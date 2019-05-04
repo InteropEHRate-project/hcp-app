@@ -1,0 +1,1 @@
+insert into HEALTH_CARE_ORGANIZATION (version, code, name) values (0, 'SCUBA', 'Spitalul Clinic de Urgenta Bagdasar-Arseni');
