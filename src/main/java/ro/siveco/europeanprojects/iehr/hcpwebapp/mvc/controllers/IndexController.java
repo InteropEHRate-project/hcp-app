@@ -1,4 +1,4 @@
-package ro.siveco.europeanprojects.iehr.hcpwebapp.controllers;
+package ro.siveco.europeanprojects.iehr.hcpwebapp.mvc.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

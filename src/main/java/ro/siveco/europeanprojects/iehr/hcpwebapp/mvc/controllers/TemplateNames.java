@@ -1,4 +1,4 @@
-package ro.siveco.europeanprojects.iehr.hcpwebapp.controllers;
+package ro.siveco.europeanprojects.iehr.hcpwebapp.mvc.controllers;
 
 public interface TemplateNames {
     String INDEX_TEMPLATE = "index";
