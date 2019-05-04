@@ -9,6 +9,6 @@ public class HealthCareOrganizationController {
 
     @RequestMapping("/view-details")
     public String detailsTemplate(){
-        return TemplateNames.HEALTH_CARE_ORGANIZATION_DETAILS_TEMPLATE;
+        return TemplateNames.HEALTH_CARE_ORGANIZATION_VIEW_DETAILS_TEMPLATE;
     }
 }
