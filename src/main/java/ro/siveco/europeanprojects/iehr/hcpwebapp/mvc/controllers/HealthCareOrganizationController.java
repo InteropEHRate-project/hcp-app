@@ -23,4 +23,11 @@ public class HealthCareOrganizationController {
         model.addAttribute("healthCareOrganization", healthCareOrganizationCommand);
         return TemplateNames.HEALTH_CARE_ORGANIZATION_VIEW_DETAILS_TEMPLATE;
     }
+
+    @GetMapping
+    @RequestMapping("/send-info-sher")
+    public String sendInformationToSHER(){
+        healthCareOrganizationService.sendInformationToSHER();
+        return "redirect:/health-care-organization/view-details";
+    }
 }

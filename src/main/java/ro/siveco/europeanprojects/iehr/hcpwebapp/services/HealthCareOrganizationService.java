@@ -4,4 +4,6 @@ import ro.siveco.europeanprojects.iehr.hcpwebapp.mvc.commands.HealthCareOrganiza
 
 public interface HealthCareOrganizationService {
     HealthCareOrganizationCommand getHealthCareOrganization();
+
+    void sendInformationToSHER();
 }

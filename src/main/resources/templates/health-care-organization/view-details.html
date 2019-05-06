@@ -38,6 +38,8 @@
 
                     <h5 class="card-title" th:text="#{template.health.care.organization.card.body.title.address}">Address</h5>
                     <p class="card-text" th:text="${healthCareOrganization.address}">address</p>
+
+                    <a href="#" class="btn btn-primary" th:text="#{template.health.care.organization.button.send.info}" th:href="@{/health-care-organization/send-info-sher}">Send information</a>
                 </div>
             </div>
         </div>
