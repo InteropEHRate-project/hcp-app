@@ -1,1 +1,1 @@
-insert into HEALTH_CARE_ORGANIZATION (version, code, name) values (0, 'SCUBA', 'Spitalul Clinic de Urgenta Bagdasar-Arseni');
+insert into HEALTH_CARE_ORGANIZATION (version, code, name, phone, address) values (0, 'SCUBA', 'Spitalul Clinic de Urgenta Bagdasar-Arseni', '+4021 334 30 25 / +4021 334 30 26 / +4021 334 30 27', 'Șoseaua Berceni nr. 12, Sector 4, cod 041915, București');

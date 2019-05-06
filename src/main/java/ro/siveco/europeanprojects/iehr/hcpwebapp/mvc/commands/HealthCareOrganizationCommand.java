@@ -8,4 +8,6 @@ import lombok.Setter;
 public class HealthCareOrganizationCommand {
     private String code;
     private String name;
+    private String phone;
+    private String address;
 }

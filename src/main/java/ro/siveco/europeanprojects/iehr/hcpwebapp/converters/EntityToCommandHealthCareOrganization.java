@@ -12,6 +12,8 @@ public class EntityToCommandHealthCareOrganization implements Converter<HealthCa
         HealthCareOrganizationCommand healthCareOrganizationCommand = new HealthCareOrganizationCommand();
         healthCareOrganizationCommand.setCode(healthCareOrganizationEntity.getCode());
         healthCareOrganizationCommand.setName(healthCareOrganizationEntity.getName());
+        healthCareOrganizationCommand.setPhone(healthCareOrganizationEntity.getPhone());
+        healthCareOrganizationCommand.setAddress(healthCareOrganizationEntity.getAddress());
         return healthCareOrganizationCommand;
     }
 }

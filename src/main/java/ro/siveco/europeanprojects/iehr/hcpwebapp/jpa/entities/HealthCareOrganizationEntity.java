@@ -18,4 +18,8 @@ public class HealthCareOrganizationEntity extends HCPApplicationEntity {
     private String code;
     @NotNull
     private String name;
+    @NotNull
+    private String phone;
+    @NotNull
+    private String address;
 }
