@@ -8,7 +8,7 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/>
     </parent>
-    <groupId>ro.siveco.europeanprojects.iehr</groupId>
+    <groupId>eu.interopehrate.hcpapp</groupId>
     <artifactId>hcp-web-app</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>hcp-web-app</name>

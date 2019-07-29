@@ -1,0 +1,12 @@
+package eu.interopehrate.hcpapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HcpWebApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(HcpWebApplication.class, args);
+    }
+}
