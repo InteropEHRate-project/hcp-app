@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Default EHR download</title>
+    <title th:text="#{template.administration.initial.sehr.download.title}">Initial EHR download</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -25,15 +25,28 @@
             <div th:replace="administration/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Default EHR download</h5>
+            <form action="#" th:action="@{/administration/initial-download/save-sehr-initial}" th:object="${sehrInitialDownload}" method="post">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 th:text="#{template.administration.initial.sehr.download.title}">Initial EHR download</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="medicationSummary" th:field="*{medicationSummary}">
+                                    <label class="custom-control-label" for="medicationSummary" th:text="#{template.administration.initial.sehr.download.medical.summary}">Medical Summary Section</label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="allergyIntolerance" th:field="*{allergyIntolerance}">
+                                    <label class="custom-control-label" for="allergyIntolerance" th:text="#{template.administration.initial.sehr.download.allergy.intolerance}">Medical Summary Section</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary" th:text="#{template.administration.initial.sehr.download.save}">Save</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

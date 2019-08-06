@@ -1,10 +1,10 @@
-package eu.interopehrate.hcpapp.services.impl;
+package eu.interopehrate.hcpapp.services.administration.impl;
 
 import eu.interopehrate.hcpapp.converters.EntityToCommandHealthCareOrganization;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareOrganizationRepository;
 import eu.interopehrate.hcpapp.mvc.commands.HealthCareOrganizationCommand;
-import eu.interopehrate.hcpapp.services.HealthCareOrganizationService;
+import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

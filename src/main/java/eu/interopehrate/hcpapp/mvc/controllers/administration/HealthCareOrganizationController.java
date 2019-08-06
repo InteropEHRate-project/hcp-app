@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.administration;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.HealthCareOrganizationService;
+import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "HEALTH_CARE_ORGANIZATION")
 public class HealthCareOrganizationEntity extends HCPApplicationEntity {
-
     @NotNull
     private String code;
     @NotNull
