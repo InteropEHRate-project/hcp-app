@@ -22,7 +22,7 @@ public class InitialDownloadController {
     @GetMapping
     @RequestMapping("/from-sehr")
     public String getSEHRInitial(Model model) {
-        SEHRInitialDownloadCommand sehrInitialDownloadCommand = sehrInitialDownloadService.getCurrent();
+        SEHRInitialDownloadCommand sehrInitialDownloadCommand = sehrInitialDownloadService.getInitialConfig();
         model.addAttribute("sehrInitialDownload", sehrInitialDownloadCommand);
         return TemplateNames.ADMINISTRATION_INITIAL_DOWNLOAD_FROM_SEHR;
     }

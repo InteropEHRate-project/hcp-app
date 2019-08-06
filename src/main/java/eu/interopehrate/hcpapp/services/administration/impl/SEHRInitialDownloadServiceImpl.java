@@ -22,7 +22,7 @@ public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadServic
     }
 
     @Override
-    public SEHRInitialDownloadCommand getCurrent() {
+    public SEHRInitialDownloadCommand getInitialConfig() {
         List<SEHRInitialDownloadEntity> all = sehrInitialDownloadRepository.findAll();
         if (CollectionUtils.isEmpty(all)) {
             return new SEHRInitialDownloadCommand();
