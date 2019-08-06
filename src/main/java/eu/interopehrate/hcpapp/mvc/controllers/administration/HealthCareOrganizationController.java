@@ -22,7 +22,7 @@ public class HealthCareOrganizationController {
     public String detailsTemplate(Model model){
         HealthCareOrganizationCommand healthCareOrganizationCommand = healthCareOrganizationService.getHealthCareOrganization();
         model.addAttribute("healthCareOrganization", healthCareOrganizationCommand);
-        return TemplateNames.HEALTH_CARE_ORGANIZATION_VIEW_DETAILS_TEMPLATE;
+        return TemplateNames.ADMINISTRATION_HEALTH_CARE_ORGANIZATION_VIEW_DETAILS;
     }
 
     @GetMapping

@@ -26,10 +26,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'index')} ? 'active' : ''">
-                    <a class="nav-link" href="../index.html" th:href="@{/index}" th:text="#{fragment.navigation.top.index}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../index.html" th:href="@{/index}" th:text="#{fragment.main.navigation.top.index}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'administration')} ? 'active' : ''">
-                    <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.navigation.top.administration}">Administration</a>
+                    <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.main.navigation.top.administration}">Administration</a>
                 </li>
             </ul>
         </div>

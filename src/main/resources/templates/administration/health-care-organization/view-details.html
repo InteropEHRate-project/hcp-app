@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{template.health.care.organization.title}">Organization</title>
+    <title th:text="#{template.administration.health.care.organization.title}">Organization</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -20,26 +20,33 @@
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 th:text="#{template.health.care.organization.card.header}">Health care organization</h5>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="#{template.health.care.organization.card.body.title.code}">Code</h5>
-                    <p class="card-text" th:text="${healthCareOrganization.code}">code</p>
+    <div class="row">
+        <div class="col-3">
+            <div th:replace="administration/fragments/navigation::navigation-left">navigation-left</div>
+        </div>
+        <div class="col-9">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 th:text="#{template.administration.health.care.organization.card.header}">Health care organization</h5>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.code}">Code</h5>
+                            <p class="card-text" th:text="${healthCareOrganization.code}">code</p>
 
-                    <h5 class="card-title" th:text="#{template.health.care.organization.card.body.title.name}">Name</h5>
-                    <p class="card-text" th:text="${healthCareOrganization.name}">name</p>
+                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.name}">Name</h5>
+                            <p class="card-text" th:text="${healthCareOrganization.name}">name</p>
 
-                    <h5 class="card-title" th:text="#{template.health.care.organization.card.body.title.phone}">Phone</h5>
-                    <p class="card-text" th:text="${healthCareOrganization.phone}">phone</p>
+                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.phone}">Phone</h5>
+                            <p class="card-text" th:text="${healthCareOrganization.phone}">phone</p>
 
-                    <h5 class="card-title" th:text="#{template.health.care.organization.card.body.title.address}">Address</h5>
-                    <p class="card-text" th:text="${healthCareOrganization.address}">address</p>
+                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.address}">Address</h5>
+                            <p class="card-text" th:text="${healthCareOrganization.address}">address</p>
 
-                    <a href="#" class="btn btn-primary" th:text="#{template.health.care.organization.button.send.info}" th:href="@{/administration/health-care-organization/send-info-sher}">Send information</a>
+                            <a href="#" class="btn btn-primary" th:text="#{template.administration.health.care.organization.button.send.info}" th:href="@{/administration/health-care-organization/send-info-sher}">Send information</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
