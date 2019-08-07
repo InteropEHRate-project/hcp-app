@@ -25,11 +25,7 @@ public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadServic
     @Override
     public SEHRInitialDownloadCommand getInitialConfig() {
         List<SEHRInitialDownloadEntity> all = sehrInitialDownloadRepository.findAll();
-        if (CollectionUtils.isEmpty(all)) {
-            return new SEHRInitialDownloadCommand();
-        } else {
-            return entityToCommandSEHRInitialDownload.convert(all.get(0));
-        }
+        return CollectionUtils.isEmpty(all) ? new SEHRInitialDownloadCommand() : entityToCommandSEHRInitialDownload.convert(all.get(0));
     }
 
     @Override
