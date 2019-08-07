@@ -4,4 +4,6 @@ import eu.interopehrate.hcpapp.mvc.commands.SEHRInitialDownloadCommand;
 
 public interface SEHRInitialDownloadService {
     SEHRInitialDownloadCommand getInitialConfig();
+
+    void saveInitialConfig(SEHRInitialDownloadCommand sehrInitialDownloadCommand);
 }

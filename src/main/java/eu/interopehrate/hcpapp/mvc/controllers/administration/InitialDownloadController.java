@@ -29,7 +29,8 @@ public class InitialDownloadController {
 
     @PostMapping
     @RequestMapping("/save-sehr-initial")
-    public String saveSEHRInitial(@ModelAttribute SEHRInitialDownloadCommand command){
+    public String saveSEHRInitial(@ModelAttribute SEHRInitialDownloadCommand command) {
+        sehrInitialDownloadService.saveInitialConfig(command);
         return "redirect:/administration/initial-download/get-sehr-initial";
     }
 }
