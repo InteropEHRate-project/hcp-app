@@ -23,10 +23,10 @@
            th:href="@{/administration/health-care-organization/view-details}"
            th:text="#{fragment.administration.navigation.left.organization}">Organization</a>
         <a class="flex-sm-fill text-sm-left nav-link"
-           th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'initial-download/from-sehr')} ? 'active' : ''"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'initial-download/get-sehr-initial')} ? 'active' : ''"
            href="../initial-download/from-sehr.html"
-           th:href="@{/administration/initial-download/from-sehr}"
-           th:text="#{fragment.administration.navigation.left.initial.download.sehr}">Default EHR download</a>
+           th:href="@{/administration/initial-download/get-sehr-initial}"
+           th:text="#{fragment.administration.navigation.left.initial.download.sehr}">Initial EHR download</a>
     </div>
 </body>
 </html>

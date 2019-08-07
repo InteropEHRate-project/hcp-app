@@ -20,7 +20,7 @@ public class InitialDownloadController {
     }
 
     @GetMapping
-    @RequestMapping("/from-sehr")
+    @RequestMapping("/get-sehr-initial")
     public String getSEHRInitial(Model model) {
         SEHRInitialDownloadCommand sehrInitialDownloadCommand = sehrInitialDownloadService.getInitialConfig();
         model.addAttribute("sehrInitialDownload", sehrInitialDownloadCommand);
@@ -30,6 +30,6 @@ public class InitialDownloadController {
     @PostMapping
     @RequestMapping("/save-sehr-initial")
     public String saveSEHRInitial(@ModelAttribute SEHRInitialDownloadCommand command){
-        return "redirect:/administration/initial-download/from-sehr";
+        return "redirect:/administration/initial-download/get-sehr-initial";
     }
 }
