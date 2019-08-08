@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>navigation</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div th:fragment="navigation-left" class="nav flex-column nav-pills">
+    <a class="flex-sm-fill text-sm-left nav-link"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medication-summary')} ? 'active' : ''"
+       href="../medication-summary/view-section.html"
+       th:href="@{/current-patient/medication-summary/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.medication.summary}">Medication Summary</a>
+    <a class="flex-sm-fill text-sm-left nav-link"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/allergies-intolerances')} ? 'active' : ''"
+       href="../initial-download/from-sehr.html"
+       th:href="@{/current-patient/allergies-intolerances/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">Allergies and Intolerances</a>
+</div>
+</body>
+</html>
