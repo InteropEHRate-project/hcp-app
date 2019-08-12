@@ -1,0 +1,1324 @@
+{
+  "resourceType": "Bundle",
+  "id": "IPS-Example-Bundle-for-InteropEHRate",
+  "language": "it-IT",
+  "type": "document",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Composition",
+        "id": "IPS-Example-Composition-for-InteropEHRate",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/composition-uv-ips"
+          ]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "60591-5",
+              "display": "Patient Summary"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "date": "2019-08-05T17:54:26+02:00",
+        "author": [
+          {
+            "reference": "Practitioner/5e95687e-9cea-4b8c-8359-db02c9c17ad7"
+          }
+        ],
+        "title": "Patient Summary of patient Mario Rossi",
+        "attester": [
+          {
+            "mode": "legal",
+            "time": "2019-08-05T17:54:26+02:00",
+            "party": {
+              "reference": "Practitioner/5e95687e-9cea-4b8c-8359-db02c9c17ad7"
+            }
+          },
+          {
+            "mode": "legal",
+            "time": "2019-08-05T17:54:26+02:00",
+            "party": {
+              "reference": "Organization/5138d805-dad6-4e49-8d44-4ed60979549c"
+            }
+          }
+        ],
+        "custodian": {
+          "reference": "Organization/5138d805-dad6-4e49-8d44-4ed60979549c"
+        },
+        "section": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "48765-2",
+                  "display": "Allergies and Intolerances"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "AllergyIntolerance/9f52359a-531d-4785-be29-a3d619a25b06"
+              }
+            ]
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "11450-4",
+                  "display": "Active Problems"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Condition/5e0a1e01-03d4-4f9f-bf06-4a72f1e18667"
+              },
+              {
+                "reference": "Condition/de47de0f-86a9-43bb-9246-bb7d76cb1446"
+              }
+            ]
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "10160-0",
+                  "display": "Medication"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "MedicationStatement/abcb6614-9ee6-4d82-9552-361f49d9d40e"
+              },
+              {
+                "reference": "MedicationStatement/2ea2c92f-1f6f-4c45-915f-48cdad522e6a"
+              },
+              {
+                "reference": "MedicationStatement/f9016258-e257-440f-aab1-43a154ea26c3"
+              },
+              {
+                "reference": "MedicationStatement/eeb134dd-ef95-48cc-bcc9-164a1dd55247"
+              },
+              {
+                "reference": "MedicationStatement/1f8921ce-8ac2-425c-89b1-23453ed4c120"
+              },
+              {
+                "reference": "MedicationStatement/324d835a-8aed-44ff-998b-bf9f152275f9"
+              }
+            ]
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "30954-2",
+                  "display": "Relevant diagnostic tests and/or laboratory data "
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Observation/77208604-bb25-4240-b2eb-160f66b7df85"
+              },
+              {
+                "reference": "Observation/a01a310a-c06e-4a30-bbde-03028a70f86e"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "5e95687e-9cea-4b8c-8359-db02c9c17ad7",
+        "name": [
+          {
+            "family": "Emdin",
+            "given": [
+              "Michele"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "email",
+            "value": "michele.emdin@ftgm.it",
+            "use": "mobile"
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "Via Moruzzi, 1"
+            ],
+            "city": "Pisa",
+            "state": "Italia",
+            "postalCode": "56126"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1958-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "5b302664-99fc-4679-be2e-7ee6d1735c45",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mario <b>ROSSI </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>RSSMRA58A01G702E</td></tr><tr><td>Address</td><td><span>Piazza del Duomo </span><br/><span>Pisa </span><span>Italia </span></td></tr><tr><td>Date of birth</td><td><span>01 gennaio 1958</span></td></tr></tbody></table></div>"
+        },
+        "identifier": [
+          {
+            "value": "RSSMRA58A01G702E"
+          }
+        ],
+        "name": [
+          {
+            "family": "Rossi",
+            "given": [
+              "Mario"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+393391234567",
+            "use": "mobile"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1958-01-01",
+        "address": [
+          {
+            "use": "home",
+            "line": [
+              "Piazza del Duomo"
+            ],
+            "city": "Pisa",
+            "state": "Italia",
+            "postalCode": "56011"
+          }
+        ],
+        "generalPractitioner": [
+          {
+            "reference": "Practitioner/5e95687e-9cea-4b8c-8359-db02c9c17ad7"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "5138d805-dad6-4e49-8d44-4ed60979549c",
+        "active": true,
+        "name": "Fondazione Gabriele Monasterio",
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "Via Moruzzi, 1"
+            ],
+            "city": "Pisa",
+            "state": "Italia",
+            "postalCode": "56126"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "9f52359a-531d-4785-be29-a3d619a25b06",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/allergyintolerance-uv-ips"
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "medication"
+        ],
+        "criticality": "high",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "373270004",
+              "display": "Penicillin -class of antibiotic- (substance)"
+            }
+          ]
+        },
+        "patient": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "onsetDateTime": "2010"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "abcb6614-9ee6-4d82-9552-361f49d9d40e",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medicationstatement-uv-ips"
+          ]
+        },
+        "status": "active",
+        "medicationReference": {
+          "reference": "Medication/0ef39785-9128-4358-aa3b-4dea8da26502"
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "dosage": [
+          {
+            "patientInstruction": "1 cps, 200mg x 2 die (8:00 - 20:00)",
+            "timing": {
+              "repeat": {
+                "frequency": 2,
+                "period": 1,
+                "periodUnit": "d",
+                "timeOfDay": [
+                  "08:00",
+                  "20:00"
+                ]
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "26643006",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 200,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "2ea2c92f-1f6f-4c45-915f-48cdad522e6a",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medicationstatement-uv-ips"
+          ]
+        },
+        "status": "active",
+        "medicationReference": {
+          "reference": "Medication/b8a0fba4-34e2-4bb6-bd6a-c595402eb565"
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "dosage": [
+          {
+            "patientInstruction": "1 cps, 25mg x 2 die (8:00 - 20:00)",
+            "timing": {
+              "repeat": {
+                "frequency": 2,
+                "period": 1,
+                "periodUnit": "d",
+                "timeOfDay": [
+                  "08:00",
+                  "20:00"
+                ]
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "26643006",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 25,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "f9016258-e257-440f-aab1-43a154ea26c3",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medicationstatement-uv-ips"
+          ]
+        },
+        "status": "active",
+        "medicationReference": {
+          "reference": "Medication/5b244107-6aee-4bca-ba2f-4c86a6dc1eae"
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "dosage": [
+          {
+            "patientInstruction": "1/2 cps, 20mg x 2 die (8:00 - 20:00)",
+            "timing": {
+              "repeat": {
+                "frequency": 2,
+                "period": 1,
+                "periodUnit": "d",
+                "timeOfDay": [
+                  "08:00",
+                  "20:00"
+                ]
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "26643006",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 20,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "eeb134dd-ef95-48cc-bcc9-164a1dd55247",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medicationstatement-uv-ips"
+          ]
+        },
+        "status": "active",
+        "medicationReference": {
+          "reference": "Medication/28430aa9-319b-411a-b8f2-c0d82e93a7df"
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "dosage": [
+          {
+            "patientInstruction": "1 cps 10mg die (22:00)",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d",
+                "timeOfDay": [
+                  "22:00"
+                ]
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "26643006",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 10,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "1f8921ce-8ac2-425c-89b1-23453ed4c120",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medicationstatement-uv-ips"
+          ]
+        },
+        "status": "active",
+        "medicationReference": {
+          "reference": "Medication/f7bc6f5f-480a-4a91-b2d0-c385c175eb6d"
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "dosage": [
+          {
+            "patientInstruction": "1 cps 20mg die (14:00)",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d",
+                "timeOfDay": [
+                  "14:00"
+                ]
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "26643006",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 20,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "324d835a-8aed-44ff-998b-bf9f152275f9",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medicationstatement-uv-ips"
+          ]
+        },
+        "status": "active",
+        "medicationReference": {
+          "reference": "Medication/443d4b90-b247-411e-9fad-520bee78a8f8"
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "dosage": [
+          {
+            "patientInstruction": "1 cps 250mg die lun, mer, ven (14:00)",
+            "timing": {
+              "repeat": {
+                "frequency": 3,
+                "period": 1,
+                "periodUnit": "wk",
+                "dayOfWeek": [
+                  "mon",
+                  "wed",
+                  "fri"
+                ],
+                "timeOfDay": [
+                  "14:00"
+                ]
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "26643006",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 20,
+                  "unit": "mg",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "mg"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Medication",
+        "id": "0ef39785-9128-4358-aa3b-4dea8da26502",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medication-uv-ips"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mexiletina (Mexiletina cloridrato)</div></div>"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "WHO ATC",
+              "code": "R05DA04",
+              "display": "Mexiletina  (Mexiletina cloridrato)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Medication",
+        "id": "b8a0fba4-34e2-4bb6-bd6a-c595402eb565",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medication-uv-ips"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Carvedilolo (Caravel)</div></div>"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "WHO ATC",
+              "code": "C07AG02",
+              "display": "Carvedilolo (Caravel)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Medication",
+        "id": "5b244107-6aee-4bca-ba2f-4c86a6dc1eae",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medication-uv-ips"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Fosinopril</div></div>"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "WHO ATC",
+              "code": "C09AA09",
+              "display": "Fosinopril"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Medication",
+        "id": "28430aa9-319b-411a-b8f2-c0d82e93a7df",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medication-uv-ips"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Simvastatina (Sinvacor)</div></div>"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "WHO ATC",
+              "code": "C10AA01",
+              "display": "Simvastatina (Sinvacor)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Medication",
+        "id": "f7bc6f5f-480a-4a91-b2d0-c385c175eb6d",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medication-uv-ips"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Spironolattone (Aldactone)</div></div>"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "WHO ATC",
+              "code": "C03DA01",
+              "display": "Spironolattone (Aldactone)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Medication",
+        "id": "443d4b90-b247-411e-9fad-520bee78a8f8",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/medication-uv-ips"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Acetazolamide (Diamox)</div></div>"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "WHO ATC",
+              "code": "S01EC01",
+              "display": "Acetazolamide (Diamox)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "5e0a1e01-03d4-4f9f-bf06-4a72f1e18667",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/condition-uv-ips"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "75326-9",
+                "display": "Problem"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "ICD9M",
+              "code": "425.4",
+              "display": "Altre Cardiomiopatie Primitive"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "onsetDateTime": "2017-03-30"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "de47de0f-86a9-43bb-9246-bb7d76cb1446",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/condition-uv-ips"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "75326-9",
+                "display": "Problem"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "ICD9M",
+              "code": "428.1",
+              "display": "Insufficienza del cuore sinistro (scompenso cardiaco Sinistro)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "onsetDateTime": "2017-03-30"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "77208604-bb25-4240-b2eb-160f66b7df85",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8716-3",
+              "display": "Vital Signs"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-03-30T08:45:00",
+        "hasMember": [
+          {
+            "reference": "Observation/18c593a1-08aa-4089-89bf-751998fd7029"
+          },
+          {
+            "reference": "Observation/6bd122f4-c084-4081-ac71-641fdd7085dd"
+          },
+          {
+            "reference": "Observation/c2186109-9ff0-4376-a4e5-9437d92f0c39"
+          },
+          {
+            "reference": "Observation/5de87be3-57b6-4ba0-aa5b-2b2476ad0294"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "a01a310a-c06e-4a30-bbde-03028a70f86e",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18723-7",
+              "display": "Hematology studies (set)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "hasMember": [
+          {
+            "reference": "Observation/02a20de5-8cbe-4363-af6c-a63c13d38c43"
+          },
+          {
+            "reference": "Observation/4d37fab8-ae32-43c8-aa19-91534e507267"
+          },
+          {
+            "reference": "Observation/1a1d49e2-305f-498d-9266-e9ca548089f5"
+          },
+          {
+            "reference": "Observation/395dcaa9-aeae-4415-b2c4-b85778e05c0e"
+          },
+          {
+            "reference": "Observation/08d5f7e2-f12d-4e42-9d95-83abd22d68ed"
+          },
+          {
+            "reference": "Observation/76434969-9ba5-43af-a267-ad35d8130111"
+          },
+          {
+            "reference": "Observation/ec9ca2ef-afea-4ee0-87ae-ea7a7d394bc5"
+          },
+          {
+            "reference": "Observation/515fb293-425e-4b91-afc9-a138f6722ccd"
+          },
+          {
+            "reference": "Observation/23513bc7-daa3-421e-87a5-aaa7fc18d113"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "18c593a1-08aa-4089-89bf-751998fd7029",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "3141-9",
+              "display": "Body weight Measured"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-03-30T08:45:00",
+        "valueQuantity": {
+          "value": 108,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "6bd122f4-c084-4081-ac71-641fdd7085dd",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body height"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-03-30T08:45:00",
+        "valueQuantity": {
+          "value": 185,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "c2186109-9ff0-4376-a4e5-9437d92f0c39",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8480-6",
+              "display": "Systolic blood pressure"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-03-30T08:45:00",
+        "valueQuantity": {
+          "value": 115,
+          "unit": "mm[Hg]",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "5de87be3-57b6-4ba0-aa5b-2b2476ad0294",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8462-4",
+              "display": "Diastolic blood pressure"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-03-30T08:45:00",
+        "valueQuantity": {
+          "value": 60,
+          "unit": "mm[Hg]",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "02a20de5-8cbe-4363-af6c-a63c13d38c43",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2345-7",
+              "display": "Glucose [Mass/volume] in Serum or Plasma"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 120,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "4d37fab8-ae32-43c8-aa19-91534e507267",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "67151-1",
+              "display": "Troponin T.cardiac"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 15.36,
+          "unit": "ng/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "1a1d49e2-305f-498d-9266-e9ca548089f5",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "20977-5",
+              "display": "Urea in Blood"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 55.6,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "395dcaa9-aeae-4415-b2c4-b85778e05c0e",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "3097-3",
+              "display": "Creatinine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 1.1,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "08d5f7e2-f12d-4e42-9d95-83abd22d68ed",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "77147-7",
+              "display": "Glomerular filtration rate/1.73 sq M.predicted"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 69,
+          "unit": "mL/min/1,73m2",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "76434969-9ba5-43af-a267-ad35d8130111",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2947-0",
+              "display": "Sodium [Moles/​volume] in Blood"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 137.9,
+          "unit": "mEq/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "ec9ca2ef-afea-4ee0-87ae-ea7a7d394bc5",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "75940-7",
+              "display": "Potassium [Moles/​volume] in Blood"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 3.76,
+          "unit": "mEq/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "515fb293-425e-4b91-afc9-a138f6722ccd",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2069-3",
+              "display": "Chloride [Moles/volume] in Blood"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 109.1,
+          "unit": "mEq/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "23513bc7-daa3-421e-87a5-aaa7fc18d113",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/observation-laboratory-uv-ips"
+          ]
+        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33762-6",
+              "display": "Natriuretic peptide.B prohormone N-Terminal [Mass/​volume] in Serum or Plasma"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/5b302664-99fc-4679-be2e-7ee6d1735c45"
+        },
+        "effectiveDateTime": "2017-11-17T08:45:00",
+        "valueQuantity": {
+          "value": 290,
+          "unit": "ng/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      }
+    }
+  ]
+}
