@@ -21,4 +21,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_SOCIAL_HISTORY_VIEW_SECTION = "current-patient/social-history/view-section";
     String CURRENT_PATIENT_HISTORY_PREGNANCY_VIEW_SECTION = "current-patient/history-pregnancy/view-section";
     String CURRENT_PATIENT_ACTIVE_DEVICES_VIEW_SECTION = "current-patient/active-devices/view-section";
+
+    // Test D2D library
+    String TEST_D2D_LIBRARY_VIEW = "test-d2d-library/view-test-d2d-library";
 }
