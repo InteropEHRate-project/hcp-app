@@ -19,12 +19,12 @@ import java.nio.file.Files;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class JsonDeserializationTests {
-    private static String initilaJsonFhir;
+    private static String initialJsonFhir;
 
     @BeforeClass
     public static void init() throws IOException {
         File file = new ClassPathResource("fhir/sample-patient-summary.json").getFile();
-        initilaJsonFhir = Files.readString(file.toPath());
+        initialJsonFhir = Files.readString(file.toPath());
     }
 
     @Test
@@ -32,9 +32,9 @@ public class JsonDeserializationTests {
         FhirContext fc = FhirContext.forR4();
         IParser parser = fc.newJsonParser().setPrettyPrint(true);
 
-        Bundle patientSummaryBundle = (Bundle) parser.parseResource(initilaJsonFhir);
+        Bundle patientSummaryBundle = (Bundle) parser.parseResource(initialJsonFhir);
         String jsonFhir = parser.encodeResourceToString(patientSummaryBundle);
 
-        Assert.assertEquals(StringUtils.trimAllWhitespace(initilaJsonFhir), StringUtils.trimAllWhitespace(jsonFhir));
+        Assert.assertEquals(StringUtils.trimAllWhitespace(initialJsonFhir), StringUtils.trimAllWhitespace(jsonFhir));
     }
 }
