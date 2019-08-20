@@ -14,6 +14,8 @@ insert into PERSONS (version, first_name, last_name, gender, birth_date) values 
 
 insert into HEALTH_CARE_PROFESSIONAL (id, OCCUPATION_ID) values ((select id from persons where first_name = 'Ion'), (select id from health_care_occupations where name = 'Medical doctor (general)'));
 
-insert into ADDRESSES (version, city_id, use, postal_code, street, number, details, person_id) values (0, (select id from cities where name = 'Bucharest'), 'WORK', '013685', 'Soseaua Bucuresti-Ploiest', '73-81', 'Sector 1, Victoria Park, Cladirea 4', (select id from persons where first_name = 'Ion'));
+insert into ADDRESSES (version, city_id, use, postal_code, street, number, details) values (0, (select id from cities where name = 'Bucharest'), 'WORK', '013685', 'Soseaua Bucuresti-Ploiest', '73-81', 'Sector 1, Victoria Park, Cladirea 4');
+
+insert into PERSON_ADDRESS (person_id, address_id) values ((select id from persons where first_name = 'Ion'), (select id from addresses where postal_code = '013685'));
 
 insert into HEALTH_CARE_ORGANIZATION (version, code, name, phone, address) values (0, 'SCUBA', 'Spitalul Clinic de Urgenta Bagdasar-Arseni', '+4021 334 30 25 / +4021 334 30 26 / +4021 334 30 27', 'Șoseaua Berceni nr. 12, Sector 4, cod 041915, București');

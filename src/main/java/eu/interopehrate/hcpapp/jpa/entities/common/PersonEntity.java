@@ -30,6 +30,9 @@ public class PersonEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "BIRTH_DATE")
     private LocalDate birthDate;
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(name = "PERSON_ADDRESS",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
     private List<AddressEntity> addresses = new ArrayList<>();
 }

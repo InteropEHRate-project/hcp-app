@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +31,6 @@ public class AddressEntity extends HCPApplicationEntity {
     private String number;
     @Column(name = "DETAILS")
     private String details;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "PERSON_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_ADDRESS_PERSON"))
-    private PersonEntity person;
+    @ManyToMany(mappedBy = "addresses")
+    private List<PersonEntity> persons = new ArrayList<>();
 }
