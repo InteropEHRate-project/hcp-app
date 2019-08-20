@@ -20,15 +20,28 @@
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
+    <div class="m-3">
+        <div class="row justify-content-center">
+            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/open-connection}">Open connection</a>
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="row justify-content-center">
+            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/close-connection}">Close connection</a>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-12">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Test D2D library</h5>
-                        </div>
-                    </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/send-date}">Send Information</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/display-date}">Display Information</a>
                 </div>
             </div>
         </div>
