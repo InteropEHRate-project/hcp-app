@@ -26,7 +26,7 @@ public class TestD2DLibraryControllersAdvice {
     @ExceptionHandler(Exception.class)
     public String handleException(Exception exception, Model model) {
         log.error(exception.getMessage(), exception);
-        model.addAttribute("exception", exception.getMessage());
+        model.addAttribute("exception", String.format("An error occurred with message - %s. See log for details.", exception.getMessage()));
         model.addAttribute("testD2DLibraryCommand", testD2DLibraryService.currentState());
         return TemplateNames.TEST_D2D_LIBRARY_VIEW;
     }
