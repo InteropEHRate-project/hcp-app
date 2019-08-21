@@ -1,12 +1,12 @@
 package eu.interopehrate.hcpapp.mvc.controllers.administration;
 
+import eu.interopehrate.hcpapp.mvc.commands.HealthCareOrganizationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import eu.interopehrate.hcpapp.mvc.commands.HealthCareOrganizationCommand;
 
 @Controller
 @RequestMapping("/administration/health-care-organization")
@@ -19,16 +19,9 @@ public class HealthCareOrganizationController {
 
     @GetMapping
     @RequestMapping("/view-details")
-    public String detailsTemplate(Model model){
+    public String detailsTemplate(Model model) {
         HealthCareOrganizationCommand healthCareOrganizationCommand = healthCareOrganizationService.getHealthCareOrganization();
         model.addAttribute("healthCareOrganization", healthCareOrganizationCommand);
         return TemplateNames.ADMINISTRATION_HEALTH_CARE_ORGANIZATION_VIEW_DETAILS;
-    }
-
-    @GetMapping
-    @RequestMapping("/send-info-sher")
-    public String sendInformationToSHER(){
-        healthCareOrganizationService.sendInformationToSHER();
-        return "redirect:/administration/health-care-organization/view-details";
     }
 }
