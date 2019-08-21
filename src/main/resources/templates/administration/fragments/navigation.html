@@ -23,7 +23,7 @@
            th:href="@{/administration/health-care-organization/view-details}"
            th:text="#{fragment.administration.navigation.left.organization}">Organization</a>
         <a class="flex-sm-fill text-sm-left nav-link"
-           th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'health-care-profesional/view-details')} ? 'active' : ''"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'health-care-professional/view-details')} ? 'active' : ''"
            href="../health-care-professional/view-details.html"
            th:href="@{/administration/health-care-professional/view-details}"
            th:text="#{fragment.administration.navigation.left.health.care.professional}">Practitioner</a>

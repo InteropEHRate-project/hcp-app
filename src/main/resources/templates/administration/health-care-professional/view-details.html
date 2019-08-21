@@ -16,3 +16,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
 </head>
+
+<body>
+    <div th:replace="fragments/header::navigation-top">navigation-top</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div th:replace="administration/fragments/navigation::navigation-left">navigation-left</div>
+            </div>
+            <div class="col-9">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 th:text="#{template.administration.health.care.professional.title}">Practitioner</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
