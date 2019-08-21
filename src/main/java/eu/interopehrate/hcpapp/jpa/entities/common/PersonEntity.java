@@ -30,7 +30,7 @@ public class PersonEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "BIRTH_DATE")
     private LocalDate birthDate;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "PERSON_ADDRESS",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
