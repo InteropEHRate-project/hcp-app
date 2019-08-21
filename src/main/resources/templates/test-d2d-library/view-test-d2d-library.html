@@ -20,28 +20,31 @@
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
-    <div class="m-3">
+    <div th:if="${exception != null}" class="m-3 alert alert-danger">
+        <p th:text="${exception}">Exception</p>
+    </div>
+    <div class="m-3" th:unless="${testD2DLibraryCommand.getOn()}">
         <div class="row justify-content-center">
-            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/open-connection}">Open connection</a>
+            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/connection/open}">Open connection</a>
         </div>
     </div>
-    <div class="m-3">
+    <div class="m-3" th:if="${testD2DLibraryCommand.getOn()}">
         <div class="row justify-content-center">
-            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/close-connection}">Close connection</a>
+            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/connection/close}">Close connection</a>
         </div>
     </div>
-    <div class="row">
+    <div class="row" th:if="${testD2DLibraryCommand.getOn()}">
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/send-date}">Send Information</a>
+                    <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/information/send}">Send info to SEHR</a>
                 </div>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/display-date}">Display Information</a>
+                    <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/information/get-last}">Display last info from SEHR</a>
                 </div>
             </div>
         </div>
