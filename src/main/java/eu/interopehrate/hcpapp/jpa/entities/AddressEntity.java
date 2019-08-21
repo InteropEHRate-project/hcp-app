@@ -1,15 +1,12 @@
 package eu.interopehrate.hcpapp.jpa.entities;
 
 import eu.interopehrate.hcpapp.jpa.entities.common.HCPApplicationEntity;
-import eu.interopehrate.hcpapp.jpa.entities.common.PersonEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AddressUse;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +28,4 @@ public class AddressEntity extends HCPApplicationEntity {
     private String number;
     @Column(name = "DETAILS")
     private String details;
-    @ManyToMany(mappedBy = "addresses")
-    private List<PersonEntity> persons = new ArrayList<>();
 }
