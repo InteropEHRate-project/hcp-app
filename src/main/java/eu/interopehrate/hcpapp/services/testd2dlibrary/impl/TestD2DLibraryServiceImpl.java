@@ -11,16 +11,18 @@ import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.*;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
+public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, DisposableBean {
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
     private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
@@ -50,6 +52,8 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
     @Override
     public void closeConnection() throws Exception {
         bluetoothConnection.closeConnection();
+        bluetoothConnection = null;
+        connectedThread = null;
         testD2DLibraryCommand.setOn(Boolean.FALSE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
@@ -66,6 +70,13 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
     public void lastSEHRMessage() {
         testD2DLibraryCommand.setLastSEHRMessage(connectedThread.getLastSentData());
         testD2DLibraryCommand.setSendActionMessage(null);
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        if (Objects.nonNull(bluetoothConnection)) {
+            this.closeConnection();
+        }
     }
 
     private Practitioner practitioner() {
