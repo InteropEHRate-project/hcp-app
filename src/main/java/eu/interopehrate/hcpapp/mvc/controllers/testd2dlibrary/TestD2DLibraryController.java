@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.controllers.testd2dlibrary;
 
-import eu.interopehrate.hcpapp.mvc.commands.TestD2DLibraryCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
 import org.springframework.stereotype.Controller;
@@ -20,8 +19,7 @@ public class TestD2DLibraryController {
     @GetMapping
     @RequestMapping("/view-test-d2d-library")
     public String viewTestD2DLibrary(Model model) {
-        TestD2DLibraryCommand testD2DLibraryCommand = testD2DLibraryService.currentState();
-        model.addAttribute("testD2DLibraryCommand", testD2DLibraryCommand);
+        model.addAttribute("testD2DLibraryCommand", testD2DLibraryService.currentState());
         return TemplateNames.TEST_D2D_LIBRARY_VIEW;
     }
 }
