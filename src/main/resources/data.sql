@@ -8,7 +8,7 @@ insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_
 insert into CITIES (created_date, updated_date, version, name, country_id) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Bucharest', (select id from countries where alpha_2_code = 'RO'));
 insert into CITIES (created_date, updated_date, version, name, country_id) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Rome', (select id from countries where alpha_2_code = 'IT'));
 
-insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '013685', 'Soseaua Bucuresti-Ploiest', '73-81', 'Sector 1, Victoria Park, Cladirea 4');
+insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '013685', 'Soseaua Bucuresti-Ploiesti', '73-81', 'Sector 1, Victoria Park, Cladirea 4');
 insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '041915', 'Șoseaua Berceni', '12', 'Sector 4');
 
 insert into CONTACT_POINTS (created_date, updated_date, version, type, use, value) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PHONE', 'WORK', '+4021 334 30 25');
