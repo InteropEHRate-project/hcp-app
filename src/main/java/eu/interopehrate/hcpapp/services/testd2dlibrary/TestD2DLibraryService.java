@@ -8,4 +8,8 @@ public interface TestD2DLibraryService {
     void openConnection() throws Exception;
 
     void closeConnection() throws Exception;
+
+    void sendMessageToSEHR() throws Exception;
+
+    void lastSEHRMessage();
 }
