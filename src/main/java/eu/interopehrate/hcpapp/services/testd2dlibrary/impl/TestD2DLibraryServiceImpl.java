@@ -1,5 +1,7 @@
 package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
 import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
@@ -61,14 +63,14 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void sendMessageToSEHR() throws Exception {
-        connectedThread.sendData(this.practitioner(), this.organization());
+        connectedThread.sendData(this.practitioner());
         testD2DLibraryCommand.setSendActionMessage("The details about organization and practitioner was sent to S-EHR.");
         testD2DLibraryCommand.setLastSEHRMessage(null);
     }
 
     @Override
     public void lastSEHRMessage() {
-        testD2DLibraryCommand.setLastSEHRMessage(connectedThread.getLastSentData());
+        testD2DLibraryCommand.setLastSEHRMessage(this.patientToString(connectedThread.getLastSentData()));
         testD2DLibraryCommand.setSendActionMessage(null);
     }
 
@@ -92,8 +94,11 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
         Address address = buildAddressFromEntity(addressEntity);
+        Practitioner.PractitionerQualificationComponent qualification = new Practitioner.PractitionerQualificationComponent();
+        qualification.setIssuerTarget(organization());
 
         return new Practitioner()
+                .setQualification(Collections.singletonList(qualification))
                 .setBirthDate(birthDate)
                 .setName(Collections.singletonList(humanName))
                 .setGender(gender)
@@ -131,5 +136,11 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 .setSystem(ContactPoint.ContactPointSystem.valueOf(contactPointEntity.getType().name()))
                 .setValue(contactPointEntity.getValue())
                 .setUse(ContactPoint.ContactPointUse.valueOf(contactPointEntity.getUse().name()));
+    }
+
+    private String patientToString(Patient patient) {
+        FhirContext fc = FhirContext.forR4();
+        IParser parser = fc.newJsonParser().setPrettyPrint(true);
+        return parser.encodeResourceToString(patient);
     }
 }
