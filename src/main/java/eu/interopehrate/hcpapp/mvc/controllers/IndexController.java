@@ -1,11 +1,11 @@
 package eu.interopehrate.hcpapp.mvc.controllers;
 
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.requestprocessors.BluetoothConnectionInfoBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import eu.interopehrate.hcpapp.mvc.requestprocessors.BluetoothConnectionInfoBuilder;
 
 @Controller
 public class IndexController {
@@ -18,7 +18,7 @@ public class IndexController {
     }
 
     @RequestMapping({"/", "/index"})
-    public String indexTemplate(Model model){
+    public String indexTemplate(Model model) throws Exception {
         IndexCommand indexCommand = new IndexCommand();
         indexCommand.setBluetoothConnectionInfoImage(bluetoothConnectionInfoBuilder.connectionInfoQRCodePng());
         indexCommand.setBluetoothConnectionInfoImageSize(bluetoothConnectionInfoImageSize);
