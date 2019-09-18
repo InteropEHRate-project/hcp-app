@@ -73,8 +73,10 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void lastSEHRMessage() {
-        log.info(connectedThread.getLastSentPatientSummary());
-        testD2DLibraryCommand.setLastSEHRMessage(this.patientToString(connectedThread.getLastSentData()));
+        testD2DLibraryCommand.setLastSEHRMessage(
+                String.join("<br/><br/>",
+                        this.patientToString(connectedThread.getLastSentData()),
+                        connectedThread.getLastSentPatientSummary()));
         testD2DLibraryCommand.setSendActionMessage(null);
     }
 
@@ -144,7 +146,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     private String patientToString(Patient patient) {
         if (Objects.isNull(patient)) {
-            return "No patient received yet";
+            return "no patient received yet";
         }
         FhirContext fc = FhirContext.forR4();
         IParser parser = fc.newJsonParser().setPrettyPrint(true);
