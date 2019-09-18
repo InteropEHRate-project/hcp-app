@@ -13,6 +13,8 @@ import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, DisposableBean {
+    private static final Logger log = LoggerFactory.getLogger(TestD2DLibraryServiceImpl.class);
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
     private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
@@ -70,6 +73,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void lastSEHRMessage() {
+        log.info(connectedThread.getLastSentPatientSummary());
         testD2DLibraryCommand.setLastSEHRMessage(this.patientToString(connectedThread.getLastSentData()));
         testD2DLibraryCommand.setSendActionMessage(null);
     }
@@ -139,6 +143,9 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
     }
 
     private String patientToString(Patient patient) {
+        if (Objects.isNull(patient)) {
+            return "No patient received yet";
+        }
         FhirContext fc = FhirContext.forR4();
         IParser parser = fc.newJsonParser().setPrettyPrint(true);
         return parser.encodeResourceToString(patient);
