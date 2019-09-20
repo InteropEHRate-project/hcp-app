@@ -18,7 +18,7 @@ public class CurrentPatient {
 
     @PostConstruct
     private void postConstruct() throws IOException {
-        File file = new ClassPathResource("fhir/sample-patient-summary.json").getFile();
+        File file = new ClassPathResource("sample-patient-summary.json").getFile();
         String patientSummaryJson = Files.readString(file.toPath());
         patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummaryJson);
     }
