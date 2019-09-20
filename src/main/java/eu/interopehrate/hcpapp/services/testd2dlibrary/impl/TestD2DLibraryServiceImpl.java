@@ -1,5 +1,7 @@
 package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
 import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
@@ -11,6 +13,8 @@ import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, DisposableBean {
+    private static final Logger log = LoggerFactory.getLogger(TestD2DLibraryServiceImpl.class);
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
     private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
@@ -61,14 +66,17 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void sendMessageToSEHR() throws Exception {
-        connectedThread.sendData(this.practitioner(), this.organization());
+        connectedThread.sendData(this.practitioner());
         testD2DLibraryCommand.setSendActionMessage("The details about organization and practitioner was sent to S-EHR.");
         testD2DLibraryCommand.setLastSEHRMessage(null);
     }
 
     @Override
     public void lastSEHRMessage() {
-        testD2DLibraryCommand.setLastSEHRMessage(connectedThread.getLastSentData());
+        testD2DLibraryCommand.setLastSEHRMessage(
+                String.join("<br/><br/>",
+                        this.patientToString(connectedThread.getLastSentData()),
+                        connectedThread.getLastSentPatientSummary()));
         testD2DLibraryCommand.setSendActionMessage(null);
     }
 
@@ -92,8 +100,11 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
         Address address = buildAddressFromEntity(addressEntity);
+        Practitioner.PractitionerQualificationComponent qualification = new Practitioner.PractitionerQualificationComponent();
+        qualification.setIssuerTarget(organization());
 
         return new Practitioner()
+                .setQualification(Collections.singletonList(qualification))
                 .setBirthDate(birthDate)
                 .setName(Collections.singletonList(humanName))
                 .setGender(gender)
@@ -131,5 +142,14 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 .setSystem(ContactPoint.ContactPointSystem.valueOf(contactPointEntity.getType().name()))
                 .setValue(contactPointEntity.getValue())
                 .setUse(ContactPoint.ContactPointUse.valueOf(contactPointEntity.getUse().name()));
+    }
+
+    private String patientToString(Patient patient) {
+        if (Objects.isNull(patient)) {
+            return "no patient received yet";
+        }
+        FhirContext fc = FhirContext.forR4();
+        IParser parser = fc.newJsonParser().setPrettyPrint(true);
+        return parser.encodeResourceToString(patient);
     }
 }
