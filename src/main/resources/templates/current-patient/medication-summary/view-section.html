@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +15,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
 </head>
-
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -26,6 +24,31 @@
         </div>
         <div class="col-9">
             <p><h3>Medication Summary Section</h3></p>
+            <div class="m-5"></div>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th>Code</th>
+                    <th>INN</th>
+                    <th>Manufacturer</th>
+                    <th>Concentration</th>
+                    <th>Dose</th>
+                    <th>Start Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ms : ${medicationSummary.medicationSummaryInfo}">
+                    <td th:text="${{ms.code}}"></td>
+                    <td th:text="${{ms.inn}}"></td>
+                    <td th:text="${{ms.manufacturer}}"></td>
+                    <td th:text="${{ms.concentration}}"></td>
+                    <td th:text="${{ms.dose}}"></td>
+                    <td th:text="${{ms.startDate}}"></td>
+                    <td th:text="${{ms.status}}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
