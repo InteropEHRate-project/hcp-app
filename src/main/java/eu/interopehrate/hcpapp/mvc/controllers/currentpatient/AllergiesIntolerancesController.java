@@ -1,9 +1,9 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
-import eu.interopehrate.hcpapp.mvc.commands.AllergiesIntolerancesCommand;
-import eu.interopehrate.hcpapp.mvc.commands.AllergiesIntolerancesInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergiesIntolerancesCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergiesIntolerancesInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.administration.AllergiesIntolerancesService;
+import eu.interopehrate.hcpapp.services.currentpatient.AllergiesIntolerancesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
-package eu.interopehrate.hcpapp.services.administration;
+package eu.interopehrate.hcpapp.services.currentpatient;
 
-import eu.interopehrate.hcpapp.mvc.commands.AllergiesIntolerancesInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergiesIntolerancesInfoCommand;
 
 import java.util.List;
 

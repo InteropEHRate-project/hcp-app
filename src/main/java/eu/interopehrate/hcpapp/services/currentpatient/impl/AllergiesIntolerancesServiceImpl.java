@@ -1,7 +1,7 @@
-package eu.interopehrate.hcpapp.services.administration.impl;
+package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import eu.interopehrate.hcpapp.mvc.commands.AllergiesIntolerancesInfoCommand;
-import eu.interopehrate.hcpapp.services.administration.AllergiesIntolerancesService;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergiesIntolerancesInfoCommand;
+import eu.interopehrate.hcpapp.services.currentpatient.AllergiesIntolerancesService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

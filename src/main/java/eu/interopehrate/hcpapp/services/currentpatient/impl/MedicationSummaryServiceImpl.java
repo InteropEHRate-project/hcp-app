@@ -1,7 +1,7 @@
-package eu.interopehrate.hcpapp.services.administration.impl;
+package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import eu.interopehrate.hcpapp.mvc.commands.MedicationSummaryInfoCommand;
-import eu.interopehrate.hcpapp.services.administration.MedicationSummaryService;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.MedicationSummaryInfoCommand;
+import eu.interopehrate.hcpapp.services.currentpatient.MedicationSummaryService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
