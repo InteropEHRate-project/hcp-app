@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.converters;
+package eu.interopehrate.hcpapp.converters.entity;
 
 import eu.interopehrate.hcpapp.jpa.entities.SEHRInitialDownloadEntity;
 import eu.interopehrate.hcpapp.mvc.commands.SEHRInitialDownloadCommand;

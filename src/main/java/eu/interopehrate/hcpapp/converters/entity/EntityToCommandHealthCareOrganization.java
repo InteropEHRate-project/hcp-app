@@ -1,6 +1,6 @@
-package eu.interopehrate.hcpapp.converters;
+package eu.interopehrate.hcpapp.converters.entity;
 
-import eu.interopehrate.hcpapp.converters.utils.AddressUtils;
+import eu.interopehrate.hcpapp.converters.entity.utils.AddressUtils;
 import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.ContactPointType;

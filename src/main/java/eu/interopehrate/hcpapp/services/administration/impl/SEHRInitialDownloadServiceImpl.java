@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
-import eu.interopehrate.hcpapp.converters.EntityToCommandSEHRInitialDownload;
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandSEHRInitialDownload;
 import eu.interopehrate.hcpapp.jpa.entities.SEHRInitialDownloadEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.SEHRInitialDownloadRepository;
 import eu.interopehrate.hcpapp.mvc.commands.SEHRInitialDownloadCommand;

@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
-import eu.interopehrate.hcpapp.converters.EntityToCommandHealthCareProfessional;
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandHealthCareProfessional;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.HealthCareProfessionalCommand;

@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.converters.utils;
+package eu.interopehrate.hcpapp.converters.entity.utils;
 
 import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
 import org.springframework.util.CollectionUtils;
