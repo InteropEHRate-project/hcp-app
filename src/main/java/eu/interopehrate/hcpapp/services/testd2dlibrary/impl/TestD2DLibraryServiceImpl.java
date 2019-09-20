@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import eu.interopehrate.hcpapp.currentpatient.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
 import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
@@ -14,31 +13,28 @@ import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, DisposableBean {
-    private static final Logger log = LoggerFactory.getLogger(TestD2DLibraryServiceImpl.class);
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
-    private CurrentPatient currentPatient;
     private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
 
     public TestD2DLibraryServiceImpl(HealthCareProfessionalRepository healthCareProfessionalRepository,
-                                     HealthCareOrganizationRepository healthCareOrganizationRepository,
-                                     CurrentPatient currentPatient) {
+                                     HealthCareOrganizationRepository healthCareOrganizationRepository) {
         this.healthCareProfessionalRepository = healthCareProfessionalRepository;
         this.healthCareOrganizationRepository = healthCareOrganizationRepository;
-        this.currentPatient = currentPatient;
     }
 
     @Override
@@ -53,7 +49,6 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
         testD2DLibraryCommand.setOn(Boolean.TRUE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
-        currentPatient.remove();
     }
 
     @Override
@@ -64,7 +59,6 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
         testD2DLibraryCommand.setOn(Boolean.FALSE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
-        currentPatient.remove();
     }
 
     @Override
@@ -80,10 +74,6 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 String.join("<br/><br/>",
                         this.patientToString(connectedThread.getLastSentData()),
                         connectedThread.getLastSentPatientSummary()));
-
-        Optional<Composition> ipsComposition = this.patientSummaryComposition(connectedThread.getLastSentPatientSummary());
-        ipsComposition.ifPresent(ips -> currentPatient.setPatientSummary(ips));
-
         testD2DLibraryCommand.setSendActionMessage(null);
     }
 
@@ -158,15 +148,5 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
         FhirContext fc = FhirContext.forR4();
         IParser parser = fc.newJsonParser().setPrettyPrint(true);
         return parser.encodeResourceToString(patient);
-    }
-
-    private Optional<Composition> patientSummaryComposition(String patientSummary) {
-        Composition composition = null;
-        try {
-            composition = (Composition) FhirContext.forR4().newJsonParser().parseResource(patientSummary);
-        } catch (Exception e) {
-            log.error(String.format("Error parsing patient summary (invalid JSON String) - %s", patientSummary), e);
-        }
-        return Optional.ofNullable(composition);
     }
 }
