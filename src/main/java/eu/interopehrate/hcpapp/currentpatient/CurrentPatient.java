@@ -1,27 +1,29 @@
 package eu.interopehrate.hcpapp.currentpatient;
 
-import org.hl7.fhir.r4.model.Composition;
+import ca.uhn.fhir.context.FhirContext;
+import org.hl7.fhir.r4.model.AllergyIntolerance;
+import org.hl7.fhir.r4.model.Bundle;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 @Component
 public class CurrentPatient {
-    private Composition patientSummary;
+    private Bundle patientSummaryBundle;
 
-    public Boolean exists() {
-        return Objects.nonNull(patientSummary);
+    @PostConstruct
+    private void postConstruct() throws IOException {
+        File file = new ClassPathResource("fhir/sample-patient-summary.json").getFile();
+        String patientSummaryJson = Files.readString(file.toPath());
+        patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummaryJson);
     }
 
-    public void remove() {
-        this.setPatientSummary(null);
-    }
-
-    public void setPatientSummary(Composition patientSummary) {
-        this.patientSummary = patientSummary;
-    }
-
-    public Composition getPatientSummary() {
-        return patientSummary;
+    public List<AllergyIntolerance> allergyIntoleranceList() {
+        return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
     }
 }
