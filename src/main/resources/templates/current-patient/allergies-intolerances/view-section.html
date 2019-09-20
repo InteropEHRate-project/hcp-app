@@ -39,7 +39,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="ai : ${allergiesIntolerances.allergiesIntolerancesInfo}">
+                <tr th:each="ai : ${allergyIntolerance.allergyIntoleranceInfo}">
                     <td th:text="${{ai.identifier}}"></td>
                     <td th:text="${{ai.name}}"></td>
                     <td th:text="${{ai.clinicalStatus}}"></td>
