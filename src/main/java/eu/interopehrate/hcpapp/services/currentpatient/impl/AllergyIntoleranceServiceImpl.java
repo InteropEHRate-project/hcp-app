@@ -21,7 +21,7 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
     }
 
     @Override
-    public List<AllergyIntoleranceInfoCommand> allergiesIntolerancesSection() {
+    public List<AllergyIntoleranceInfoCommand> allergyIntoleranceSection() {
         return currentPatient.allergyIntoleranceList()
                 .stream()
                 .map(hapiToCommandAllergyIntolerance::convert)

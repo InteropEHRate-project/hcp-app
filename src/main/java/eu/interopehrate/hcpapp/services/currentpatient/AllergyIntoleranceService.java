@@ -5,5 +5,5 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInf
 import java.util.List;
 
 public interface AllergyIntoleranceService {
-    List<AllergyIntoleranceInfoCommand> allergiesIntolerancesSection();
+    List<AllergyIntoleranceInfoCommand> allergyIntoleranceSection();
 }
