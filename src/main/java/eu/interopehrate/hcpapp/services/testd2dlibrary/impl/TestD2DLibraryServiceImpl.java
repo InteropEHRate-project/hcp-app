@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.currentpatient.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
 import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
@@ -30,11 +31,14 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
     private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
+    private CurrentPatient currentPatient;
 
     public TestD2DLibraryServiceImpl(HealthCareProfessionalRepository healthCareProfessionalRepository,
-                                     HealthCareOrganizationRepository healthCareOrganizationRepository) {
+                                     HealthCareOrganizationRepository healthCareOrganizationRepository,
+                                     CurrentPatient currentPatient) {
         this.healthCareProfessionalRepository = healthCareProfessionalRepository;
         this.healthCareOrganizationRepository = healthCareOrganizationRepository;
+        this.currentPatient = currentPatient;
     }
 
     @Override
@@ -49,6 +53,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
         testD2DLibraryCommand.setOn(Boolean.TRUE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
+        currentPatient.reset();
     }
 
     @Override
@@ -59,21 +64,26 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
         testD2DLibraryCommand.setOn(Boolean.FALSE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
+        currentPatient.reset();
     }
 
     @Override
     public void sendMessageToSEHR() throws Exception {
         connectedThread.sendData(this.practitioner());
         testD2DLibraryCommand.setSendActionMessage("The details about organization and practitioner was sent to S-EHR.");
-        testD2DLibraryCommand.setLastSEHRMessage(null);
     }
 
     @Override
     public void lastSEHRMessage() {
+        String lastSentPatientSummary = connectedThread.getLastSentPatientSummary();
+        if (lastSentPatientSummary.contains("{")) {
+            lastSentPatientSummary = lastSentPatientSummary.substring(lastSentPatientSummary.indexOf("{"));
+            currentPatient.intiFromJsonString(lastSentPatientSummary);
+        }
         testD2DLibraryCommand.setLastSEHRMessage(
                 String.join("<br/><br/>",
                         this.patientToString(connectedThread.getLastSentData()),
-                        connectedThread.getLastSentPatientSummary()));
+                        lastSentPatientSummary));
         testD2DLibraryCommand.setSendActionMessage(null);
     }
 
