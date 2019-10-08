@@ -16,6 +16,7 @@ import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
 
 import java.time.ZoneId;
 import java.util.Collections;
@@ -109,8 +110,12 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
         Address address = buildAddressFromEntity(addressEntity);
         Practitioner.PractitionerQualificationComponent qualification = new Practitioner.PractitionerQualificationComponent();
         qualification.setIssuerTarget(organization());
+        Attachment photo = new Attachment()
+                .setContentType(MimeTypeUtils.IMAGE_PNG_VALUE)
+                .setData(healthCareProfessionalEntity.getPicture());
 
         return new Practitioner()
+                .setPhoto(Collections.singletonList(photo))
                 .setQualification(Collections.singletonList(qualification))
                 .setBirthDate(birthDate)
                 .setName(Collections.singletonList(humanName))
