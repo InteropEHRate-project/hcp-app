@@ -30,6 +30,8 @@ public class PersonEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "BIRTH_DATE")
     private LocalDate birthDate;
+    @Lob
+    private byte[] picture;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "PERSON_ADDRESS",
             joinColumns = @JoinColumn(name = "person_id"),
