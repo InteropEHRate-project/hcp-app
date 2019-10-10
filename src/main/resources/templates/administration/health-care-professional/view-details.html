@@ -32,6 +32,10 @@
                                 <h5 th:text="#{template.administration.health.care.professional.title}">Practitioner</h5>
                             </div>
                             <div class="card-body">
+                                <div class="text-center">
+                                    <img src="..." th:src="${healthCareProfessional.picture}" alt="available at runtime" height="130" width="110"/>
+                                </div>
+
                                 <h5 class="card-title" th:text="#{template.administration.health.care.professional.card.body.title.first.name}">First Name</h5>
                                 <p class="card-text" th:text="${healthCareProfessional.firstName}">First name</p>
 
@@ -46,7 +50,6 @@
 
                                 <h5 class="card-title" th:text="#{template.administration.health.care.professional.card.body.title.address}">Address</h5>
                                 <p class="card-text" th:text="${healthCareProfessional.address}">Address</p>
-
                             </div>
                         </div>
                     </div>
