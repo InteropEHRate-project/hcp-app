@@ -3,10 +3,7 @@ package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.currentpatient.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
-import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
-import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
-import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
+import eu.interopehrate.hcpapp.jpa.entities.*;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareOrganizationRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.TestD2DLibraryCommand;
@@ -109,6 +106,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 .toInstant());
         Address address = buildAddressFromEntity(addressEntity);
         Practitioner.PractitionerQualificationComponent qualification = new Practitioner.PractitionerQualificationComponent();
+        qualification.setCode(this.buildQualificationCode(healthCareProfessionalEntity.getOccupation()));
         qualification.setIssuerTarget(organization());
         Attachment photo = new Attachment()
                 .setContentType(MimeTypeUtils.IMAGE_PNG_VALUE)
@@ -154,6 +152,11 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
                 .setSystem(ContactPoint.ContactPointSystem.valueOf(contactPointEntity.getType().name()))
                 .setValue(contactPointEntity.getValue())
                 .setUse(ContactPoint.ContactPointUse.valueOf(contactPointEntity.getUse().name()));
+    }
+
+    private CodeableConcept buildQualificationCode(HealthCareOccupationEntity healthCareOccupationEntity) {
+        return new CodeableConcept()
+                .setText(healthCareOccupationEntity.getName());
     }
 
     private String patientToString(Patient patient) {
