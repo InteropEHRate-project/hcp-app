@@ -2,16 +2,14 @@ package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.*;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareOrganizationRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.TestD2DLibraryCommand;
 import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
-import eu.interopehrate.td2de.BluetoothConnection;
-import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.*;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
@@ -23,20 +21,21 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, DisposableBean {
+public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
-    private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
-    private BluetoothConnection bluetoothConnection;
-    private ConnectedThread connectedThread;
     private CurrentPatient currentPatient;
+    private CurrentD2DConnection currentD2DConnection;
+    private TestD2DLibraryCommand testD2DLibraryCommand = new TestD2DLibraryCommand();
 
     public TestD2DLibraryServiceImpl(HealthCareProfessionalRepository healthCareProfessionalRepository,
                                      HealthCareOrganizationRepository healthCareOrganizationRepository,
-                                     CurrentPatient currentPatient) {
+                                     CurrentPatient currentPatient,
+                                     CurrentD2DConnection currentD2DConnection) {
         this.healthCareProfessionalRepository = healthCareProfessionalRepository;
         this.healthCareOrganizationRepository = healthCareOrganizationRepository;
         this.currentPatient = currentPatient;
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
@@ -46,8 +45,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void openConnection() throws Exception {
-        bluetoothConnection = new BluetoothConnection();
-        connectedThread = bluetoothConnection.startListening();
+        currentD2DConnection.open();
         testD2DLibraryCommand.setOn(Boolean.TRUE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
@@ -56,9 +54,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void closeConnection() throws Exception {
-        bluetoothConnection.closeConnection();
-        bluetoothConnection = null;
-        connectedThread = null;
+        currentD2DConnection.close();
         testD2DLibraryCommand.setOn(Boolean.FALSE);
         testD2DLibraryCommand.setLastSEHRMessage(null);
         testD2DLibraryCommand.setSendActionMessage(null);
@@ -67,29 +63,22 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService, Disposa
 
     @Override
     public void sendMessageToSEHR() throws Exception {
-        connectedThread.sendData(this.practitioner());
+        currentD2DConnection.sendPractitioner(this.practitioner());
         testD2DLibraryCommand.setSendActionMessage("The details about organization and practitioner was sent to S-EHR.");
     }
 
     @Override
     public void lastSEHRMessage() {
-        String lastSentPatientSummary = connectedThread.getLastSentPatientSummary();
+        String lastSentPatientSummary = currentD2DConnection.lastPatientSummary();
         if (lastSentPatientSummary.contains("{")) {
             lastSentPatientSummary = lastSentPatientSummary.substring(lastSentPatientSummary.indexOf("{"));
             currentPatient.intiFromJsonString(lastSentPatientSummary);
         }
         testD2DLibraryCommand.setLastSEHRMessage(
                 String.join("<br/><br/>",
-                        this.patientToString(connectedThread.getLastSentData()),
+                        this.patientToString(currentD2DConnection.lastPatient()),
                         lastSentPatientSummary));
         testD2DLibraryCommand.setSendActionMessage(null);
-    }
-
-    @Override
-    public void destroy() throws Exception {
-        if (Objects.nonNull(bluetoothConnection)) {
-            this.closeConnection();
-        }
     }
 
     private Practitioner practitioner() {
