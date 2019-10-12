@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.services.testd2dlibrary.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import eu.interopehrate.hcpapp.currentpatient.CurrentPatient;
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.*;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareOrganizationRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;

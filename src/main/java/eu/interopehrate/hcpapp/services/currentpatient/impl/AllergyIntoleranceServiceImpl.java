@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergyIntolerance;
-import eu.interopehrate.hcpapp.currentpatient.CurrentPatient;
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
 import org.springframework.stereotype.Service;

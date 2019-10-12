@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.currentpatient;
+package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
 import org.hl7.fhir.r4.model.*;
