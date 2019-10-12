@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.requestprocessors;
 
-import eu.interopehrate.hcpapp.services.BluetoothConnectionService;
+import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;

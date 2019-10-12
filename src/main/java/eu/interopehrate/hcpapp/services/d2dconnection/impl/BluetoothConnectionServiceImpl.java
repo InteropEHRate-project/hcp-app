@@ -1,11 +1,11 @@
-package eu.interopehrate.hcpapp.services.impl;
+package eu.interopehrate.hcpapp.services.d2dconnection.impl;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import eu.interopehrate.hcpapp.services.BluetoothConnectionService;
+import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
