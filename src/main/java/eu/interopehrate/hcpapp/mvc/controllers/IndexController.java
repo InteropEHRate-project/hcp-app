@@ -18,4 +18,16 @@ public class IndexController {
         model.addAttribute("index", indexService.d2dConnectionState());
         return TemplateNames.INDEX_TEMPLATE;
     }
+
+    @RequestMapping("/index/open-connection")
+    public String openConnection() {
+        indexService.openConnection();
+        return "redirect:/index";
+    }
+
+    @RequestMapping("/index/close-connection")
+    public String closeConnection() {
+        indexService.closeConnection();
+        return "redirect:/index";
+    }
 }

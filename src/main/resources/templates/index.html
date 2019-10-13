@@ -25,14 +25,31 @@
         <p th:text="${exception}">Exception</p>
     </div>
     <div th:if="${exception == null}">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h3 class="mt-5">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
+        <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}" class="m-3">
+            <div class="row justify-content-center">
+                <h3 class="mt-5">Press the button to put the application in connection mode.</h3>
+            </div>
+            <div class="row justify-content-center">
+                <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}" th:href="@{/index/open-connection}">Open connection</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
+        <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}" class="m-3">
+            <div class="row justify-content-center">
+                <h3 class="mt-5">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
+            </div>
+            <div class="row justify-content-center">
                 <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime" height="10" th:height="${index.bluetoothConnectionInfoImageSize}" width="10" th:width="${index.bluetoothConnectionInfoImageSize}"/>
+            </div>
+            <div class="row justify-content-center">
+                <a href="#" class="btn btn-primary" th:text="#{template.index.button.discard.connection}" th:href="@{/index/close-connection}">Discard</a>
+            </div>
+        </div>
+        <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
+            <div class="row justify-content-center">
+                <h3 class="mt-5">Connected</h3>
+            </div>
+            <div class="row justify-content-center">
+                <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}" th:href="@{/index/close-connection}">Close connection</a>
             </div>
         </div>
     </div>
