@@ -1,7 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.testd2dlibrary.advice;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.mvc.controllers.testd2dlibrary.ConnectionController;
 import eu.interopehrate.hcpapp.mvc.controllers.testd2dlibrary.ExchangeInformationController;
 import eu.interopehrate.hcpapp.mvc.controllers.testd2dlibrary.TestD2DLibraryController;
 import eu.interopehrate.hcpapp.services.testd2dlibrary.TestD2DLibraryService;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice(assignableTypes = {
         TestD2DLibraryController.class,
-        ExchangeInformationController.class,
-        ConnectionController.class})
+        ExchangeInformationController.class
+})
 public class TestD2DLibraryControllersAdvice {
     private static final Logger log = LoggerFactory.getLogger(TestD2DLibraryControllersAdvice.class);
     private TestD2DLibraryService testD2DLibraryService;

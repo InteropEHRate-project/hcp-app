@@ -40,25 +40,18 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
 
     @Override
     public TestD2DLibraryCommand currentState() {
+        switch (currentD2DConnection.connectionState()) {
+            case PENDING_DEVICE:
+            case OFF:
+                testD2DLibraryCommand.setOn(Boolean.FALSE);
+                break;
+            case ON:
+                testD2DLibraryCommand.setOn(Boolean.TRUE);
+                break;
+            default:
+                throw new RuntimeException("No such state");
+        }
         return this.testD2DLibraryCommand;
-    }
-
-    @Override
-    public void openConnection() throws Exception {
-        currentD2DConnection.open();
-        testD2DLibraryCommand.setOn(Boolean.TRUE);
-        testD2DLibraryCommand.setLastSEHRMessage(null);
-        testD2DLibraryCommand.setSendActionMessage(null);
-        currentPatient.reset();
-    }
-
-    @Override
-    public void closeConnection() throws Exception {
-        currentD2DConnection.close();
-        testD2DLibraryCommand.setOn(Boolean.FALSE);
-        testD2DLibraryCommand.setLastSEHRMessage(null);
-        testD2DLibraryCommand.setSendActionMessage(null);
-        currentPatient.reset();
     }
 
     @Override

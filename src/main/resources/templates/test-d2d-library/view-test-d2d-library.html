@@ -23,15 +23,8 @@
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>
-    <div class="m-3" th:unless="${testD2DLibraryCommand.getOn()}">
-        <div class="row justify-content-center">
-            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/connection/open}">Open connection</a>
-        </div>
-    </div>
-    <div class="m-3" th:if="${testD2DLibraryCommand.getOn()}">
-        <div class="row justify-content-center">
-            <a href="#" class="btn btn-primary" th:href="@{/test-d2d-library/connection/close}">Close connection</a>
-        </div>
+    <div class="row justify-content-center" th:unless="${testD2DLibraryCommand.getOn()}">
+        <h3 class="mt-5">No device connected.</h3>
     </div>
     <div class="row" th:if="${testD2DLibraryCommand.getOn()}">
         <div class="col-sm-6">
