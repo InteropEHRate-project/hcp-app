@@ -9,11 +9,6 @@ function EventSubscriber() {
                 document.location.reload();
             }
         });
-
-        this.source.onerror = function () {
-            this.close();
-        };
-
     };
 
     this.stop = function () {
