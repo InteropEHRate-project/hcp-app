@@ -74,7 +74,6 @@ public class CurrentD2DConnection implements DisposableBean {
 
     private void closeConnection() {
         try {
-            //todo  - add an issue to uprc for introducing a metohod for aborting the connection
             if (Objects.nonNull(connectedThread)) {
                 this.bluetoothConnection.closeConnection();
             }
