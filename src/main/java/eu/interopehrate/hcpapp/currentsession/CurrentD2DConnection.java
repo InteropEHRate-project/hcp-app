@@ -1,10 +1,12 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,9 +15,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 public class CurrentD2DConnection implements DisposableBean {
+    private final ApplicationEventPublisher eventPublisher;
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
+
+    public CurrentD2DConnection(ApplicationEventPublisher eventPublisher) {
+        this.eventPublisher = eventPublisher;
+    }
 
     @Override
     public void destroy() {
@@ -66,6 +73,7 @@ public class CurrentD2DConnection implements DisposableBean {
             bluetoothConnection = new BluetoothConnection();
             connectedThread = bluetoothConnection.startListening();
             this.connectionState = D2DConnectionState.ON;
+            this.publishBTConnectionEstablished();
         } catch (IOException e) {
             this.connectionState = D2DConnectionState.OFF;
             throw new RuntimeException(e);
@@ -83,5 +91,10 @@ public class CurrentD2DConnection implements DisposableBean {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void publishBTConnectionEstablished() {
+        D2DConnectionSseCommand d2DConnectionSseCommand = new D2DConnectionSseCommand(D2DConnectionSseCommand.SseCommandAction.RELOAD_PAGE, "");
+        this.eventPublisher.publishEvent(d2DConnectionSseCommand);
     }
 }
