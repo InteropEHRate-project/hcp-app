@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.8.RELEASE</version>
+        <version>2.2.0.RELEASE</version>
         <relativePath/>
     </parent>
     <groupId>eu.interopehrate.hcpapp</groupId>
@@ -15,7 +15,7 @@
     <description>Reference HCP application</description>
 
     <properties>
-        <java.version>12</java.version>
+        <java.version>13</java.version>
         <hapi.fhir.version>3.8.0</hapi.fhir.version>
     </properties>
 
