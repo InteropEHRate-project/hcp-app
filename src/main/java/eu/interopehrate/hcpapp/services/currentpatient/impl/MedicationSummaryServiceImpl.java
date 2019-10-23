@@ -21,15 +21,6 @@ public class MedicationSummaryServiceImpl implements MedicationSummaryService {
         summaryCommand1.setStartDate("16/10/2016");
         summaryCommand1.setStatus("Active");
 
-        MedicationSummaryInfoCommand summaryCommand2 = new MedicationSummaryInfoCommand();
-        summaryCommand2.setCode("02C01BB");
-        summaryCommand2.setInn("Mexiletina");
-        summaryCommand2.setManufacturer("Mexitil");
-        summaryCommand2.setConcentration("100mg");
-        summaryCommand2.setDose("1cps x day");
-        summaryCommand2.setStartDate("16/10/2017");
-        summaryCommand2.setStatus("Active");
-
-        return Arrays.asList(summaryCommand1, summaryCommand2);
+        return Arrays.asList(summaryCommand1);
     }
 }

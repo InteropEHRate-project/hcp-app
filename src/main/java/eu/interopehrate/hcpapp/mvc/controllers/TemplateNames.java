@@ -10,6 +10,7 @@ public interface TemplateNames {
 
     // Current Patient
     String CURRENT_PATIENT_MEDICATION_SUMMARY_VIEW_SECTION = "current-patient/medication-summary/view-section";
+    String CURRENT_PATIENT_MEDICATION_SUMMARY_ADD_PAGE = "current-patient/medication-summary/add-info";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION = "current-patient/allergies-intolerances/view-section";
     String CURRENT_PATIENT_PROBLEMS_VIEW_SECTION = "current-patient/problems/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_VIEW_SECTION = "current-patient/history-procedure/view-section";

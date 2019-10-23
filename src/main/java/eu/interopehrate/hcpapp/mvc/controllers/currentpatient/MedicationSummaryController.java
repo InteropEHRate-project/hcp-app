@@ -27,4 +27,16 @@ public class MedicationSummaryController {
         model.addAttribute("medicationSummary", new MedicationSummaryCommand(medicationSummaryInfo));
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_VIEW_SECTION;
     }
+
+    @GetMapping
+    @RequestMapping("/open-add-page")
+    public String openAddPage() {
+        return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_ADD_PAGE;
+    }
+
+    @GetMapping
+    @RequestMapping("/save-add")
+    public String saveAdd() {
+        return "redirect:/current-patient/medication-summary/view-section";
+    }
 }
