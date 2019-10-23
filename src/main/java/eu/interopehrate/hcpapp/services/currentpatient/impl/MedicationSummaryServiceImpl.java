@@ -4,6 +4,8 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.MedicationSummaryInfo
 import eu.interopehrate.hcpapp.services.currentpatient.MedicationSummaryService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class MedicationSummaryServiceImpl implements MedicationSummaryService {
         summaryCommand1.setManufacturer("Mexitil");
         summaryCommand1.setConcentration("200mg");
         summaryCommand1.setDose("1cps x day");
-        summaryCommand1.setStartDate("16/10/2016");
+        summaryCommand1.setStartDate(LocalDate.of(2018, Month.APRIL, 2));
         summaryCommand1.setStatus("Active");
 
         return Arrays.asList(summaryCommand1);

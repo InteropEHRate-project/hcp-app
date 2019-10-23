@@ -44,7 +44,7 @@
                     <td th:text="${{ms.manufacturer}}"></td>
                     <td th:text="${{ms.concentration}}"></td>
                     <td th:text="${{ms.dose}}"></td>
-                    <td th:text="${{ms.startDate}}"></td>
+                    <td th:text="${{#temporals.format(ms.startDate, 'dd-MM-yyyy')}}"></td>
                     <td th:text="${{ms.status}}"></td>
                 </tr>
                 </tbody>
