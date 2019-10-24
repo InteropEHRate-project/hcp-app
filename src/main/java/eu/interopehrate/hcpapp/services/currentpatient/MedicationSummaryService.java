@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface MedicationSummaryService {
     List<MedicationSummaryInfoCommand> medicationSummarySection();
+
+    void insertMedicationSummary(MedicationSummaryInfoCommand medicationSummaryInfoCommand);
 }
