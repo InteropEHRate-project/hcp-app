@@ -7,6 +7,8 @@ import eu.interopehrate.hcpapp.services.currentpatient.MedicationSummaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -30,13 +32,15 @@ public class MedicationSummaryController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage() {
+    public String openAddPage(Model model) {
+        model.addAttribute("medicationSummaryInfoCommand", new MedicationSummaryInfoCommand());
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_ADD_PAGE;
     }
 
-    @GetMapping
+    @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd() {
+    public String saveAdd(@ModelAttribute MedicationSummaryInfoCommand medicationSummaryInfoCommand) {
+        medicationSummaryService.insertMedicationSummary(medicationSummaryInfoCommand);
         return "redirect:/current-patient/medication-summary/view-section";
     }
 }
