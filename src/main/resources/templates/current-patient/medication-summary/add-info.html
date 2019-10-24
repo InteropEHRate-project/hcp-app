@@ -10,12 +10,16 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          th:href="@{/webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
-
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -27,47 +31,54 @@
             <div class="m-3"></div>
             <h2>Add Medication Summary</h2>
             <div class="m-5"></div>
-            <form>
+            <form  action="#" th:action="@{/current-patient/medication-summary/save-add}" th:object="${medicationSummaryInfoCommand}" method="post">
                 <div class="row">
                     <div class="col">
                         <label for="code">Code</label>
-                        <input id="code" type="text" class="form-control"/>
+                        <input id="code" type="text" class="form-control" th:field="*{code}"/>
                     </div>
                     <div class="col">
                         <label for="inn">INN</label>
-                        <input id="inn" type="text" class="form-control">
+                        <input id="inn" type="text" class="form-control" th:field="*{inn}">
                     </div>
                     <div class="col">
                         <label for="manufacturer">Manufacturer</label><br>
-                        <input id="manufacturer" type="text" class="form-control">
+                        <input id="manufacturer" type="text" class="form-control" th:field="*{manufacturer}">
                     </div>
                     <div class="m-2"></div>
                     <div class="row">
                         <div class="m-2"></div>
                         <div class="col"><br>
                             <label for="concentration">Concentration</label><br>
-                            <input id="concentration" type="text" class="form-control">
+                            <input id="concentration" type="text" class="form-control" th:field="*{concentration}">
                         </div>
                         <div class="col"><br>
                             <label for="dose">Dose</label> <br>
-                            <input id="dose" type="text" class="form-control">
+                            <input id="dose" type="text" class="form-control" th:field="*{dose}">
                         </div>
                         <div class="col"><br>
                             <label for="start-date">Start date</label><br>
-                            <input id="start-date" type="text" class="form-control">
+                            <input id="start-date" type="text" class="form-control" readonly th:field="*{startDate}"/>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#start-date').datetimepicker({
+                                        format: 'dd-m-yyyy',
+                                        minView: "month"
+                                    });
+                                });
+                            </script>
                         </div>
                         <div class="col"><br>
                             <label for="status">Status</label><br>
-                            <select id="status" class="form-control">
-                                <option>Active</option>
-                                <option>Inactive</option>
+                            <select th:field="*{status}" id="status" class="form-control">
+                                <option th:value="Active" th:text="Active"></option>
+                                <option th:value="Inactive" th:text="Inactive"></option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="m-2"></div>
                 <div class="text-right"><br>
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/save-add}">Save</a>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
