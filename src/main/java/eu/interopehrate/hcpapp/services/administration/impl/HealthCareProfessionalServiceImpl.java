@@ -3,7 +3,7 @@ package eu.interopehrate.hcpapp.services.administration.impl;
 import eu.interopehrate.hcpapp.converters.entity.EntityToCommandHealthCareProfessional;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
-import eu.interopehrate.hcpapp.mvc.commands.HealthCareProfessionalCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

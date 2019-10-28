@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands;
+package eu.interopehrate.hcpapp.mvc.commands.administration;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.administration;
 
-import eu.interopehrate.hcpapp.mvc.commands.SEHRInitialDownloadCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.SEHRInitialDownloadCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.administration.SEHRInitialDownloadService;
 import org.springframework.stereotype.Controller;

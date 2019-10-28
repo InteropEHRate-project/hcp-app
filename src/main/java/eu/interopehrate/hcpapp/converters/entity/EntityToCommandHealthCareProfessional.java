@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.converters.entity;
 
 import eu.interopehrate.hcpapp.converters.entity.utils.AddressUtils;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
-import eu.interopehrate.hcpapp.mvc.commands.HealthCareProfessionalCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

@@ -4,7 +4,7 @@ import eu.interopehrate.hcpapp.converters.entity.utils.AddressUtils;
 import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.ContactPointType;
-import eu.interopehrate.hcpapp.mvc.commands.HealthCareOrganizationCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareOrganizationCommand;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

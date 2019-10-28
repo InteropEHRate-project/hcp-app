@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.converters.entity;
 
 import eu.interopehrate.hcpapp.jpa.entities.SEHRInitialDownloadEntity;
-import eu.interopehrate.hcpapp.mvc.commands.SEHRInitialDownloadCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.SEHRInitialDownloadCommand;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

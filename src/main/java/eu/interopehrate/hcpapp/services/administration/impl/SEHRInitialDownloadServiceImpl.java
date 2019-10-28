@@ -3,7 +3,7 @@ package eu.interopehrate.hcpapp.services.administration.impl;
 import eu.interopehrate.hcpapp.converters.entity.EntityToCommandSEHRInitialDownload;
 import eu.interopehrate.hcpapp.jpa.entities.SEHRInitialDownloadEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.SEHRInitialDownloadRepository;
-import eu.interopehrate.hcpapp.mvc.commands.SEHRInitialDownloadCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.SEHRInitialDownloadCommand;
 import eu.interopehrate.hcpapp.services.administration.SEHRInitialDownloadService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

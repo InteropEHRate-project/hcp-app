@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
-import eu.interopehrate.hcpapp.mvc.commands.AuditInformationCommand;
+import eu.interopehrate.hcpapp.mvc.commands.administration.AuditInformationCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import org.springframework.stereotype.Service;
 

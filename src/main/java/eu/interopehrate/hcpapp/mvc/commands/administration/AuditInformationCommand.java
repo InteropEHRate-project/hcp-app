@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands;
+package eu.interopehrate.hcpapp.mvc.commands.administration;
 
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import lombok.Getter;
