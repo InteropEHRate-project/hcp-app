@@ -1,27 +1,15 @@
 package eu.interopehrate.hcpapp.mvc.commands;
 
-import eu.interopehrate.hcpapp.jpa.entities.enums.EventType;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class AuditInformationCommand{
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate eventDateTime;
-    private EventType type;
-    private String eventDescription;
-
-    private List<AuditInformationCommand> auditInformationCommands;
-
-    public AuditInformationCommand(List<AuditInformationCommand> auditInformationCommand) {
-        this.auditInformationCommands=auditInformationCommand;
-    }
-
-    public AuditInformationCommand() {
-    }
+public class AuditInformationCommand {
+    private LocalDateTime dateTime;
+    private AuditEventType type;
+    private String details;
 }
