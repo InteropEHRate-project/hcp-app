@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AuditInformationCommand<type> {
+public class AuditInformationCommand{
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate eventDateTime;
     private EventType type;
