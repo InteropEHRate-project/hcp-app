@@ -32,48 +32,84 @@
             <h2>Add Medication Summary</h2>
             <div class="m-5"></div>
             <form  action="#" th:action="@{/current-patient/medication-summary/save-add}" th:object="${medicationSummaryInfoCommand}" method="post">
-                <div class="row">
-                    <div class="col">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please correct the errors below</p>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4">
                         <label for="code">Code</label>
-                        <input id="code" type="text" class="form-control" th:field="*{code}"/>
+                        <input id="code" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{code}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('code')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('code')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-4">
                         <label for="inn">INN</label>
-                        <input id="inn" type="text" class="form-control" th:field="*{inn}">
-                    </div>
-                    <div class="col">
-                        <label for="manufacturer">Manufacturer</label><br>
-                        <input id="manufacturer" type="text" class="form-control" th:field="*{manufacturer}">
-                    </div>
-                    <div class="m-2"></div>
-                    <div class="row">
-                        <div class="m-2"></div>
-                        <div class="col"><br>
-                            <label for="concentration">Concentration</label><br>
-                            <input id="concentration" type="text" class="form-control" th:field="*{concentration}">
+                        <input id="inn" type="text" class="form-control" th:classappend="${#fields.hasErrors('inn')} ? 'is-invalid' :''" th:field="*{inn}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('inn')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('inn')}" th:text="${err}">err</li>
+                            </ul>
                         </div>
-                        <div class="col"><br>
-                            <label for="dose">Dose</label> <br>
-                            <input id="dose" type="text" class="form-control" th:field="*{dose}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="manufacturer">Manufacturer</label>
+                        <input id="manufacturer" type="text" class="form-control" th:classappend="${#fields.hasErrors('manufacturer')} ? 'is-invalid' :''" th:field="*{manufacturer}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('manufacturer')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('manufacturer')}" th:text="${err}">err</li>
+                            </ul>
                         </div>
-                        <div class="col"><br>
-                            <label for="start-date">Start date</label><br>
-                            <input id="start-date" type="text" class="form-control" readonly th:field="*{startDate}"/>
-                            <script type="text/javascript">
-                                $(function () {
-                                    $('#start-date').datetimepicker({
-                                        format: 'dd-m-yyyy',
-                                        minView: "month"
-                                    });
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for="concentration">Concentration</label>
+                        <input id="concentration" type="text" class="form-control" th:classappend="${#fields.hasErrors('concentration')} ? 'is-invalid' :''" th:field="*{concentration}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('concentration')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('concentration')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="dose">Dose</label>
+                        <input id="dose" type="text" class="form-control" th:classappend="${#fields.hasErrors('dose')} ? 'is-invalid' :''" th:field="*{dose}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('dose')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('dose')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="start-date">Start date</label>
+                        <input id="start-date" type="text" class="form-control" th:classappend="${#fields.hasErrors('startDate')} ? 'is-invalid' :''" readonly th:field="*{startDate}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('startDate')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#start-date').datetimepicker({
+                                    format: 'dd-m-yyyy',
+                                    minView: "month"
                                 });
-                            </script>
-                        </div>
-                        <div class="col"><br>
-                            <label for="status">Status</label><br>
-                            <select th:field="*{status}" id="status" class="form-control">
-                                <option th:value="Active" th:text="Active"></option>
-                                <option th:value="Inactive" th:text="Inactive"></option>
-                            </select>
+                            });
+                        </script>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="status">Status</label>
+                        <select th:field="*{status}" id="status" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''">
+                            <option th:value="Active" th:text="Active"></option>
+                            <option th:value="Inactive" th:text="Inactive"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('status')}" th:text="${err}">err</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
