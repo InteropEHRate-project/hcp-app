@@ -5,8 +5,11 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInf
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -26,5 +29,18 @@ public class AllergyIntoleranceController {
         List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfo = allergyIntoleranceService.allergyIntoleranceSection();
         model.addAttribute("allergyIntolerance", new AllergyIntoleranceCommand(allergyIntoleranceInfo));
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION;
+    }
+    @GetMapping
+    @RequestMapping("/open-add-page")
+    public String openAddPage(Model model) {
+        model.addAttribute("allergiesIntolerancesInfoCommand", new AllergyIntoleranceInfoCommand());
+        return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE;
+    }
+
+    @PostMapping
+    @RequestMapping("/save-add")
+    public String saveAdd(@ModelAttribute AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand) {
+        allergyIntoleranceService.insertAllergiesIntolerances(allergyIntoleranceInfoCommand);
+        return "redirect:/current-patient/allergies-intolerances/view-section";
     }
 }

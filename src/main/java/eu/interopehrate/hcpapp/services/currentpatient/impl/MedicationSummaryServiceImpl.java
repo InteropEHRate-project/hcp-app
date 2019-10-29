@@ -23,7 +23,6 @@ public class MedicationSummaryServiceImpl implements MedicationSummaryService {
     public void insertMedicationSummary(MedicationSummaryInfoCommand medicationSummaryInfoCommand) {
         medicationSummaryInfoCommandList.add(medicationSummaryInfoCommand);
     }
-
     @PostConstruct
     private void postConstruct() {
         MedicationSummaryInfoCommand summaryCommand = new MedicationSummaryInfoCommand();
