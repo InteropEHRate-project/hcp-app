@@ -17,6 +17,7 @@ buildNumber.properties
 # NicuJ's pattern
 .idea-ide-files/
 0-idea-ide-files/
+.idea/
 
 # User-specific stuff:
 .idea/**/workspace.xml
