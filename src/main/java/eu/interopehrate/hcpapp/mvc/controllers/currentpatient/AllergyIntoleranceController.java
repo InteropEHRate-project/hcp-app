@@ -45,7 +45,7 @@ public class AllergyIntoleranceController {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE;
         }
-        allergyIntoleranceService.insertAllergiesIntolerances(allergyIntoleranceInfoCommand);
+        allergyIntoleranceService.insertAllergyIntolerance(allergyIntoleranceInfoCommand);
         return "redirect:/current-patient/allergies-intolerances/view-section";
     }
 }

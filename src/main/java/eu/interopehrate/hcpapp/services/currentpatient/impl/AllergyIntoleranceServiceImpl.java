@@ -6,7 +6,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInf
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +20,6 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
                                          HapiToCommandAllergyIntolerance hapiToCommandAllergyIntolerance) {
         this.currentPatient = currentPatient;
         this.hapiToCommandAllergyIntolerance = hapiToCommandAllergyIntolerance;
-        allergyIntoleranceSection();
     }
 
     @Override
@@ -33,20 +31,9 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
                 .collect(Collectors.toList()));
         return allergyIntoleranceList;
     }
+
     @Override
-    public void insertAllergiesIntolerances(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand) {
-        allergyIntoleranceInfoCommandList.add(allergyIntoleranceInfoCommand);
-    }
-    @PostConstruct
-    private void postConstruct() {
-        AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand = new AllergyIntoleranceInfoCommand();
-        allergyIntoleranceInfoCommand.setIdentifier("000");
-        allergyIntoleranceInfoCommand.setName("deerte");
-        allergyIntoleranceInfoCommand.setClinicalStatus("abc");
-        allergyIntoleranceInfoCommand.setType("abc");
-        allergyIntoleranceInfoCommand.setCategory("abc");
-        allergyIntoleranceInfoCommand.setCriticality("abc");
-        allergyIntoleranceSection();
+    public void insertAllergyIntolerance(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand) {
         allergyIntoleranceInfoCommandList.add(allergyIntoleranceInfoCommand);
     }
 }

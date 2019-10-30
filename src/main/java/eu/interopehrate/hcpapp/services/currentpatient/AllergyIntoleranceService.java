@@ -7,5 +7,5 @@ import java.util.List;
 public interface AllergyIntoleranceService {
     List<AllergyIntoleranceInfoCommand> allergyIntoleranceSection();
 
-   void insertAllergiesIntolerances(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand);
+   void insertAllergyIntolerance(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand);
 }
