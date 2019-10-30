@@ -31,43 +31,78 @@
             <div class="m-3"></div>
             <h2>Add Allergies and Intolerances information</h2>
             <div class="m-5"></div>
-            <form  action="#" th:action="@{/current-patient/allergies-intolerances/save-add}" th:object="${allergiesIntolerancesInfoCommand}" method="post">
-                <div class="row">
-                    <div class="row">
-                        <div class="col">
-                            <label for="identifier">Identifier</label>
-                            <input id="identifier" type="text" class="form-control" th:field="*{identifier}"/>
-                        </div>
+            <form  action="#" th:action="@{/current-patient/allergies-intolerances/save-add}" th:object="${allergyIntoleranceInfoCommand}" method="post">
 
-                        <div class="col">
-                            <label for="name">Name</label>
-                            <input id="name" type="text" class="form-control" th:field="*{name}">
-                        </div>
-
-                        <div class="col">
-                            <label for="clinicalStatus">Clinical Status</label><br>
-                            <input id="clinicalStatus" type="text" class="form-control" th:field="*{clinicalStatus}">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col"><br>
-                            <label for="type">Type</label><br>
-                            <input id="type" type="text" class="form-control" th:field="*{type}">
-                        </div>
-
-                        <div class="col"><br>
-                            <label for="category">Category</label> <br>
-                            <input id="category" type="text" class="form-control" th:field="*{category}">
-                        </div>
-
-
-                        <div class="col"><br>
-                            <label for="criticality">Criticality</label><br>
-                            <input id="criticality" type="text" class="form-control" th:field="*{criticality}">
-                        </div>
-                    </div>
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please correct the errors below</p>
                 </div>
+
+                <div class="form-row">
+
+                        <div class="col-md-4">
+                            <label for="identifier">Identifier</label>
+                            <input id="identifier" type="text" class="form-control" th:classappend="${#fields.hasErrors('identifier')} ? 'is-invalid' :''" th:field="*{identifier}"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('identifier')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('identifier')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' :''" th:field="*{name}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="clinicalStatus">Clinical Status</label><br>
+                            <input id="clinicalStatus" type="text" class="form-control" th:classappend="${#fields.hasErrors('clinicalStatus')} ? 'is-invalid' :''" th:field="*{clinicalStatus}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('clinicalStatus')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('clinicalStatus')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+
+                    <div class="form-row">
+                        <div class="col-md-4"><br>
+                            <label for="type">Type</label><br>
+                            <input id="type" type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('type')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4"><br>
+                            <label for="category">Category</label> <br>
+                            <input id="category" type="text" class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''" th:field="*{category}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('category')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('category')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4"><br>
+                            <label for="criticality">Criticality</label><br>
+                            <input id="criticality" type="text" class="form-control" th:classappend="${#fields.hasErrors('criticality')} ? 'is-invalid' :''" th:field="*{criticality}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('criticality')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('criticality')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
 
                 <div class="text-right"><br>
                     <button type="submit" class="btn btn-primary">Save</button>
