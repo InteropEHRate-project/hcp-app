@@ -61,6 +61,7 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
 
     @Override
     public void lastSEHRMessage() {
+        Patient lastPatient = currentD2DConnection.lastPatient();
         String lastSentPatientSummary = currentD2DConnection.lastPatientSummary();
         if (lastSentPatientSummary.contains("{")) {
             lastSentPatientSummary = lastSentPatientSummary.substring(lastSentPatientSummary.indexOf("{"));
@@ -68,8 +69,9 @@ public class TestD2DLibraryServiceImpl implements TestD2DLibraryService {
         }
         testD2DLibraryCommand.setLastSEHRMessage(
                 String.join("<br/><br/>",
-                        this.patientToString(currentD2DConnection.lastPatient()),
+                        this.patientToString(lastPatient),
                         lastSentPatientSummary));
+        currentPatient.initPatient(lastPatient);
         testD2DLibraryCommand.setSendActionMessage(null);
     }
 

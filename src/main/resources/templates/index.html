@@ -51,6 +51,20 @@
             <div class="row justify-content-center">
                 <h3 class="mt-5">Connected</h3>
             </div>
+            <div th:if="${!(index.patientDataCommand.getFirstName().equals('Empty')) || !(index.patientDataCommand.getLastName().equals('Empty')) || !(index.patientDataCommand.getId().equals('Empty'))}">
+                <div class="row justify-content-center">
+                    <h7 th:text="${index.patientDataCommand.getFirstName()}"></h7>
+                </div>
+                <div class="row justify-content-center">
+                    <h7 th:text="${index.patientDataCommand.getLastName()}"></h7>
+                </div>
+                <div class="row justify-content-center">
+                    <h7 th:text="${index.patientDataCommand.getId()}"></h7>
+                </div>
+                <div class="row justify-content-center">
+                    <p></p>
+                </div>
+            </div>
             <div class="row justify-content-center">
                 <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}" th:href="@{/index/close-connection}">Close connection</a>
             </div>

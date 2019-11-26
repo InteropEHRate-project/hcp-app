@@ -1,13 +1,18 @@
 package eu.interopehrate.hcpapp.services.index.impl;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import org.hl7.fhir.r4.model.HumanName;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class IndexServiceImpl implements IndexService {
@@ -15,11 +20,14 @@ public class IndexServiceImpl implements IndexService {
     private String bluetoothConnectionInfoImageSize;
     private BluetoothConnectionService bluetoothConnectionService;
     private CurrentD2DConnection currentD2DConnection;
+    private CurrentPatient currentPatient;
 
     public IndexServiceImpl(BluetoothConnectionService bluetoothConnectionService,
-                            CurrentD2DConnection currentD2DConnection) {
+                            CurrentD2DConnection currentD2DConnection,
+                            CurrentPatient currentPatient) {
         this.bluetoothConnectionService = bluetoothConnectionService;
         this.currentD2DConnection = currentD2DConnection;
+        this.currentPatient = currentPatient;
     }
 
     @Override
@@ -28,6 +36,36 @@ public class IndexServiceImpl implements IndexService {
         indexCommand.setConnectionState(currentD2DConnection.connectionState());
         indexCommand.setBluetoothConnectionInfoImage(this.connectionInfoQRCodePng());
         indexCommand.setBluetoothConnectionInfoImageSize(bluetoothConnectionInfoImageSize);
+
+        IndexPatientDataCommand patientDataCommand = new IndexPatientDataCommand();
+        if (Objects.nonNull(currentPatient.getPatient()) && Objects.nonNull(currentPatient.getPatient().getName())) {
+            patientDataCommand.setFirstName(currentPatient.getPatient()
+                    .getName()
+                    .stream()
+                    .map(humanName -> String.join(" ", "First Name:" + " " + humanName.getGivenAsSingleString()))
+                    .collect(Collectors.joining(","))
+            );
+
+            patientDataCommand.setLastName(currentPatient.getPatient()
+                    .getName()
+                    .stream()
+                    .map(humanName -> String.join(" ", "Family Name:" + " " + humanName.getFamily()))
+                    .collect(Collectors.joining(","))
+            );
+
+            patientDataCommand.setId(currentPatient.getPatient().getId());
+
+        }
+        else {
+            patientDataCommand.setFirstName("Empty");
+            patientDataCommand.setLastName("Empty");
+            patientDataCommand.setId("Empty");
+        }
+
+
+
+        indexCommand.setPatientDataCommand(patientDataCommand);
+
         return indexCommand;
     }
 

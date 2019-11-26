@@ -8,7 +8,7 @@ import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationSer
 import org.springframework.stereotype.Service;
 
 @Service
-public class HealthCareOrganizationServiceImpl implements HealthCareOrganizationService {
+public class  HealthCareOrganizationServiceImpl implements HealthCareOrganizationService {
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
     private EntityToCommandHealthCareOrganization entityToCommandHealthCareOrganization;
 

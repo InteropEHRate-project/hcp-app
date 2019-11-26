@@ -10,4 +10,5 @@ public class IndexCommand {
     private String bluetoothConnectionInfoImage;
     private String bluetoothConnectionInfoImageSize;
     private D2DConnectionState connectionState;
+    private IndexPatientDataCommand patientDataCommand;
 }
