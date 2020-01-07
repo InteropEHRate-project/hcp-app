@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.currentsession;
 import org.hl7.fhir.r4.model.*;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BundleProcessor {
@@ -49,11 +50,13 @@ public class BundleProcessor {
     }
 
     public List<Observation> observationList() {
+        Predicate<Observation> hasMember = Observation::hasHasMember;
         return bundle.getEntry()
                 .stream()
                 .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
                 .map(Bundle.BundleEntryComponent::getResource)
                 .map(Observation.class::cast)
+                .filter(hasMember.negate())
                 .collect(Collectors.toList());
     }
 }

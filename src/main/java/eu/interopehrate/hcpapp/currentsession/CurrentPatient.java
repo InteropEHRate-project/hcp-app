@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.currentsession;
 import ca.uhn.fhir.context.FhirContext;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,14 @@ public class CurrentPatient {
             return Collections.emptyList();
         } else {
             return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
+        }
+    }
+
+    public List<Observation> observationList(){
+        if (Objects.isNull(patientSummaryBundle)){
+            return Collections.emptyList();
+        }else{
+            return new BundleProcessor(patientSummaryBundle).observationList();
         }
     }
 
