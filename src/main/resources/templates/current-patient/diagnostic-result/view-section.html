@@ -44,6 +44,8 @@
                 </tbody>
             </table>
             <div class="text-right">
+                <a th:if="${diagnosticResult.getDisplayTranslatedVersion()} == true" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-result/view-section')}" th:text="#{template.button.translate.patient}">Initial version</a>
+                <a th:if="${diagnosticResult.getDisplayTranslatedVersion()} == false" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-result/view-section')}" th:text="#{template.button.translate.physician}">Translated version</a>
                 <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-result/open-add-page}">Add</a>
             </div>
         </div>

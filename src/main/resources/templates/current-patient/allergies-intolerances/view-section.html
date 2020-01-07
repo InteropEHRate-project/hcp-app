@@ -50,8 +50,8 @@
                 </tbody>
             </table>
             <div class="text-right">
-                <a th:if="${allergyIntolerance.getDisplayTranslatedVersion()} == true" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies-intolerances/view-section')}">Initial version</a>
-                <a th:if="${allergyIntolerance.getDisplayTranslatedVersion()} == false" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies-intolerances/view-section')}">Translated version</a>
+                <a th:if="${allergyIntolerance.getDisplayTranslatedVersion()} == true" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies-intolerances/view-section')}" th:text="#{template.button.translate.patient}">Initial version</a>
+                <a th:if="${allergyIntolerance.getDisplayTranslatedVersion()} == false" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies-intolerances/view-section')}" th:text="#{template.button.translate.physician}">Translated version</a>
                 <a href="#" class="btn btn-primary" th:href="@{/current-patient/allergies-intolerances/open-add-page}">Add</a>
             </div>
         </div>

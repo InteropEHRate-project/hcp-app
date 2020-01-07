@@ -50,6 +50,8 @@
                 </tbody>
             </table>
             <div class="text-right">
+                <a th:if="${medicationSummary.getDisplayTranslatedVersion()} == true" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/medication-summary/view-section')}" th:text="#{template.button.translate.patient}">Initial version</a>
+                <a th:if="${medicationSummary.getDisplayTranslatedVersion()} == false" href="#" class="btn btn-primary" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/medication-summary/view-section')}" th:text="#{template.button.translate.physician}">Translated version</a>
                 <a href="#" class="btn btn-primary"  th:href="@{/current-patient/medication-summary/open-add-page}">Add</a>
             </div>
         </div>
