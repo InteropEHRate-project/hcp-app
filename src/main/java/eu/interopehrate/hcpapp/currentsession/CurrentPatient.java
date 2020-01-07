@@ -19,6 +19,7 @@ import java.util.Objects;
 public class CurrentPatient {
     private static final Logger logger = LoggerFactory.getLogger(CurrentPatient.class);
     private final TranslateService translateService;
+    private Boolean displayTranslatedVersion = Boolean.TRUE;
     private Bundle initialPatientSummaryBundle;
     private Bundle translatedPatientSummaryBundle;
     private Patient patient;
@@ -42,26 +43,37 @@ public class CurrentPatient {
     }
 
     public void reset() {
+        displayTranslatedVersion = Boolean.TRUE;
+        initialPatientSummaryBundle = null;
         translatedPatientSummaryBundle = null;
+        patient = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
-        if (Objects.isNull(translatedPatientSummaryBundle)) {
+        if (Objects.isNull(patientSummaryBundle())) {
             return Collections.emptyList();
         } else {
-            return new BundleProcessor(translatedPatientSummaryBundle).allergyIntoleranceList();
+            return new BundleProcessor(patientSummaryBundle()).allergyIntoleranceList();
         }
     }
 
     public List<Observation> observationList() {
-        if (Objects.isNull(translatedPatientSummaryBundle)) {
+        if (Objects.isNull(patientSummaryBundle())) {
             return Collections.emptyList();
         } else {
-            return new BundleProcessor(translatedPatientSummaryBundle).observationList();
+            return new BundleProcessor(patientSummaryBundle()).observationList();
         }
+    }
+
+    public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
+        this.displayTranslatedVersion = displayTranslatedVersion;
     }
 
     public Patient getPatient() {
         return patient;
+    }
+
+    private Bundle patientSummaryBundle() {
+        return displayTranslatedVersion ? translatedPatientSummaryBundle : initialPatientSummaryBundle;
     }
 }
