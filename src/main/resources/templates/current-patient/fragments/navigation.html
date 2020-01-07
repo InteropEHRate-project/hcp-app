@@ -48,9 +48,9 @@
        th:href="@{/current-patient/medical-devices/view-section}"
        th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical Devices</a>
     <a class="flex-sm-fill text-sm-left nav-link"
-       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/results')} ? 'active' : ''"
-       href="../results/view-section.html"
-       th:href="@{/current-patient/results/view-section}"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-result')} ? 'active' : ''"
+       href="../diagnostic-result/view-section.html"
+       th:href="@{/current-patient/diagnostic-result/view-section}"
        th:text="#{fragment.current.patient.navigation.left.results}">Results</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-past-illness')} ? 'active' : ''"
