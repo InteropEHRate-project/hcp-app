@@ -46,6 +46,9 @@ cmake-build-debug/
 ## File-based project format:
 *.iws
 
+## Module files
+**/*.iml
+
 ## Plugin-specific files:
 
 # IntelliJ
