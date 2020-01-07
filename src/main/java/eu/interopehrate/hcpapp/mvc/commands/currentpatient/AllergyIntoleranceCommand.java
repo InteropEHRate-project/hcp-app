@@ -1,16 +1,16 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Setter
 public class AllergyIntoleranceCommand {
+    private Boolean displayTranslatedVersion;
     private List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfo;
 
-    public AllergyIntoleranceCommand(List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfo) {
+    public AllergyIntoleranceCommand(Boolean displayTranslatedVersion, List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfo) {
+        this.displayTranslatedVersion = displayTranslatedVersion;
         this.allergyIntoleranceInfo = allergyIntoleranceInfo;
     }
 }

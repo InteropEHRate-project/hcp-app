@@ -16,4 +16,9 @@ public class CurrentPatientServiceImpl implements CurrentPatientService {
     public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
         currentPatient.setDisplayTranslatedVersion(displayTranslatedVersion);
     }
+
+    @Override
+    public Boolean getDisplayTranslatedVersion() {
+        return currentPatient.getDisplayTranslatedVersion();
+    }
 }

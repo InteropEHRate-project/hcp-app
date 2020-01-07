@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceCom
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
+import eu.interopehrate.hcpapp.services.currentpatient.CurrentPatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,16 +20,18 @@ import java.util.List;
 @RequestMapping("/current-patient/allergies-intolerances")
 public class AllergyIntoleranceController {
     private AllergyIntoleranceService allergyIntoleranceService;
+    private CurrentPatientService currentPatientService;
 
-    public AllergyIntoleranceController(AllergyIntoleranceService allergyIntoleranceService) {
+    public AllergyIntoleranceController(AllergyIntoleranceService allergyIntoleranceService, CurrentPatientService currentPatientService) {
         this.allergyIntoleranceService = allergyIntoleranceService;
+        this.currentPatientService = currentPatientService;
     }
 
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfo = allergyIntoleranceService.allergyIntoleranceSection();
-        model.addAttribute("allergyIntolerance", new AllergyIntoleranceCommand(allergyIntoleranceInfo));
+        model.addAttribute("allergyIntolerance", new AllergyIntoleranceCommand(currentPatientService.getDisplayTranslatedVersion(), allergyIntoleranceInfo));
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION;
     }
 

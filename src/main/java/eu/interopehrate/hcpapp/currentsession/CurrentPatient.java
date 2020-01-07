@@ -69,6 +69,10 @@ public class CurrentPatient {
         this.displayTranslatedVersion = displayTranslatedVersion;
     }
 
+    public Boolean getDisplayTranslatedVersion() {
+        return this.displayTranslatedVersion;
+    }
+
     public Patient getPatient() {
         return patient;
     }
