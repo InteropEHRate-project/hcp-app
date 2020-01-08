@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.MedicationSummaryCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.MedicationSummaryInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import eu.interopehrate.hcpapp.services.currentpatient.CurrentPatientService;
 import eu.interopehrate.hcpapp.services.currentpatient.MedicationSummaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +20,18 @@ import java.util.List;
 @RequestMapping("/current-patient/medication-summary")
 public class MedicationSummaryController {
     private MedicationSummaryService medicationSummaryService;
+    private CurrentPatientService currentPatientService;
 
-    public MedicationSummaryController(MedicationSummaryService medicationSummaryService) {
+    public MedicationSummaryController(MedicationSummaryService medicationSummaryService, CurrentPatientService currentPatientService) {
         this.medicationSummaryService = medicationSummaryService;
+        this.currentPatientService = currentPatientService;
     }
 
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         List<MedicationSummaryInfoCommand> medicationSummaryInfo = medicationSummaryService.medicationSummarySection();
-        model.addAttribute("medicationSummary", new MedicationSummaryCommand(medicationSummaryInfo));
+        model.addAttribute("medicationSummary", new MedicationSummaryCommand(currentPatientService.getDisplayTranslatedVersion(), medicationSummaryInfo));
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_VIEW_SECTION;
     }
 

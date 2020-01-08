@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.DiagnosticResultCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.DiagnosticResultInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import eu.interopehrate.hcpapp.services.currentpatient.CurrentPatientService;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticResultService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +20,18 @@ import java.util.List;
 @RequestMapping("/current-patient/diagnostic-result")
 public class DiagnosticResultController {
     private DiagnosticResultService diagnosticResultService;
+    private CurrentPatientService currentPatientService;
 
-    public DiagnosticResultController(DiagnosticResultService diagnosticResultService) {
+    public DiagnosticResultController(DiagnosticResultService diagnosticResultService, CurrentPatientService currentPatientService) {
         this.diagnosticResultService = diagnosticResultService;
+        this.currentPatientService = currentPatientService;
     }
 
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         List<DiagnosticResultInfoCommand> diagnosticCommandInfo = diagnosticResultService.diagnosticResultSection();
-        model.addAttribute("diagnosticResult", new DiagnosticResultCommand(diagnosticCommandInfo));
+        model.addAttribute("diagnosticResult", new DiagnosticResultCommand(currentPatientService.getDisplayTranslatedVersion(), diagnosticCommandInfo));
         return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_VIEW_SECTION;
     }
 
