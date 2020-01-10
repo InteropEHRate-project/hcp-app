@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
+import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.Patient;
@@ -16,12 +17,15 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class CurrentD2DConnection implements DisposableBean {
     private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
 
-    public CurrentD2DConnection(ApplicationEventPublisher eventPublisher) {
+    public CurrentD2DConnection(ApplicationEventPublisher eventPublisher,
+                                ApplicationRuntimeInfoService applicationRuntimeInfoService) {
         this.eventPublisher = eventPublisher;
+        this.applicationRuntimeInfoService = applicationRuntimeInfoService;
     }
 
     @Override
@@ -33,7 +37,8 @@ public class CurrentD2DConnection implements DisposableBean {
 
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
-        CompletableFuture.runAsync(this::openConnection);
+        CompletableFuture.runAsync(this::openConnection)
+                .thenRun(this::sendPractitioner);
     }
 
     public void close() {
@@ -96,5 +101,13 @@ public class CurrentD2DConnection implements DisposableBean {
     private void publishBTConnectionEstablished() {
         D2DConnectionSseCommand d2DConnectionSseCommand = new D2DConnectionSseCommand(D2DConnectionSseCommand.SseCommandAction.RELOAD_PAGE, "");
         this.eventPublisher.publishEvent(d2DConnectionSseCommand);
+    }
+
+    private void sendPractitioner() {
+        try {
+            this.sendPractitioner(applicationRuntimeInfoService.practitioner());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
