@@ -6,7 +6,6 @@ import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
-import org.hl7.fhir.r4.model.HumanName;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -45,27 +44,19 @@ public class IndexServiceImpl implements IndexService {
                     .map(humanName -> String.join(" ", "First Name:" + " " + humanName.getGivenAsSingleString()))
                     .collect(Collectors.joining(","))
             );
-
             patientDataCommand.setLastName(currentPatient.getPatient()
                     .getName()
                     .stream()
                     .map(humanName -> String.join(" ", "Family Name:" + " " + humanName.getFamily()))
                     .collect(Collectors.joining(","))
             );
-
             patientDataCommand.setId(currentPatient.getPatient().getId());
-
-        }
-        else {
+        } else {
             patientDataCommand.setFirstName("Empty");
             patientDataCommand.setLastName("Empty");
             patientDataCommand.setId("Empty");
         }
-
-
-
         indexCommand.setPatientDataCommand(patientDataCommand);
-
         return indexCommand;
     }
 
@@ -76,6 +67,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public void closeConnection() {
+        currentPatient.reset();
         currentD2DConnection.close();
     }
 
