@@ -38,7 +38,7 @@ public class CurrentD2DConnection implements DisposableBean {
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
         CompletableFuture.runAsync(this::openConnection)
-                .thenRun(this::sendPractitioner);
+                .thenRun(this::afterOpenConnection);
     }
 
     public void close() {
@@ -103,9 +103,10 @@ public class CurrentD2DConnection implements DisposableBean {
         this.eventPublisher.publishEvent(d2DConnectionSseCommand);
     }
 
-    private void sendPractitioner() {
+    private void afterOpenConnection() {
         try {
             this.sendPractitioner(applicationRuntimeInfoService.practitioner());
+            //todo - insert audit admission call
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
