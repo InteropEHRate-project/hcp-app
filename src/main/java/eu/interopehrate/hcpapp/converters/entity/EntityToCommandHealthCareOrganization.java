@@ -8,7 +8,7 @@ import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareOrganizatio
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,7 +23,7 @@ public class EntityToCommandHealthCareOrganization implements Converter<HealthCa
         return healthCareOrganizationCommand;
     }
 
-    private String phonesAsString(List<ContactPointEntity> contactPointList) {
+    private String phonesAsString(Set<ContactPointEntity> contactPointList) {
         return contactPointList
                 .stream()
                 .filter(cp -> cp.getType().equals(ContactPointType.PHONE))

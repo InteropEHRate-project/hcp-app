@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +27,8 @@ public class ApplicationRuntimeInfoServiceImpl implements ApplicationRuntimeInfo
     @Override
     public Organization organization() {
         HealthCareOrganizationEntity healthCareOrganizationEntity = healthCareOrganizationRepository.findAll().get(0);
-        AddressEntity addressEntity = healthCareOrganizationEntity.getAddresses().get(0);
-        List<ContactPointEntity> contactPointsEntities = healthCareOrganizationEntity.getContactPoints();
+        AddressEntity addressEntity = healthCareOrganizationEntity.getAddresses().iterator().next();
+        Set<ContactPointEntity> contactPointsEntities = healthCareOrganizationEntity.getContactPoints();
 
         Address address = buildAddressFromEntity(addressEntity);
 
