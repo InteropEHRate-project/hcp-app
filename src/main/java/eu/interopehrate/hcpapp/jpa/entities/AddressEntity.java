@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.jpa.entities;
 
 import eu.interopehrate.hcpapp.jpa.entities.common.HCPApplicationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AddressUse;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "ADDRESSES")
+@EqualsAndHashCode(callSuper = true)
 public class AddressEntity extends HCPApplicationEntity {
     @NotNull
     @ManyToOne(optional = false)

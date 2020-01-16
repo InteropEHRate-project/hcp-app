@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.jpa.entities;
 import eu.interopehrate.hcpapp.jpa.entities.common.HCPApplicationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.ContactPointType;
 import eu.interopehrate.hcpapp.jpa.entities.enums.ContactPointUse;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "CONTACT_POINTS")
+@EqualsAndHashCode(callSuper = true)
 public class ContactPointEntity extends HCPApplicationEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
