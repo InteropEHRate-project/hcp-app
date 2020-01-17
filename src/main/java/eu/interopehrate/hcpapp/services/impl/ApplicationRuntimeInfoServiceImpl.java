@@ -32,7 +32,7 @@ public class ApplicationRuntimeInfoServiceImpl implements ApplicationRuntimeInfo
 
         Address address = buildAddressFromEntity(addressEntity);
 
-        return new Organization()
+        Organization organization = new Organization()
                 .setActive(Boolean.TRUE)
                 .setName(healthCareOrganizationEntity.getName())
                 .setAddress(Collections.singletonList(address))
@@ -40,6 +40,8 @@ public class ApplicationRuntimeInfoServiceImpl implements ApplicationRuntimeInfo
                         .stream()
                         .map(this::buildContactPointFromEntity)
                         .collect(Collectors.toList()));
+        organization.setId(healthCareOrganizationEntity.getCode());
+        return organization;
     }
 
     @Override
@@ -60,12 +62,15 @@ public class ApplicationRuntimeInfoServiceImpl implements ApplicationRuntimeInfo
         qualification.setCode(this.buildQualificationCode(healthCareProfessionalEntity.getOccupation()));
         qualification.setIssuerTarget(organization());
 
-        return new Practitioner()
+        Practitioner practitioner = new Practitioner()
                 .setQualification(Collections.singletonList(qualification))
+
                 .setBirthDate(birthDate)
                 .setName(Collections.singletonList(humanName))
                 .setGender(gender)
                 .setAddress(Collections.singletonList(address));
+        practitioner.setId(healthCareProfessionalEntity.getId().toString());
+        return practitioner;
     }
 
     private Address buildAddressFromEntity(AddressEntity addressEntity) {
