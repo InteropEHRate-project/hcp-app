@@ -47,7 +47,7 @@ public class BundleProcessorTests {
     }
 
     @Test
-    public void testConditionList() {
+        public void testConditionList() {
         List<Condition> conditionList = bundleProcessor.conditionList();
         assertEquals(2, conditionList.size());
     }
@@ -55,6 +55,6 @@ public class BundleProcessorTests {
     @Test
     public void testObservationList() {
         List<Observation> observationList = bundleProcessor.observationList();
-        assertEquals(15, observationList.size());
+        assertEquals(13, observationList.size());
     }
 }
