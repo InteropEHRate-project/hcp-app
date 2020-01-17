@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.currentsession;
 
 import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
+import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import org.hl7.fhir.r4.model.Patient;
@@ -21,11 +22,14 @@ public class CurrentD2DConnection implements DisposableBean {
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
+    private AdmissionDataAuditService admissionDataAuditService;
 
     public CurrentD2DConnection(ApplicationEventPublisher eventPublisher,
-                                ApplicationRuntimeInfoService applicationRuntimeInfoService) {
+                                ApplicationRuntimeInfoService applicationRuntimeInfoService,
+                                AdmissionDataAuditService admissionDataAuditService) {
         this.eventPublisher = eventPublisher;
         this.applicationRuntimeInfoService = applicationRuntimeInfoService;
+        this.admissionDataAuditService = admissionDataAuditService;
     }
 
     @Override
@@ -106,7 +110,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private void afterOpenConnection() {
         try {
             this.sendPractitioner(applicationRuntimeInfoService.practitioner());
-            //todo - insert audit admission call
+            admissionDataAuditService.saveAdmissionData();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

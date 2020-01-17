@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "AUDIT_INFORMATION")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class AuditInformationEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "DATE_TIME")
