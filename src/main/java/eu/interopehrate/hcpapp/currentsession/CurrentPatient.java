@@ -28,6 +28,7 @@ public class CurrentPatient {
         this.translateService = translateService;
     }
 
+    @Deprecated
     public void intiFromJsonString(String patientSummaryJson) {
         initialPatientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummaryJson);
         try {
@@ -40,6 +41,16 @@ public class CurrentPatient {
 
     public void initPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public void initPatientSummary(Bundle patientSummary) {
+        initialPatientSummaryBundle = patientSummary;
+        try {
+            translatedPatientSummaryBundle = translateService.translate(initialPatientSummaryBundle, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            translatedPatientSummaryBundle = initialPatientSummaryBundle;
+        }
     }
 
     public void reset() {

@@ -1,7 +1,9 @@
 package eu.interopehrate.hcpapp.services.currentpatient;
 
+import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.DiagnosticResultInfoCommand;
+import org.hl7.fhir.r4.model.Bundle;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +36,8 @@ public class DiagnosticResultServiceTests {
 
     @Test
     public void testDiagnosticResultSection() {
-        currentPatient.intiFromJsonString(initialJsonFhir);
+        Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(initialJsonFhir);
+        currentPatient.initPatientSummary(patientSummaryBundle);
         List<DiagnosticResultInfoCommand> diagnosticResultInfoCommands = diagnosticResultService.diagnosticResultSection();
         assertTrue(diagnosticResultInfoCommands.size() > 0);
     }

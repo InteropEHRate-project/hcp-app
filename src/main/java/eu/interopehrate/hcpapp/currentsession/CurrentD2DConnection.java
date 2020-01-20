@@ -5,6 +5,10 @@ import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
+import eu.interopehrate.td2de.api.D2DConnectionListeners;
+import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
+import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.springframework.beans.factory.DisposableBean;
@@ -15,18 +19,22 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Component
 public class CurrentD2DConnection implements DisposableBean {
+    private final CurrentPatient currentPatient;
     private final ApplicationEventPublisher eventPublisher;
     private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
+    private final AdmissionDataAuditService admissionDataAuditService;
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
-    private AdmissionDataAuditService admissionDataAuditService;
 
     public CurrentD2DConnection(ApplicationEventPublisher eventPublisher,
                                 ApplicationRuntimeInfoService applicationRuntimeInfoService,
-                                AdmissionDataAuditService admissionDataAuditService) {
+                                AdmissionDataAuditService admissionDataAuditService,
+                                CurrentPatient currentPatient) {
+        this.currentPatient = currentPatient;
         this.eventPublisher = eventPublisher;
         this.applicationRuntimeInfoService = applicationRuntimeInfoService;
         this.admissionDataAuditService = admissionDataAuditService;
@@ -46,43 +54,34 @@ public class CurrentD2DConnection implements DisposableBean {
     }
 
     public void close() {
-        CompletableFuture.runAsync(this::closeConnection);
+        this.closeConnection();
     }
 
     public D2DConnectionState connectionState() {
         return this.connectionState;
     }
 
+    @Deprecated
     public void sendPractitioner(Practitioner practitioner) throws IOException {
-        if (D2DConnectionState.ON.equals(connectionState)) {
-            connectedThread.sendData(practitioner);
-        } else {
-            throw new RuntimeException("No D2D active connection.");
-        }
+        throw new RuntimeException("will be removed");
     }
 
+    @Deprecated
     public String lastPatientSummary() {
-        if (D2DConnectionState.ON.equals(connectionState)) {
-            return connectedThread.getLastSentPatientSummary();
-        } else {
-            throw new RuntimeException("No D2D active connection.");
-        }
+        throw new RuntimeException("will be removed");
     }
 
+    @Deprecated
     public Patient lastPatient() {
-        if (D2DConnectionState.ON.equals(connectionState)) {
-            return connectedThread.getLastSentData();
-        } else {
-            throw new RuntimeException("No D2D active connection.");
-        }
+        throw new RuntimeException("will be removed");
     }
 
     private void openConnection() {
         try {
             bluetoothConnection = new BluetoothConnection();
-            connectedThread = bluetoothConnection.startListening();
+            connectedThread = bluetoothConnection.listenConnection(new D2DHRExchangeListener(), new D2DConnectionListener());
             this.connectionState = D2DConnectionState.ON;
-            this.publishBTConnectionEstablished();
+            this.publishReloadPageEvent();
         } catch (IOException e) {
             this.connectionState = D2DConnectionState.OFF;
             throw new RuntimeException(e);
@@ -102,17 +101,42 @@ public class CurrentD2DConnection implements DisposableBean {
         }
     }
 
-    private void publishBTConnectionEstablished() {
+    private void publishReloadPageEvent() {
         D2DConnectionSseCommand d2DConnectionSseCommand = new D2DConnectionSseCommand(D2DConnectionSseCommand.SseCommandAction.RELOAD_PAGE, "");
         this.eventPublisher.publishEvent(d2DConnectionSseCommand);
     }
 
     private void afterOpenConnection() {
         try {
-            this.sendPractitioner(applicationRuntimeInfoService.practitioner());
-            admissionDataAuditService.saveAdmissionData();
+            this.connectedThread.sendPersonalIdentity(applicationRuntimeInfoService.practitioner());
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private class D2DConnectionListener implements D2DConnectionListeners {
+        @Override
+        public void onConnectionClosure() {
+            log.info("D2D connection was closed.");
+        }
+    }
+
+    private class D2DHRExchangeListener implements D2DHRExchangeListeners {
+        @Override
+        public void onPersonalIdentityReceived(Patient patient) {
+            CurrentD2DConnection.this.currentPatient.initPatient(patient);
+            CurrentD2DConnection.this.publishReloadPageEvent();
+        }
+
+        @Override
+        public void onPatientSummaryReceived(Bundle bundle) {
+            CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
+            CurrentD2DConnection.this.admissionDataAuditService.saveAdmissionData();
+        }
+
+        @Override
+        public void onConsentAnswerReceived(String s) {
+            System.out.println("onConsentAnswerReceived");
         }
     }
 }
