@@ -11,7 +11,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Practitioner;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -60,21 +59,6 @@ public class CurrentD2DConnection implements DisposableBean {
 
     public D2DConnectionState connectionState() {
         return this.connectionState;
-    }
-
-    @Deprecated
-    public void sendPractitioner(Practitioner practitioner) throws IOException {
-        throw new RuntimeException("will be removed");
-    }
-
-    @Deprecated
-    public String lastPatientSummary() {
-        throw new RuntimeException("will be removed");
-    }
-
-    @Deprecated
-    public Patient lastPatient() {
-        throw new RuntimeException("will be removed");
     }
 
     private void openConnection() {
