@@ -26,7 +26,4 @@ public interface TemplateNames {
     String CURRENT_PATIENT_ACTIVE_DEVICES_VIEW_SECTION = "current-patient/active-devices/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_VIEW_SECTION = "current-patient/diagnostic-result/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_ADD_PAGE = "current-patient/diagnostic-result/add-info";
-
-    // Test D2D library
-    String TEST_D2D_LIBRARY_VIEW = "test-d2d-library/view-test-d2d-library";
 }

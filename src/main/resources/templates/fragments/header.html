@@ -34,9 +34,6 @@
                 <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'administration')} ? 'active' : ''">
                     <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.main.navigation.top.administration}">Administration</a>
                 </li>
-                <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'test-d2d-library')} ? 'active' : ''">
-                    <a class="nav-link" href="../test-d2d-library/view-test-d2d-library.html" th:href="@{/test-d2d-library/view-test-d2d-library}" th:text="#{fragment.main.navigation.top.test-d2d-library}">Test D2D library</a>
-                </li>
             </ul>
         </div>
     </div>
