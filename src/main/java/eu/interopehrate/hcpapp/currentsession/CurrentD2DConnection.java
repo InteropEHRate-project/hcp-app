@@ -83,7 +83,7 @@ public class CurrentD2DConnection implements DisposableBean {
             this.connectionState = D2DConnectionState.ON;
             this.publishReloadPageEvent();
         } catch (IOException e) {
-            this.connectionState = D2DConnectionState.OFF;
+            this.closeConnection();
             throw new RuntimeException(e);
         }
     }
@@ -93,11 +93,12 @@ public class CurrentD2DConnection implements DisposableBean {
             if (Objects.nonNull(connectedThread)) {
                 this.bluetoothConnection.closeConnection();
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
             this.bluetoothConnection = null;
             this.connectedThread = null;
             this.connectionState = D2DConnectionState.OFF;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -110,6 +111,7 @@ public class CurrentD2DConnection implements DisposableBean {
         try {
             this.connectedThread.sendPersonalIdentity(applicationRuntimeInfoService.practitioner());
         } catch (Exception e) {
+            this.closeConnection();
             throw new RuntimeException(e);
         }
     }
