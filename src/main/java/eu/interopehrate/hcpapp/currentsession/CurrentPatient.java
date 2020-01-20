@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.currentsession;
 
-import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
 import org.hl7.fhir.r4.model.Bundle;
@@ -26,17 +25,6 @@ public class CurrentPatient {
 
     public CurrentPatient(TranslateService translateService) {
         this.translateService = translateService;
-    }
-
-    @Deprecated
-    public void intiFromJsonString(String patientSummaryJson) {
-        initialPatientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummaryJson);
-        try {
-            translatedPatientSummaryBundle = translateService.translate(initialPatientSummaryBundle, Locale.UK);
-        } catch (Exception e) {
-            logger.error("Error calling translation service.", e);
-            translatedPatientSummaryBundle = initialPatientSummaryBundle;
-        }
     }
 
     public void initPatient(Patient patient) {
