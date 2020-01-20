@@ -7,6 +7,7 @@ import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import eu.interopehrate.td2de.api.D2DConnectionListeners;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
@@ -124,9 +125,11 @@ public class CurrentD2DConnection implements DisposableBean {
     }
 
     private class D2DHRExchangeListener implements D2DHRExchangeListeners {
+        @SneakyThrows
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
             CurrentD2DConnection.this.currentPatient.initPatient(patient);
+            Thread.sleep(100);
             CurrentD2DConnection.this.publishReloadPageEvent();
         }
 
