@@ -1,8 +1,5 @@
 package eu.interopehrate.hcpapp.currentsession;
 
-import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
-import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
-import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import eu.interopehrate.td2de.api.D2DConnectionListeners;
@@ -12,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -23,21 +19,15 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class CurrentD2DConnection implements DisposableBean {
     private final CurrentPatient currentPatient;
-    private final ApplicationEventPublisher eventPublisher;
-    private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
-    private final AdmissionDataAuditService admissionDataAuditService;
+    private final D2DConnectionOperations d2DConnectionOperations;
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
 
-    public CurrentD2DConnection(ApplicationEventPublisher eventPublisher,
-                                ApplicationRuntimeInfoService applicationRuntimeInfoService,
-                                AdmissionDataAuditService admissionDataAuditService,
-                                CurrentPatient currentPatient) {
+    public CurrentD2DConnection(CurrentPatient currentPatient,
+                                D2DConnectionOperations d2DConnectionOperations) {
         this.currentPatient = currentPatient;
-        this.eventPublisher = eventPublisher;
-        this.applicationRuntimeInfoService = applicationRuntimeInfoService;
-        this.admissionDataAuditService = admissionDataAuditService;
+        this.d2DConnectionOperations = d2DConnectionOperations;
     }
 
     @Override
@@ -66,8 +56,17 @@ public class CurrentD2DConnection implements DisposableBean {
             bluetoothConnection = new BluetoothConnection();
             connectedThread = bluetoothConnection.listenConnection(new D2DHRExchangeListener(), new D2DConnectionListener());
             this.connectionState = D2DConnectionState.ON;
-            this.publishReloadPageEvent();
+            this.d2DConnectionOperations.reloadIndexPage();
         } catch (IOException e) {
+            this.closeConnection();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void afterOpenConnection() {
+        try {
+            this.d2DConnectionOperations.sendPractitionerIdentity(this.connectedThread);
+        } catch (Exception e) {
             this.closeConnection();
             throw new RuntimeException(e);
         }
@@ -87,20 +86,6 @@ public class CurrentD2DConnection implements DisposableBean {
         }
     }
 
-    private void publishReloadPageEvent() {
-        D2DConnectionSseCommand d2DConnectionSseCommand = new D2DConnectionSseCommand(D2DConnectionSseCommand.SseCommandAction.RELOAD_PAGE, "");
-        this.eventPublisher.publishEvent(d2DConnectionSseCommand);
-    }
-
-    private void afterOpenConnection() {
-        try {
-            this.connectedThread.sendPersonalIdentity(applicationRuntimeInfoService.practitioner());
-        } catch (Exception e) {
-            this.closeConnection();
-            throw new RuntimeException(e);
-        }
-    }
-
     private class D2DConnectionListener implements D2DConnectionListeners {
         @Override
         public void onConnectionClosure() {
@@ -114,13 +99,13 @@ public class CurrentD2DConnection implements DisposableBean {
         public void onPersonalIdentityReceived(Patient patient) {
             CurrentD2DConnection.this.currentPatient.initPatient(patient);
             Thread.sleep(150);
-            CurrentD2DConnection.this.publishReloadPageEvent();
+            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
         }
 
         @Override
         public void onPatientSummaryReceived(Bundle bundle) {
             CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
-            CurrentD2DConnection.this.admissionDataAuditService.saveAdmissionData();
+            CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
         }
 
         @Override
