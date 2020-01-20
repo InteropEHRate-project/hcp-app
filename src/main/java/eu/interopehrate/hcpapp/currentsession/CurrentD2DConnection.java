@@ -113,7 +113,7 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
             CurrentD2DConnection.this.currentPatient.initPatient(patient);
-            Thread.sleep(100);
+            Thread.sleep(150);
             CurrentD2DConnection.this.publishReloadPageEvent();
         }
 
