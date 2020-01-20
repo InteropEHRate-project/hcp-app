@@ -110,7 +110,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
         @Override
         public void onConsentAnswerReceived(String s) {
-            System.out.println("onConsentAnswerReceived");
+            log.info(String.format("Consent received - %s", s));
         }
     }
 }
