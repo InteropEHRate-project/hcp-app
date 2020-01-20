@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseComman
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.td2de.ConnectedThread;
+import lombok.SneakyThrows;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,9 @@ public class D2DConnectionOperations {
         this.admissionDataAuditService = admissionDataAuditService;
     }
 
+    @SneakyThrows
     public void reloadIndexPage() {
+        Thread.sleep(150);
         D2DConnectionSseCommand d2DConnectionSseCommand = new D2DConnectionSseCommand(D2DConnectionSseCommand.SseCommandAction.RELOAD_PAGE, "");
         this.eventPublisher.publishEvent(d2DConnectionSseCommand);
     }
