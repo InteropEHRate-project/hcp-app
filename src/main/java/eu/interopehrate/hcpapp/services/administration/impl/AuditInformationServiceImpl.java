@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.AuditInformationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.AuditInformationRepository;
@@ -16,11 +17,14 @@ public class AuditInformationServiceImpl implements AuditInformationService {
 
     private final AuditInformationRepository auditInformationRepository;
     private final AdmissionDataAuditService admissionDataAuditService;
+    private final CurrentPatient currentPatient;
 
     public AuditInformationServiceImpl(AuditInformationRepository auditInformationRepository,
-                                       AdmissionDataAuditService admissionDataAuditService) {
+                                       AdmissionDataAuditService admissionDataAuditService,
+                                       CurrentPatient currentPatient) {
         this.auditInformationRepository = auditInformationRepository;
         this.admissionDataAuditService = admissionDataAuditService;
+        this.currentPatient = currentPatient;
     }
 
     @Override
@@ -41,5 +45,15 @@ public class AuditInformationServiceImpl implements AuditInformationService {
     @Override
     public void auditAdmissionData() {
         admissionDataAuditService.saveAdmissionData();
+    }
+
+    @Override
+    public void auditConsentData() {
+        AuditInformationEntity auditInformationEntity = new AuditInformationEntity();
+        auditInformationEntity.setDateTime(LocalDateTime.now());
+        auditInformationEntity.setType(AuditEventType.AUDIT_CONSENT);
+        auditInformationEntity.setDetails(this.currentPatient.getPatient().getName()
+                + ", " + this.currentPatient.getPatient().getId()
+                + " ->" + this.currentPatient.getConsent());
     }
 }

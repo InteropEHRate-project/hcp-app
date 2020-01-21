@@ -11,4 +11,6 @@ public interface AuditInformationService {
     void auditEvent(AuditEventType auditEventType, String details);
 
     void auditAdmissionData();
+
+    void auditConsentData();
 }

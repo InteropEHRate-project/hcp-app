@@ -42,6 +42,6 @@ public class D2DConnectionOperations {
     }
 
     public void auditPatientConsent() {
-        log.info("auditPatientConsent");
+        this.auditInformationService.auditConsentData();
     }
 }
