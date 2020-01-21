@@ -9,4 +9,6 @@ public interface AuditInformationService {
     List<AuditInformationEntity> getAuditInformationCommand();
 
     void auditEvent(AuditEventType auditEventType, String details);
+
+    void auditAdmissionData();
 }

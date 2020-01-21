@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.currentsession;
 
 import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
-import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.td2de.ConnectedThread;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -16,14 +16,14 @@ import java.io.IOException;
 public class D2DConnectionOperations {
     private final ApplicationEventPublisher eventPublisher;
     private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
-    private final AdmissionDataAuditService admissionDataAuditService;
+    private final AuditInformationService auditInformationService;
 
     public D2DConnectionOperations(ApplicationEventPublisher eventPublisher,
                                    ApplicationRuntimeInfoService applicationRuntimeInfoService,
-                                   AdmissionDataAuditService admissionDataAuditService) {
+                                   AuditInformationService auditInformationService) {
         this.eventPublisher = eventPublisher;
         this.applicationRuntimeInfoService = applicationRuntimeInfoService;
-        this.admissionDataAuditService = admissionDataAuditService;
+        this.auditInformationService = auditInformationService;
     }
 
     @SneakyThrows
@@ -38,7 +38,7 @@ public class D2DConnectionOperations {
     }
 
     public void auditPatientAdmission() {
-        this.admissionDataAuditService.saveAdmissionData();
+        this.auditInformationService.auditAdmissionData();
     }
 
     public void auditPatientConsent() {
