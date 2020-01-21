@@ -41,21 +41,28 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setFirstName(currentPatient.getPatient()
                     .getName()
                     .stream()
-                    .map(humanName -> String.join(" ", "First Name:" + " " + humanName.getGivenAsSingleString()))
+                    .map(humanName -> String.join(" ",humanName.getGivenAsSingleString()))
                     .collect(Collectors.joining(","))
             );
             patientDataCommand.setLastName(currentPatient.getPatient()
                     .getName()
                     .stream()
-                    .map(humanName -> String.join(" ", "Family Name:" + " " + humanName.getFamily()))
+                    .map(humanName -> String.join(" ", humanName.getFamily()))
                     .collect(Collectors.joining(","))
             );
             patientDataCommand.setId(currentPatient.getPatient().getId());
+
         } else {
             patientDataCommand.setFirstName("Empty");
             patientDataCommand.setLastName("Empty");
             patientDataCommand.setId("Empty");
         }
+        if(Objects.nonNull(currentPatient.getConsent())){
+            patientDataCommand.setConsent(currentPatient.getConsent());
+        }else{
+            patientDataCommand.setConsent("Unavailable Consent");
+        }
+
         indexCommand.setPatientDataCommand(patientDataCommand);
         return indexCommand;
     }
