@@ -9,4 +9,5 @@ public class IndexPatientDataCommand {
     private String id;
     private String lastName;
     private String firstName;
+    private String consent;
 }

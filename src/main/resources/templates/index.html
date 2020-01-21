@@ -52,15 +52,41 @@
                 <h3 class="mt-5">Connected</h3>
             </div>
             <div th:if="${!(index.patientDataCommand.getFirstName().equals('Empty')) || !(index.patientDataCommand.getLastName().equals('Empty')) || !(index.patientDataCommand.getId().equals('Empty'))}">
-                <div class="row justify-content-center">
-                    <h7 th:text="${index.patientDataCommand.getFirstName()}"></h7>
-                </div>
-                <div class="row justify-content-center">
-                    <h7 th:text="${index.patientDataCommand.getLastName()}"></h7>
-                </div>
-                <div class="row justify-content-center">
-                    <h7 th:text="${index.patientDataCommand.getId()}"></h7>
-                </div>
+
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"> <div class="row justify-content-center"> First Name </div></th>
+                        <th scope="col"> <div class="row justify-content-center"> Family Name</div></th>
+                        <th scope="col"> <div class="row justify-content-center"> ID Patient </div></th>
+                        <th scope="col"> <div class="row justify-content-center"> Consent </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="row justify-content-center">
+                                <h7 th:text="${index.patientDataCommand.getFirstName()}"></h7>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <h7 th:text="${index.patientDataCommand.getLastName()}"></h7>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <h7 th:text="${index.patientDataCommand.getId()}"></h7>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <h7 th:text="${index.patientDataCommand.getConsent()}"></h7>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="row justify-content-center">
                     <p></p>
                 </div>
