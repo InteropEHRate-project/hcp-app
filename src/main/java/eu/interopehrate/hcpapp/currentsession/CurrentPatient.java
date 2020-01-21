@@ -19,9 +19,10 @@ public class CurrentPatient {
     private static final Logger logger = LoggerFactory.getLogger(CurrentPatient.class);
     private final TranslateService translateService;
     private Boolean displayTranslatedVersion = Boolean.TRUE;
+    private Patient patient;
+    private String consent;
     private Bundle initialPatientSummaryBundle;
     private Bundle translatedPatientSummaryBundle;
-    private Patient patient;
 
     public CurrentPatient(TranslateService translateService) {
         this.translateService = translateService;
@@ -29,6 +30,10 @@ public class CurrentPatient {
 
     public void initPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public void initConsent(String consent) {
+        this.consent = consent;
     }
 
     public void initPatientSummary(Bundle patientSummary) {
@@ -43,9 +48,10 @@ public class CurrentPatient {
 
     public void reset() {
         displayTranslatedVersion = Boolean.TRUE;
+        patient = null;
+        consent = null;
         initialPatientSummaryBundle = null;
         translatedPatientSummaryBundle = null;
-        patient = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
@@ -74,6 +80,10 @@ public class CurrentPatient {
 
     public Patient getPatient() {
         return patient;
+    }
+
+    public String getConsent() {
+        return consent;
     }
 
     private Bundle patientSummaryBundle() {

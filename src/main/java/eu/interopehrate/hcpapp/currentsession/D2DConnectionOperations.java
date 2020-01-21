@@ -5,11 +5,13 @@ import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.td2de.ConnectedThread;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class D2DConnectionOperations {
     private final ApplicationEventPublisher eventPublisher;
@@ -37,5 +39,9 @@ public class D2DConnectionOperations {
 
     public void auditPatientAdmission() {
         this.admissionDataAuditService.saveAdmissionData();
+    }
+
+    public void auditPatientConsent() {
+        log.info("auditPatientConsent");
     }
 }
