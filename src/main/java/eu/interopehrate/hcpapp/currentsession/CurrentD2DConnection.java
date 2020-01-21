@@ -98,14 +98,14 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
             CurrentD2DConnection.this.currentPatient.initPatient(patient);
-            CurrentD2DConnection.this.connectedThread.getConsent("");
+            CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
             CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            CurrentD2DConnection.this.connectedThread.getConsent("");
         }
 
         @Override
         public void onPatientSummaryReceived(Bundle bundle) {
             CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
-            CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
         }
 
         @Override
