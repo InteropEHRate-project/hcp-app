@@ -4,7 +4,6 @@ import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import eu.interopehrate.td2de.api.D2DConnectionListeners;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
@@ -94,25 +93,36 @@ public class CurrentD2DConnection implements DisposableBean {
     }
 
     private class D2DHRExchangeListener implements D2DHRExchangeListeners {
-        @SneakyThrows
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
-            CurrentD2DConnection.this.currentPatient.initPatient(patient);
-            CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
-            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            CurrentD2DConnection.this.connectedThread.getConsent("");
+            try {
+                CurrentD2DConnection.this.currentPatient.initPatient(patient);
+                CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                CurrentD2DConnection.this.connectedThread.getConsent("");
+            } catch (Exception e) {
+                log.error("Error after personal identity was received", e);
+            }
         }
 
         @Override
         public void onPatientSummaryReceived(Bundle bundle) {
-            CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
+            try {
+                CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
+            } catch (Exception e) {
+                log.error("Error after Patient Summary was received", e);
+            }
         }
 
         @Override
         public void onConsentAnswerReceived(String s) {
-            log.info(String.format("Consent received - %s", s));
-            CurrentD2DConnection.this.currentPatient.initConsent("empty-consent");
-            CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
+            try {
+                log.info(String.format("Consent received - %s", s));
+                CurrentD2DConnection.this.currentPatient.initConsent(s);
+                CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
+            } catch (Exception e) {
+                log.error("Error after consent answer was received", e);
+            }
         }
     }
 }
