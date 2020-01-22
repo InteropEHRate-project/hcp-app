@@ -12,8 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,6 +28,12 @@ public class BundleProcessorTests {
         String patientSummaryJson = Files.readString(file.toPath());
         Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummaryJson);
         bundleProcessor = new BundleProcessor(patientSummaryBundle);
+    }
+
+    @Test
+    public void testPatient() {
+        Optional<Patient> optionalPatient = bundleProcessor.patient();
+        assertTrue(optionalPatient.isPresent());
     }
 
     @Test
@@ -47,7 +55,7 @@ public class BundleProcessorTests {
     }
 
     @Test
-        public void testConditionList() {
+    public void testConditionList() {
         List<Condition> conditionList = bundleProcessor.conditionList();
         assertEquals(2, conditionList.size());
     }

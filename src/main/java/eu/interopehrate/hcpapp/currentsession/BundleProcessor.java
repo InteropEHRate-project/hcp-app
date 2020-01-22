@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.currentsession;
 import org.hl7.fhir.r4.model.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,14 @@ public class BundleProcessor {
 
     public BundleProcessor(Bundle bundle) {
         this.bundle = bundle;
+    }
+
+    public Optional<Patient> patient() {
+        return bundle.getEntry().stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Patient))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(Patient.class::cast)
+                .findFirst();
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
