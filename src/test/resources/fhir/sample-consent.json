@@ -1,0 +1,9 @@
+{
+  "resourceType":"Consent",
+  "text":{
+    "status":"generated",
+    "div":"<div xmlns=\"http://www.w3.org/1999/xhtml\">I have read and understood InteropEHRate’s Privacy Policy.\n\nI hereby give permission to the recipient health care provider to process (view, store, edit etc.) the personal data stored in my Personal Health Record on this application for the purpose of medical diagnosis and/or treatment. I understand that my consent will remain valid for these purposes unless I affirmatively withdraw it. I have the right to withdraw this consent at any time.</div>"
+  },
+  "status":"active",
+  "dateTime":"2020-01-23T10:36:26+02:00"
+}
