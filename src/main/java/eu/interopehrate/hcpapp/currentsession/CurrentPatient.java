@@ -1,10 +1,8 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
-import org.hl7.fhir.r4.model.AllergyIntolerance;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Observation;
-import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -20,7 +18,7 @@ public class CurrentPatient {
     private final TranslateService translateService;
     private Boolean displayTranslatedVersion = Boolean.TRUE;
     private Patient patient;
-    private String consent;
+    private Consent consent;
     private Bundle initialPatientSummaryBundle;
     private Bundle translatedPatientSummaryBundle;
 
@@ -33,7 +31,9 @@ public class CurrentPatient {
     }
 
     public void initConsent(String consent) {
-        this.consent = consent;
+        String consentJson = consent.substring(consent.indexOf("{") + 1);
+        consentJson = consentJson.substring(0, consentJson.lastIndexOf("}"));
+        this.consent = (Consent) FhirContext.forR4().newJsonParser().parseResource(consentJson);
     }
 
     public void initPatientSummary(Bundle patientSummary) {
@@ -82,8 +82,12 @@ public class CurrentPatient {
         return patient;
     }
 
-    public String getConsent() {
+    public Consent getConsent() {
         return consent;
+    }
+
+    public String getConsentAsString() {
+        return consent.getText().getDiv().toString().replaceAll("[<](/)?div[^>]*[>]", "");
     }
 
     private Bundle patientSummaryBundle() {

@@ -99,7 +99,6 @@ public class CurrentD2DConnection implements DisposableBean {
                 CurrentD2DConnection.this.currentPatient.initPatient(patient);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-                CurrentD2DConnection.this.connectedThread.getConsent("");
             } catch (Exception e) {
                 log.error("Error after personal identity was received", e);
             }
@@ -117,9 +116,9 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onConsentAnswerReceived(String s) {
             try {
-                log.info(String.format("Consent received - %s", s));
                 CurrentD2DConnection.this.currentPatient.initConsent(s);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after consent answer was received", e);
             }

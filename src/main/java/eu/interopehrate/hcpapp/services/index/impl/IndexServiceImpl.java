@@ -41,7 +41,7 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setFirstName(currentPatient.getPatient()
                     .getName()
                     .stream()
-                    .map(humanName -> String.join(" ",humanName.getGivenAsSingleString()))
+                    .map(humanName -> String.join(" ", humanName.getGivenAsSingleString()))
                     .collect(Collectors.joining(","))
             );
             patientDataCommand.setLastName(currentPatient.getPatient()
@@ -57,9 +57,9 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setLastName("Empty");
             patientDataCommand.setId("Empty");
         }
-        if(Objects.nonNull(currentPatient.getConsent())){
-            patientDataCommand.setConsent(currentPatient.getConsent());
-        }else{
+        if (Objects.nonNull(currentPatient.getConsent())) {
+            patientDataCommand.setConsent(currentPatient.getConsentAsString());
+        } else {
             patientDataCommand.setConsent("Unavailable Consent");
         }
 

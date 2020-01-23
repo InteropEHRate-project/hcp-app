@@ -6,11 +6,14 @@ import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.AuditInformationRepository;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
+import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Patient;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AuditInformationServiceImpl implements AuditInformationService {
@@ -49,11 +52,12 @@ public class AuditInformationServiceImpl implements AuditInformationService {
 
     @Override
     public void auditConsentData() {
-        AuditInformationEntity auditInformationEntity = new AuditInformationEntity();
-        auditInformationEntity.setDateTime(LocalDateTime.now());
-        auditInformationEntity.setType(AuditEventType.AUDIT_CONSENT);
-        auditInformationEntity.setDetails(this.currentPatient.getPatient().getName()
-                + ", " + this.currentPatient.getPatient().getId()
-                + " ->" + this.currentPatient.getConsent());
+        Patient patient = this.currentPatient.getPatient();
+        if (Objects.nonNull(patient)) {
+            HumanName patientName = patient.getName().get(0);
+            String patientInfo = String.join(", ", patientName.getGivenAsSingleString(), patientName.getFamily(), patient.getId());
+            String auditDetails = String.join("->", patientInfo, this.currentPatient.getConsentAsString());
+            this.auditEvent(AuditEventType.AUDIT_CONSENT, auditDetails);
+        }
     }
 }
