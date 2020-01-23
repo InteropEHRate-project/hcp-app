@@ -52,17 +52,10 @@ public class IndexServiceImpl implements IndexService {
             );
             patientDataCommand.setId(currentPatient.getPatient().getId());
 
-        } else {
-            patientDataCommand.setFirstName("Empty");
-            patientDataCommand.setLastName("Empty");
-            patientDataCommand.setId("Empty");
         }
         if (Objects.nonNull(currentPatient.getConsent())) {
             patientDataCommand.setConsent(currentPatient.getConsentAsString());
-        } else {
-            patientDataCommand.setConsent("Unavailable Consent");
         }
-
         indexCommand.setPatientDataCommand(patientDataCommand);
         return indexCommand;
     }
