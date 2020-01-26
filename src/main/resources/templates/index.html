@@ -57,25 +57,25 @@
             <div class="row justify-content-center">
                 <p></p>
             </div>
-            <div th:if="${index.patientDataCommand.getFirstName() != null || index.patientDataCommand.getLastName() != null || index.patientDataCommand.getId() != null}">
+            <div th:if="${index.patientDataCommand.hasData()}">
                 <div class="row justify-content-center">
                     <div class="card">
                         <div class="card-header">
                             <h5>General info about patient</h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" th:if="${index.patientDataCommand.getFirstName() != null}">
                             <h5 class="card-title">First Name</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getFirstName()}">first name</p>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" th:if="${index.patientDataCommand.getLastName() != null}">
                             <h5 class="card-title">Family Name</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getLastName()}">last name</p>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" th:if="${index.patientDataCommand.getId() != null}">
                             <h5 class="card-title">ID Patient</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getId()}">patient id</p>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
                             <h5 class="card-title">Consent</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getConsent()}">patient id</p>
                         </div>
