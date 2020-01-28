@@ -50,9 +50,10 @@
                 </tbody>
             </table>
             <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn disabled" style="background-color: lightgray" th:text="#{template.button.language}">Language Section</div>
                 <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn btn-primary" th:styleappend="${!medicationSummary.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/medication-summary/view-section')}" th:text="#{template.button.translate.patient}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${medicationSummary.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/medication-summary/view-section')}" th:text="#{template.button.translate.physician}">Translated version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!medicationSummary.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/medication-summary/view-section')}" th:text="#{template.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${medicationSummary.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/medication-summary/view-section')}" th:text="#{template.button.translated}">Translated version</a>
                 </div>
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/open-add-page}">Add</a>
