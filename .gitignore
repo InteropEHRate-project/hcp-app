@@ -69,5 +69,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Certificate files
+**/*.jks
+
 # -------------------------------------------------------------------------------
 
