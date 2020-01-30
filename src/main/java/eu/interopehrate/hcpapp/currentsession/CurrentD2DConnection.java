@@ -39,7 +39,7 @@ public class CurrentD2DConnection implements DisposableBean {
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
         CompletableFuture.runAsync(this::openConnection)
-                .thenRun(this::afterOpenConnection);
+                .thenRun(this::afterConnectionOpened);
     }
 
     public void close() {
@@ -62,7 +62,7 @@ public class CurrentD2DConnection implements DisposableBean {
         }
     }
 
-    private void afterOpenConnection() {
+    private void afterConnectionOpened() {
         try {
             this.d2DConnectionOperations.sendPractitionerIdentity(this.connectedThread);
         } catch (Exception e) {
