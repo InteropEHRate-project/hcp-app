@@ -65,6 +65,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private void afterConnectionOpened() {
         try {
             this.d2DConnectionOperations.sendPractitionerIdentity(this.connectedThread);
+            this.connectedThread.sendHCPCertificate();
         } catch (Exception e) {
             this.closeConnection();
             throw new RuntimeException(e);
@@ -96,6 +97,7 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
             try {
+                CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
                 CurrentD2DConnection.this.currentPatient.initPatient(patient);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();

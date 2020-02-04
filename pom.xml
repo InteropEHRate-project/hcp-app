@@ -75,9 +75,27 @@
             <version>${hapi.fhir.version}</version>
         </dependency>
         <dependency>
-            <groupId>S-D2D-E</groupId>
+            <groupId>eu.interopehrate</groupId>
             <artifactId>SD2DE</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ca.uhn.hapi</groupId>
+                    <artifactId>hapi-base</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ca.uhn.hapi.fhir</groupId>
+                    <artifactId>hapi-fhir-structures-r4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>eu.interopehrate.ihs</groupId>
@@ -111,4 +129,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>iehr-project-repo</id>
+            <url>http://213.249.46.206:8081/repository/maven-releases/</url>
+        </repository>
+    </repositories>
 </project>
