@@ -37,7 +37,7 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Identifier</th>
+                    <th>Code</th>
                     <th>Name</th>
                     <th>Clinical Status</th>
                     <th>Type</th>
@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="ai : ${allergyIntolerance.allergyIntoleranceInfo}">
-                    <td th:text="${{ai.identifier}}"></td>
+                    <td th:text="${{ai.code}}"></td>
                     <td style="background-color: azure" th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ai.name}}"></td>
                     <td th:text="${{ai.clinicalStatus}}"></td>
                     <td th:text="${{ai.type}}"></td>
