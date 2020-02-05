@@ -17,7 +17,7 @@ public class HapiToCommandDiagnosticResults implements Converter<Observation, Di
     public DiagnosticResultInfoCommand convert(Observation observation) {
         DiagnosticResultInfoCommand diagnosticResultInfoCommand = new DiagnosticResultInfoCommand();
 
-        if(!CollectionUtils.isEmpty(observation.getCode().getCoding())){
+        if (!CollectionUtils.isEmpty(observation.getCode().getCoding())) {
             diagnosticResultInfoCommand.setNameDiagnostic(observation
                     .getCode()
                     .getCoding()
@@ -27,15 +27,16 @@ public class HapiToCommandDiagnosticResults implements Converter<Observation, Di
             diagnosticResultInfoCommand.setCode(observation
                     .getCode()
                     .getCoding()
-                    .get(0)
-                    .getCode());
+                    .stream()
+                    .map(Coding::getCode)
+                    .collect(Collectors.joining(", ")));
         }
 
-        if(Objects.nonNull(observation.getValueQuantity().getValue())){
+        if (Objects.nonNull(observation.getValueQuantity().getValue())) {
             diagnosticResultInfoCommand.setValue(observation.getValueQuantity().getValue().doubleValue());
         }
 
-        if(Objects.nonNull(observation.getValueQuantity().getUnit())){
+        if (Objects.nonNull(observation.getValueQuantity().getUnit())) {
             diagnosticResultInfoCommand.setUnitOfMeasurement(observation.getValueQuantity().getUnit());
         }
 
