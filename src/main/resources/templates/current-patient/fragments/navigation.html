@@ -39,8 +39,8 @@
        th:text="#{fragment.current.patient.navigation.left.immunization}">Immunzations</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-procedure')} ? 'active' : ''"
-       href="../history-procedure/view-section.html"
-       th:href="@{/current-patient/history-procedure/view-section}"
+       href="../history-procedure/procedure/view-section.html"
+       th:href="@{/current-patient/history-procedure/procedure/view-section}"
        th:text="#{fragment.current.patient.navigation.left.history.procedure}">History of Procedure</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices')} ? 'active' : ''"
