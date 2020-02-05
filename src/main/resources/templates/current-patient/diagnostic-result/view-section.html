@@ -33,7 +33,7 @@
                     <a  href="#" class="btn btn-primary" th:styleappend="${diagnosticResult.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-result/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
-            <p><h3>Diagnostic Results</h3></p>
+            <p><h3 th:text="#{fragment.current.patient.navigation.left.results}">diagnostic results</h3></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>

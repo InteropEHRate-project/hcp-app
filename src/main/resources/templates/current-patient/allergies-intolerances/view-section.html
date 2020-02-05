@@ -33,7 +33,7 @@
                     <a href="#" class="btn btn-primary" th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies-intolerances/view-section')}"  th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
-            <p><h3>Allergies and Intolerances</h3></p>
+            <p><h3 th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">allergies and intolerances</h3></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
