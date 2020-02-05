@@ -23,7 +23,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_PLAN_OF_CARE_VIEW_SECTION = "current-patient/plan-care/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_VIEW_SECTION = "current-patient/social-history/view-section";
     String CURRENT_PATIENT_HISTORY_PREGNANCY_VIEW_SECTION = "current-patient/history-pregnancy/view-section";
-    String CURRENT_PATIENT_ACTIVE_DEVICES_VIEW_SECTION = "current-patient/active-devices/view-section";
+    String CURRENT_PATIENT_ADVANCE_DIRECTIVES_VIEW_SECTION = "current-patient/advance-directives/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_VIEW_SECTION = "current-patient/diagnostic-result/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_ADD_PAGE = "current-patient/diagnostic-result/add-info";
 }

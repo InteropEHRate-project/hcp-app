@@ -5,11 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
-@RequestMapping("/current-patient/active-devices")
-public class ActiveDevicesController {
+@RequestMapping("/current-patient/advance-directives")
+public class AdvanceDirectivesController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_ACTIVE_DEVICES_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_ADVANCE_DIRECTIVES_VIEW_SECTION;
     }
 }

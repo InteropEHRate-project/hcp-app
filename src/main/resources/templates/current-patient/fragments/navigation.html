@@ -79,10 +79,10 @@
        th:href="@{/current-patient/functional-status/view-section}"
        th:text="#{fragment.current.patient.navigation.left.functional-status}">Functional Status</a>
     <a class="flex-sm-fill text-sm-left nav-link"
-       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/active-devices')} ? 'active' : ''"
-       href="../active-devices/view-section.html"
-       th:href="@{/current-patient/active-devices/view-section}"
-       th:text="#{fragment.current.patient.navigation.left.active-devices}">Active Devices</a>
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/advance-directives')} ? 'active' : ''"
+       href="../advance-directives/view-section.html"
+       th:href="@{/current-patient/advance-directives/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.advance-directives}">Advance Directives</a>
 </div>
 </body>
 </html>
