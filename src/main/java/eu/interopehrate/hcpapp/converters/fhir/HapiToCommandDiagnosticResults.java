@@ -24,6 +24,11 @@ public class HapiToCommandDiagnosticResults implements Converter<Observation, Di
                     .stream()
                     .map(Coding::getDisplay)
                     .collect(Collectors.joining(", ")));
+            diagnosticResultInfoCommand.setCode(observation
+                    .getCode()
+                    .getCoding()
+                    .get(0)
+                    .getCode());
         }
 
         if(Objects.nonNull(observation.getValueQuantity().getValue())){

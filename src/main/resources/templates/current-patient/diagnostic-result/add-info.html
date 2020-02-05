@@ -40,6 +40,16 @@
                 <div class="form-row">
 
                         <div class="col-md-4">
+                            <label for="code">Code</label>
+                            <input id="code" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{code}"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('code')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('code')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <label for="nameDiagnostic">Name Diagnostic</label>
                             <input id="nameDiagnostic" type="text" class="form-control" th:classappend="${#fields.hasErrors('nameDiagnostic')} ? 'is-invalid' :''" th:field="*{nameDiagnostic}"/>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('nameDiagnostic')}">

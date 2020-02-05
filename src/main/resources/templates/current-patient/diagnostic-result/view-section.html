@@ -37,6 +37,7 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
+                    <th>Code</th>
                     <th>Name of the Diagnostic</th>
                     <th>Value</th>
                     <th>Unit of Measurement</th>
@@ -44,6 +45,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="dr : ${diagnosticResult.diagnosticResultInfoCommands}">
+                    <td th:text="${{dr.code}}"></td>
                     <td style="background-color: azure" th:style="${!diagnosticResult.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{dr.nameDiagnostic}}"></td>
                     <td th:text="${{dr.value}}"></td>
                     <td th:text="${{dr.unitOfMeasurement}}"></td>

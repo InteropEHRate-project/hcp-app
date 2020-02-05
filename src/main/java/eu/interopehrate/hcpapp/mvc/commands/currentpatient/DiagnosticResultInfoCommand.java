@@ -17,4 +17,7 @@ public class DiagnosticResultInfoCommand {
     @NotEmpty
     @NotNull
     public String unitOfMeasurement;
+    @NotEmpty
+    @NotNull
+    public String code;
 }
