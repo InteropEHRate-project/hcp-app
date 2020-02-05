@@ -59,10 +59,10 @@
        th:href="@{/current-patient/history-past-illness/view-section}"
        th:text="#{fragment.current.patient.navigation.left.history-past-illness}">History of Past Illness</a>
     <a class="flex-sm-fill text-sm-left nav-link"
-       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-pregnancy')} ? 'active' : ''"
-       href="../history-pregnancy/view-section.html"
-       th:href="@{/current-patient/history-pregnancy/view-section}"
-       th:text="#{fragment.current.patient.navigation.left.history-pregnancy}">History Pregnancy</a>
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/pregnancy')} ? 'active' : ''"
+       href="../pregnancy/view-section.html"
+       th:href="@{/current-patient/pregnancy/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.pregnancy}">Pregnancy</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/social-history')} ? 'active' : ''"
        href="../social-history/view-section.html"
