@@ -9,8 +9,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class AllergyIntoleranceInfoCommand {
-    @NotEmpty
-    @NotNull
     private String identifier;
     @NotEmpty
     @NotNull
@@ -27,4 +25,7 @@ public class AllergyIntoleranceInfoCommand {
     @NotEmpty
     @NotNull
     private String criticality;
+    @NotEmpty
+    @NotNull
+    private String code;
 }

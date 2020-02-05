@@ -47,6 +47,13 @@ public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntoler
                     .map(Coding::getDisplay)
                     .collect(Collectors.joining(", "))
             );
+            command.setCode(allergyIntolerance
+                    .getCode()
+                    .getCoding()
+                    .stream()
+                    .map(Coding::getCode)
+                    .collect(Collectors.joining(", "))
+            );
         }
         return command;
     }
