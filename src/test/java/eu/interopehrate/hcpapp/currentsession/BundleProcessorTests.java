@@ -63,6 +63,6 @@ public class BundleProcessorTests {
     @Test
     public void testObservationList() {
         List<Observation> observationList = bundleProcessor.observationList();
-        assertEquals(13, observationList.size());
+        assertEquals(15, observationList.size());
     }
 }
