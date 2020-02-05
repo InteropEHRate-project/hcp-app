@@ -51,7 +51,7 @@ public class BundleProcessorTests {
     @Test
     public void testMedicationList() {
         List<Medication> medicationList = bundleProcessor.medicationList();
-        assertEquals(6, medicationList.size());
+        assertEquals(0, medicationList.size());
     }
 
     @Test
@@ -63,6 +63,6 @@ public class BundleProcessorTests {
     @Test
     public void testObservationList() {
         List<Observation> observationList = bundleProcessor.observationList();
-        assertEquals(15, observationList.size());
+        assertEquals(2, observationList.size());
     }
 }
