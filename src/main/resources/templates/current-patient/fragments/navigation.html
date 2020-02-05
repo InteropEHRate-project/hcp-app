@@ -52,7 +52,11 @@
        href="../diagnostic-result/view-section.html"
        th:href="@{/current-patient/diagnostic-result/view-section}"
        th:text="#{fragment.current.patient.navigation.left.results}">Results</a>
-    <!-- Vital signs -->
+    <a class="flex-sm-fill text-sm-left nav-link"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/vital-signs')} ? 'active' : ''"
+       href="../vital-signs/view-section.html"
+       th:href="@{/current-patient/vital-signs/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.vital-signs}">Vital Signs</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-past-illness')} ? 'active' : ''"
        href="../history-past-illness/view-section.html"
