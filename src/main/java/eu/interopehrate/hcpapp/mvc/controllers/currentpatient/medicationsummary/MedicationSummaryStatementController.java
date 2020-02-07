@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/current-patient/medication-summary/statement")
-public class MedicationSummaryMedicationStatementController {
+public class MedicationSummaryStatementController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_MEDICATION_STATEMENT_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_VIEW_SECTION;
     }
 }
