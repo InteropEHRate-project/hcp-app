@@ -19,8 +19,8 @@
 <div th:fragment="navigation-left" class="nav flex-column nav-pills">
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medication-summary')} ? 'active' : ''"
-       href="../medication-summary/view-section.html"
-       th:href="@{/current-patient/medication-summary/view-section}"
+       href="../medication-summary/medication-statement/view-section.html"
+       th:href="@{/current-patient/medication-summary/statement/view-section}"
        th:text="#{fragment.current.patient.navigation.left.medication.summary}">Medication Summary</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/allergies-intolerances')} ? 'active' : ''"

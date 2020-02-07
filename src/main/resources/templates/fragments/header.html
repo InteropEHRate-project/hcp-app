@@ -29,7 +29,7 @@
                     <a class="nav-link" href="../index.html" th:href="@{/index}" th:text="#{fragment.main.navigation.top.index}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient')} ? 'active' : ''">
-                    <a class="nav-link" href="../current-patient/medication-summary/view-section.html" th:href="@{/current-patient/medication-summary/view-section}" th:text="#{fragment.main.navigation.top.current.patient}">Current Patient</a>
+                    <a class="nav-link" href="../current-patient/medication-summary/view-section.html" th:href="@{/current-patient/medication-summary/statement/view-section}" th:text="#{fragment.main.navigation.top.current.patient}">Current Patient</a>
                 </li>
                 <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'administration')} ? 'active' : ''">
                     <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.main.navigation.top.administration}">Administration</a>

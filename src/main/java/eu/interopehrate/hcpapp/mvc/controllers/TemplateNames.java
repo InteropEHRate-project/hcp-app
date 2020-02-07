@@ -11,6 +11,8 @@ public interface TemplateNames {
 
     // Current Patient
     String CURRENT_PATIENT_MEDICATION_SUMMARY_VIEW_SECTION = "current-patient/medication-summary/view-section";
+    String CURRENT_PATIENT_MEDICATION_SUMMARY_MEDICATION_STATEMENT_VIEW_SECTION = "current-patient/medication-summary/medication-statement/view-section";
+    String CURRENT_PATIENT_MEDICATION_SUMMARY_MEDICATION_VIEW_SECTION = "current-patient/medication-summary/medication/view-section";
     String CURRENT_PATIENT_MEDICATION_SUMMARY_ADD_PAGE = "current-patient/medication-summary/add-info";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION = "current-patient/allergies-intolerances/view-section";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE="current-patient/allergies-intolerances/add-info";
