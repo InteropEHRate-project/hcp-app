@@ -31,7 +31,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public IndexCommand d2dConnectionState() throws Exception {
+    public IndexCommand indexCommand() throws Exception {
         IndexCommand indexCommand = new IndexCommand();
         indexCommand.setConnectionState(currentD2DConnection.connectionState());
         if (D2DConnectionState.PENDING_DEVICE.equals(currentD2DConnection.connectionState())) {

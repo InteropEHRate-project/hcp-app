@@ -15,7 +15,7 @@ public class IndexController {
 
     @RequestMapping({"/", "/index"})
     public String indexTemplate(Model model) throws Exception {
-        model.addAttribute("index", indexService.d2dConnectionState());
+        model.addAttribute("index", indexService.indexCommand());
         return TemplateNames.INDEX_TEMPLATE;
     }
 
