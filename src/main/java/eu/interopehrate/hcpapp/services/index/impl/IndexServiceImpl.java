@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.index.impl;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.currentsession.D2DConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
@@ -33,8 +34,10 @@ public class IndexServiceImpl implements IndexService {
     public IndexCommand d2dConnectionState() throws Exception {
         IndexCommand indexCommand = new IndexCommand();
         indexCommand.setConnectionState(currentD2DConnection.connectionState());
-        indexCommand.setBluetoothConnectionInfoImage(this.connectionInfoQRCodePng());
-        indexCommand.setBluetoothConnectionInfoImageSize(bluetoothConnectionInfoImageSize);
+        if (D2DConnectionState.PENDING_DEVICE.equals(currentD2DConnection.connectionState())) {
+            indexCommand.setBluetoothConnectionInfoImage(this.connectionInfoQRCodePng());
+            indexCommand.setBluetoothConnectionInfoImageSize(bluetoothConnectionInfoImageSize);
+        }
 
         IndexPatientDataCommand patientDataCommand = new IndexPatientDataCommand();
         if (Objects.nonNull(currentPatient.getPatient()) && Objects.nonNull(currentPatient.getPatient().getName())) {
