@@ -76,8 +76,8 @@
         </dependency>
         <dependency>
             <groupId>eu.interopehrate</groupId>
-            <artifactId>SD2DE</artifactId>
-            <version>0.0.3</version>
+            <artifactId>sd2de</artifactId>
+            <version>0.0.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>ca.uhn.hapi</groupId>
