@@ -46,7 +46,11 @@
                     </div>
                     <div class="col-md-4">
                         <label for="status" th:text="#{template.current.patient.medication.summary.statement.status}">status</label>
-                        <input id="status" type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" th:field="*{status}">
+                        <select id="status" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" th:field="*{status}">
+                            <option value="" th:text="#{input.select.option.no.value}">Select a value</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('status')}" th:text="${err}">err</li>
