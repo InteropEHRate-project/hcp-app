@@ -24,7 +24,7 @@
         </div>
         <div class="col-9">
             <div th:replace="current-patient/medication-summary/fragments/navigation::navigation-top">navigation-top</div>
-            <p><h5>Add Medication Statement</h5></p>
+            <p><h5 th:text="#{template.current.patient.medication.summary.statement.add}">add medication statement</h5></p>
             <form  action="#" th:action="@{/current-patient/medication-summary/statement/save-add}" th:object="${medicationSummaryStatementCommand}" method="post">
                 <div class="text-right"><br>
                     <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">save</button>

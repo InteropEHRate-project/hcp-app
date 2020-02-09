@@ -35,10 +35,10 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
-                        <th>Medication</th>
-                        <th>Status</th>
-                        <th>Effective</th>
-                        <th>Dosage - Patient instructions</th>
+                        <th th:text="#{template.current.patient.medication.summary.statement.medication}">medication</th>
+                        <th th:text="#{template.current.patient.medication.summary.statement.status}">status</th>
+                        <th th:text="#{template.current.patient.medication.summary.statement.effective}">effective</th>
+                        <th th:text="#{template.current.patient.medication.summary.statement.dosage.patient.instructions}">dosage - patient instructions</th>
                     </tr>
                 </thead>
                 <tbody>
