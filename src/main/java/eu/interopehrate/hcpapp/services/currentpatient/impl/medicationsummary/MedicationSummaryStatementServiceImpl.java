@@ -7,6 +7,8 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Med
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryStatementService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class MedicationSummaryStatementServiceImpl implements MedicationSummaryStatementService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandMedicationSummaryStatement hapiToCommandMedicationSummaryStatement;
+    private final List<MedicationSummaryStatementCommand> medicationStatementCommands = new ArrayList<>();
 
     public MedicationSummaryStatementServiceImpl(CurrentPatient currentPatient,
                                                  HapiToCommandMedicationSummaryStatement hapiToCommandMedicationSummaryStatement) {
@@ -23,13 +26,20 @@ public class MedicationSummaryStatementServiceImpl implements MedicationSummaryS
 
     @Override
     public MedicationSummaryCommand statementCommand() {
-        List<MedicationSummaryStatementCommand> medicationStatements = currentPatient.medicationStatementList()
+        var medicationStatements = currentPatient.medicationStatementList()
                 .stream()
                 .map(hapiToCommandMedicationSummaryStatement::convert)
                 .collect(Collectors.toList());
+        medicationStatements.addAll(medicationStatementCommands);
+        medicationStatements.sort(Comparator.comparing(MedicationSummaryStatementCommand::getEffective).reversed());
         return MedicationSummaryCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .statementList(medicationStatements)
                 .build();
+    }
+
+    @Override
+    public void insertMedicationSummaryStatement(MedicationSummaryStatementCommand medicationSummaryStatementCommand) {
+        this.medicationStatementCommands.add(medicationSummaryStatementCommand);
     }
 }

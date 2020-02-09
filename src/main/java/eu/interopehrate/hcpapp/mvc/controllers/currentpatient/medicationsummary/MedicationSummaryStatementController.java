@@ -42,7 +42,7 @@ public class MedicationSummaryStatementController {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_ADD_PAGE;
         }
-        //medicationSummaryService.insertMedicationSummary(medicationSummaryInfoCommand);
+        medicationSummaryStatementService.insertMedicationSummaryStatement(medicationSummaryStatementCommand);
         return "redirect:/current-patient/medication-summary/statement/view-section";
     }
 }
