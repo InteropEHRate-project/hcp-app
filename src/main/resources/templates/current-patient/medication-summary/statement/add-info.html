@@ -10,10 +10,15 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          th:href="@{/webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
@@ -26,6 +31,57 @@
             <div th:replace="current-patient/medication-summary/fragments/navigation::navigation-top">navigation-top</div>
             <p><h5 th:text="#{template.current.patient.medication.summary.statement.add}">add medication statement</h5></p>
             <form  action="#" th:action="@{/current-patient/medication-summary/statement/save-add}" th:object="${medicationSummaryStatementCommand}" method="post">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:text="#{template.errors.message}">please correct the errors below</p>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <label for="medication" th:text="#{template.current.patient.medication.summary.statement.medication}">medication</label>
+                        <input id="medication" type="text" class="form-control" th:classappend="${#fields.hasErrors('medication')} ? 'is-invalid' :''" th:field="*{medication}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('medication')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('medication')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="status" th:text="#{template.current.patient.medication.summary.statement.status}">status</label>
+                        <input id="status" type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" th:field="*{status}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('status')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="effective" th:text="#{template.current.patient.medication.summary.statement.effective}">effective</label>
+                        <input id="effective" type="text" class="form-control" th:classappend="${#fields.hasErrors('effective')} ? 'is-invalid' :''" readonly th:field="*{effective}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('effective')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('effective')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#effective').datetimepicker({
+                                    format: 'dd-mm-yyyy',
+                                    minView: "month"
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <label for="patientInstructions" th:text="#{template.current.patient.medication.summary.statement.dosage.patient.instructions}">patient instructions</label>
+                        <input id="patientInstructions" type="text" class="form-control" th:classappend="${#fields.hasErrors('patientInstructions')} ? 'is-invalid' :''" th:field="*{patientInstructions}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('patientInstructions')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('patientInstructions')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="text-right"><br>
                     <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">save</button>
                 </div>
