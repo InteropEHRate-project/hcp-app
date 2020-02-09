@@ -47,7 +47,7 @@
                     <div class="col-md-4">
                         <label for="status" th:text="#{template.current.patient.medication.summary.statement.status}">status</label>
                         <select id="status" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" th:field="*{status}">
-                            <option value="" th:text="#{input.select.option.no.value}">Select a value</option>
+                            <option value="" selected th:text="#{input.select.option.no.value}">choose...</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </select>
