@@ -1,12 +1,12 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Builder
 @Getter
+@Setter
 public class MedicationSummaryStatementCommand {
     private String medication;
     private String status;
