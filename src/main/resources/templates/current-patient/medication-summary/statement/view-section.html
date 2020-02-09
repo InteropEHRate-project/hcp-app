@@ -32,6 +32,25 @@
                 </div>
             </div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.medication.summary.medication.statement}">medication statement</h5></p>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th>Medication</th>
+                    <th>Status</th>
+                    <th>Effective</th>
+                    <th>Dosage - Patient instructions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ms : ${statementCommand.statementList}">
+                    <td th:text="${{ms.medication}}"></td>
+                    <td th:text="${{ms.status}}"></td>
+                    <td th:text="${{#temporals.format(ms.effective, 'dd-MM-yyyy')}}"></td>
+                    <td th:text="${{ms.patientInstructions}}"></td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>
