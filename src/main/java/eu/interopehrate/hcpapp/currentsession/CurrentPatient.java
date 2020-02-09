@@ -70,6 +70,14 @@ public class CurrentPatient {
         }
     }
 
+    public List<MedicationStatement> medicationStatementList() {
+        if (Objects.isNull(patientSummaryBundle())) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(patientSummaryBundle()).medicationStatementList();
+        }
+    }
+
     public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
         this.displayTranslatedVersion = displayTranslatedVersion;
     }
