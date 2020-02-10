@@ -74,7 +74,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
     private void closeConnection() {
         try {
-            if (Objects.nonNull(connectedThread)) {
+            if (Objects.nonNull(bluetoothConnection) && Objects.nonNull(connectedThread)) {
                 this.bluetoothConnection.closeConnection();
             }
         } catch (Exception e) {
