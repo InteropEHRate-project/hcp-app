@@ -2,9 +2,8 @@ package eu.interopehrate.hcpapp.services.currentpatient;
 
 import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.DiagnosticResultInfoCommand;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Observation;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +38,7 @@ public class DiagnosticResultServiceTests {
     public void testDiagnosticResultSection() {
         Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(initialJsonFhir);
         currentPatient.initPatientSummary(patientSummaryBundle);
-        List<DiagnosticResultInfoCommand> diagnosticResultInfoCommands = diagnosticResultService.diagnosticResultSection();
+        List<Observation> diagnosticResultInfoCommands = currentPatient.observationList();
         assertTrue(diagnosticResultInfoCommands.size() > 0);
     }
 
@@ -47,6 +46,6 @@ public class DiagnosticResultServiceTests {
     @Test
     public void testDiagnosticResultCode() {
         System.out.println(currentPatient.observationList().get(4).getCode().getCoding().get(0).getCode());
-}
+    }
 
 }
