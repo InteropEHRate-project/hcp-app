@@ -25,14 +25,14 @@ public class DiagnosticResultServiceImpl implements DiagnosticResultService {
 
     @Override
     public DiagnosticResultCommand diagnosticResultCommand() {
-        var diagnoticResults = currentPatient.observationList()
+        var diagnosticResults = currentPatient.observationList()
                 .stream()
                 .map(hapiToCommandDiagnosticResults::convert)
                 .collect(Collectors.toList());
-        diagnoticResults.addAll(diagnosticResultInfoCommands);
+        diagnosticResults.addAll(diagnosticResultInfoCommands);
         return DiagnosticResultCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                .diagnosticResultInfoList(diagnoticResults)
+                .diagnosticResultInfoList(diagnosticResults)
                 .build();
     }
 
