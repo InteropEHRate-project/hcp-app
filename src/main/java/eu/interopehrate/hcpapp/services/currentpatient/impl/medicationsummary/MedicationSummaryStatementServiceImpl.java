@@ -31,7 +31,7 @@ public class MedicationSummaryStatementServiceImpl implements MedicationSummaryS
                 .map(hapiToCommandMedicationSummaryStatement::convert)
                 .collect(Collectors.toList());
         medicationStatements.addAll(medicationStatementCommands);
-        medicationStatements.sort(Comparator.comparing(MedicationSummaryStatementCommand::getMedication).reversed());
+        medicationStatements.sort(Comparator.comparing(MedicationSummaryStatementCommand::getEffective).reversed());
         return MedicationSummaryCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .statementList(medicationStatements)
