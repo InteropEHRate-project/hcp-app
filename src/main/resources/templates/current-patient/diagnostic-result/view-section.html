@@ -44,7 +44,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="dr : ${diagnosticResult.diagnosticResultInfoCommands}">
+                <tr th:each="dr : ${diagnosticResult.diagnosticResultInfoList}">
                     <td th:text="${{dr.code}}"></td>
                     <td style="background-color: azure" th:style="${!diagnosticResult.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{dr.nameDiagnostic}}"></td>
                     <td th:text="${{dr.value}}"></td>
