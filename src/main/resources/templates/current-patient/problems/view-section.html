@@ -28,30 +28,36 @@
             <div class="m-5"></div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
-                    <div class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">Language Section</div>
                     <div class="btn-group mr-2" role="group">
-                        <a  href="#" class="btn btn-primary" th:styleappend="${!problems.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/problems/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                        <a  href="#" class="btn btn-primary" th:styleappend="${problems.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/problems/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+                        <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+                        <a href="#" class="btn btn-primary" th:styleappend="${!problemCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/problems/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                        <a href="#" class="btn btn-primary" th:styleappend="${problemCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/problems/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
                     </div>
                 </div>
             </div>
             <p><h3 th:text="#{fragment.current.patient.navigation.left.problems}">problems</h3></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
-                <tr>
-                    <th>nameProblem</th>
-                    <th>idProblem</th>
-                    <th>code</th>
-                    <th>date</th>
-                </tr>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Set on</th>
+                        <th>Category code</th>
+                        <th>Category name</th>
+                        <th>Clinical status</th>
+                        <th>Verification status</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pr : ${problems.problemsInfoCommands}">
-                    <td style="background-color: azure" th:style="${!problems.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{pr.nameProblem}}"></td>
-                    <td th:text="${{pr.idProblem}}"></td>
-                    <td th:text="${{pr.code}}"></td>
-                    <td th:text="${{#temporals.format(pr.date, 'dd-MM-yyyy')}}"></td>
-                </tr>
+                    <tr th:each="pr : ${problemCommand.problemsInfoCommands}">
+                        <td th:text="${pr.code}">code</td>
+                        <td th:text="${pr.code}">name</td>
+                        <td th:text="${{#temporals.format(pr.onSet, 'dd-MM-yyyy')}}"></td>
+                        <td th:text="${pr.categoryCode}">category code</td>
+                        <td th:text="${pr.categoryName}">category name</td>
+                        <td th:text="${pr.clinicalStatus}">clinical status</td>
+                        <td th:text="${pr.verificationStatus}">verification status</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

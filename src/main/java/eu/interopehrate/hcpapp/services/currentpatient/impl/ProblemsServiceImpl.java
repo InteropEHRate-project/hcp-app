@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandProblems;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.ProblemsService;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,16 @@ public class ProblemsServiceImpl implements ProblemsService {
     }
 
     @Override
-    public List<ProblemsInfoCommand> problemsSection() {
+    public ProblemsCommand problemsSection() {
         List<ProblemsInfoCommand> problemsList = new ArrayList<>(problemsInfoCommandList);
         problemsList.addAll(currentPatient.conditionsList()
                 .stream()
                 .map(hapiToCommandProblems::convert)
                 .collect(Collectors.toList()));
-        return problemsList;
+        return ProblemsCommand.builder()
+                .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                .problemsInfoCommands(problemsList)
+                .build();
     }
 
     @Override

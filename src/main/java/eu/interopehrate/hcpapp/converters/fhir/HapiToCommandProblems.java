@@ -22,7 +22,7 @@ public class HapiToCommandProblems implements Converter<Condition, ProblemsInfoC
         ProblemsInfoCommand problemsInfoCommand = new ProblemsInfoCommand();
 
         if(!CollectionUtils.isEmpty(condition.getCode().getCoding())){
-            problemsInfoCommand.setNameProblem(condition
+            problemsInfoCommand.setName(condition
                     .getCode()
                     .getCoding()
                     .stream()
@@ -36,13 +36,13 @@ public class HapiToCommandProblems implements Converter<Condition, ProblemsInfoC
                     .collect(Collectors.joining(",")));
         }
 
-        if(Objects.nonNull(condition.getId())){
-            problemsInfoCommand.setIdProblem(condition.getIdBase());
-        }
+//        if(Objects.nonNull(condition.getId())){
+//            problemsInfoCommand.setIdProblem(condition.getIdBase());
+//        }
 
         if (Objects.nonNull(condition.getOnsetDateTimeType())) {
             Date onsetDateTime = ((DateTimeType)condition.getOnsetDateTimeType()).getValue();
-            problemsInfoCommand.setDate(onsetDateTime.toInstant()
+            problemsInfoCommand.setOnSet(onsetDateTime.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());
         }
