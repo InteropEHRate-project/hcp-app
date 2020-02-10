@@ -24,11 +24,11 @@ public class ProblemsServiceImpl implements ProblemsService {
 
     @Override
     public ProblemsCommand problemsSection() {
-        List<ProblemsInfoCommand> problemsList = new ArrayList<>(problemsInfoCommandList);
-        problemsList.addAll(currentPatient.conditionsList()
+        var problemsList = currentPatient.conditionsList()
                 .stream()
                 .map(hapiToCommandProblems::convert)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        problemsList.addAll(problemsInfoCommandList);
         return ProblemsCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .problemsInfoCommands(problemsList)
