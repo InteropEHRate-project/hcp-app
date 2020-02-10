@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergyIntolerance;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService {
     private CurrentPatient currentPatient;
     private HapiToCommandAllergyIntolerance hapiToCommandAllergyIntolerance;
-    private List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfoCommandList = new ArrayList<>();
+    private List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfoCommands = new ArrayList<>();
 
     public AllergyIntoleranceServiceImpl(CurrentPatient currentPatient,
                                          HapiToCommandAllergyIntolerance hapiToCommandAllergyIntolerance) {
@@ -23,17 +24,20 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
     }
 
     @Override
-    public List<AllergyIntoleranceInfoCommand> allergyIntoleranceSection() {
-        List<AllergyIntoleranceInfoCommand> allergyIntoleranceList = new ArrayList<>(allergyIntoleranceInfoCommandList);
-        allergyIntoleranceList.addAll(currentPatient.allergyIntoleranceList()
+    public AllergyIntoleranceCommand allergyIntoleranceInfoCommand() {
+        var allergiesIntolerances = currentPatient.allergyIntoleranceList()
                 .stream()
                 .map(hapiToCommandAllergyIntolerance::convert)
-                .collect(Collectors.toList()));
-        return allergyIntoleranceList;
+                .collect(Collectors.toList());
+        allergiesIntolerances.addAll(allergyIntoleranceInfoCommands);
+        return AllergyIntoleranceCommand.builder()
+                .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                .allergyIntoleranceList(allergiesIntolerances)
+                .build();
     }
 
     @Override
     public void insertAllergyIntolerance(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand) {
-        allergyIntoleranceInfoCommandList.add(allergyIntoleranceInfoCommand);
+        allergyIntoleranceInfoCommands.add(allergyIntoleranceInfoCommand);
     }
 }

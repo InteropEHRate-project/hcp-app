@@ -46,7 +46,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="ai : ${allergyIntolerance.allergyIntoleranceInfo}">
+                <tr th:each="ai : ${allergyIntolerance.allergyIntoleranceList}">
                     <td th:text="${{ai.code}}"></td>
                     <td style="background-color: azure" th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ai.name}}"></td>
                     <td th:text="${{ai.clinicalStatus}}"></td>

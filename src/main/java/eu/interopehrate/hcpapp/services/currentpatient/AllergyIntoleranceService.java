@@ -1,11 +1,10 @@
 package eu.interopehrate.hcpapp.services.currentpatient;
 
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
 
-import java.util.List;
-
 public interface AllergyIntoleranceService {
-    List<AllergyIntoleranceInfoCommand> allergyIntoleranceSection();
+    AllergyIntoleranceCommand allergyIntoleranceInfoCommand();
 
-   void insertAllergyIntolerance(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand);
+    void insertAllergyIntolerance(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand);
 }
