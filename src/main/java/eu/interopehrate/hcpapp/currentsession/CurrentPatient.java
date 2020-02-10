@@ -70,6 +70,15 @@ public class CurrentPatient {
         }
     }
 
+    public List<Condition> conditionsList() {
+        if (Objects.isNull(patientSummaryBundle())) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(patientSummaryBundle()).conditionList();
+        }
+    }
+
+
     public List<MedicationStatement> medicationStatementList() {
         if (Objects.isNull(patientSummaryBundle())) {
             return Collections.emptyList();
