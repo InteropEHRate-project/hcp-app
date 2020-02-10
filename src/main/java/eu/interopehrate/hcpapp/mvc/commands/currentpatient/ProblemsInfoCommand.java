@@ -11,16 +11,25 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ProblemsInfoCommand {
-    @NotEmpty
-    @NotNull
-    public String nameProblem;
     @NotNull
     @NotEmpty
-    public String idProblem;
-    @NotNull
+    private String code;
     @NotEmpty
-    public String code;
+    @NotNull
+    private String name;
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    public LocalDate date;
+    private LocalDate onSet;
+    @NotNull
+    @NotEmpty
+    private String categoryCode;
+    @NotNull
+    @NotEmpty
+    private String categoryName;
+    @NotNull
+    @NotEmpty
+    private String clinicalStatus;
+    @NotNull
+    @NotEmpty
+    private String verificationStatus;
 }
