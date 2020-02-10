@@ -61,9 +61,9 @@
                     <tr th:each="pr : ${problemCommand.problemInfoCommand}">
                         <td th:text="${pr.code}">code</td>
                         <td th:text="${pr.name}">name</td>
-                        <td th:text="${{#temporals.format(pr.onSet, 'dd-MM-yyyy')}}"></td>
+                        <td th:text="${{#temporals.format(pr.onSet, 'dd-MM-yyyy')}}">on set</td>
                         <td th:text="${pr.categoryCode}">category code</td>
-                        <td th:text="${pr.categoryName}">category name</td>
+                        <td style="background-color: azure" th:style="${!problemCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${pr.categoryName}">category name</td>
                         <td th:text="${pr.clinicalStatus}">clinical status</td>
                         <td th:text="${pr.verificationStatus}">verification status</td>
                     </tr>
