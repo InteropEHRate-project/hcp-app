@@ -51,7 +51,7 @@
                 <tbody>
                     <tr th:each="pr : ${problemCommand.problemInfoCommand}">
                         <td th:text="${pr.code}">code</td>
-                        <td th:text="${pr.code}">name</td>
+                        <td th:text="${pr.name}">name</td>
                         <td th:text="${{#temporals.format(pr.onSet, 'dd-MM-yyyy')}}"></td>
                         <td th:text="${pr.categoryCode}">category code</td>
                         <td th:text="${pr.categoryName}">category name</td>
