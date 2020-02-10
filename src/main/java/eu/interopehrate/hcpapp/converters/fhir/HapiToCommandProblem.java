@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.converters.fhir;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemsInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemInfoCommand;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Condition;
 
@@ -15,20 +15,20 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class HapiToCommandProblems implements Converter<Condition, ProblemsInfoCommand> {
+public class HapiToCommandProblem implements Converter<Condition, ProblemInfoCommand> {
 
     @Override
-    public ProblemsInfoCommand convert(Condition condition) {
-        ProblemsInfoCommand problemsInfoCommand = new ProblemsInfoCommand();
+    public ProblemInfoCommand convert(Condition condition) {
+        ProblemInfoCommand problemInfoCommand = new ProblemInfoCommand();
 
         if(!CollectionUtils.isEmpty(condition.getCode().getCoding())){
-            problemsInfoCommand.setName(condition
+            problemInfoCommand.setName(condition
                     .getCode()
                     .getCoding()
                     .stream()
                     .map(Coding::getDisplay)
                     .collect(Collectors.joining(",")));
-            problemsInfoCommand.setCode(condition
+            problemInfoCommand.setCode(condition
                     .getCode()
                     .getCoding()
                     .stream()
@@ -42,11 +42,11 @@ public class HapiToCommandProblems implements Converter<Condition, ProblemsInfoC
 
         if (Objects.nonNull(condition.getOnsetDateTimeType())) {
             Date onsetDateTime = ((DateTimeType)condition.getOnsetDateTimeType()).getValue();
-            problemsInfoCommand.setOnSet(onsetDateTime.toInstant()
+            problemInfoCommand.setOnSet(onsetDateTime.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());
         }
 
-        return problemsInfoCommand;
+        return problemInfoCommand;
     }
 }

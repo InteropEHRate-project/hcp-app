@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemsInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.currentpatient.ProblemsService;
+import eu.interopehrate.hcpapp.services.currentpatient.ProblemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,34 +15,34 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/current-patient/problems")
-public class ProblemsController {
-    private ProblemsService problemsService;
+public class ProblemController {
+    private ProblemService problemService;
 
-    public ProblemsController(ProblemsService problemsService) {
-        this.problemsService = problemsService;
+    public ProblemController(ProblemService problemService) {
+        this.problemService = problemService;
     }
 
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
-        model.addAttribute("problemCommand", problemsService.problemsSection());
+        model.addAttribute("problemCommand", problemService.problemsSection());
         return TemplateNames.CURRENT_PATIENT_PROBLEMS_VIEW_SECTION;
     }
 
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
-        model.addAttribute("problemsInfoCommand", new ProblemsInfoCommand());
+        model.addAttribute("problemInfoCommand", new ProblemInfoCommand());
         return TemplateNames.CURRENT_PATIENT_PROBLEMS_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute ProblemsInfoCommand problemsInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute ProblemInfoCommand problemInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_PROBLEMS_ADD_PAGE;
         }
-        problemsService.insertProblem(problemsInfoCommand);
+        problemService.insertProblem(problemInfoCommand);
         return "redirect:/current-patient/problems/view-section";
     }
 }

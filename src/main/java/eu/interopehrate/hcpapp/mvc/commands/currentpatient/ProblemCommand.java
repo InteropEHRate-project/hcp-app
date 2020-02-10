@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class ProblemsCommand {
+public class ProblemCommand {
     private Boolean displayTranslatedVersion;
-    private List<ProblemsInfoCommand> problemsInfoCommands;
+    private List<ProblemInfoCommand> problemInfoCommand;
 }
