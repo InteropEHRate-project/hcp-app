@@ -20,7 +20,8 @@ public interface TemplateNames {
     String CURRENT_PATIENT_IMMUNIZATIONS_VIEW_SECTION = "current-patient/immunization/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_PROCEDURE_VIEW_SECTION = "current-patient/history-procedure/procedure/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_ORGANIZATION_VIEW_SECTION = "current-patient/history-procedure/organization/view-section";
-    String CURRENT_PATIENT_MEDICAL_DEVICES_VIEW_SECTION = "current-patient/medical-devices/view-section";
+    String CURRENT_PATIENT_MEDICAL_DEVICES_DEVICE_VIEW_SECTION="current-patient/medical-devices/device/view-section";
+    String CURRENT_PATIENT_MEDICAL_DEVICES_USE_DEVICE_STATEMENT_VIEW_SECTION="current-patient/medical-devices/use-device-statement/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_VIEW_SECTION = "current-patient/diagnostic-result/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_ADD_PAGE = "current-patient/diagnostic-result/add-info";
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/vital-signs/view-section";
