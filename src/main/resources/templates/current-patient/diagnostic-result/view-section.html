@@ -26,13 +26,6 @@
         </div>
         <div class="col-9">
             <div class="m-5"></div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!diagnosticResult.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-result/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${diagnosticResult.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-result/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
-                </div>
-            </div>
             <p><h3 th:text="#{fragment.current.patient.navigation.left.results}">diagnostic results</h3></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
@@ -44,18 +37,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="dr : ${diagnosticResult.diagnosticResultInfoList}">
-                    <td th:text="${{dr.code}}"></td>
-                    <td style="background-color: azure" th:style="${!diagnosticResult.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{dr.nameDiagnostic}}"></td>
-                    <td th:text="${{dr.value}}"></td>
-                    <td th:text="${{dr.unitOfMeasurement}}"></td>
-                </tr>
                 </tbody>
             </table>
             <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-result/open-add-page}">Add</a>
-                </div>
             </div>
         </div>
     </div>
