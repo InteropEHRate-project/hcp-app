@@ -22,10 +22,10 @@ public interface TemplateNames {
     String CURRENT_PATIENT_HISTORY_PROCEDURE_ORGANIZATION_VIEW_SECTION = "current-patient/history-procedure/organization/view-section";
     String CURRENT_PATIENT_MEDICAL_DEVICES_DEVICE_VIEW_SECTION="current-patient/medical-devices/device/view-section";
     String CURRENT_PATIENT_MEDICAL_DEVICES_USE_DEVICE_STATEMENT_VIEW_SECTION="current-patient/medical-devices/use-device-statement/view-section";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY = "current-patient/diagnostic-results/laboratory-results/observation-laboratory";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_SPECIMEN = "current-patient/diagnostic-results/laboratory-results/specimen";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_ORGANIZATION_LABORATORY = "current-patient/diagnostic-results/laboratory-results/organization-laboratory";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA = "current-patient/diagnostic-results/laboratory-results/observation-laboratory-media";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW = "current-patient/diagnostic-results/laboratory-results/observation-laboratory-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_SPECIMEN_VIEW = "current-patient/diagnostic-results/laboratory-results/specimen-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_ORGANIZATION_LABORATORY_VIEW = "current-patient/diagnostic-results/laboratory-results/organization-laboratory-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW = "current-patient/diagnostic-results/laboratory-results/observation-laboratory-media-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/radiology-results/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/pathology-results/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_OTHER_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/other-results/view-section";

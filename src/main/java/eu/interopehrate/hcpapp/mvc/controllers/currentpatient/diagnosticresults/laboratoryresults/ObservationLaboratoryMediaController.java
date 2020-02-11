@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/current-patient/diagnostic-results/laboratory-results")
 public class ObservationLaboratoryMediaController {
     @GetMapping
-    @RequestMapping("/observation-laboratory-media")
+    @RequestMapping("/observation-laboratory-media-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA;
+        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW;
     }
 }

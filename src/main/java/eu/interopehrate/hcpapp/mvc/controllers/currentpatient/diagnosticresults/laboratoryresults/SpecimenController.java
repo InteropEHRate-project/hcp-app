@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/current-patient/diagnostic-results/laboratory-results")
 public class SpecimenController {
     @GetMapping
-    @RequestMapping("/specimen")
+    @RequestMapping("/specimen-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_SPECIMEN;
+        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_SPECIMEN_VIEW;
     }
 }
