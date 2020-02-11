@@ -22,7 +22,10 @@ public interface TemplateNames {
     String CURRENT_PATIENT_HISTORY_PROCEDURE_ORGANIZATION_VIEW_SECTION = "current-patient/history-procedure/organization/view-section";
     String CURRENT_PATIENT_MEDICAL_DEVICES_DEVICE_VIEW_SECTION="current-patient/medical-devices/device/view-section";
     String CURRENT_PATIENT_MEDICAL_DEVICES_USE_DEVICE_STATEMENT_VIEW_SECTION="current-patient/medical-devices/use-device-statement/view-section";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_VIEW_SECTION = "current-patient/diagnostic-result/view-section";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/laboratory-results/view-section";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/radiology-results/view-section";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/pathology-results/view-section";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_OTHER_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/other-results/view-section";
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/vital-signs/view-section";
     String CURRENT_PATIENT_HISTORY_OF_PAST_ILLNESS_VIEW_SECTION = "current-patient/history-past-illness/view-section";
     String CURRENT_PATIENT_PREGNANCY_VIEW_SECTION = "current-patient/pregnancy/view-section";

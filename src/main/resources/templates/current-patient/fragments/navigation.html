@@ -48,10 +48,10 @@
        th:href="@{/current-patient/medical-devices/use-device-statement/view-section}"
        th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical Devices</a>
     <a class="flex-sm-fill text-sm-left nav-link"
-       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-result')} ? 'active' : ''"
-       href="../diagnostic-result/view-section.html"
-       th:href="@{/current-patient/diagnostic-result/view-section}"
-       th:text="#{fragment.current.patient.navigation.left.results}">Results</a>
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results')} ? 'active' : ''"
+       href="../diagnostic-results/laboratory-results/view-section.html"
+       th:href="@{/current-patient/diagnostic-results/laboratory-results/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.diagnostic.results}">Results</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/vital-signs')} ? 'active' : ''"
        href="../vital-signs/view-section.html"

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.results}">diagnostic results</title>
+    <title th:text="#{fragment.current.patient.navigation.left.diagnostic.results}">diagnostic results</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -25,22 +25,8 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div class="m-5"></div>
-            <p><h3 th:text="#{fragment.current.patient.navigation.left.results}">diagnostic results</h3></p>
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                <tr>
-                    <th>Code</th>
-                    <th>Name of the Diagnostic</th>
-                    <th>Value</th>
-                    <th>Unit of Measurement</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <div class="btn-toolbar float-right" role="toolbar">
-            </div>
+            <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
+            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results}">radiology results</h5></p>
         </div>
     </div>
 </div>
