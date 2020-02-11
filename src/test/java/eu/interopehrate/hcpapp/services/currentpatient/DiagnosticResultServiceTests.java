@@ -24,8 +24,6 @@ import static org.junit.Assert.assertTrue;
 public class DiagnosticResultServiceTests {
     private static String initialJsonFhir;
     @Autowired
-    private DiagnosticResultService diagnosticResultService;
-    @Autowired
     private CurrentPatient currentPatient;
 
     @BeforeClass
