@@ -28,7 +28,9 @@ public interface TemplateNames {
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_OTHER_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/other-results/view-section";
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/vital-signs/view-section";
     String CURRENT_PATIENT_HISTORY_OF_PAST_ILLNESS_VIEW_SECTION = "current-patient/history-past-illness/view-section";
-    String CURRENT_PATIENT_PREGNANCY_VIEW_SECTION = "current-patient/pregnancy/view-section";
+    String CURRENT_PATIENT_PREGNANCY_VIEW_SECTION_EDD = "current-patient/pregnancy/edd/view-section";
+    String CURRENT_PATIENT_PREGNANCY_VIEW_SECTION_OUTCOME = "current-patient/pregnancy/outcome/view-section";
+    String CURRENT_PATIENT_PREGNANCY_VIEW_SECTION_STATUS = "current-patient/pregnancy/status/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_ALCOHOL_VIEW_SECTION = "current-patient/social-history/alcohol/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_TOBACCO_VIEW_SECTION = "current-patient/social-history/tobacco/view-section";
     String CURRENT_PATIENT_PLAN_OF_CARE_VIEW_SECTION = "current-patient/plan-care/view-section";
