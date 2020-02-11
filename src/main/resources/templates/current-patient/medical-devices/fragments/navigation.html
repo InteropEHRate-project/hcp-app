@@ -18,22 +18,21 @@
 <body>
 <div th:fragment="navigation-top">
     <div class="m-5"></div>
-    <p>
-    <h3 th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical devices</h3></p>
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical devices</h3></p>
     <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link"
-               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices/device')} ? 'active' : ''"
-               href="../device/view-section.html"
-               th:href="@{/current-patient/medical-devices/device/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.medical.devices.device}">Devices</a>
-        </li>
         <li class="nav-item">
             <a class="nav-link"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices/use-device-statement')} ? 'active' : ''"
                href="../use-device-statement/view-section.html"
                th:href="@{/current-patient/medical-devices/use-device-statement/view-section}"
                th:text="#{fragment.current.patient.navigation.left.medical.devices.use.device.statement}">Devices use Statement </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices/device')} ? 'active' : ''"
+               href="../device/view-section.html"
+               th:href="@{/current-patient/medical-devices/device/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.medical.devices.device}">Devices</a>
         </li>
     </ul>
 </div>

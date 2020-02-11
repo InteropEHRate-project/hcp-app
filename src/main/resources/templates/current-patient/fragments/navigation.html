@@ -45,7 +45,7 @@
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices')} ? 'active' : ''"
        href="../medical-devices/device/view-section.html"
-       th:href="@{/current-patient/medical-devices/device/view-section}"
+       th:href="@{/current-patient/medical-devices/use-device-statement/view-section}"
        th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical Devices</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-result')} ? 'active' : ''"
