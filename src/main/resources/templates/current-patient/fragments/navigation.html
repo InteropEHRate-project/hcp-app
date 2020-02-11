@@ -64,8 +64,8 @@
        th:text="#{fragment.current.patient.navigation.left.history-past-illness}">History of Past Illness</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/pregnancy')} ? 'active' : ''"
-       href="../pregnancy/view-section.html"
-       th:href="@{/current-patient/pregnancy/view-section}"
+       href="../pregnancy/edd/view-section.html"
+       th:href="@{/current-patient/pregnancy/edd/view-section}"
        th:text="#{fragment.current.patient.navigation.left.pregnancy}">Pregnancy</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/social-history')} ? 'active' : ''"
