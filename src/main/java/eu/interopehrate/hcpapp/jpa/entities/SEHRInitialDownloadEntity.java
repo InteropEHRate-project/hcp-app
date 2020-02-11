@@ -18,25 +18,27 @@ public class SEHRInitialDownloadEntity extends HCPApplicationEntity {
     @NonNull
     private Boolean allergyIntolerance = Boolean.FALSE;
     @NonNull
-    private Boolean problems=Boolean.FALSE;
+    private Boolean problems = Boolean.FALSE;
     @NonNull
-    private Boolean historyOfProcedure=Boolean.FALSE;
+    private Boolean immunizations = Boolean.FALSE;
     @NonNull
-    private Boolean immunizations=Boolean.FALSE;
+    private Boolean historyOfProcedure = Boolean.FALSE;
     @NonNull
-    private Boolean medicalDevices=Boolean.FALSE;
+    private Boolean medicalDevices = Boolean.FALSE;
     @NonNull
-    private Boolean results=Boolean.FALSE;
+    private Boolean results = Boolean.FALSE;
     @NonNull
-    private Boolean historyOfPast=Boolean.FALSE;
+    private Boolean vitalSigns = Boolean.FALSE;
     @NonNull
-    private Boolean functionalStatus=Boolean.FALSE;
+    private Boolean historyOfPastIllnesses = Boolean.FALSE;
     @NonNull
-    private Boolean planOfCare=Boolean.FALSE;
+    private Boolean pregnancy = Boolean.FALSE;
     @NonNull
-    private Boolean socialHistory=Boolean.FALSE;
+    private Boolean socialHistory = Boolean.FALSE;
     @NonNull
-    private Boolean historyOfPregnancy=Boolean.FALSE;
+    private Boolean planOfCare = Boolean.FALSE;
     @NonNull
-    private Boolean advancesDirectives=Boolean.FALSE;
+    private Boolean functionalStatus = Boolean.FALSE;
+    @NonNull
+    private Boolean advanceDirectives = Boolean.FALSE;
 }
