@@ -50,7 +50,7 @@
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results')} ? 'active' : ''"
        href="../diagnostic-results/laboratory-results/view-section.html"
-       th:href="@{/current-patient/diagnostic-results/laboratory-results/view-section}"
+       th:href="@{/current-patient/diagnostic-results/laboratory-results/observation-laboratory}"
        th:text="#{fragment.current.patient.navigation.left.diagnostic.results}">Results</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/vital-signs')} ? 'active' : ''"
