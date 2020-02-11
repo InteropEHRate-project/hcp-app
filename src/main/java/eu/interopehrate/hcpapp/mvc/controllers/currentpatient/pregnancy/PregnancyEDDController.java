@@ -11,6 +11,6 @@ public class PregnancyEDDController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_PREGNANCY_VIEW_SECTION_EDD;
+        return TemplateNames.CURRENT_PATIENT_PREGNANCY_EDD_VIEW_SECTION;
     }
 }

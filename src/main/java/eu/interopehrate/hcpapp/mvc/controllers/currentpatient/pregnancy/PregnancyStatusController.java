@@ -11,6 +11,6 @@ public class PregnancyStatusController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_PREGNANCY_VIEW_SECTION_STATUS;
+        return TemplateNames.CURRENT_PATIENT_PREGNANCY_STATUS_VIEW_SECTION;
     }
 }
