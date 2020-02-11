@@ -46,46 +46,50 @@
                                     <label class="custom-control-label" for="problems" th:text="#{template.administration.initial.sehr.download.problems}">Problems</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="historyOfProcedure" th:field="*{historyOfProcedure}">
-                                    <label class="custom-control-label" for="historyOfProcedure" th:text="#{template.administration.initial.sehr.download.historyOfProcedure}">History of Procedures Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="immunizations" th:field="*{immunizations}">
                                     <label class="custom-control-label" for="immunizations" th:text="#{template.administration.initial.sehr.download.immunizations}">Immunizations Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="historyOfProcedure" th:field="*{historyOfProcedure}">
+                                    <label class="custom-control-label" for="historyOfProcedure" th:text="#{template.administration.initial.sehr.download.history.of.procedure}">History of Procedures Section</label>
+                                </div>
+                                <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="medicalDevices" th:field="*{medicalDevices}">
-                                    <label class="custom-control-label" for="medicalDevices" th:text="#{template.administration.initial.sehr.download.medicalDevices}">Medical Devices Section</label>
+                                    <label class="custom-control-label" for="medicalDevices" th:text="#{template.administration.initial.sehr.download.medical.devices}">Medical Devices Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="results" th:field="*{results}">
                                     <label class="custom-control-label" for="results" th:text="#{template.administration.initial.sehr.download.results}">Results Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="historyOfPast" th:field="*{historyOfPast}">
-                                    <label class="custom-control-label" for="historyOfPast" th:text="#{template.administration.initial.sehr.download.historyOfPast}">History of Past Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="vitalSigns" th:field="*{vitalSigns}">
+                                    <label class="custom-control-label" for="vitalSigns" th:text="#{template.administration.initial.sehr.download.vital.signs}">Vital Signs</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="functinalStatus" th:field="*{functionalStatus}">
-                                    <label class="custom-control-label" for="functinalStatus" th:text="#{template.administration.initial.sehr.download.functionalStatus}">Functional Status Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="historyOfPast" th:field="*{historyOfPastIllnesses}">
+                                    <label class="custom-control-label" for="historyOfPast" th:text="#{template.administration.initial.sehr.download.history.of.past.illnesses}">History of Past Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="planOfCare" th:field="*{planOfCare}">
-                                    <label class="custom-control-label" for="planOfCare" th:text="#{template.administration.initial.sehr.download.planOfCare}">Plan of Care Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="historyOfPregnancy" th:field="*{pregnancy}">
+                                    <label class="custom-control-label" for="historyOfPregnancy" th:text="#{template.administration.initial.sehr.download.pregnancy}"> History of Pregnancy Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="socialHistory" th:field="*{socialHistory}">
-                                    <label class="custom-control-label" for="socialHistory" th:text="#{template.administration.initial.sehr.download.socialHistory}">Social History Section</label>
+                                    <label class="custom-control-label" for="socialHistory" th:text="#{template.administration.initial.sehr.download.social.history}">Social History Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="historyOfPregnancy" th:field="*{historyOfPregnancy}">
-                                    <label class="custom-control-label" for="historyOfPregnancy" th:text="#{template.administration.initial.sehr.download.historyOgPregnancy}"> History of Pregnancy Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="planOfCare" th:field="*{planOfCare}">
+                                    <label class="custom-control-label" for="planOfCare" th:text="#{template.administration.initial.sehr.download.plan.of.care}">Plan of Care Section</label>
                                 </div>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="advancesDirectives" th:field="*{advancesDirectives}">
-                                    <label class="custom-control-label" for="advancesDirectives" th:text="#{template.administration.initial.sehr.download.advancesDirectives}"> Advances Directives Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="functionalStatus" th:field="*{functionalStatus}">
+                                    <label class="custom-control-label" for="functionalStatus" th:text="#{template.administration.initial.sehr.download.functional.status}">Functional Status Section</label>
                                 </div>
-                                <button type="submit" class="btn btn-primary" th:text="#{template.administration.initial.sehr.download.save}">Save</button>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="advanceDirectives" th:field="*{advanceDirectives}">
+                                    <label class="custom-control-label" for="advanceDirectives" th:text="#{template.administration.initial.sehr.download.advance.directives}"> Advances Directives Section</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">Save</button>
                             </div>
                         </div>
                     </div>
