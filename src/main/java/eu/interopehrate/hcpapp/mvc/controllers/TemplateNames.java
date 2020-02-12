@@ -31,7 +31,10 @@ public interface TemplateNames {
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_IMAGING_STUDY_VIEW = "current-patient/diagnostic-results/radiology-results/imaging-study-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_ORGANIZATION_VIEW = "current-patient/diagnostic-results/radiology-results/organization-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_PRACTITIONER_VIEW = "current-patient/diagnostic-results/radiology-results/practitioner-view";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/pathology-results/view-section";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_OBSERVATION_PATHOLOGY_VIEW = "current-patient/diagnostic-results/pathology-results/observation-laboratory-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_SPECIMEN_VIEW = "current-patient/diagnostic-results/pathology-results/specimen-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_ORGANISATION_LABORATORY_VIEW = "current-patient/diagnostic-results/pathology-results/organization-laboratory-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW = "current-patient/diagnostic-results/pathology-results/observation-laboratory-media-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_OTHER_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/other-results/view-section";
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/vital-signs/view-section";
     String CURRENT_PATIENT_HISTORY_OF_PAST_ILLNESS_VIEW_SECTION = "current-patient/history-past-illness/view-section";

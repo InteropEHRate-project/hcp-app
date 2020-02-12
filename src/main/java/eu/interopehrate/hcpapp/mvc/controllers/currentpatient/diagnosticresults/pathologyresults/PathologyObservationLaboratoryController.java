@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/current-patient/diagnostic-results/pathology-results")
-public class DiagnosticResultsPathologyResultsController {
+public class PathologyObservationLaboratoryController {
+
     @GetMapping
-    @RequestMapping("/view-section")
+    @RequestMapping("/observation-laboratory-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_OBSERVATION_PATHOLOGY_VIEW;
     }
 }
