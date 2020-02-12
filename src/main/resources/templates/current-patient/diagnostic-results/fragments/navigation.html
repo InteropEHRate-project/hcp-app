@@ -48,7 +48,6 @@
                    th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory.media}">observation laboratory media</a>
             </div>
         </li>
-
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results/pathology-results')} ? 'active' : ''"
@@ -77,13 +76,6 @@
                    th:text="#{fragment.current.patient.navigation.left.diagnostic.results.pathology.results.observation.laboratory.media}">observation laboratory media</a>
             </div>
         </li>
-
-
-
-
-
-
-
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results/radiology-results')} ? 'active' : ''"
