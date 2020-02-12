@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/current-patient/diagnostic-results/radiology-results")
-public class DiagnosticResultsRadiologyResultsController {
+public class DeviceController {
     @GetMapping
-    @RequestMapping("/view-section")
+    @RequestMapping("/device-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_DEVICE_VIEW;
     }
 }

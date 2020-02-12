@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
+    <meta charset="UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +16,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
-
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -25,8 +24,11 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
-            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results}">radiology results</h5></p>
+            <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top
+            </div>
+            <p><h5
+                th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results.observation.radiology}">
+            observation radiology</h5></p>
         </div>
     </div>
 </div>

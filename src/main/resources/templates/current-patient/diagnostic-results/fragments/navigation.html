@@ -51,16 +51,40 @@
         <li class="nav-item">
             <a class="nav-link"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results/pathology-results')} ? 'active' : ''"
-               href="../pathology-results/view-section.html"
                th:href="@{/current-patient/diagnostic-results/pathology-results/view-section}"
                th:text="#{fragment.current.patient.navigation.left.diagnostic.results.pathology.results}">Pathology results</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link"
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results/radiology-results')} ? 'active' : ''"
-               href="../radiology-results/view-section.html"
-               th:href="@{/current-patient/diagnostic-results/radiology-results/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results}">Pathology results</a>
+               data-toggle="dropdown"
+               href="#"
+               role="button"
+               aria-haspopup="true"
+               aria-expanded="false"
+               th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results}">Radiology results</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"
+                   href="../radiology-results/observation-radiology-view.html"
+                   th:href="@{/current-patient/diagnostic-results/radiology-results/observation-radiology-view}"
+                   th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results.observation.radiology}">observation radiology</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/device-view.html"
+                   th:href="@{/current-patient/diagnostic-results/radiology-results/device-view}"
+                   th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results.device}">device</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/imaging-study-view.html"
+                   th:href="@{/current-patient/diagnostic-results/radiology-results/imaging-study-view}"
+                   th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results.imaging}">imaging study</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/organization-view.html"
+                   th:href="@{/current-patient/diagnostic-results/radiology-results/organization-view}"
+                   th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results.organization}">oragnization</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/practitioner-view.html"
+                   th:href="@{/current-patient/diagnostic-results/radiology-results/practitioner-view}"
+                   th:text="#{fragment.current.patient.navigation.left.diagnostic.results.radiology.results.practitioner}">practitioner</a>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link"
