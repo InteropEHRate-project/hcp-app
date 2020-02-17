@@ -74,3 +74,8 @@ fabric.properties
 
 # -------------------------------------------------------------------------------
 
+## Eclipse module files
+.settings/
+**/*.classpath
+**/*.project
+/bin/
