@@ -43,12 +43,10 @@ public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntoler
             );
         }
         if (Objects.nonNull(allergyIntolerance.getCode())) {
-            command.setName(allergyIntolerance.getCode()
-                    .getCoding()
-                    .stream()
-                    .map(this::extractExtensionText)
-                    .collect(Collectors.joining("; "))
-            );
+            for(Coding coding : allergyIntolerance.getCode().getCoding()) {
+                command.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+            }
+
             command.setCode(allergyIntolerance.getCode()
                     .getCoding()
                     .stream()
@@ -64,13 +62,5 @@ public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntoler
                     .collect(Collectors.joining("; ")));
         }
         return command;
-    }
-
-    private String extractExtensionText(Coding coding) {
-        if (currentPatient.getDisplayTranslatedVersion() && coding.hasExtension()) {
-            return coding.getExtension().get(0).getExtension().get(1).getValue().toString();
-        } else {
-            return coding.getDisplay();
-        }
     }
 }

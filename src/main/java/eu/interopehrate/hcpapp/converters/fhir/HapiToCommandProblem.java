@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.converters.fhir;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemInfoCommand;
+import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Condition;
 import org.hl7.fhir.r4.model.DateTimeType;
@@ -15,6 +17,12 @@ import java.util.stream.Collectors;
 @Component
 public class HapiToCommandProblem implements Converter<Condition, ProblemInfoCommand> {
 
+    private final CurrentPatient currentPatient;
+
+    public HapiToCommandProblem(CurrentPatient currentPatient) {
+        this.currentPatient = currentPatient;
+    }
+
     @Override
     public ProblemInfoCommand convert(Condition condition) {
         ProblemInfoCommand problemInfoCommand = new ProblemInfoCommand();
@@ -25,11 +33,10 @@ public class HapiToCommandProblem implements Converter<Condition, ProblemInfoCom
                     .stream()
                     .map(Coding::getCode)
                     .collect(Collectors.joining("; ")));
-            problemInfoCommand.setName(condition.getCode()
-                    .getCoding()
-                    .stream()
-                    .map(Coding::getDisplay)
-                    .collect(Collectors.joining("; ")));
+
+            for(Coding coding : condition.getCode().getCoding()) {
+                problemInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+            }
         }
         if (Objects.nonNull(condition.getOnset())) {
             Date onSet = ((DateTimeType) condition.getOnset()).getValue();
@@ -43,11 +50,12 @@ public class HapiToCommandProblem implements Converter<Condition, ProblemInfoCom
                     .flatMap(codeableConcept -> codeableConcept.getCoding().stream())
                     .map(Coding::getCode)
                     .collect(Collectors.joining("; ")));
-            problemInfoCommand.setCategoryName(condition.getCategory()
-                    .stream()
-                    .flatMap(codeableConcept -> codeableConcept.getCoding().stream())
-                    .map(Coding::getDisplay)
-                    .collect(Collectors.joining("; ")));
+
+            for(CodeableConcept codeableConcept : condition.getCategory()) {
+                for(Coding coding : codeableConcept.getCoding()) {
+                    problemInfoCommand.setCategoryName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+                }
+            }
         }
         if (Objects.nonNull(condition.getClinicalStatus())) {
             problemInfoCommand.setClinicalStatus(condition.getClinicalStatus()
