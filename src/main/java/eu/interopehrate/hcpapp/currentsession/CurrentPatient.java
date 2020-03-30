@@ -19,8 +19,7 @@ public class CurrentPatient {
     private Boolean displayTranslatedVersion = Boolean.TRUE;
     private Patient patient;
     private Consent consent;
-    private Bundle initialPatientSummaryBundle;
-    private Bundle translatedPatientSummaryBundle;
+    private Bundle patientSummaryBundle;
 
     public CurrentPatient(TranslateService translateService) {
         this.translateService = translateService;
@@ -37,12 +36,11 @@ public class CurrentPatient {
     }
 
     public void initPatientSummary(Bundle patientSummary) {
-        initialPatientSummaryBundle = patientSummary;
         try {
-            translatedPatientSummaryBundle = translateService.translate(initialPatientSummaryBundle, Locale.UK);
+            patientSummaryBundle = translateService.translate(patientSummary, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
-            translatedPatientSummaryBundle = initialPatientSummaryBundle;
+            patientSummaryBundle = patientSummary;
         }
     }
 
@@ -50,49 +48,48 @@ public class CurrentPatient {
         displayTranslatedVersion = Boolean.TRUE;
         patient = null;
         consent = null;
-        initialPatientSummaryBundle = null;
-        translatedPatientSummaryBundle = null;
+        patientSummaryBundle = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
-        if (Objects.isNull(patientSummaryBundle())) {
+        if (Objects.isNull(patientSummaryBundle)) {
             return Collections.emptyList();
         } else {
-            return new BundleProcessor(patientSummaryBundle()).allergyIntoleranceList();
+            return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
         }
     }
 
     public List<Observation> observationList() {
-        if (Objects.isNull(patientSummaryBundle())) {
+        if (Objects.isNull(patientSummaryBundle)) {
             return Collections.emptyList();
         } else {
-            return new BundleProcessor(patientSummaryBundle()).observationList();
+            return new BundleProcessor(patientSummaryBundle).observationList();
         }
     }
 
     public List<Condition> conditionsList() {
-        if (Objects.isNull(patientSummaryBundle())) {
+        if (Objects.isNull(patientSummaryBundle)) {
             return Collections.emptyList();
         } else {
-            return new BundleProcessor(patientSummaryBundle()).conditionList();
+            return new BundleProcessor(patientSummaryBundle).conditionList();
         }
     }
 
 
     public List<MedicationStatement> medicationStatementList() {
-        if (Objects.isNull(patientSummaryBundle())) {
+        if (Objects.isNull(patientSummaryBundle)) {
             return Collections.emptyList();
         } else {
-            return new BundleProcessor(patientSummaryBundle()).medicationStatementList();
+            return new BundleProcessor(patientSummaryBundle).medicationStatementList();
         }
-    }
-
-    public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
-        this.displayTranslatedVersion = displayTranslatedVersion;
     }
 
     public Boolean getDisplayTranslatedVersion() {
         return this.displayTranslatedVersion;
+    }
+
+    public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
+        this.displayTranslatedVersion = displayTranslatedVersion;
     }
 
     public Patient getPatient() {
@@ -107,7 +104,12 @@ public class CurrentPatient {
         return consent.getText().getDiv().toString().replaceAll("[<](/)?div[^>]*[>]", "");
     }
 
-    private Bundle patientSummaryBundle() {
-        return displayTranslatedVersion ? translatedPatientSummaryBundle : initialPatientSummaryBundle;
+    // todo - nicuj, code review
+    public static String extractExtensionText(Coding coding, CurrentPatient currentPatient) {
+        if (currentPatient.getDisplayTranslatedVersion() && coding.hasExtension()) {
+            return coding.getExtension().get(0).getExtension().get(1).getValue().toString();
+        } else {
+            return coding.getDisplay();
+        }
     }
 }

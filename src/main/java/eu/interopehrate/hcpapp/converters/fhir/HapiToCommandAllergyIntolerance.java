@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.converters.fhir;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
 import org.hl7.fhir.r4.model.Coding;
@@ -12,6 +13,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntolerance, AllergyIntoleranceInfoCommand> {
+    private final CurrentPatient currentPatient;
+
+    public HapiToCommandAllergyIntolerance(CurrentPatient currentPatient) {
+        this.currentPatient = currentPatient;
+    }
 
     @Override
     public AllergyIntoleranceInfoCommand convert(AllergyIntolerance allergyIntolerance) {
@@ -37,12 +43,10 @@ public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntoler
             );
         }
         if (Objects.nonNull(allergyIntolerance.getCode())) {
-            command.setName(allergyIntolerance.getCode()
-                    .getCoding()
-                    .stream()
-                    .map(Coding::getDisplay)
-                    .collect(Collectors.joining("; "))
-            );
+            for(Coding coding : allergyIntolerance.getCode().getCoding()) {
+                command.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+            }
+
             command.setCode(allergyIntolerance.getCode()
                     .getCoding()
                     .stream()

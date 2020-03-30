@@ -43,7 +43,7 @@ public class DiagnosticResultServiceTests {
 
     @Test
     public void testDiagnosticResultCode() {
-        System.out.println(currentPatient.observationList().get(4).getCode().getCoding().get(0).getCode());
+        System.out.println(currentPatient.observationList().get(1).getCode().getCoding().get(0).getCode());
     }
 
 }
