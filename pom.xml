@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>13</java.version>
-        <hapi.fhir.version>3.8.0</hapi.fhir.version>
+        <hapi.fhir.version>4.0.3</hapi.fhir.version>
     </properties>
 
     <dependencies>
@@ -75,9 +75,19 @@
             <version>${hapi.fhir.version}</version>
         </dependency>
         <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-validation-resources-r4</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-validation</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
+        <dependency>
             <groupId>eu.interopehrate</groupId>
             <artifactId>sd2de</artifactId>
-            <version>0.0.4</version>
+            <version>0.0.5</version>
             <exclusions>
                 <exclusion>
                     <groupId>ca.uhn.hapi</groupId>
@@ -86,6 +96,14 @@
                 <exclusion>
                     <groupId>ca.uhn.hapi.fhir</groupId>
                     <artifactId>hapi-fhir-structures-r4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ca.uhn.hapi.fhir</groupId>
+                    <artifactId>hapi-fhir-validation-resources-r4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ca.uhn.hapi.fhir</groupId>
+                    <artifactId>hapi-fhir-validation</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.slf4j</groupId>

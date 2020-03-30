@@ -125,5 +125,10 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.error("Error after consent answer was received", e);
             }
         }
+
+        @Override
+        public void onNoConformantPatientSummaryReceived() {
+            log.error("onNoConformantPatientSummaryReceived");
+        }
     }
 }
