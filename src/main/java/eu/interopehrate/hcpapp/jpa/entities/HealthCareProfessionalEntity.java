@@ -14,4 +14,6 @@ public class HealthCareProfessionalEntity extends PersonEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "OCCUPATION_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_HCP_OCCUPATION"))
     private HealthCareOccupationEntity occupation;
+    @Lob
+    private Byte[] certificate;
 }

@@ -28,4 +28,6 @@ public class HealthCareOrganizationEntity extends HCPApplicationEntity {
             joinColumns = @JoinColumn(name = "hco_id"),
             inverseJoinColumns = @JoinColumn(name = "contact_point_id"))
     private Set<ContactPointEntity> contactPoints = new HashSet<>();
+    @Lob
+    private Byte[] certificate;
 }

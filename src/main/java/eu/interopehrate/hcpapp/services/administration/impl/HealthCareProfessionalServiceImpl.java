@@ -5,11 +5,16 @@ import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Service
 public class HealthCareProfessionalServiceImpl implements HealthCareProfessionalService {
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
@@ -28,6 +33,26 @@ public class HealthCareProfessionalServiceImpl implements HealthCareProfessional
             return new HealthCareProfessionalCommand();
         } else {
             return entityToCommandHealthCareProfessional.convert(all.get(0));
+        }
+    }
+
+    @Override
+    @Transactional
+    public void saveFile(Long certificateId, MultipartFile file) {
+        try {
+            HealthCareProfessionalEntity healthCareProfessionalEntity = healthCareProfessionalRepository.getOne(certificateId);
+            Byte[] byteObjects = new Byte[file.getBytes().length];
+            int i = 0;
+            for (byte b : file.getBytes()){
+                byteObjects[i++] = b;
+            }
+            healthCareProfessionalEntity.setCertificate(byteObjects);
+
+            healthCareProfessionalRepository.save(healthCareProfessionalEntity);
+            log.info("Entity Certificate: " + healthCareProfessionalEntity.getCertificate().toString());
+        } catch (IOException e) {
+            log.error("Error occurred", e);
+            e.printStackTrace();
         }
     }
 }
