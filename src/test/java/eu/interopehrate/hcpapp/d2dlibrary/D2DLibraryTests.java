@@ -9,6 +9,9 @@ import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
 public class D2DLibraryTests {
 
     @Test
@@ -47,6 +50,15 @@ public class D2DLibraryTests {
         D2DHRExchangeListeners d2DHRExchangeListeners = new D2DHRExchangeListenersTestImpl();
         D2DLibraryMock d2DLibraryMock = new D2DLibraryMock(d2DHRExchangeListeners);
         d2DLibraryMock.simulateNonValidPatientSummaryReceived();
+    }
+
+    @Test
+    public void testLoadPublicKey() throws Exception {
+        D2DConnection d2DConnection = new BluetoothConnection();
+        ((D2DSecurityConnection) d2DConnection).fetchCertificate();
+        PublicKey publicKey = BluetoothConnection.loadPublicKey("mykey", "password".toCharArray(), "keystore.jks");
+        PrivateKey privateKey = BluetoothConnection.loadPrivateKey("mykey", "password".toCharArray(), "keystore.jks");
+        System.out.println();
     }
 
     private static class D2DLibraryMock {
