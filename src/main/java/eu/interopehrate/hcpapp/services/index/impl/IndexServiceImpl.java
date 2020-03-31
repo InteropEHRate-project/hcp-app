@@ -59,6 +59,11 @@ public class IndexServiceImpl implements IndexService {
         if (Objects.nonNull(currentPatient.getConsent())) {
             patientDataCommand.setConsent(currentPatient.getConsentAsString());
         }
+
+        if(currentD2DConnection.getIndexPatientDataCommand().getNoConformantJSON()) {
+            patientDataCommand.setNoConformantJSON(true);
+        }
+
         indexCommand.setPatientDataCommand(patientDataCommand);
         return indexCommand;
     }

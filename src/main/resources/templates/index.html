@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -50,6 +50,9 @@
         <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
             <div class="row justify-content-center">
                 <h3 class="mt-5">Connected</h3>
+            </div>
+            <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
+                <h6 style="color: red" class="row justify-content-center">NO CONFORMANT IPS PROFILE RECEIVED</h6>
             </div>
             <div class="row justify-content-center">
                 <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}" th:href="@{/index/close-connection}">Close connection</a>

@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import eu.interopehrate.td2de.api.D2DConnectionListeners;
@@ -22,11 +23,17 @@ public class CurrentD2DConnection implements DisposableBean {
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
+    private IndexPatientDataCommand indexPatientDataCommand;
+
+    public IndexPatientDataCommand getIndexPatientDataCommand() {
+        return indexPatientDataCommand;
+    }
 
     public CurrentD2DConnection(CurrentPatient currentPatient,
-                                D2DConnectionOperations d2DConnectionOperations) {
+                                D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand) {
         this.currentPatient = currentPatient;
         this.d2DConnectionOperations = d2DConnectionOperations;
+        this.indexPatientDataCommand = indexPatientDataCommand;
     }
 
     @Override
@@ -129,6 +136,8 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onNoConformantPatientSummaryReceived() {
             log.error("onNoConformantPatientSummaryReceived");
+            indexPatientDataCommand.setNoConformantJSON(true);
+            d2DConnectionOperations.reloadIndexPage();
         }
     }
 }
