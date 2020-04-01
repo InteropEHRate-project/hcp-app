@@ -45,6 +45,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
+        this.indexPatientDataCommand.setNoConformantJSON(false);
         CompletableFuture.runAsync(this::openConnection)
                 .thenRun(this::afterConnectionOpened);
     }
@@ -137,7 +138,7 @@ public class CurrentD2DConnection implements DisposableBean {
         public void onNoConformantPatientSummaryReceived() {
             log.error("onNoConformantPatientSummaryReceived");
             indexPatientDataCommand.setNoConformantJSON(true);
-            d2DConnectionOperations.reloadIndexPage();
+            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
         }
     }
 }
