@@ -14,7 +14,7 @@ public class IndexPatientDataCommand {
     private String lastName;
     private String firstName;
     private String consent;
-    private Boolean noConformantJSON;
+    private Boolean noConformantJSON = false;
 
     public Boolean hasData() {
         return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(consent);
