@@ -83,6 +83,11 @@
                             <p class="card-text" th:text="${index.patientDataCommand.getConsent()}">patient id</p>
                         </div>
                     </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
+                        <div class="row justify-content-center">
+                            <a href="#" class="btn btn-danger" th:text="#{template.index.button.invalid.certificate}" th:href="@{/index/close-connection}">Invalid Digital Identity</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
