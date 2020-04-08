@@ -18,12 +18,10 @@ import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.Objects;
@@ -155,7 +153,7 @@ public class CurrentD2DConnection implements DisposableBean {
             CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
         }
     }
-    public void certificate (byte[] tempCert) throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, NoSuchProviderException, OperatorCreationException, SignatureException, InvalidKeyException {
+    public void certificate () throws CertificateException, NoSuchAlgorithmException, NoSuchProviderException, OperatorCreationException, SignatureException, InvalidKeyException {
         Security.addProvider(new BouncyCastleProvider());
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
@@ -173,18 +171,7 @@ public class CurrentD2DConnection implements DisposableBean {
         cert.checkValidity(new Date());
         cert.verify(keyPair.getPublic());
 
-        CertificateFactory certificateFactory = CertificateFactory.getInstance("jks");
-        java.security.cert.Certificate trustedCertif = certificateFactory.generateCertificate(new ByteArrayInputStream(tempCert));
-        System.out.println("Received Public: "+ trustedCertif.getPublicKey().toString());
-
-        String alias ="mykey";
-        String keystore = "keystore.jks";
-        KeyStore keyStore = KeyStore.getInstance("jsk");
-        keyStore.load(null,null);
-        keyStore.setCertificateEntry("InteropEHRate",trustedCertif);
-        keyStore.getCertificate(alias);
-
         Principal principal = cert.getIssuerX500Principal();
-        principal.getName();
+        this.indexPatientDataCommand.setCertificate(principal.getName());
     }
 }
