@@ -21,7 +21,6 @@ public class CurrentPatient {
     private Patient patient;
     private Consent consent;
     private Bundle patientSummaryBundle;
-    private Certificate certificate;
 
     public CurrentPatient(TranslateService translateService) {
         this.translateService = translateService;
@@ -105,8 +104,6 @@ public class CurrentPatient {
     public String getConsentAsString() {
         return consent.getText().getDiv().toString().replaceAll("[<](/)?div[^>]*[>]", "");
     }
-
-    public Certificate getCertificate(){return certificate;}
 
     // todo - nicuj, code review
     public static String extractExtensionText(Coding coding, CurrentPatient currentPatient) {
