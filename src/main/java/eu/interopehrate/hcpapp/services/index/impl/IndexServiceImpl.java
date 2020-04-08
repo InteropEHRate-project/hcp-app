@@ -64,6 +64,10 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setNoConformantJSON(true);
         }
 
+        if (Objects.nonNull(currentPatient.getCertificate())) {
+            patientDataCommand.setCertificate(currentPatient.getCertificate().toString());
+        }
+
         indexCommand.setPatientDataCommand(patientDataCommand);
         return indexCommand;
     }
@@ -78,6 +82,8 @@ public class IndexServiceImpl implements IndexService {
         currentPatient.reset();
         currentD2DConnection.close();
     }
+    @Override
+    public void certificate(){currentD2DConnection.getIndexPatientDataCommand().getCertificate();}
 
     private String connectionInfoQRCodePng() throws Exception {
         byte[] connectionInfoPng = bluetoothConnectionService.connectionInfoQRCodePng();

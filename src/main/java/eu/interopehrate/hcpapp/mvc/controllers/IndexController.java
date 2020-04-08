@@ -35,4 +35,9 @@ public class IndexController {
     public String stopListening() {
         return "redirect:/index";
     }
+    @RequestMapping("/index/certificate")
+    public String certificate() {
+        indexService.certificate();
+        return "redirect:/index";
+    }
 }

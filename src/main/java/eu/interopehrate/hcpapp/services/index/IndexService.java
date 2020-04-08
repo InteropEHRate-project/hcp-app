@@ -8,4 +8,6 @@ public interface IndexService {
     void openConnection();
 
     void closeConnection();
+
+    void certificate();
 }

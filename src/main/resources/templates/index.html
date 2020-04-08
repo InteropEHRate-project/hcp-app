@@ -82,6 +82,10 @@
                             <h5 class="card-title">Consent</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getConsent()}">patient id</p>
                         </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getCertificate()!= null}">
+                            <h5 class="card-title">Certificate details</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getCertificate()}">certificate details</p>
+                        </div>
                     </div>
                     <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
                         <div class="row justify-content-center">
