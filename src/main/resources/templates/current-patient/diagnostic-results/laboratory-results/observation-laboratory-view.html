@@ -24,8 +24,48 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
+            <div class="m-5"></div>
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group mr-2" role="group">
+                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"  th:text="#{ips.translate.button.translated}">Translated version</a>
+                </div>
+            </div>
             <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Author</th>
+                    <th>Code</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Patient</th>
+                    <th>Performer</th>
+                    <th>Results Interpreter</th>
+                    <th>Specimen</th>
+                    <th>Request</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommands()}">
+                    <td th:text="${{ol.id}}"></td>
+                    <td th:text="${{ol.author}}"></td>
+                    <td th:text="${{ol.code}}"></td>
+                    <td th:text="${{ol.status}}"></td>
+                    <td th:text="${{ol.date}}"></td>
+                    <td th:text="${{ol.patient}}"></td>
+                    <td th:text="${{ol.performer}}"></td>
+                    <td th:text="${{ol.resultsInterpreter}}"></td>
+                    <td th:text="${{ol.specimen}}"></td>
+                    <td th:text="${{ol.request}}"></td>
+                    <td th:text="${{ol.result}}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

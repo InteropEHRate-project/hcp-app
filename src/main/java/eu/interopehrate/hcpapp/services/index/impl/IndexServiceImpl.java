@@ -7,9 +7,15 @@ import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SignatureException;
+import java.security.cert.CertificateException;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -60,10 +66,11 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setConsent(currentPatient.getConsentAsString());
         }
 
-        if(currentD2DConnection.getIndexPatientDataCommand().getNoConformantJSON()) {
+        if (currentD2DConnection.getIndexPatientDataCommand().getNoConformantJSON()) {
             patientDataCommand.setNoConformantJSON(true);
         }
 
+        patientDataCommand.setCertificate(currentD2DConnection.getIndexPatientDataCommand().getCertificate());
         indexCommand.setPatientDataCommand(patientDataCommand);
         return indexCommand;
     }
@@ -77,6 +84,11 @@ public class IndexServiceImpl implements IndexService {
     public void closeConnection() {
         currentPatient.reset();
         currentD2DConnection.close();
+    }
+
+    @Override
+    public void certificate() throws CertificateException, InvalidKeyException, NoSuchAlgorithmException, OperatorCreationException, NoSuchProviderException, SignatureException {
+        this.currentD2DConnection.certificate();
     }
 
     private String connectionInfoQRCodePng() throws Exception {
