@@ -24,8 +24,54 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
+            <div class="m-5"></div>
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group mr-2" role="group">
+                    <a href="#" class="btn disabled" style="background-color: lightgray"
+                       th:text="#{ips.translate.label}">language of the section</a>
+                    <a href="#" class="btn btn-primary"
+                       th:styleappend="${!specimen.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results//specimen-view')}"
+                       th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary"
+                       th:styleappend="${specimen.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results//specimen-view')}"
+                       th:text="#{ips.translate.button.translated}">Translated version</a>
+                </div>
+            </div>
             <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
-            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen}">specimen</h5></p>
+            <p></p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen} + ${specimen.getSpecimenInfoCommandList().get(0).getId()}">specimen</h5></p>
+                        </div>
+                        <div class="card-body" th:each="sp : ${specimen.getSpecimenInfoCommandList()}">
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.id}">ID</h5>
+                            <p class="card-text" th:text="${sp.getId()}">id</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.id}">Patient ID</h5>
+                            <p class="card-text" th:text="${sp.getPatientID()}">patient ID</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.status}">Status</h5>
+                            <p class="card-text" th:text="${sp.getStatus()}">status</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.operator}">Operator</h5>
+                            <p class="card-text" th:text="${sp.getOperator()}">operator</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.priority.of.sampling}">Priority of Sampling</h5>
+                            <p class="card-text" th:text="${sp.getPriorityOfSampling()}">priority of sampling</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary"
+                       th:href="@{/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view}">Back</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
