@@ -9,37 +9,38 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class ObservationLaboratoryInfoCommand {
+    private static int index = 1;
     @NotEmpty
     @NotNull
-    private String id;
+    private String id = Integer.toString(index++);
     @NotEmpty
     @NotNull
-    private String author;
+    private String author = "-";
     @NotEmpty
     @NotNull
-    private String status;
+    private String status = "-";
     @NotEmpty
     @NotNull
-    private String code;
+    private String code = "MB";
     @NotEmpty
     @NotNull
-    private String date;
+    private String date = "-";
     @NotEmpty
     @NotNull
-    private String patient;
+    private String patient = "-";
     @NotEmpty
     @NotNull
-    private String performer;
+    private String performer = "-";
     @NotEmpty
     @NotNull
-    private String resultsInterpreter;
+    private String resultsInterpreter = "-";
     @NotEmpty
     @NotNull
-    private String specimen;
+    private String specimen = "-";
     @NotEmpty
     @NotNull
-    private String request;
+    private String request = "-";
     @NotEmpty
     @NotNull
-    private String result;
+    private String result = "-";
 }
