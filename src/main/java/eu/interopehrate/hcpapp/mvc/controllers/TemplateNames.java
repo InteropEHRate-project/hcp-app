@@ -27,6 +27,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW = "current-patient/diagnostic-results/laboratory-results/observation-laboratory-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_SPECIMEN_VIEW = "current-patient/diagnostic-results/laboratory-results/specimen-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_REQUEST_VIEW = "current-patient/diagnostic-results/laboratory-results/request-view";
+    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_RESULT_VIEW = "current-patient/diagnostic-results/laboratory-results/result-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_ORGANIZATION_LABORATORY_VIEW = "current-patient/diagnostic-results/laboratory-results/organization-laboratory-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW = "current-patient/diagnostic-results/laboratory-results/observation-laboratory-media-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_OBSERVATION_VIEW = "current-patient/diagnostic-results/radiology-results/observation-radiology-view";
