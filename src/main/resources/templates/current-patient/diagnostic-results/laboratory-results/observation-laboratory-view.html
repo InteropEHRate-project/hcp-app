@@ -73,15 +73,14 @@
                     <td th:text="${{ol.request}}"></td>
                     <td th:text="${{ol.result}}"></td>
                     <td>
-<!--                        <div class="btn-group" role="group">-->
-<!--                            <a href="#" class="btn btn-primary"-->
-<!--                               th:href="@{/current-patient/diagnostic-results/laboratory-results/idToSpecimen(id=${{ol.id}})}">Visualization</a>-->
-<!--                        </div>-->
-                        <select>
-                            <option th:text="#{fragment.current.patient.navigation.left.diagnostic.results.pathology.results.specimen}"></option>
-                            <option th:text="#{fragment.current.patient.navigation.left.diagnostic.results.pathology.results.request}"></option>
-                            <option th:text="#{fragment.current.patient.navigation.left.diagnostic.results.pathology.results.result}"></option>
-                        </select>
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown link</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToSpecimen(id=${{ol.id}})}">Specimen</a>
+                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToRequest(id=${{ol.id}})}">Request</a>
+<!--                                <a class="dropdown-item" th:href="#">Something else here</a>-->
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
