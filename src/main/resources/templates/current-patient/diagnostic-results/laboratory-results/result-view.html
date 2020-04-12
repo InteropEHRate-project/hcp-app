@@ -30,12 +30,12 @@
                     <a href="#" class="btn disabled" style="background-color: lightgray"
                        th:text="#{ips.translate.label}">language of the section</a>
                     <a href="#" class="btn btn-primary"
-                       th:styleappend="${!specimen.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/specimen-view')}"
+                       th:styleappend="${!result.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/result-view')}"
                        th:text="#{ips.translate.button.original}">Initial version</a>
                     <a href="#" class="btn btn-primary"
-                       th:styleappend="${specimen.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/specimen-view')}"
+                       th:styleappend="${result.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/result-view')}"
                        th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
@@ -45,23 +45,17 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen} + ${specimen.getSpecimenInfoCommandList().get(0).getId()}">specimen</h5></p>
+                            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.result} + ${result.getResultInfoCommandList().get(0).getId()}">result</h5></p>
                         </div>
-                        <div class="card-body" th:each="sp : ${specimen.getSpecimenInfoCommandList()}">
+                        <div class="card-body" th:each="rs : ${result.getResultInfoCommandList()}">
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.id}">ID</h5>
-                            <p class="card-text" th:text="${sp.getId()}">id</p>
+                            <p class="card-text" th:text="${rs.getId()}">id</p>
 
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.id}">Patient ID</h5>
-                            <p class="card-text" th:text="${sp.getPatientID()}">patient ID</p>
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.result.code}">Code</h5>
+                            <p class="card-text" th:text="${rs.getCode()}">code</p>
 
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.patient.status}">Status</h5>
-                            <p class="card-text" th:text="${sp.getStatus()}">status</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.operator}">Operator</h5>
-                            <p class="card-text" th:text="${sp.getOperator()}">operator</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.specimen.patient.priority.of.sampling}">Priority of Sampling</h5>
-                            <p class="card-text" th:text="${sp.getPriorityOfSampling()}">priority of sampling</p>
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.result.value}">Value</h5>
+                            <p class="card-text" th:text="${rs.getValue()}">value</p>
                         </div>
                     </div>
                 </div>

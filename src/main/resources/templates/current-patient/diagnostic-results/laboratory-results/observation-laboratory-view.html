@@ -27,12 +27,20 @@
             <div class="m-5"></div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"  th:text="#{ips.translate.button.translated}">Translated version</a>
+                    <a href="#" class="btn disabled" style="background-color: lightgray"
+                       th:text="#{ips.translate.label}">language of the section</a>
+                    <a href="#" class="btn btn-primary"
+                       th:styleappend="${!observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"
+                       th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary"
+                       th:styleappend="${observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"
+                       th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
-            <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
+            <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top
+            </div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
@@ -48,6 +56,7 @@
                     <th>Specimen</th>
                     <th>Request</th>
                     <th>Result</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,6 +72,16 @@
                     <td th:text="${{ol.specimen}}"></td>
                     <td th:text="${{ol.request}}"></td>
                     <td th:text="${{ol.result}}"></td>
+                    <td>
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More details</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToSpecimen(id=${{ol.id}})}">Specimen</a>
+                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToRequest(id=${{ol.id}})}">Request</a>
+                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToResult(id=${{ol.id}})}">Result</a>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
