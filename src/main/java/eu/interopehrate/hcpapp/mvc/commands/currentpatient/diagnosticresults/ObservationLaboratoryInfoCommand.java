@@ -13,13 +13,13 @@ public class ObservationLaboratoryInfoCommand {
     private static int index = 1;
     @NotEmpty
     @NotNull
-    private String id = Integer.toString(index++);
+    private String id = "f00" + index++;
     @NotEmpty
     @NotNull
-    private String author = "-";
+    private String author = "Ion Popescu";
     @NotEmpty
     @NotNull
-    private String status = "-";
+    private String status = "final";
     @NotEmpty
     @NotNull
     private String code = "MB";
@@ -31,7 +31,7 @@ public class ObservationLaboratoryInfoCommand {
     private String patient = "Mario Rossi";
     @NotEmpty
     @NotNull
-    private String performer = "-";
+    private String performer = "Spitalul Clinic de Urgenta Bagdasar-Arseni";
     @NotEmpty
     @NotNull
     private String resultsInterpreter = "-";
@@ -43,5 +43,5 @@ public class ObservationLaboratoryInfoCommand {
     private String request = "-";
     @NotEmpty
     @NotNull
-    private String result = "-";
+    private String result = "Observation/" + id;
 }

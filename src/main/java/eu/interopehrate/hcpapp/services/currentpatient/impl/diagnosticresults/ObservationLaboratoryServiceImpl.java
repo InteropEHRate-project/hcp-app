@@ -16,7 +16,6 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
     private ObservationLaboratoryInfoCommand observationLaboratoryInfoCommand1 = new ObservationLaboratoryInfoCommand();
     private ObservationLaboratoryInfoCommand observationLaboratoryInfoCommand2 = new ObservationLaboratoryInfoCommand();
     private ObservationLaboratoryInfoCommand observationLaboratoryInfoCommand3 = new ObservationLaboratoryInfoCommand();
-    private ObservationLaboratoryInfoCommand observationLaboratoryInfoCommand4 = new ObservationLaboratoryInfoCommand();
 
     public ObservationLaboratoryServiceImpl(CurrentPatient currentPatient) {
         this.currentPatient = currentPatient;
@@ -28,7 +27,6 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
         observationLaboratoryInfoCommands.add(observationLaboratoryInfoCommand1);
         observationLaboratoryInfoCommands.add(observationLaboratoryInfoCommand2);
         observationLaboratoryInfoCommands.add(observationLaboratoryInfoCommand3);
-        observationLaboratoryInfoCommands.add(observationLaboratoryInfoCommand4);
         return ObservationLaboratoryCommand.builder().displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .observationLaboratoryInfoCommands(observationLaboratoryInfoCommands).build();
     }
