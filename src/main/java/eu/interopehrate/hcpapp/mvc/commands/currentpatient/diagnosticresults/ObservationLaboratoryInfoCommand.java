@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,10 +25,10 @@ public class ObservationLaboratoryInfoCommand {
     private String code = "MB";
     @NotEmpty
     @NotNull
-    private String date = "-";
+    private LocalDate date = LocalDate.now();
     @NotEmpty
     @NotNull
-    private String patient = "-";
+    private String patient = "Mario Rossi";
     @NotEmpty
     @NotNull
     private String performer = "-";
