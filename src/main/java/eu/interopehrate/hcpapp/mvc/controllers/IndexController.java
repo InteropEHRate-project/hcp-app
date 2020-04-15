@@ -1,14 +1,9 @@
 package eu.interopehrate.hcpapp.mvc.controllers;
 
 import eu.interopehrate.hcpapp.services.index.IndexService;
-import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.IOException;
-import java.security.*;
-import java.security.cert.CertificateException;
 
 @Controller
 public class IndexController {
@@ -25,9 +20,8 @@ public class IndexController {
     }
 
     @RequestMapping("/index/open-connection")
-    public String openConnection() throws CertificateException, SignatureException, NoSuchAlgorithmException, KeyStoreException, OperatorCreationException, NoSuchProviderException, InvalidKeyException, IOException {
+    public String openConnection() {
         indexService.openConnection();
-        indexService.certificate();
         return "redirect:/index";
     }
 
