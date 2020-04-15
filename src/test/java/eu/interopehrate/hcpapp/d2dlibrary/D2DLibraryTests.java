@@ -93,5 +93,6 @@ public class D2DLibraryTests {
         cert.checkValidity(new Date());
         cert.verify(keyPair.getPublic());
         System.out.println(cert);
+        System.out.println(cert);
     }
 }
