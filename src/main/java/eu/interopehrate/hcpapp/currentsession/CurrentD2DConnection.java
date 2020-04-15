@@ -121,6 +121,7 @@ public class CurrentD2DConnection implements DisposableBean {
                 CurrentD2DConnection.this.currentPatient.initPatient(patient);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                System.out.println();
             } catch (Exception e) {
                 log.error("Error after personal identity was received", e);
             }
