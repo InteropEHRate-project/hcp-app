@@ -7,14 +7,12 @@ import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
-import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.security.InvalidKeyException;
+import java.io.IOException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SignatureException;
 import java.security.cert.CertificateException;
 import java.util.Base64;
 import java.util.Objects;
@@ -25,6 +23,7 @@ public class IndexServiceImpl implements IndexService {
     @Value("${bluetooth.connection.info.image.size}")
     private String bluetoothConnectionInfoImageSize;
     private BluetoothConnectionService bluetoothConnectionService;
+
     private CurrentD2DConnection currentD2DConnection;
     private CurrentPatient currentPatient;
 
@@ -65,6 +64,9 @@ public class IndexServiceImpl implements IndexService {
         if (Objects.nonNull(currentPatient.getConsent())) {
             patientDataCommand.setConsent(currentPatient.getConsentAsString());
         }
+        if (Objects.nonNull(currentPatient.getCertificate())) {
+            patientDataCommand.setCertificate(currentPatient.getCertificateAsString());
+        }
 
         if (currentD2DConnection.getIndexPatientDataCommand().getNoConformantJSON()) {
             patientDataCommand.setNoConformantJSON(true);
@@ -87,7 +89,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public void certificate() throws CertificateException, InvalidKeyException, NoSuchAlgorithmException, OperatorCreationException, NoSuchProviderException, SignatureException {
+    public void certificate() throws CertificateException, NoSuchAlgorithmException, IOException, KeyStoreException {
         this.currentD2DConnection.certificate();
     }
 
