@@ -10,5 +10,6 @@ import java.util.List;
 public class MedicationSummaryCommand {
     private Boolean displayTranslatedVersion;
     private List<MedicationSummaryStatementCommand> statementList;
+    private List<MedicationSummaryPrescriptionCommand> prescriptionList;
     private List<MedicationSummaryMedicationCommand> medicationList;
 }
