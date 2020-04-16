@@ -39,7 +39,7 @@ public class BundleProcessorTests {
     @Test
     public void testAllergyIntoleranceList() {
         List<AllergyIntolerance> allergyIntolerance = bundleProcessor.allergyIntoleranceList();
-        assertEquals(1, allergyIntolerance.size());
+        assertEquals(2, allergyIntolerance.size());
     }
 
     @Test
