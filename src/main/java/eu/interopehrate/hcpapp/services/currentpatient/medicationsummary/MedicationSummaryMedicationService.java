@@ -1,7 +1,8 @@
 package eu.interopehrate.hcpapp.services.currentpatient.medicationsummary;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryCommand;
+
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryMedicationCommand;
 
 public interface MedicationSummaryMedicationService {
-    MedicationSummaryCommand medicationCommand();
+    MedicationSummaryMedicationCommand medicationCommand(String id);
 }
