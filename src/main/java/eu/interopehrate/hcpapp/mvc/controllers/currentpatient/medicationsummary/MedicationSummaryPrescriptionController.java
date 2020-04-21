@@ -14,6 +14,7 @@ public class MedicationSummaryPrescriptionController {
 
     public MedicationSummaryPrescriptionController(MedicationSummaryPrescriptionService medicationSummaryPrescriptionService) {
         this.medicationSummaryPrescriptionService = medicationSummaryPrescriptionService;
+        System.out.println("");
     }
 
     @GetMapping
