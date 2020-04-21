@@ -31,11 +31,11 @@
                        th:text="#{ips.translate.label}">language of the section</a>
                     <a href="#" class="btn btn-primary"
                        th:styleappend="${!request.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/request-view')}"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"
                        th:text="#{ips.translate.button.original}">Initial version</a>
                     <a href="#" class="btn btn-primary"
                        th:styleappend="${request.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/request-view')}"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"
                        th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>

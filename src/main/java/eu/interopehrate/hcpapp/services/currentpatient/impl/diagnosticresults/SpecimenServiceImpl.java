@@ -22,7 +22,7 @@ public class SpecimenServiceImpl implements SpecimenService {
     @Override
     public SpecimenCommand specimenInfoCommand(String id) {
         List<SpecimenInfoCommand> specimenInfoCommands = new ArrayList<>();
-        specimenInfoCommand.setId(id);
+        this.specimenInfoCommand.setId(id);
         specimenInfoCommands.add(specimenInfoCommand);
         return SpecimenCommand.builder().displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .specimenInfoCommandList(specimenInfoCommands)

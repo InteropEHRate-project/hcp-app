@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;

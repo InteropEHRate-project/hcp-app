@@ -36,13 +36,6 @@
                th:text="#{fragment.current.patient.navigation.left.medication.summary.medication.statement}">medication
                 statement</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link"
-               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medication-summary/medication')} ? 'active' : ''"
-               href="../medication/view-section.html"
-               th:href="@{/current-patient/medication-summary/medication/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.medication.summary.medication}">medication</a>
-        </li>
     </ul>
     <div class="m-2"></div>
 </div>
