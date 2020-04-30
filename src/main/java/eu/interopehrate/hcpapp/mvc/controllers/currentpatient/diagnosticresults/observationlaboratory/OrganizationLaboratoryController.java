@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.laboratoryresults;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import org.springframework.stereotype.Controller;

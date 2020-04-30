@@ -1,8 +1,9 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.laboratoryresults;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.ObservationLaboratoryController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults.ObservationLaboratoryServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
