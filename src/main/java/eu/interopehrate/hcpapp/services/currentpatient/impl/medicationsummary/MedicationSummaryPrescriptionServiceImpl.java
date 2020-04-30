@@ -23,7 +23,7 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public MedicationSummaryPrescriptionCommand prescriptionCommand() {
+    public MedicationSummaryPrescriptionCommand prescriptionCommand(String id) {
         List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
         medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand1);
         medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand2);

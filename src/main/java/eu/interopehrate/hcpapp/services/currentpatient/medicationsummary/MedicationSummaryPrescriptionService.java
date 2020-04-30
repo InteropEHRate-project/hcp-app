@@ -4,7 +4,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Med
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
 
 public interface MedicationSummaryPrescriptionService {
-    MedicationSummaryPrescriptionCommand prescriptionCommand();
+    MedicationSummaryPrescriptionCommand prescriptionCommand(String id);
 
     void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand);
 }
