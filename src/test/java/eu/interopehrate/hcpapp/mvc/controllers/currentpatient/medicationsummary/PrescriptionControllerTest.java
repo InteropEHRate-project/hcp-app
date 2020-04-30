@@ -24,7 +24,6 @@ public class PrescriptionControllerTest {
     @Mock
     private Model model;
     private MedicationSummaryPrescriptionController controller;
-    private String id = "10";
 
     @BeforeEach
     void setUp() {
@@ -35,7 +34,7 @@ public class PrescriptionControllerTest {
 
     @Test
     void viewSection() {
-        String returnedString = this.controller.viewSection(this.id, this.model);
+        String returnedString = this.controller.viewSection(this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION, returnedString);
         verify(this.model, times(1)).addAttribute(eq("prescriptionCommand"), any(MedicationSummaryPrescriptionCommand.class));
     }
