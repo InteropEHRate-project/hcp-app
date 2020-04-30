@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/current-patient/medication-summary/prescription/medication-view")
+@RequestMapping("/current-patient/medication-summary/prescription")
 public class MedicationSummaryMedicationController {
     private final MedicationSummaryMedicationService medicationSummaryMedicationService;
 
