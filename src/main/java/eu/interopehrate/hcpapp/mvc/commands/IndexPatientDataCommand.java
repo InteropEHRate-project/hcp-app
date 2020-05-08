@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -13,11 +14,13 @@ public class IndexPatientDataCommand {
     private String id;
     private String lastName;
     private String firstName;
+    private String gender;
+    private Date birthDate;
     private String consent;
     private Boolean noConformantJSON = false;
     private String certificate;
 
     public Boolean hasData() {
-        return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(consent)||Objects.nonNull(certificate);
+        return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) || Objects.nonNull(birthDate) || Objects.nonNull(consent)||Objects.nonNull(certificate);
     }
 }

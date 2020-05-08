@@ -74,6 +74,15 @@
                             <h5 class="card-title">Family Name</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getLastName()}">last name</p>
                         </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getGender() != null}">
+                            <h5 class="card-title">Gender</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getGender()}">gender</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getBirthDate() != null}">
+                            <h5 class="card-title">Birth date</h5>
+<!--                            Birth date output is processed. -->
+                            <p class="card-text" th:text="${index.patientDataCommand.getBirthDate().toLocaleString().substring(0, index.patientDataCommand.getBirthDate().toLocaleString().length() - 10)}">birth date</p>
+                        </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getId() != null}">
                             <h5 class="card-title">ID Patient</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getId()}">patient id</p>
@@ -89,7 +98,7 @@
                     </div>
                     <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
                         <div class="row justify-content-center">
-                            <a href="#" class="btn btn-danger" th:text="#{template.index.button.invalid.certificate}" th:href="@{/index/close-connection}">Invalid Digital Identity</a>
+                            <a href="#" class="btn btn-danger btn-lg" th:text="#{template.index.button.invalid.certificate}" th:href="@{/index/close-connection}">Invalid Digital Identity</a>
                         </div>
                     </div>
                 </div>

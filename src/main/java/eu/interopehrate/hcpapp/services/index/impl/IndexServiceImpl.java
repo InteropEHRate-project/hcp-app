@@ -59,7 +59,12 @@ public class IndexServiceImpl implements IndexService {
                     .collect(Collectors.joining(","))
             );
             patientDataCommand.setId(currentPatient.getPatient().getId());
-
+            if (Objects.nonNull(currentPatient.getPatient().getGender())) {
+                patientDataCommand.setGender(currentPatient.getPatient().getGender().toString());
+            }
+            if (Objects.nonNull(currentPatient.getPatient().getBirthDate())) {
+                patientDataCommand.setBirthDate(currentPatient.getPatient().getBirthDate());
+            }
         }
         if (Objects.nonNull(currentPatient.getConsent())) {
             patientDataCommand.setConsent(currentPatient.getConsentAsString());
