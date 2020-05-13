@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,23 +15,17 @@ public class MedicationSummaryPrescriptionInfoCommand {
     private String id = "00" + index++;
     @NotEmpty
     @NotNull
-    private String author = "-";
+    private String author = "Ion Popescu";
     @NotEmpty
     @NotNull
     private String status = "active";
     @NotEmpty
     @NotNull
-    private LocalDate issueDate = LocalDate.now();
+    private String timings = "-";
     @NotEmpty
     @NotNull
-    private String dosageInstructions = "-";
+    private String drugName = "-";
     @NotEmpty
     @NotNull
-    private String dosageInstructionsText = "-";
-    @NotEmpty
-    @NotNull
-    private String patient = "Mario Rossi";
-    @NotEmpty
-    @NotNull
-    private String medication = "-";
+    private String drugDosage = "-";
 }

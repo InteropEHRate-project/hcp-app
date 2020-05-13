@@ -19,8 +19,11 @@ public class MedicationSummaryMedicationController {
 
     @GetMapping
     @RequestMapping("/idToMedication")
-    public String viewSection(@RequestParam(name = "id") String id, Model model) {
-        model.addAttribute("medicationCommand", medicationSummaryMedicationService.medicationCommand(id));
+    public String viewSection(@RequestParam(name = "id") String id,
+                              @RequestParam(name = "drug") String drug,
+                              @RequestParam(name = "status") String status,
+                              Model model) {
+        model.addAttribute("medicationCommand", medicationSummaryMedicationService.medicationCommand(id, drug, status));
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW;
     }
 }

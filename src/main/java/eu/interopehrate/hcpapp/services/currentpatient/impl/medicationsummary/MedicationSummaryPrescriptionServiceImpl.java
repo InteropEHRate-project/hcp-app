@@ -25,8 +25,13 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     @Override
     public MedicationSummaryPrescriptionCommand prescriptionCommand() {
         List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
+        this.medicationSummaryPrescriptionInfoCommand1.setDrugName("Data test 1");
         medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand1);
+        this.medicationSummaryPrescriptionInfoCommand2.setDrugName("Data test 2");
+        this.medicationSummaryPrescriptionInfoCommand2.setStatus("suspended");
         medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand2);
+        this.medicationSummaryPrescriptionInfoCommand3.setDrugName("Data test 3");
+        this.medicationSummaryPrescriptionInfoCommand3.setStatus("stopped");
         medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand3);
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())

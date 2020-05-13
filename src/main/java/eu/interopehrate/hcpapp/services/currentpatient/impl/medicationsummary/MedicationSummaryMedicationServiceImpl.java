@@ -20,9 +20,11 @@ public class MedicationSummaryMedicationServiceImpl implements MedicationSummary
     }
 
     @Override
-    public MedicationSummaryMedicationCommand medicationCommand(String id) {
+    public MedicationSummaryMedicationCommand medicationCommand(String id, String drug, String status) {
         List<MedicationSummaryMedicationInfoCommand> medicationSummaryMedicationInfoCommands = new ArrayList<>();
         this.medicationSummaryMedicationInfoCommand.setId(id);
+        this.medicationSummaryMedicationInfoCommand.setDrugName(drug);
+        this.medicationSummaryMedicationInfoCommand.setStatus(status);
         medicationSummaryMedicationInfoCommands.add(medicationSummaryMedicationInfoCommand);
         return MedicationSummaryMedicationCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())

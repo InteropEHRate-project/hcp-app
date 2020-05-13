@@ -44,17 +44,27 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <p><h5 th:text="#{fragment.current.patient.navigation.left.medication.summary.medication} + ${medicationCommand.getMedicationSummaryMedicationInfoCommandList().get(0).getId()}">specimen</h5></p>
+                            <p><h3 th:text="${medicationCommand.getMedicationSummaryMedicationInfoCommandList().get(0).getDrugName()}">specimen</h3></p>
                         </div>
                         <div class="card-body" th:each="med : ${medicationCommand.getMedicationSummaryMedicationInfoCommandList()}">
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.id}">ID</h5>
-                            <p class="card-text" th:text="${med.getId()}">id</p>
 
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.code}">Code</h5>
-                            <p class="card-text" th:text="${med.getCode()}">code</p>
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</h5>
+                            <p class="card-text" th:text="${med.getDateOfPrescription()}">date of prescription</p>
 
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.name}">Name</h5>
-                            <p class="card-text" th:text="${med.getName()}">name</p>
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.author}">Author</h5>
+                            <p class="card-text" th:text="${med.getAuthor()}">author</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.dosage}">Drug dosage</h5>
+                            <p class="card-text" th:text="${med.getDrugDosage()}">drug dosage</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.timings}">Timings</h5>
+                            <p class="card-text" th:text="${med.getTimings()}">timings</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.notes}">Notes</h5>
+                            <p class="card-text" th:text="${med.getNotes()}">notes</p>
+
+                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.status}">Status</h5>
+                            <p class="card-text" th:text="${med.getStatus()}">status</p>
                         </div>
                     </div>
                 </div>

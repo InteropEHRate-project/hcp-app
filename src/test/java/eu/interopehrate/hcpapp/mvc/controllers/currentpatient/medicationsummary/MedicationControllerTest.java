@@ -25,6 +25,8 @@ public class MedicationControllerTest {
     private Model model;
     private MedicationSummaryMedicationController controller;
     private String id = "10";
+    private String drug = "Data test";
+    private String status = "active";
 
     @BeforeEach
     void setUp() {
@@ -35,7 +37,7 @@ public class MedicationControllerTest {
 
     @Test
     void viewSection() {
-        String returnedString = this.controller.viewSection(this.id, this.model);
+        String returnedString = this.controller.viewSection(this.id, this.drug, this.status, this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW, returnedString);
         verify(this.model, times(1)).addAttribute(eq("medicationCommand"), any(MedicationSummaryMedicationCommand.class));
     }

@@ -44,30 +44,22 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Id</th>
-                    <th>Author</th>
+                    <th>Drug Name</th>
+                    <th>Drug Dosage</th>
+                    <th>Timings</th>
                     <th>Status</th>
-                    <th>Issue Date</th>
-                    <th>Dosage Instructions</th>
-                    <th>Dosage Instructions Text</th>
-                    <th>Patient</th>
-                    <th>Medication</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="pr : ${prescriptionCommand.getMedicationSummaryPrescriptionInfoCommandList()}">
-                    <td th:text="${{pr.getId()}}"></td>
-                    <td th:text="${{pr.getAuthor()}}"></td>
+                    <td th:text="${{pr.getDrugName()}}"></td>
+                    <td th:text="${{pr.getDrugDosage()}}"></td>
+                    <td th:text="${{pr.getTimings()}}"></td>
                     <td th:text="${{pr.getStatus()}}"></td>
-                    <td th:text="${{pr.getIssueDate()}}"></td>
-                    <td th:text="${{pr.getDosageInstructions()}}"></td>
-                    <td th:text="${{pr.getDosageInstructionsText()}}"></td>
-                    <td th:text="${{pr.getPatient()}}"></td>
-                    <td th:text="${{pr.getMedication()}}"></td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(id=${{pr.getId()}})}">Medication Details</a>
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(id=${{pr.getId()}}, drug=${{pr.getDrugName()}}, status=${{pr.getStatus()}})}">Medication Details</a>
                         </div>
                     </td>
                 </tr>

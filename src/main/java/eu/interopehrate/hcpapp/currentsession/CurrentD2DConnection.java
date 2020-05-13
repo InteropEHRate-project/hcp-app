@@ -124,6 +124,7 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onPatientSummaryReceived(Bundle bundle) {
             try {
+                log.info("onPatientSummaryReceived");
                 CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
             } catch (Exception e) {
                 log.error("Error after Patient Summary was received", e);
