@@ -1,16 +1,16 @@
 package eu.interopehrate.hcpapp.converters.fhir.diagnosticresults;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandAnalyte;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandAnalysis;
 import org.hl7.fhir.r4.model.Observation;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HapiToCommandObservationLaboratory implements Converter<Observation, ObservationLaboratoryInfoCommandAnalyte> {
+public class HapiToCommandObservationLaboratory implements Converter<Observation, ObservationLaboratoryInfoCommandAnalysis> {
 
     @Override
-    public ObservationLaboratoryInfoCommandAnalyte convert(Observation observation) {
-        ObservationLaboratoryInfoCommandAnalyte command = new ObservationLaboratoryInfoCommandAnalyte();
+    public ObservationLaboratoryInfoCommandAnalysis convert(Observation observation) {
+        ObservationLaboratoryInfoCommandAnalysis command = new ObservationLaboratoryInfoCommandAnalysis();
         return command;
     }
 }

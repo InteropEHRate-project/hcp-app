@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommandAnalyte;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.ObservationLaboratoryController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
@@ -33,6 +33,6 @@ class ObservationLaboratoryControllerTest {
     void viewSection() {
         String returnedString = this.controller.viewSection(this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW, returnedString);
-        verify(this.model, times(1)).addAttribute(eq("observationLaboratory"), any(ObservationLaboratoryCommandAnalyte.class));
+        verify(this.model, times(1)).addAttribute(eq("observationLaboratory"), any(ObservationLaboratoryCommandAnalysis.class));
     }
 }

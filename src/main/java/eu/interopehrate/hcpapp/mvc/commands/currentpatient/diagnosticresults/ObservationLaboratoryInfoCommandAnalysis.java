@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class ObservationLaboratoryInfoCommandAnalyte {
+public class ObservationLaboratoryInfoCommandAnalysis {
     @NotEmpty
     @NotNull
-    private String analyte = "SARS CoV-2";
+    private String analysis = "SARS CoV-2";
     @NotEmpty
     @NotNull
     private String value = "-";

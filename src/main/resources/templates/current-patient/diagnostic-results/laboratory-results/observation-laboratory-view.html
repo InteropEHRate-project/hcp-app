@@ -43,16 +43,16 @@
             <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
-                <th>Analyte</th>
+                <th>Analysis</th>
                 <th:block th:each="sample : ${observationLaboratorySample.getObservationLaboratoryInfoCommandSamples()}">
                     <th th:text="${{sample.getSample()}}"></th>
                 </th:block>
 
                 </thead>
                 <tbody>
-                <tr th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalytes()}">
-                    <td th:text="${{ol.getAnalyte()}}"></td>
-                    <th:block th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalytes()}">
+                <tr th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalyses()}">
+                    <td th:text="${{ol.getAnalysis()}}"></td>
+                    <th:block th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalyses()}">
                         <td th:text="${{ol.getValue()}}"></td>
                     </th:block>
                 </tr>

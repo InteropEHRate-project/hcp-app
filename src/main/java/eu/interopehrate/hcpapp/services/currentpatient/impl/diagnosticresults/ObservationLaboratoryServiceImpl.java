@@ -1,9 +1,9 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommandAnalyte;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommandSample;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandAnalyte;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandSample;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,9 @@ import java.util.List;
 public class ObservationLaboratoryServiceImpl implements ObservationLaboratoryService {
     private CurrentPatient currentPatient;
     //Hardcoded rows in Observation Laboratory result tabel
-    private ObservationLaboratoryInfoCommandAnalyte observationLaboratoryInfoCommandAnalyte1 = new ObservationLaboratoryInfoCommandAnalyte();
-    private ObservationLaboratoryInfoCommandAnalyte observationLaboratoryInfoCommandAnalyte2 = new ObservationLaboratoryInfoCommandAnalyte();
-    private ObservationLaboratoryInfoCommandAnalyte observationLaboratoryInfoCommandAnalyte3 = new ObservationLaboratoryInfoCommandAnalyte();
+    private ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis1 = new ObservationLaboratoryInfoCommandAnalysis();
+    private ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis2 = new ObservationLaboratoryInfoCommandAnalysis();
+    private ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis3 = new ObservationLaboratoryInfoCommandAnalysis();
     //Hardcoded columns in Observation Laboratory result tabel
     private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample1 = new ObservationLaboratoryInfoCommandSample();
     private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample2 = new ObservationLaboratoryInfoCommandSample();
@@ -29,18 +29,18 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
     }
 
     @Override
-    public ObservationLaboratoryCommandAnalyte observationLaboratoryInfoCommand() {
-        List<ObservationLaboratoryInfoCommandAnalyte> observationLaboratoryInfoCommandAnalytes = new ArrayList<>();
-        observationLaboratoryInfoCommandAnalytes.add(this.observationLaboratoryInfoCommandAnalyte1);
+    public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis() {
+        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = new ArrayList<>();
+        observationLaboratoryInfoCommandAnalyses.add(this.observationLaboratoryInfoCommandAnalysis1);
 
-        this.observationLaboratoryInfoCommandAnalyte2.setAnalyte("Eritrociti");
-        observationLaboratoryInfoCommandAnalytes.add(this.observationLaboratoryInfoCommandAnalyte2);
+        this.observationLaboratoryInfoCommandAnalysis2.setAnalysis("Eritrociti");
+        observationLaboratoryInfoCommandAnalyses.add(this.observationLaboratoryInfoCommandAnalysis2);
 
-        this.observationLaboratoryInfoCommandAnalyte3.setAnalyte("Emoglobina");
-        observationLaboratoryInfoCommandAnalytes.add(this.observationLaboratoryInfoCommandAnalyte3);
-        return ObservationLaboratoryCommandAnalyte.builder()
+        this.observationLaboratoryInfoCommandAnalysis3.setAnalysis("Emoglobina");
+        observationLaboratoryInfoCommandAnalyses.add(this.observationLaboratoryInfoCommandAnalysis3);
+        return ObservationLaboratoryCommandAnalysis.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                .observationLaboratoryInfoCommandAnalytes(observationLaboratoryInfoCommandAnalytes).build();
+                .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses).build();
     }
 
     @Override

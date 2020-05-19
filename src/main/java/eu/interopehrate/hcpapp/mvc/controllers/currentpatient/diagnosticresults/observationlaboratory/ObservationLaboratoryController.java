@@ -19,7 +19,7 @@ public class ObservationLaboratoryController {
     @GetMapping
     @RequestMapping("/observation-laboratory-view")
     public String viewSection(Model model) {
-        model.addAttribute("observationLaboratory", observationLaboratoryService.observationLaboratoryInfoCommand());
+        model.addAttribute("observationLaboratory", observationLaboratoryService.observationLaboratoryInfoCommandAnalysis());
         model.addAttribute("observationLaboratorySample", observationLaboratoryService.observationLaboratoryInfoCommandSample());
         return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW;
     }
