@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class ObservationLaboratoryCommand {
+public class ObservationLaboratoryCommandAnalyte {
     private Boolean displayTranslatedVersion;
-    private List<ObservationLaboratoryInfoCommand> observationLaboratoryInfoCommands;
+    private List<ObservationLaboratoryInfoCommandAnalyte> observationLaboratoryInfoCommandAnalytes;
 }

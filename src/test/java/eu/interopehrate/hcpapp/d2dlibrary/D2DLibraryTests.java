@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.d2dlibrary;
 
+import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.td2de.BluetoothConnection;
+import eu.interopehrate.td2de.IPSChecker;
 import eu.interopehrate.td2de.api.D2DConnection;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
 import eu.interopehrate.td2de.api.D2DSecurityConnection;
@@ -16,7 +18,9 @@ import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
+import java.net.URISyntaxException;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -72,6 +76,12 @@ public class D2DLibraryTests {
         public void simulateNonValidPatientSummaryReceived() {
             listeners.onNoConformantPatientSummaryReceived();
         }
+    }
+
+    @Test
+    public void testIPSchecker() throws FileNotFoundException, URISyntaxException {
+        FhirContext ctx = FhirContext.forR4();
+        IPSChecker ipsChecker = new IPSChecker(ctx);
     }
 
     @Test

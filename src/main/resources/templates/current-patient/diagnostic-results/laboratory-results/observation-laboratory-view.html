@@ -43,44 +43,18 @@
             <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
-                <tr>
-                    <th>Id</th>
-                    <th>Author</th>
-                    <th>Code</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Patient</th>
-                    <th>Performer</th>
-                    <th>Results Interpreter</th>
-                    <th>Specimen</th>
-                    <th>Request</th>
-                    <th>Result</th>
-                    <th>Action</th>
-                </tr>
+                <th>Analyte</th>
+                <th:block th:each="sample : ${observationLaboratorySample.getObservationLaboratoryInfoCommandSamples()}">
+                    <th th:text="${{sample.getSample()}}"></th>
+                </th:block>
+
                 </thead>
                 <tbody>
-                <tr th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommands()}">
-                    <td th:text="${{ol.id}}"></td>
-                    <td th:text="${{ol.author}}"></td>
-                    <td th:text="${{ol.code}}"></td>
-                    <td th:text="${{ol.status}}"></td>
-                    <td th:text="${{ol.date}}"></td>
-                    <td th:text="${{ol.patient}}"></td>
-                    <td th:text="${{ol.performer}}"></td>
-                    <td th:text="${{ol.resultsInterpreter}}"></td>
-                    <td th:text="${{ol.specimen}}"></td>
-                    <td th:text="${{ol.request}}"></td>
-                    <td th:text="${{ol.result}}"></td>
-                    <td>
-                        <div class="dropdown show">
-                            <a class="btn btn-primary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown">Details</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToSpecimen(id=${{ol.id}})}">Specimen</a>
-                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToRequest(id=${{ol.id}})}">Request</a>
-                                <a class="dropdown-item" th:href="@{/current-patient/diagnostic-results/laboratory-results/idToResult(id=${{ol.id}})}">Result</a>
-                            </div>
-                        </div>
-                    </td>
+                <tr th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalytes()}">
+                    <td th:text="${{ol.getAnalyte()}}"></td>
+                    <th:block th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalytes()}">
+                        <td th:text="${{ol.getValue()}}"></td>
+                    </th:block>
                 </tr>
                 </tbody>
             </table>
