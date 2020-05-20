@@ -33,6 +33,6 @@ class ObservationLaboratoryControllerTest {
     void viewSection() {
         String returnedString = this.controller.viewSection(this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW, returnedString);
-        verify(this.model, times(1)).addAttribute(eq("observationLaboratory"), any(ObservationLaboratoryCommandAnalysis.class));
+        verify(this.model, times(1)).addAttribute(eq("observationLaboratoryAnalysis"), any(ObservationLaboratoryCommandAnalysis.class));
     }
 }

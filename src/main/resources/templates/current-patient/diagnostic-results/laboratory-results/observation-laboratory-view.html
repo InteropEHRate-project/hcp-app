@@ -30,11 +30,11 @@
                     <a href="#" class="btn disabled" style="background-color: lightgray"
                        th:text="#{ips.translate.label}">language of the section</a>
                     <a href="#" class="btn btn-primary"
-                       th:styleappend="${!observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:styleappend="${!observationLaboratoryAnalysis.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
                        th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"
                        th:text="#{ips.translate.button.original}">Initial version</a>
                     <a href="#" class="btn btn-primary"
-                       th:styleappend="${observationLaboratory.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:styleappend="${observationLaboratoryAnalysis.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
                        th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}"
                        th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
@@ -50,9 +50,9 @@
 
                 </thead>
                 <tbody>
-                <tr th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalyses()}">
+                <tr th:each="ol : ${observationLaboratoryAnalysis.getObservationLaboratoryInfoCommandAnalyses()}">
                     <td th:text="${{ol.getAnalysis()}}"></td>
-                    <th:block th:each="ol : ${observationLaboratory.getObservationLaboratoryInfoCommandAnalyses()}">
+                    <th:block th:each="ol : ${observationLaboratoryAnalysis.getObservationLaboratoryInfoCommandAnalyses()}">
                         <td th:text="${{ol.getValue()}}"></td>
                     </th:block>
                 </tr>
