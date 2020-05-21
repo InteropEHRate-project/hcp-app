@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
@@ -30,6 +31,8 @@ public class CurrentD2DConnection implements DisposableBean {
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
     private IndexPatientDataCommand indexPatientDataCommand;
+    @Value("${ips.validator.pack}")
+    private String ipsValidatorPackPath;
 
     public IndexPatientDataCommand getIndexPatientDataCommand() {
         return indexPatientDataCommand;
@@ -67,7 +70,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private void openConnection() {
         try {
             bluetoothConnection = new BluetoothConnection();
-            connectedThread = bluetoothConnection.listenConnection(new D2DHRExchangeListener(), new D2DConnectionListener());
+            connectedThread = bluetoothConnection.listenConnection(new D2DHRExchangeListener(), new D2DConnectionListener(), this.ipsValidatorPackPath);
             this.connectionState = D2DConnectionState.ON;
             this.d2DConnectionOperations.reloadIndexPage();
         } catch (IOException e) {

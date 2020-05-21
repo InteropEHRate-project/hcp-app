@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.d2dlibrary;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.IPSChecker;
 import eu.interopehrate.td2de.api.D2DConnection;
@@ -18,13 +19,18 @@ import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+import java.util.Scanner;
+
+import static org.junit.Assert.assertTrue;
 
 public class D2DLibraryTests {
 
@@ -79,12 +85,6 @@ public class D2DLibraryTests {
     }
 
     @Test
-    public void testIPSchecker() throws FileNotFoundException, URISyntaxException {
-        FhirContext ctx = FhirContext.forR4();
-        IPSChecker ipsChecker = new IPSChecker(ctx);
-    }
-
-    @Test
     public void createCertif() throws OperatorCreationException, CertificateException, NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Security.addProvider(new BouncyCastleProvider());
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
@@ -103,5 +103,22 @@ public class D2DLibraryTests {
         cert.checkValidity(new Date());
         cert.verify(keyPair.getPublic());
         System.out.println(cert);
+    }
+
+    @Test
+    public void testCorrectPatientSummary() throws FileNotFoundException, URISyntaxException {
+        String ipsValidatorPackPath = "ipsValidatorPack";
+        FhirContext ctx = FhirContext.forR4();
+        IPSChecker ipsChecker = new IPSChecker(ctx, ipsValidatorPackPath);
+        URL is = D2DLibraryTests.class.getClassLoader().getResource("fhir/correctPatientSummary.json");
+        File f = new File(is.toURI());
+        Scanner sc = new Scanner(f);
+        String content = sc.useDelimiter("\\Z").next();
+        IParser parser = ctx.newJsonParser();
+        Bundle correctPatientSummary = parser.parseResource(Bundle.class, content);
+        boolean conformant=ipsChecker.validateIPSProfile(correctPatientSummary);
+        System.out.println(conformant);
+        assertTrue(conformant);
+        sc.close();
     }
 }
