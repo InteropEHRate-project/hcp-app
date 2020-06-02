@@ -39,6 +39,15 @@ public class BundleProcessor {
                 .collect(Collectors.toList());
     }
 
+    public List<MedicationRequest> medicationRequestList() {
+        return bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(MedicationRequest.class::cast)
+                .collect(Collectors.toList());
+    }
+
     public List<Medication> medicationList() {
         return bundle.getEntry()
                 .stream()

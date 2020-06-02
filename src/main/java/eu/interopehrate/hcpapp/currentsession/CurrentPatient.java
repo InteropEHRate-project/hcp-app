@@ -86,6 +86,14 @@ public class CurrentPatient {
         }
     }
 
+    public List<MedicationRequest> medicationRequestList() {
+        if(Objects.isNull(patientSummaryBundle)) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(patientSummaryBundle).medicationRequestList();
+        }
+    }
+
     public Boolean getDisplayTranslatedVersion() {
         return this.displayTranslatedVersion;
     }
