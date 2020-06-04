@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="#{fragment.current.patient.navigation.left.demographic.information}">Demographic Information</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header::navigation-top">navigation-top</div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+        </div>
+        <div class="col-9">
+            <p><h3 th:text="#{fragment.current.patient.navigation.left.demographic.information}">Demographic Information</h3></p>
+            <div th:if="${index.patientDataCommand.hasData()}">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Patient details</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Name</th>
+                        <td th:text="${index.patientDataCommand.getLastName()}">name</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Surname</th>
+                        <td th:text="${index.patientDataCommand.getFirstName()}">surname</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getBirthDate() != null}">
+                        <th>Birth Date</th>
+                        <!--    Birth date output is processed.     -->
+                        <td th:text="${index.patientDataCommand.getBirthDate().toLocaleString().substring(0, index.patientDataCommand.getBirthDate().toLocaleString().length() - 10)}">birth date</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Place of Birth</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getGender() != null}">
+                        <th>Gender</th>
+                        <td th:text="${index.patientDataCommand.getGender()}">gender</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Native Language</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Country of Residence</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Social Security Number/PID</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Next of Kin</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Emergency Contact</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Patient Phone</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <th>Patient E-mail</th>
+                        <td>-</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>GP/Referral Physician details</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Name</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Phone</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Country of Residence</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>E-mail</th>
+                        <td>-</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Referral Nurse details</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Name</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Phone</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>Country of Residence</th>
+                        <td>-</td>
+                    </tr>
+                    <tr th:if="${index.patientDataCommand.getLastName() != null}">
+                        <th>E-mail</th>
+                        <td>-</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

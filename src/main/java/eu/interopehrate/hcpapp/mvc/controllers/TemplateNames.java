@@ -13,6 +13,10 @@ public interface TemplateNames {
 
     // Current Patient
     String CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_VIEW_SECTION = "current-patient/medication-summary/statement/view-section";
+    String CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION = "current-patient/pat-history/view-section";
+    String CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION = "current-patient/current-diseases/view-section";
+    String CURRENT_PATIENT_DEMOGRAPHIC_INFORMATION_VIEW_SECTION = "current-patient/demographic-information/view-section";
+    String CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION = "current-patient/document-history-consultation/view-section";
     String CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_ADD_PAGE = "current-patient/medication-summary/statement/add-info";
     String CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION = "current-patient/medication-summary/prescription/view-section";
     String CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW = "current-patient/medication-summary/prescription/medication-view";
@@ -41,7 +45,12 @@ public interface TemplateNames {
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_ORGANISATION_LABORATORY_VIEW = "current-patient/diagnostic-results/pathology-results/organization-laboratory-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW = "current-patient/diagnostic-results/pathology-results/observation-laboratory-media-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_OTHER_RESULTS_VIEW_SECTION = "current-patient/diagnostic-results/other-results/view-section";
-    String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/vital-signs/view-section";
+
+    // Visit data
+    String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/visit-data/vital-signs/view-section";
+    String CURRENT_PATIENT_REASON_VIEW_SECTION = "current-patient/visit-data/reason/view-section";
+    String CURRENT_PATIENT_PH_EXAM_VIEW_SECTION = "current-patient/visit-data/ph-exam/view-section";
+    String CURRENT_PATIENT_CONCLUSION_VIEW_SECTION = "current-patient/visit-data/conclusion/view-section";
     String CURRENT_PATIENT_HISTORY_OF_PAST_ILLNESS_VIEW_SECTION = "current-patient/history-past-illness/view-section";
     String CURRENT_PATIENT_PREGNANCY_EDD_VIEW_SECTION = "current-patient/pregnancy/edd/view-section";
     String CURRENT_PATIENT_PREGNANCY_OUTCOME_VIEW_SECTION = "current-patient/pregnancy/outcome/view-section";
