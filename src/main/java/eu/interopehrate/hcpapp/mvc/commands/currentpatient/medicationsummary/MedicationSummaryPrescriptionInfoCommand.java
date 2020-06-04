@@ -15,17 +15,17 @@ public class MedicationSummaryPrescriptionInfoCommand {
     private String id = "00" + index++;
     @NotEmpty
     @NotNull
-    private String author = "Ion Popescu";
+    private String author;
     @NotEmpty
     @NotNull
-    private String status = "active";
+    private String status;
     @NotEmpty
     @NotNull
-    private String timings = "-";
+    private String timings;
     @NotEmpty
     @NotNull
-    private String drugName = "-";
+    private String drugName;
     @NotEmpty
     @NotNull
-    private String drugDosage = "-";
+    private String drugDosage;
 }

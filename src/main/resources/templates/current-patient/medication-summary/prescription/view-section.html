@@ -51,14 +51,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pr : ${prescriptionCommand.getMedicationSummaryPrescriptionInfoCommandList()}">
-                    <td th:text="${{pr.getDrugName()}}"></td>
-                    <td th:text="${{pr.getDrugDosage()}}"></td>
-                    <td th:text="${{pr.getTimings()}}"></td>
-                    <td th:text="${{pr.getStatus()}}"></td>
+                <tr th:if="${prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand() != null}">
+                    <td th:text="${prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getDrugName()}"></td>
+                    <td th:text="${{prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getDrugDosage()}}"></td>
+                    <td th:text="${{prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getTimings()}}"></td>
+                    <td th:text="${{prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getStatus()}}"></td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(id=${{pr.getId()}}, drug=${{pr.getDrugName()}}, status=${{pr.getStatus()}})}">Medication Details</a>
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(
+                            id=${{prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getId()}},
+                            drug=${{prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getDrugName()}},
+                            status=${{prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand().getStatus()}})}">Medication Details</a>
                         </div>
                     </td>
                 </tr>

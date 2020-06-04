@@ -15,23 +15,23 @@ public class MedicationSummaryMedicationInfoCommand {
     private String id;
     @NotEmpty
     @NotNull
-    private LocalDate dateOfPrescription = LocalDate.now();
+    private LocalDate dateOfPrescription;
     @NotEmpty
     @NotNull
-    private String author = "Ion Popescu";
+    private String author;
     @NotEmpty
     @NotNull
-    private String drugName = "-";
+    private String drugName;
     @NotEmpty
     @NotNull
-    private String drugDosage = "-";
+    private String drugDosage;
     @NotEmpty
     @NotNull
-    private String timings = "-";
+    private String timings;
     @NotEmpty
     @NotNull
-    private String notes = "-";
+    private String notes;
     @NotEmpty
     @NotNull
-    private String status = "active";
+    private String status;
 }

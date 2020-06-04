@@ -27,23 +27,23 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
 
     @Override
     public MedicationSummaryPrescriptionCommand prescriptionCommand() {
-        List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
-        this.medicationSummaryPrescriptionInfoCommand1.setDrugName("Data test 1");
-        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand1);
-        this.medicationSummaryPrescriptionInfoCommand2.setDrugName("Data test 2");
-        this.medicationSummaryPrescriptionInfoCommand2.setStatus("suspended");
-        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand2);
-        this.medicationSummaryPrescriptionInfoCommand3.setDrugName("Data test 3");
-        this.medicationSummaryPrescriptionInfoCommand3.setStatus("stopped");
-        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand3);
-//        var medicationRequests = currentPatient.medicationRequestList()
-//                .stream()
-//                .map(hapiToCommandPrescription::convert)
-//                .collect(Collectors.toList());
-//        medicationRequests.addAll(this.medicationSummaryPrescriptionInfoCommandList);
+//        List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
+//        this.medicationSummaryPrescriptionInfoCommand1.setDrugName("Data test 1");
+//        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand1);
+//        this.medicationSummaryPrescriptionInfoCommand2.setDrugName("Data test 2");
+//        this.medicationSummaryPrescriptionInfoCommand2.setStatus("suspended");
+//        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand2);
+//        this.medicationSummaryPrescriptionInfoCommand3.setDrugName("Data test 3");
+//        this.medicationSummaryPrescriptionInfoCommand3.setStatus("stopped");
+//        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand3);
+        if (this.currentPatient.getPrescription() == null) {
+            return MedicationSummaryPrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion()).build();
+        }
+        var medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(currentPatient.getPrescription());
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                .medicationSummaryPrescriptionInfoCommandList(medicationSummaryPrescriptionInfoCommandList)
+                .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommand)
                 .build();
     }
 

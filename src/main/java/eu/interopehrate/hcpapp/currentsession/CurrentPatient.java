@@ -22,6 +22,11 @@ public class CurrentPatient {
     private Consent consent;
     private Bundle patientSummaryBundle;
     private Certificate certificate;
+    private MedicationRequest prescription;
+
+    public MedicationRequest getPrescription() {
+        return prescription;
+    }
 
     public CurrentPatient(TranslateService translateService) {
         this.translateService = translateService;
@@ -44,6 +49,10 @@ public class CurrentPatient {
             logger.error("Error calling translation service.", e);
             patientSummaryBundle = patientSummary;
         }
+    }
+
+    public void initPrescription(MedicationRequest prescription) {
+        this.prescription = prescription;
     }
 
     public void reset() {
@@ -83,14 +92,6 @@ public class CurrentPatient {
             return Collections.emptyList();
         } else {
             return new BundleProcessor(patientSummaryBundle).medicationStatementList();
-        }
-    }
-
-    public List<MedicationRequest> medicationRequestList() {
-        if(Objects.isNull(patientSummaryBundle)) {
-            return Collections.emptyList();
-        } else {
-            return new BundleProcessor(patientSummaryBundle).medicationRequestList();
         }
     }
 

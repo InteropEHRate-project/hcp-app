@@ -15,6 +15,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.MedicationRequest;
 import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
@@ -63,6 +64,11 @@ public class D2DLibraryTests {
 
             @Override
             public void onNoConformantPatientSummaryReceived() {
+
+            }
+
+            @Override
+            public void onPrescriptionReceived(MedicationRequest medicationRequest) {
 
             }
         }

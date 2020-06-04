@@ -7,6 +7,7 @@ import eu.interopehrate.td2de.api.D2DConnectionListeners;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.MedicationRequest;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -150,6 +151,16 @@ public class CurrentD2DConnection implements DisposableBean {
             log.error("onNoConformantPatientSummaryReceived");
             indexPatientDataCommand.setNoConformantJSON(true);
             CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+        }
+
+        @Override
+        public void onPrescriptionReceived(MedicationRequest medicationRequest) {
+            try {
+                log.info("onPrescriptionReceived");
+                CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);
+            } catch (Exception e) {
+                log.error("Error after Prescription was received", e);
+            }
         }
     }
 

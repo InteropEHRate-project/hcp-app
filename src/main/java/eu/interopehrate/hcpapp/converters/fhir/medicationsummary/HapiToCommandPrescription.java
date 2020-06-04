@@ -5,17 +5,21 @@ import org.hl7.fhir.r4.model.MedicationRequest;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class HapiToCommandPrescription implements Converter<MedicationRequest, MedicationSummaryPrescriptionInfoCommand> {
     @Override
     public MedicationSummaryPrescriptionInfoCommand convert(MedicationRequest source) {
-        MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionCommand = new MedicationSummaryPrescriptionInfoCommand();
-        if(source.getMedicationCodeableConcept().hasText()) {
-            medicationSummaryPrescriptionCommand.setDrugName(source.getMedicationCodeableConcept().getText());
+        MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = new MedicationSummaryPrescriptionInfoCommand();
+        if (Objects.nonNull(source)) {
+            if(source.getMedicationCodeableConcept().hasText()) {
+                medicationSummaryPrescriptionInfoCommand.setDrugName(source.getMedicationCodeableConcept().getText());
+            }
+            if(source.hasStatus()) {
+                medicationSummaryPrescriptionInfoCommand.setStatus(source.getStatus().getDisplay());
+            }
         }
-        if(source.hasStatus()) {
-            medicationSummaryPrescriptionCommand.setStatus(source.getStatus().getDisplay());
-        }
-        return medicationSummaryPrescriptionCommand;
+        return medicationSummaryPrescriptionInfoCommand;
     }
 }
