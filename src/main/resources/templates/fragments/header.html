@@ -35,17 +35,21 @@
                     <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.main.navigation.top.administration}">Administration</a>
                 </li>
             </ul>
-<!--            <ul class="navbar-nav ml-auto">-->
-<!--                <li class="nav-item disabled">-->
-<!--                    <a class="nav-link">Name: </a>-->
-<!--                </li>-->
-<!--                <li class="nav-item disabled">-->
-<!--                    <a class="nav-link">Age: </a>-->
-<!--                </li>-->
-<!--                <li class="nav-item disabled">-->
-<!--                    <a class="nav-link">Country: </a>-->
-<!--                </li>-->
-<!--            </ul>-->
+            <ul class="navbar-nav ml-auto" th:if="${session.mySessionAttribute.getPatientDataCommand().hasData() && session.mySessionAttribute.getPatientDataCommand().getBirthDate() != null}">
+                <li class="nav-item disabled">
+                    <a class="nav-link" th:text="${'Name: '
+                    + session.mySessionAttribute.getPatientDataCommand().getFirstName()
+                    + ' '
+                    + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name</a>
+                </li>
+                <li class="nav-item disabled">
+                    <a class="nav-link" th:text="${'Age: '
+                    + session.mySessionAttribute.getPatientDataCommand().getBirthDate().getYear()}" th:unless="${session == null}">Age</a>
+                </li>
+                <li class="nav-item disabled">
+                    <a class="nav-link">Country: -</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
