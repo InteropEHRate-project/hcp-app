@@ -162,6 +162,13 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.error("Error after Prescription was received", e);
             }
         }
+
+        @Override
+        public void onNoConformantPrescriptionReceived() {
+            log.error("onNoConformantPrescriptionReceived");
+            indexPatientDataCommand.setNoConformantJSON(true);
+            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+        }
     }
 
     public void certificate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {

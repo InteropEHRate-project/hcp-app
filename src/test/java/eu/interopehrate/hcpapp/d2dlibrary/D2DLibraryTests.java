@@ -71,6 +71,11 @@ public class D2DLibraryTests {
             public void onPrescriptionReceived(MedicationRequest medicationRequest) {
 
             }
+
+            @Override
+            public void onNoConformantPrescriptionReceived() {
+
+            }
         }
 
         D2DHRExchangeListeners d2DHRExchangeListeners = new D2DHRExchangeListenersTestImpl();
