@@ -1,6 +1,9 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary;
 
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandHealthCareProfessional;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryMedicationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription.MedicationSummaryMedicationController;
@@ -34,15 +37,14 @@ public class MedicationControllerTest {
     private String timings = "Frequency: 1, Period: 2, PeriodUnit: D";
     private String drugDosage = "2 tablet per day";
     @Mock
-    private MedicationSummaryMedicationServiceImpl medicationSummaryMedicationService;
-    @Mock
-    private HealthCareProfessionalServiceImpl healthCareProfessionalService;
+    private HealthCareProfessionalRepository healthCareProfessionalRepository;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         MedicationSummaryMedicationService service = new MedicationSummaryMedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate())));
-        this.controller = new MedicationSummaryMedicationController(medicationSummaryMedicationService, healthCareProfessionalService);
+        HealthCareProfessionalServiceImpl healthCareProfessionalService = new HealthCareProfessionalServiceImpl(healthCareProfessionalRepository, new EntityToCommandHealthCareProfessional());
+        this.controller = new MedicationSummaryMedicationController(service, healthCareProfessionalService);
     }
 
     @Test
@@ -50,5 +52,6 @@ public class MedicationControllerTest {
         String returnedString = this.controller.viewSection(this.id, this.drug, this.status, this.notes, this.timings, this.drugDosage, LocalDate.now(), this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW, returnedString);
         verify(this.model, times(1)).addAttribute(eq("medicationCommand"), any(MedicationSummaryMedicationCommand.class));
+        verify(this.model, times(1)).addAttribute(eq("doctor"), any(HealthCareProfessionalCommand.class));
     }
 }
