@@ -6,13 +6,13 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Med
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryMedicationService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MedicationSummaryMedicationServiceImpl implements MedicationSummaryMedicationService {
     private final CurrentPatient currentPatient;
-    //Hardcoded Medication
     private MedicationSummaryMedicationInfoCommand medicationSummaryMedicationInfoCommand = new MedicationSummaryMedicationInfoCommand();
 
     public MedicationSummaryMedicationServiceImpl(CurrentPatient currentPatient) {
@@ -20,11 +20,15 @@ public class MedicationSummaryMedicationServiceImpl implements MedicationSummary
     }
 
     @Override
-    public MedicationSummaryMedicationCommand medicationCommand(String id, String drug, String status) {
+    public MedicationSummaryMedicationCommand medicationCommand(String id, String drug, String status, String notes, String timings, String drugDosage, LocalDate dateOfPrescription) {
         List<MedicationSummaryMedicationInfoCommand> medicationSummaryMedicationInfoCommands = new ArrayList<>();
         this.medicationSummaryMedicationInfoCommand.setId(id);
         this.medicationSummaryMedicationInfoCommand.setDrugName(drug);
         this.medicationSummaryMedicationInfoCommand.setStatus(status);
+        this.medicationSummaryMedicationInfoCommand.setNotes(notes);
+        this.medicationSummaryMedicationInfoCommand.setTimings(timings);
+        this.medicationSummaryMedicationInfoCommand.setDrugDosage(drugDosage);
+        this.medicationSummaryMedicationInfoCommand.setDateOfPrescription(dateOfPrescription);
         medicationSummaryMedicationInfoCommands.add(medicationSummaryMedicationInfoCommand);
         return MedicationSummaryMedicationCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())

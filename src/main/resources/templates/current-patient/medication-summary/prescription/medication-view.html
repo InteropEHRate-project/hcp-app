@@ -44,7 +44,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <p><h3 th:text="${medicationCommand.getMedicationSummaryMedicationInfoCommandList().get(0).getDrugName()}">specimen</h3></p>
+                            <p><h3 th:text="${medicationCommand.getMedicationSummaryMedicationInfoCommandList().get(0).getDrugName()}">drug name</h3></p>
                         </div>
                         <div class="card-body" th:each="med : ${medicationCommand.getMedicationSummaryMedicationInfoCommandList()}">
 
@@ -52,13 +52,13 @@
                             <p class="card-text" th:text="${med.getDateOfPrescription()}">date of prescription</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.author}">Author</h5>
-                            <p class="card-text" th:text="${med.getAuthor()}">author</p>
+                            <p class="card-text" th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}">author</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.dosage}">Drug dosage</h5>
                             <p class="card-text" th:text="${med.getDrugDosage()}">drug dosage</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.timings}">Timings</h5>
-                            <p class="card-text" th:text="${med.getTimings()}">timings</p>
+                            <p class="card-text" th:utext="${med.getTimings() + '<br/>'}">timings</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.notes}">Notes</h5>
                             <p class="card-text" th:text="${med.getNotes()}">notes</p>

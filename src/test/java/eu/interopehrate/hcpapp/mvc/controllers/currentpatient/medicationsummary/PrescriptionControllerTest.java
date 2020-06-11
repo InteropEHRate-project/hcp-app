@@ -15,6 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -36,7 +38,7 @@ public class PrescriptionControllerTest {
     }
 
     @Test
-    void viewSection() {
+    void viewSection() throws IOException {
         String returnedString = this.controller.viewSection(this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION, returnedString);
         verify(this.model, times(1)).addAttribute(eq("prescriptionCommand"), any(MedicationSummaryPrescriptionCommand.class));

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+
 @Controller
 @RequestMapping("/current-patient/medication-summary/prescription")
 public class MedicationSummaryPrescriptionController {
@@ -18,7 +20,7 @@ public class MedicationSummaryPrescriptionController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model) {
+    public String viewSection(Model model) throws IOException {
         model.addAttribute("prescriptionCommand", medicationSummaryPrescriptionService.prescriptionCommand());
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION;
     }

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -28,4 +29,10 @@ public class MedicationSummaryPrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String drugDosage;
+    @NotEmpty
+    @NotNull
+    private String notes;
+    @NotEmpty
+    @NotNull
+    private LocalDate dateOfPrescription;
 }

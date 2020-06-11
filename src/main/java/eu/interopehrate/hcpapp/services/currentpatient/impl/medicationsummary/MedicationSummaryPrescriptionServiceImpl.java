@@ -1,12 +1,17 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;
+import org.hl7.fhir.r4.model.MedicationRequest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +20,6 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
     private List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
-    //Hardcoded records in Prescription tabel
-    private MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand1 = new MedicationSummaryPrescriptionInfoCommand();
-    private MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand2 = new MedicationSummaryPrescriptionInfoCommand();
-    private MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand3 = new MedicationSummaryPrescriptionInfoCommand();
 
     public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription) {
         this.currentPatient = currentPatient;
@@ -26,25 +27,36 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public MedicationSummaryPrescriptionCommand prescriptionCommand() {
-//        List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
-//        this.medicationSummaryPrescriptionInfoCommand1.setDrugName("Data test 1");
-//        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand1);
-//        this.medicationSummaryPrescriptionInfoCommand2.setDrugName("Data test 2");
-//        this.medicationSummaryPrescriptionInfoCommand2.setStatus("suspended");
-//        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand2);
-//        this.medicationSummaryPrescriptionInfoCommand3.setDrugName("Data test 3");
-//        this.medicationSummaryPrescriptionInfoCommand3.setStatus("stopped");
-//        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand3);
-        if (this.currentPatient.getPrescription() == null) {
-            return MedicationSummaryPrescriptionCommand.builder()
-                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion()).build();
-        }
-        var medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(currentPatient.getPrescription());
+    public MedicationSummaryPrescriptionCommand prescriptionCommand() throws IOException {
+
+//        if (Objects.isNull(this.currentPatient.getPrescription())) {
+//            return MedicationSummaryPrescriptionCommand.builder()
+//                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion()).build();
+//        }
+
+        File json = new ClassPathResource("MedicationRequest-PRESCRIPTION-sample.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        MedicationRequest medicationRequest = parser.parseResource(MedicationRequest.class, lineReadtest);
+
+        var medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(medicationRequest);
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommand)
                 .build();
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 
     @Override
