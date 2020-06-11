@@ -44,7 +44,7 @@ public class CurrentPatient {
 
     public void initPatientSummary(Bundle patientSummary) {
         try {
-            patientSummaryBundle = translateService.translate(patientSummary, Locale.UK);
+            patientSummaryBundle = translateService.translate(patientSummary, Locale.ITALY, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             patientSummaryBundle = patientSummary;
