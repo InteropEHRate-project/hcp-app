@@ -56,6 +56,8 @@ public class CurrentD2DConnection implements DisposableBean {
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
         this.indexPatientDataCommand.setNoConformantJSON(false);
+        this.indexPatientDataCommand.setIpsReceived(false);
+        this.indexPatientDataCommand.setPrescriptionReceived(false);
         CompletableFuture.runAsync(this::openConnection)
                 .thenRun(this::afterConnectionOpened);
     }
@@ -130,6 +132,8 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onPatientSummaryReceived");
                 CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
+                CurrentD2DConnection.this.indexPatientDataCommand.setIpsReceived(true);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after Patient Summary was received", e);
             }
@@ -158,6 +162,8 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onPrescriptionReceived");
                 CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);
+                CurrentD2DConnection.this.indexPatientDataCommand.setPrescriptionReceived(true);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after Prescription was received", e);
             }

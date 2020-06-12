@@ -18,6 +18,8 @@ public class IndexPatientDataCommand {
     private Date birthDate;
     private String consent;
     private Boolean noConformantJSON = false;
+    private Boolean ipsReceived = false;
+    private Boolean prescriptionReceived = false;
     private String certificate;
 
     public Boolean hasData() {
