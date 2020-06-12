@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;
+import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.MedicationRequest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@Slf4j
 @Service
 public class MedicationSummaryPrescriptionServiceImpl implements MedicationSummaryPrescriptionService {
     private final CurrentPatient currentPatient;
@@ -28,22 +31,27 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
 
     @Override
     public MedicationSummaryPrescriptionCommand prescriptionCommand() throws IOException {
+        List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
 
-//        if (Objects.isNull(this.currentPatient.getPrescription())) {
-//            return MedicationSummaryPrescriptionCommand.builder()
-//                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion()).build();
-//        }
+        if (Objects.isNull(this.currentPatient.getPrescription())) {
+            File json = new ClassPathResource("MedicationRequest-PRESCRIPTION-sample.json").getFile();
+            FileInputStream file = new FileInputStream(json);
+            String lineReadtest = readFromInputStream(file);
+            IParser parser = FhirContext.forR4().newJsonParser();
+            MedicationRequest medicationRequest = parser.parseResource(MedicationRequest.class, lineReadtest);
 
-        File json = new ClassPathResource("MedicationRequest-PRESCRIPTION-sample.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        MedicationRequest medicationRequest = parser.parseResource(MedicationRequest.class, lineReadtest);
-
-        var medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(medicationRequest);
+            medicationSummaryPrescriptionInfoCommandList.add(this.hapiToCommandPrescription.convert(medicationRequest));
+            log.info("On plain JSON Prescription");
+            return MedicationSummaryPrescriptionCommand.builder()
+                    .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                    .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommandList)
+                    .build();
+        }
+        medicationSummaryPrescriptionInfoCommandList.add(this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription()));
+        log.info("On S-EHR Prescription received");
         return MedicationSummaryPrescriptionCommand.builder()
-                .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommand)
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommandList)
                 .build();
     }
 
