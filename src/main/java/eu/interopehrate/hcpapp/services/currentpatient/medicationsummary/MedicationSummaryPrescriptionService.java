@@ -9,4 +9,5 @@ public interface MedicationSummaryPrescriptionService {
     MedicationSummaryPrescriptionCommand prescriptionCommand() throws IOException;
     MedicationSummaryPrescriptionCommand prescriptionCommandUpload();
     void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand);
+    void deletePrescription(String drugId);
 }

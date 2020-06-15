@@ -79,4 +79,14 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     public void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand) {
         this.medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
     }
+
+    @Override
+    public void deletePrescription(String drugId) {
+        for (int i = 0; i < this.medicationSummaryPrescriptionInfoCommandList.size(); i++) {
+            if (this.medicationSummaryPrescriptionInfoCommandList.get(i).getId().equalsIgnoreCase(drugId)) {
+                this.medicationSummaryPrescriptionInfoCommandList.remove(i);
+                break;
+            }
+        }
+    }
 }
