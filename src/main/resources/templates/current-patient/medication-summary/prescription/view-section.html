@@ -71,6 +71,48 @@
                 </tr>
                 </tbody>
             </table>
+
+            <p th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">
+            <h5 th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">Prescription to upload in S-EHR</h5></p>
+            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th>Drug Name</th>
+                    <th>Drug Dosage</th>
+                    <th>Timings</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="prUpload : ${prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand()}">
+                    <td th:text="${prUpload.getDrugName()}"></td>
+                    <td th:text="${prUpload.getDrugDosage()}"></td>
+                    <td th:utext="${prUpload.getTimings() + '<br/>'}"></td>
+                    <td th:text="${prUpload.getStatus()}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(
+                            id=${{prUpload.getId()}},
+                            drug=${{prUpload.getDrugName()}},
+                            status=${{prUpload.getStatus()}},
+                            notes=${{prUpload.getNotes()}},
+                            timings=${{prUpload.getTimings()}},
+                            drugDosage=${{prUpload.getDrugDosage()}},
+                            dateOfPrescription=${{prUpload.getDateOfPrescription()}})}">Medication Details</a>
+<!--                            <a href="#" class="btn btn-info">Edit</a>-->
+<!--                            <a href="#" class="btn btn-danger">Delete</a>-->
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/open-add-page}">Add</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

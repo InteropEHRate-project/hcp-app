@@ -55,6 +55,14 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
                 .build();
     }
 
+    @Override
+    public MedicationSummaryPrescriptionCommand prescriptionCommandUpload() {
+        return MedicationSummaryPrescriptionCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .medicationSummaryPrescriptionInfoCommand(this.medicationSummaryPrescriptionInfoCommandList)
+                .build();
+    }
+
     private String readFromInputStream(InputStream inputStream) throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();
         try (BufferedReader br

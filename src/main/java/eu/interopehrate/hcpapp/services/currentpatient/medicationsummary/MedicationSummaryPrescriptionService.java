@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface MedicationSummaryPrescriptionService {
     MedicationSummaryPrescriptionCommand prescriptionCommand() throws IOException;
-
+    MedicationSummaryPrescriptionCommand prescriptionCommandUpload();
     void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand);
 }

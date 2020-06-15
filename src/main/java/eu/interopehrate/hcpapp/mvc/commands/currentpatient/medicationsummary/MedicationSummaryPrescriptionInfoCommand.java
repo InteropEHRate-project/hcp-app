@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,9 +14,7 @@ public class MedicationSummaryPrescriptionInfoCommand {
     private static int index = 1;
     @NotEmpty
     @NotNull
-    private String id = "00" + index++;
-    @NotEmpty
-    @NotNull
+    private String id = "" + index++;
     private String author;
     @NotEmpty
     @NotNull
@@ -32,7 +31,7 @@ public class MedicationSummaryPrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String notes;
-    @NotEmpty
     @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfPrescription;
 }
