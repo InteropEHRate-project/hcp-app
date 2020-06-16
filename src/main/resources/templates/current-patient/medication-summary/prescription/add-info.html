@@ -72,7 +72,11 @@
                 <div class="form-row">
                     <div class="col-md-4"><br>
                         <label for="status" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.status}">Status</label><br>
-                        <input id="status" type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" th:field="*{status}">
+                        <select class="form-control" id="status" th:field="*{status}">
+                            <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Active">Active</option>
+                            <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Suspended">Suspended</option>
+                            <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Stopped">Stopped</option>
+                        </select>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('status')}" th:text="${err}">err</li>
