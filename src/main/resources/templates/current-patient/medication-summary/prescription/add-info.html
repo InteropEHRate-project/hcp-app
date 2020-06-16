@@ -80,8 +80,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="dateOfPrescription" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</label>
+                    <div class="col-md-4"><br>
+                        <label for="dateOfPrescription" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</label><br>
                         <input id="dateOfPrescription" type="text" class="form-control" th:classappend="${#fields.hasErrors('dateOfPrescription')} ? 'is-invalid' :''" readonly th:field="*{dateOfPrescription}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfPrescription')}">
                             <ul>
