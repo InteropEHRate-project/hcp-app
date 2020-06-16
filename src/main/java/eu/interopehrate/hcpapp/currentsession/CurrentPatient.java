@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
+import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.*;
 import org.slf4j.Logger;
@@ -17,10 +18,12 @@ import java.util.Objects;
 public class CurrentPatient {
     private static final Logger logger = LoggerFactory.getLogger(CurrentPatient.class);
     private final TranslateService translateService;
+    private final CodesConversionService codesConversionService;
     private Boolean displayTranslatedVersion = Boolean.TRUE;
     private Patient patient;
     private Consent consent;
     private Bundle patientSummaryBundle;
+    private Bundle patientSummaryTranslatedBundle;
     private Certificate certificate;
     private MedicationRequest prescription;
 
@@ -28,8 +31,9 @@ public class CurrentPatient {
         return prescription;
     }
 
-    public CurrentPatient(TranslateService translateService) {
+    public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService) {
         this.translateService = translateService;
+        this.codesConversionService = codesConversionService;
     }
 
     public void initPatient(Patient patient) {
@@ -44,7 +48,8 @@ public class CurrentPatient {
 
     public void initPatientSummary(Bundle patientSummary) {
         try {
-            patientSummaryBundle = translateService.translate(patientSummary, Locale.ITALY, Locale.UK);
+            patientSummaryTranslatedBundle = translateService.translate(patientSummary, Locale.ITALY, Locale.UK);
+            patientSummaryBundle = codesConversionService.convert(patientSummaryTranslatedBundle);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             patientSummaryBundle = patientSummary;

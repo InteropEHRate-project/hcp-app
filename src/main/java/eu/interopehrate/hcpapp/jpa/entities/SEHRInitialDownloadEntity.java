@@ -18,7 +18,7 @@ public class SEHRInitialDownloadEntity extends HCPApplicationEntity {
     @NonNull
     private Boolean allergyIntolerance = Boolean.FALSE;
     @NonNull
-    private Boolean problems = Boolean.FALSE;
+    private Boolean currentDiseases = Boolean.FALSE;
     @NonNull
     private Boolean immunizations = Boolean.FALSE;
     @NonNull

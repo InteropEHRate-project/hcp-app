@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.converters.fhir;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.ProblemInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Condition;
@@ -15,37 +15,37 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class HapiToCommandProblem implements Converter<Condition, ProblemInfoCommand> {
+public class HapiToCommandCurrentDisease implements Converter<Condition, CurrentDiseaseInfoCommand> {
 
     private final CurrentPatient currentPatient;
 
-    public HapiToCommandProblem(CurrentPatient currentPatient) {
+    public HapiToCommandCurrentDisease(CurrentPatient currentPatient) {
         this.currentPatient = currentPatient;
     }
 
     @Override
-    public ProblemInfoCommand convert(Condition condition) {
-        ProblemInfoCommand problemInfoCommand = new ProblemInfoCommand();
+    public CurrentDiseaseInfoCommand convert(Condition condition) {
+        CurrentDiseaseInfoCommand currentDiseaseInfoCommand = new CurrentDiseaseInfoCommand();
 
         if (Objects.nonNull(condition.getCode())) {
-            problemInfoCommand.setCode(condition.getCode()
+            currentDiseaseInfoCommand.setCode(condition.getCode()
                     .getCoding()
                     .stream()
                     .map(Coding::getCode)
                     .collect(Collectors.joining("; ")));
 
             for(Coding coding : condition.getCode().getCoding()) {
-                problemInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+                currentDiseaseInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
             }
         }
         if (Objects.nonNull(condition.getOnset())) {
             Date onSet = ((DateTimeType) condition.getOnset()).getValue();
-            problemInfoCommand.setOnSet(onSet.toInstant()
+            currentDiseaseInfoCommand.setOnSet(onSet.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());
         }
         if (Objects.nonNull(condition.getCategory())) {
-            problemInfoCommand.setCategoryCode(condition.getCategory()
+            currentDiseaseInfoCommand.setCategoryCode(condition.getCategory()
                     .stream()
                     .flatMap(codeableConcept -> codeableConcept.getCoding().stream())
                     .map(Coding::getCode)
@@ -53,25 +53,25 @@ public class HapiToCommandProblem implements Converter<Condition, ProblemInfoCom
 
             for(CodeableConcept codeableConcept : condition.getCategory()) {
                 for(Coding coding : codeableConcept.getCoding()) {
-                    problemInfoCommand.setCategoryName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+                    currentDiseaseInfoCommand.setCategoryName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
                 }
             }
         }
         if (Objects.nonNull(condition.getClinicalStatus())) {
-            problemInfoCommand.setClinicalStatus(condition.getClinicalStatus()
+            currentDiseaseInfoCommand.setClinicalStatus(condition.getClinicalStatus()
                     .getCoding()
                     .stream()
                     .map(Coding::getCode)
                     .collect(Collectors.joining("; ")));
         }
         if (Objects.nonNull(condition.getVerificationStatus())) {
-            problemInfoCommand.setVerificationStatus(condition.getVerificationStatus()
+            currentDiseaseInfoCommand.setVerificationStatus(condition.getVerificationStatus()
                     .getCoding()
                     .stream()
                     .map(Coding::getCode)
                     .collect(Collectors.joining(" ")));
         }
 
-        return problemInfoCommand;
+        return currentDiseaseInfoCommand;
     }
 }

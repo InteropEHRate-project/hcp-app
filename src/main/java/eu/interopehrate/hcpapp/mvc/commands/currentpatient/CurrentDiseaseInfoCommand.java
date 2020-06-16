@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class ProblemInfoCommand {
+public class CurrentDiseaseInfoCommand {
     @NotNull
     @NotEmpty
     private String code;

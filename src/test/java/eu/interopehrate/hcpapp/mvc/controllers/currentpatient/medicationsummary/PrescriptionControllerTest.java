@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription.MedicationSummaryPrescriptionController;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.MedicationSummaryPrescriptionServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;
+import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class PrescriptionControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        MedicationSummaryPrescriptionService service = new MedicationSummaryPrescriptionServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate())), hapiToCommandPrescription);
+        MedicationSummaryPrescriptionService service = new MedicationSummaryPrescriptionServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())), hapiToCommandPrescription);
         this.controller = new MedicationSummaryPrescriptionController(service);
     }
 

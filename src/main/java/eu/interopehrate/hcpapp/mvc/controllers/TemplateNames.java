@@ -15,6 +15,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_VIEW_SECTION = "current-patient/medication-summary/statement/view-section";
     String CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION = "current-patient/pat-history/view-section";
     String CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION = "current-patient/current-diseases/view-section";
+    String CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE = "current-patient/current-diseases/add-info";
     String CURRENT_PATIENT_DEMOGRAPHIC_INFORMATION_VIEW_SECTION = "current-patient/demographic-information/view-section";
     String CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION = "current-patient/document-history-consultation/view-section";
     String CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_ADD_PAGE = "current-patient/medication-summary/statement/add-info";
@@ -23,8 +24,6 @@ public interface TemplateNames {
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION = "current-patient/allergies-intolerances/view-section";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE = "current-patient/allergies-intolerances/add-info";
     String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/medication-summary/prescription/add-info";
-    String CURRENT_PATIENT_PROBLEMS_VIEW_SECTION = "current-patient/problems/view-section";
-    String CURRENT_PATIENT_PROBLEMS_ADD_PAGE = "current-patient/problems/add-info";
     String CURRENT_PATIENT_IMMUNIZATIONS_VIEW_SECTION = "current-patient/immunization/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_PROCEDURE_VIEW_SECTION = "current-patient/history-procedure/procedure/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_ORGANIZATION_VIEW_SECTION = "current-patient/history-procedure/organization/view-section";

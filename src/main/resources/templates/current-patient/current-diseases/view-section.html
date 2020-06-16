@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.current.diseases}">current diseases</title>
+    <title th:text="#{fragment.current.patient.navigation.left.current.diseases}">Current Diseases</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -25,7 +25,55 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <p><h3 th:text="#{fragment.current.patient.navigation.left.current.diseases}">Current Diseases</h3></p>
+            <div class="m-5"></div>
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group btn-group-sm mr-2" role="group">
+                    <div class="btn-group mr-2" role="group">
+                        <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+                        <a href="#" class="btn btn-primary" th:styleappend="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-diseases/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                        <a href="#" class="btn btn-primary" th:styleappend="${currentDiseaseCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-diseases/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+                    </div>
+                </div>
+            </div>
+            <p><h3 th:text="#{fragment.current.patient.navigation.left.currentDiseases}">Current Diseases</h3></p>
+            <table class="table table-bordered">
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 35%;">
+                    <col style="width: 15%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                </colgroup>
+                <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.name}">name</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.on.set}">set on</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.category.code}">category code</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.category.name}">category name</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.clinical.status}">clinical status</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.verification.status}">verification status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
+                        <td th:text="${currentDisease.code}">code</td>
+                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.name}">name</td>
+                        <td th:text="${{#temporals.format(currentDisease.onSet, 'dd-MM-yyyy')}}">on set</td>
+                        <td th:text="${currentDisease.categoryCode}">category code</td>
+                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.categoryName}">category name</td>
+                        <td th:text="${currentDisease.clinicalStatus}">clinical status</td>
+                        <td th:text="${currentDisease.verificationStatus}">verification status</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--<div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}" th:text="#{crud.button.add}">add</a>
+                </div>
+            </div>-->
         </div>
     </div>
 </div>

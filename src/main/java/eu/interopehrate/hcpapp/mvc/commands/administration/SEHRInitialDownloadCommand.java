@@ -10,7 +10,7 @@ import lombok.ToString;
 public class SEHRInitialDownloadCommand {
     private Boolean medicationSummary = Boolean.FALSE;
     private Boolean allergyIntolerance = Boolean.FALSE;
-    private Boolean problems = Boolean.FALSE;
+    private Boolean currentDiseases = Boolean.FALSE;
     private Boolean immunizations = Boolean.FALSE;
     private Boolean historyOfProcedure = Boolean.FALSE;
     private Boolean medicalDevices = Boolean.FALSE;
