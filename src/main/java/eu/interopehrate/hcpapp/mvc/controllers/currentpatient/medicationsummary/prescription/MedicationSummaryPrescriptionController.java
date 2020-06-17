@@ -56,14 +56,7 @@ public class MedicationSummaryPrescriptionController {
     @GetMapping
     @RequestMapping("/open-update-page")
     public String openUpdatePage(@RequestParam("id") String id, Model model) {
-        MedicationSummaryPrescriptionInfoCommand drug = null;
-        for (int i = 0; i < this.medicationSummaryPrescriptionService.getMedicationSummaryPrescriptionInfoCommandList().size(); i++) {
-            if (this.medicationSummaryPrescriptionService.getMedicationSummaryPrescriptionInfoCommandList().get(i).getId().equalsIgnoreCase(id)) {
-                drug = this.medicationSummaryPrescriptionService.getMedicationSummaryPrescriptionInfoCommandList().get(i);
-                break;
-            }
-        }
-        model.addAttribute("drug", drug);
+        model.addAttribute("drug", this.medicationSummaryPrescriptionService.medicationSummaryPrescriptionById(id));
         return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
     }
 

@@ -69,6 +69,14 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
                 .build();
     }
 
+    @Override
+    public MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionById(String id) {
+        return medicationSummaryPrescriptionInfoCommandList.stream()
+                .filter(prescription -> prescription.getId().equalsIgnoreCase(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("id not found"));
+    }
+
     private String readFromInputStream(InputStream inputStream) throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();
         try (BufferedReader br
