@@ -9,9 +9,16 @@ import java.util.List;
 
 public interface MedicationSummaryPrescriptionService {
     List<MedicationSummaryPrescriptionInfoCommand> getMedicationSummaryPrescriptionInfoCommandList();
+
     MedicationSummaryPrescriptionCommand prescriptionCommand() throws IOException;
+
     MedicationSummaryPrescriptionCommand prescriptionCommandUpload();
+
+    MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionById(String id);
+
     void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand);
+
     void deletePrescription(String drugId);
+
     void updatePrescription(String id, String status, String timings, String drugName, String drugDosage, String notes, LocalDate dateOfPrescription);
 }
