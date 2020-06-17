@@ -31,7 +31,7 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
             currentDiseaseInfoCommand.setCode(condition.getCode()
                     .getCoding()
                     .stream()
-                    .map(Coding::getCode)
+                    .map(c -> c.getSystem() + ":" + c.getCode())
                     .collect(Collectors.joining("; ")));
 
             for(Coding coding : condition.getCode().getCoding()) {
