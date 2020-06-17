@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta charset="utf-8">
@@ -16,6 +16,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
+<style>
+    .scrollBar {
+        width: auto;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+</style>
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -41,23 +48,27 @@
             </div>
             <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
+            <div class="scrollBar">
             <table class="table table-bordered">
                 <thead class="thead-light">
-                <th>Analysis</th>
-                <th:block th:each="sample : ${observationLaboratorySample.getObservationLaboratoryInfoCommandSamples()}">
-                    <th th:text="${{sample.getSample()}}"></th>
-                </th:block>
-
-                </thead>
-                <tbody>
-                <tr th:each="ol : ${observationLaboratoryAnalysis.getObservationLaboratoryInfoCommandAnalyses()}">
-                    <td th:text="${{ol.getAnalysis()}}"></td>
-                    <th:block th:each="ol : ${observationLaboratoryAnalysis.getObservationLaboratoryInfoCommandAnalyses()}">
-                        <td th:text="${{ol.getValue()}}"></td>
+                    <th>Analysis</th>
+                    <th:block th:each="sample : ${observationLaboratoryAnalysis.localDateTimeListWithoutDuplicates()}">
+                        <th th:text="${{sample}}"></th>
                     </th:block>
-                </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="an : ${observationLaboratoryAnalysis.observationLaboratoryInfoCommandAnalysesWithoutDuplicates()}">
+                        <div th:with="map=${observationLaboratoryAnalysis.valueReturn()}">
+                            <td th:text="${{an}}"></td>
+                            <th:block th:each="sample : ${observationLaboratoryAnalysis.localDateTimeListWithoutDuplicates()}">
+                                    <td th:text="${{map.get(an,sample)}}"></td>
+                            </th:block>
+                        </div>
+                    </tr>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

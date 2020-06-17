@@ -1,5 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
@@ -8,18 +10,23 @@ import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.MedicationRequest;
+import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -132,6 +139,15 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onPatientSummaryReceived");
                 CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
+
+                File file = new ClassPathResource("samples_StructuredLaboratoryResult_V1.json").getFile();
+                String initialJsonFhir = Files.readString(file.toPath());
+                FhirContext fc = FhirContext.forR4();
+                IParser parser = fc.newJsonParser().setPrettyPrint(true);
+                Bundle observation = (Bundle) parser.parseResource(initialJsonFhir);
+                List<Observation> observationList = new BundleProcessor(observation).observationList();
+                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(new BundleProcessor(observation).observationList());
+
                 CurrentD2DConnection.this.indexPatientDataCommand.setIpsReceived(true);
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {

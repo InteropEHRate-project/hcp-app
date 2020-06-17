@@ -13,4 +13,10 @@ public class ObservationLaboratoryInfoCommandSample {
     @NotEmpty
     @NotNull
     private LocalDateTime sample = LocalDateTime.now().minusDays(2);
+    @NotEmpty
+    @NotNull
+    private String value = "-";
+    @NotEmpty
+    @NotNull
+    private String unit = "-";
 }
