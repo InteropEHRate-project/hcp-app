@@ -11,8 +11,9 @@ import javax.validation.constraints.NotNull;
 public class ObservationLaboratoryInfoCommandAnalysis {
     @NotEmpty
     @NotNull
-    private String analysis = "SARS CoV-2";
+    private String analysis = "Default Analysis";
+
     @NotEmpty
     @NotNull
-    private String value = "-";
+    private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample = new ObservationLaboratoryInfoCommandSample();
 }

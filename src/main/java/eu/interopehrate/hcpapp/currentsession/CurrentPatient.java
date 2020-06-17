@@ -26,6 +26,7 @@ public class CurrentPatient {
     private Bundle patientSummaryTranslatedBundle;
     private Certificate certificate;
     private MedicationRequest prescription;
+    private List<Observation> observation;
 
     public MedicationRequest getPrescription() {
         return prescription;
@@ -58,6 +59,18 @@ public class CurrentPatient {
 
     public void initPrescription(MedicationRequest prescription) {
         this.prescription = prescription;
+    }
+
+    public void initLaboratoryResults(List<Observation> obs) {
+        this.observation = obs;
+    }
+
+    public List<Observation> getObservation(){
+        if (Objects.isNull(observation)) {
+            return Collections.emptyList();
+        }else{
+            return observation;
+        }
     }
 
     public void reset() {
