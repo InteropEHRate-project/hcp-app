@@ -13,6 +13,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +28,11 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
+    }
+
+    @Override
+    public List<MedicationSummaryPrescriptionInfoCommand> getMedicationSummaryPrescriptionInfoCommandList() {
+        return medicationSummaryPrescriptionInfoCommandList;
     }
 
     @Override
@@ -78,6 +84,7 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     @Override
     public void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand) {
         this.medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
+        toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
     }
 
     @Override
@@ -88,5 +95,47 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
                 break;
             }
         }
+    }
+
+    @Override
+    public void updatePrescription(String id,
+                                   String status, String timings, String drugName,
+                                   String drugDosage, String notes, LocalDate dateOfPrescription) {
+        for (int i = 0; i < this.medicationSummaryPrescriptionInfoCommandList.size(); i++) {
+            if (this.medicationSummaryPrescriptionInfoCommandList.get(i).getId().equalsIgnoreCase(id)) {
+                this.medicationSummaryPrescriptionInfoCommandList.get(i).setStatus(status);
+                this.medicationSummaryPrescriptionInfoCommandList.get(i).setTimings(timings);
+                this.medicationSummaryPrescriptionInfoCommandList.get(i).setDrugName(drugName);
+                this.medicationSummaryPrescriptionInfoCommandList.get(i).setDrugDosage(drugDosage);
+                this.medicationSummaryPrescriptionInfoCommandList.get(i).setNotes(notes);
+                this.medicationSummaryPrescriptionInfoCommandList.get(i).setDateOfPrescription(dateOfPrescription);
+                break;
+            }
+        }
+        toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
+    }
+
+    private static void toSortMethod(List<MedicationSummaryPrescriptionInfoCommand> med) {
+        med.sort((o1, o2) -> {
+            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Suspended")) {
+                return -1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+                return -1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Suspended") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+                return -1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Suspended")) {
+                return 1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
+                return 1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Suspended") && o2.getStatus().equalsIgnoreCase("Active")) {
+                return 1;
+            }
+            return 0;
+        });
     }
 }

@@ -24,6 +24,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION = "current-patient/allergies-intolerances/view-section";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE = "current-patient/allergies-intolerances/add-info";
     String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/medication-summary/prescription/add-info";
+    String CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE = "current-patient/medication-summary/prescription/update-info";
     String CURRENT_PATIENT_IMMUNIZATIONS_VIEW_SECTION = "current-patient/immunization/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_PROCEDURE_VIEW_SECTION = "current-patient/history-procedure/procedure/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_ORGANIZATION_VIEW_SECTION = "current-patient/history-procedure/organization/view-section";

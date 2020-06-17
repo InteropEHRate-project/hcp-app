@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/current-patient/medication-summary/prescription")
@@ -47,10 +48,35 @@ public class MedicationSummaryPrescriptionController {
 
     @DeleteMapping
     @RequestMapping("/delete")
-    public String delete(@RequestParam("drugId") String drugId, Model model) throws IOException {
-        model.addAttribute("prescriptionCommand", this.medicationSummaryPrescriptionService.prescriptionCommand());
-        model.addAttribute("prescriptionCommandUpload", this.medicationSummaryPrescriptionService.prescriptionCommandUpload());
+    public String delete(@RequestParam("drugId") String drugId) {
         this.medicationSummaryPrescriptionService.deletePrescription(drugId);
-        return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION;
+        return "redirect:/current-patient/medication-summary/prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-update-page")
+    public String openUpdatePage(@RequestParam("id") String id, Model model) {
+        MedicationSummaryPrescriptionInfoCommand drug = null;
+        for (int i = 0; i < this.medicationSummaryPrescriptionService.getMedicationSummaryPrescriptionInfoCommandList().size(); i++) {
+            if (this.medicationSummaryPrescriptionService.getMedicationSummaryPrescriptionInfoCommandList().get(i).getId().equalsIgnoreCase(id)) {
+                drug = this.medicationSummaryPrescriptionService.getMedicationSummaryPrescriptionInfoCommandList().get(i);
+                break;
+            }
+        }
+        model.addAttribute("drug", drug);
+        return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
+    }
+
+    @PutMapping
+    @RequestMapping("/update")
+    public String update(@RequestParam("id") String id,
+                         @RequestParam("status") String status,
+                         @RequestParam("timings") String timings,
+                         @RequestParam("drugName") String drugName,
+                         @RequestParam("drugDosage") String drugDosage,
+                         @RequestParam("notes") String notes,
+                         @RequestParam("dateOfPrescription") LocalDate dateOfPrescription) {
+        this.medicationSummaryPrescriptionService.updatePrescription(id, status, timings, drugName, drugDosage, notes, dateOfPrescription);
+        return "redirect:/current-patient/medication-summary/prescription/view-section";
     }
 }
