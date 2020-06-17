@@ -31,19 +31,13 @@
             <div class="m-3"></div>
             <h2>Add Prescription information</h2>
             <div class="m-5"></div>
-            <form action="#" th:action="@{/current-patient/medication-summary/prescription/update(id=${{drug.getId()}},
-                    status=${{drug.getStatus()}},
-                    timings=${{drug.getTimings()}},
-                    drugName=${{drug.getDrugName()}},
-                    drugDosage=${{drug.getDrugDosage()}},
-                    notes=${{drug.getNotes()}},
-                    dateOfPrescription=${{drug.getDateOfPrescription()}})}" th:object="${drug}" method="post">
+            <form action="#" th:action="@{/current-patient/medication-summary/prescription/update}" th:object="${medicationSummaryPrescriptionInfoCommand}" method="post">
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p>Please correct the errors below</p>
                 </div>
                 <div class="form-row">
-
+                    <input id="drugId" type="hidden" th:field="*{id}">
                     <div class="col-md-4">
                         <label for="drugName" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.name}">Drug name</label>
                         <input id="drugName" type="text" class="form-control" th:classappend="${#fields.hasErrors('drugName')} ? 'is-invalid' :''" th:field="*{drugName}"/>

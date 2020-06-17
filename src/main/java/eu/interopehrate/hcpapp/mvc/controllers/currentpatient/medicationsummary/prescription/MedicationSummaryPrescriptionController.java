@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/current-patient/medication-summary/prescription")
@@ -56,20 +55,18 @@ public class MedicationSummaryPrescriptionController {
     @GetMapping
     @RequestMapping("/open-update-page")
     public String openUpdatePage(@RequestParam("id") String id, Model model) {
-        model.addAttribute("drug", this.medicationSummaryPrescriptionService.medicationSummaryPrescriptionById(id));
+        model.addAttribute("medicationSummaryPrescriptionInfoCommand", this.medicationSummaryPrescriptionService.medicationSummaryPrescriptionInfoById(id));
         return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
     }
 
-    @PutMapping
+    @PostMapping
     @RequestMapping("/update")
-    public String update(@RequestParam("id") String id,
-                         @RequestParam("status") String status,
-                         @RequestParam("timings") String timings,
-                         @RequestParam("drugName") String drugName,
-                         @RequestParam("drugDosage") String drugDosage,
-                         @RequestParam("notes") String notes,
-                         @RequestParam("dateOfPrescription") LocalDate dateOfPrescription) {
-        this.medicationSummaryPrescriptionService.updatePrescription(id, status, timings, drugName, drugDosage, notes, dateOfPrescription);
+    public String update(@Valid @ModelAttribute MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("medicationSummaryPrescriptionInfoCommand", medicationSummaryPrescriptionInfoCommand);
+            return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
+        }
+        this.medicationSummaryPrescriptionService.updatePrescription(medicationSummaryPrescriptionInfoCommand);
         return "redirect:/current-patient/medication-summary/prescription/view-section";
     }
 }

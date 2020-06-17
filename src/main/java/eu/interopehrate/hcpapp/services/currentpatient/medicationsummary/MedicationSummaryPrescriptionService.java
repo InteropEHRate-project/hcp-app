@@ -4,7 +4,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Med
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface MedicationSummaryPrescriptionService {
@@ -14,11 +13,11 @@ public interface MedicationSummaryPrescriptionService {
 
     MedicationSummaryPrescriptionCommand prescriptionCommandUpload();
 
-    MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionById(String id);
+    MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoById(String id);
 
     void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand);
 
     void deletePrescription(String drugId);
 
-    void updatePrescription(String id, String status, String timings, String drugName, String drugDosage, String notes, LocalDate dateOfPrescription);
+    void updatePrescription(MedicationSummaryPrescriptionInfoCommand prescriptionInfoCommand);
 }

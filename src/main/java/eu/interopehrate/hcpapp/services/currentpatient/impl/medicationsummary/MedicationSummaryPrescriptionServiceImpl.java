@@ -13,7 +13,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -70,7 +69,7 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionById(String id) {
+    public MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoById(String id) {
         return medicationSummaryPrescriptionInfoCommandList.stream()
                 .filter(prescription -> prescription.getId().equalsIgnoreCase(id))
                 .findFirst()
@@ -106,20 +105,15 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public void updatePrescription(String id,
-                                   String status, String timings, String drugName,
-                                   String drugDosage, String notes, LocalDate dateOfPrescription) {
-        for (int i = 0; i < this.medicationSummaryPrescriptionInfoCommandList.size(); i++) {
-            if (this.medicationSummaryPrescriptionInfoCommandList.get(i).getId().equalsIgnoreCase(id)) {
-                this.medicationSummaryPrescriptionInfoCommandList.get(i).setStatus(status);
-                this.medicationSummaryPrescriptionInfoCommandList.get(i).setTimings(timings);
-                this.medicationSummaryPrescriptionInfoCommandList.get(i).setDrugName(drugName);
-                this.medicationSummaryPrescriptionInfoCommandList.get(i).setDrugDosage(drugDosage);
-                this.medicationSummaryPrescriptionInfoCommandList.get(i).setNotes(notes);
-                this.medicationSummaryPrescriptionInfoCommandList.get(i).setDateOfPrescription(dateOfPrescription);
-                break;
-            }
-        }
+    public void updatePrescription(MedicationSummaryPrescriptionInfoCommand prescriptionInfoCommand) {
+        MedicationSummaryPrescriptionInfoCommand oldPrescription = this.medicationSummaryPrescriptionInfoById(prescriptionInfoCommand.getId());
+        oldPrescription.setDrugName(prescriptionInfoCommand.getDrugName());
+        oldPrescription.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
+        oldPrescription.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
+        oldPrescription.setNotes(prescriptionInfoCommand.getNotes());
+        oldPrescription.setStatus(prescriptionInfoCommand.getStatus());
+        oldPrescription.setTimings(prescriptionInfoCommand.getTimings());
+        oldPrescription.setAuthor(prescriptionInfoCommand.getAuthor());
         toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
     }
 
