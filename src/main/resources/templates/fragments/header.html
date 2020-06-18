@@ -35,20 +35,33 @@
                     <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.main.navigation.top.administration}">Administration</a>
                 </li>
             </ul>
+        </div>
+    </div>
+</nav>
+
+<nav th:fragment="navigation-top" class="navbar navbar-expand-sm navbar-light static-top"  style="background-color: #e3f2fd;"
+     th:if="${session.mySessionAttribute != null && session.mySessionAttribute.getPatientDataCommand() != null
+             && session.mySessionAttribute.getPatientDataCommand().hasData() && session.mySessionAttribute.getPatientDataCommand().getBirthDate() != null}">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-column" id="navbarResponsive2">
             <ul class="navbar-nav ml-auto" th:if="${session.mySessionAttribute != null && session.mySessionAttribute.getPatientDataCommand() != null
              && session.mySessionAttribute.getPatientDataCommand().hasData() && session.mySessionAttribute.getPatientDataCommand().getBirthDate() != null}">
                 <li class="nav-item disabled">
-                    <a class="nav-link" th:text="${'Name: '
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="${'Name: '
                     + session.mySessionAttribute.getPatientDataCommand().getFirstName()
                     + ' '
-                    + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name</a>
+                    + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name</span>
                 </li>
                 <li class="nav-item disabled">
-                    <a class="nav-link" th:text="${'Age: '
-                    + session.mySessionAttribute.getPatientDataCommand().getBirthDate().getYear()}" th:unless="${session == null}">Age</a>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="${'Age: '
+                    + session.mySessionAttribute.getPatientDataCommand().getBirthDate().getYear()}" th:unless="${session == null}">Age</span>
                 </li>
                 <li class="nav-item disabled">
-                    <a class="nav-link">Country: -</a>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box">Country: -</span>
                 </li>
             </ul>
         </div>
