@@ -14,31 +14,16 @@ import javax.persistence.Table;
 @Table(name = "SEHR_INITIAL_DOWNLOAD")
 public class SEHRInitialDownloadEntity extends HCPApplicationEntity {
     @NonNull
-    private Boolean medicationSummary = Boolean.FALSE;
-    @NonNull
-    private Boolean allergyIntolerance = Boolean.FALSE;
-    @NonNull
     private Boolean currentDiseases = Boolean.FALSE;
     @NonNull
-    private Boolean immunizations = Boolean.FALSE;
+    private Boolean patHistory = Boolean.FALSE;
     @NonNull
-    private Boolean historyOfProcedure = Boolean.FALSE;
+    private Boolean allergies = Boolean.FALSE;
     @NonNull
-    private Boolean medicalDevices = Boolean.FALSE;
+    private Boolean currentMedication = Boolean.FALSE;
     @NonNull
-    private Boolean results = Boolean.FALSE;
+    private Boolean documentHistoryConsultation = Boolean.FALSE;
     @NonNull
-    private Boolean vitalSigns = Boolean.FALSE;
-    @NonNull
-    private Boolean historyOfPastIllnesses = Boolean.FALSE;
-    @NonNull
-    private Boolean pregnancy = Boolean.FALSE;
-    @NonNull
-    private Boolean socialHistory = Boolean.FALSE;
-    @NonNull
-    private Boolean planOfCare = Boolean.FALSE;
-    @NonNull
-    private Boolean functionalStatus = Boolean.FALSE;
-    @NonNull
-    private Boolean advanceDirectives = Boolean.FALSE;
+    private Boolean laboratoryTests = Boolean.FALSE;
+
 }

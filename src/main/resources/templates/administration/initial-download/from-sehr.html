@@ -33,62 +33,37 @@
                                 <h5 th:text="#{template.administration.initial.sehr.download.title}">Initial EHR download</h5>
                             </div>
                             <div class="card-body">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="medicationSummary" th:field="*{medicationSummary}">
-                                    <label class="custom-control-label" for="medicationSummary" th:text="#{template.administration.initial.sehr.download.medication.summary}">Medication Summary Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="allergyIntolerance" th:field="*{allergyIntolerance}">
-                                    <label class="custom-control-label" for="allergyIntolerance" th:text="#{template.administration.initial.sehr.download.allergy.intolerance}">Allergies and Intolerances Section</label>
-                                </div>
+
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="currentDiseases" th:field="*{currentDiseases}">
                                     <label class="custom-control-label" for="currentDiseases" th:text="#{template.administration.initial.sehr.download.currentDiseases}">Current Diseases</label>
                                 </div>
+
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="immunizations" th:field="*{immunizations}">
-                                    <label class="custom-control-label" for="immunizations" th:text="#{template.administration.initial.sehr.download.immunizations}">Immunizations Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="patHistory" th:field="*{patHistory}">
+                                    <label class="custom-control-label" for="patHistory" th:text="#{template.administration.initial.sehr.download.pat.history}">Pat History</label>
                                 </div>
+
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="historyOfProcedure" th:field="*{historyOfProcedure}">
-                                    <label class="custom-control-label" for="historyOfProcedure" th:text="#{template.administration.initial.sehr.download.history.of.procedure}">History of Procedures Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="allergies" th:field="*{allergies}">
+                                    <label class="custom-control-label" for="allergies" th:text="#{template.administration.initial.sehr.download.allergies}">Allergies</label>
                                 </div>
+
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="medicalDevices" th:field="*{medicalDevices}">
-                                    <label class="custom-control-label" for="medicalDevices" th:text="#{template.administration.initial.sehr.download.medical.devices}">Medical Devices Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="currentMedication" th:field="*{currentMedication}">
+                                    <label class="custom-control-label" for="currentMedication" th:text="#{template.administration.initial.sehr.download.current.Medication}">Current Medication</label>
                                 </div>
+
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="results" th:field="*{results}">
-                                    <label class="custom-control-label" for="results" th:text="#{template.administration.initial.sehr.download.results}">Results Section</label>
+                                    <input type="checkbox" class="custom-control-input" id="documentHistoryConsultation" th:field="*{documentHistoryConsultation}">
+                                    <label class="custom-control-label" for="documentHistoryConsultation" th:text="#{template.administration.initial.sehr.download.document.history.consultation}">Document History Consultation</label>
                                 </div>
+
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="vitalSigns" th:field="*{vitalSigns}">
-                                    <label class="custom-control-label" for="vitalSigns" th:text="#{template.administration.initial.sehr.download.vital.signs}">Vital Signs</label>
+                                    <input type="checkbox" class="custom-control-input" id="laboratoryTests" th:field="*{laboratoryTests}">
+                                    <label class="custom-control-label" for="laboratoryTests" th:text="#{template.administration.initial.sehr.download.laboratory.tests}">Laboratory Tests</label>
                                 </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="historyOfPast" th:field="*{historyOfPastIllnesses}">
-                                    <label class="custom-control-label" for="historyOfPast" th:text="#{template.administration.initial.sehr.download.history.of.past.illnesses}">History of Past Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="historyOfPregnancy" th:field="*{pregnancy}">
-                                    <label class="custom-control-label" for="historyOfPregnancy" th:text="#{template.administration.initial.sehr.download.pregnancy}"> History of Pregnancy Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="socialHistory" th:field="*{socialHistory}">
-                                    <label class="custom-control-label" for="socialHistory" th:text="#{template.administration.initial.sehr.download.social.history}">Social History Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="planOfCare" th:field="*{planOfCare}">
-                                    <label class="custom-control-label" for="planOfCare" th:text="#{template.administration.initial.sehr.download.plan.of.care}">Plan of Care Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="functionalStatus" th:field="*{functionalStatus}">
-                                    <label class="custom-control-label" for="functionalStatus" th:text="#{template.administration.initial.sehr.download.functional.status}">Functional Status Section</label>
-                                </div>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="advanceDirectives" th:field="*{advanceDirectives}">
-                                    <label class="custom-control-label" for="advanceDirectives" th:text="#{template.administration.initial.sehr.download.advance.directives}"> Advances Directives Section</label>
-                                </div>
+
                                 <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">Save</button>
                             </div>
                         </div>
