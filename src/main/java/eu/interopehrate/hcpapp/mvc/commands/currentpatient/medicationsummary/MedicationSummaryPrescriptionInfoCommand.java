@@ -21,7 +21,16 @@ public class MedicationSummaryPrescriptionInfoCommand {
     private String status;
     @NotEmpty
     @NotNull
-    private String timings;
+    private String frequency;
+    @NotEmpty
+    @NotNull
+    private String period;
+    @NotEmpty
+    @NotNull
+    private String periodUnit;
+    @NotEmpty
+    @NotNull
+    private String timings = "Frequency: " + frequency + "<br/>" + "Period: " + period + "<br/>" + "Period unit: " + periodUnit;
     @NotEmpty
     @NotNull
     private String drugName;

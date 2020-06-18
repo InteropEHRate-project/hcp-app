@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-row">
                     <input id="drugId" type="hidden" th:field="*{id}">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="drugName" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.name}">Drug name</label>
                         <input id="drugName" type="text" class="form-control" th:classappend="${#fields.hasErrors('drugName')} ? 'is-invalid' :''" th:field="*{drugName}"/>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('drugName')}">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="drugDosage" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.dosage}">Drug Dosage</label>
                         <input id="drugDosage" type="text" class="form-control" th:classappend="${#fields.hasErrors('drugDosage')} ? 'is-invalid' :''" th:field="*{drugDosage}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('drugDosage')}">
@@ -57,20 +57,10 @@
                             </ul>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <label for="timings" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.timings}">Timings</label><br>
-                        <input id="timings" type="text" class="form-control" th:classappend="${#fields.hasErrors('timings')} ? 'is-invalid' :''" th:field="*{timings}">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('timings')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('timings')}" th:text="${err}">err</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-4"><br>
+                    <div class="col-md-2"><br>
                         <label for="status" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.status}">Status</label><br>
                         <select class="form-control" id="status" th:field="*{status}">
                             <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Active">Active</option>
@@ -84,9 +74,66 @@
                         </div>
                     </div>
 
+                    <div class="col-md-10"><br>
+                        <label for="notes" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.notes}">Notes</label><br>
+                        <input id="notes" type="text" class="form-control" th:classappend="${#fields.hasErrors('notes')} ? 'is-invalid' :''" th:field="*{notes}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('notes')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('notes')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><br>
+
+                <p th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.timings}">Timings</p>
+                <div class="form-row">
+                    <div class="col-sm-6">
+                        <div class="form-group row">
+                            <label for="frequency" class="col-sm-4 col-form-label">Frequency</label>
+                            <div class="col-sm-6">
+                                <input id="frequency" type="text" class="form-control" th:classappend="${#fields.hasErrors('frequency')} ? 'is-invalid' :''" th:field="*{frequency}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('frequency')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('frequency')}" th:text="${err}">err</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="period" class="col-sm-4 col-form-label">Period</label>
+                            <div class="col-sm-6">
+                                <input id="period" type="text" class="form-control" th:classappend="${#fields.hasErrors('period')} ? 'is-invalid' :''" th:field="*{period}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('period')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('period')}" th:text="${err}">err</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="periodUnit" class="col-sm-4 col-form-label">Period unit</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="periodUnit" th:field="*{periodUnit}">
+                                    <option selected value="">Choose...</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="min">minute: min</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="h">hour: h</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="d">day: d</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="wk">week: wk</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="mo">month: mo</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="a">year: a</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('periodUnit')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('periodUnit')}" th:text="${err}">err</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-4"><br>
                         <label for="dateOfPrescription" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</label><br>
-                        <input id="dateOfPrescription" type="text" class="form-control" th:classappend="${#fields.hasErrors('dateOfPrescription')} ? 'is-invalid' :''" readonly th:field="*{dateOfPrescription}">
+                        <input id="dateOfPrescription" type="text" class="form-control" th:classappend="${#fields.hasErrors('dateOfPrescription')} ? 'is-invalid' :''" readonly th:field="*{dateOfPrescription}" placeholder="Choose...">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfPrescription')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('dateOfPrescription')}" th:text="${err}">err</li>
@@ -100,16 +147,6 @@
                                 });
                             });
                         </script>
-                    </div>
-
-                    <div class="col-md-4"><br>
-                        <label for="notes" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.notes}">Notes</label><br>
-                        <input id="notes" type="text" class="form-control" th:classappend="${#fields.hasErrors('notes')} ? 'is-invalid' :''" th:field="*{notes}">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('notes')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('notes')}" th:text="${err}">err</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
 

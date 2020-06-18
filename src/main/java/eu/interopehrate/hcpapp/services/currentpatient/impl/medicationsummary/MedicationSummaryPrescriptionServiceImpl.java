@@ -90,6 +90,9 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
 
     @Override
     public void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand) {
+        medicationSummaryPrescriptionInfoCommand.setTimings("Frequency: " + medicationSummaryPrescriptionInfoCommand.getFrequency() + "<br/>"
+                + "Period: " + medicationSummaryPrescriptionInfoCommand.getPeriod() + "<br/>"
+                + "Period unit: " + medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
         this.medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
         toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
     }
@@ -112,7 +115,9 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         oldPrescription.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
         oldPrescription.setNotes(prescriptionInfoCommand.getNotes());
         oldPrescription.setStatus(prescriptionInfoCommand.getStatus());
-        oldPrescription.setTimings(prescriptionInfoCommand.getTimings());
+        oldPrescription.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
+                + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
+                + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
         oldPrescription.setAuthor(prescriptionInfoCommand.getAuthor());
         toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
     }
