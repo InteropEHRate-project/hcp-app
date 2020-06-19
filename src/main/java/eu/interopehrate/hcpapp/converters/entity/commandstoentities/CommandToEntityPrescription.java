@@ -2,17 +2,11 @@ package eu.interopehrate.hcpapp.converters.entity.commandstoentities;
 
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
-import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CommandToEntityPrescription implements Converter<MedicationSummaryPrescriptionInfoCommand, PrescriptionEntity> {
-    private HealthCareProfessionalService healthCareProfessionalService;
-
-    public CommandToEntityPrescription(HealthCareProfessionalService healthCareProfessionalService) {
-        this.healthCareProfessionalService = healthCareProfessionalService;
-    }
 
     @Override
     public PrescriptionEntity convert(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand) {
@@ -21,7 +15,6 @@ public class CommandToEntityPrescription implements Converter<MedicationSummaryP
         prescriptionEntity.setDrugDosage(medicationSummaryPrescriptionInfoCommand.getDrugDosage());
         prescriptionEntity.setTimings(medicationSummaryPrescriptionInfoCommand.getTimings());
         prescriptionEntity.setStatus(medicationSummaryPrescriptionInfoCommand.getStatus());
-        prescriptionEntity.setAuthor(this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + this.healthCareProfessionalService.getHealthCareProfessional().getLastName());
         prescriptionEntity.setNotes(medicationSummaryPrescriptionInfoCommand.getNotes());
         prescriptionEntity.setDateOfPrescription(medicationSummaryPrescriptionInfoCommand.getDateOfPrescription());
         return prescriptionEntity;

@@ -7,15 +7,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
 public class MedicationSummaryPrescriptionInfoCommand {
-    private static int index = 1;
-    @NotEmpty
-    @NotNull
-    private String id = "" + index++;
-    private String author;
+    private Long id;
     @NotEmpty
     @NotNull
     private String status;
@@ -43,4 +40,17 @@ public class MedicationSummaryPrescriptionInfoCommand {
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfPrescription;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MedicationSummaryPrescriptionInfoCommand that = (MedicationSummaryPrescriptionInfoCommand) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

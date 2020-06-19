@@ -18,9 +18,6 @@ public class MedicationSummaryMedicationInfoCommand {
     private LocalDate dateOfPrescription;
     @NotEmpty
     @NotNull
-    private String author;
-    @NotEmpty
-    @NotNull
     private String drugName;
     @NotEmpty
     @NotNull

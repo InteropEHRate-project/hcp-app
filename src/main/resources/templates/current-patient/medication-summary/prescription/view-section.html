@@ -118,7 +118,7 @@
                                         <div class="modal-body">Are you sure?</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Yes</a>
+                                            <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${prUpload.getId()})}" class="btn btn-danger">Yes</a>
                                         </div>
                                     </div>
                                 </div>

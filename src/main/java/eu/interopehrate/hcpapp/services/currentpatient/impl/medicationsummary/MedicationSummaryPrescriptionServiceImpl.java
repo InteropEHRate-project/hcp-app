@@ -2,9 +2,11 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
@@ -29,17 +31,14 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     private final List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
     @Autowired
     private PrescriptionRepository prescriptionRepository;
+    private EntityToCommandPrescription entityToCommandPrescription = new EntityToCommandPrescription();
+    private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
 
     public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
-    }
-
-    @Override
-    public List<MedicationSummaryPrescriptionInfoCommand> getMedicationSummaryPrescriptionInfoCommandList() {
-        return medicationSummaryPrescriptionInfoCommandList;
     }
 
     @Override
@@ -52,15 +51,17 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
             String lineReadtest = readFromInputStream(file);
             IParser parser = FhirContext.forR4().newJsonParser();
             MedicationRequest medicationRequest = parser.parseResource(MedicationRequest.class, lineReadtest);
+            MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(medicationRequest);
 
-            medicationSummaryPrescriptionInfoCommandList.add(this.hapiToCommandPrescription.convert(medicationRequest));
+            medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
             log.info("On plain JSON Prescription");
             return MedicationSummaryPrescriptionCommand.builder()
                     .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                     .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommandList)
                     .build();
         }
-        medicationSummaryPrescriptionInfoCommandList.add(this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription()));
+        MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription());
+        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
         log.info("On S-EHR Prescription received");
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
@@ -77,9 +78,9 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoById(String id) {
+    public MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoById(Long id) {
         return medicationSummaryPrescriptionInfoCommandList.stream()
-                .filter(prescription -> prescription.getId().equalsIgnoreCase(id))
+                .filter(prescription -> prescription.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("id not found"));
     }
@@ -101,21 +102,24 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         medicationSummaryPrescriptionInfoCommand.setTimings("Frequency: " + medicationSummaryPrescriptionInfoCommand.getFrequency() + "<br/>"
                 + "Period: " + medicationSummaryPrescriptionInfoCommand.getPeriod() + "<br/>"
                 + "Period unit: " + medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
+
+        PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(medicationSummaryPrescriptionInfoCommand);
+        prescriptionEntity.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+
+        this.prescriptionRepository.save(prescriptionEntity);
+        medicationSummaryPrescriptionInfoCommand.setId(prescriptionEntity.getId());
         this.medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
         toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
-
-        CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription(healthCareProfessionalService);
-        this.prescriptionRepository.save(commandToEntityPrescription.convert(medicationSummaryPrescriptionInfoCommand));
     }
 
     @Override
-    public void deletePrescription(String drugId) {
-        for (int i = 0; i < this.medicationSummaryPrescriptionInfoCommandList.size(); i++) {
-            if (this.medicationSummaryPrescriptionInfoCommandList.get(i).getId().equalsIgnoreCase(drugId)) {
-                this.medicationSummaryPrescriptionInfoCommandList.remove(i);
-                break;
-            }
-        }
+    public void deletePrescription(Long drugId) {
+        System.out.println("$$$");
+        System.out.println("ID de stergere: " + drugId);
+        System.out.println("$$$");
+        MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = this.entityToCommandPrescription.convert(this.prescriptionRepository.getOne(drugId));
+        this.medicationSummaryPrescriptionInfoCommandList.remove(medicationSummaryPrescriptionInfoCommand);
+        this.prescriptionRepository.deleteById(drugId);
     }
 
     @Override
@@ -129,7 +133,6 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         oldPrescription.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
                 + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
                 + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
-        oldPrescription.setAuthor(prescriptionInfoCommand.getAuthor());
         toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
     }
 

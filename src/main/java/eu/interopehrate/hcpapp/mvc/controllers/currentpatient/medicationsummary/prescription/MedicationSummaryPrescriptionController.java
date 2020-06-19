@@ -47,14 +47,14 @@ public class MedicationSummaryPrescriptionController {
 
     @DeleteMapping
     @RequestMapping("/delete")
-    public String delete(@RequestParam("drugId") String drugId) {
+    public String delete(@RequestParam("drugId") Long drugId) {
         this.medicationSummaryPrescriptionService.deletePrescription(drugId);
         return "redirect:/current-patient/medication-summary/prescription/view-section";
     }
 
     @GetMapping
     @RequestMapping("/open-update-page")
-    public String openUpdatePage(@RequestParam("id") String id, Model model) {
+    public String openUpdatePage(@RequestParam("id") Long id, Model model) {
         model.addAttribute("medicationSummaryPrescriptionInfoCommand", this.medicationSummaryPrescriptionService.medicationSummaryPrescriptionInfoById(id));
         return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
     }
