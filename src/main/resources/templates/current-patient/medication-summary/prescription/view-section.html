@@ -72,9 +72,9 @@
                 </tbody>
             </table>
 
-            <p th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}"><br>
-            <h5 th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">Prescription to upload in S-EHR</h5></p>
-            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">
+            <p th:if="${!prescriptionCommandUpload.getPrescriptionEntities().isEmpty()}"><br>
+            <h5 th:if="${!prescriptionCommandUpload.getPrescriptionEntities().isEmpty()}">Prescription to upload in S-EHR</h5></p>
+            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionEntities().isEmpty()}">
                 <thead class="thead-light">
                 <tr>
                     <th>Drug Name</th>
@@ -82,10 +82,11 @@
                     <th>Timings</th>
                     <th>Status</th>
                     <th>Actions</th>
+                    <th>ID</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="prUpload : ${prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand()}">
+                <tr th:each="prUpload : ${prescriptionCommandUpload.getPrescriptionEntities()}">
                     <td th:text="${prUpload.getDrugName()}"></td>
                     <td th:text="${prUpload.getDrugDosage()}"></td>
                     <td th:utext="${prUpload.getTimings() + '<br/>'}"></td>
@@ -118,13 +119,14 @@
                                         <div class="modal-body">Are you sure?</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${prUpload.getId()})}" class="btn btn-danger">Yes</a>
+                                            <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Yes</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </td>
+                    <td th:text="${{prUpload.getId()}}"></td>
                 </tr>
                 </tbody>
             </table>

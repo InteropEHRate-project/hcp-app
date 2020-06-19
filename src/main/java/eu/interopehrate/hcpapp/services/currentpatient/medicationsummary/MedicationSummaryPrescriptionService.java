@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.currentpatient.medicationsummary;
 
+import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
 
@@ -11,7 +12,7 @@ public interface MedicationSummaryPrescriptionService {
 
     MedicationSummaryPrescriptionCommand prescriptionCommandUpload();
 
-    MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoById(Long id);
+    PrescriptionEntity medicationSummaryPrescriptionInfoById(Long id);
 
     void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand);
 
