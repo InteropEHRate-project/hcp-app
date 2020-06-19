@@ -112,9 +112,6 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
 
     @Override
     public void deletePrescription(Long drugId) {
-        System.out.println("$$$");
-        System.out.println("ID de stergere: " + drugId);
-        System.out.println("$$$");
         for (int i = 0; i < this.prescriptionEntities.size(); i++) {
             if (this.prescriptionEntities.get(i).getId().equals(drugId)) {
                 this.prescriptionEntities.remove(i);
