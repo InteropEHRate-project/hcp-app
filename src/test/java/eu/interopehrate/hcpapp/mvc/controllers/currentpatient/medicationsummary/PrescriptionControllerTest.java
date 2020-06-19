@@ -34,7 +34,9 @@ public class PrescriptionControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        MedicationSummaryPrescriptionService service = new MedicationSummaryPrescriptionServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())), hapiToCommandPrescription);
+        MedicationSummaryPrescriptionService service = new MedicationSummaryPrescriptionServiceImpl
+                (new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())),
+                        hapiToCommandPrescription);
         this.controller = new MedicationSummaryPrescriptionController(service);
     }
 

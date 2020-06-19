@@ -2,13 +2,17 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.MedicationRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +26,11 @@ import java.util.Objects;
 public class MedicationSummaryPrescriptionServiceImpl implements MedicationSummaryPrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
-    private List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
+    private final List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
+    @Autowired
+    private PrescriptionRepository prescriptionRepository;
+    @Autowired
+    private HealthCareProfessionalService healthCareProfessionalService;
 
     public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription) {
         this.currentPatient = currentPatient;
@@ -95,6 +103,9 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
                 + "Period unit: " + medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
         this.medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
         toSortMethod(this.medicationSummaryPrescriptionInfoCommandList);
+
+        CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription(healthCareProfessionalService);
+        this.prescriptionRepository.save(commandToEntityPrescription.convert(medicationSummaryPrescriptionInfoCommand));
     }
 
     @Override
