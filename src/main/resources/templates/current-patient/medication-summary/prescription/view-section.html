@@ -82,11 +82,10 @@
                     <th>Timings</th>
                     <th>Status</th>
                     <th>Actions</th>
-                    <th>ID</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="prUpload : ${prescriptionCommandUpload.getPrescriptionEntities()}">
+                <tr th:each="prUpload : ${prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand()}">
                     <td th:text="${prUpload.getDrugName()}"></td>
                     <td th:text="${prUpload.getDrugDosage()}"></td>
                     <td th:utext="${prUpload.getTimings() + '<br/>'}"></td>
@@ -106,7 +105,6 @@
                             <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Delete</a>
                         </div>
                     </td>
-                    <td th:text="${{prUpload.getId()}}"></td>
                 </tr>
                 </tbody>
             </table>

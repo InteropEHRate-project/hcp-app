@@ -27,12 +27,12 @@ import java.util.Objects;
 public class MedicationSummaryPrescriptionServiceImpl implements MedicationSummaryPrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
-    @Autowired
-    private PrescriptionRepository prescriptionRepository;
+    private List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommands = new ArrayList<>();
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
     @Autowired
+    private PrescriptionRepository prescriptionRepository;
+    @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
-    private List<PrescriptionEntity> prescriptionEntities = new ArrayList<>();
 
     public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription) {
         this.currentPatient = currentPatient;
@@ -71,13 +71,14 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     public MedicationSummaryPrescriptionCommand prescriptionCommandUpload() {
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .prescriptionEntities(this.prescriptionEntities)
+                .medicationSummaryPrescriptionInfoCommand(this.medicationSummaryPrescriptionInfoCommands)
+                .prescriptionEntities(this.prescriptionRepository.findAll())
                 .build();
     }
 
     @Override
-    public PrescriptionEntity medicationSummaryPrescriptionInfoById(Long id) {
-        return this.prescriptionRepository.findAll()
+    public MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommandById(Long id) {
+        return this.medicationSummaryPrescriptionInfoCommands
                 .stream()
                 .filter(prescription -> prescription.getId().equals(id))
                 .findFirst()
@@ -104,38 +105,53 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
 
         PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(medicationSummaryPrescriptionInfoCommand);
         prescriptionEntity.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        medicationSummaryPrescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
         this.prescriptionRepository.save(prescriptionEntity);
         medicationSummaryPrescriptionInfoCommand.setId(prescriptionEntity.getId());
-        this.prescriptionEntities = toSortMethod(this.prescriptionRepository.findAll());
+        this.medicationSummaryPrescriptionInfoCommands.add(medicationSummaryPrescriptionInfoCommand);
+        this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
     }
 
     @Override
     public void deletePrescription(Long drugId) {
-        for (int i = 0; i < this.prescriptionEntities.size(); i++) {
-            if (this.prescriptionEntities.get(i).getId().equals(drugId)) {
-                this.prescriptionEntities.remove(i);
-                break;
-            }
-        }
+        this.medicationSummaryPrescriptionInfoCommands.removeIf(pre -> pre.getId().equals(drugId));
         this.prescriptionRepository.deleteById(drugId);
     }
 
     @Override
     public void updatePrescription(MedicationSummaryPrescriptionInfoCommand prescriptionInfoCommand) {
-//        MedicationSummaryPrescriptionInfoCommand oldPrescription = this.medicationSummaryPrescriptionInfoById(prescriptionInfoCommand.getId());
-//        oldPrescription.setDrugName(prescriptionInfoCommand.getDrugName());
-//        oldPrescription.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
-//        oldPrescription.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
-//        oldPrescription.setNotes(prescriptionInfoCommand.getNotes());
-//        oldPrescription.setStatus(prescriptionInfoCommand.getStatus());
-//        oldPrescription.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
-//                + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
-//                + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
-        toSortMethod(this.prescriptionRepository.findAll());
+        MedicationSummaryPrescriptionInfoCommand oldPrescription = medicationSummaryPrescriptionInfoCommandById(prescriptionInfoCommand.getId());
+        oldPrescription.setDrugName(prescriptionInfoCommand.getDrugName());
+        oldPrescription.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
+        oldPrescription.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
+        oldPrescription.setNotes(prescriptionInfoCommand.getNotes());
+        oldPrescription.setStatus(prescriptionInfoCommand.getStatus());
+        oldPrescription.setFrequency(prescriptionInfoCommand.getFrequency());
+        oldPrescription.setPeriod(prescriptionInfoCommand.getPeriod());
+        oldPrescription.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
+        oldPrescription.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
+                + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
+                + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
+
+        PrescriptionEntity prescriptionEntity = this.prescriptionRepository.getOne(prescriptionInfoCommand.getId());
+        prescriptionEntity.setDrugName(prescriptionInfoCommand.getDrugName());
+        prescriptionEntity.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
+        prescriptionEntity.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
+        prescriptionEntity.setNotes(prescriptionInfoCommand.getNotes());
+        prescriptionEntity.setStatus(prescriptionInfoCommand.getStatus());
+        prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
+        prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
+        prescriptionEntity.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
+        prescriptionEntity.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
+                + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
+                + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
+        this.prescriptionRepository.save(prescriptionEntity);
+
+        this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
     }
 
-    private static List<PrescriptionEntity> toSortMethod(List<PrescriptionEntity> med) {
+    private static List<MedicationSummaryPrescriptionInfoCommand> toSortMethodCommand(List<MedicationSummaryPrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
             if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Suspended")) {
                 return -1;

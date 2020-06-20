@@ -55,7 +55,7 @@ public class MedicationSummaryPrescriptionController {
     @GetMapping
     @RequestMapping("/open-update-page")
     public String openUpdatePage(@RequestParam("id") Long id, Model model) {
-        model.addAttribute("medicationSummaryPrescriptionInfoCommand", this.medicationSummaryPrescriptionService.medicationSummaryPrescriptionInfoById(id));
+        model.addAttribute("medicationSummaryPrescriptionInfoCommand", this.medicationSummaryPrescriptionService.medicationSummaryPrescriptionInfoCommandById(id));
         return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
     }
 

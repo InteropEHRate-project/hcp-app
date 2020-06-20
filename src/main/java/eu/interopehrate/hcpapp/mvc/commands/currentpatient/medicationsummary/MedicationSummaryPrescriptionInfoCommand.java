@@ -37,6 +37,7 @@ public class MedicationSummaryPrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String notes;
+    private String author;
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfPrescription;
