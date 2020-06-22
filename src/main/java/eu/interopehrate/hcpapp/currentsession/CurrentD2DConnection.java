@@ -191,6 +191,11 @@ public class CurrentD2DConnection implements DisposableBean {
             indexPatientDataCommand.setNoConformantJSON(true);
             CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
         }
+
+        @Override
+        public void onLaboratoryResultsReceived(Bundle bundle) {
+
+        }
     }
 
     public void certificate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {

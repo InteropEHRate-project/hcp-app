@@ -76,6 +76,11 @@ public class D2DLibraryTests {
             public void onNoConformantPrescriptionReceived() {
 
             }
+
+            @Override
+            public void onLaboratoryResultsReceived(Bundle bundle) {
+
+            }
         }
 
         D2DHRExchangeListeners d2DHRExchangeListeners = new D2DHRExchangeListenersTestImpl();
@@ -127,7 +132,7 @@ public class D2DLibraryTests {
         String content = sc.useDelimiter("\\Z").next();
         IParser parser = ctx.newJsonParser();
         Bundle correctPatientSummary = parser.parseResource(Bundle.class, content);
-        boolean conformant=ipsChecker.validateIPSProfile(correctPatientSummary);
+        boolean conformant=ipsChecker.validateProfile(correctPatientSummary);
         System.out.println(conformant);
         assertTrue(conformant);
         sc.close();
