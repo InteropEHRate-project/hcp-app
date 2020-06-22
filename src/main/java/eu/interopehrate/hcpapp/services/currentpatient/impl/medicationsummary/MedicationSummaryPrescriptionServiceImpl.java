@@ -140,11 +140,8 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         prescriptionEntity.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
         prescriptionEntity.setNotes(prescriptionInfoCommand.getNotes());
         prescriptionEntity.setStatus(prescriptionInfoCommand.getStatus());
-        prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
-        prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
-        prescriptionEntity.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
-        prescriptionEntity.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
-                + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
+        prescriptionEntity.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + ", "
+                + "Period: " + prescriptionInfoCommand.getPeriod() + ", "
                 + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
         this.prescriptionRepository.save(prescriptionEntity);
 
