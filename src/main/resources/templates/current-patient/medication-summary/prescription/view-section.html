@@ -72,9 +72,9 @@
                 </tbody>
             </table>
 
-            <p th:if="${!prescriptionCommandUpload.getPrescriptionEntities().isEmpty()}"><br>
-            <h5 th:if="${!prescriptionCommandUpload.getPrescriptionEntities().isEmpty()}">Prescription to upload in S-EHR</h5></p>
-            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionEntities().isEmpty()}">
+            <p th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}"><br>
+            <h5 th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">Prescription to upload in S-EHR</h5></p>
+            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">
                 <thead class="thead-light">
                 <tr>
                     <th>Drug Name</th>
