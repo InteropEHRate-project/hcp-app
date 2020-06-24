@@ -66,9 +66,6 @@ public class CurrentD2DConnection implements DisposableBean {
 
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
-        this.indexPatientDataCommand.setNoConformantJSON(false);
-        this.indexPatientDataCommand.setIpsReceived(false);
-        this.indexPatientDataCommand.setPrescriptionReceived(false);
         CompletableFuture.runAsync(this::openConnection)
                 .thenRun(this::afterConnectionOpened);
     }
@@ -114,6 +111,10 @@ public class CurrentD2DConnection implements DisposableBean {
             this.bluetoothConnection = null;
             this.connectedThread = null;
             this.connectionState = D2DConnectionState.OFF;
+            this.indexPatientDataCommand.setCertificate(null);
+            this.indexPatientDataCommand.setNoConformantJSON(false);
+            this.indexPatientDataCommand.setIpsReceived(false);
+            this.indexPatientDataCommand.setPrescriptionReceived(false);
         }
     }
 
