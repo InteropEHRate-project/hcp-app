@@ -15,6 +15,9 @@ import java.time.LocalDate;
 public class PrescriptionEntity extends HCPApplicationEntity {
     private String drugName;
     private String drugDosage;
+    private String frequency;
+    private String period;
+    private String periodUnit;
     private String timings;
     private String status;
     private String author;
