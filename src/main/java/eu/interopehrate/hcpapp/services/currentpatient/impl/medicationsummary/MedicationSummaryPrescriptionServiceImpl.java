@@ -75,7 +75,6 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .medicationSummaryPrescriptionInfoCommand(this.medicationSummaryPrescriptionInfoCommands)
-                .prescriptionEntities(this.prescriptionRepository.findAll())
                 .build();
     }
 
