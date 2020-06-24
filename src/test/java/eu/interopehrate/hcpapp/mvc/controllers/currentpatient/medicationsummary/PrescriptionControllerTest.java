@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary;
 
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -30,13 +31,15 @@ public class PrescriptionControllerTest {
     private MedicationSummaryPrescriptionController controller;
     @Mock
     private HapiToCommandPrescription hapiToCommandPrescription;
+    @Mock
+    private CurrentD2DConnection currentD2DConnection;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         MedicationSummaryPrescriptionService service = new MedicationSummaryPrescriptionServiceImpl
                 (new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())),
-                        hapiToCommandPrescription);
+                        hapiToCommandPrescription, currentD2DConnection);
         this.controller = new MedicationSummaryPrescriptionController(service);
     }
 

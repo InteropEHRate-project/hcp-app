@@ -69,4 +69,11 @@ public class MedicationSummaryPrescriptionController {
         this.medicationSummaryPrescriptionService.updatePrescription(medicationSummaryPrescriptionInfoCommand);
         return "redirect:/current-patient/medication-summary/prescription/view-section";
     }
+
+    @GetMapping
+    @RequestMapping("/sendToSehr")
+    public String sendToSehr() {
+        this.medicationSummaryPrescriptionService.callSendPrescription();
+        return "redirect:/current-patient/medication-summary/prescription/view-section";
+    }
 }

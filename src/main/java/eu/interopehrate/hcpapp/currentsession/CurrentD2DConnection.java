@@ -53,6 +53,10 @@ public class CurrentD2DConnection implements DisposableBean {
         this.indexPatientDataCommand = indexPatientDataCommand;
     }
 
+    public ConnectedThread getConnectedThread() {
+        return connectedThread;
+    }
+
     @Override
     public void destroy() {
         if (Objects.nonNull(bluetoothConnection)) {

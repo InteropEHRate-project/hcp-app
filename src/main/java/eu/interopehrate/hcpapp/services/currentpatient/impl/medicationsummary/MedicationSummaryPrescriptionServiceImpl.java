@@ -4,6 +4,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
@@ -33,10 +34,12 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     private PrescriptionRepository prescriptionRepository;
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
+    private CurrentD2DConnection currentD2DConnection;
 
-    public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription) {
+    public MedicationSummaryPrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
@@ -174,5 +177,21 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
             return 0;
         });
         return med;
+    }
+
+    //todo
+    @Override
+    public void callSendPrescription() {
+        for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+            //transformare in Medication request a unui MedicationInfoCommand sau PrescriptionEntity
+
+
+            // call sendPrescription de MedicationRequest
+        }
+    }
+
+    @Override
+    public void sendPrescription(MedicationRequest medicationRequest) throws IOException {
+        this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
     }
 }
