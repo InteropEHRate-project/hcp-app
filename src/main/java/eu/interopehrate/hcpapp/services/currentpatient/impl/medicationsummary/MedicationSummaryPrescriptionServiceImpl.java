@@ -13,13 +13,17 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Med
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.MedicationRequest;
+import org.hl7.fhir.dstu3.model.codesystems.MedicationRequestStatus;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Line;
 import java.io.*;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -111,6 +115,7 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         medicationSummaryPrescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
         this.prescriptionRepository.save(prescriptionEntity);
+        createPrescriptionFromEntity(prescriptionEntity);
         medicationSummaryPrescriptionInfoCommand.setId(prescriptionEntity.getId());
         this.medicationSummaryPrescriptionInfoCommands.add(medicationSummaryPrescriptionInfoCommand);
         this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
@@ -154,6 +159,16 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
     }
 
+    @Override
+    public void callSendPrescription() {
+
+    }
+
+    @Override
+    public void sendPrescription(MedicationRequest medicationRequest) throws IOException {
+
+    }
+
     private static List<MedicationSummaryPrescriptionInfoCommand> toSortMethodCommand(List<MedicationSummaryPrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
             if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Suspended")) {
@@ -179,19 +194,30 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         return med;
     }
 
-    //todo
-    @Override
-    public void callSendPrescription() {
-        for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-            //transformare in Medication request a unui MedicationInfoCommand sau PrescriptionEntity
 
+    public MedicationRequest createPrescriptionFromEntity (PrescriptionEntity prescriptionEntity){
+        MedicationRequest medicationRequest = new MedicationRequest();
 
-            // call sendPrescription de MedicationRequest
-        }
+        medicationRequest.setMedication(new CodeableConcept().setText(prescriptionEntity.getDrugName()));
+
+        Timing t = new Timing();
+        t.getRepeat().setFrequency(Integer.parseInt(prescriptionEntity.getFrequency()));
+        t.getRepeat().setPeriod(Integer.parseInt(prescriptionEntity.getPeriod()));
+        t.getRepeat().setPeriodUnit(Timing.UnitsOfTime.fromCode(prescriptionEntity.getPeriodUnit()));
+        List<Dosage> d = new ArrayList<>();
+        d.add(new Dosage().setTiming(t));
+        medicationRequest.setDosageInstruction(d);
+
+        medicationRequest.setStatus(MedicationRequest.MedicationRequestStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
+
+        medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        medicationRequest.setId(prescriptionEntity.getId().toString());
+
+        List<Dosage> d2 = new ArrayList<>();
+        d2.add(new Dosage().setText(prescriptionEntity.getNotes()));
+        medicationRequest.setDosageInstruction(d2);
+
+        return medicationRequest;
     }
 
-    @Override
-    public void sendPrescription(MedicationRequest medicationRequest) throws IOException {
-        this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
-    }
 }
