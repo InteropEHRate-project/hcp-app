@@ -18,10 +18,7 @@ import org.hl7.fhir.r4.model.Timing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,29 +75,19 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
                 .orElseThrow(() -> new IllegalArgumentException("id not found"));
     }
 
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
-    }
-
     @Override
     public void insertPrescription(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand) {
-        medicationSummaryPrescriptionInfoCommand.setTimings("Frequency: " + medicationSummaryPrescriptionInfoCommand.getFrequency() + "<br/>"
-                + "Period: " + medicationSummaryPrescriptionInfoCommand.getPeriod() + "<br/>"
-                + "Period unit: " + medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
+        medicationSummaryPrescriptionInfoCommand.setTimings(medicationSummaryPrescriptionInfoCommand.getFrequency() + " times per "
+                + medicationSummaryPrescriptionInfoCommand.getPeriod() + " "
+                + medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
 
         PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(medicationSummaryPrescriptionInfoCommand);
         prescriptionEntity.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
         medicationSummaryPrescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
+        prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionEntity.getPeriodUnit()));
         this.prescriptionRepository.save(prescriptionEntity);
+        //Adding the ID from the database to the InfoCommand
         medicationSummaryPrescriptionInfoCommand.setId(prescriptionEntity.getId());
         this.medicationSummaryPrescriptionInfoCommands.add(medicationSummaryPrescriptionInfoCommand);
         this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
@@ -123,9 +110,9 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         oldPrescription.setFrequency(prescriptionInfoCommand.getFrequency());
         oldPrescription.setPeriod(prescriptionInfoCommand.getPeriod());
         oldPrescription.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
-        oldPrescription.setTimings("Frequency: " + prescriptionInfoCommand.getFrequency() + "<br/>"
-                + "Period: " + prescriptionInfoCommand.getPeriod() + "<br/>"
-                + "Period unit: " + prescriptionInfoCommand.getPeriodUnit());
+        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
+                + prescriptionInfoCommand.getPeriod() + " "
+                + prescriptionInfoCommand.getPeriodUnit());
 
         PrescriptionEntity prescriptionEntity = this.prescriptionRepository.getOne(prescriptionInfoCommand.getId());
         prescriptionEntity.setDrugName(prescriptionInfoCommand.getDrugName());
@@ -136,9 +123,7 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
         prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
         prescriptionEntity.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
-        prescriptionEntity.setTimings("Frequency: " + prescriptionEntity.getFrequency() + ", "
-                + "Period: " + prescriptionEntity.getPeriod() + ", "
-                + "Period unit: " + prescriptionEntity.getPeriodUnit());
+        prescriptionEntity.setTimings(oldPrescription.getTimings());
         this.prescriptionRepository.save(prescriptionEntity);
 
         this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
@@ -207,5 +192,33 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         medicationRequest.setDosageInstruction(d2);
 
         return medicationRequest;
+    }
+
+    private static String toShortUnit(String unit) {
+        String result;
+        switch (unit) {
+            case "minute":
+                result = "min";
+                break;
+            case "hour":
+                result = "h";
+                break;
+            case "day":
+                result = "d";
+                break;
+            case "week":
+                result = "wk";
+                break;
+            case "month":
+                result = "mo";
+                break;
+            case "year":
+                result = "a";
+                break;
+            default:
+                result = unit;
+                break;
+        }
+        return result;
     }
 }

@@ -115,12 +115,12 @@
                             <div class="col-sm-6">
                                 <select class="form-control" id="periodUnit" th:field="*{periodUnit}">
                                     <option selected value="">Choose...</option>
-                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="min">minute: min</option>
-                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="h">hour: h</option>
-                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="d">day: d</option>
-                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="wk">week: wk</option>
-                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="mo">month: mo</option>
-                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="a">year: a</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="minute">minute</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="hour">hour</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="day">day</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="week">week</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="month">month</option>
+                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="year">year</option>
                                 </select>
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('periodUnit')}">
                                     <ul>

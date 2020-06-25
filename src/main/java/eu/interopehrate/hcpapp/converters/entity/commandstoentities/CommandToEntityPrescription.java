@@ -16,7 +16,7 @@ public class CommandToEntityPrescription implements Converter<MedicationSummaryP
         prescriptionEntity.setFrequency(medicationSummaryPrescriptionInfoCommand.getFrequency());
         prescriptionEntity.setPeriod(medicationSummaryPrescriptionInfoCommand.getPeriod());
         prescriptionEntity.setPeriodUnit(medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
-        prescriptionEntity.setTimings(medicationSummaryPrescriptionInfoCommand.getTimings().replace("<br/>", ", "));
+        prescriptionEntity.setTimings(medicationSummaryPrescriptionInfoCommand.getTimings());
         prescriptionEntity.setStatus(medicationSummaryPrescriptionInfoCommand.getStatus());
         prescriptionEntity.setNotes(medicationSummaryPrescriptionInfoCommand.getNotes());
         prescriptionEntity.setDateOfPrescription(medicationSummaryPrescriptionInfoCommand.getDateOfPrescription());
