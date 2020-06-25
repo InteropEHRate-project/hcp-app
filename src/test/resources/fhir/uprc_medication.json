@@ -6,19 +6,13 @@
       "http://interopehrate.eu/fhir/StructureDefinition/MedicationRequest-IEHR"
     ]
   },
-  "identifier": [
-    {
-      "system": "examplesystem",
-      "value": "1"
-    }
-  ],
   "status": "active",
   "intent": "order",
   "medicationCodeableConcept": {
     "coding": [
       {
         "system": "http://snomed.info/sct",
-        "code": "320422006"
+        "code": "66493003"
       }
     ],
     "text": "Theophylline 200mg"

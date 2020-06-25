@@ -123,7 +123,7 @@ public class D2DLibraryTests {
 
     @Test
     public void testCorrectPatientSummary() throws FileNotFoundException, URISyntaxException {
-        String ipsValidatorPackPath = "ipsValidatorPack";
+        String ipsValidatorPackPath = "src/main/resources/ipsValidatorPack";
         FhirContext ctx = FhirContext.forR4();
         IPSChecker ipsChecker = new IPSChecker(ctx, ipsValidatorPackPath);
         URL is = D2DLibraryTests.class.getClassLoader().getResource("fhir/correctPatientSummary.json");
@@ -132,6 +132,23 @@ public class D2DLibraryTests {
         String content = sc.useDelimiter("\\Z").next();
         IParser parser = ctx.newJsonParser();
         Bundle correctPatientSummary = parser.parseResource(Bundle.class, content);
+        boolean conformant=ipsChecker.validateProfile(correctPatientSummary);
+        System.out.println(conformant);
+        assertTrue(conformant);
+        sc.close();
+    }
+
+    @Test
+    public void testCorrectPrescription() throws FileNotFoundException, URISyntaxException {
+        String ipsValidatorPackPath = "src/main/resources/ipsValidatorPack";
+        FhirContext ctx = FhirContext.forR4();
+        IPSChecker ipsChecker = new IPSChecker(ctx, ipsValidatorPackPath);
+        URL is = D2DLibraryTests.class.getClassLoader().getResource("fhir/uprc_medication.json");
+        File f = new File(is.toURI());
+        Scanner sc = new Scanner(f);
+        String content = sc.useDelimiter("\\Z").next();
+        IParser parser = ctx.newJsonParser();
+        MedicationRequest correctPatientSummary = parser.parseResource(MedicationRequest.class, content);
         boolean conformant=ipsChecker.validateProfile(correctPatientSummary);
         System.out.println(conformant);
         assertTrue(conformant);

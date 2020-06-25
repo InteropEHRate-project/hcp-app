@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>14</java.version>
-        <hapi.fhir.version>4.0.3</hapi.fhir.version>
+        <hapi.fhir.version>4.1.0</hapi.fhir.version>
     </properties>
 
     <dependencies>
