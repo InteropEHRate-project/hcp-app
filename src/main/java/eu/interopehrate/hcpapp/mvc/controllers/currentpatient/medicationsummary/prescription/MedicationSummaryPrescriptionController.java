@@ -72,7 +72,7 @@ public class MedicationSummaryPrescriptionController {
 
     @GetMapping
     @RequestMapping("/sendToSehr")
-    public String sendToSehr() {
+    public String sendToSehr() throws IOException {
         this.medicationSummaryPrescriptionService.callSendPrescription();
         return "redirect:/current-patient/medication-summary/prescription/view-section";
     }

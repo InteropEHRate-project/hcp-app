@@ -16,12 +16,10 @@ public class MedicationSummaryPrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String status;
-    @NotEmpty
     @NotNull
-    private String frequency;
-    @NotEmpty
+    private Integer frequency;
     @NotNull
-    private String period;
+    private Integer period;
     @NotEmpty
     @NotNull
     private String periodUnit;

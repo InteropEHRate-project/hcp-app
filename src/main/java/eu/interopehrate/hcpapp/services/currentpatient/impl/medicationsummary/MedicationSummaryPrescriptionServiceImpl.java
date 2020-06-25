@@ -1,7 +1,5 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -13,14 +11,17 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Med
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryPrescriptionService;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.dstu3.model.codesystems.MedicationRequestStatus;
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.MedicationRequest;
+import org.hl7.fhir.r4.model.Timing;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import javax.sound.sampled.Line;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,27 +48,13 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public MedicationSummaryPrescriptionCommand prescriptionCommand() throws IOException {
+    public MedicationSummaryPrescriptionCommand prescriptionCommand() {
         List<MedicationSummaryPrescriptionInfoCommand> medicationSummaryPrescriptionInfoCommandList = new ArrayList<>();
 
-        if (Objects.isNull(this.currentPatient.getPrescription())) {
-            File json = new ClassPathResource("MedicationRequest-PRESCRIPTION-sample.json").getFile();
-            FileInputStream file = new FileInputStream(json);
-            String lineReadtest = readFromInputStream(file);
-            IParser parser = FhirContext.forR4().newJsonParser();
-            MedicationRequest medicationRequest = parser.parseResource(MedicationRequest.class, lineReadtest);
-            MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(medicationRequest);
-
+        if (Objects.nonNull(this.currentPatient.getPrescription())) {
+            MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription());
             medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
-            log.info("On plain JSON Prescription");
-            return MedicationSummaryPrescriptionCommand.builder()
-                    .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                    .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommandList)
-                    .build();
         }
-        MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription());
-        medicationSummaryPrescriptionInfoCommandList.add(medicationSummaryPrescriptionInfoCommand);
-        log.info("On S-EHR Prescription received");
         return MedicationSummaryPrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .medicationSummaryPrescriptionInfoCommand(medicationSummaryPrescriptionInfoCommandList)
@@ -114,7 +101,6 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
         medicationSummaryPrescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
         this.prescriptionRepository.save(prescriptionEntity);
-        createPrescriptionFromEntity(prescriptionEntity);
         medicationSummaryPrescriptionInfoCommand.setId(prescriptionEntity.getId());
         this.medicationSummaryPrescriptionInfoCommands.add(medicationSummaryPrescriptionInfoCommand);
         this.medicationSummaryPrescriptionInfoCommands = toSortMethodCommand(this.medicationSummaryPrescriptionInfoCommands);
@@ -159,13 +145,17 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
     @Override
-    public void callSendPrescription() {
-
+    public void callSendPrescription() throws IOException {
+        for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+            MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+            this.sendPrescription(med);
+        }
     }
 
     @Override
     public void sendPrescription(MedicationRequest medicationRequest) throws IOException {
-
+        this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
+        log.info("Prescription sent to S-EHR");
     }
 
     private static List<MedicationSummaryPrescriptionInfoCommand> toSortMethodCommand(List<MedicationSummaryPrescriptionInfoCommand> med) {
@@ -194,14 +184,14 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
     }
 
 
-    public MedicationRequest createPrescriptionFromEntity (PrescriptionEntity prescriptionEntity){
+    private static MedicationRequest createPrescriptionFromEntity (PrescriptionEntity prescriptionEntity) {
         MedicationRequest medicationRequest = new MedicationRequest();
 
         medicationRequest.setMedication(new CodeableConcept().setText(prescriptionEntity.getDrugName()));
 
         Timing t = new Timing();
-        t.getRepeat().setFrequency(Integer.parseInt(prescriptionEntity.getFrequency()));
-        t.getRepeat().setPeriod(Integer.parseInt(prescriptionEntity.getPeriod()));
+        t.getRepeat().setFrequency(prescriptionEntity.getFrequency());
+        t.getRepeat().setPeriod(prescriptionEntity.getPeriod());
         t.getRepeat().setPeriodUnit(Timing.UnitsOfTime.fromCode(prescriptionEntity.getPeriodUnit()));
         List<Dosage> d = new ArrayList<>();
         d.add(new Dosage().setTiming(t));
@@ -218,5 +208,4 @@ public class MedicationSummaryPrescriptionServiceImpl implements MedicationSumma
 
         return medicationRequest;
     }
-
 }

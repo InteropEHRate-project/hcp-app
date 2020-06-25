@@ -78,6 +78,7 @@ public class CurrentPatient {
         patient = null;
         consent = null;
         patientSummaryBundle = null;
+        this.prescription = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {

@@ -20,7 +20,7 @@ public interface MedicationSummaryPrescriptionService {
 
     void updatePrescription(MedicationSummaryPrescriptionInfoCommand prescriptionInfoCommand);
 
-    void callSendPrescription();
+    void callSendPrescription() throws IOException;
 
     void sendPrescription(MedicationRequest medicationRequest) throws IOException;
 }

@@ -199,7 +199,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
         @Override
         public void onLaboratoryResultsReceived(Bundle bundle) {
-
+            log.info("onLaboratoryResultsReceived");
         }
     }
 
