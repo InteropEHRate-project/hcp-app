@@ -40,8 +40,8 @@
        th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">Allergies</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medication-summary')} ? 'active' : ''"
-       href="../medication-summary/statement/view-section.html"
-       th:href="@{/current-patient/medication-summary/statement/view-section}"
+       href="../medication-summary/prescription/view-section.html"
+       th:href="@{/current-patient/medication-summary/prescription/view-section}"
        th:text="#{fragment.current.patient.navigation.left.current.medications}">Current Medications</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/document-history-consultation')} ? 'active' : ''"
