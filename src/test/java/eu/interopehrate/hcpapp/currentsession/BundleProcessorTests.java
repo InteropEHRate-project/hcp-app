@@ -80,5 +80,6 @@ public class BundleProcessorTests {
                 .map(Bundle.BundleEntryComponent::getResource)
                 .map(MedicationRequest.class::cast)
                 .collect(Collectors.toList());
+        assertEquals(1, list.size());
     }
 }
