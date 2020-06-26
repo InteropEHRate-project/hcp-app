@@ -10,9 +10,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -64,5 +66,19 @@ public class BundleProcessorTests {
     public void testObservationList() {
         List<Observation> observationList = bundleProcessor.observationList();
         assertEquals(2, observationList.size());
+    }
+
+    @Test
+    public void testPrescriptionList() throws IOException {
+        File file = new ClassPathResource("fhir/BundlePrescription.json").getFile();
+        String prescriptionJson = Files.readString(file.toPath());
+        Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescriptionJson);
+
+        List<MedicationRequest> list = prescriptionBundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(MedicationRequest.class::cast)
+                .collect(Collectors.toList());
     }
 }
