@@ -28,7 +28,7 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
         }
 
         if (Objects.nonNull(observation.getValueQuantity())){
-                command.getObservationLaboratoryInfoCommandSample().setValue(observation.getValueQuantity().getValue().toString());
+                command.getObservationLaboratoryInfoCommandSample().setCurrentValue(observation.getValueQuantity().getValue().longValue());
                 command.getObservationLaboratoryInfoCommandSample().setUnit(observation.getValueQuantity().getUnit());
         }
 

@@ -16,4 +16,8 @@ public class ObservationLaboratoryInfoCommandAnalysis {
     @NotEmpty
     @NotNull
     private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample = new ObservationLaboratoryInfoCommandSample();
+
+    @NotEmpty
+    @NotNull
+    private Boolean isInLimits = true;
 }

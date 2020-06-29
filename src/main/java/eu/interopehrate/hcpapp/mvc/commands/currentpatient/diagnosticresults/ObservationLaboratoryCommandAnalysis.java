@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class ObservationLaboratoryCommandAnalysis {
                 for(int k=0; k < observationLaboratoryInfoCommandAnalyses.size(); k++){
                     if(analysisList.get(i).equals(observationLaboratoryInfoCommandAnalyses.get(k).getAnalysis()) &&
                             (dateTimeList.get(j).equals(observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getSample()))) {
-                             mapPair.put(analysisList.get(i),dateTimeList.get(j),observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getValue()+" " + observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getUnit());
+                             mapPair.put(analysisList.get(i),dateTimeList.get(j),observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getCurrentValue()+" " + observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getUnit());
                     }
                 }
             }

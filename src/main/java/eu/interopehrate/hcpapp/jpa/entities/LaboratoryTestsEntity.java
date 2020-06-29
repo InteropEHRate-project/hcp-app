@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class LaboratoryTestsEntity extends HCPApplicationEntity {
     private String analysisName;
     private LocalDateTime sampleDate;
-    private Integer value;
+    private Long currentValue;
     private String unitOfMeasurement;
+    private Long limitValue;
 }
