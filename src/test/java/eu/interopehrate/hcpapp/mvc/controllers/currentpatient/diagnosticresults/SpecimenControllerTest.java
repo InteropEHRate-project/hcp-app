@@ -6,6 +6,8 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.SpecimenController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.SpecimenService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults.SpecimenServiceImpl;
+import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
+import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,11 +25,15 @@ class SpecimenControllerTest {
     private Model model;
     private SpecimenController controller;
     private String id = "10";
+    @Mock
+    private MachineTranslateService machineTranslateService;
+    @Mock
+    private ConceptTranslateService conceptTranslateService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        SpecimenService service = new SpecimenServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())));
+        SpecimenService service = new SpecimenServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())));
         this.controller = new SpecimenController(service);
     }
 

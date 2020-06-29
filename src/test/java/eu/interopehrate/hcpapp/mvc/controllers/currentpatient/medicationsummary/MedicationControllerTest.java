@@ -10,6 +10,8 @@ import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.MedicationSummaryMedicationServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryMedicationService;
+import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
+import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,11 +41,15 @@ public class MedicationControllerTest {
     private String drugDosage = "2 tablet per day";
     @Mock
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
+    @Mock
+    private MachineTranslateService machineTranslateService;
+    @Mock
+    private ConceptTranslateService conceptTranslateService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        MedicationSummaryMedicationService service = new MedicationSummaryMedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())));
+        MedicationSummaryMedicationService service = new MedicationSummaryMedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())));
         HealthCareProfessionalServiceImpl healthCareProfessionalService = new HealthCareProfessionalServiceImpl(healthCareProfessionalRepository, new EntityToCommandHealthCareProfessional());
         this.controller = new MedicationSummaryMedicationController(service, healthCareProfessionalService);
     }

@@ -29,14 +29,8 @@
                 <div class="btn-group btn-group-sm mr-2" role="group">
                     <a href="#" class="btn disabled" style="background-color: lightgray"
                        th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary"
-                       th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/medication-summary/prescription/view-section')}"
-                       th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary"
-                       th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/medication-summary/prescription/view-section')}"
-                       th:text="#{ips.translate.button.translated}">Translated version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/medication-summary/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/medication-summary/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription}">prescription</h5></p>
@@ -51,7 +45,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pr : ${prescriptionCommand.getMedicationSummaryPrescriptionInfoCommand()}">
+                <tr th:each="pr : ${prescriptionCommand.getPrescriptionInfoCommand()}">
                     <td th:text="${pr.getDrugName()}"></td>
                     <td th:text="${pr.getDrugDosage()}"></td>
                     <td th:utext="${pr.getTimings() + '<br/>'}"></td>
@@ -72,9 +66,9 @@
                 </tbody>
             </table>
 
-            <p th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}"><br>
-            <h5 th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">Prescription to upload in S-EHR</h5></p>
-            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">
+            <p th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"><br>
+            <h5 th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">Prescription to upload in S-EHR</h5></p>
+            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
                 <thead class="thead-light">
                 <tr>
                     <th>Drug Name</th>
@@ -85,7 +79,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="prUpload : ${prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand()}">
+                <tr th:each="prUpload : ${prescriptionCommandUpload.getPrescriptionInfoCommand()}">
                     <td th:text="${prUpload.getDrugName()}"></td>
                     <td th:text="${prUpload.getDrugDosage()}"></td>
                     <td th:utext="${prUpload.getTimings() + '<br/>'}"></td>
@@ -114,7 +108,7 @@
                     <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/open-add-page}">Add</a>
                 </div>
             </div>
-            <div class="btn-toolbar float-left" role="toolbar" th:if="${!prescriptionCommandUpload.getMedicationSummaryPrescriptionInfoCommand().isEmpty()}">
+            <div class="btn-toolbar float-left" role="toolbar" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/medication-summary/prescription/sendToSehr}">Send to S-EHR</a>
                 </div>

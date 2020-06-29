@@ -7,6 +7,8 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.ObservationLaboratoryController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults.ObservationLaboratoryServiceImpl;
+import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
+import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,11 +25,15 @@ class ObservationLaboratoryControllerTest {
     @Mock
     private Model model;
     private ObservationLaboratoryController controller;
+    @Mock
+    private MachineTranslateService machineTranslateService;
+    @Mock
+    private ConceptTranslateService conceptTranslateService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate())), new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(new RestTemplate()), new CodesConversionServiceImpl(new RestTemplate()))));
+        ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())), new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate()))));
         this.controller = new ObservationLaboratoryController(service);
     }
 
