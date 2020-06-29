@@ -15,11 +15,11 @@ public class ObservationLaboratoryInfoCommandSample {
     private LocalDateTime sample = LocalDateTime.now().minusDays(2);
     @NotEmpty
     @NotNull
-    private long currentValue = 0l;
+    private double currentValue = 0;
     @NotEmpty
     @NotNull
     private String unit = "-";
     @NotEmpty
     @NotNull
-    private long limitValue = 0l;
+    private double limitValue = 0;
 }
