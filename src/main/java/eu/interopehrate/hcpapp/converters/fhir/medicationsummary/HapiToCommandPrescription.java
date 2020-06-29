@@ -39,7 +39,7 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, M
                         && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriod()
                         && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriodUnit()) {
                     timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getFrequency());
-                    timing.append(" times per ");
+                    timing.append(" times, for ");
                     timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriod());
                     timing.append(" ");
                     switch (source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit()) {
