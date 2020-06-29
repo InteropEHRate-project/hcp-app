@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.converters.fhir.medicationsummary;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.MedicationRequest;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -9,26 +9,26 @@ import java.time.ZoneId;
 import java.util.Objects;
 
 @Component
-public class HapiToCommandPrescription implements Converter<MedicationRequest, MedicationSummaryPrescriptionInfoCommand> {
+public class HapiToCommandPrescription implements Converter<MedicationRequest, PrescriptionInfoCommand> {
     @Override
-    public MedicationSummaryPrescriptionInfoCommand convert(MedicationRequest source) {
-        MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand = new MedicationSummaryPrescriptionInfoCommand();
+    public PrescriptionInfoCommand convert(MedicationRequest source) {
+        PrescriptionInfoCommand prescriptionInfoCommand = new PrescriptionInfoCommand();
         if (Objects.nonNull(source)) {
             if(source.hasMedicationCodeableConcept() && source.getMedicationCodeableConcept().hasText()) {
-                medicationSummaryPrescriptionInfoCommand.setDrugName(source.getMedicationCodeableConcept().getText());
+                prescriptionInfoCommand.setDrugName(source.getMedicationCodeableConcept().getText());
             }
             if(source.hasStatus() && source.getStatus().getDisplay() != null) {
-                medicationSummaryPrescriptionInfoCommand.setStatus(source.getStatus().getDisplay());
+                prescriptionInfoCommand.setStatus(source.getStatus().getDisplay());
             }
             if (source.hasAuthoredOn()) {
-                medicationSummaryPrescriptionInfoCommand.setDateOfPrescription(source.getAuthoredOn()
+                prescriptionInfoCommand.setDateOfPrescription(source.getAuthoredOn()
                         .toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate());
             }
             if (source.hasDosageInstruction()) {
                 if (source.getDosageInstructionFirstRep().hasAdditionalInstruction() && source.getDosageInstructionFirstRep().getAdditionalInstructionFirstRep().hasText()) {
-                    medicationSummaryPrescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep()
+                    prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep()
                             .getAdditionalInstructionFirstRep()
                             .getText());
                 }
@@ -66,7 +66,7 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, M
                             break;
                     }
                 }
-                medicationSummaryPrescriptionInfoCommand.setTimings(timing.toString());
+                prescriptionInfoCommand.setTimings(timing.toString());
                 StringBuilder drugDosage = new StringBuilder();
                 if (source.getDosageInstructionFirstRep().hasDoseAndRate()
                         && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().hasDoseQuantity()
@@ -75,9 +75,9 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, M
                     drugDosage.append(source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getValue() + " ");
                     drugDosage.append(source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getUnit());
                 }
-                medicationSummaryPrescriptionInfoCommand.setDrugDosage(drugDosage.toString());
+                prescriptionInfoCommand.setDrugDosage(drugDosage.toString());
             }
         }
-        return medicationSummaryPrescriptionInfoCommand;
+        return prescriptionInfoCommand;
     }
 }

@@ -31,7 +31,7 @@
             <div class="m-3"></div>
             <h2>Edit Prescription information</h2>
             <div class="m-5"></div>
-            <form action="#" th:action="@{/current-patient/medication-summary/prescription/update}" th:object="${medicationSummaryPrescriptionInfoCommand}" method="post">
+            <form action="#" th:action="@{/current-patient/medication-summary/prescription/update}" th:object="${prescriptionInfoCommand}" method="post">
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p>Please correct the errors below</p>

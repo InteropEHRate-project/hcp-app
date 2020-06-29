@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class MedicationSummaryPrescriptionInfoCommand {
+public class PrescriptionInfoCommand {
     private Long id;
     @NotEmpty
     @NotNull
@@ -44,7 +44,7 @@ public class MedicationSummaryPrescriptionInfoCommand {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MedicationSummaryPrescriptionInfoCommand that = (MedicationSummaryPrescriptionInfoCommand) o;
+        PrescriptionInfoCommand that = (PrescriptionInfoCommand) o;
         return id.equals(that.id);
     }
 

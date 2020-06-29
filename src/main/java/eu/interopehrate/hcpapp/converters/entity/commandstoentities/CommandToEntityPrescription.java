@@ -1,25 +1,25 @@
 package eu.interopehrate.hcpapp.converters.entity.commandstoentities;
 
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryPrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommandToEntityPrescription implements Converter<MedicationSummaryPrescriptionInfoCommand, PrescriptionEntity> {
+public class CommandToEntityPrescription implements Converter<PrescriptionInfoCommand, PrescriptionEntity> {
 
     @Override
-    public PrescriptionEntity convert(MedicationSummaryPrescriptionInfoCommand medicationSummaryPrescriptionInfoCommand) {
+    public PrescriptionEntity convert(PrescriptionInfoCommand prescriptionInfoCommand) {
         PrescriptionEntity prescriptionEntity = new PrescriptionEntity();
-        prescriptionEntity.setDrugName(medicationSummaryPrescriptionInfoCommand.getDrugName());
-        prescriptionEntity.setDrugDosage(medicationSummaryPrescriptionInfoCommand.getDrugDosage());
-        prescriptionEntity.setFrequency(medicationSummaryPrescriptionInfoCommand.getFrequency());
-        prescriptionEntity.setPeriod(medicationSummaryPrescriptionInfoCommand.getPeriod());
-        prescriptionEntity.setPeriodUnit(medicationSummaryPrescriptionInfoCommand.getPeriodUnit());
-        prescriptionEntity.setTimings(medicationSummaryPrescriptionInfoCommand.getTimings());
-        prescriptionEntity.setStatus(medicationSummaryPrescriptionInfoCommand.getStatus());
-        prescriptionEntity.setNotes(medicationSummaryPrescriptionInfoCommand.getNotes());
-        prescriptionEntity.setDateOfPrescription(medicationSummaryPrescriptionInfoCommand.getDateOfPrescription());
+        prescriptionEntity.setDrugName(prescriptionInfoCommand.getDrugName());
+        prescriptionEntity.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
+        prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
+        prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
+        prescriptionEntity.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
+        prescriptionEntity.setTimings(prescriptionInfoCommand.getTimings());
+        prescriptionEntity.setStatus(prescriptionInfoCommand.getStatus());
+        prescriptionEntity.setNotes(prescriptionInfoCommand.getNotes());
+        prescriptionEntity.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
         return prescriptionEntity;
     }
 }
