@@ -39,6 +39,8 @@ public class MedicationControllerTest {
     private String notes = "take with food";
     private String timings = "Frequency: 1, Period: 2, PeriodUnit: D";
     private String drugDosage = "2 tablet per day";
+    private LocalDate start = LocalDate.now();
+    private LocalDate end = LocalDate.now();
     @Mock
     private HealthCareProfessionalRepository healthCareProfessionalRepository;
     @Mock
@@ -56,7 +58,7 @@ public class MedicationControllerTest {
 
     @Test
     void viewSection() {
-        String returnedString = this.controller.viewSection(this.id, this.drug, this.status, this.notes, this.timings, this.drugDosage, LocalDate.now(), this.model);
+        String returnedString = this.controller.viewSection(this.id, this.drug, this.status, this.notes, this.timings, this.drugDosage, LocalDate.now(), this.start, this.end, this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW, returnedString);
         verify(this.model, times(1)).addAttribute(eq("medicationCommand"), any(MedicationSummaryMedicationCommand.class));
         verify(this.model, times(1)).addAttribute(eq("doctor"), any(HealthCareProfessionalCommand.class));

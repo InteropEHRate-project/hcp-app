@@ -31,4 +31,10 @@ public class MedicationSummaryMedicationInfoCommand {
     @NotEmpty
     @NotNull
     private String status;
+    @NotEmpty
+    @NotNull
+    private LocalDate start;
+    @NotEmpty
+    @NotNull
+    private LocalDate end;
 }

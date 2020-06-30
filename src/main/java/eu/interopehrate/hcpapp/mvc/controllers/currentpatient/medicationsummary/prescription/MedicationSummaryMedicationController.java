@@ -31,8 +31,10 @@ public class MedicationSummaryMedicationController {
                               @RequestParam(name = "timings") String timings,
                               @RequestParam(name = "drugDosage") String drugDosage,
                               @RequestParam(name = "dateOfPrescription") LocalDate dateOfPrescription,
+                              @RequestParam(name = "start") LocalDate start,
+                              @RequestParam(name = "end") LocalDate end,
                               Model model) {
-        model.addAttribute("medicationCommand", medicationSummaryMedicationService.medicationCommand(id, drug, status, notes, timings, drugDosage, dateOfPrescription));
+        model.addAttribute("medicationCommand", medicationSummaryMedicationService.medicationCommand(id, drug, status, notes, timings, drugDosage, dateOfPrescription, start, end));
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW;
     }

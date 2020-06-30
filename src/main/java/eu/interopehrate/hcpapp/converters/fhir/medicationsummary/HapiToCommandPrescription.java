@@ -39,7 +39,7 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
                         && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriod()
                         && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriodUnit()) {
                     timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getFrequency());
-                    timing.append(" times, for ");
+                    timing.append(" times per ");
                     timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriod());
                     timing.append(" ");
                     switch (source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit()) {
@@ -64,6 +64,22 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
                         default:
                             timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit());
                             break;
+                    }
+                }
+                if (source.getDosageInstructionFirstRep().hasTiming()
+                        && source.getDosageInstructionFirstRep().getTiming().hasRepeat()
+                && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasBoundsPeriod()) {
+                    if (source.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().hasStart()) {
+                        prescriptionInfoCommand.setStart(source.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().getStart()
+                                .toInstant()
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate());
+                    }
+                    if (source.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().hasEnd()) {
+                        prescriptionInfoCommand.setEnd(source.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().getEnd()
+                                .toInstant()
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate());
                     }
                 }
                 prescriptionInfoCommand.setTimings(timing.toString());

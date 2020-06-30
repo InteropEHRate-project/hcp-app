@@ -44,6 +44,10 @@
       ],
       "timing": {
         "repeat": {
+          "boundsPeriod": {
+            "start": "2020-01-16",
+            "end": "2020-01-20"
+          },
           "frequency": 2,
           "period": 1,
           "periodUnit": "d"

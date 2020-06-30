@@ -77,18 +77,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 .build();
     }
 
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
-    }
-
     @Override
     public PrescriptionCommand prescriptionCommandUpload() {
         return PrescriptionCommand.builder()
@@ -108,7 +96,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
-        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times, for "
+        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
                 + prescriptionInfoCommand.getPeriod() + " "
                 + prescriptionInfoCommand.getPeriodUnit());
 
@@ -141,9 +129,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         oldPrescription.setFrequency(prescriptionInfoCommand.getFrequency());
         oldPrescription.setPeriod(prescriptionInfoCommand.getPeriod());
         oldPrescription.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
-        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency() + " times, for "
+        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
                 + prescriptionInfoCommand.getPeriod() + " "
                 + prescriptionInfoCommand.getPeriodUnit());
+        oldPrescription.setStart(prescriptionInfoCommand.getStart());
+        oldPrescription.setEnd(prescriptionInfoCommand.getEnd());
 
         PrescriptionEntity prescriptionEntity = this.prescriptionRepository.getOne(prescriptionInfoCommand.getId());
         prescriptionEntity.setDrugName(prescriptionInfoCommand.getDrugName());
@@ -155,6 +145,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
         prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionInfoCommand.getPeriodUnit()));
         prescriptionEntity.setTimings(oldPrescription.getTimings());
+        prescriptionEntity.setStart(prescriptionInfoCommand.getStart());
+        prescriptionEntity.setEnd(prescriptionInfoCommand.getEnd());
         this.prescriptionRepository.save(prescriptionEntity);
 
         this.prescriptionInfoCommands = toSortMethodCommand(this.prescriptionInfoCommands);
@@ -198,7 +190,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         });
         return med;
     }
-
 
     private static MedicationRequest createPrescriptionFromEntity (PrescriptionEntity prescriptionEntity) {
         MedicationRequest medicationRequest = new MedicationRequest();
@@ -251,5 +242,17 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 break;
         }
         return result;
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 }

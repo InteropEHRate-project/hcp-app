@@ -26,6 +26,12 @@ public class PrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String timings = frequency + " times per " + period + " " + periodUnit;
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate start;
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate end;
     @NotEmpty
     @NotNull
     private String drugName;

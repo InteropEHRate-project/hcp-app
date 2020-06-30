@@ -19,6 +19,8 @@ public class PrescriptionEntity extends HCPApplicationEntity {
     private Integer period;
     private String periodUnit;
     private String timings;
+    private LocalDate start;
+    private LocalDate end;
     private String status;
     private String author;
     private String notes;
