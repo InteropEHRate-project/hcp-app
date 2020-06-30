@@ -20,6 +20,8 @@ public class CommandToEntityPrescription implements Converter<PrescriptionInfoCo
         prescriptionEntity.setStatus(prescriptionInfoCommand.getStatus());
         prescriptionEntity.setNotes(prescriptionInfoCommand.getNotes());
         prescriptionEntity.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
+        prescriptionEntity.setStart(prescriptionInfoCommand.getStart());
+        prescriptionEntity.setEnd(prescriptionInfoCommand.getEnd());
         return prescriptionEntity;
     }
 }
