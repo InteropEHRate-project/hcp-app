@@ -95,7 +95,9 @@
                             notes=${{prUpload.getNotes()}},
                             timings=${{prUpload.getTimings()}},
                             drugDosage=${{prUpload.getDrugDosage()}},
-                            dateOfPrescription=${{prUpload.getDateOfPrescription()}})}">Medication Details</a>
+                            dateOfPrescription=${{prUpload.getDateOfPrescription()}},
+                            start=${{prUpload.getStart()}},
+                            end=${{prUpload.getEnd()}})}">Medication Details</a>
 
                             <a href="#" th:href="@{/current-patient/medication-summary/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info">Edit</a>
                             <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Delete</a>
