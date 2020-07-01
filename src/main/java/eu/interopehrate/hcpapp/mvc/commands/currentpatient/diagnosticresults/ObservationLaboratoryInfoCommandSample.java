@@ -21,5 +21,8 @@ public class ObservationLaboratoryInfoCommandSample {
     private String unit = "-";
     @NotEmpty
     @NotNull
-    private double limitValue = 0;
+    private double upperLimitBound = Double.MAX_VALUE;
+    @NotEmpty
+    @NotNull
+    private double lowerLimitBound = Double.MIN_VALUE;
 }

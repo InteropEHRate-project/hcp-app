@@ -17,5 +17,6 @@ public class LaboratoryTestsEntity extends HCPApplicationEntity {
     private LocalDateTime sampleDate;
     private Double currentValue;
     private String unitOfMeasurement;
-    private Double limitValue;
+    private Double upperLimitBound;
+    private Double lowerLimitBound;
 }
