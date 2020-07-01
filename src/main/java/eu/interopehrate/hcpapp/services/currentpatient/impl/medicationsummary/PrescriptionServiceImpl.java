@@ -4,6 +4,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
+import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescriptionTranslate;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
@@ -13,26 +14,22 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.Pre
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.PrescriptionService;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.MedicationRequest;
-import org.hl7.fhir.r4.model.Timing;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
+    private final HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate;
     private List<PrescriptionInfoCommand> prescriptionInfoCommands = new ArrayList<>();
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
     @Autowired
@@ -41,9 +38,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
+        this.hapiToCommandPrescriptionTranslate = hapiToCommandPrescriptionTranslate;
         this.currentD2DConnection = currentD2DConnection;
     }
 
@@ -52,29 +50,55 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
 
         if (Objects.isNull(this.currentPatient.getPrescription())) {
-            File json = new ClassPathResource("MedicationRequest-PRESCRIPTION-sample.json").getFile();
+            File json = new ClassPathResource("prescriptionItalian.json").getFile();
             FileInputStream file = new FileInputStream(json);
             String lineReadtest = readFromInputStream(file);
             IParser parser = FhirContext.forR4().newJsonParser();
-            MedicationRequest medicationRequest = parser.parseResource(MedicationRequest.class, lineReadtest);
-            PrescriptionInfoCommand prescriptionInfoCommand = this.hapiToCommandPrescription.convert(medicationRequest);
+            Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
 
-            prescriptionInfoCommandList.add(prescriptionInfoCommand);
-            log.info("On plain JSON Prescription");
+            if (this.currentPatient.getDisplayTranslatedVersion()) {
+                prescription = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
+                List<MedicationRequest> prescriptionList1 = prescription.getEntry()
+                        .stream()
+                        .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
+                        .map(Bundle.BundleEntryComponent::getResource)
+                        .map(MedicationRequest.class::cast)
+                        .collect(Collectors.toList());
+
+                for (MedicationRequest med : prescriptionList1) {
+                    prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
+                }
+                return PrescriptionCommand.builder()
+                        .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                        .prescriptionInfoCommand(prescriptionInfoCommandList)
+                        .build();
+            } else {
+                List<MedicationRequest> prescriptionList2 = prescription.getEntry()
+                        .stream()
+                        .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
+                        .map(Bundle.BundleEntryComponent::getResource)
+                        .map(MedicationRequest.class::cast)
+                        .collect(Collectors.toList());
+
+                for (MedicationRequest med : prescriptionList2) {
+                    prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
+                }
+                log.info("On plain JSON Prescription");
+                return PrescriptionCommand.builder()
+                        .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                        .prescriptionInfoCommand(prescriptionInfoCommandList)
+                        .build();
+            }
+        } else {
+            if (Objects.nonNull(this.currentPatient.getPrescription())) {
+                PrescriptionInfoCommand prescriptionInfoCommand = this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription());
+                prescriptionInfoCommandList.add(prescriptionInfoCommand);
+            }
             return PrescriptionCommand.builder()
-                    .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .prescriptionInfoCommand(prescriptionInfoCommandList)
                     .build();
         }
-
-        if (Objects.nonNull(this.currentPatient.getPrescription())) {
-            PrescriptionInfoCommand prescriptionInfoCommand = this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription());
-            prescriptionInfoCommandList.add(prescriptionInfoCommand);
-        }
-        return PrescriptionCommand.builder()
-                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .prescriptionInfoCommand(prescriptionInfoCommandList)
-                .build();
     }
 
     @Override

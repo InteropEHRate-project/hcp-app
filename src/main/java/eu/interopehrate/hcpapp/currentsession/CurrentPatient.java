@@ -37,6 +37,10 @@ public class CurrentPatient {
         this.codesConversionService = codesConversionService;
     }
 
+    public TranslateService getTranslateService() {
+        return translateService;
+    }
+
     public void initPatient(Patient patient) {
         this.patient = patient;
     }
