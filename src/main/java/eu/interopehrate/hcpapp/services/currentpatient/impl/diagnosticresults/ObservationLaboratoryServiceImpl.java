@@ -29,6 +29,9 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
                 .stream()
                 .map(hapiToCommandObservationLaboratory::convert)
                 .collect(Collectors.toList());
+        for(ObservationLaboratoryInfoCommandAnalysis e: observationLaboratoryInfoCommandAnalyses){
+            e.setIsInLimits();
+        }
         observationLaboratoryInfoCommandAnalyses.addAll(observationLaboratoryInfoCommandAnalysis);
 
         return ObservationLaboratoryCommandAnalysis.builder()

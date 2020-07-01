@@ -60,6 +60,19 @@ public class ObservationLaboratoryCommandAnalysis {
 
     }
 
+    public boolean getResultOfAnalysis(String analysis, LocalDateTime dateTime) {
+        for (ObservationLaboratoryInfoCommandAnalysis el : observationLaboratoryInfoCommandAnalyses) {
+            if (el.getAnalysis().equals(analysis) && el.getObservationLaboratoryInfoCommandSample().getSample().equals(dateTime)) {
+                if (el.getIsInLimits() == true) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
 
 }

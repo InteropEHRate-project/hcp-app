@@ -62,7 +62,9 @@
                         <div th:with="map=${observationLaboratoryAnalysis.valueReturn()}">
                             <td th:text="${{an}}"></td>
                             <th:block th:each="sample : ${observationLaboratoryAnalysis.localDateTimeListWithoutDuplicates()}">
-                                    <td th:text="${{map.get(an,sample)}}"></td>
+                                    <div th:with="boolVal=${observationLaboratoryAnalysis.getResultOfAnalysis(an, sample)}">
+                                        <td th:text="${{map.get(an,sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' " ></td>
+                                    </div>
                             </th:block>
                         </div>
                     </tr>

@@ -19,5 +19,14 @@ public class ObservationLaboratoryInfoCommandAnalysis {
 
     @NotEmpty
     @NotNull
-    private Boolean isInLimits = true;
+    private Boolean isInLimits = false;
+
+
+    public void setIsInLimits(){
+        if((this.getObservationLaboratoryInfoCommandSample().getCurrentValue()>=this.getObservationLaboratoryInfoCommandSample().getLowerLimitBound()) && (this.getObservationLaboratoryInfoCommandSample().getCurrentValue()<=this.getObservationLaboratoryInfoCommandSample().getUpperLimitBound())){
+            isInLimits = true;
+        }else{
+            isInLimits=false;
+        }
+    }
 }
