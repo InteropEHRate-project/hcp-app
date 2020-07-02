@@ -63,7 +63,10 @@
                             <td th:text="${{an}}"></td>
                             <th:block th:each="sample : ${observationLaboratoryAnalysis.localDateTimeListWithoutDuplicates()}">
                                     <div th:with="boolVal=${observationLaboratoryAnalysis.getResultOfAnalysis(an, sample)}">
-                                        <td th:text="${{map.get(an,sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' " ></td>
+                                        <td th:if="${map.get(an,sample) == null}">-</td>
+                                        <div th:if="${map.get(an,sample) != null}">
+                                            <td th:text="${{map.get(an,sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' " data-toggle="tooltip" data-placement="bottom" th:title="${observationLaboratoryAnalysis.getStringForTooltip(an)}" ></td>
+                                        </div>
                                     </div>
                             </th:block>
                         </div>
@@ -74,5 +77,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
 </body>
 </html>

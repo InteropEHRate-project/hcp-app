@@ -73,6 +73,15 @@ public class ObservationLaboratoryCommandAnalysis {
         return true;
     }
 
+    public String getStringForTooltip(String analysis){
+        for (ObservationLaboratoryInfoCommandAnalysis el : observationLaboratoryInfoCommandAnalyses) {
+            if (el.getAnalysis().equals(analysis)) {
+                return String.valueOf(el.getObservationLaboratoryInfoCommandSample().getLowerLimitBound() + " - " + el.getObservationLaboratoryInfoCommandSample().getUpperLimitBound());
+            }
+        }
+
+        return "No value found";
+    }
 
 
 }
