@@ -18,20 +18,17 @@ public class PrescriptionInfoCommand {
     private String status;
     @NotNull
     private Integer frequency;
-    @NotNull
-    private Integer period;
+    private Integer period = 1;
+    private String periodUnit = "day";
     @NotEmpty
     @NotNull
-    private String periodUnit;
-    @NotEmpty
-    @NotNull
-    private String timings = frequency + " times per " + period + " " + periodUnit;
-    @NotNull
+    private String timings = frequency + " times per day";
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate start;
-    @NotNull
+    private LocalDate start = LocalDate.now();
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate end;
+    private LocalDate end = LocalDate.MAX;
     @NotEmpty
     @NotNull
     private String drugName;
@@ -44,7 +41,7 @@ public class PrescriptionInfoCommand {
     private String author;
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate dateOfPrescription;
+    private LocalDate dateOfPrescription = LocalDate.now();
 
     @Override
     public boolean equals(Object o) {

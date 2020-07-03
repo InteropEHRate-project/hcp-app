@@ -55,6 +55,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             String lineReadtest = readFromInputStream(file);
             IParser parser = FhirContext.forR4().newJsonParser();
             Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
+            log.info("On plain JSON Prescription");
 
             if (this.currentPatient.getDisplayTranslatedVersion()) {
                 prescription = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
@@ -83,7 +84,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 for (MedicationRequest med : prescriptionList2) {
                     prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
                 }
-                log.info("On plain JSON Prescription");
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -120,13 +120,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
-        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
-                + prescriptionInfoCommand.getPeriod() + " "
-                + prescriptionInfoCommand.getPeriodUnit());
+//        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
+//                + prescriptionInfoCommand.getPeriod() + " "
+//                + prescriptionInfoCommand.getPeriodUnit());
+        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
+        prescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
         PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(prescriptionInfoCommand);
-        prescriptionEntity.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
-        prescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        prescriptionEntity.setAuthor(prescriptionInfoCommand.getAuthor());
 
         prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionEntity.getPeriodUnit()));
         this.prescriptionRepository.save(prescriptionEntity);
@@ -153,9 +154,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         oldPrescription.setFrequency(prescriptionInfoCommand.getFrequency());
         oldPrescription.setPeriod(prescriptionInfoCommand.getPeriod());
         oldPrescription.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
-        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
-                + prescriptionInfoCommand.getPeriod() + " "
-                + prescriptionInfoCommand.getPeriodUnit());
+        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
         oldPrescription.setStart(prescriptionInfoCommand.getStart());
         oldPrescription.setEnd(prescriptionInfoCommand.getEnd());
 

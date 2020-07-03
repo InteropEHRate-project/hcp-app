@@ -32,39 +32,40 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
                             .getAdditionalInstructionFirstRep()
                             .getText());
                 }
-                StringBuilder timing = new StringBuilder();
+//                StringBuilder timing = new StringBuilder();
                 if (source.getDosageInstructionFirstRep().hasTiming()
                         && source.getDosageInstructionFirstRep().getTiming().hasRepeat()
                         && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasFrequency()
-                        && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriod()
-                        && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriodUnit()) {
-                    timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getFrequency());
-                    timing.append(" times per ");
-                    timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriod());
-                    timing.append(" ");
-                    switch (source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit()) {
-                        case MIN:
-                            timing.append("minute");
-                            break;
-                        case H:
-                            timing.append("hour");
-                            break;
-                        case D:
-                            timing.append("day");
-                            break;
-                        case WK:
-                            timing.append("week");
-                            break;
-                        case MO:
-                            timing.append("month");
-                            break;
-                        case A:
-                            timing.append("year");
-                            break;
-                        default:
-                            timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit());
-                            break;
-                    }
+//                        && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriod() && source.getDosageInstructionFirstRep().getTiming().getRepeat().hasPeriodUnit()
+                ) {
+//                    timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getFrequency());
+//                    timing.append(" times per ");
+//                    timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriod());
+//                    timing.append(" ");
+//                    switch (source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit()) {
+//                        case MIN:
+//                            timing.append("minute");
+//                            break;
+//                        case H:
+//                            timing.append("hour");
+//                            break;
+//                        case D:
+//                            timing.append("day");
+//                            break;
+//                        case WK:
+//                            timing.append("week");
+//                            break;
+//                        case MO:
+//                            timing.append("month");
+//                            break;
+//                        case A:
+//                            timing.append("year");
+//                            break;
+//                        default:
+//                            timing.append(source.getDosageInstructionFirstRep().getTiming().getRepeat().getPeriodUnit());
+//                            break;
+//                    }
+                    prescriptionInfoCommand.setTimings(source.getDosageInstructionFirstRep().getTiming().getRepeat().getFrequency() + " times per day");
                 }
                 if (source.getDosageInstructionFirstRep().hasTiming()
                         && source.getDosageInstructionFirstRep().getTiming().hasRepeat()
@@ -82,7 +83,7 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
                                 .toLocalDate());
                     }
                 }
-                prescriptionInfoCommand.setTimings(timing.toString());
+//                prescriptionInfoCommand.setTimings(timing.toString());
                 StringBuilder drugDosage = new StringBuilder();
                 if (source.getDosageInstructionFirstRep().hasDoseAndRate()
                         && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().hasDoseQuantity()
