@@ -28,7 +28,7 @@ public class PrescriptionInfoCommand {
     private LocalDate start = LocalDate.now();
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate end = LocalDate.MAX;
+    private LocalDate end;
     @NotEmpty
     @NotNull
     private String drugName;

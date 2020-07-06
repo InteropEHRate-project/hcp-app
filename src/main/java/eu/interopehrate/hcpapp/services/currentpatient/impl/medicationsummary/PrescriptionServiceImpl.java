@@ -177,8 +177,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() throws IOException {
-        for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-            MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+        for (PrescriptionEntity medEntity : this.prescriptionRepository.findAll()) {
+            MedicationRequest med = createPrescriptionFromEntity(medEntity);
             this.sendPrescription(med);
         }
     }
@@ -229,11 +229,12 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
         medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
-        Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
 
+        if (Objects.nonNull(prescriptionEntity.getEnd())) {
+            Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
+        }
         medicationRequest.setDosageInstruction(d);
-
         medicationRequest.setStatus(MedicationRequest.MedicationRequestStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
 
         medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
