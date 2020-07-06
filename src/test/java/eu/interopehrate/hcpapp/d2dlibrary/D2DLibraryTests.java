@@ -20,8 +20,7 @@ import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -153,5 +152,27 @@ public class D2DLibraryTests {
         System.out.println(conformant);
         assertTrue(conformant);
         sc.close();
+    }
+
+    @Test
+    public void testSendPrescription() {
+        MedicationRequest prescription = new MedicationRequest();
+        String prescriptionJSON = FhirContext.forR4().newJsonParser().encodeResourceToString(prescription);
+        this.write("medicationRequest#ACK#" + prescriptionJSON);
+    }
+
+    private void write(String data) {
+        DataOutputStream dos = new DataOutputStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+
+            }
+        });
+        try {
+            dos.writeUTF(data + "\n");
+            dos.flush();
+        } catch (IOException var3) {
+            var3.printStackTrace();
+        }
     }
 }
