@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryMedicationService;
+import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +13,12 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/current-patient/medication-summary/prescription")
-public class MedicationSummaryMedicationController {
-    private final MedicationSummaryMedicationService medicationSummaryMedicationService;
+public class MedicationController {
+    private final MedicationService medicationService;
     private final HealthCareProfessionalServiceImpl healthCareProfessionalService;
 
-    public MedicationSummaryMedicationController(MedicationSummaryMedicationService medicationSummaryMedicationService, HealthCareProfessionalServiceImpl healthCareProfessionalService) {
-        this.medicationSummaryMedicationService = medicationSummaryMedicationService;
+    public MedicationController(MedicationService medicationService, HealthCareProfessionalServiceImpl healthCareProfessionalService) {
+        this.medicationService = medicationService;
         this.healthCareProfessionalService = healthCareProfessionalService;
     }
 
@@ -34,7 +34,7 @@ public class MedicationSummaryMedicationController {
                               @RequestParam(name = "start") LocalDate start,
                               @RequestParam(name = "end") LocalDate end,
                               Model model) {
-        model.addAttribute("medicationCommand", medicationSummaryMedicationService.medicationCommand(id, drug, status, notes, timings, drugDosage, dateOfPrescription, start, end));
+        model.addAttribute("medicationCommand", medicationService.medicationCommand(id, drug, status, notes, timings, drugDosage, dateOfPrescription, start, end));
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW;
     }

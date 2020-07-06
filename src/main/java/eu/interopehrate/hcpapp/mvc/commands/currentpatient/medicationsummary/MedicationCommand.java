@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class MedicationSummaryMedicationCommand {
+public class MedicationCommand {
     private Boolean displayTranslatedVersion;
-    private List<MedicationSummaryMedicationInfoCommand> medicationSummaryMedicationInfoCommandList;
+    private List<MedicationInfoCommand> medicationInfoCommandList;
 }

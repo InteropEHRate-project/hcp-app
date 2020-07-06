@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class MedicationSummaryMedicationInfoCommand {
+public class MedicationInfoCommand {
     @NotEmpty
     @NotNull
     private String id;

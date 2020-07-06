@@ -38,9 +38,9 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <p><h3 th:text="${medicationCommand.getMedicationSummaryMedicationInfoCommandList().get(0).getDrugName()}">drug name</h3></p>
+                            <p><h3 th:text="${medicationCommand.getMedicationInfoCommandList().get(0).getDrugName()}">drug name</h3></p>
                         </div>
-                        <div class="card-body" th:each="med : ${medicationCommand.getMedicationSummaryMedicationInfoCommandList()}">
+                        <div class="card-body" th:each="med : ${medicationCommand.getMedicationInfoCommandList()}">
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</h5>
                             <p class="card-text" th:text="${med.getDateOfPrescription()}">date of prescription</p>

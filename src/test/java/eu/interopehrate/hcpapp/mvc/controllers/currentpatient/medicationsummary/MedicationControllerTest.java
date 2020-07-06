@@ -4,12 +4,12 @@ import eu.interopehrate.hcpapp.converters.entity.EntityToCommandHealthCareProfes
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationSummaryMedicationCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription.MedicationSummaryMedicationController;
+import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription.MedicationController;
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.MedicationSummaryMedicationServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationSummaryMedicationService;
+import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.MedicationServiceImpl;
+import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationService;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 public class MedicationControllerTest {
     @Mock
     private Model model;
-    private MedicationSummaryMedicationController controller;
+    private MedicationController controller;
     private String id = "10";
     private String drug = "Data test";
     private String status = "active";
@@ -51,16 +51,16 @@ public class MedicationControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        MedicationSummaryMedicationService service = new MedicationSummaryMedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())));
+        MedicationService service = new MedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())));
         HealthCareProfessionalServiceImpl healthCareProfessionalService = new HealthCareProfessionalServiceImpl(healthCareProfessionalRepository, new EntityToCommandHealthCareProfessional());
-        this.controller = new MedicationSummaryMedicationController(service, healthCareProfessionalService);
+        this.controller = new MedicationController(service, healthCareProfessionalService);
     }
 
     @Test
     void viewSection() {
         String returnedString = this.controller.viewSection(this.id, this.drug, this.status, this.notes, this.timings, this.drugDosage, LocalDate.now(), this.start, this.end, this.model);
         assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW, returnedString);
-        verify(this.model, times(1)).addAttribute(eq("medicationCommand"), any(MedicationSummaryMedicationCommand.class));
+        verify(this.model, times(1)).addAttribute(eq("medicationCommand"), any(MedicationCommand.class));
         verify(this.model, times(1)).addAttribute(eq("doctor"), any(HealthCareProfessionalCommand.class));
     }
 }

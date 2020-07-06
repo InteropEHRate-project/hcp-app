@@ -11,5 +11,5 @@ public class MedicationSummaryCommand {
     private Boolean displayTranslatedVersion;
     private List<MedicationSummaryStatementCommand> statementList;
     private List<PrescriptionCommand> prescriptionList;
-    private List<MedicationSummaryMedicationCommand> medicationList;
+    private List<MedicationCommand> medicationList;
 }

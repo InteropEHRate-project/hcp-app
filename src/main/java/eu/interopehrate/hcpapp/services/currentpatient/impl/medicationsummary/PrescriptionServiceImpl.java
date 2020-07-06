@@ -191,22 +191,22 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static List<PrescriptionInfoCommand> toSortMethodCommand(List<PrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
-            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Suspended")) {
+            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("On-Hold")) {
                 return -1;
             }
             if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
                 return -1;
             }
-            if (o1.getStatus().equalsIgnoreCase("Suspended") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+            if (o1.getStatus().equalsIgnoreCase("On-Hold") && o2.getStatus().equalsIgnoreCase("Stopped")) {
                 return -1;
             }
-            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Suspended")) {
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("On-Hold")) {
                 return 1;
             }
             if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
                 return 1;
             }
-            if (o1.getStatus().equalsIgnoreCase("Suspended") && o2.getStatus().equalsIgnoreCase("Active")) {
+            if (o1.getStatus().equalsIgnoreCase("On-Hold") && o2.getStatus().equalsIgnoreCase("Active")) {
                 return 1;
             }
             return 0;
