@@ -96,6 +96,42 @@
                 </div><br>
 
                 <div class="form-group row">
+                    <label for="dateOfPrescription" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</label><br>
+                    <input id="dateOfPrescription" type="text" class="form-control col-sm-3" th:classappend="${#fields.hasErrors('dateOfPrescription')} ? 'is-invalid' :''" readonly th:field="*{dateOfPrescription}" placeholder="Choose...">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfPrescription')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('dateOfPrescription')}" th:text="${err}">err</li>
+                        </ul>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#dateOfPrescription').datetimepicker({
+                                format: 'dd-mm-yyyy',
+                                minView: "month"
+                            });
+                        });
+                    </script>
+                </div>
+
+                <div class="form-group row">
+                    <label for="start" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.start}">Start</label><br>
+                    <input id="start" type="text" class="form-control col-sm-3" th:classappend="${#fields.hasErrors('start')} ? 'is-invalid' :''" readonly th:field="*{start}" placeholder="Choose...">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('start')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('start')}" th:text="${err}">err</li>
+                        </ul>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#start').datetimepicker({
+                                format: 'dd-mm-yyyy',
+                                minView: "month"
+                            });
+                        });
+                    </script>
+                </div>
+
+                <div class="form-group row">
                     <label for="end" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.end}">End</label><br>
                     <input id="end" type="text" class="form-control col-sm-3" th:classappend="${#fields.hasErrors('end')} ? 'is-invalid' :''" readonly th:field="*{end}" placeholder="Choose...">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('end')}">
@@ -157,41 +193,6 @@
 <!--                                </div>-->
 <!--                            </div>-->
 <!--                        </div>-->
-<!--                        <div class="form-group row">-->
-<!--                            <label for="start" class="col-sm-5 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.start}">Start</label><br>-->
-<!--                            <input id="start" type="text" class="form-control col-sm-6" th:classappend="${#fields.hasErrors('start')} ? 'is-invalid' :''" readonly th:field="*{start}" placeholder="Choose...">-->
-<!--                            <div class="invalid-feedback" th:if="${#fields.hasErrors('start')}">-->
-<!--                                <ul>-->
-<!--                                    <li th:each="err : ${#fields.errors('start')}" th:text="${err}">err</li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-<!--                            <script type="text/javascript">-->
-<!--                                $(function () {-->
-<!--                                    $('#start').datetimepicker({-->
-<!--                                        format: 'dd-mm-yyyy',-->
-<!--                                        minView: "month"-->
-<!--                                    });-->
-<!--                                });-->
-<!--                            </script>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    <div class="col-md-4"><br>-->
-<!--                        <label for="dateOfPrescription" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</label><br>-->
-<!--                        <input id="dateOfPrescription" type="text" class="form-control" th:classappend="${#fields.hasErrors('dateOfPrescription')} ? 'is-invalid' :''" readonly th:field="*{dateOfPrescription}" placeholder="Choose...">-->
-<!--                        <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfPrescription')}">-->
-<!--                            <ul>-->
-<!--                                <li th:each="err : ${#fields.errors('dateOfPrescription')}" th:text="${err}">err</li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                        <script type="text/javascript">-->
-<!--                            $(function () {-->
-<!--                                $('#dateOfPrescription').datetimepicker({-->
-<!--                                    format: 'dd-mm-yyyy',-->
-<!--                                    minView: "month"-->
-<!--                                });-->
-<!--                            });-->
-<!--                        </script>-->
 <!--                    </div>-->
 <!--                </div>-->
 
