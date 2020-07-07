@@ -1,9 +1,9 @@
-package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
+package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationInfoCommand;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationService;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.MedicationCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.MedicationInfoCommand;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

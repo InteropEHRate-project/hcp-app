@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -1,10 +1,10 @@
-package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
+package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
-import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandMedicationSummaryStatement;
+import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandMedicationSummaryStatement;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.CurrentMedicationsCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.CurrentMedicationsStatementCommand;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.CurrentMedicationsStatementService;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.CurrentMedicationsCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.CurrentMedicationsStatementCommand;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.CurrentMedicationsStatementService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

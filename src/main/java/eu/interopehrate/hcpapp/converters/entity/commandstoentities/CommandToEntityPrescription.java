@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.converters.entity.commandstoentities;
 
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

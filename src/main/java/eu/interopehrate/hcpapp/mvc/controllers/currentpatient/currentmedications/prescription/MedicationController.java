@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedication
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

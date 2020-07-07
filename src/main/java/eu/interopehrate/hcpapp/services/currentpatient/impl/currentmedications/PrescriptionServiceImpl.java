@@ -1,18 +1,18 @@
-package eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary;
+package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
-import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
-import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescriptionTranslate;
+import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
+import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescriptionTranslate;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package eu.interopehrate.hcpapp.converters.fhir.medicationsummary;
+package eu.interopehrate.hcpapp.converters.fhir.currentmedications;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.CurrentMedicationsStatementCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.CurrentMedicationsStatementCommand;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.MedicationStatement;

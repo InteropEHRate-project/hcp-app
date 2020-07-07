@@ -1,7 +1,7 @@
-package eu.interopehrate.hcpapp.services.currentpatient.medicationsummary;
+package eu.interopehrate.hcpapp.services.currentpatient.currentmedications;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.MedicationRequest;
 
 import java.io.IOException;

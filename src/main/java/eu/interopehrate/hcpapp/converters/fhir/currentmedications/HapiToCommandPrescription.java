@@ -1,6 +1,6 @@
-package eu.interopehrate.hcpapp.converters.fhir.medicationsummary;
+package eu.interopehrate.hcpapp.converters.fhir.currentmedications;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.MedicationRequest;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

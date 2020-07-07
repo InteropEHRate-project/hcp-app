@@ -1,14 +1,14 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary;
 
-import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescription;
-import eu.interopehrate.hcpapp.converters.fhir.medicationsummary.HapiToCommandPrescriptionTranslate;
+import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
+import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescriptionTranslate;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
-import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.PrescriptionServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications.PrescriptionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;

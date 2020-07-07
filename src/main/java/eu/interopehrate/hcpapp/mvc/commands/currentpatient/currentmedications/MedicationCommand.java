@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary;
+package eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications;
 
 import lombok.Builder;
 import lombok.Getter;

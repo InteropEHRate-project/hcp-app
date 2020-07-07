@@ -1,7 +1,7 @@
-package eu.interopehrate.hcpapp.services.currentpatient.medicationsummary;
+package eu.interopehrate.hcpapp.services.currentpatient.currentmedications;
 
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.MedicationCommand;
 
 import java.time.LocalDate;
 

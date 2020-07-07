@@ -4,12 +4,12 @@ import eu.interopehrate.hcpapp.converters.entity.EntityToCommandHealthCareProfes
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.MedicationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.MedicationController;
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.MedicationServiceImpl;
-import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
+import eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications.MedicationServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
