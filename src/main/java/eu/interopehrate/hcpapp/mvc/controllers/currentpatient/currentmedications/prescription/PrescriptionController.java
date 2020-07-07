@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription;
 
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/current-patient/medication-summary/prescription")
+@RequestMapping("/current-patient/current-medications/prescription")
 public class PrescriptionController {
     private final PrescriptionService prescriptionService;
 
@@ -25,7 +25,7 @@ public class PrescriptionController {
     public String viewSection(Model model) throws IOException {
         model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand());
         model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload());
-        return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
     }
 
     @GetMapping
@@ -42,14 +42,14 @@ public class PrescriptionController {
             return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE;
         }
         prescriptionService.insertPrescription(prescriptionInfoCommand);
-        return "redirect:/current-patient/medication-summary/prescription/view-section";
+        return "redirect:/current-patient/current-medications/prescription/view-section";
     }
 
     @DeleteMapping
     @RequestMapping("/delete")
     public String delete(@RequestParam("drugId") Long drugId) {
         this.prescriptionService.deletePrescription(drugId);
-        return "redirect:/current-patient/medication-summary/prescription/view-section";
+        return "redirect:/current-patient/current-medications/prescription/view-section";
     }
 
     @GetMapping
@@ -67,13 +67,13 @@ public class PrescriptionController {
             return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
         }
         this.prescriptionService.updatePrescription(prescriptionInfoCommand);
-        return "redirect:/current-patient/medication-summary/prescription/view-section";
+        return "redirect:/current-patient/current-medications/prescription/view-section";
     }
 
     @GetMapping
     @RequestMapping("/sendToSehr")
     public String sendToSehr() throws IOException {
         this.prescriptionService.callSendPrescription();
-        return "redirect:/current-patient/medication-summary/prescription/view-section";
+        return "redirect:/current-patient/current-medications/prescription/view-section";
     }
 }

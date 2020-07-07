@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class MedicationSummaryStatementCommand {
+public class CurrentMedicationsStatementCommand {
     @NotNull
     @NotEmpty
     private String medication;

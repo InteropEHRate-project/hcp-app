@@ -23,17 +23,17 @@
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link"
-               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medication-summary/prescription')} ? 'active' : ''"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/current-medications/prescription')} ? 'active' : ''"
                href="../prescription/view-section.html"
-               th:href="@{/current-patient/medication-summary/prescription/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription}">prescription</a>
+               th:href="@{/current-patient/current-medications/prescription/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</a>
         </li>
         <li class="nav-item">
             <a class="nav-link"
-               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medication-summary/statement')} ? 'active' : ''"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/current-medications/statement')} ? 'active' : ''"
                href="../statement/view-section.html"
-               th:href="@{/current-patient/medication-summary/statement/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.medication.summary.medication.statement}">medication
+               th:href="@{/current-patient/current-medications/statement/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.current.medications.medication.statement}">medication
                 statement</a>
         </li>
     </ul>

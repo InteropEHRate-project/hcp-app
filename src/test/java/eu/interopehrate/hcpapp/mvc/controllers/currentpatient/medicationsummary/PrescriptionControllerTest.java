@@ -6,7 +6,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription.PrescriptionController;
+import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.PrescriptionServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.PrescriptionService;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
@@ -55,7 +55,7 @@ public class PrescriptionControllerTest {
     @Test
     void viewSection() throws IOException {
         String returnedString = this.controller.viewSection(this.model);
-        assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION, returnedString);
+        assertEquals(TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION, returnedString);
         verify(this.model, times(1)).addAttribute(eq("prescriptionCommand"), any(PrescriptionCommand.class));
     }
 }

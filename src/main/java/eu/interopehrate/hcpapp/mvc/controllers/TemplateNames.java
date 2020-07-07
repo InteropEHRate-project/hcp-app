@@ -12,19 +12,19 @@ public interface TemplateNames {
     String ADMINISTRATION_AUDIT_INFORMATION_VIEW_DETAILS = "administration/audit-information/view-details";
 
     // Current Patient
-    String CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_VIEW_SECTION = "current-patient/medication-summary/statement/view-section";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_VIEW_SECTION = "current-patient/current-medications/statement/view-section";
     String CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION = "current-patient/pat-history/view-section";
     String CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION = "current-patient/current-diseases/view-section";
     String CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE = "current-patient/current-diseases/add-info";
     String CURRENT_PATIENT_DEMOGRAPHIC_INFORMATION_VIEW_SECTION = "current-patient/demographic-information/view-section";
     String CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION = "current-patient/document-history-consultation/view-section";
-    String CURRENT_PATIENT_MEDICATION_SUMMARY_STATEMENT_ADD_PAGE = "current-patient/medication-summary/statement/add-info";
-    String CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_VIEW_SECTION = "current-patient/medication-summary/prescription/view-section";
-    String CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW = "current-patient/medication-summary/prescription/medication-view";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_ADD_PAGE = "current-patient/current-medications/statement/add-info";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION = "current-patient/current-medications/prescription/view-section";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW = "current-patient/current-medications/prescription/medication-view";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION = "current-patient/allergies-intolerances/view-section";
     String CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE = "current-patient/allergies-intolerances/add-info";
-    String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/medication-summary/prescription/add-info";
-    String CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE = "current-patient/medication-summary/prescription/update-info";
+    String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/current-medications/prescription/add-info";
+    String CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE = "current-patient/current-medications/prescription/update-info";
     String CURRENT_PATIENT_IMMUNIZATIONS_VIEW_SECTION = "current-patient/immunization/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_PROCEDURE_VIEW_SECTION = "current-patient/history-procedure/procedure/view-section";
     String CURRENT_PATIENT_HISTORY_PROCEDURE_ORGANIZATION_VIEW_SECTION = "current-patient/history-procedure/organization/view-section";

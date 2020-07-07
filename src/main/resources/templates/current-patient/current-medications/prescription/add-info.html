@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription}">prescription</title>
+    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -31,7 +31,7 @@
             <div class="m-3"></div>
             <h2>Add Prescription information</h2>
             <div class="m-5"></div>
-            <form action="#" th:action="@{/current-patient/medication-summary/prescription/save-add}" th:object="${prescriptionInfoCommand}" method="post">
+            <form action="#" th:action="@{/current-patient/current-medications/prescription/save-add}" th:object="${prescriptionInfoCommand}" method="post">
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p>Please correct the errors below</p>
@@ -39,7 +39,7 @@
                 <div class="form-row">
 
                     <div class="col-md-6">
-                        <label for="drugName" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.name}">Drug name</label>
+                        <label for="drugName" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug name</label>
                         <input id="drugName" type="text" class="form-control" th:classappend="${#fields.hasErrors('drugName')} ? 'is-invalid' :''" th:field="*{drugName}"/>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('drugName')}">
                             <ul>
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="drugDosage" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.drug.dosage}">Drug Dosage</label>
+                        <label for="drugDosage" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</label>
                         <input id="drugDosage" type="text" class="form-control" th:classappend="${#fields.hasErrors('drugDosage')} ? 'is-invalid' :''" th:field="*{drugDosage}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('drugDosage')}">
                             <ul>
@@ -61,7 +61,7 @@
 
                 <div class="form-row">
                     <div class="col-md-2"><br>
-                        <label for="status" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.status}">Status</label><br>
+                        <label for="status" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</label><br>
                         <select class="form-control" id="status" th:field="*{status}">
                             <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Active">Active</option>
                             <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="On-Hold">On-Hold</option>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="col-md-7"><br>
-                        <label for="notes" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.notes}">Notes</label><br>
+                        <label for="notes" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</label><br>
                         <input id="notes" type="text" class="form-control" th:classappend="${#fields.hasErrors('notes')} ? 'is-invalid' :''" th:field="*{notes}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('notes')}">
                             <ul>
@@ -96,7 +96,7 @@
                 </div><br>
 
                 <div class="form-group row">
-                    <label for="dateOfPrescription" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.dateofprescription}">Date of Prescription</label><br>
+                    <label for="dateOfPrescription" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription}">Date of Prescription</label><br>
                     <input id="dateOfPrescription" type="text" class="form-control col-sm-3" th:classappend="${#fields.hasErrors('dateOfPrescription')} ? 'is-invalid' :''" readonly th:field="*{dateOfPrescription}" placeholder="Choose...">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfPrescription')}">
                         <ul>
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="start" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.start}">Start</label><br>
+                    <label for="start" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start}">Start</label><br>
                     <input id="start" type="text" class="form-control col-sm-3" th:classappend="${#fields.hasErrors('start')} ? 'is-invalid' :''" readonly th:field="*{start}" placeholder="Choose...">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('start')}">
                         <ul>
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="end" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.end}">End</label><br>
+                    <label for="end" class="col-sm-3 col-form-label" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end}">End</label><br>
                     <input id="end" type="text" class="form-control col-sm-3" th:classappend="${#fields.hasErrors('end')} ? 'is-invalid' :''" readonly th:field="*{end}" placeholder="Choose...">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('end')}">
                         <ul>

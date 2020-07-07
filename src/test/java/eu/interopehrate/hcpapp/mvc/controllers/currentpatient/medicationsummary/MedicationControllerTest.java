@@ -6,7 +6,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.medicationsummary.MedicationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription.MedicationController;
+import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.MedicationController;
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.medicationsummary.MedicationServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.medicationsummary.MedicationService;
@@ -59,7 +59,7 @@ public class MedicationControllerTest {
     @Test
     void viewSection() {
         String returnedString = this.controller.viewSection(this.id, this.drug, this.status, this.notes, this.timings, this.drugDosage, LocalDate.now(), this.start, this.end, this.model);
-        assertEquals(TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW, returnedString);
+        assertEquals(TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW, returnedString);
         verify(this.model, times(1)).addAttribute(eq("medicationCommand"), any(MedicationCommand.class));
         verify(this.model, times(1)).addAttribute(eq("doctor"), any(HealthCareProfessionalCommand.class));
     }

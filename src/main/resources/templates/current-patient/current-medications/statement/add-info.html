@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.medication.summary.medication.statement}">medication statement</title>
+    <title th:text="#{fragment.current.patient.navigation.left.current.medications.medication.statement}">medication statement</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -28,15 +28,15 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div th:replace="current-patient/medication-summary/fragments/navigation::navigation-top">navigation-top</div>
-            <p><h5 th:text="#{template.current.patient.medication.summary.statement.add}">add medication statement</h5></p>
-            <form  action="#" th:action="@{/current-patient/medication-summary/statement/save-add}" th:object="${medicationSummaryStatementCommand}" method="post">
+            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
+            <p><h5 th:text="#{template.current.patient.current.medication.statement.add}">add medication statement</h5></p>
+            <form action="#" th:action="@{/current-patient/current-medications/statement/save-add}" th:object="${currentMedicationsStatementCommand}" method="post">
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p th:text="#{template.errors.message}">please correct the errors below</p>
                 </div>
                 <div class="form-row">
                     <div class="col-md-4">
-                        <label for="medication" th:text="#{template.current.patient.medication.summary.statement.medication}">medication</label>
+                        <label for="medication" th:text="#{template.current.patient.current.medication.statement.medication}">medication</label>
                         <input id="medication" type="text" class="form-control" th:classappend="${#fields.hasErrors('medication')} ? 'is-invalid' :''" th:field="*{medication}"/>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('medication')}">
                             <ul>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="status" th:text="#{template.current.patient.medication.summary.statement.status}">status</label>
+                        <label for="status" th:text="#{template.current.patient.current.medication.statement.status}">status</label>
                         <select id="status" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" th:field="*{status}">
                             <option value="" selected th:text="#{input.select.option.no.value}">choose...</option>
                             <option value="Active">Active</option>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="effective" th:text="#{template.current.patient.medication.summary.statement.effective}">effective</label>
+                        <label for="effective" th:text="#{template.current.patient.current.medication.statement.effective}">effective</label>
                         <input id="effective" type="text" class="form-control" th:classappend="${#fields.hasErrors('effective')} ? 'is-invalid' :''" readonly th:field="*{effective}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('effective')}">
                             <ul>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="form-row">
                     <div class="col-md-12">
-                        <label for="patientInstructions" th:text="#{template.current.patient.medication.summary.statement.dosage.patient.instructions}">patient instructions</label>
+                        <label for="patientInstructions" th:text="#{template.current.patient.current.medication.statement.dosage.patient.instructions}">patient instructions</label>
                         <input id="patientInstructions" type="text" class="form-control" th:classappend="${#fields.hasErrors('patientInstructions')} ? 'is-invalid' :''" th:field="*{patientInstructions}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('patientInstructions')}">
                             <ul>

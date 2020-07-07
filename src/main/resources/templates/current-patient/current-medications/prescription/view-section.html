@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription}">prescription</title>
+    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -23,17 +23,17 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div th:replace="current-patient/medication-summary/fragments/navigation::navigation-top">navigation-top
+            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top
             </div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
                     <a href="#" class="btn disabled" style="background-color: lightgray"
                        th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/medication-summary/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/medication-summary/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
-            <p><h5 th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription}">prescription</h5></p>
+            <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
@@ -52,7 +52,7 @@
                     <td th:text="${pr.getStatus()}"></td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
                             id=${{pr.getId()}},
                             drug=${{pr.getDrugName()}},
                             status=${{pr.getStatus()}},
@@ -88,7 +88,7 @@
                     <td th:text="${prUpload.getStatus()}"></td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/idToMedication(
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
                             id=${{prUpload.getId()}},
                             drug=${{prUpload.getDrugName()}},
                             status=${{prUpload.getStatus()}},
@@ -99,8 +99,8 @@
                             start=${{prUpload.getStart()}},
                             end=${{prUpload.getEnd()}})}">Medication Details</a>
 
-                            <a href="#" th:href="@{/current-patient/medication-summary/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info">Edit</a>
-                            <a href="#" th:href="@{/current-patient/medication-summary/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Delete</a>
+                            <a href="#" th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info">Edit</a>
+                            <a href="#" th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -109,12 +109,12 @@
 
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/medication-summary/prescription/open-add-page}">Add</a>
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/open-add-page}">Add</a>
                 </div>
             </div>
             <div class="btn-toolbar float-left" role="toolbar" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/medication-summary/prescription/sendToSehr}">Send to S-EHR</a>
+                    <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/current-medications/prescription/sendToSehr}">Send to S-EHR</a>
                 </div>
             </div>
         </div>

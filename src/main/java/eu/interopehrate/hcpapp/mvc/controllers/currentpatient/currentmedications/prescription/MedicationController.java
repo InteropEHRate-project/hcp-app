@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary.prescription;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("/current-patient/medication-summary/prescription")
+@RequestMapping("/current-patient/current-medications/prescription")
 public class MedicationController {
     private final MedicationService medicationService;
     private final HealthCareProfessionalServiceImpl healthCareProfessionalService;
@@ -36,6 +36,6 @@ public class MedicationController {
                               Model model) {
         model.addAttribute("medicationCommand", medicationService.medicationCommand(id, drug, status, notes, timings, drugDosage, dateOfPrescription, start, end));
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
-        return TemplateNames.CURRENT_PATIENT_MEDICATION_SUMMARY_PRESCRIPTION_MEDICATION_VIEW;
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
 }
