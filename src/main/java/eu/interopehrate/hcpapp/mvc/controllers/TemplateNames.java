@@ -61,4 +61,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_PLAN_OF_CARE_VIEW_SECTION = "current-patient/plan-care/view-section";
     String CURRENT_PATIENT_FUNCTIONAL_STATUS_VIEW_SECTION = "current-patient/functional-status/view-section";
     String CURRENT_PATIENT_ADVANCE_DIRECTIVES_VIEW_SECTION = "current-patient/advance-directives/view-section";
+
+    //Emergency
+    String EMERGENCY_INDEX_TEMPLATE = "emergency/emergency-index";
 }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="#{template.index.title}">HCP Application</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header::navigation-top">navigation-top</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div th:if="${emergencyIndexCommand.connectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}" class="col-6">
+            <form action="#" th:action="@{/emergency/open-connection}" th:object="${emergencyIndexCommand}" method="post">
+                <div class="form-row justify-content-center m-3">
+                    <div class="col text-center">
+                        <label for="qrCode" th:text="#{template.emergencyIndex.qrCode}">QR Code</label>
+                        <textarea rows="5" class="form-control" id="qrCode" th:field="*{qrCode}" th:classappend="${#fields.hasErrors('qrCode')} ? 'is-invalid' :''"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('qrCode')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('qrCode')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <button type="submit" class="btn btn-primary" th:text="#{template.emergencyIndex.button.open.connection}">Open connection</button>
+                </div>
+            </form>
+        </div>
+        <div th:if="${emergencyIndexCommand.connectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}" class="m-3">
+            <div class="row justify-content-center">
+                <h3 class="mt-5">Connected</h3>
+            </div>
+            <div th:if="${emergencyIndexCommand.patientDataCommand.getIpsReceived()}">
+                <h5 style="color: green" class="row justify-content-center">Transmission completed!</h5>
+            </div>
+            <div class="row justify-content-center">
+                <a href="#" class="btn btn-primary" th:text="#{template.emergencyIndex.button.close.connection}" th:href="@{/emergency/close-connection}">Close connection</a>
+            </div>
+            <div class="row justify-content-center">
+                <p></p>
+            </div>
+            <div th:if="${emergencyIndexCommand.patientDataCommand.hasData()}">
+                <div class="row justify-content-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>General info about patient</h5>
+                        </div>
+                        <div class="card-body" th:if="${emergencyIndexCommand.patientDataCommand.getFirstName() != null}">
+                            <h5 class="card-title">First Name</h5>
+                            <p class="card-text" th:text="${emergencyIndexCommand.patientDataCommand.getFirstName()}">first name</p>
+                        </div>
+                        <div class="card-body" th:if="${emergencyIndexCommand.patientDataCommand.getLastName() != null}">
+                            <h5 class="card-title">Family Name</h5>
+                            <p class="card-text" th:text="${emergencyIndexCommand.patientDataCommand.getLastName()}">last name</p>
+                        </div>
+                        <div class="card-body" th:if="${emergencyIndexCommand.patientDataCommand.getGender() != null}">
+                            <h5 class="card-title">Gender</h5>
+                            <p class="card-text" th:text="${emergencyIndexCommand.patientDataCommand.getGender()}">gender</p>
+                        </div>
+                        <div class="card-body" th:if="${emergencyIndexCommand.patientDataCommand.getBirthDate() != null}">
+                            <h5 class="card-title">Birth date</h5>
+                            <!--                            Birth date output is processed. -->
+                            <p class="card-text" th:text="${emergencyIndexCommand.patientDataCommand.getBirthDate().toLocaleString().substring(0, emergencyIndexCommand.patientDataCommand.getBirthDate().toLocaleString().length() - 10)}">birth date</p>
+                        </div>
+                        <div class="card-body" th:if="${emergencyIndexCommand.patientDataCommand.getId() != null}">
+                            <h5 class="card-title">ID Patient</h5>
+                            <p class="card-text" th:text="${emergencyIndexCommand.patientDataCommand.getId()}">patient id</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{/js/reload-page-sse.js}"></script>
+</body>
+
+</html>
