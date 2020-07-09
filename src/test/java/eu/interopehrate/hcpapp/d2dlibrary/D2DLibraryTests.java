@@ -67,7 +67,7 @@ public class D2DLibraryTests {
             }
 
             @Override
-            public void onPrescriptionReceived(MedicationRequest medicationRequest) {
+            public void onPrescriptionReceived(Bundle medicationRequest) {
 
             }
 
@@ -156,7 +156,7 @@ public class D2DLibraryTests {
 
     @Test
     public void testSendPrescription() {
-        MedicationRequest prescription = new MedicationRequest();
+        Bundle prescription = new Bundle();
         String prescriptionJSON = FhirContext.forR4().newJsonParser().encodeResourceToString(prescription);
         this.write("medicationRequest#ACK#" + prescriptionJSON);
     }

@@ -9,7 +9,6 @@ import eu.interopehrate.td2de.api.D2DConnectionListeners;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.MedicationRequest;
 import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
@@ -179,7 +178,7 @@ public class CurrentD2DConnection implements DisposableBean {
         }
 
         @Override
-        public void onPrescriptionReceived(MedicationRequest medicationRequest) {
+        public void onPrescriptionReceived(Bundle medicationRequest) {
             try {
                 log.info("onPrescriptionReceived");
                 CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);

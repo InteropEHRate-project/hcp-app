@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.currentmedications;
 
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
-import org.hl7.fhir.r4.model.MedicationRequest;
+import org.hl7.fhir.r4.model.Bundle;
 
 import java.io.IOException;
 
@@ -22,5 +22,5 @@ public interface PrescriptionService {
 
     void callSendPrescription() throws IOException;
 
-    void sendPrescription(MedicationRequest medicationRequest) throws IOException;
+    void sendPrescription(Bundle medicationRequest) throws IOException;
 }

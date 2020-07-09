@@ -25,11 +25,15 @@ public class CurrentPatient {
     private Bundle patientSummaryBundle;
     private Bundle patientSummaryTranslatedBundle;
     private Certificate certificate;
-    private MedicationRequest prescription;
+    private Bundle prescription;
     private List<Observation> observation;
 
-    public MedicationRequest getPrescription() {
+    public Bundle getPrescription() {
         return prescription;
+    }
+
+    public void setPrescription(Bundle prescription) {
+        this.prescription = prescription;
     }
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService) {
@@ -61,7 +65,7 @@ public class CurrentPatient {
         }
     }
 
-    public void initPrescription(MedicationRequest prescription) {
+    public void initPrescription(Bundle prescription) {
         this.prescription = prescription;
     }
 
@@ -115,6 +119,14 @@ public class CurrentPatient {
             return Collections.emptyList();
         } else {
             return new BundleProcessor(patientSummaryBundle).medicationStatementList();
+        }
+    }
+
+    public List<MedicationRequest> prescriptionList() {
+        if (Objects.isNull(this.prescription)) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(this.prescription).prescriptionList();
         }
     }
 

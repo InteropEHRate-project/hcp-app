@@ -50,7 +50,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
 
         if (Objects.isNull(this.currentPatient.getPrescription())) {
-            File json = new ClassPathResource("prescriptionItalian.json").getFile();
+            File json = new ClassPathResource("PrescriptionBundle.json").getFile();
             FileInputStream file = new FileInputStream(json);
             String lineReadtest = readFromInputStream(file);
             IParser parser = FhirContext.forR4().newJsonParser();
@@ -90,14 +90,29 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .build();
             }
         } else {
-            if (Objects.nonNull(this.currentPatient.getPrescription())) {
-                PrescriptionInfoCommand prescriptionInfoCommand = this.hapiToCommandPrescription.convert(this.currentPatient.getPrescription());
-                prescriptionInfoCommandList.add(prescriptionInfoCommand);
+            if (this.currentPatient.getDisplayTranslatedVersion()) {
+                this.currentPatient.setPrescription(this.currentPatient.getTranslateService().translate(this.currentPatient.getPrescription(), Locale.ITALY, Locale.UK));
+                var prescriptions = this.currentPatient.prescriptionList()
+                        .stream()
+                        .map(hapiToCommandPrescription::convert)
+                        .collect(Collectors.toList());
+                prescriptionInfoCommandList.addAll(prescriptions);
+                return PrescriptionCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .prescriptionInfoCommand(prescriptionInfoCommandList)
+                        .build();
+            } else {
+                var prescriptions = this.currentPatient.prescriptionList()
+                        .stream()
+                        .map(hapiToCommandPrescription::convert)
+                        .collect(Collectors.toList());
+                prescriptionInfoCommandList.addAll(prescriptions);
+                return PrescriptionCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .prescriptionInfoCommand(prescriptionInfoCommandList)
+                        .build();
             }
-            return PrescriptionCommand.builder()
-                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .prescriptionInfoCommand(prescriptionInfoCommandList)
-                    .build();
+
         }
     }
 
@@ -177,14 +192,18 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() throws IOException {
-        for (PrescriptionEntity medEntity : this.prescriptionRepository.findAll()) {
-            MedicationRequest med = createPrescriptionFromEntity(medEntity);
-            this.sendPrescription(med);
+        Bundle prescription = new Bundle();
+        prescription.setEntry(new ArrayList<>());
+        for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+            prescription.getEntry().add(new Bundle.BundleEntryComponent());
+            MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+            prescription.getEntry().get(i).setResource(med);
         }
+        this.sendPrescription(prescription);
     }
 
     @Override
-    public void sendPrescription(MedicationRequest medicationRequest) throws IOException {
+    public void sendPrescription(Bundle medicationRequest) throws IOException {
         this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
     }
@@ -214,7 +233,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         return med;
     }
 
-    private static MedicationRequest createPrescriptionFromEntity (PrescriptionEntity prescriptionEntity) {
+    private static MedicationRequest createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
         MedicationRequest medicationRequest = new MedicationRequest();
 
         medicationRequest.setMedication(new CodeableConcept().setText(prescriptionEntity.getDrugName()));
