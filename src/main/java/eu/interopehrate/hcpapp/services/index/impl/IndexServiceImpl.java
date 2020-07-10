@@ -77,9 +77,12 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setNoConformantJSON(true);
         }
 
-        if (this.currentD2DConnection.getIndexPatientDataCommand().getIpsReceived() && this.currentD2DConnection.getIndexPatientDataCommand().getPrescriptionReceived()) {
+        if (this.currentD2DConnection.getIndexPatientDataCommand().getIpsReceived() &&
+                this.currentD2DConnection.getIndexPatientDataCommand().getPrescriptionReceived() &&
+                this.currentD2DConnection.getIndexPatientDataCommand().getLaboratoryResultsReceived()) {
             patientDataCommand.setIpsReceived(true);
             patientDataCommand.setPrescriptionReceived(true);
+            patientDataCommand.setLaboratoryResultsReceived(true);
         }
 
         patientDataCommand.setCertificate(currentD2DConnection.getIndexPatientDataCommand().getCertificate());

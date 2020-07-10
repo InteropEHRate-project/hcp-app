@@ -114,6 +114,7 @@ public class CurrentD2DConnection implements DisposableBean {
             this.indexPatientDataCommand.setNoConformantJSON(false);
             this.indexPatientDataCommand.setIpsReceived(false);
             this.indexPatientDataCommand.setPrescriptionReceived(false);
+            this.indexPatientDataCommand.setLaboratoryResultsReceived(false);
         }
     }
 
@@ -199,6 +200,7 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onLaboratoryResultsReceived(Bundle bundle) {
             log.info("onLaboratoryResultsReceived");
+            CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
         }
     }
 

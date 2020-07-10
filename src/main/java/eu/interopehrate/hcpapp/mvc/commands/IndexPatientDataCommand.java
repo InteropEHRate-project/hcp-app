@@ -20,9 +20,11 @@ public class IndexPatientDataCommand {
     private Boolean noConformantJSON = false;
     private Boolean ipsReceived = false;
     private Boolean prescriptionReceived = false;
+    private Boolean laboratoryResultsReceived = false;
     private String certificate;
 
     public Boolean hasData() {
-        return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) || Objects.nonNull(birthDate) || Objects.nonNull(consent)||Objects.nonNull(certificate);
+        return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) ||
+                Objects.nonNull(birthDate) || Objects.nonNull(consent)||Objects.nonNull(certificate);
     }
 }

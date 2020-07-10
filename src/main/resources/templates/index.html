@@ -54,7 +54,7 @@
             <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
                 <h5 style="color: red" class="row justify-content-center">Transmission error, please retry!</h5>
             </div>
-            <div th:if="${index.patientDataCommand.getIpsReceived() && index.patientDataCommand.getPrescriptionReceived()}">
+            <div th:if="${index.patientDataCommand.getIpsReceived() && index.patientDataCommand.getPrescriptionReceived() && index.patientDataCommand.getLaboratoryResultsReceived()}">
                 <h5 style="color: green" class="row justify-content-center">Transmission completed!</h5>
             </div>
             <div class="row justify-content-center">
