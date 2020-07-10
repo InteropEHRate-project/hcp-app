@@ -31,6 +31,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private final HapiToCommandPrescription hapiToCommandPrescription;
     private final HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate;
     private List<PrescriptionInfoCommand> prescriptionInfoCommands = new ArrayList<>();
+    private List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR = new ArrayList<>();
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
     @Autowired
     private PrescriptionRepository prescriptionRepository;
@@ -59,31 +60,33 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
             if (this.currentPatient.getDisplayTranslatedVersion()) {
                 prescription = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
-                List<MedicationRequest> prescriptionList1 = prescription.getEntry()
+                List<MedicationRequest> prescriptionList = prescription.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
                         .map(MedicationRequest.class::cast)
                         .collect(Collectors.toList());
 
-                for (MedicationRequest med : prescriptionList1) {
+                for (MedicationRequest med : prescriptionList) {
                     prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
                 }
+                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
                         .build();
             } else {
-                List<MedicationRequest> prescriptionList2 = prescription.getEntry()
+                List<MedicationRequest> prescriptionList = prescription.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
                         .map(MedicationRequest.class::cast)
                         .collect(Collectors.toList());
 
-                for (MedicationRequest med : prescriptionList2) {
+                for (MedicationRequest med : prescriptionList) {
                     prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
                 }
+                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -97,6 +100,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .map(hapiToCommandPrescription::convert)
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
+                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -107,6 +111,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .map(hapiToCommandPrescription::convert)
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
+                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -135,9 +140,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
-//        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per "
-//                + prescriptionInfoCommand.getPeriod() + " "
-//                + prescriptionInfoCommand.getPeriodUnit());
         prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
         prescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
@@ -192,12 +194,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() throws IOException {
+        this.prescriptionsUploadedToSEHR.clear();
         Bundle prescription = new Bundle();
         prescription.setEntry(new ArrayList<>());
         for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
             prescription.getEntry().add(new Bundle.BundleEntryComponent());
             MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
             prescription.getEntry().get(i).setResource(med);
+            this.prescriptionsUploadedToSEHR.add(this.hapiToCommandPrescription.convert(med));
         }
         this.sendPrescription(prescription);
     }
@@ -206,6 +210,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public void sendPrescription(Bundle medicationRequest) throws IOException {
         this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
+        this.prescriptionInfoCommands.clear();
+        this.prescriptionRepository.deleteAll();
     }
 
     private static List<PrescriptionInfoCommand> toSortMethodCommand(List<PrescriptionInfoCommand> med) {
@@ -244,24 +250,27 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         t.getRepeat().setPeriodUnit(Timing.UnitsOfTime.fromCode(prescriptionEntity.getPeriodUnit()));
         List<Dosage> d = new ArrayList<>();
         d.add(new Dosage().setTiming(t));
+        d.get(0).setDoseAndRate(new ArrayList<>());
+        d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setUnit(prescriptionEntity.getDrugDosage());
 
         medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
         medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
-        if (Objects.nonNull(prescriptionEntity.getEnd())) {
-            Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
-        }
         medicationRequest.setDosageInstruction(d);
         medicationRequest.setStatus(MedicationRequest.MedicationRequestStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
 
         medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         medicationRequest.setId(prescriptionEntity.getId().toString());
 
-        List<Dosage> d2 = new ArrayList<>();
-        d2.add(new Dosage().setText(prescriptionEntity.getNotes()));
-        medicationRequest.setDosageInstruction(d2);
+        List<CodeableConcept> d2 = new ArrayList<>();
+        d2.add(new CodeableConcept().setText(prescriptionEntity.getNotes()));
+        medicationRequest.getDosageInstructionFirstRep().setAdditionalInstruction(d2);
+
+        if (Objects.nonNull(prescriptionEntity.getEnd())) {
+            Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
+        }
 
         return medicationRequest;
     }

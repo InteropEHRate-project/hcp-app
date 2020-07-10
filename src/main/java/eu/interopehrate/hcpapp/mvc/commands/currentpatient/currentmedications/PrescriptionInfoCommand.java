@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -20,9 +19,7 @@ public class PrescriptionInfoCommand {
     private Integer frequency;
     private Integer period = 1;
     private String periodUnit = "day";
-    @NotEmpty
-    @NotNull
-    private String timings = frequency + " times per day";
+    private String timings;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate start = LocalDate.now();
@@ -42,17 +39,4 @@ public class PrescriptionInfoCommand {
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfPrescription = LocalDate.now();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PrescriptionInfoCommand that = (PrescriptionInfoCommand) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
