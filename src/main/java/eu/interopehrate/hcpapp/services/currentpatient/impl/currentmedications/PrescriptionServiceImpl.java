@@ -82,6 +82,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                     prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
                 }
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -98,6 +99,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                     prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
                 }
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -111,6 +113,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -122,6 +125,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -204,7 +208,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() throws IOException {
-        this.prescriptionsUploadedToSEHR.clear();
         Bundle prescription = new Bundle();
         prescription.setEntry(new ArrayList<>());
         for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
