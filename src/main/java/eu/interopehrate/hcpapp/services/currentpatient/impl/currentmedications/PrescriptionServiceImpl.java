@@ -71,16 +71,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         if (Objects.isNull(this.currentPatient.getPrescription())) {
             log.info("On plain JSON Prescription");
             if (this.currentPatient.getDisplayTranslatedVersion()) {
-                List<MedicationRequest> prescriptionList = this.prescriptionTranslatedFromJSON.getEntry()
+                var prescriptionList = this.prescriptionTranslatedFromJSON.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
                         .map(MedicationRequest.class::cast)
+                        .map(this.hapiToCommandPrescriptionTranslate::convert)
                         .collect(Collectors.toList());
-
-                for (MedicationRequest med : prescriptionList) {
-                    prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
-                }
+                prescriptionInfoCommandList.addAll(prescriptionList);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
                 toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
@@ -88,16 +86,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
                         .build();
             } else {
-                List<MedicationRequest> prescriptionList = this.prescriptionFromJSON.getEntry()
+                var prescriptionList = this.prescriptionFromJSON.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
                         .map(MedicationRequest.class::cast)
+                        .map(this.hapiToCommandPrescription::convert)
                         .collect(Collectors.toList());
-
-                for (MedicationRequest med : prescriptionList) {
-                    prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
-                }
+                prescriptionInfoCommandList.addAll(prescriptionList);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
                 toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
@@ -229,22 +225,22 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static List<PrescriptionInfoCommand> toSortMethodCommand(List<PrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
-            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("On-Hold")) {
+            if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
                 return -1;
             }
             if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
                 return -1;
             }
-            if (o1.getStatus().equalsIgnoreCase("On-Hold") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Stopped")) {
                 return -1;
             }
-            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("On-Hold")) {
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
                 return 1;
             }
             if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
                 return 1;
             }
-            if (o1.getStatus().equalsIgnoreCase("On-Hold") && o2.getStatus().equalsIgnoreCase("Active")) {
+            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Active")) {
                 return 1;
             }
             return 0;
