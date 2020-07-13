@@ -44,7 +44,7 @@ public class PrescriptionControllerTest {
     private ConceptTranslateService conceptTranslateService;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
         PrescriptionService service = new PrescriptionServiceImpl
                 (new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())),

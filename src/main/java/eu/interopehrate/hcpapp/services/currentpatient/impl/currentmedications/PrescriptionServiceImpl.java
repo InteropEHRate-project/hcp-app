@@ -38,29 +38,40 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
+    private Bundle prescriptionFromJSON;
+    private Bundle prescriptionTranslatedFromJSON;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.hapiToCommandPrescriptionTranslate = hapiToCommandPrescriptionTranslate;
         this.currentD2DConnection = currentD2DConnection;
+        this.initPrescription();
+    }
+
+    private void initPrescription() throws IOException {
+        File json = new ClassPathResource("PrescriptionBundle.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
+        try {
+            this.prescriptionFromJSON = prescription;
+            this.prescriptionTranslatedFromJSON = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            log.error("Error calling translation service.", e);
+            this.prescriptionTranslatedFromJSON = prescription;
+        }
     }
 
     @Override
-    public PrescriptionCommand prescriptionCommand() throws IOException {
+    public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
 
         if (Objects.isNull(this.currentPatient.getPrescription())) {
-            File json = new ClassPathResource("PrescriptionBundle.json").getFile();
-            FileInputStream file = new FileInputStream(json);
-            String lineReadtest = readFromInputStream(file);
-            IParser parser = FhirContext.forR4().newJsonParser();
-            Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
             log.info("On plain JSON Prescription");
-
             if (this.currentPatient.getDisplayTranslatedVersion()) {
-                prescription = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
-                List<MedicationRequest> prescriptionList = prescription.getEntry()
+                List<MedicationRequest> prescriptionList = this.prescriptionTranslatedFromJSON.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
@@ -76,7 +87,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
                         .build();
             } else {
-                List<MedicationRequest> prescriptionList = prescription.getEntry()
+                List<MedicationRequest> prescriptionList = this.prescriptionFromJSON.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
@@ -94,8 +105,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             }
         } else {
             if (this.currentPatient.getDisplayTranslatedVersion()) {
-                this.currentPatient.setPrescription(this.currentPatient.getTranslateService().translate(this.currentPatient.getPrescription(), Locale.ITALY, Locale.UK));
-                var prescriptions = this.currentPatient.prescriptionList()
+                var prescriptions = this.currentPatient.prescriptionListTranslated()
                         .stream()
                         .map(hapiToCommandPrescription::convert)
                         .collect(Collectors.toList());
