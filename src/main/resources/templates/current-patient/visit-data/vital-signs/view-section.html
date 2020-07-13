@@ -16,7 +16,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
-
+<style>
+    .scrollBar {
+        width: auto;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+</style>
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -26,8 +32,41 @@
         </div>
         <div class="col-9">
             <p><h3 th:text="#{fragment.current.patient.navigation.left.vital-signs}">vital signs</h3></p>
+
+
+
+            <div class="scrollBar">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <th>Analysis</th>
+                    <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
+                        <th th:text="${{sample}}"></th>
+                    </th:block>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="an : ${vitalSigns.vitalSignsAnalysesWithoutDuplicates()}">
+                        <div th:with="map=${vitalSigns.valueReturn()}">
+                            <td th:text="${{an}}"></td>
+                            <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
+                                    <td th:if="${map.get(an,sample) == null}">-</td>
+                                    <div th:if="${map.get(an,sample) != null}">
+                                        <td th:text="${{map.get(an,sample)}}"></td>
+                                    </div>
+
+                            </th:block>
+                        </div>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 </body>
 </html>
