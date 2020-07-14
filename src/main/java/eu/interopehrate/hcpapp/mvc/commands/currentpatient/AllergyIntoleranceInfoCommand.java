@@ -12,20 +12,15 @@ public class AllergyIntoleranceInfoCommand {
     private String identifier;
     @NotEmpty
     @NotNull
-    private String name;
+    private String category;
     @NotEmpty
     @NotNull
-    private String clinicalStatus;
+    private String name;
     @NotEmpty
     @NotNull
     private String type;
     @NotEmpty
     @NotNull
-    private String category;
-    @NotEmpty
-    @NotNull
-    private String criticality;
-    @NotEmpty
-    @NotNull
-    private String code;
+    private String symptoms;
+    private String comments;
 }
