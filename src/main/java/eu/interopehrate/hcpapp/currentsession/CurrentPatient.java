@@ -26,6 +26,7 @@ public class CurrentPatient {
     private Bundle patientSummaryTranslatedBundle;
     private Certificate certificate;
     private Bundle prescription;
+    private Bundle prescriptionTranslated;
     private List<Observation> observation;
 
     public Bundle getPrescription() {
@@ -66,7 +67,13 @@ public class CurrentPatient {
     }
 
     public void initPrescription(Bundle prescription) {
-        this.prescription = prescription;
+        try {
+            this.prescription = prescription;
+            this.prescriptionTranslated = this.translateService.translate(prescription, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.prescriptionTranslated = prescription;
+        }
     }
 
     public void initLaboratoryResults(List<Observation> obs) {
@@ -127,6 +134,14 @@ public class CurrentPatient {
             return Collections.emptyList();
         } else {
             return new BundleProcessor(this.prescription).prescriptionList();
+        }
+    }
+
+    public List<MedicationRequest> prescriptionListTranslated() {
+        if (Objects.isNull(this.prescriptionTranslated)) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(this.prescriptionTranslated).prescriptionList();
         }
     }
 

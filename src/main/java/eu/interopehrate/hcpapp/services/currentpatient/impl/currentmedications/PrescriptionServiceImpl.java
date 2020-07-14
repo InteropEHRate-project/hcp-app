@@ -38,55 +38,64 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
+    private Bundle prescriptionFromJSON;
+    private Bundle prescriptionTranslatedFromJSON;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.hapiToCommandPrescriptionTranslate = hapiToCommandPrescriptionTranslate;
         this.currentD2DConnection = currentD2DConnection;
+        this.initPrescription();
+    }
+
+    private void initPrescription() throws IOException {
+        File json = new ClassPathResource("PrescriptionBundle.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
+        try {
+            this.prescriptionFromJSON = prescription;
+            this.prescriptionTranslatedFromJSON = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            log.error("Error calling translation service.", e);
+            this.prescriptionTranslatedFromJSON = prescription;
+        }
     }
 
     @Override
-    public PrescriptionCommand prescriptionCommand() throws IOException {
+    public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
 
         if (Objects.isNull(this.currentPatient.getPrescription())) {
-            File json = new ClassPathResource("PrescriptionBundle.json").getFile();
-            FileInputStream file = new FileInputStream(json);
-            String lineReadtest = readFromInputStream(file);
-            IParser parser = FhirContext.forR4().newJsonParser();
-            Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
             log.info("On plain JSON Prescription");
-
             if (this.currentPatient.getDisplayTranslatedVersion()) {
-                prescription = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
-                List<MedicationRequest> prescriptionList = prescription.getEntry()
+                var prescriptionList = this.prescriptionTranslatedFromJSON.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
                         .map(MedicationRequest.class::cast)
+                        .map(this.hapiToCommandPrescriptionTranslate::convert)
                         .collect(Collectors.toList());
-
-                for (MedicationRequest med : prescriptionList) {
-                    prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
-                }
+                prescriptionInfoCommandList.addAll(prescriptionList);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
                         .build();
             } else {
-                List<MedicationRequest> prescriptionList = prescription.getEntry()
+                var prescriptionList = this.prescriptionFromJSON.getEntry()
                         .stream()
                         .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                         .map(Bundle.BundleEntryComponent::getResource)
                         .map(MedicationRequest.class::cast)
+                        .map(this.hapiToCommandPrescription::convert)
                         .collect(Collectors.toList());
-
-                for (MedicationRequest med : prescriptionList) {
-                    prescriptionInfoCommandList.add(this.hapiToCommandPrescriptionTranslate.convert(med));
-                }
+                prescriptionInfoCommandList.addAll(prescriptionList);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -94,13 +103,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             }
         } else {
             if (this.currentPatient.getDisplayTranslatedVersion()) {
-                this.currentPatient.setPrescription(this.currentPatient.getTranslateService().translate(this.currentPatient.getPrescription(), Locale.ITALY, Locale.UK));
-                var prescriptions = this.currentPatient.prescriptionList()
+                var prescriptions = this.currentPatient.prescriptionListTranslated()
                         .stream()
-                        .map(hapiToCommandPrescription::convert)
+                        .map(this.hapiToCommandPrescriptionTranslate::convert)
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -112,6 +121,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+                toSortMethodCommand(prescriptionInfoCommandList);
                 return PrescriptionCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
@@ -194,7 +204,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() throws IOException {
-        this.prescriptionsUploadedToSEHR.clear();
         Bundle prescription = new Bundle();
         prescription.setEntry(new ArrayList<>());
         for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
@@ -216,22 +225,22 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static List<PrescriptionInfoCommand> toSortMethodCommand(List<PrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
-            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("On-Hold")) {
+            if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
                 return -1;
             }
             if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
                 return -1;
             }
-            if (o1.getStatus().equalsIgnoreCase("On-Hold") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Stopped")) {
                 return -1;
             }
-            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("On-Hold")) {
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
                 return 1;
             }
             if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
                 return 1;
             }
-            if (o1.getStatus().equalsIgnoreCase("On-Hold") && o2.getStatus().equalsIgnoreCase("Active")) {
+            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Active")) {
                 return 1;
             }
             return 0;
