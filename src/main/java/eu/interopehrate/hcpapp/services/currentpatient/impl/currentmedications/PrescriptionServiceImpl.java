@@ -105,7 +105,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             if (this.currentPatient.getDisplayTranslatedVersion()) {
                 var prescriptions = this.currentPatient.prescriptionListTranslated()
                         .stream()
-                        .map(hapiToCommandPrescription::convert)
+                        .map(this.hapiToCommandPrescriptionTranslate::convert)
                         .collect(Collectors.toList());
                 prescriptionInfoCommandList.addAll(prescriptions);
                 prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
