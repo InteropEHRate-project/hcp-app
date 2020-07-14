@@ -22,44 +22,31 @@ public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntoler
     @Override
     public AllergyIntoleranceInfoCommand convert(AllergyIntolerance allergyIntolerance) {
         AllergyIntoleranceInfoCommand command = new AllergyIntoleranceInfoCommand();
-        if (Objects.nonNull(allergyIntolerance.getCriticality())) {
-            command.setCriticality(allergyIntolerance.getCriticality().getDisplay());
-        }
-        if (Objects.nonNull(allergyIntolerance.getType())) {
-            command.setType(allergyIntolerance.getType().getDisplay());
-        }
-        if (Objects.nonNull(allergyIntolerance.getCategory())) {
-            command.setCategory(allergyIntolerance.getCategory()
-                    .stream()
-                    .map(aice -> aice.getValue().getDisplay())
-                    .collect(Collectors.joining("; "))
-            );
-        }
-        if (Objects.nonNull(allergyIntolerance.getIdentifier())) {
-            command.setIdentifier(allergyIntolerance.getIdentifier()
-                    .stream()
-                    .map(Identifier::getValue)
-                    .collect(Collectors.joining("; "))
-            );
-        }
+
         if (Objects.nonNull(allergyIntolerance.getCode())) {
-            for(Coding coding : allergyIntolerance.getCode().getCoding()) {
+            for (Coding coding : allergyIntolerance.getCode().getCoding()) {
                 command.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
             }
 
-            command.setCode(allergyIntolerance.getCode()
-                    .getCoding()
-                    .stream()
-                    .map(Coding::getCode)
-                    .collect(Collectors.joining("; "))
-            );
-        }
-        if (Objects.nonNull(allergyIntolerance.getClinicalStatus())) {
-            command.setClinicalStatus(allergyIntolerance.getClinicalStatus()
-                    .getCoding()
-                    .stream()
-                    .map(Coding::getCode)
-                    .collect(Collectors.joining("; ")));
+            if (Objects.nonNull(allergyIntolerance.getCategory())) {
+                command.setCategory(allergyIntolerance.getCategory()
+                        .stream()
+                        .map(aice -> aice.getValue().getDisplay())
+                        .collect(Collectors.joining("; "))
+                );
+            }
+
+            if (Objects.nonNull(allergyIntolerance.getType())) {
+                command.setType(allergyIntolerance.getType().getDisplay());
+            }
+
+            if (Objects.nonNull(allergyIntolerance.getIdentifier())) {
+                command.setIdentifier(allergyIntolerance.getIdentifier()
+                        .stream()
+                        .map(Identifier::getValue)
+                        .collect(Collectors.joining("; "))
+                );
+            }
         }
         return command;
     }
