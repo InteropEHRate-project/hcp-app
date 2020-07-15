@@ -1,7 +1,5 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescriptionTranslate;
@@ -16,12 +14,17 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Prescr
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -38,70 +41,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
-    private Bundle prescriptionFromJSON;
-    private Bundle prescriptionTranslatedFromJSON;
 
     public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.hapiToCommandPrescriptionTranslate = hapiToCommandPrescriptionTranslate;
         this.currentD2DConnection = currentD2DConnection;
-        this.initPrescription();
-    }
-
-    private void initPrescription() throws IOException {
-        File json = new ClassPathResource("PrescriptionBundle.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        Bundle prescription = parser.parseResource(Bundle.class, lineReadtest);
-        try {
-            this.prescriptionFromJSON = prescription;
-            this.prescriptionTranslatedFromJSON = this.currentPatient.getTranslateService().translate(prescription, Locale.ITALY, Locale.UK);
-        } catch (Exception e) {
-            log.error("Error calling translation service.", e);
-            this.prescriptionTranslatedFromJSON = prescription;
-        }
     }
 
     @Override
     public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
 
-        if (Objects.isNull(this.currentPatient.getPrescription())) {
-            log.info("On plain JSON Prescription");
-            if (this.currentPatient.getDisplayTranslatedVersion()) {
-                var prescriptionList = this.prescriptionTranslatedFromJSON.getEntry()
-                        .stream()
-                        .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
-                        .map(Bundle.BundleEntryComponent::getResource)
-                        .map(MedicationRequest.class::cast)
-                        .map(this.hapiToCommandPrescriptionTranslate::convert)
-                        .collect(Collectors.toList());
-                prescriptionInfoCommandList.addAll(prescriptionList);
-                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
-                toSortMethodCommand(prescriptionInfoCommandList);
-                return PrescriptionCommand.builder()
-                        .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                        .prescriptionInfoCommand(prescriptionInfoCommandList)
-                        .build();
-            } else {
-                var prescriptionList = this.prescriptionFromJSON.getEntry()
-                        .stream()
-                        .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
-                        .map(Bundle.BundleEntryComponent::getResource)
-                        .map(MedicationRequest.class::cast)
-                        .map(this.hapiToCommandPrescription::convert)
-                        .collect(Collectors.toList());
-                prescriptionInfoCommandList.addAll(prescriptionList);
-                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
-                toSortMethodCommand(prescriptionInfoCommandList);
-                return PrescriptionCommand.builder()
-                        .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                        .prescriptionInfoCommand(prescriptionInfoCommandList)
-                        .build();
-            }
-        } else {
+        if (Objects.nonNull(this.currentPatient.getPrescription())) {
             if (this.currentPatient.getDisplayTranslatedVersion()) {
                 var prescriptions = this.currentPatient.prescriptionListTranslated()
                         .stream()
@@ -127,8 +79,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                         .prescriptionInfoCommand(prescriptionInfoCommandList)
                         .build();
             }
-
         }
+        return PrescriptionCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .prescriptionInfoCommand(prescriptionInfoCommandList)
+                .build();
     }
 
     @Override
