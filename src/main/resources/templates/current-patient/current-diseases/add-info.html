@@ -30,98 +30,107 @@
         <div class="col-9">
             <p><h2 th:text="#{template.current.patient.currentDisease.list.statement.add}">add current disease</h2></p>
             <div class="m-5"></div>
-            <form  action="#" th:action="@{/current-patient/currentDiseases/save-add}" th:object="${currentDiseaseInfoCommand}" method="post">
+            <form  action="#" th:action="@{/current-patient/current-diseases/save-add}" th:object="${currentDiseaseInfoCommand}" method="post">
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p th:text="#{template.errors.message}">please correct the errors below</p>
                 </div>
                 <div class="form-row">
+<!--                    <div class="col-md-4">-->
+<!--                        <label for="code" th:text="#{template.current.patient.currentDisease.list.statement.code}">code</label>-->
+<!--                        <input id="code" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{code}"/>-->
+<!--                        <div class="invalid-feedback" th:if="${#fields.hasErrors('code')}">-->
+<!--                            <ul>-->
+<!--                                <li th:each="err : ${#fields.errors('code')}" th:text="${err}">err</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="col-md-4">
-                        <label for="code" th:text="#{template.current.patient.currentDisease.list.statement.code}">code</label>
-                        <input id="code" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{code}"/>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('code')}">
+                        <label for="disease" th:text="#{template.current.patient.currentDisease.list.statement.disease}">disease</label>
+                        <input id="disease" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{disease}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('disease')}">
                             <ul>
-                                <li th:each="err : ${#fields.errors('code')}" th:text="${err}">err</li>
+                                <li th:each="err : ${#fields.errors('disease')}" th:text="${err}">err</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <label for="name" th:text="#{template.current.patient.currentDisease.list.statement.disease}">name</label>
-                        <input id="name" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{getDisease}"/>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                        <label for="comment" th:text="#{template.current.patient.currentDisease.list.statement.comment}">comment</label>
+                        <input id="comment" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{comment}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('comment')}">
                             <ul>
-                                <li th:each="err : ${#fields.errors('name')}" th:text="${err}">err</li>
+                                <li th:each="err : ${#fields.errors('comment')}" th:text="${err}">err</li>
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div><br>
+<!--                <div class="form-row">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <label for="categoryCode" th:text="#{template.current.patient.currentDisease.list.statement.category.code}">categoryCode</label>-->
+<!--                        <input id="categoryCode" type="text" class="form-control" th:classappend="${#fields.hasErrors('categoryCode')} ? 'is-invalid' :''" th:field="*{categoryCode}"/>-->
+<!--                        <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryCode')}">-->
+<!--                            <ul>-->
+<!--                                <li th:each="err : ${#fields.errors('categoryCode')}" th:text="${err}">err</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-8">-->
+<!--                        <label for="categoryName" th:text="#{template.current.patient.currentDisease.list.statement.category.name}">categoryName</label>-->
+<!--                        <input id="categoryName" type="text" class="form-control" th:classappend="${#fields.hasErrors('categoryName')} ? 'is-invalid' :''" th:field="*{categoryName}"/>-->
+<!--                        <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryName')}">-->
+<!--                            <ul>-->
+<!--                                <li th:each="err : ${#fields.errors('categoryName')}" th:text="${err}">err</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="form-row">
                     <div class="col-md-4">
-                        <label for="categoryCode" th:text="#{template.current.patient.currentDisease.list.statement.category.code}">categoryCode</label>
-                        <input id="categoryCode" type="text" class="form-control" th:classappend="${#fields.hasErrors('categoryCode')} ? 'is-invalid' :''" th:field="*{categoryCode}"/>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryCode')}">
+                        <label for="dateOfDiagnosis" th:text="#{template.current.patient.currentDisease.list.statement.date.of.diagnosis}">dateOfDiagnosis</label>
+                        <input id="dateOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('dateOfDiagnosis')} ? 'is-invalid' :''" readonly th:field="*{dateOfDiagnosis}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfDiagnosis')}">
                             <ul>
-                                <li th:each="err : ${#fields.errors('categoryCode')}" th:text="${err}">err</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <label for="categoryName" th:text="#{template.current.patient.currentDisease.list.statement.category.name}">categoryName</label>
-                        <input id="categoryName" type="text" class="form-control" th:classappend="${#fields.hasErrors('categoryName')} ? 'is-invalid' :''" th:field="*{categoryName}"/>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryName')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('categoryName')}" th:text="${err}">err</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="onSet" th:text="#{template.current.patient.currentDisease.list.statement.date.of.diagnosis}">onset</label>
-                        <input id="onSet" type="text" class="form-control" th:classappend="${#fields.hasErrors('onSet')} ? 'is-invalid' :''" readonly th:field="*{getDateOfDiagnosis}">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('onSet')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('onSet')}" th:text="${err}">err</li>
+                                <li th:each="err : ${#fields.errors('dateOfDiagnosis')}" th:text="${err}">err</li>
                             </ul>
                         </div>
                         <script type="text/javascript">
                             $(function () {
-                                $('#onSet').datetimepicker({
+                                $('#dateOfDiagnosis').datetimepicker({
                                     format: 'dd-mm-yyyy',
                                     minView: "month"
                                 });
                             });
                         </script>
                     </div>
-                    <div class="col-md-4">
-                        <label for="clinicalStatus" th:text="#{template.current.patient.currentDisease.list.statement.clinical.status}">clinicalStatus</label>
-                        <select id="clinicalStatus" class="form-control" th:classappend="${#fields.hasErrors('clinicalStatus')} ? 'is-invalid' :''" th:field="*{clinicalStatus}">
-                            <option value="" selected th:text="#{input.select.option.no.value}">choose...</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('clinicalStatus')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('clinicalStatus')}" th:text="${err}">err</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="verificationStatus" th:text="#{template.current.patient.currentDisease.list.statement.verification.status}">verificationStatus</label>
-                        <select id="verificationStatus" class="form-control" th:classappend="${#fields.hasErrors('verificationStatus')} ? 'is-invalid' :''" th:field="*{verificationStatus}">
-                            <option value="" selected th:text="#{input.select.option.no.value}">choose...</option>
-                            <option value="Unconfirmed">Unconfirmed</option>
-                            <option value="Provisional">Provisional</option>
-                            <option value="Differential">Differential</option>
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Refuted">Refuted</option>
-                            <option value="Entered in Error	">Entered in Error</option>
-                        </select>
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('verificationStatus')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('verificationStatus')}" th:text="${err}">err</li>
-                            </ul>
-                        </div>
-                    </div>
+<!--                    <div class="col-md-4">-->
+<!--                        <label for="clinicalStatus" th:text="#{template.current.patient.currentDisease.list.statement.clinical.status}">clinicalStatus</label>-->
+<!--                        <select id="clinicalStatus" class="form-control" th:classappend="${#fields.hasErrors('clinicalStatus')} ? 'is-invalid' :''" th:field="*{clinicalStatus}">-->
+<!--                            <option value="" selected th:text="#{input.select.option.no.value}">choose...</option>-->
+<!--                            <option value="Active">Active</option>-->
+<!--                            <option value="Inactive">Inactive</option>-->
+<!--                        </select>-->
+<!--                        <div class="invalid-feedback" th:if="${#fields.hasErrors('clinicalStatus')}">-->
+<!--                            <ul>-->
+<!--                                <li th:each="err : ${#fields.errors('clinicalStatus')}" th:text="${err}">err</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <label for="verificationStatus" th:text="#{template.current.patient.currentDisease.list.statement.verification.status}">verificationStatus</label>-->
+<!--                        <select id="verificationStatus" class="form-control" th:classappend="${#fields.hasErrors('verificationStatus')} ? 'is-invalid' :''" th:field="*{verificationStatus}">-->
+<!--                            <option value="" selected th:text="#{input.select.option.no.value}">choose...</option>-->
+<!--                            <option value="Unconfirmed">Unconfirmed</option>-->
+<!--                            <option value="Provisional">Provisional</option>-->
+<!--                            <option value="Differential">Differential</option>-->
+<!--                            <option value="Confirmed">Confirmed</option>-->
+<!--                            <option value="Refuted">Refuted</option>-->
+<!--                            <option value="Entered in Error	">Entered in Error</option>-->
+<!--                        </select>-->
+<!--                        <div class="invalid-feedback" th:if="${#fields.hasErrors('verificationStatus')}">-->
+<!--                            <ul>-->
+<!--                                <li th:each="err : ${#fields.errors('verificationStatus')}" th:text="${err}">err</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="text-right"><br>
                     <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">save</button>
