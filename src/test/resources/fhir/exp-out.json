@@ -1,0 +1,344 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-test-1",
+  "type": "collection",
+  "total": 13,
+  "entry": [{
+    "resource": {
+      "resourceType": "Patient",
+      "id": "IEHR001",
+      "identifier": [{
+        "value": "http://www.ftgm.it/patient/IEHR001"
+      }
+      ],
+      "name": [{
+        "family": "Masked",
+        "given": ["IEHR001"]
+      }
+      ],
+      "telecom": [{
+        "value": "tel:+39000000000"
+      }
+      ],
+      "gender": "male",
+      "birthDate": "1958-11-28T00:00:00.000Z",
+      "address": [{
+        "text": "Via Matteotti 16, 56011, Pisa, IT"
+      }
+      ]
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c120",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c120"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "2069-3",
+          "display": "Chloride [Moles/volume] in Blood"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 109.1,
+        "unit": "Milliequivalent/liter"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c115",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c115"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "67151-1",
+          "display": "Troponin T.cardiac [Mass/volume] in Serum or Plasma by High sensitivity method"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 15.36,
+        "unit": "ng/L"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "0427613b-b582-4247-865e-a3443cef703f",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/0427613b-b582-4247-865e-a3443cef703f"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "8462-4",
+          "display": "Diastolic blood pressure"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 60,
+        "unit": "Millimetre of mercury"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c116",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c116"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "20977-5",
+          "display": "Urea [Mass/volume] in Blood"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 55.6,
+        "unit": "Milligram/decilitre"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c114",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c114"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "2345-7",
+          "display": "Glucose [Mass/volume] in Serum or Plasma"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 12345,
+        "unit": "Milligram/decilitre"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c118",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c118"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "77147-7",
+          "display": "Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 69,
+        "unit": "Milligram/decilitre"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c121",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c121"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "33762-6",
+          "display": "Natriuretic peptide.B prohormone N-Terminal [Mass/volume] in Serum or Plasma"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 290,
+        "unit": "ng/L"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c119",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c119"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "75940-7",
+          "display": "Potassium [Mass/volume] in Blood"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 3.76,
+        "unit": "Milliequivalent/liter"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "d6ea7449-0e74-4313-a969-db49a6468636",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/d6ea7449-0e74-4313-a969-db49a6468636"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "8480-6",
+          "display": "Systolic blood pressure"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 115,
+        "unit": "Millimetre of mercury"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2f8c412f-a58b-40c3-b56d-0b6305b5c117",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/2f8c412f-a58b-40c3-b56d-0b6305b5c117"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "3097-3",
+          "display": "Urea nitrogen/Creatinine [Mass Ratio] in Serum or Plasma"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 1.1,
+        "unit": "Milligram/decilitre"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "a3f2b13f-b37b-4df1-81d9-9d96b8f9b882",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/a3f2b13f-b37b-4df1-81d9-9d96b8f9b882"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "3141-9",
+          "display": "Body weight Measured"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 108,
+        "unit": "Kilogram"
+      }
+    }
+  }, {
+    "resource": {
+      "resourceType": "Observation",
+      "id": "eb709b32-bdc7-4e21-ab41-4b5d06fd8d03",
+      "identifier": [{
+        "value": "http://www.ftgm.it/iehr/eb709b32-bdc7-4e21-ab41-4b5d06fd8d03"
+      }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [{
+          "system": "http://loinc.org",
+          "code": "8302-2",
+          "display": "Body height"
+        }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/IEHR001"
+      },
+      "effectiveDateTime": "2017-11-17T08:45:00.000Z",
+      "valueQuantity": {
+        "value": 185,
+        "unit": "Centimeter"
+      }
+    }
+  }
+  ]
+}
