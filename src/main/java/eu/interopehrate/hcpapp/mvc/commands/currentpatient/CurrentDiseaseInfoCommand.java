@@ -16,10 +16,10 @@ public class CurrentDiseaseInfoCommand {
     private String code;
     @NotEmpty
     @NotNull
-    private String name;
+    private String disease;
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate onSet;
+    private LocalDate dateOfDiagnosis;
     @NotNull
     @NotEmpty
     private String categoryCode;
@@ -32,4 +32,7 @@ public class CurrentDiseaseInfoCommand {
     @NotNull
     @NotEmpty
     private String verificationStatus;
+    @NotNull
+    @NotEmpty
+    private String comment;
 }

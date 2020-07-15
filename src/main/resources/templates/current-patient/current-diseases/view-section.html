@@ -49,23 +49,17 @@
                 <thead class="thead-light">
                     <tr>
                         <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.name}">name</th>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.on.set}">set on</th>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.category.code}">category code</th>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.category.name}">category name</th>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.clinical.status}">clinical status</th>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.verification.status}">verification status</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.disease}">disease</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.date.of.diagnosis}">date of diagnosis</th>
+                        <th th:text="#{template.current.patient.currentDisease.list.statement.comment}">comment</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
-                        <td th:text="${currentDisease.code}">code</td>
-                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.name}">name</td>
-                        <td th:text="${{#temporals.format(currentDisease.onSet, 'dd-MM-yyyy')}}">on set</td>
-                        <td th:text="${currentDisease.categoryCode}">category code</td>
-                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.categoryName}">category name</td>
-                        <td th:text="${currentDisease.clinicalStatus}">clinical status</td>
-                        <td th:text="${currentDisease.verificationStatus}">verification status</td>
+                        <td th:text="${currentDisease.getCode()}">code</td>
+                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.getDisease}">disease</td>
+                        <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis, 'dd-MM-yyyy')}}">date of diagnosis</td>
+                        <td th:text="${currentDisease.getComment()}">comment</td>
                     </tr>
                 </tbody>
             </table>

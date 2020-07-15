@@ -45,8 +45,8 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <label for="name" th:text="#{template.current.patient.currentDisease.list.statement.name}">name</label>
-                        <input id="name" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{name}"/>
+                        <label for="name" th:text="#{template.current.patient.currentDisease.list.statement.disease}">name</label>
+                        <input id="name" type="text" class="form-control" th:classappend="${#fields.hasErrors('code')} ? 'is-invalid' :''" th:field="*{getDisease}"/>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('name')}" th:text="${err}">err</li>
@@ -76,8 +76,8 @@
                 </div>
                 <div class="form-row">
                     <div class="col-md-4">
-                        <label for="onSet" th:text="#{template.current.patient.currentDisease.list.statement.on.set}">onset</label>
-                        <input id="onSet" type="text" class="form-control" th:classappend="${#fields.hasErrors('onSet')} ? 'is-invalid' :''" readonly th:field="*{onSet}">
+                        <label for="onSet" th:text="#{template.current.patient.currentDisease.list.statement.date.of.diagnosis}">onset</label>
+                        <input id="onSet" type="text" class="form-control" th:classappend="${#fields.hasErrors('onSet')} ? 'is-invalid' :''" readonly th:field="*{getDateOfDiagnosis}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('onSet')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('onSet')}" th:text="${err}">err</li>

@@ -35,12 +35,12 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                     .collect(Collectors.joining("; ")));
 
             for(Coding coding : condition.getCode().getCoding()) {
-                currentDiseaseInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
+                currentDiseaseInfoCommand.setDisease(CurrentPatient.extractExtensionText(coding, this.currentPatient));
             }
         }
         if (Objects.nonNull(condition.getOnset())) {
             Date onSet = ((DateTimeType) condition.getOnset()).getValue();
-            currentDiseaseInfoCommand.setOnSet(onSet.toInstant()
+            currentDiseaseInfoCommand.setDateOfDiagnosis(onSet.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());
         }
