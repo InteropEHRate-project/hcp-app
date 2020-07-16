@@ -162,6 +162,12 @@
             <version>2.3.0.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20200518</version>
+        </dependency>
+
     </dependencies>
 
     <build>
