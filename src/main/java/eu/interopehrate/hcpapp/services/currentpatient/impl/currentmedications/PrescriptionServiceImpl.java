@@ -53,37 +53,31 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
 
-        if (Objects.nonNull(this.currentPatient.getPrescription())) {
-            if (this.currentPatient.getDisplayTranslatedVersion()) {
-                var prescriptions = this.currentPatient.prescriptionListTranslated()
-                        .stream()
-                        .map(this.hapiToCommandPrescriptionTranslate::convert)
-                        .collect(Collectors.toList());
-                prescriptionInfoCommandList.addAll(prescriptions);
-                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
-                toSortMethodCommand(prescriptionInfoCommandList);
-                return PrescriptionCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .prescriptionInfoCommand(prescriptionInfoCommandList)
-                        .build();
-            } else {
-                var prescriptions = this.currentPatient.prescriptionList()
-                        .stream()
-                        .map(hapiToCommandPrescription::convert)
-                        .collect(Collectors.toList());
-                prescriptionInfoCommandList.addAll(prescriptions);
-                prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
-                toSortMethodCommand(prescriptionInfoCommandList);
-                return PrescriptionCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .prescriptionInfoCommand(prescriptionInfoCommandList)
-                        .build();
-            }
+        if (this.currentPatient.getDisplayTranslatedVersion()) {
+            var prescriptions = this.currentPatient.prescriptionList()
+                    .stream()
+                    .map(this.hapiToCommandPrescriptionTranslate::convert)
+                    .collect(Collectors.toList());
+            prescriptionInfoCommandList.addAll(prescriptions);
+            prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+            toSortMethodCommand(prescriptionInfoCommandList);
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .prescriptionInfoCommand(prescriptionInfoCommandList)
+                    .build();
+        } else {
+            var prescriptions = this.currentPatient.prescriptionList()
+                    .stream()
+                    .map(hapiToCommandPrescription::convert)
+                    .collect(Collectors.toList());
+            prescriptionInfoCommandList.addAll(prescriptions);
+            prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
+            toSortMethodCommand(prescriptionInfoCommandList);
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .prescriptionInfoCommand(prescriptionInfoCommandList)
+                    .build();
         }
-        return PrescriptionCommand.builder()
-                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .prescriptionInfoCommand(prescriptionInfoCommandList)
-                .build();
     }
 
     @Override

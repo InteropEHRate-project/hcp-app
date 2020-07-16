@@ -132,18 +132,18 @@ public class CurrentPatient {
     }
 
     public List<MedicationRequest> prescriptionList() {
-        if (Objects.isNull(this.prescription)) {
-            return Collections.emptyList();
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.prescriptionTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.prescriptionTranslated).prescriptionList();
+            }
         } else {
-            return new BundleProcessor(this.prescription).prescriptionList();
-        }
-    }
-
-    public List<MedicationRequest> prescriptionListTranslated() {
-        if (Objects.isNull(this.prescriptionTranslated)) {
-            return Collections.emptyList();
-        } else {
-            return new BundleProcessor(this.prescriptionTranslated).prescriptionList();
+            if (Objects.isNull(this.prescription)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.prescription).prescriptionList();
+            }
         }
     }
 
