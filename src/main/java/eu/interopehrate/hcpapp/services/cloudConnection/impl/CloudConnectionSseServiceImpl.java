@@ -1,7 +1,7 @@
-package eu.interopehrate.hcpapp.services.d2dconnection.impl;
+package eu.interopehrate.hcpapp.services.cloudConnection.impl;
 
-import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
-import eu.interopehrate.hcpapp.services.d2dconnection.D2DConnectionSseService;
+import eu.interopehrate.hcpapp.mvc.commands.emergency.CloudConnectionSseCommand;
+import eu.interopehrate.hcpapp.services.cloudConnection.CloudConnectionSseService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
-public class D2DConnectionSseServiceImpl implements D2DConnectionSseService {
+public class CloudConnectionSseServiceImpl implements CloudConnectionSseService {
     private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
     @Override
@@ -23,13 +23,13 @@ public class D2DConnectionSseServiceImpl implements D2DConnectionSseService {
     }
 
     @EventListener
-    public void onD2DConnectionEvent(D2DConnectionSseCommand d2DConnectionSseCommand) {
-        this.emitters.forEach(emitter -> this.sendEvent(emitter, d2DConnectionSseCommand));
+    public void onCloudConnectionEvent(CloudConnectionSseCommand cloudConnectionSseCommand) {
+        this.emitters.forEach(emitter -> this.sendEvent(emitter, cloudConnectionSseCommand));
     }
 
-    private void sendEvent(SseEmitter sseEmitter, D2DConnectionSseCommand d2DConnectionSseCommand) {
+    private void sendEvent(SseEmitter sseEmitter, CloudConnectionSseCommand cloudConnectionSseCommand) {
         try {
-            sseEmitter.send(d2DConnectionSseCommand);
+            sseEmitter.send(cloudConnectionSseCommand);
         } catch (Exception e) {
             sseEmitter.completeWithError(e);
         }

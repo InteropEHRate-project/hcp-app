@@ -1,10 +1,13 @@
 package eu.interopehrate.hcpapp.services.index.impl;
 
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.currentsession.D2DConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.mvc.commands.emergency.EmergencyIndexCommand;
+import eu.interopehrate.hcpapp.mvc.commands.emergency.EmergencyIndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,13 +28,16 @@ public class IndexServiceImpl implements IndexService {
     private BluetoothConnectionService bluetoothConnectionService;
 
     private CurrentD2DConnection currentD2DConnection;
+    private CloudConnection cloudConnection;
     private CurrentPatient currentPatient;
 
     public IndexServiceImpl(BluetoothConnectionService bluetoothConnectionService,
                             CurrentD2DConnection currentD2DConnection,
+                            CloudConnection cloudConnection,
                             CurrentPatient currentPatient) {
         this.bluetoothConnectionService = bluetoothConnectionService;
         this.currentD2DConnection = currentD2DConnection;
+        this.cloudConnection = cloudConnection;
         this.currentPatient = currentPatient;
     }
 
@@ -39,6 +45,7 @@ public class IndexServiceImpl implements IndexService {
     public IndexCommand indexCommand() throws Exception {
         IndexCommand indexCommand = new IndexCommand();
         indexCommand.setConnectionState(currentD2DConnection.connectionState());
+        indexCommand.setCloudConnectionState(cloudConnection.connectionState());
         if (D2DConnectionState.PENDING_DEVICE.equals(currentD2DConnection.connectionState())) {
             indexCommand.setBluetoothConnectionInfoImage(this.connectionInfoQRCodePng());
             indexCommand.setBluetoothConnectionInfoImageSize(bluetoothConnectionInfoImageSize);
@@ -99,6 +106,28 @@ public class IndexServiceImpl implements IndexService {
     public void closeConnection() {
         currentPatient.reset();
         currentD2DConnection.close();
+    }
+
+    @Override
+    public void openCloudConnection() {
+        cloudConnection.open();
+    }
+
+    @Override
+    public void discardCloudConnection() {
+        cloudConnection.discard();
+    }
+
+    @Override
+    public void downloadCloudIps(String qrCode) {
+        System.out.println("QR Code: " + qrCode);
+        cloudConnection.downloadIps(qrCode);
+    }
+
+    @Override
+    public void closeCloudConnection() {
+        currentPatient.reset();
+        cloudConnection.close();
     }
 
     @Override

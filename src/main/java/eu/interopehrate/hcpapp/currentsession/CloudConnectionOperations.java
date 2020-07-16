@@ -12,15 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CloudConnectionOperations {
     private final ApplicationEventPublisher eventPublisher;
-    private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
-    private final AuditInformationService auditInformationService;
 
-    public CloudConnectionOperations(ApplicationEventPublisher eventPublisher,
-                                   ApplicationRuntimeInfoService applicationRuntimeInfoService,
-                                   AuditInformationService auditInformationService) {
+    public CloudConnectionOperations(ApplicationEventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
-        this.applicationRuntimeInfoService = applicationRuntimeInfoService;
-        this.auditInformationService = auditInformationService;
     }
 
     @SneakyThrows
