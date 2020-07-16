@@ -9,6 +9,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications.PrescriptionServiceImpl;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
@@ -42,12 +43,14 @@ public class PrescriptionControllerTest {
     private MachineTranslateService machineTranslateService;
     @Mock
     private ConceptTranslateService conceptTranslateService;
+    @Mock
+    private TerminalFhirContext terminalFhirContext;
 
     @BeforeEach
     void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
         PrescriptionService service = new PrescriptionServiceImpl
-                (new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())),
+                (new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)),
                         hapiToCommandPrescription, hapiToCommandPrescriptionTranslate, currentD2DConnection);
         this.controller = new PrescriptionController(service);
     }

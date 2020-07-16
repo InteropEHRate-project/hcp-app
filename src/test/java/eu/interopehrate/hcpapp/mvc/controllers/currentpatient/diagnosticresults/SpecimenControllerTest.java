@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.SpecimenController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.SpecimenService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults.SpecimenServiceImpl;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
@@ -29,11 +30,13 @@ class SpecimenControllerTest {
     private MachineTranslateService machineTranslateService;
     @Mock
     private ConceptTranslateService conceptTranslateService;
+    @Mock
+    private TerminalFhirContext terminalFhirContext;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        SpecimenService service = new SpecimenServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())));
+        SpecimenService service = new SpecimenServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)));
         this.controller = new SpecimenController(service);
     }
 

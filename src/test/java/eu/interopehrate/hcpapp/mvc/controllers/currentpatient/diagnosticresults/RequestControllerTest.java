@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.RequestController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.RequestService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults.RequestServiceImpl;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
@@ -29,11 +30,13 @@ class RequestControllerTest {
     private MachineTranslateService machineTranslateService;
     @Mock
     private ConceptTranslateService conceptTranslateService;
+    @Mock
+    private TerminalFhirContext terminalFhirContext;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        RequestService service = new RequestServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())));
+        RequestService service = new RequestServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)));
         this.controller = new RequestController(service);
     }
 

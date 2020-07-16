@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticresults.observationlaboratory.ObservationLaboratoryController;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults.ObservationLaboratoryServiceImpl;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
@@ -29,11 +30,13 @@ class ObservationLaboratoryControllerTest {
     private MachineTranslateService machineTranslateService;
     @Mock
     private ConceptTranslateService conceptTranslateService;
+    @Mock
+    private TerminalFhirContext terminalFhirContext;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())), new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate()))));
+        ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)), new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext))));
         this.controller = new ObservationLaboratoryController(service);
     }
 

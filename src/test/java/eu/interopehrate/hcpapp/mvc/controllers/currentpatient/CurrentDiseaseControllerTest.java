@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.CurrentDiseaseServiceImpl;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
@@ -33,12 +34,14 @@ class CurrentDiseaseControllerTest {
     private ConceptTranslateService conceptTranslateService;
     @Mock
     private HapiToCommandCurrentDisease hapiToCommandCurrentDisease;
+    @Mock
+    private TerminalFhirContext terminalFhirContext;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         CurrentDiseaseService service = new CurrentDiseaseServiceImpl(
-                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate())),
+                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)),
                 hapiToCommandCurrentDisease);
         this.controller = new CurrentDiseaseController(service);
     }
