@@ -1,8 +1,6 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import eu.interopehrate.hcpapp.mvc.commands.emergency.CloudConnectionSseCommand;
-import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
-import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

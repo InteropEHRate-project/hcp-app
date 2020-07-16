@@ -14,7 +14,7 @@ public class D2DConnectionSseServiceImpl implements D2DConnectionSseService {
 
     @Override
     public SseEmitter buildSseEmitter() {
-        SseEmitter emitter = new SseEmitter(50 * 60 * 1000L);
+        SseEmitter emitter = new SseEmitter(5 * 60 * 1000L);
         emitter.onError(throwable -> this.emitters.remove(emitter));
         emitter.onTimeout(() -> this.emitters.remove(emitter));
         this.emitters.add(emitter);

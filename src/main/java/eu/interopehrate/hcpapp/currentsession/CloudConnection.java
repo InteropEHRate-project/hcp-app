@@ -37,12 +37,10 @@ public class CloudConnection implements DisposableBean {
 
     public void open() {
         this.connectionState = CloudConnectionState.PENDING;
-        this.cloudConnectionOperations.reloadIndexPage();
     }
 
     public void discard() {
         this.connectionState = CloudConnectionState.OFF;
-        this.cloudConnectionOperations.reloadIndexPage();
     }
 
     public void downloadIps(String url) {
@@ -73,15 +71,12 @@ public class CloudConnection implements DisposableBean {
                 this.currentPatient.initPatientSummary(cloudIps);
                 this.connectionState = CloudConnectionState.ON;
                 this.indexPatientDataCommand.setIpsReceived(true);
-                this.cloudConnectionOperations.reloadIndexPage();
             } else {
                 this.closeConnection();
-                this.cloudConnectionOperations.reloadIndexPage();
             }
 
         } catch (Exception e) {
             this.closeConnection();
-            this.cloudConnectionOperations.reloadIndexPage();
             e.printStackTrace();
         }
     }
