@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="pr : ${prescriptionCommand.getPrescriptionInfoCommand()}">
-                    <td th:text="${pr.getDrugName()}"></td>
+                    <td style="background-color: azure" th:style="${!prescriptionCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${pr.getDrugName()}"></td>
                     <td th:text="${pr.getDrugDosage()}"></td>
                     <td th:utext="${pr.getTimings() + '<br/>'}"></td>
                     <td th:text="${pr.getStatus()}"></td>
@@ -82,7 +82,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="prUpload : ${prescriptionCommandUpload.getPrescriptionInfoCommand()}">
-                    <td style="background-color: azure" th:style="${!prescriptionCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${prUpload.getDrugName()}"></td>
+                    <td th:text="${prUpload.getDrugName()}"></td>
                     <td th:text="${prUpload.getDrugDosage()}"></td>
                     <td th:utext="${prUpload.getTimings() + '<br/>'}"></td>
                     <td th:text="${prUpload.getStatus()}"></td>
