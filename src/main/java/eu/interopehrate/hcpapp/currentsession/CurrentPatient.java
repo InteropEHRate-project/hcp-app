@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.currentsession;
 
-import ca.uhn.fhir.context.FhirContext;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.*;
@@ -19,6 +19,7 @@ public class CurrentPatient {
     private static final Logger logger = LoggerFactory.getLogger(CurrentPatient.class);
     private final TranslateService translateService;
     private final CodesConversionService codesConversionService;
+    private TerminalFhirContext terminalFhirContext;
     private Boolean displayTranslatedVersion = Boolean.TRUE;
     private Patient patient;
     private Consent consent;
@@ -37,9 +38,10 @@ public class CurrentPatient {
         this.prescription = prescription;
     }
 
-    public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService) {
+    public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
         this.codesConversionService = codesConversionService;
+        this.terminalFhirContext = terminalFhirContext;
     }
 
     public TranslateService getTranslateService() {
@@ -53,7 +55,7 @@ public class CurrentPatient {
     public void initConsent(String consent) {
         String consentJson = consent.substring(consent.indexOf("{") + 1);
         consentJson = consentJson.substring(0, consentJson.lastIndexOf("}"));
-        this.consent = (Consent) FhirContext.forR4().newJsonParser().parseResource(consentJson);
+        this.consent = (Consent) terminalFhirContext.getContext().newJsonParser().parseResource(consentJson);
     }
 
     public void initPatientSummary(Bundle patientSummary) {

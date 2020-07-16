@@ -41,7 +41,7 @@ class CurrentDiseaseControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         CurrentDiseaseService service = new CurrentDiseaseServiceImpl(
-                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)),
+                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
                 hapiToCommandCurrentDisease);
         this.controller = new CurrentDiseaseController(service);
     }

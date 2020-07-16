@@ -50,7 +50,7 @@ public class PrescriptionControllerTest {
     void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
         PrescriptionService service = new PrescriptionServiceImpl
-                (new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)),
+                (new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
                         hapiToCommandPrescription, hapiToCommandPrescriptionTranslate, currentD2DConnection);
         this.controller = new PrescriptionController(service);
     }

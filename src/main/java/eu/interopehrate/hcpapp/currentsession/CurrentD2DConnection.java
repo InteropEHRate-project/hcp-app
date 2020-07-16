@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.currentsession;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import eu.interopehrate.td2de.api.D2DConnectionListeners;
@@ -40,16 +41,18 @@ public class CurrentD2DConnection implements DisposableBean {
     private IndexPatientDataCommand indexPatientDataCommand;
     @Value("${ips.validator.pack}")
     private String ipsValidatorPackPath;
+    private TerminalFhirContext terminalFhirContext;
 
     public IndexPatientDataCommand getIndexPatientDataCommand() {
         return indexPatientDataCommand;
     }
 
     public CurrentD2DConnection(CurrentPatient currentPatient,
-                                D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand) {
+                                D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext) {
         this.currentPatient = currentPatient;
         this.d2DConnectionOperations = d2DConnectionOperations;
         this.indexPatientDataCommand = indexPatientDataCommand;
+        this.terminalFhirContext = terminalFhirContext;
     }
 
     public ConnectedThread getConnectedThread() {
@@ -147,7 +150,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
                 File file = new ClassPathResource("samples_StructuredLaboratoryResult_V1.json").getFile();
                 String initialJsonFhir = Files.readString(file.toPath());
-                FhirContext fc = FhirContext.forR4();
+                FhirContext fc = terminalFhirContext.getContext();
                 IParser parser = fc.newJsonParser().setPrettyPrint(true);
                 Bundle observation = (Bundle) parser.parseResource(initialJsonFhir);
                 List<Observation> observationList = new BundleProcessor(observation).observationList();

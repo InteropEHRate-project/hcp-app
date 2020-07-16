@@ -54,7 +54,7 @@ public class MedicationControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        MedicationService service = new MedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext)));
+        MedicationService service = new MedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext));
         HealthCareProfessionalServiceImpl healthCareProfessionalService = new HealthCareProfessionalServiceImpl(healthCareProfessionalRepository, new EntityToCommandHealthCareProfessional());
         this.controller = new MedicationController(service, healthCareProfessionalService);
     }
