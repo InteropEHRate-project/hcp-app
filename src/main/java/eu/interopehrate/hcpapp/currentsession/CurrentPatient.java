@@ -27,8 +27,9 @@ public class CurrentPatient {
     private Bundle patientSummaryBundleTranslated;
     private Bundle prescription;
     private Bundle prescriptionTranslated;
+    private Bundle observation;
+    private Bundle observationTranslated;
     private Certificate certificate;
-    private List<Observation> observation;
 
     public Bundle getPrescription() {
         return prescription;
@@ -60,11 +61,12 @@ public class CurrentPatient {
 
     public void initPatientSummary(Bundle patientSummary) {
         try {
+            patientSummaryBundle = patientSummary;
             patientSummaryBundleTranslated = translateService.translate(patientSummary, Locale.ITALY, Locale.UK);
-            patientSummaryBundle = codesConversionService.convert(patientSummaryBundleTranslated);
+            patientSummaryBundleTranslated = codesConversionService.convert(patientSummaryBundleTranslated);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
-            patientSummaryBundle = patientSummary;
+            patientSummaryBundleTranslated = patientSummary;
         }
     }
 
@@ -78,16 +80,18 @@ public class CurrentPatient {
         }
     }
 
-    public void initLaboratoryResults(List<Observation> obs) {
-        this.observation = obs;
+    public void initLaboratoryResults(Bundle obs) {
+        try {
+            this.observation = obs;
+            this.observationTranslated = this.translateService.translate(obs, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.observationTranslated = observation;
+        }
     }
 
-    public List<Observation> getObservation(){
-        if (Objects.isNull(observation)) {
-            return Collections.emptyList();
-        }else{
-            return observation;
-        }
+    public Bundle getObservation(){
+        return observation;
     }
 
     public void reset() {
@@ -96,6 +100,7 @@ public class CurrentPatient {
         consent = null;
         patientSummaryBundle = null;
         this.prescription = null;
+        observation = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
@@ -107,18 +112,34 @@ public class CurrentPatient {
     }
 
     public List<Observation> observationList() {
-        if (Objects.isNull(patientSummaryBundle)) {
-            return Collections.emptyList();
-        } else {
-            return new BundleProcessor(patientSummaryBundle).observationList();
+        if(displayTranslatedVersion) {
+            if (Objects.isNull(observationTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(observationTranslated).observationList();
+            }
+        }else{
+            if (Objects.isNull(observation)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(observation).observationList();
+            }
         }
     }
 
     public List<Condition> conditionsList() {
-        if (Objects.isNull(patientSummaryBundle)) {
-            return Collections.emptyList();
-        } else {
-            return new BundleProcessor(patientSummaryBundle).conditionList();
+        if(displayTranslatedVersion){
+            if (Objects.isNull(patientSummaryBundleTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundleTranslated).conditionList();
+            }
+        }else{
+            if (Objects.isNull(patientSummaryBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundle).conditionList();
+            }
         }
     }
 

@@ -7,7 +7,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.Obs
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,18 +24,20 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
 
     @Override
     public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis() {
-        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = currentPatient.getObservation()
-                .stream()
-                .map(hapiToCommandObservationLaboratory::convert)
-                .collect(Collectors.toList());
-        for(ObservationLaboratoryInfoCommandAnalysis e: observationLaboratoryInfoCommandAnalyses){
-            e.setIsInLimits();
-        }
-        observationLaboratoryInfoCommandAnalyses.addAll(observationLaboratoryInfoCommandAnalysis);
+        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = currentPatient.observationList()
+                    .stream()
+                    .map(hapiToCommandObservationLaboratory::convert)
+                    .collect(Collectors.toList());
 
-        return ObservationLaboratoryCommandAnalysis.builder()
-                .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses).build();
+            for (ObservationLaboratoryInfoCommandAnalysis e : observationLaboratoryInfoCommandAnalyses) {
+                e.setIsInLimits();
+            }
+
+            observationLaboratoryInfoCommandAnalyses.addAll(observationLaboratoryInfoCommandAnalysis);
+
+            return ObservationLaboratoryCommandAnalysis.builder()
+                    .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                    .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses).build();
     }
 
 }

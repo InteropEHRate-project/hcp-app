@@ -147,15 +147,6 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onPatientSummaryReceived");
                 CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
-
-                File file = new ClassPathResource("samples_StructuredLaboratoryResult_V1.json").getFile();
-                String initialJsonFhir = Files.readString(file.toPath());
-                FhirContext fc = terminalFhirContext.getContext();
-                IParser parser = fc.newJsonParser().setPrettyPrint(true);
-                Bundle observation = (Bundle) parser.parseResource(initialJsonFhir);
-                List<Observation> observationList = new BundleProcessor(observation).observationList();
-                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(new BundleProcessor(observation).observationList());
-
                 CurrentD2DConnection.this.indexPatientDataCommand.setIpsReceived(true);
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
@@ -202,8 +193,14 @@ public class CurrentD2DConnection implements DisposableBean {
 
         @Override
         public void onLaboratoryResultsReceived(Bundle bundle) {
-            log.info("onLaboratoryResultsReceived");
-            CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
+            try {
+                log.info("onLaboratoryResultsReceived");
+                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(bundle);
+                CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            } catch (Exception e) {
+                log.error("Error after Prescription was received", e);
+            }
         }
     }
 

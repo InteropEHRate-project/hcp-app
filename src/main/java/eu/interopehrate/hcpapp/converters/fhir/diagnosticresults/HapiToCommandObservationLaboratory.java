@@ -27,10 +27,14 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
             }
         }
 
-        if (Objects.nonNull(observation.getValueQuantity())){
+        if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue()) ){
                 command.getObservationLaboratoryInfoCommandSample().setCurrentValue(observation.getValueQuantity().getValue().longValue());
-                command.getObservationLaboratoryInfoCommandSample().setUnit(observation.getValueQuantity().getUnit());
         }
+
+        if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getUnit()) ){
+            command.getObservationLaboratoryInfoCommandSample().setUnit(observation.getValueQuantity().getUnit());
+        }
+
 
         if (Objects.nonNull(observation.getEffectiveDateTimeType())){
                 command.getObservationLaboratoryInfoCommandSample().setSample(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
