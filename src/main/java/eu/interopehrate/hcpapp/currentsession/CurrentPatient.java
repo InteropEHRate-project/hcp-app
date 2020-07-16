@@ -23,10 +23,10 @@ public class CurrentPatient {
     private Patient patient;
     private Consent consent;
     private Bundle patientSummaryBundle;
-    private Bundle patientSummaryTranslatedBundle;
-    private Certificate certificate;
+    private Bundle patientSummaryBundleTranslated;
     private Bundle prescription;
     private Bundle prescriptionTranslated;
+    private Certificate certificate;
     private List<Observation> observation;
 
     public Bundle getPrescription() {
@@ -58,8 +58,8 @@ public class CurrentPatient {
 
     public void initPatientSummary(Bundle patientSummary) {
         try {
-            patientSummaryTranslatedBundle = translateService.translate(patientSummary, Locale.ITALY, Locale.UK);
-            patientSummaryBundle = codesConversionService.convert(patientSummaryTranslatedBundle);
+            patientSummaryBundleTranslated = translateService.translate(patientSummary, Locale.ITALY, Locale.UK);
+            patientSummaryBundle = codesConversionService.convert(patientSummaryBundleTranslated);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             patientSummaryBundle = patientSummary;
