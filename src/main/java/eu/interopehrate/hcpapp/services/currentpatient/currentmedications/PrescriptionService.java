@@ -11,6 +11,8 @@ public interface PrescriptionService {
 
     void setPrescriptionsUploadedToSEHR(List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR);
 
+    List<PrescriptionInfoCommand> getPrescriptionsUploadedToSEHR();
+
     PrescriptionCommand prescriptionCommand() throws IOException;
 
     PrescriptionCommand prescriptionCommandUpload();

@@ -108,7 +108,7 @@ public class CurrentPatient {
         prescriptionTranslated =null;
         observation = null;
         observationTranslated = null;
-        this.prescriptionService.setPrescriptionsUploadedToSEHR(null);
+        this.prescriptionService.setPrescriptionsUploadedToSEHR(this.prescriptionService.getPrescriptionsUploadedToSEHR());
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {

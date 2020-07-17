@@ -53,6 +53,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.prescriptionsUploadedToSEHR = prescriptionsUploadedToSEHR;
     }
 
+    public List<PrescriptionInfoCommand> getPrescriptionsUploadedToSEHR() {
+        return prescriptionsUploadedToSEHR;
+    }
+
     @Override
     public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
