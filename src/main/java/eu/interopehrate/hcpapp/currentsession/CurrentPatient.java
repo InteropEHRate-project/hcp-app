@@ -104,10 +104,18 @@ public class CurrentPatient {
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
-        if (Objects.isNull(patientSummaryBundle)) {
-            return Collections.emptyList();
+        if(displayTranslatedVersion) {
+            if (Objects.isNull(patientSummaryBundleTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundleTranslated).allergyIntoleranceList();
+            }
         } else {
-            return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
+            if (Objects.isNull(patientSummaryBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
+            }
         }
     }
 
