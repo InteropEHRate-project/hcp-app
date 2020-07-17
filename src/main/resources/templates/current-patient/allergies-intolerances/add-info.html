@@ -28,7 +28,6 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div class="m-3"></div>
             <h2>Add Allergies and Intolerances information</h2>
             <div class="m-5"></div>
             <form action="#" th:action="@{/current-patient/allergies-intolerances/save-add}"
@@ -39,7 +38,6 @@
                 </div>
 
                 <div class="form-row">
-
                     <div class="col-md-6">
                         <label for="category">Category</label>
                         <input id="category" type="text" class="form-control"
@@ -85,9 +83,10 @@
                             </ul>
                         </div>
                     </div>
-
+                </div>
+                <div class="form-row">
                     <div class="col-md-12"><br>
-                        <label for="comments">Comments</label><br>
+                        <label for="comments">Comments</label>
                         <input id="comments" type="text" class="form-control" th:field="*{comments}">
                     </div>
                 </div>
