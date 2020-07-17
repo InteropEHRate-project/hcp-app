@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.security.cert.Certificate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 public class CurrentPatient {
@@ -108,7 +105,7 @@ public class CurrentPatient {
         prescriptionTranslated =null;
         observation = null;
         observationTranslated = null;
-        this.prescriptionService.setPrescriptionsUploadedToSEHR(this.prescriptionService.getPrescriptionsUploadedToSEHR());
+        this.prescriptionService.setPrescriptionsUploadedToSEHR(new ArrayList<>());
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
