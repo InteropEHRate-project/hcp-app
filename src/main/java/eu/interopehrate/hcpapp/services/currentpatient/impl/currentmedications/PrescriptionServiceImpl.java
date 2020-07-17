@@ -49,6 +49,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.currentD2DConnection = currentD2DConnection;
     }
 
+    public void setPrescriptionsUploadedToSEHR(List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR) {
+        this.prescriptionsUploadedToSEHR = prescriptionsUploadedToSEHR;
+    }
+
     @Override
     public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();

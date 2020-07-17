@@ -5,8 +5,11 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.Pr
 import org.hl7.fhir.r4.model.Bundle;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface PrescriptionService {
+
+    void setPrescriptionsUploadedToSEHR(List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR);
 
     PrescriptionCommand prescriptionCommand() throws IOException;
 
