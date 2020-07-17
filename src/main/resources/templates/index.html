@@ -161,8 +161,7 @@
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getBirthDate() != null}">
                             <h5 class="card-title">Birth date</h5>
-                            <!--                            Birth date output is processed. -->
-                            <p class="card-text" th:text="${index.patientDataCommand.getBirthDate().toLocaleString().substring(0, index.patientDataCommand.getBirthDate().toLocaleString().length() - 10)}">birth date</p>
+                            <p class="card-text" th:text="${index.patientDataCommand.getBirthDate()}">birth date</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getId() != null}">
                             <h5 class="card-title">ID Patient</h5>

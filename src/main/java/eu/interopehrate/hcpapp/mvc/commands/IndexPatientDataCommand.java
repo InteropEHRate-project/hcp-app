@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -15,7 +15,7 @@ public class IndexPatientDataCommand {
     private String lastName;
     private String firstName;
     private String gender;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String consent;
     private Boolean noConformantJSON = false;
     private Boolean ipsReceived = false;

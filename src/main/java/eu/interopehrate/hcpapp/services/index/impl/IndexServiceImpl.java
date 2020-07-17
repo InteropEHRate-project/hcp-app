@@ -6,8 +6,6 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.currentsession.D2DConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
-import eu.interopehrate.hcpapp.mvc.commands.emergency.EmergencyIndexCommand;
-import eu.interopehrate.hcpapp.mvc.commands.emergency.EmergencyIndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +15,7 @@ import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -70,7 +69,7 @@ public class IndexServiceImpl implements IndexService {
                 patientDataCommand.setGender(currentPatient.getPatient().getGender().toString());
             }
             if (Objects.nonNull(currentPatient.getPatient().getBirthDate())) {
-                patientDataCommand.setBirthDate(currentPatient.getPatient().getBirthDate());
+                patientDataCommand.setBirthDate(currentPatient.getPatient().getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
         }
         if (Objects.nonNull(currentPatient.getConsent())) {
