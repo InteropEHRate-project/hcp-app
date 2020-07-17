@@ -99,8 +99,11 @@ public class CurrentPatient {
         patient = null;
         consent = null;
         patientSummaryBundle = null;
-        this.prescription = null;
+        patientSummaryBundleTranslated=null;
+        prescription = null;
+        prescriptionTranslated =null;
         observation = null;
+        observationTranslated = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
