@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Objects;
@@ -70,6 +72,7 @@ public class IndexServiceImpl implements IndexService {
             }
             if (Objects.nonNull(currentPatient.getPatient().getBirthDate())) {
                 patientDataCommand.setBirthDate(currentPatient.getPatient().getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                patientDataCommand.setAge(Period.between(patientDataCommand.getBirthDate(), LocalDate.now()).getYears());
             }
         }
         if (Objects.nonNull(currentPatient.getConsent())) {

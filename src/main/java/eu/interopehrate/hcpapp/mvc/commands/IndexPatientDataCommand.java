@@ -22,6 +22,7 @@ public class IndexPatientDataCommand {
     private Boolean prescriptionReceived = false;
     private Boolean laboratoryResultsReceived = false;
     private String certificate;
+    private Integer age;
 
     public Boolean hasData() {
         return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) ||
