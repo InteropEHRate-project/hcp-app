@@ -161,15 +161,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() throws IOException {
-        Bundle prescription = new Bundle();
-        prescription.setEntry(new ArrayList<>());
-        for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-            prescription.getEntry().add(new Bundle.BundleEntryComponent());
-            MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
-            prescription.getEntry().get(i).setResource(med);
-            this.prescriptionsUploadedToSEHR.add(this.hapiToCommandPrescription.convert(med));
+        if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
+            Bundle prescription = new Bundle();
+            prescription.setEntry(new ArrayList<>());
+            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+                prescription.getEntry().add(new Bundle.BundleEntryComponent());
+                MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+                prescription.getEntry().get(i).setResource(med);
+                this.prescriptionsUploadedToSEHR.add(this.hapiToCommandPrescription.convert(med));
+            }
+            this.sendPrescription(prescription);
+        } else {
+            log.error("The connection with S-EHR is not established.");
         }
-        this.sendPrescription(prescription);
     }
 
     @Override
