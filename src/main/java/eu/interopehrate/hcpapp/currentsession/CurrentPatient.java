@@ -1,17 +1,18 @@
 package eu.interopehrate.hcpapp.currentsession;
 
-import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.security.cert.Certificate;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 @Component
 public class CurrentPatient {
@@ -29,8 +30,6 @@ public class CurrentPatient {
     private Bundle observation;
     private Bundle observationTranslated;
     private Certificate certificate;
-    @Autowired
-    private PrescriptionService prescriptionService;
 
     public Bundle getPrescription() {
         return prescription;
@@ -105,7 +104,6 @@ public class CurrentPatient {
         prescriptionTranslated =null;
         observation = null;
         observationTranslated = null;
-        this.prescriptionService.setPrescriptionsUploadedToSEHR(new ArrayList<>());
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {

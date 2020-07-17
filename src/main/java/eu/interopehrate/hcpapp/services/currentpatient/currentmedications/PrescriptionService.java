@@ -13,6 +13,8 @@ public interface PrescriptionService {
 
     List<PrescriptionInfoCommand> getPrescriptionsUploadedToSEHR();
 
+    void clearUploadedList();
+
     PrescriptionCommand prescriptionCommand() throws IOException;
 
     PrescriptionCommand prescriptionCommandUpload();

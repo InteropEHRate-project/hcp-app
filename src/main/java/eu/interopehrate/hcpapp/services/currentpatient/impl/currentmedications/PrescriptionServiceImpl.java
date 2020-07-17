@@ -57,6 +57,12 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         return prescriptionsUploadedToSEHR;
     }
 
+    public void clearUploadedList() {
+        if (Objects.isNull(this.currentD2DConnection.getConnectedThread())) {
+            this.prescriptionsUploadedToSEHR.clear();
+        }
+    }
+
     @Override
     public PrescriptionCommand prescriptionCommand() {
         List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
