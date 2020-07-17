@@ -59,5 +59,16 @@ public class AuditInformationServiceImpl implements AuditInformationService {
             String auditDetails = String.join("->", patientInfo, this.currentPatient.getConsentAsString());
             this.auditEvent(AuditEventType.AUDIT_CONSENT, auditDetails);
         }
+
+    }
+
+    @Override
+    public void auditEmergencyGetIps() {
+        Patient patient = this.currentPatient.getPatient();
+        if (Objects.nonNull(patient)) {
+            HumanName patientName = patient.getName().get(0);
+            String patientInfo = String.join(", ", patientName.getGivenAsSingleString(), patientName.getFamily(), patient.getId());
+            this.auditEvent(AuditEventType.EMERGENCY_GET_IPS, patientInfo);
+        }
     }
 }
