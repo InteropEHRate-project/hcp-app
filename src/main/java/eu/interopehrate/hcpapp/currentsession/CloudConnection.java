@@ -1,5 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
+
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.ihs.terminalclient.services.EmergencyService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
@@ -14,20 +16,20 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class CloudConnection implements DisposableBean {
-    private final CurrentPatient currentPatient;
-    private final CloudConnectionOperations cloudConnectionOperations;
-    private IndexPatientDataCommand indexPatientDataCommand;
     private CloudConnectionState connectionState = CloudConnectionState.OFF;
-    private EmergencyService emergencyService;
+    private final CurrentPatient currentPatient;
+    private final IndexPatientDataCommand indexPatientDataCommand;
+    private final EmergencyService emergencyService;
+    private final AuditInformationService auditInformationService;
 
     public CloudConnection(CurrentPatient currentPatient,
-                           CloudConnectionOperations cloudConnectionOperations,
                            IndexPatientDataCommand indexPatientDataCommand,
-                           EmergencyService emergencyService) {
+                           EmergencyService emergencyService,
+                           AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
-        this.cloudConnectionOperations = cloudConnectionOperations;
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.emergencyService = emergencyService;
+        this.auditInformationService = auditInformationService;
     }
 
     @Override
@@ -71,6 +73,7 @@ public class CloudConnection implements DisposableBean {
                 this.currentPatient.initPatientSummary(cloudIps);
                 this.connectionState = CloudConnectionState.ON;
                 this.indexPatientDataCommand.setIpsReceived(true);
+                this.auditInformationService.auditEmergencyGetIps();
             } else {
                 this.closeConnection();
             }

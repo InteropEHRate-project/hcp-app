@@ -13,4 +13,6 @@ public interface AuditInformationService {
     void auditAdmissionData();
 
     void auditConsentData();
+
+    void auditEmergencyGetIps();
 }
