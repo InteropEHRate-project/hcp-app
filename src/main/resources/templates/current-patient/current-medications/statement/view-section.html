@@ -46,7 +46,7 @@
                         <td th:text="${{ms.medication}}"></td>
                         <td th:text="${{ms.status}}"></td>
                         <td th:text="${{#temporals.format(ms.effective, 'dd-MM-yyyy')}}"></td>
-                        <td th:text="${{ms.patientInstructions}}"></td>
+                        <td style="background-color: azure" th:style="${!statementCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ms.patientInstructions}}"></td>
                     </tr>
                 </tbody>
             </table>

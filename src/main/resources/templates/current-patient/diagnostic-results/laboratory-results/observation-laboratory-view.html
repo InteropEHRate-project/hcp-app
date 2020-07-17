@@ -60,7 +60,7 @@
                 <tbody>
                     <tr th:each="an : ${observationLaboratoryAnalysis.observationLaboratoryInfoCommandAnalysesWithoutDuplicates()}">
                         <div th:with="map=${observationLaboratoryAnalysis.valueReturn()}">
-                            <td th:text="${{an}}"></td>
+                            <td style="background-color: azure" th:style="${!observationLaboratoryAnalysis.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{an}}"></td>
                             <th:block th:each="sample : ${observationLaboratoryAnalysis.localDateTimeListWithoutDuplicates()}">
                                     <div th:with="boolVal=${observationLaboratoryAnalysis.getResultOfAnalysis(an, sample)}">
                                         <td th:if="${map.get(an,sample) == null}">-</td>

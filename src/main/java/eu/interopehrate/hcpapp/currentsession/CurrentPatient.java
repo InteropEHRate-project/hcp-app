@@ -104,10 +104,18 @@ public class CurrentPatient {
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
-        if (Objects.isNull(patientSummaryBundle)) {
-            return Collections.emptyList();
+        if(displayTranslatedVersion) {
+            if (Objects.isNull(patientSummaryBundleTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundleTranslated).allergyIntoleranceList();
+            }
         } else {
-            return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
+            if (Objects.isNull(patientSummaryBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
+            }
         }
     }
 
@@ -145,10 +153,18 @@ public class CurrentPatient {
 
 
     public List<MedicationStatement> medicationStatementList() {
-        if (Objects.isNull(patientSummaryBundle)) {
-            return Collections.emptyList();
-        } else {
-            return new BundleProcessor(patientSummaryBundle).medicationStatementList();
+        if(displayTranslatedVersion){
+            if (Objects.isNull(patientSummaryBundleTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundleTranslated).medicationStatementList();
+            }
+        }else{
+            if (Objects.isNull(patientSummaryBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundle).medicationStatementList();
+            }
         }
     }
 
