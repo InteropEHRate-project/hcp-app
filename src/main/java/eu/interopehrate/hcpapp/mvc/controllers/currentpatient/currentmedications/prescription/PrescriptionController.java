@@ -25,6 +25,7 @@ public class PrescriptionController {
     public String viewSection(Model model) throws IOException {
         model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand());
         model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload());
+        model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
     }
 

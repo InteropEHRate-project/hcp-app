@@ -1,17 +1,15 @@
 package eu.interopehrate.hcpapp.services.currentpatient.currentmedications;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface PrescriptionService {
 
-    void setPrescriptionsUploadedToSEHR(List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR);
-
-    List<PrescriptionInfoCommand> getPrescriptionsUploadedToSEHR();
+    CurrentD2DConnection getCurrentD2DConnection();
 
     void clearUploadedList();
 

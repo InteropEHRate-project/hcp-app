@@ -16,10 +16,7 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,14 +46,12 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.currentD2DConnection = currentD2DConnection;
     }
 
-    public void setPrescriptionsUploadedToSEHR(List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR) {
-        this.prescriptionsUploadedToSEHR = prescriptionsUploadedToSEHR;
+    @Override
+    public CurrentD2DConnection getCurrentD2DConnection() {
+        return currentD2DConnection;
     }
 
-    public List<PrescriptionInfoCommand> getPrescriptionsUploadedToSEHR() {
-        return prescriptionsUploadedToSEHR;
-    }
-
+    @Override
     public void clearUploadedList() {
         if (Objects.isNull(this.currentD2DConnection.getConnectedThread())) {
             this.prescriptionsUploadedToSEHR.clear();
@@ -277,17 +272,5 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 break;
         }
         return result;
-    }
-
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
     }
 }
