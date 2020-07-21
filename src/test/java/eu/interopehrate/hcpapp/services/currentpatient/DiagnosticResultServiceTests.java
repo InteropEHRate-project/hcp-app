@@ -43,6 +43,8 @@ public class DiagnosticResultServiceTests {
 
     @Test
     public void testDiagnosticResultCode() {
+        Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(initialJsonFhir);
+        currentPatient.initLaboratoryResults(patientSummaryBundle);
         System.out.println(currentPatient.observationList().get(1).getCode().getCoding().get(0).getCode());
     }
 
