@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
@@ -28,14 +27,15 @@ public class DiagnosticResultServiceTests {
 
     @BeforeClass
     public static void init() throws IOException {
-        File file = new ClassPathResource("fhir/sample-patient-summary.json").getFile();
+        ClassLoader classLoader = DiagnosticResultServiceTests.class.getClassLoader();
+        File file = new File(classLoader.getResource("fhir/samples_StructuredLaboratoryResult_V1.json").getFile());
         initialJsonFhir = Files.readString(file.toPath());
     }
 
     @Test
     public void testDiagnosticResultSection() {
         Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(initialJsonFhir);
-        currentPatient.initPatientSummary(patientSummaryBundle);
+        currentPatient.initLaboratoryResults(patientSummaryBundle);
         List<Observation> diagnosticResultInfoCommands = currentPatient.observationList();
         assertTrue(diagnosticResultInfoCommands.size() > 0);
     }

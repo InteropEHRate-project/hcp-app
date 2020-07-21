@@ -18,11 +18,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
-import java.net.URISyntaxException;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -114,40 +112,6 @@ public class D2DLibraryTests {
         cert.checkValidity(new Date());
         cert.verify(keyPair.getPublic());
         System.out.println(cert);
-    }
-
-    @Test
-    public void testCorrectPatientSummary() throws FileNotFoundException, URISyntaxException {
-//        String ipsValidatorPackPath = "src/main/resources/ipsValidatorPack";
-//        FhirContext ctx = FhirContext.forR4();
-//        IPSChecker ipsChecker = new IPSChecker(ctx, ipsValidatorPackPath);
-//        URL is = D2DLibraryTests.class.getClassLoader().getResource("fhir/correctPatientSummary.json");
-//        File f = new File(is.toURI());
-//        Scanner sc = new Scanner(f);
-//        String content = sc.useDelimiter("\\Z").next();
-//        IParser parser = ctx.newJsonParser();
-//        Bundle correctPatientSummary = parser.parseResource(Bundle.class, content);
-//        boolean conformant=ipsChecker.validateProfile(correctPatientSummary);
-//        System.out.println(conformant);
-//        assertTrue(conformant);
-//        sc.close();
-    }
-
-    @Test
-    public void testCorrectPrescription() throws FileNotFoundException, URISyntaxException {
-//        String ipsValidatorPackPath = "src/main/resources/ipsValidatorPack";
-//        FhirContext ctx = FhirContext.forR4();
-//        IPSChecker ipsChecker = new IPSChecker(ctx, ipsValidatorPackPath);
-//        URL is = D2DLibraryTests.class.getClassLoader().getResource("fhir/uprc_medication.json");
-//        File f = new File(is.toURI());
-//        Scanner sc = new Scanner(f);
-//        String content = sc.useDelimiter("\\Z").next();
-//        IParser parser = ctx.newJsonParser();
-//        MedicationRequest correctPatientSummary = parser.parseResource(MedicationRequest.class, content);
-//        boolean conformant=ipsChecker.validateProfile(correctPatientSummary);
-//        System.out.println(conformant);
-//        assertTrue(conformant);
-//        sc.close();
     }
 
     @Test

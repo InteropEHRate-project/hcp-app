@@ -1,0 +1,2561 @@
+{
+  "resourceType": "Bundle",
+  "id": "695ce69f-0da1-437d-a719-1e507b853c82",
+  "meta": {
+    "lastUpdated": "2020-05-28T15:20:11.733+02:00"
+  },
+  "type": "searchset",
+  "total": 2,
+  "link": [
+    {
+      "relation": "self",
+      "url": "http://213.249.46.205:8080/NCP/fhir/DiagnosticReport?_include=DiagnosticReport%3Aresult&_sort=-date&category=LAB&status=final"
+    }
+  ],
+  "entry": [
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/DiagnosticReport/163",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "163",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopEHRate.eu/fhir/StructureDefinition/LaboratoryResult-IPS-IEHR"
+          ]
+        },
+        "language": "it-IT",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> Test diagnostici rilevanti e/o dati di laboratorio </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> Eritrociti </td><td>4.38 µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Emoglobina </td><td>12.7 g/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ematocrito (HCT) </td><td>37.1 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Volume corpuscolare medio (MCV) </td><td>84.7 fL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Contenuto corpuscolare medio HGB (MCH) </td><td>29.0 pg </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Concentrazione corpuscolare media HGB (MCHC) </td><td>34.2 g/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione volume eritrocitario (RDW CV) </td><td>13.7 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza curva distribuzione eritrociti (RDW SD) </td><td>42.5 fL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Piastrine </td><td>313.0 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Leucociti </td><td>14.19 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Neutrofili </td><td>4.58 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Linfociti </td><td>6.66 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Monociti </td><td>2.09 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Eosinofili </td><td>0.83 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Basofili </td><td>0.03 10^3/µL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Neutrofili % </td><td>32.4 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Linfociti % </td><td>46.9 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Monociti % </td><td>14.7 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Eosinofili % </td><td>5.8 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Basofili % </td><td>0.2 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> NT-proBNP </td><td>3295.0 ng/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Transaminasi G.P. (ALT) </td><td>12.0 IU/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Gamma-GT </td><td>40.0 IU/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Bilirubina Totale Reflex </td><td>0.3 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Glicemia </td><td>82.0 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Creatinina (metodo enzimatico) </td><td>0.22 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Azotemia </td><td>14.0 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Potassiemia </td><td>4.5 mEq/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Sodiemia </td><td>138.0 mEq/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Calcemia </td><td>10.7 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Osmolalita' </td><td>272.6 mOsm/Kg </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ferro </td><td>35.0 µg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Albumina </td><td>4.0 g/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Proteine Totali </td><td>5.8 g/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Proteina C Reattiva </td><td>3.26 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza distribuzione piastrine (PDW) </td><td>10.6 fL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Grandi piastrine % (P-LCR) </td><td>23.5 % </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Volume piastrinico medio (MPV) </td><td>9.9 fL </td><td/><td/><td>FINAL</td></tr></tbody></table></div>"
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PRN"
+                }
+              ]
+            },
+            "value": "496ec099-39ad-4f1f-bb34-e95deeed45ee"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/diagnostic-service-sections",
+                "code": "LAB"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "30954-2",
+              "display": "Test diagnostici rilevanti e/o dati di laboratorio"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "performer": [
+          {
+            "reference": "Organization/33"
+          }
+        ],
+        "resultsInterpreter": [
+          {
+            "reference": "Organization/33"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/164"
+          },
+          {
+            "reference": "Observation/165"
+          },
+          {
+            "reference": "Observation/166"
+          },
+          {
+            "reference": "Observation/167"
+          },
+          {
+            "reference": "Observation/168"
+          },
+          {
+            "reference": "Observation/169"
+          },
+          {
+            "reference": "Observation/170"
+          },
+          {
+            "reference": "Observation/171"
+          },
+          {
+            "reference": "Observation/172"
+          },
+          {
+            "reference": "Observation/173"
+          },
+          {
+            "reference": "Observation/174"
+          },
+          {
+            "reference": "Observation/175"
+          },
+          {
+            "reference": "Observation/176"
+          },
+          {
+            "reference": "Observation/177"
+          },
+          {
+            "reference": "Observation/178"
+          },
+          {
+            "reference": "Observation/179"
+          },
+          {
+            "reference": "Observation/180"
+          },
+          {
+            "reference": "Observation/181"
+          },
+          {
+            "reference": "Observation/182"
+          },
+          {
+            "reference": "Observation/183"
+          },
+          {
+            "reference": "Observation/184"
+          },
+          {
+            "reference": "Observation/185"
+          },
+          {
+            "reference": "Observation/186"
+          },
+          {
+            "reference": "Observation/187"
+          },
+          {
+            "reference": "Observation/188"
+          },
+          {
+            "reference": "Observation/189"
+          },
+          {
+            "reference": "Observation/190"
+          },
+          {
+            "reference": "Observation/191"
+          },
+          {
+            "reference": "Observation/192"
+          },
+          {
+            "reference": "Observation/193"
+          },
+          {
+            "reference": "Observation/194"
+          },
+          {
+            "reference": "Observation/195"
+          },
+          {
+            "reference": "Observation/196"
+          },
+          {
+            "reference": "Observation/197"
+          },
+          {
+            "reference": "Observation/198"
+          },
+          {
+            "reference": "Observation/199"
+          },
+          {
+            "reference": "Observation/200"
+          },
+          {
+            "reference": "Observation/201"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/DiagnosticReport/152",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "152",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopEHRate.eu/fhir/StructureDefinition/LaboratoryResult-IPS-IEHR"
+          ]
+        },
+        "language": "it-IT",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> Test diagnostici rilevanti e/o dati di laboratorio </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> Transaminasi G.O. (AST) </td><td>19.0 IU/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Transaminasi G.P. (ALT) </td><td>13.0 IU/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Gamma-GT </td><td>26.0 UI/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Creatinfosfochinasi </td><td>78.0 IU/L </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Colesterolo totale </td><td>249.0 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Colesterolo HDL </td><td>73.0 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Colesterolo LDL </td><td>154.0 mg/dl </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Colesterolo/Colesterolo HDL </td><td>3.4 00 </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Trigliceridi </td><td>108.0 mg/dL </td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Lipoproteina (a) </td><td>84.7 mg/dL </td><td/><td/><td>FINAL</td></tr></tbody></table></div>"
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PRN"
+                }
+              ]
+            },
+            "value": "eea41b72-7ed8-4d2e-8be9-a3274a3fb1f6"
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/diagnostic-service-sections",
+                "code": "LAB"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "30954-2",
+              "display": "Test diagnostici rilevanti e/o dati di laboratorio"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "performer": [
+          {
+            "reference": "Organization/33"
+          }
+        ],
+        "resultsInterpreter": [
+          {
+            "reference": "Organization/33"
+          }
+        ],
+        "result": [
+          {
+            "reference": "Observation/153"
+          },
+          {
+            "reference": "Observation/154"
+          },
+          {
+            "reference": "Observation/155"
+          },
+          {
+            "reference": "Observation/156"
+          },
+          {
+            "reference": "Observation/157"
+          },
+          {
+            "reference": "Observation/158"
+          },
+          {
+            "reference": "Observation/159"
+          },
+          {
+            "reference": "Observation/160"
+          },
+          {
+            "reference": "Observation/161"
+          },
+          {
+            "reference": "Observation/162"
+          }
+        ]
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/192",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "192",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11893",
+              "display": "Sodiemia"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 138.0,
+          "unit": "mEq/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/193",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "193",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11933",
+              "display": "Calcemia"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 10.7,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/194",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "194",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11765",
+              "display": "Osmolalita'"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 272.6,
+          "unit": "mOsm/Kg",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/195",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "195",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11973",
+              "display": "Ferro"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 35.0,
+          "unit": "µg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/196",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "196",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12476",
+              "display": "Albumina"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 4.0,
+          "unit": "g/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/197",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "197",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11763",
+              "display": "Proteine Totali"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 5.8,
+          "unit": "g/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/198",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "198",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12043",
+              "display": "Proteina C Reattiva"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 3.26,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/199",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "199",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12328",
+              "display": "Ampiezza distribuzione piastrine (PDW)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 10.6,
+          "unit": "fL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/200",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "200",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12330",
+              "display": "Grandi piastrine % (P-LCR)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 23.5,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/201",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "201",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12319",
+              "display": "Volume piastrinico medio (MPV)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 9.9,
+          "unit": "fL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/153",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "153",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11852",
+              "display": "Transaminasi G.O. (AST)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 19.0,
+          "unit": "IU/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/154",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "154",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11843",
+              "display": "Transaminasi G.P. (ALT)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 13.0,
+          "unit": "IU/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/155",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "155",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11859",
+              "display": "Gamma-GT"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 26.0,
+          "unit": "UI/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/156",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "156",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11862",
+              "display": "Creatinfosfochinasi"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 78.0,
+          "unit": "IU/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/157",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "157",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11743",
+              "display": "Colesterolo totale"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 249.0,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/158",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "158",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11745",
+              "display": "Colesterolo HDL"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 73.0,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/159",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "159",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11766",
+              "display": "Colesterolo LDL"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 154.0,
+          "unit": "mg/dl",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/160",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "160",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11782",
+              "display": "Colesterolo/Colesterolo HDL"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 3.4,
+          "unit": "00",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/161",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "161",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11744",
+              "display": "Trigliceridi"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 108.0,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/162",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "162",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12368",
+              "display": "Lipoproteina (a)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-04-18T11:45:00+01:00",
+        "valueQuantity": {
+          "value": 84.7,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/164",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "164",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12324",
+              "display": "Eritrociti"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 4.38,
+          "unit": "µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/165",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "165",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12331",
+              "display": "Emoglobina"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 12.7,
+          "unit": "g/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/166",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "166",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12332",
+              "display": "Ematocrito (HCT)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 37.1,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/167",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "167",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12333",
+              "display": "Volume corpuscolare medio (MCV)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 84.7,
+          "unit": "fL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/168",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "168",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12316",
+              "display": "Contenuto corpuscolare medio HGB (MCH)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 29.0,
+          "unit": "pg",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/169",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "169",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12317",
+              "display": "Concentrazione corpuscolare media HGB (MCHC)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 34.2,
+          "unit": "g/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/170",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "170",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12318",
+              "display": "Ampiezza distribuzione volume eritrocitario (RDW CV)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 13.7,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/171",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "171",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12329",
+              "display": "Ampiezza curva distribuzione eritrociti (RDW SD)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 42.5,
+          "unit": "fL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/172",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "172",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12334",
+              "display": "Piastrine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 313.0,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/173",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "173",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12313",
+              "display": "Leucociti"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 14.19,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/174",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "174",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12335",
+              "display": "Neutrofili"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 4.58,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/175",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "175",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12336",
+              "display": "Linfociti"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 6.66,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/176",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "176",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12337",
+              "display": "Monociti"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 2.09,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/177",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12314",
+              "display": "Eosinofili"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 0.83,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/178",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "178",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12315",
+              "display": "Basofili"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 0.03,
+          "unit": "10^3/µL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/179",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "179",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12322",
+              "display": "Neutrofili %"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 32.4,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/180",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "180",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12323",
+              "display": "Linfociti %"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 46.9,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/181",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "181",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12325",
+              "display": "Monociti %"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 14.7,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/182",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "182",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12326",
+              "display": "Eosinofili %"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 5.8,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/183",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "183",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12327",
+              "display": "Basofili %"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 0.2,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/184",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "184",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12049",
+              "display": "NT-proBNP"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 3295.0,
+          "unit": "ng/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/185",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "185",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11843",
+              "display": "Transaminasi G.P. (ALT)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 12.0,
+          "unit": "IU/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/186",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "186",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11859",
+              "display": "Gamma-GT"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 40.0,
+          "unit": "IU/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/187",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "187",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11737",
+              "display": "Bilirubina Totale Reflex"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 0.3,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/188",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "188",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11747",
+              "display": "Glicemia"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 82.0,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/189",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "189",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "12177",
+              "display": "Creatinina (metodo enzimatico)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 0.22,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/190",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "190",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11738",
+              "display": "Azotemia"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 14.0,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/191",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "191",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2020-05-28T15:12:33.149+02:00",
+          "source": "#hBmITM2nwuVMrhlq",
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/InteropEHRateLaboratoryValue"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "2.16.840.1.113883.6.1",
+              "code": "11910",
+              "display": "Potassiemia"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/31"
+        },
+        "effectiveDateTime": "2019-11-04T08:30:00+01:00",
+        "valueQuantity": {
+          "value": 4.5,
+          "unit": "mEq/L",
+          "system": "http://unitsofmeasure.org"
+        }
+      },
+      "search": {
+        "mode": "include"
+      }
+    }
+  ]
+}
