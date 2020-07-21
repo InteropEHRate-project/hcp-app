@@ -58,10 +58,6 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
                         && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().hasDoseQuantity()
                         && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().hasValue()) {
                     drugDosage.append(source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getValue() + " ");
-                }
-                if (source.getDosageInstructionFirstRep().hasDoseAndRate()
-                        && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().hasDoseQuantity()
-                        && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().hasUnit()) {
                     drugDosage.append(source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getUnit());
                 }
                 prescriptionInfoCommand.setDrugDosage(drugDosage.toString());

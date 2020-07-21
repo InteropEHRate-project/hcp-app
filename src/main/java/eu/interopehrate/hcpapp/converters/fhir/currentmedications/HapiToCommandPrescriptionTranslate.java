@@ -63,7 +63,6 @@ public class HapiToCommandPrescriptionTranslate implements Converter<MedicationR
             StringBuilder drugDosage = new StringBuilder();
             if (source.getDosageInstructionFirstRep().hasDoseAndRate()
                     && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().hasDoseQuantity()
-                    && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().hasUnit()
                     && source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().hasValue()) {
                 drugDosage.append(source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getValue() + " ");
                 drugDosage.append(source.getDosageInstructionFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getUnit());
