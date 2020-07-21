@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
-import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescriptionTranslate;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
@@ -29,7 +28,6 @@ import java.util.stream.Collectors;
 public class PrescriptionServiceImpl implements PrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
-    private final HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate;
     private List<PrescriptionInfoCommand> prescriptionInfoCommands = new ArrayList<>();
     private List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR = new ArrayList<>();
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
@@ -39,10 +37,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, HapiToCommandPrescriptionTranslate hapiToCommandPrescriptionTranslate, CurrentD2DConnection currentD2DConnection) throws IOException {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
-        this.hapiToCommandPrescriptionTranslate = hapiToCommandPrescriptionTranslate;
         this.currentD2DConnection = currentD2DConnection;
     }
 
@@ -65,7 +62,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         if (this.currentPatient.getDisplayTranslatedVersion()) {
             var prescriptions = this.currentPatient.prescriptionList()
                     .stream()
-                    .map(this.hapiToCommandPrescriptionTranslate::convert)
+                    .map(this.hapiToCommandPrescription::convert)
                     .collect(Collectors.toList());
             prescriptionInfoCommandList.addAll(prescriptions);
             prescriptionInfoCommandList.addAll(this.prescriptionsUploadedToSEHR);
@@ -213,7 +210,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private static MedicationRequest createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
         MedicationRequest medicationRequest = new MedicationRequest();
 
-        medicationRequest.setMedication(new CodeableConcept().setText(prescriptionEntity.getDrugName()));
+        medicationRequest.setMedication(new CodeableConcept());
+        medicationRequest.getMedication().addChild("coding");
+        medicationRequest.getMedicationCodeableConcept().setCoding(new ArrayList<>());
+        medicationRequest.getMedicationCodeableConcept().getCoding().add(new Coding());
+        medicationRequest.getMedicationCodeableConcept().getCoding().get(0).setDisplay(prescriptionEntity.getDrugName());
 
         Timing t = new Timing();
         t.getRepeat().setFrequency(prescriptionEntity.getFrequency());
