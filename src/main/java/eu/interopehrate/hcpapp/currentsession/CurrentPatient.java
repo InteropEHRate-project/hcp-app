@@ -31,22 +31,10 @@ public class CurrentPatient {
     private Bundle observationTranslated;
     private Certificate certificate;
 
-    public Bundle getPrescription() {
-        return prescription;
-    }
-
-    public void setPrescription(Bundle prescription) {
-        this.prescription = prescription;
-    }
-
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
         this.codesConversionService = codesConversionService;
         this.terminalFhirContext = terminalFhirContext;
-    }
-
-    public TranslateService getTranslateService() {
-        return translateService;
     }
 
     public void initPatient(Patient patient) {
