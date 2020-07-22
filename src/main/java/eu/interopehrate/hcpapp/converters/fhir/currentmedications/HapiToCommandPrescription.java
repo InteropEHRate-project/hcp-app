@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.converters.fhir.currentmedications;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
+import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.MedicationRequest;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -20,10 +21,8 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
     public PrescriptionInfoCommand convert(MedicationRequest source) {
         PrescriptionInfoCommand prescriptionInfoCommand = new PrescriptionInfoCommand();
         if (source.hasMedicationCodeableConcept() && source.getMedicationCodeableConcept().hasCoding()) {
-            if (this.currentPatient.getDisplayTranslatedVersion() && source.getMedicationCodeableConcept().getCoding().get(0).hasExtension()) {
-                prescriptionInfoCommand.setDrugName(source.getMedicationCodeableConcept().getCoding().get(0).getExtension().get(0).getExtension().get(1).getValue().toString());
-            } else {
-                prescriptionInfoCommand.setDrugName(source.getMedicationCodeableConcept().getCoding().get(0).getDisplay());
+            for (Coding coding : source.getMedicationCodeableConcept().getCoding()) {
+                prescriptionInfoCommand.setDrugName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
             }
         }
         if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasAdditionalInstruction()) {
