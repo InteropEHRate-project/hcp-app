@@ -54,6 +54,7 @@ public class IndexController {
     @RequestMapping("/index/close-cloud-connection")
     public String closeCloudConnection() {
         indexService.closeCloudConnection();
+        prescriptionService.clearUploadedList();
         return "redirect:/index";
     }
 

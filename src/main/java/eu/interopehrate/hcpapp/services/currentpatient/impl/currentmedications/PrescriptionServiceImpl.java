@@ -50,9 +50,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void clearUploadedList() {
-        if (Objects.isNull(this.currentD2DConnection.getConnectedThread())) {
-            this.prescriptionsUploadedToSEHR.clear();
-        }
+        this.prescriptionsUploadedToSEHR.clear();
     }
 
     @Override
