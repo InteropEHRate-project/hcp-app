@@ -37,6 +37,14 @@ public class CurrentPatient {
         this.terminalFhirContext = terminalFhirContext;
     }
 
+    public Bundle getPrescription() {
+        return prescription;
+    }
+
+    public Bundle getPrescriptionTranslated() {
+        return prescriptionTranslated;
+    }
+
     public void initPatient(Patient patient) {
         this.patient = patient;
     }
