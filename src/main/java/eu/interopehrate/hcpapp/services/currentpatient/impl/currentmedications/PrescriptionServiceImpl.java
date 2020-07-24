@@ -29,7 +29,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
     private List<PrescriptionInfoCommand> prescriptionInfoCommands = new ArrayList<>();
-    private List<PrescriptionInfoCommand> prescriptionsUploadedToSEHR = new ArrayList<>();
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
     @Autowired
     private PrescriptionRepository prescriptionRepository;
@@ -49,17 +48,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    public void clearUploadedList() {
-        this.prescriptionsUploadedToSEHR.clear();
-    }
-
-    @Override
     public PrescriptionCommand prescriptionCommand() {
         var prescriptions = this.currentPatient.prescriptionList()
                 .stream()
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
-//        prescriptions.addAll(this.prescriptionsUploadedToSEHR);
         toSortMethodCommand(prescriptions);
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
@@ -147,8 +140,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 prescription.getEntry().add(new Bundle.BundleEntryComponent());
                 MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
                 prescription.getEntry().get(i).setResource(med);
-//                this.prescriptionsUploadedToSEHR.add(this.hapiToCommandPrescription.convert(med));
-
                 this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
                 this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
             }

@@ -11,8 +11,6 @@ public interface PrescriptionService {
 
     CurrentD2DConnection getCurrentD2DConnection();
 
-    void clearUploadedList();
-
     PrescriptionCommand prescriptionCommand() throws IOException;
 
     PrescriptionCommand prescriptionCommandUpload();

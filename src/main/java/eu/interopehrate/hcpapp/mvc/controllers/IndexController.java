@@ -42,7 +42,6 @@ public class IndexController {
     @RequestMapping("/index/close-connection")
     public String closeConnection() {
         indexService.closeConnection();
-        prescriptionService.clearUploadedList();
         return "redirect:/index";
     }
 
@@ -54,7 +53,6 @@ public class IndexController {
     @RequestMapping("/index/close-cloud-connection")
     public String closeCloudConnection() {
         indexService.closeCloudConnection();
-        prescriptionService.clearUploadedList();
         return "redirect:/index";
     }
 
