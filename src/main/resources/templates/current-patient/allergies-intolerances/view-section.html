@@ -15,8 +15,18 @@
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
 </head>
-
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -41,8 +51,7 @@
                 </div>
             </div>
             <p>
-            <h3 th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">allergies and
-                intolerances</h3></p>
+            <h3 th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">allergies</h3></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
@@ -65,6 +74,14 @@
                 </tr>
                 </tbody>
             </table>
+
+            <span th:text="#{language.change}"></span>:
+            <select id="locales">
+                <option value=""></option>
+                <option value="en" th:text="#{lang.eng}"></option>
+                <option value="ro" th:text="#{lang.ro}"></option>
+                <option value="it" th:text="#{lang.it}"></option>
+            </select>
 
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
