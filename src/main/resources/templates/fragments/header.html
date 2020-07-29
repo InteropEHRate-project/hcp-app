@@ -14,6 +14,17 @@
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <nav th:fragment="navigation-top" class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -25,27 +36,53 @@
         </button>
         <div class="collapse navbar-collapse flex-column" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'index')} ? 'active' : ''">
-                    <a class="nav-link" href="../index.html" th:href="@{/index}" th:text="#{fragment.main.navigation.top.index}">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item"
+                    th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'index')} ? 'active' : ''">
+                    <a class="nav-link" href="../index.html" th:href="@{/index}"
+                       th:text="#{fragment.main.navigation.top.index}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient')} ? 'active' : ''">
-                    <a class="nav-link" href="../current-patient/demographic-information/view-section.html" th:href="@{/current-patient/demographic-information/view-section}" th:text="#{fragment.main.navigation.top.current.patient}">Current Patient</a>
+                <li class="nav-item"
+                    th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient')} ? 'active' : ''">
+                    <a class="nav-link" href="../current-patient/demographic-information/view-section.html"
+                       th:href="@{/current-patient/demographic-information/view-section}"
+                       th:text="#{fragment.main.navigation.top.current.patient}">Current Patient</a>
                 </li>
-                <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'administration')} ? 'active' : ''">
-                    <a class="nav-link" href="../administration/health-care-organization/view-details.html" th:href="@{/administration/health-care-organization/view-details}" th:text="#{fragment.main.navigation.top.administration}">Administration</a>
+                <li class="nav-item"
+                    th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'administration')} ? 'active' : ''">
+                    <a class="nav-link" href="../administration/health-care-organization/view-details.html"
+                       th:href="@{/administration/health-care-organization/view-details}"
+                       th:text="#{fragment.main.navigation.top.administration}">Administration</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="locales" role="button"
+                       data-toggle="dropdown">
+                        Language
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="?lang=en" value="en"
+                           th:text="#{lang.eng}">English</a>
+                        <a class="dropdown-item" href="?lang=ro" value="ro"
+                           th:text="#{lang.ro}">Romanian</a>
+                        <a class="dropdown-item" href="?lang=it" value="it" th:text="#{lang.it}">Italian</a>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<nav th:fragment="navigation-top" class="navbar navbar-expand-sm navbar-light static-top"  style="background-color: #e3f2fd;"
+<nav th:fragment="navigation-top" class="navbar navbar-expand-sm navbar-light static-top"
+     style="background-color: #e3f2fd;"
      th:if="${session.mySessionAttribute != null && session.mySessionAttribute.getPatientDataCommand() != null
              && session.mySessionAttribute.getPatientDataCommand().hasData() && session.mySessionAttribute.getPatientDataCommand().getBirthDate() != null}">
     <div class="container">
         <div>
-            <span style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getConnectionState() != null && session.mySessionAttribute.getConnectionState() == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" th:text="#{template.index.d2dConnection.title}"></span>
-            <span style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getCloudConnectionState() != null && session.mySessionAttribute.getCloudConnectionState() == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}" th:text="#{template.index.cloudConnection.title}"></span>
+            <span style="color: cornflowerblue; font: message-box"
+                  th:if="${session.mySessionAttribute.getConnectionState() != null && session.mySessionAttribute.getConnectionState() == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                  th:text="#{template.index.d2dConnection.title}"></span>
+            <span style="color: cornflowerblue; font: message-box"
+                  th:if="${session.mySessionAttribute.getCloudConnectionState() != null && session.mySessionAttribute.getCloudConnectionState() == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
+                  th:text="#{template.index.cloudConnection.title}"></span>
         </div>
         <div class="collapse navbar-collapse flex-column" id="navbarResponsive2">
             <ul class="navbar-nav ml-auto">
@@ -57,7 +94,8 @@
                 </li>
                 <li class="nav-item disabled">
                     <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="${'Age: '
-                    + session.mySessionAttribute.getPatientDataCommand().getAge()}" th:unless="${session == null}">Age</span>
+                    + session.mySessionAttribute.getPatientDataCommand().getAge()}"
+                          th:unless="${session == null}">Age</span>
                 </li>
                 <li class="nav-item disabled">
                     <span class="nav-link" style="color: cornflowerblue; font: message-box">Country: -</span>
