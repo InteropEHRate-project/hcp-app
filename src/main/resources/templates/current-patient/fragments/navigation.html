@@ -47,7 +47,8 @@
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/document-history-consultation')} ? 'active' : ''"
        href="../document-history-consultation/view-section.html"
        th:href="@{/current-patient/document-history-consultation/view-section}"
-       th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</a>
+       th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
+        Consultation</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-results')} ? 'active' : ''"
        href="../diagnostic-results/laboratory-results/observation-laboratory-view.html"
@@ -55,10 +56,14 @@
        th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.tests}">Laboratory Tests</a>
     <div class="dropdown-divider"></div>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Visit Data</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+           aria-expanded="false">Visit Data</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/vital-signs/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.vital-signs}">Vital Signs</a>
+            <a class="dropdown-item nav-link"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/visit-data/vital-signs')} ? 'active' : ''"
+               href="../vital-signs/view-section.html"
+               th:href="@{/current-patient/visit-data/vital-signs/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.vital.signs}">Vital Signs</a>
             <a class="dropdown-item" th:href="@{/current-patient/visit-data/reason/view-section}"
                th:text="#{fragment.current.patient.navigation.left.reason}">Reason</a>
             <a class="dropdown-item" th:href="@{/current-patient/visit-data/ph-exam/view-section}"
@@ -68,61 +73,61 @@
                th:text="#{fragment.current.patient.navigation.left.conclusion}">Conclusion</a>
         </div>
     </li>
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/problems')} ? 'active' : ''"-->
-<!--       href="../problems/view-section.html"-->
-<!--       th:href="@{/current-patient/problems/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.problems}">Problems</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/immunization')} ? 'active' : ''"-->
-<!--       href="../immunization/view-section.html"-->
-<!--       th:href="@{/current-patient/immunization/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.immunization}">Immunzations</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-procedure')} ? 'active' : ''"-->
-<!--       href="../history-procedure/procedure/view-section.html"-->
-<!--       th:href="@{/current-patient/history-procedure/procedure/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.history.procedure}">History of Procedure</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices')} ? 'active' : ''"-->
-<!--       href="../medical-devices/device/view-section.html"-->
-<!--       th:href="@{/current-patient/medical-devices/use-device-statement/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical Devices</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/vital-signs')} ? 'active' : ''"-->
-<!--       href="../vital-signs/view-section.html"-->
-<!--       th:href="@{/current-patient/vital-signs/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.vital-signs}">Vital Signs</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-past-illness')} ? 'active' : ''"-->
-<!--       href="../history-past-illness/view-section.html"-->
-<!--       th:href="@{/current-patient/history-past-illness/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.history-past-illness}">History of Past Illness</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/pregnancy')} ? 'active' : ''"-->
-<!--       href="../pregnancy/edd/view-section.html"-->
-<!--       th:href="@{/current-patient/pregnancy/edd/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.pregnancy}">Pregnancy</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/social-history')} ? 'active' : ''"-->
-<!--       href="../social-history/alcohol/view-section.html"-->
-<!--       th:href="@{/current-patient/social-history/alcohol/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.social-history}">Social History</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/plan-care')} ? 'active' : ''"-->
-<!--       href="../plan-care/view-section.html"-->
-<!--       th:href="@{/current-patient/plan-care/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.plan-care}">Plan of Care</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/functional-status')} ? 'active' : ''"-->
-<!--       href="../functional-status/view-section.html"-->
-<!--       th:href="@{/current-patient/functional-status/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.functional-status}">Functional Status</a>-->
-<!--    <a class="flex-sm-fill text-sm-left nav-link"-->
-<!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/advance-directives')} ? 'active' : ''"-->
-<!--       href="../advance-directives/view-section.html"-->
-<!--       th:href="@{/current-patient/advance-directives/view-section}"-->
-<!--       th:text="#{fragment.current.patient.navigation.left.advance-directives}">Advance Directives</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/problems')} ? 'active' : ''"-->
+    <!--       href="../problems/view-section.html"-->
+    <!--       th:href="@{/current-patient/problems/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.problems}">Problems</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/immunization')} ? 'active' : ''"-->
+    <!--       href="../immunization/view-section.html"-->
+    <!--       th:href="@{/current-patient/immunization/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.immunization}">Immunzations</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-procedure')} ? 'active' : ''"-->
+    <!--       href="../history-procedure/procedure/view-section.html"-->
+    <!--       th:href="@{/current-patient/history-procedure/procedure/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.history.procedure}">History of Procedure</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/medical-devices')} ? 'active' : ''"-->
+    <!--       href="../medical-devices/device/view-section.html"-->
+    <!--       th:href="@{/current-patient/medical-devices/use-device-statement/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.medical.devices}">Medical Devices</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/vital-signs')} ? 'active' : ''"-->
+    <!--       href="../vital-signs/view-section.html"-->
+    <!--       th:href="@{/current-patient/vital-signs/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.vital-signs}">Vital Signs</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/history-past-illness')} ? 'active' : ''"-->
+    <!--       href="../history-past-illness/view-section.html"-->
+    <!--       th:href="@{/current-patient/history-past-illness/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.history-past-illness}">History of Past Illness</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/pregnancy')} ? 'active' : ''"-->
+    <!--       href="../pregnancy/edd/view-section.html"-->
+    <!--       th:href="@{/current-patient/pregnancy/edd/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.pregnancy}">Pregnancy</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/social-history')} ? 'active' : ''"-->
+    <!--       href="../social-history/alcohol/view-section.html"-->
+    <!--       th:href="@{/current-patient/social-history/alcohol/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.social-history}">Social History</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/plan-care')} ? 'active' : ''"-->
+    <!--       href="../plan-care/view-section.html"-->
+    <!--       th:href="@{/current-patient/plan-care/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.plan-care}">Plan of Care</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/functional-status')} ? 'active' : ''"-->
+    <!--       href="../functional-status/view-section.html"-->
+    <!--       th:href="@{/current-patient/functional-status/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.functional-status}">Functional Status</a>-->
+    <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
+    <!--       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/advance-directives')} ? 'active' : ''"-->
+    <!--       href="../advance-directives/view-section.html"-->
+    <!--       th:href="@{/current-patient/advance-directives/view-section}"-->
+    <!--       th:text="#{fragment.current.patient.navigation.left.advance-directives}">Advance Directives</a>-->
 </div>
 </body>
 </html>
