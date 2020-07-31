@@ -57,7 +57,7 @@ public class BundleProcessor {
                 .collect(Collectors.toList());
     }
 
-    public List<Observation> observationList() {
+    public List<Observation> laboratoryList() {
         return bundle.getEntry()
                 .stream()
                 .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))

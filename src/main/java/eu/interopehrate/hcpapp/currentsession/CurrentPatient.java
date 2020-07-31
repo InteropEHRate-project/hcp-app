@@ -118,18 +118,18 @@ public class CurrentPatient {
         }
     }
 
-    public List<Observation> observationList() {
+    public List<Observation> laboratoryList() {
         if(displayTranslatedVersion) {
             if (Objects.isNull(observationTranslated)) {
                 return Collections.emptyList();
             } else {
-                return new BundleProcessor(observationTranslated).observationList();
+                return new BundleProcessor(observationTranslated).laboratoryList();
             }
         }else{
             if (Objects.isNull(observation)) {
                 return Collections.emptyList();
             } else {
-                return new BundleProcessor(observation).observationList();
+                return new BundleProcessor(observation).laboratoryList();
             }
         }
     }

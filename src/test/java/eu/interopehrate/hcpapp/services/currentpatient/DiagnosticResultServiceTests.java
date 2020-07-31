@@ -36,7 +36,7 @@ public class DiagnosticResultServiceTests {
     public void testDiagnosticResultSection() {
         Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(initialJsonFhir);
         currentPatient.initLaboratoryResults(patientSummaryBundle);
-        List<Observation> diagnosticResultInfoCommands = currentPatient.observationList();
+        List<Observation> diagnosticResultInfoCommands = currentPatient.laboratoryList();
         assertTrue(diagnosticResultInfoCommands.size() > 0);
     }
 
@@ -45,7 +45,7 @@ public class DiagnosticResultServiceTests {
     public void testDiagnosticResultCode() {
         Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(initialJsonFhir);
         currentPatient.initLaboratoryResults(patientSummaryBundle);
-        System.out.println(currentPatient.observationList().get(1).getCode().getCoding().get(0).getCode());
+        System.out.println(currentPatient.laboratoryList().get(1).getCode().getCoding().get(0).getCode());
     }
 
 }

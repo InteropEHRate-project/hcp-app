@@ -24,7 +24,7 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
 
     @Override
     public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis() {
-        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = currentPatient.observationList()
+        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = currentPatient.laboratoryList()
                     .stream()
                     .map(hapiToCommandObservationLaboratory::convert)
                     .collect(Collectors.toList());

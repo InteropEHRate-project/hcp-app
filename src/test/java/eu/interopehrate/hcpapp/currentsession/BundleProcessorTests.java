@@ -64,7 +64,7 @@ public class BundleProcessorTests {
 
     @Test
     public void testObservationList() {
-        List<Observation> observationList = bundleProcessor.observationList();
+        List<Observation> observationList = bundleProcessor.laboratoryList();
         assertEquals(2, observationList.size());
     }
 
