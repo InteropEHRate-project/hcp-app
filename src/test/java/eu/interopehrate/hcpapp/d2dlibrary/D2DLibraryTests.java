@@ -74,6 +74,11 @@ public class D2DLibraryTests {
             public void onLaboratoryResultsReceived(Bundle bundle) {
 
             }
+
+            @Override
+            public void onImageReportReceived(Bundle bundle) {
+
+            }
         }
 
         D2DHRExchangeListeners d2DHRExchangeListeners = new D2DHRExchangeListenersTestImpl();

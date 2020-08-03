@@ -1,7 +1,5 @@
 package eu.interopehrate.hcpapp.currentsession;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.td2de.BluetoothConnection;
@@ -10,23 +8,18 @@ import eu.interopehrate.td2de.api.D2DConnectionListeners;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -201,6 +194,11 @@ public class CurrentD2DConnection implements DisposableBean {
             } catch (Exception e) {
                 log.error("Error after Prescription was received", e);
             }
+        }
+
+        @Override
+        public void onImageReportReceived(Bundle bundle) {
+            log.info("onImageReportReceived");
         }
     }
 
