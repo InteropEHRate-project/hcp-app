@@ -37,18 +37,9 @@
             </div>
             <p><h3 th:text="#{fragment.current.patient.navigation.left.currentDiseases}">Current Diseases</h3></p>
             <table class="table table-bordered">
-                <colgroup>
-                    <col style="width: 10%;">
-                    <col style="width: 35%;">
-                    <col style="width: 15%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                </colgroup>
                 <thead class="thead-light">
                     <tr>
-                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>
+<!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
                         <th th:text="#{template.current.patient.currentDisease.list.statement.disease}">disease</th>
                         <th th:text="#{template.current.patient.currentDisease.list.statement.date.of.diagnosis}">date of diagnosis</th>
                         <th th:text="#{template.current.patient.currentDisease.list.statement.comment}">comment</th>
@@ -56,7 +47,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
-                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>
+<!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
                         <td style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.getDisease()}">disease</td>
                         <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                         <td th:text="${currentDisease.getComment()}">comment</td>
