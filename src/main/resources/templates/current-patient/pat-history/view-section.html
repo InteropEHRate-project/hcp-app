@@ -25,7 +25,34 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
+            <div class="m-5"></div>
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group btn-group-sm mr-2" role="group">
+                    <div class="btn-group mr-2" role="group">
+                        <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+                        <a href="#" class="btn btn-primary" th:styleappend="${!patHistoryCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/pat-history/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                        <a href="#" class="btn btn-primary" th:styleappend="${patHistoryCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/pat-history/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+                    </div>
+                </div>
+            </div>
             <p><h3 th:text="#{fragment.current.patient.navigation.left.pat.history}">Pat History</h3></p>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.current.patient.pat.history.diagnosis}">diagnosis</th>
+                    <th th:text="#{template.current.patient.pat.history.year.of.diagnosis}">year of diagnosis</th>
+                    <th th:text="#{template.current.patient.pat.history.comments}">comments</th>
+                </tr>
+                </thead>
+                <tbody>
+                        <tr th:each="patHistory : ${patHistoryCommand.getPatHistoryInfoCommands()}">
+<!--                            <td style="background-color: azure" th:style="${!patHistoryCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${patHistory.getDiagnosis()}">diagnosis</td>-->
+                            <td th:text="${patHistory.getDiagnosis()}">diagnosis</td>
+                            <td th:text="${{patHistory.getYearOfDiagnosis()}}">year of diagnosis</td>
+                            <td th:text="${patHistory.getComments()}">comments</td>
+                        </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
