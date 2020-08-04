@@ -37,11 +37,11 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Drug Name</th>
-                    <th>Drug Dosage</th>
-                    <th>Timings</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.action}">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,7 @@
                             drugDosage=${{pr.getDrugDosage()}},
                             dateOfPrescription=${{pr.getDateOfPrescription()}},
                             start=${{pr.getStart()}},
-                            end=${{pr.getEnd()}})}">Medication Details</a>
+                            end=${{pr.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
                         </div>
                     </td>
                 </tr>
@@ -69,15 +69,16 @@
             </table>
 
             <p th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"><br>
-            <h5 th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">Prescription to upload in S-EHR</h5></p>
+            <h5 th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"
+                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
             <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
                 <thead class="thead-light">
                 <tr>
-                    <th>Drug Name</th>
-                    <th>Drug Dosage</th>
-                    <th>Timings</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.actions}">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -97,10 +98,14 @@
                             drugDosage=${{prUpload.getDrugDosage()}},
                             dateOfPrescription=${{prUpload.getDateOfPrescription()}},
                             start=${{prUpload.getStart()}},
-                            end=${{prUpload.getEnd()}})}">Medication Details</a>
+                            end=${{prUpload.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
 
-                            <a href="#" th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info">Edit</a>
-                            <a href="#" th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger">Delete</a>
+                            <a href="#"
+                               th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"
+                               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.edit}">Edit</a>
+                            <a href="#"
+                               th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"
+                               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.delete}">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -109,12 +114,16 @@
 
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/open-add-page}">Add</a>
+                    <a href="#" class="btn btn-primary"
+                       th:href="@{/current-patient/current-medications/prescription/open-add-page}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.add}">Add</a>
                 </div>
             </div>
             <div class="btn-toolbar float-left" role="toolbar" th:if="${(!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/current-medications/prescription/sendToSehr}">Send to S-EHR</a>
+                    <a href="#" class="btn btn-outline-primary"
+                       th:href="@{/current-patient/current-medications/prescription/sendToSehr}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
                 </div>
             </div>
         </div>

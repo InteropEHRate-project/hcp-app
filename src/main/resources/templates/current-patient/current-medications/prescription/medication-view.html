@@ -28,8 +28,8 @@
                 <div class="btn-group mr-2" role="group">
                     <a href="#" class="btn disabled" style="background-color: lightgray"
                        th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Original</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>
                 </div>
             </div>
             <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
@@ -71,7 +71,7 @@
             </div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/view-section}">Back</a>
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/view-section}" th:text="#{crud.button.back}">Back</a>
                 </div>
             </div>
         </div>
