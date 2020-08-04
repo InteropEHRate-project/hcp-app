@@ -61,7 +61,7 @@
         <div class="col-4">
             <form>
                 <div class="form-group">
-                    <label for="patientHistory">Patient History</label>
+                    <label for="patientHistory" th:text="#{template.current.patient.pat.history.patient.history}">Patient History</label>
                     <textarea class="form-control" id="patientHistory" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Save</button>
@@ -70,7 +70,7 @@
         <div class="col-4">
             <form>
                 <div class="form-group">
-                    <label for="socialHistory">Social History</label>
+                    <label for="socialHistory" th:text="#{template.current.patient.pat.history.social.history}">Social History</label>
                     <textarea class="form-control" id="socialHistory" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Save</button>
@@ -79,7 +79,7 @@
         <div class="col-4">
             <form>
                 <div class="form-group">
-                    <label for="familyHistory">Family History</label>
+                    <label for="familyHistory" th:text="#{template.current.patient.pat.history.family.history}">Family History</label>
                     <textarea class="form-control" id="familyHistory" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Save</button>
