@@ -198,7 +198,13 @@ public class CurrentD2DConnection implements DisposableBean {
 
         @Override
         public void onImageReportReceived(Bundle bundle) {
-            log.info("onImageReportReceived");
+            try {
+                log.info("onImageReportReceived");
+                CurrentD2DConnection.this.currentPatient.initImageReport(bundle);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            } catch (Exception e) {
+                log.error("Error after ImageReport was received", e);
+            }
         }
     }
 

@@ -30,6 +30,7 @@ public class CurrentPatient {
     private Bundle observation;
     private Bundle observationTranslated;
     private Certificate certificate;
+    private Bundle imageReport;
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
@@ -86,24 +87,29 @@ public class CurrentPatient {
         }
     }
 
-    public Bundle getObservation(){
+    public void initImageReport(Bundle imageRep) {
+        this.imageReport = imageRep;
+    }
+
+    public Bundle getObservation() {
         return observation;
     }
 
     public void reset() {
-        displayTranslatedVersion = Boolean.TRUE;
-        patient = null;
-        consent = null;
-        patientSummaryBundle = null;
-        patientSummaryBundleTranslated=null;
-        prescription = null;
-        prescriptionTranslated =null;
-        observation = null;
-        observationTranslated = null;
+        this.displayTranslatedVersion = Boolean.TRUE;
+        this.patient = null;
+        this.consent = null;
+        this.patientSummaryBundle = null;
+        this.patientSummaryBundleTranslated = null;
+        this.prescription = null;
+        this.prescriptionTranslated = null;
+        this.observation = null;
+        this.observationTranslated = null;
+        this.imageReport = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
-        if(displayTranslatedVersion) {
+        if (displayTranslatedVersion) {
             if (Objects.isNull(patientSummaryBundleTranslated)) {
                 return Collections.emptyList();
             } else {
@@ -119,13 +125,13 @@ public class CurrentPatient {
     }
 
     public List<Observation> laboratoryList() {
-        if(displayTranslatedVersion) {
+        if (displayTranslatedVersion) {
             if (Objects.isNull(observationTranslated)) {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(observationTranslated).laboratoryList();
             }
-        }else{
+        } else {
             if (Objects.isNull(observation)) {
                 return Collections.emptyList();
             } else {
@@ -135,13 +141,13 @@ public class CurrentPatient {
     }
 
     public List<Condition> conditionsList() {
-        if(displayTranslatedVersion){
+        if (displayTranslatedVersion) {
             if (Objects.isNull(patientSummaryBundleTranslated)) {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(patientSummaryBundleTranslated).conditionList();
             }
-        }else{
+        } else {
             if (Objects.isNull(patientSummaryBundle)) {
                 return Collections.emptyList();
             } else {
@@ -152,13 +158,13 @@ public class CurrentPatient {
 
 
     public List<MedicationStatement> medicationStatementList() {
-        if(displayTranslatedVersion){
+        if (displayTranslatedVersion) {
             if (Objects.isNull(patientSummaryBundleTranslated)) {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(patientSummaryBundleTranslated).medicationStatementList();
             }
-        }else{
+        } else {
             if (Objects.isNull(patientSummaryBundle)) {
                 return Collections.emptyList();
             } else {
