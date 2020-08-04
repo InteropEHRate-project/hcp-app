@@ -18,7 +18,7 @@ public class VitalSignsCommand {
     public List<LocalDateTime> localDateTimeListWithoutDuplicates(){
         List<LocalDateTime> withDuplicates = new ArrayList<>();
         for (int i = 0; i < vitalSignsInfoCommands.size(); i++){
-            withDuplicates.add(vitalSignsInfoCommands.get(i).getSample());
+            withDuplicates.add(vitalSignsInfoCommands.get(i).getLocalDateOfVitalSign());
         }
 
         List<LocalDateTime> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
@@ -29,7 +29,7 @@ public class VitalSignsCommand {
     public List<String> vitalSignsAnalysesWithoutDuplicates(){
         List<String> withDuplicates = new ArrayList<>();
         for (int i = 0; i < vitalSignsInfoCommands.size(); i++){
-            withDuplicates.add(vitalSignsInfoCommands.get(i).getAnalysis());
+            withDuplicates.add(vitalSignsInfoCommands.get(i).getAnalysisName());
         }
 
         List<String> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
@@ -45,8 +45,8 @@ public class VitalSignsCommand {
         for (int i = 0; i < analysisList.size(); i++){
             for (int j = 0; j < dateTimeList.size(); j++){
                 for(int k=0; k < vitalSignsInfoCommands.size(); k++){
-                    if(analysisList.get(i).equals(vitalSignsInfoCommands.get(k).getAnalysis()) &&
-                            (dateTimeList.get(j).equals(vitalSignsInfoCommands.get(k).getSample()))) {
+                    if(analysisList.get(i).equals(vitalSignsInfoCommands.get(k).getAnalysisName()) &&
+                            (dateTimeList.get(j).equals(vitalSignsInfoCommands.get(k).getLocalDateOfVitalSign()))) {
                         mapPair.put(analysisList.get(i),dateTimeList.get(j),vitalSignsInfoCommands.get(k).getCurrentValue()+" " + vitalSignsInfoCommands.get(k).getUnitOfMeasurement());
                     }
                 }
