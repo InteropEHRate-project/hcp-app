@@ -53,6 +53,39 @@
                         </tr>
                 </tbody>
             </table>
+            <br>
+            <div class="col-7">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{template.current.patient.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
+                        <th scope="col" th:text="#{template.current.patient.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
+                    </tr>
+                    </thead>
+                    <tbody class="col-6">
+                    <tr>
+                        <th scope="row" th:text="#{template.current.patient.pat.history.hypertension}">hypertension</th>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" th:text="#{template.current.patient.pat.history.diabetes}">diabetes</th>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" th:text="#{template.current.patient.pat.history.dyslipidemia}">dyslipidemia</th>
+                        <td colspan="2">No</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" th:text="#{template.current.patient.pat.history.current.past.smoker}">current/past smoker</th>
+                        <td colspan="2">Yes</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" th:text="#{template.current.patient.pat.history.family.history}">family history of CVD</th>
+                        <td colspan="2">No</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <br><br>
