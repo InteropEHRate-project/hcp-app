@@ -36,10 +36,6 @@ public class CurrentD2DConnection implements DisposableBean {
     private String ipsValidatorPackPath;
     private TerminalFhirContext terminalFhirContext;
 
-    public IndexPatientDataCommand getIndexPatientDataCommand() {
-        return indexPatientDataCommand;
-    }
-
     public CurrentD2DConnection(CurrentPatient currentPatient,
                                 D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext) {
         this.currentPatient = currentPatient;
@@ -50,6 +46,10 @@ public class CurrentD2DConnection implements DisposableBean {
 
     public ConnectedThread getConnectedThread() {
         return connectedThread;
+    }
+
+    public IndexPatientDataCommand getIndexPatientDataCommand() {
+        return indexPatientDataCommand;
     }
 
     @Override

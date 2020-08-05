@@ -78,7 +78,7 @@
                     <div class="col-md-6">
                         <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date}">Date:</label><br>
                         <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" th:field="*{localDateOfVitalSign}" id="localDateOfVitalSign" placeholder="Date"/>
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" th:field="*{vitalSignsInfoCommandSample.localDateOfVitalSign}" id="localDateOfVitalSign" placeholder="Date"/>
                             <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                             </div>
@@ -92,10 +92,10 @@
 
                     <div class="col-md-6">
                         <label for="currentValue" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value}">Value of the Vital Signs</label><br>
-                        <input id="currentValue" type="number" step="0.01" class="form-control" th:classappend="${#fields.hasErrors('currentValue')} ? 'is-invalid' :''" th:field="*{currentValue}">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('currentValue')}">
+                        <input id="currentValue" type="number" step="0.01" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.currentValue}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')}">
                             <ul>
-                                <li th:each="err : ${#fields.errors('currentValue')}" th:text="${err}">err</li>
+                                <li th:each="err : ${#fields.errors('vitalSignsInfoCommandSample.currentValue')}" th:text="${err}">err</li>
                             </ul>
                         </div>
                     </div>
@@ -103,10 +103,10 @@
 
                     <div class="col-md-6">
                         <label for="unitOfMeasurement" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.unit}">Unit of Measurement</label><br>
-                        <input id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{unitOfMeasurement}">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('unitOfMeasurement')}">
+                        <input id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')}">
                             <ul>
-                                <li th:each="err : ${#fields.errors('unitOfMeasurement')}" th:text="${err}">err</li>
+                                <li th:each="err : ${#fields.errors('vitalSignsInfoCommandSample.unitOfMeasurement')}" th:text="${err}">err</li>
                             </ul>
                         </div>
                     </div>
