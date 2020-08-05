@@ -93,8 +93,8 @@
                     + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name</span>
                 </li>
                 <li class="nav-item disabled">
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="${'Age: '
-                    + session.mySessionAttribute.getPatientDataCommand().getAge()}"
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box"
+                          th:text="${'Age: ' + session.mySessionAttribute.getPatientDataCommand().getAge()}"
                           th:unless="${session == null}">Age</span>
                 </li>
                 <li class="nav-item disabled">
