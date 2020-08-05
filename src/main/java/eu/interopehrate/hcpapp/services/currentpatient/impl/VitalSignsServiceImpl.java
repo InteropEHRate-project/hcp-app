@@ -58,7 +58,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     @Override
-    public void insertPrescription(VitalSignsInfoCommand vitalSignsInfoCommand) {
+    public void insertVitalSign(VitalSignsInfoCommand vitalSignsInfoCommand) {
         VitalSignsEntity vitalSignsEntity=this.entityToVitalSigns.convert(vitalSignsInfoCommand);
         vitalSignsRepository.save(vitalSignsEntity);
         vitalSignsInfoCommandsList.add(vitalSignsInfoCommand);
