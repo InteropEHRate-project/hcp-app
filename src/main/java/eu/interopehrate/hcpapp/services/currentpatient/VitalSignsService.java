@@ -11,5 +11,5 @@ public interface VitalSignsService {
 
     void sendVitalSigns(Bundle vitalSigns) throws IOException;
 
-    void insertPrescription(VitalSignsInfoCommand vitalSignsInfoCommand);
+    void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand);
 }

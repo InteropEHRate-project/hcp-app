@@ -43,7 +43,7 @@ public class VitalSignsController {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
         }
-        vitalSignsService.insertPrescription(vitalSignsInfoCommand);
+        vitalSignsService.insertVitalSigns(vitalSignsInfoCommand);
         return "redirect:/current-patient/visit-data/vital-signs/view-section";
     }
 
