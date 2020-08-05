@@ -74,4 +74,13 @@ public class BundleProcessor {
                 .map(MedicationRequest.class::cast)
                 .collect(Collectors.toList());
     }
+
+    public List<Observation> vitalSignsList() {
+        return bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(Observation.class::cast)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults;
+package eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class VitalSignsInfoCommand {
-    @NotEmpty
-    @NotNull
-    private String analysisName;
+public class VitalSignsInfoCommandSample {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
-    private LocalDateTime localDateOfVitalSign ;
+    private LocalDateTime localDateOfVitalSign;
 
     private double currentValue;
 

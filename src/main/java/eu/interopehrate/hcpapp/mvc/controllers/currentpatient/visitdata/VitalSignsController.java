@@ -1,17 +1,18 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.VitalSignsInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/current-patient/visit-data/vital-signs")
@@ -24,7 +25,7 @@ public class VitalSignsController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model) {
+    public String viewSection(Model model) throws IOException {
         model.addAttribute("vitalSigns", vitalSignsService.vitalSignsCommand());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION;
     }

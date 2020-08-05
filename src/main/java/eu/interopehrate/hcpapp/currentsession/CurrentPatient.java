@@ -31,6 +31,8 @@ public class CurrentPatient {
     private Bundle observationTranslated;
     private Certificate certificate;
     private Bundle imageReport;
+    private Bundle vitalSignsBundle;
+    private Bundle vitalSignsTranslated;
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
@@ -185,6 +187,22 @@ public class CurrentPatient {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(this.prescription).prescriptionList();
+            }
+        }
+    }
+
+    public List<Observation> vitalSignsList() {
+        if (displayTranslatedVersion) {
+            if (Objects.isNull(vitalSignsTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(vitalSignsTranslated).vitalSignsList();
+            }
+        } else {
+            if (Objects.isNull(vitalSignsBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(vitalSignsBundle).vitalSignsList();
             }
         }
     }

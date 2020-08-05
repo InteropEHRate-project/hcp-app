@@ -1,65 +1,89 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.EntityToVitalSigns;
+import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.VitalSignsCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.VitalSignsInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Observation;
+import org.hl7.fhir.r4.model.ResourceType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class VitalSignsServiceImpl implements VitalSignsService {
     private CurrentPatient currentPatient;
     private List<VitalSignsInfoCommand> vitalSignsInfoCommandsList = new ArrayList<>();
-    private EntityToVitalSigns entityToVitalSigns=new EntityToVitalSigns();
+    private HapiToCommandVitalSigns hapiToCommandVitalSigns;
+    private EntityToVitalSigns entityToVitalSigns = new EntityToVitalSigns();
     @Autowired
     private VitalSignsRepository vitalSignsRepository;
     private CurrentD2DConnection currentD2DConnection;
 
-    public VitalSignsServiceImpl(CurrentPatient currentPatient, CurrentD2DConnection currentD2DConnection) {
+    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns,
+                                 CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
+        this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
-    public VitalSignsCommand vitalSignsCommand() {
-        VitalSignsInfoCommand test = new VitalSignsInfoCommand();
-        test.setAnalysisName("Heart Rate");
-        test.setCurrentValue(90);
-        test.setUnitOfMeasurement("bpm");
-        test.setLocalDateOfVitalSign(LocalDateTime.of(LocalDate.of(2020,03,12),LocalTime.of(19,20,02)));
+    public VitalSignsCommand vitalSignsCommand() throws IOException {
 
-        VitalSignsInfoCommand test2 = new VitalSignsInfoCommand();
-        test2.setAnalysisName("Breathing Rate");
-        test2.setCurrentValue(120);
-        test2.setUnitOfMeasurement("b/min");
-        test2.setLocalDateOfVitalSign(LocalDateTime.of(LocalDate.of(2020,04,12),LocalTime.of(19,20,02)));
+        File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        Bundle vitalSignsBundle = parser.parseResource(Bundle.class, lineReadtest);
 
-        vitalSignsInfoCommandsList.add(test);
-        vitalSignsInfoCommandsList.add(test2);
+        var vitalSigns = vitalSignsBundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(Observation.class::cast)
+                .collect(Collectors.toList());
+
+        var vitalSignsInfoCommands = vitalSigns
+                .stream()
+                .map(hapiToCommandVitalSigns::convert)
+                .collect(Collectors.toList());
+
         return VitalSignsCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
-                .vitalSignsInfoCommands(vitalSignsInfoCommandsList)
+                .vitalSignsInfoCommands(vitalSignsInfoCommands)
                 .build();
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 
     @Override
     public void insertPrescription(VitalSignsInfoCommand vitalSignsInfoCommand) {
-        VitalSignsEntity vitalSignsEntity=this.entityToVitalSigns.convert(vitalSignsInfoCommand);
+        VitalSignsEntity vitalSignsEntity = this.entityToVitalSigns.convert(vitalSignsInfoCommand);
         vitalSignsRepository.save(vitalSignsEntity);
         vitalSignsInfoCommandsList.add(vitalSignsInfoCommand);
 
