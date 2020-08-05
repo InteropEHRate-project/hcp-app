@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          th:href="@{/webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+
+
+</head>
+<body>
+<div th:replace="fragments/header::navigation-top">navigation-top</div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+        </div>
+
+        <div class="col-9">
+            <div class="m-3"></div>
+            <h2>Add Vital Signs information</h2>
+            <div class="m-5"></div>
+            <form action="#" th:action="@{/current-patient/visit-data/vital-signs/save-add}" th:object="${vitalSignsInfoCommand}" method="post">
+
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please correct the errors below</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.name}">Vital Sign Name</label>
+                        <input id="analysisName" type="text" class="form-control" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" placeholder="" th:field="*{analysisName}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('analysisName')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+<!--                    <div class="col-md-6">-->
+<!--                        <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date}">Date of Vital Signs</label><br>-->
+<!--                        <div class="row">-->
+<!--                            <div class='col-sm-6'>-->
+<!--                                    <input id="localDateOfVitalSign" type='text' class="form-control" th:classappend="${#fields.hasErrors('localDateOfVitalSign')} ? 'is-invalid' :''" th:field="*{localDateOfVitalSign}" placeholder="Chose date"   />-->
+<!--                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('localDateOfVitalSign')}">-->
+<!--                                        <ul>-->
+<!--                                            <li th:each="err : ${#fields.errors('localDateOfVitalSign')}" th:text="${err}">err</li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                            </div>-->
+<!--                            <script type="text/javascript">-->
+<!--                                $(function () {-->
+<!--                                    $('#localDateOfVitalSign').datetimepicker({format: "dd/MM/yyyy h:mm a"});-->
+<!--                                });-->
+<!--                            </script>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="col-md-6">
+                        <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date}">Date:</label><br>
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" th:field="*{localDateOfVitalSign}" id="localDateOfVitalSign" placeholder="Date"/>
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="col-md-6">
+                        <label for="currentValue" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value}">Value of the Vital Signs</label><br>
+                        <input id="currentValue" type="number" step="0.01" class="form-control" th:classappend="${#fields.hasErrors('currentValue')} ? 'is-invalid' :''" th:field="*{currentValue}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('currentValue')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('currentValue')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <label for="unitOfMeasurement" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.unit}">Unit of Measurement</label><br>
+                        <input id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{unitOfMeasurement}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('unitOfMeasurement')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('unitOfMeasurement')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="text-right"><br>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/moment/moment.min.js}"></script>
+<script th:src="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+<script>
+    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check-o',
+            clear: 'far fa-trash',
+            close: 'far fa-times'
+        } });
+
+    $('#datetimepicker1').datetimepicker({
+        format: 'DD/MM/YYYY h:mm A'
+    });
+</script>
+
+
+</body>
+</html>
