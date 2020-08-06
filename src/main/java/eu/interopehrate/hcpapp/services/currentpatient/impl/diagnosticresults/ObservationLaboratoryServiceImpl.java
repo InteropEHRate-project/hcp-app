@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.Obs
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandAnalysis;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.ResourceType;
@@ -20,28 +21,30 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ObservationLaboratoryServiceImpl implements ObservationLaboratoryService {
     private CurrentPatient currentPatient;
     private HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory;
     private List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalysis = new ArrayList<>();
+    private Bundle labResultsBundle;
 
+    @SneakyThrows
     public ObservationLaboratoryServiceImpl(CurrentPatient currentPatient, HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory) {
         this.currentPatient = currentPatient;
         this.hapiToCommandObservationLaboratory = hapiToCommandObservationLaboratory;
+
+        File json = new ClassPathResource("LabResultsWithRanges.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        this.labResultsBundle = parser.parseResource(Bundle.class, lineReadtest);
     }
 
-    @SneakyThrows
     @Override
     public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis() {
         if (Objects.isNull(this.currentPatient.getLaboratoryResults())) {
-            File json = new ClassPathResource("LabResultsWithRanges.json").getFile();
-            FileInputStream file = new FileInputStream(json);
-            String lineReadtest = readFromInputStream(file);
-            IParser parser = FhirContext.forR4().newJsonParser();
-            Bundle labResultsBundle = parser.parseResource(Bundle.class, lineReadtest);
-
-            var observations = labResultsBundle.getEntry()
+            var observations = this.labResultsBundle.getEntry()
                     .stream()
                     .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
                     .map(Bundle.BundleEntryComponent::getResource)
@@ -55,6 +58,8 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
             for (ObservationLaboratoryInfoCommandAnalysis e : observationLaboratoryInfoCommandAnalyses) {
                 e.setIsInLimits();
             }
+            log.info("LAB RESULTS from PLAIN JSON with LIMITS !!!");
+
             observationLaboratoryInfoCommandAnalyses.addAll(observationLaboratoryInfoCommandAnalysis);
             return ObservationLaboratoryCommandAnalysis.builder()
                     .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
