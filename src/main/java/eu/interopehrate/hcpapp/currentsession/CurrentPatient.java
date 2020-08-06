@@ -27,8 +27,8 @@ public class CurrentPatient {
     private Bundle patientSummaryBundleTranslated;
     private Bundle prescription;
     private Bundle prescriptionTranslated;
-    private Bundle observation;
-    private Bundle observationTranslated;
+    private Bundle laboratoryResults;
+    private Bundle laboratoryResultsTranslated;
     private Certificate certificate;
     private Bundle imageReport;
     private Bundle vitalSignsBundle;
@@ -38,6 +38,10 @@ public class CurrentPatient {
         this.translateService = translateService;
         this.codesConversionService = codesConversionService;
         this.terminalFhirContext = terminalFhirContext;
+    }
+
+    public Bundle getLaboratoryResults() {
+        return laboratoryResults;
     }
 
     public Bundle getPrescription() {
@@ -81,20 +85,16 @@ public class CurrentPatient {
 
     public void initLaboratoryResults(Bundle obs) {
         try {
-            this.observation = obs;
-            this.observationTranslated = this.translateService.translate(obs, Locale.ITALY, Locale.UK);
+            this.laboratoryResults = obs;
+            this.laboratoryResultsTranslated = this.translateService.translate(obs, Locale.ITALY, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
-            this.observationTranslated = observation;
+            this.laboratoryResultsTranslated = laboratoryResults;
         }
     }
 
     public void initImageReport(Bundle imageRep) {
         this.imageReport = imageRep;
-    }
-
-    public Bundle getObservation() {
-        return observation;
     }
 
     public void reset() {
@@ -105,8 +105,8 @@ public class CurrentPatient {
         this.patientSummaryBundleTranslated = null;
         this.prescription = null;
         this.prescriptionTranslated = null;
-        this.observation = null;
-        this.observationTranslated = null;
+        this.laboratoryResults = null;
+        this.laboratoryResultsTranslated = null;
         this.imageReport = null;
     }
 
@@ -128,16 +128,16 @@ public class CurrentPatient {
 
     public List<Observation> laboratoryList() {
         if (displayTranslatedVersion) {
-            if (Objects.isNull(observationTranslated)) {
+            if (Objects.isNull(laboratoryResultsTranslated)) {
                 return Collections.emptyList();
             } else {
-                return new BundleProcessor(observationTranslated).laboratoryList();
+                return new BundleProcessor(laboratoryResultsTranslated).laboratoryList();
             }
         } else {
-            if (Objects.isNull(observation)) {
+            if (Objects.isNull(laboratoryResults)) {
                 return Collections.emptyList();
             } else {
-                return new BundleProcessor(observation).laboratoryList();
+                return new BundleProcessor(laboratoryResults).laboratoryList();
             }
         }
     }

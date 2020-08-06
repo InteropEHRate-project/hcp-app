@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -22,11 +23,15 @@ public class ObservationLaboratoryInfoCommandAnalysis {
     private Boolean isInLimits = false;
 
 
-    public void setIsInLimits(){
-        if((this.getObservationLaboratoryInfoCommandSample().getCurrentValue()>=this.getObservationLaboratoryInfoCommandSample().getLowerLimitBound()) && (this.getObservationLaboratoryInfoCommandSample().getCurrentValue()<=this.getObservationLaboratoryInfoCommandSample().getUpperLimitBound())){
-            isInLimits = true;
-        }else{
-            isInLimits=false;
+    public void setIsInLimits() {
+        if (Objects.nonNull(this.getObservationLaboratoryInfoCommandSample().getCurrentValue())) {
+            if ((this.getObservationLaboratoryInfoCommandSample().getCurrentValue() >= this.getObservationLaboratoryInfoCommandSample().getLowerLimitBound()) && (this.getObservationLaboratoryInfoCommandSample().getCurrentValue() <= this.getObservationLaboratoryInfoCommandSample().getUpperLimitBound())) {
+                this.isInLimits = true;
+            } else {
+                this.isInLimits = false;
+            }
+        } else {
+            this.isInLimits = true;
         }
     }
 }

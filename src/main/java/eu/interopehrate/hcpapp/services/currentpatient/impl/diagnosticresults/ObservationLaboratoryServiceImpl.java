@@ -1,14 +1,23 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.diagnosticresults.HapiToCommandObservationLaboratory;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.ObservationLaboratoryInfoCommandAnalysis;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryService;
+import lombok.SneakyThrows;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Observation;
+import org.hl7.fhir.r4.model.ResourceType;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,9 +31,23 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
         this.hapiToCommandObservationLaboratory = hapiToCommandObservationLaboratory;
     }
 
+    @SneakyThrows
     @Override
     public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis() {
-        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = currentPatient.laboratoryList()
+        if (Objects.isNull(this.currentPatient.getLaboratoryResults())) {
+            File json = new ClassPathResource("LabResultsWithRanges.json").getFile();
+            FileInputStream file = new FileInputStream(json);
+            String lineReadtest = readFromInputStream(file);
+            IParser parser = FhirContext.forR4().newJsonParser();
+            Bundle labResultsBundle = parser.parseResource(Bundle.class, lineReadtest);
+
+            var observations = labResultsBundle.getEntry()
+                    .stream()
+                    .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
+                    .map(Bundle.BundleEntryComponent::getResource)
+                    .map(Observation.class::cast)
+                    .collect(Collectors.toList());
+            var observationLaboratoryInfoCommandAnalyses = observations
                     .stream()
                     .map(hapiToCommandObservationLaboratory::convert)
                     .collect(Collectors.toList());
@@ -32,12 +55,37 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
             for (ObservationLaboratoryInfoCommandAnalysis e : observationLaboratoryInfoCommandAnalyses) {
                 e.setIsInLimits();
             }
-
             observationLaboratoryInfoCommandAnalyses.addAll(observationLaboratoryInfoCommandAnalysis);
-
             return ObservationLaboratoryCommandAnalysis.builder()
                     .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                     .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses).build();
+        }
+
+        List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses = currentPatient.laboratoryList()
+                .stream()
+                .map(hapiToCommandObservationLaboratory::convert)
+                .collect(Collectors.toList());
+
+        for (ObservationLaboratoryInfoCommandAnalysis e : observationLaboratoryInfoCommandAnalyses) {
+            e.setIsInLimits();
+        }
+
+        observationLaboratoryInfoCommandAnalyses.addAll(observationLaboratoryInfoCommandAnalysis);
+
+        return ObservationLaboratoryCommandAnalysis.builder()
+                .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses).build();
     }
 
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
+    }
 }

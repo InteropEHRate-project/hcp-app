@@ -15,7 +15,7 @@ public class ObservationLaboratoryInfoCommandSample {
     private LocalDateTime sample = LocalDateTime.now().minusDays(2);
     @NotEmpty
     @NotNull
-    private double currentValue = 0;
+    private Double currentValue;
     @NotEmpty
     @NotNull
     private String unit = "-";
