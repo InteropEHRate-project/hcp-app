@@ -4,10 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Builder
 @Getter
@@ -15,14 +12,12 @@ public class ObservationLaboratoryCommandAnalysis {
     private Boolean displayTranslatedVersion;
     private List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses;
 
-
     public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
 
         List<LocalDateTime> withDuplicates = new ArrayList<>();
-        for (int i = 0; i < observationLaboratoryInfoCommandAnalyses.size(); i++) {
-            withDuplicates.add(observationLaboratoryInfoCommandAnalyses.get(i).getObservationLaboratoryInfoCommandSample().getSample());
+        for (ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis : this.observationLaboratoryInfoCommandAnalyses) {
+            withDuplicates.add(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getSample());
         }
-
         List<LocalDateTime> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
         Collections.sort(noDuplicates);
         return noDuplicates;
@@ -30,10 +25,9 @@ public class ObservationLaboratoryCommandAnalysis {
 
     public List<String> observationLaboratoryInfoCommandAnalysesWithoutDuplicates() {
         List<String> withDuplicates = new ArrayList<>();
-        for (int i = 0; i < observationLaboratoryInfoCommandAnalyses.size(); i++) {
-            withDuplicates.add(observationLaboratoryInfoCommandAnalyses.get(i).getAnalysis());
+        for (ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis : this.observationLaboratoryInfoCommandAnalyses) {
+            withDuplicates.add(observationLaboratoryInfoCommandAnalysis.getAnalysis());
         }
-
         List<String> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
         Collections.sort(noDuplicates);
         return noDuplicates;
@@ -45,23 +39,26 @@ public class ObservationLaboratoryCommandAnalysis {
         List<String> analysisList = this.observationLaboratoryInfoCommandAnalysesWithoutDuplicates();
         List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
 
-        for (int i = 0; i < analysisList.size(); i++) {
-            for (int j = 0; j < dateTimeList.size(); j++) {
-                for (int k = 0; k < observationLaboratoryInfoCommandAnalyses.size(); k++) {
-                    if (analysisList.get(i).equals(observationLaboratoryInfoCommandAnalyses.get(k).getAnalysis()) &&
-                            (dateTimeList.get(j).equals(observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getSample()))) {
-                        mapPair.put(analysisList.get(i), dateTimeList.get(j), observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getCurrentValue() + " " + observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getUnit());
+        for (String s : analysisList) {
+            for (LocalDateTime localDateTime : dateTimeList) {
+                for (ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis : this.observationLaboratoryInfoCommandAnalyses) {
+                    if (s.equals(observationLaboratoryInfoCommandAnalysis.getAnalysis()) &&
+                            (localDateTime.equals(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getSample()))) {
+                        if (Objects.isNull(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getCurrentValue())
+                                || Objects.isNull(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getUnit())) {
+                            mapPair.put(s, localDateTime, "-");
+                        } else {
+                            mapPair.put(s, localDateTime, observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getCurrentValue() + " " + observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getUnit());
+                        }
                     }
                 }
             }
         }
-
         return mapPair;
-
     }
 
     public boolean getResultOfAnalysis(String analysis, LocalDateTime dateTime) {
-        for (ObservationLaboratoryInfoCommandAnalysis el : observationLaboratoryInfoCommandAnalyses) {
+        for (ObservationLaboratoryInfoCommandAnalysis el : this.observationLaboratoryInfoCommandAnalyses) {
             if (el.getAnalysis().equals(analysis) && el.getObservationLaboratoryInfoCommandSample().getSample().equals(dateTime)) {
                 return el.getIsInLimits();
             }
@@ -70,14 +67,11 @@ public class ObservationLaboratoryCommandAnalysis {
     }
 
     public String getStringForTooltip(String analysis) {
-        for (ObservationLaboratoryInfoCommandAnalysis el : observationLaboratoryInfoCommandAnalyses) {
+        for (ObservationLaboratoryInfoCommandAnalysis el : this.observationLaboratoryInfoCommandAnalyses) {
             if (el.getAnalysis().equals(analysis)) {
                 return el.getReferenceRange();
             }
         }
-
         return "No value found";
     }
-
-
 }
