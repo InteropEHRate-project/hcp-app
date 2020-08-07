@@ -28,7 +28,7 @@ public class DiagnosticResultServiceTests {
     @BeforeClass
     public static void init() throws IOException {
         ClassLoader classLoader = DiagnosticResultServiceTests.class.getClassLoader();
-        File file = new File(classLoader.getResource("fhir/samples_StructuredLaboratoryResult_V1.json").getFile());
+        File file = new File(classLoader.getResource("fhir/LaboratoryResults.json").getFile());
         initialJsonFhir = Files.readString(file.toPath());
     }
 

@@ -29,7 +29,7 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
         }
 
         try {
-            if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue()) ){
+            if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
                 command.getObservationLaboratoryInfoCommandSample().setCurrentValue(observation.getValueQuantity().getValue().doubleValue());
             }
         } catch (FHIRException e) {
@@ -37,7 +37,7 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
         }
 
         try {
-            if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getUnit()) ){
+            if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getUnit())) {
                 command.getObservationLaboratoryInfoCommandSample().setUnit(observation.getValueQuantity().getUnit());
             }
         } catch (FHIRException e) {
@@ -45,11 +45,12 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
         }
 
 
-        if (Objects.nonNull(observation.getEffectiveDateTimeType())){
-                command.getObservationLaboratoryInfoCommandSample().setSample(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
+        if (Objects.nonNull(observation.getEffectiveDateTimeType())) {
+            command.getObservationLaboratoryInfoCommandSample().setSample(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
         }
 
         if (Objects.nonNull(observation.getReferenceRange()) && Objects.nonNull(observation.getReferenceRangeFirstRep().getText())) {
+            command.setReferenceRange(observation.getReferenceRangeFirstRep().getText());
             String range = observation.getReferenceRangeFirstRep().getText().replaceAll(",", ".");
             if (range.startsWith("<")) {
                 range = range.substring(range.indexOf("<") + 2);

@@ -34,7 +34,7 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
         this.currentPatient = currentPatient;
         this.hapiToCommandObservationLaboratory = hapiToCommandObservationLaboratory;
 
-        File json = new ClassPathResource("LabResultsWithRanges.json").getFile();
+        File json = new ClassPathResource("LaboratoryResultsWithRanges.json").getFile();
         FileInputStream file = new FileInputStream(json);
         String lineReadtest = readFromInputStream(file);
         IParser parser = FhirContext.forR4().newJsonParser();

@@ -16,10 +16,10 @@ public class ObservationLaboratoryCommandAnalysis {
     private List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses;
 
 
-    public List<LocalDateTime> localDateTimeListWithoutDuplicates(){
+    public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
 
         List<LocalDateTime> withDuplicates = new ArrayList<>();
-        for (int i = 0; i < observationLaboratoryInfoCommandAnalyses.size(); i++){
+        for (int i = 0; i < observationLaboratoryInfoCommandAnalyses.size(); i++) {
             withDuplicates.add(observationLaboratoryInfoCommandAnalyses.get(i).getObservationLaboratoryInfoCommandSample().getSample());
         }
 
@@ -28,9 +28,9 @@ public class ObservationLaboratoryCommandAnalysis {
         return noDuplicates;
     }
 
-    public List<String> observationLaboratoryInfoCommandAnalysesWithoutDuplicates(){
+    public List<String> observationLaboratoryInfoCommandAnalysesWithoutDuplicates() {
         List<String> withDuplicates = new ArrayList<>();
-        for (int i = 0; i < observationLaboratoryInfoCommandAnalyses.size(); i++){
+        for (int i = 0; i < observationLaboratoryInfoCommandAnalyses.size(); i++) {
             withDuplicates.add(observationLaboratoryInfoCommandAnalyses.get(i).getAnalysis());
         }
 
@@ -40,17 +40,17 @@ public class ObservationLaboratoryCommandAnalysis {
     }
 
 
-    public DoubleKeyHashMap valueReturn (){
-        DoubleKeyHashMap<String,LocalDateTime,String> mapPair = new DoubleKeyHashMap<>();
+    public DoubleKeyHashMap valueReturn() {
+        DoubleKeyHashMap<String, LocalDateTime, String> mapPair = new DoubleKeyHashMap<>();
         List<String> analysisList = this.observationLaboratoryInfoCommandAnalysesWithoutDuplicates();
         List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
 
-        for (int i = 0; i < analysisList.size(); i++){
-            for (int j = 0; j < dateTimeList.size(); j++){
-                for(int k=0; k < observationLaboratoryInfoCommandAnalyses.size(); k++){
-                    if(analysisList.get(i).equals(observationLaboratoryInfoCommandAnalyses.get(k).getAnalysis()) &&
+        for (int i = 0; i < analysisList.size(); i++) {
+            for (int j = 0; j < dateTimeList.size(); j++) {
+                for (int k = 0; k < observationLaboratoryInfoCommandAnalyses.size(); k++) {
+                    if (analysisList.get(i).equals(observationLaboratoryInfoCommandAnalyses.get(k).getAnalysis()) &&
                             (dateTimeList.get(j).equals(observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getSample()))) {
-                             mapPair.put(analysisList.get(i),dateTimeList.get(j),observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getCurrentValue()+" " + observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getUnit());
+                        mapPair.put(analysisList.get(i), dateTimeList.get(j), observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getCurrentValue() + " " + observationLaboratoryInfoCommandAnalyses.get(k).getObservationLaboratoryInfoCommandSample().getUnit());
                     }
                 }
             }
@@ -63,20 +63,16 @@ public class ObservationLaboratoryCommandAnalysis {
     public boolean getResultOfAnalysis(String analysis, LocalDateTime dateTime) {
         for (ObservationLaboratoryInfoCommandAnalysis el : observationLaboratoryInfoCommandAnalyses) {
             if (el.getAnalysis().equals(analysis) && el.getObservationLaboratoryInfoCommandSample().getSample().equals(dateTime)) {
-                if (el.getIsInLimits() == true) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return el.getIsInLimits();
             }
         }
         return true;
     }
 
-    public String getStringForTooltip(String analysis){
+    public String getStringForTooltip(String analysis) {
         for (ObservationLaboratoryInfoCommandAnalysis el : observationLaboratoryInfoCommandAnalyses) {
             if (el.getAnalysis().equals(analysis)) {
-                return String.valueOf(el.getObservationLaboratoryInfoCommandSample().getLowerLimitBound() + " - " + el.getObservationLaboratoryInfoCommandSample().getUpperLimitBound());
+                return el.getReferenceRange();
             }
         }
 

@@ -22,6 +22,10 @@ public class ObservationLaboratoryInfoCommandAnalysis {
     @NotNull
     private Boolean isInLimits = false;
 
+    @NotEmpty
+    @NotNull
+    private String referenceRange;
+
 
     public void setIsInLimits() {
         if (Objects.nonNull(this.getObservationLaboratoryInfoCommandSample().getCurrentValue())) {
