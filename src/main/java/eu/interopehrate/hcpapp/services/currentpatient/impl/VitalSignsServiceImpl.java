@@ -63,7 +63,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .map(hapiToCommandVitalSigns::convert)
                 .collect(Collectors.toList());
 
-        vitalSignsInfoCommands.addAll(this.vitalSignsInfoCommandsList);
+        //vitalSignsInfoCommands.addAll(this.vitalSignsInfoCommandsList);
         return VitalSignsCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .vitalSignsInfoCommands(vitalSignsInfoCommands)
@@ -90,8 +90,18 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     @Override
+    public VitalSignsCommand vitalSignsUpload() {
+        return VitalSignsCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .vitalSignsInfoCommands(this.vitalSignsInfoCommandsList)
+                .build();
+    }
+
+    @Override
     public void sendVitalSigns(Bundle vitalSigns) throws IOException {
         this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
     }
+
+
 }

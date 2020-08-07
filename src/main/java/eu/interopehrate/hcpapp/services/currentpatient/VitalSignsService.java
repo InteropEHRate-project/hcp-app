@@ -12,4 +12,6 @@ public interface VitalSignsService {
     void sendVitalSigns(Bundle vitalSigns) throws IOException;
 
     void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand);
+
+    VitalSignsCommand vitalSignsUpload();
 }
