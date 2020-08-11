@@ -26,6 +26,14 @@
         </div>
         <div class="col-9">
             <p><h3 th:text="#{fragment.current.patient.navigation.left.conclusion}">conclusion</h3></p>
+            <br>
+            <div class="row justify-content-center">
+                <tr th:each="image : ${conclusionCommand.getConclusionInfoCommands()}">
+                    <td th:text="${image.getName()}"></td>
+                    <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
+                    <br>
+                </tr>
+            </div><br>
         </div>
     </div>
 </div>

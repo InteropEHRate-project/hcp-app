@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.mvc.controllers;
 
 import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
-import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,11 +18,9 @@ import javax.validation.Valid;
 @Scope("session")
 public class IndexController {
     private IndexService indexService;
-    private PrescriptionService prescriptionService;
 
-    public IndexController(IndexService indexService, PrescriptionService prescriptionService) {
+    public IndexController(IndexService indexService) {
         this.indexService = indexService;
-        this.prescriptionService = prescriptionService;
     }
 
     @RequestMapping({"/", "/index"})
