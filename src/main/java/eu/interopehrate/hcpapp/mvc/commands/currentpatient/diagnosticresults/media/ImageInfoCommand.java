@@ -1,11 +1,11 @@
-package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
+package eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.media;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ConclusionInfoCommand {
+public class ImageInfoCommand {
     private String name;
     private String imageType;
     private String imageContent;

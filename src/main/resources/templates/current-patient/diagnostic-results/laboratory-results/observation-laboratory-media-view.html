@@ -27,6 +27,14 @@
             <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory.media}">observation laboratory media</h5></p>
 
+            <div class="row justify-content-center">
+                <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
+                    <td th:text="${image.getName()}"></td>
+                    <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
+                    <br>
+                </tr>
+            </div><br>
+
             <div class="m-5"></div>
             <p><h5>Display DICOM test images</h5></p>
             <div th:if="${exception != null}" class="m-3 alert alert-danger">

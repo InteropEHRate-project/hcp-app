@@ -31,6 +31,7 @@ public class CurrentPatient {
     private Bundle laboratoryResultsTranslated;
     private Certificate certificate;
     private Bundle imageReport;
+    private Bundle imageReportTranslated;
     private Bundle vitalSignsBundle;
     private Bundle vitalSignsTranslated;
 
@@ -94,7 +95,13 @@ public class CurrentPatient {
     }
 
     public void initImageReport(Bundle imageRep) {
-        this.imageReport = imageRep;
+        try {
+            this.imageReport = imageRep;
+            this.imageReportTranslated = this.translateService.translate(imageRep, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.imageReportTranslated = this.imageReport;
+        }
     }
 
     public void reset() {
@@ -108,6 +115,7 @@ public class CurrentPatient {
         this.laboratoryResults = null;
         this.laboratoryResultsTranslated = null;
         this.imageReport = null;
+        this.imageReportTranslated = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
