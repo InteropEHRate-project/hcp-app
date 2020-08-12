@@ -30,57 +30,57 @@
                 <table class="table table-bordered">
                     <thead class="thead-light">
                     <tr>
-                        <th>Patient details</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.details}">Patient details</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Name</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.name}">Name</th>
                         <td th:text="${index.patientDataCommand.getLastName()}">name</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Surname</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.surname}">Surname</th>
                         <td th:text="${index.patientDataCommand.getFirstName()}">surname</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getBirthDate() != null}">
-                        <th>Birth Date</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.birth.date}">Birth Date</th>
                         <td th:text="${index.patientDataCommand.getBirthDate()}">birth date</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Place of Birth</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.place.of.birth}">Place of Birth</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getGender() != null}">
-                        <th>Gender</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.gender}">Gender</th>
                         <td th:text="${index.patientDataCommand.getGender()}">gender</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Native Language</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.native.language}">Native Language</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Country of Residence</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.country.of.residence}">Country of Residence</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Social Security Number/PID</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.social.security.number}">Social Security Number/PID</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Next of Kin</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.next.of.kin}">Next of Kin</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Emergency Contact</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.emergency.contact}">Emergency Contact</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Patient Phone</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.phone}">Patient Phone</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getFirstName() != null}">
-                        <th>Patient E-mail</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.email}">Patient E-mail</th>
                         <td>-</td>
                     </tr>
                     </tbody>
@@ -89,25 +89,25 @@
                 <table class="table table-bordered">
                     <thead class="thead-light">
                     <tr>
-                        <th>GP/Referral Physician details</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.referral.physician.details}">GP/Referral Physician details</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Name</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.name}">Name</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Phone</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.phone}">Phone</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Country of Residence</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.country.of.residence}">Country of Residence</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>E-mail</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.email}">E-mail</th>
                         <td>-</td>
                     </tr>
                     </tbody>
@@ -116,25 +116,25 @@
                 <table class="table table-bordered">
                     <thead class="thead-light">
                     <tr>
-                        <th>Referral Nurse details</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.referral.nurse.details}">Referral Nurse details</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Name</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.name}">Name</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Phone</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.phone}">Phone</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>Country of Residence</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.patient.country.of.residence}">Country of Residence</th>
                         <td>-</td>
                     </tr>
                     <tr th:if="${index.patientDataCommand.getLastName() != null}">
-                        <th>E-mail</th>
+                        <th th:text="#{fragment.current.patient.demographic.data.email}">E-mail</th>
                         <td>-</td>
                     </tr>
                     </tbody>

@@ -47,7 +47,7 @@
                  th:classappend="${(index.connectionState != null && index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF)} ? 'active' :''">
                 <div th:if="${index.connectionState == null || index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}" class="m-3">
                     <div class="row justify-content-center">
-                        <h3 class="mt-5">Press the button to put the application in connection mode.</h3>
+                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
                     </div>
                     <div class="row justify-content-center">
                         <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}" th:href="@{/index/open-connection}">Open connection</a>
@@ -55,7 +55,7 @@
                 </div>
                 <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}" class="m-3">
                     <div class="row justify-content-center">
-                        <h3 class="mt-5">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
+                        <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
                     </div>
                     <div class="row justify-content-center">
                         <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime" height="10" th:height="${index.bluetoothConnectionInfoImageSize}" width="10" th:width="${index.bluetoothConnectionInfoImageSize}"/>
@@ -69,7 +69,7 @@
                 </div>
                 <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
                     <div class="row justify-content-center">
-                        <h3 class="mt-5">Connected</h3>
+                        <h3 class="mt-5" th:text="#{fragment.main.connected}">Connected</h3>
                     </div>
                     <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
                         <h5 style="color: red" class="row justify-content-center">Transmission error, please retry!</h5>
@@ -90,7 +90,7 @@
                   th:classappend="${(index.cloudConnectionState != null && index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF)} ? 'active' :''">
                 <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}" class="m-3">
                     <div class="row justify-content-center">
-                        <h3 class="mt-5">Press the button to put the application in connection mode.</h3>
+                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
                     </div>
                     <div class="row justify-content-center">
                         <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.cloud.connection}" th:href="@{/index/open-cloud-connection}">Open connection</a>
@@ -126,7 +126,7 @@
                 </div>-->
                 <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}" class="m-3">
                     <div class="row justify-content-center">
-                        <h3>Connected</h3>
+                        <h3 th:text="#{fragment.main.connected}">Connected</h3>
                     </div>
                     <div th:if="${index.patientDataCommand.getIpsReceived()}">
                         <h5 style="color: green" class="row justify-content-center">Transmission completed!</h5>
@@ -145,34 +145,34 @@
                 <div class="row justify-content-center">
                     <div class="card">
                         <div class="card-header">
-                            <h5>General info about patient</h5>
+                            <h5 th:text="#{template.index.general.info}">General info about patient</h5>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getFirstName() != null}">
-                            <h5 class="card-title">First Name</h5>
+                            <h5 class="card-title" th:text="#{template.patient.first.name}">First Name</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getFirstName()}">first name</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getLastName() != null}">
-                            <h5 class="card-title">Family Name</h5>
+                            <h5 class="card-title" th:text="#{template.patient.last.name}">Last Name</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getLastName()}">last name</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getGender() != null}">
-                            <h5 class="card-title">Gender</h5>
+                            <h5 class="card-title" th:text="#{template.patient.gender}">Gender</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getGender()}">gender</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getBirthDate() != null}">
-                            <h5 class="card-title">Birth date</h5>
+                            <h5 class="card-title" th:text="#{template.patient.birth.date}">Birth date</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getBirthDate()}">birth date</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getId() != null}">
-                            <h5 class="card-title">ID Patient</h5>
+                            <h5 class="card-title" th:text="#{template.patient.id}">ID Patient</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getId()}">patient id</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
-                            <h5 class="card-title">Consent</h5>
+                            <h5 class="card-title" th:text="#{template.patient.consent}">Consent</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getConsent()}">patient id</p>
                         </div>
                         <div class="card-body" th:if="${index.patientDataCommand.getCertificate()!= null}">
-                            <h5 class="card-title">Certificate details</h5>
+                            <h5 class="card-title" th:text="#{template.patient.certificate}">Certificate details</h5>
                             <p class="card-text" th:text="${index.patientDataCommand.getCertificate()}">certificate details</p>
                         </div>
                     </div>
