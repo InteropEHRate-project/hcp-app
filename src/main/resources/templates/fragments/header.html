@@ -54,10 +54,7 @@
                        th:text="#{fragment.main.navigation.top.administration}">Administration</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" id="locales" role="button"
-                       data-toggle="dropdown">
-                        Language
-                    </a>
+                    <a class="nav-link dropdown-toggle" href="" id="locales" role="button" data-toggle="dropdown" th:text="#{language.change}">Language</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="?lang=en" value="en"
                            th:text="#{lang.eng}">English</a>
@@ -87,18 +84,17 @@
         <div class="collapse navbar-collapse flex-column" id="navbarResponsive2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item disabled">
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="${'Name: '
-                    + session.mySessionAttribute.getPatientDataCommand().getFirstName()
-                    + ' '
-                    + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name</span>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="#{fragment.main.navigation.top.name} + ${' '
+                    + session.mySessionAttribute.getPatientDataCommand().getFirstName() + ' '
+                    + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name: </span>
                 </li>
                 <li class="nav-item disabled">
                     <span class="nav-link" style="color: cornflowerblue; font: message-box"
-                          th:text="${'Age: ' + session.mySessionAttribute.getPatientDataCommand().getAge()}"
-                          th:unless="${session == null}">Age</span>
+                          th:text="#{fragment.main.navigation.top.age} + ${' ' + session.mySessionAttribute.getPatientDataCommand().getAge()}"
+                          th:unless="${session == null}">Age: </span>
                 </li>
                 <li class="nav-item disabled">
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box">Country: -</span>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="#{fragment.main.navigation.top.country} + ' -'">Country: -</span>
                 </li>
             </ul>
         </div>

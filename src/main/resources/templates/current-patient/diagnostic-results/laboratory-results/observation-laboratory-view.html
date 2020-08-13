@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta charset="utf-8">
@@ -51,7 +51,7 @@
             <div class="scrollBar">
             <table class="table table-bordered">
                 <thead class="thead-light">
-                    <th>Analysis</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
                     <th:block th:each="sample : ${observationLaboratoryAnalysis.localDateTimeListWithoutDuplicates()}">
                         <th th:text="${{sample}}"></th>
                     </th:block>

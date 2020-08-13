@@ -45,11 +45,11 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Category</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Symptoms</th>
-                    <th>Comments</th>
+                    <th th:text="#{template.current.patient.allergies.category}">Category</th>
+                    <th th:text="#{template.current.patient.allergies.name}">Name</th>
+                    <th th:text="#{template.current.patient.allergies.type}">Type</th>
+                    <th th:text="#{template.current.patient.allergies.symptoms}">Symptoms</th>
+                    <th th:text="#{template.current.patient.allergies.comments}">Comments</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary"
-                       th:href="@{/current-patient/allergies-intolerances/open-add-page}">Add</a>
+                       th:href="@{/current-patient/allergies-intolerances/open-add-page}" th:text="#{crud.button.add}">Add</a>
                 </div>
             </div>
         </div>

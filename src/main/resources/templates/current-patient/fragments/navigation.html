@@ -57,7 +57,7 @@
     <div class="dropdown-divider"></div>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-           aria-expanded="false">Visit Data</a>
+           aria-expanded="false" th:text="#{template.current.patient.visit.data}">Visit Data</a>
         <div class="dropdown-menu">
             <a class="dropdown-item nav-link"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/visit-data/vital-signs')} ? 'active' : ''"

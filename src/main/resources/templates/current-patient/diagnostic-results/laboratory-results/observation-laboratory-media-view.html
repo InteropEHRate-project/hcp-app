@@ -36,7 +36,7 @@
             </div><br>
 
             <div class="m-5"></div>
-            <p><h5>Display DICOM test images</h5></p>
+            <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.media}">Display DICOM test images</h5></p>
             <div th:if="${exception != null}" class="m-3 alert alert-danger">
                 <p th:text="${exception}">Exception</p>
             </div>

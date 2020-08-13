@@ -65,23 +65,23 @@
                     <tbody class="col-6">
                     <tr>
                         <th scope="row" th:text="#{template.current.patient.pat.history.hypertension}">hypertension</th>
-                        <td>No</td>
+                        <td th:text="#{template.current.patient.pat.history.no}">No</td>
                     </tr>
                     <tr>
                         <th scope="row" th:text="#{template.current.patient.pat.history.diabetes}">diabetes</th>
-                        <td>Yes</td>
+                        <td th:text="#{template.current.patient.pat.history.yes}">Yes</td>
                     </tr>
                     <tr>
                         <th scope="row" th:text="#{template.current.patient.pat.history.dyslipidemia}">dyslipidemia</th>
-                        <td colspan="2">No</td>
+                        <td colspan="2" th:text="#{template.current.patient.pat.history.no}">No</td>
                     </tr>
                     <tr>
                         <th scope="row" th:text="#{template.current.patient.pat.history.current.past.smoker}">current/past smoker</th>
-                        <td colspan="2">Yes</td>
+                        <td colspan="2" th:text="#{template.current.patient.pat.history.yes}">Yes</td>
                     </tr>
                     <tr>
                         <th scope="row" th:text="#{template.current.patient.pat.history.family.history.of.cvd}">family history of CVD</th>
-                        <td colspan="2">No</td>
+                        <td colspan="2" th:text="#{template.current.patient.pat.history.no}">No</td>
                     </tr>
                     </tbody>
                 </table>
