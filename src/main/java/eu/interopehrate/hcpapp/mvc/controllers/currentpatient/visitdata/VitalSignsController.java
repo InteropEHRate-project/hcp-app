@@ -28,7 +28,7 @@ public class VitalSignsController {
     public String viewSection(Model model) throws IOException {
         model.addAttribute("vitalSigns", vitalSignsService.vitalSignsCommand());
         model.addAttribute("vitalSignsUpload", vitalSignsService.vitalSignsUpload());
-   //     model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
+        model.addAttribute("vitalSignsService", vitalSignsService.getCurrentD2DConnection());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION;
     }
 
@@ -49,4 +49,10 @@ public class VitalSignsController {
         return "redirect:/current-patient/visit-data/vital-signs/view-section";
     }
 
+    @GetMapping
+    @RequestMapping("/sendToSehr")
+    public String sendToSehr() throws IOException {
+        // this.vitalSignsService.callVitalSigns();
+        return "redirect:/current-patient/visit-data/vital-signs/view-section";
+    }
 }

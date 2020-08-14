@@ -49,8 +49,16 @@ public class CurrentPatient {
         return prescription;
     }
 
+    public Bundle getVitalSigns() {
+        return vitalSignsBundle;
+    }
+
     public Bundle getPrescriptionTranslated() {
         return prescriptionTranslated;
+    }
+
+    public Bundle getVitalSignsTranslated() {
+        return vitalSignsTranslated;
     }
 
     public void initPatient(Patient patient) {

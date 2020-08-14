@@ -12,9 +12,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSigns
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Observation;
-import org.hl7.fhir.r4.model.ResourceType;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,6 +39,11 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
+    }
+
+    @Override
+    public CurrentD2DConnection getCurrentD2DConnection() {
+        return currentD2DConnection;
     }
 
     @Override
@@ -84,7 +88,14 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand) {
+
         VitalSignsEntity vitalSignsEntity = this.entityToVitalSigns.convert(vitalSignsInfoCommand);
+        vitalSignsEntity.setAnalysisName(vitalSignsInfoCommand.getAnalysisName());
+
+        vitalSignsEntity.setLocalDateOfVitalSign(vitalSignsInfoCommand.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign());
+        vitalSignsEntity.setCurrentValue(vitalSignsInfoCommand.getVitalSignsInfoCommandSample().getCurrentValue());
+        vitalSignsEntity.setUnitOfMeasurement(vitalSignsInfoCommand.getVitalSignsInfoCommandSample().getUnitOfMeasurement());
+
         vitalSignsRepository.save(vitalSignsEntity);
         vitalSignsInfoCommandsList.add(vitalSignsInfoCommand);
     }
@@ -97,11 +108,39 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .build();
     }
 
+    public void callVitalSigns() throws IOException {
+        if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
+            Bundle vital = new Bundle();
+            vital.setEntry(new ArrayList<>());
+            for (int i = 0; i < this.vitalSignsRepository.findAll().size(); i++) {
+                vital.getEntry().add(new Bundle.BundleEntryComponent());
+                Observation vitalSigns = createVitalSignsFromEntity(this.vitalSignsRepository.findAll().get(i));
+                vital.getEntry().get(i).setResource(vitalSigns);
+                this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+            }
+            this.sendVitalSigns(vital);
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+    }
+
     @Override
     public void sendVitalSigns(Bundle vitalSigns) throws IOException {
         this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
     }
 
+    private static Observation createVitalSignsFromEntity(VitalSignsEntity vitalSignsEntity) {
+        Observation vitalSigns = new Observation();
 
+        vitalSigns.setCode(new CodeableConcept());
+        vitalSigns.getCode().addChild("coding");
+        vitalSigns.getCode().setCoding(new ArrayList<>());
+        vitalSigns.getCode().getCoding().add(new Coding());
+        vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisName());
+
+
+        return vitalSigns;
+    }
 }
