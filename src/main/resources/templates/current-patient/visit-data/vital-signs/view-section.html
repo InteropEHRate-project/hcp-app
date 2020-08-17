@@ -139,8 +139,7 @@
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-outline-primary"
                            th:href="@{/current-patient/visit-data/vital-signs/sendToSehr}"
-                           th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.send.to.sehr}"
-                           onclick="myFunction()">Send to S-EHR</a>
+                           th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.send.to.sehr}"></a>
                     </div>
                 </div>
             </div>
@@ -151,11 +150,6 @@
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
-</script>
-<script>
-    function myFunction() {
-        alert("Data are send to S-EHR!");
-    }
 </script>
 </body>
 </html>
