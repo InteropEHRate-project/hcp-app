@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import eu.interopehrate.hcpapp.converters.entity.EntityToVitalSigns;
+import eu.interopehrate.hcpapp.converters.entity.CommandToEntityVitalSigns;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class VitalSignsServiceImpl implements VitalSignsService {
-    private CurrentPatient currentPatient;
+    private final CurrentPatient currentPatient;
+    private final HapiToCommandVitalSigns hapiToCommandVitalSigns;
     private List<VitalSignsInfoCommand> vitalSignsInfoCommandsList = new ArrayList<>();
-    private HapiToCommandVitalSigns hapiToCommandVitalSigns;
-    private EntityToVitalSigns entityToVitalSigns = new EntityToVitalSigns();
+    private CommandToEntityVitalSigns entityToVitalSigns = new CommandToEntityVitalSigns();
     @Autowired
     private VitalSignsRepository vitalSignsRepository;
     private CurrentD2DConnection currentD2DConnection;
