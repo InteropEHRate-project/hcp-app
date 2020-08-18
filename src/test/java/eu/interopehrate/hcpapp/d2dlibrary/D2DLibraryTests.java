@@ -17,9 +17,9 @@ import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.CertificateException;
@@ -126,13 +126,15 @@ public class D2DLibraryTests {
         this.write("medicationRequest#ACK#" + prescriptionJSON);
     }
 
-    private void write(String data) {
-        DataOutputStream dos = new DataOutputStream(new OutputStream() {
-            @Override
-            public void write(int b) {
+    @Test
+    public void testSendVitalSigns() {
+        Bundle vitalSigns = new Bundle();
+        String vitalSignsJSON = FhirContext.forR4().newJsonParser().encodeResourceToString(vitalSigns);
+        this.write("vitalSigns#ACK#" + vitalSignsJSON);
+    }
 
-            }
-        });
+    private void write(String data) {
+        DataOutputStream dos = new DataOutputStream(new ByteArrayOutputStream());
         try {
             dos.writeUTF(data + "\n");
             dos.flush();
