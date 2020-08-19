@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -140,7 +141,50 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.getCode().getCoding().add(new Coding());
         vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisName());
 
+        Calendar when = Calendar.getInstance();
+        int y = vitalSignsEntity.getLocalDateOfVitalSign().getYear();
+        int m = monthNumber(vitalSignsEntity.getLocalDateOfVitalSign().getMonthValue());
+        int d = vitalSignsEntity.getLocalDateOfVitalSign().getDayOfMonth();
+        int h = vitalSignsEntity.getLocalDateOfVitalSign().getHour();
+        int min = vitalSignsEntity.getLocalDateOfVitalSign().getMinute();
+        when.set(y, m, d, h, min);
+        vitalSigns.setEffective(new DateTimeType(when));
+
+        vitalSigns.getValueQuantity().setValue(vitalSignsEntity.getCurrentValue());
+        vitalSigns.getValueQuantity().setUnit(vitalSignsEntity.getUnitOfMeasurement());
 
         return vitalSigns;
+    }
+
+    //Special designed method that changes the number of month because in FHIR protocol JANUARY is represented by 0 value (the range is from 0 to 11).
+    private static int monthNumber(int monthNumber) {
+        switch (monthNumber) {
+            case 1:
+                return Calendar.JANUARY;
+            case 2:
+                return Calendar.FEBRUARY;
+            case 3:
+                return Calendar.MARCH;
+            case 4:
+                return Calendar.APRIL;
+            case 5:
+                return Calendar.MAY;
+            case 6:
+                return Calendar.JUNE;
+            case 7:
+                return Calendar.JULY;
+            case 8:
+                return Calendar.AUGUST;
+            case 9:
+                return Calendar.SEPTEMBER;
+            case 10:
+                return Calendar.OCTOBER;
+            case 11:
+                return Calendar.NOVEMBER;
+            case 12:
+                return Calendar.DECEMBER;
+            default:
+                return -1;
+        }
     }
 }
