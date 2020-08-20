@@ -22,10 +22,10 @@ public class PrescriptionController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model) throws IOException {
-        model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand());
-        model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload());
+    public String viewSection(Model model, String keyword) throws IOException {
+        model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand(keyword));
         model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
+        model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload(keyword));
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
     }
 

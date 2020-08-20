@@ -47,21 +47,49 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         return currentD2DConnection;
     }
 
+    //The method can filter and return only records that contains the keyword in the drugName if it is the case.
     @Override
-    public PrescriptionCommand prescriptionCommand() {
+    public PrescriptionCommand prescriptionCommand(String keyword) {
         var prescriptions = this.currentPatient.prescriptionList()
                 .stream()
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
         toSortMethodCommand(prescriptions);
+
+        if (Objects.nonNull(keyword) && !keyword.equals("")) {
+            //The filtration is happening...
+            List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
+            for (PrescriptionInfoCommand pr : prescriptions) {
+                if (pr.getDrugName().contains(keyword)) {
+                    prescriptionInfoCommandList.add(pr);
+                }
+            }
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .prescriptionInfoCommand(prescriptionInfoCommandList)
+                    .build();
+        }
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .prescriptionInfoCommand(prescriptions)
                 .build();
     }
 
+    //The method can filter and return only records that contains the keyword in the drugName if it is the case.
     @Override
-    public PrescriptionCommand prescriptionCommandUpload() {
+    public PrescriptionCommand prescriptionCommandUpload(String keyword) {
+        if (Objects.nonNull(keyword) && !keyword.equals("")) {
+            List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
+            for (PrescriptionInfoCommand pr : this.prescriptionInfoCommands) {
+                if (pr.getDrugName().contains(keyword)) {
+                    prescriptionInfoCommandList.add(pr);
+                }
+            }
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .prescriptionInfoCommand(prescriptionInfoCommandList)
+                    .build();
+        }
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .prescriptionInfoCommand(this.prescriptionInfoCommands)

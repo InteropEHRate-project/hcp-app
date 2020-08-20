@@ -42,6 +42,7 @@ public class PrescriptionControllerTest {
     private ConceptTranslateService conceptTranslateService;
     @Mock
     private TerminalFhirContext terminalFhirContext;
+    private String keyword = "";
 
     @BeforeEach
     void setUp() throws IOException {
@@ -54,7 +55,7 @@ public class PrescriptionControllerTest {
 
     @Test
     void viewSection() throws IOException {
-        String returnedString = this.controller.viewSection(this.model);
+        String returnedString = this.controller.viewSection(this.model, keyword);
         assertEquals(TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION, returnedString);
         verify(this.model, times(1)).addAttribute(eq("prescriptionCommand"), any(PrescriptionCommand.class));
     }

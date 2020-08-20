@@ -23,8 +23,7 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top
-            </div>
+            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
                     <a href="#" class="btn disabled" style="background-color: lightgray"
@@ -34,6 +33,17 @@
                 </div>
             </div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
+            <br>
+            <div class="btn-toolbar float-left" role="toolbar">
+                <div class="btn-group btn-group-sm mr-2" role="group">
+                    <span class="label label-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter</span>
+                    <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
+                        <input id="txtSearch" type="text" name="keyword">
+                        <button type="submit" class="btn btn-outline-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.go}">Go</button>
+                    </form>
+                </div>
+            </div>
+
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
