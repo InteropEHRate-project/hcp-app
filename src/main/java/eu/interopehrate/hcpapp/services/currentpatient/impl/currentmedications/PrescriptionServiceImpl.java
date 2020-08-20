@@ -35,11 +35,23 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
+    private boolean isFiltered = false;
+    private boolean isEmpty = false;
 
     public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.currentD2DConnection = currentD2DConnection;
+    }
+
+    @Override
+    public boolean isFiltered() {
+        return this.isFiltered;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.isEmpty;
     }
 
     @Override
@@ -64,11 +76,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                     prescriptionInfoCommandList.add(pr);
                 }
             }
+            if (prescriptionInfoCommandList.isEmpty()) {
+                this.isEmpty = true;
+            } else {
+                this.isFiltered = true;
+                this.isEmpty = false;
+            }
             return PrescriptionCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .prescriptionInfoCommand(prescriptionInfoCommandList)
                     .build();
         }
+        this.isFiltered = false;
+        this.isEmpty = false;
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .prescriptionInfoCommand(prescriptions)
@@ -85,11 +105,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                     prescriptionInfoCommandList.add(pr);
                 }
             }
+            if (prescriptionInfoCommandList.isEmpty()) {
+                this.isEmpty = true;
+            } else {
+                this.isFiltered = true;
+                this.isEmpty = false;
+            }
             return PrescriptionCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .prescriptionInfoCommand(prescriptionInfoCommandList)
                     .build();
         }
+        this.isFiltered = false;
+        this.isEmpty = false;
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .prescriptionInfoCommand(this.prescriptionInfoCommands)

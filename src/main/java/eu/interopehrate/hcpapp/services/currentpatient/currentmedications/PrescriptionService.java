@@ -9,6 +9,10 @@ import java.io.IOException;
 
 public interface PrescriptionService {
 
+    boolean isFiltered();
+
+    boolean isEmpty();
+
     CurrentD2DConnection getCurrentD2DConnection();
 
     PrescriptionCommand prescriptionCommand(String keyword) throws IOException;

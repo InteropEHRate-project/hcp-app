@@ -26,22 +26,21 @@
             <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray"
-                       th:text="#{ips.translate.label}">language of the section</a>
+                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
                     <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
                     <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
-            <br>
             <div class="btn-toolbar float-left" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
-                    <span class="label label-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter</span>
                     <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
                         <input id="txtSearch" type="text" name="keyword">
-                        <button type="submit" class="btn btn-outline-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.go}">Go</button>
+                        <button type="submit" class="btn btn-outline-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter</button>
                     </form>
                 </div>
+                <div class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</div>
+                <div class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</div>
             </div>
 
             <table class="table table-bordered">

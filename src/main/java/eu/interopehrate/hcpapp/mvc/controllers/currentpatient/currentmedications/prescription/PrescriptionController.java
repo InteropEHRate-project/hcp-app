@@ -26,6 +26,8 @@ public class PrescriptionController {
         model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand(keyword));
         model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
         model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload(keyword));
+        model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
+        model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
     }
 
