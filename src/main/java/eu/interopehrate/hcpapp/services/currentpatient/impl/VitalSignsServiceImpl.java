@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import eu.interopehrate.hcpapp.converters.entity.CommandToEntityVitalSigns;
+import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityVitalSigns;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;

@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.converters.entity;
+package eu.interopehrate.hcpapp.converters.entity.commandstoentities;
 
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
@@ -11,8 +11,8 @@ public class CommandToEntityVitalSigns implements Converter<VitalSignsInfoComman
     public VitalSignsEntity convert(VitalSignsInfoCommand source) {
         VitalSignsEntity vitalSignsEntity = new VitalSignsEntity();
         vitalSignsEntity.setAnalysisName(source.getAnalysisName());
-        vitalSignsEntity.setCurrentValue(source.getVitalSignsInfoCommandSample().getCurrentValue());
         vitalSignsEntity.setLocalDateOfVitalSign(source.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign());
+        vitalSignsEntity.setCurrentValue(source.getVitalSignsInfoCommandSample().getCurrentValue());
         vitalSignsEntity.setUnitOfMeasurement(source.getVitalSignsInfoCommandSample().getUnitOfMeasurement());
         return vitalSignsEntity;
     }
