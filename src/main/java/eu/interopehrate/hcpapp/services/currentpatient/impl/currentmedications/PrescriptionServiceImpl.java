@@ -72,12 +72,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             //The filtration is happening...
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
             for (PrescriptionInfoCommand pr : prescriptions) {
-                if (pr.getDrugName().contains(keyword)) {
+                if (pr.getDrugName().toLowerCase().contains(keyword.toLowerCase())) {
                     prescriptionInfoCommandList.add(pr);
                 }
             }
             if (prescriptionInfoCommandList.isEmpty()) {
                 this.isEmpty = true;
+                this.isFiltered = false;
             } else {
                 this.isFiltered = true;
                 this.isEmpty = false;
@@ -101,12 +102,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         if (Objects.nonNull(keyword) && !keyword.equals("")) {
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
             for (PrescriptionInfoCommand pr : this.prescriptionInfoCommands) {
-                if (pr.getDrugName().contains(keyword)) {
+                if (pr.getDrugName().toLowerCase().contains(keyword.toLowerCase())) {
                     prescriptionInfoCommandList.add(pr);
                 }
             }
             if (prescriptionInfoCommandList.isEmpty()) {
                 this.isEmpty = true;
+                this.isFiltered = false;
             } else {
                 this.isFiltered = true;
                 this.isEmpty = false;
