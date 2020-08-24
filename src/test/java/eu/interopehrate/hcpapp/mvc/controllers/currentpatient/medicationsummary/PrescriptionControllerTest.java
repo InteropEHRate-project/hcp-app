@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -43,9 +44,11 @@ public class PrescriptionControllerTest {
     @Mock
     private TerminalFhirContext terminalFhirContext;
     private String keyword = "";
+    @Mock
+    private HttpSession session;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         PrescriptionService service = new PrescriptionServiceImpl
                 (new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
@@ -55,7 +58,7 @@ public class PrescriptionControllerTest {
 
     @Test
     void viewSection() throws IOException {
-        String returnedString = this.controller.viewSection(this.model, keyword);
+        String returnedString = this.controller.viewSection(this.model, this.session, this.keyword);
         assertEquals(TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION, returnedString);
         verify(this.model, times(1)).addAttribute(eq("prescriptionCommand"), any(PrescriptionCommand.class));
     }

@@ -32,15 +32,21 @@
                 </div>
             </div>
             <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
-            <div class="btn-toolbar float-left" role="toolbar">
-                <div class="btn-group btn-group-sm mr-2" role="group">
-                    <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
-                        <input id="txtSearch" type="text" name="keyword">
-                        <button type="submit" class="btn btn-outline-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter by drug name</button>
-                    </form>
+
+            <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter</button></p>
+            <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
+            <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
+            <div class="collapse" id="collapseExample">
+                <div class="btn-toolbar float-left" role="toolbar">
+                    <div class="btn-group btn-group-sm mr-2" role="group">
+                        <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
+                            <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
+                            <button type="submit" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
+                            <input type="button" class="btn btn-light" name="reset" th:value="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.reset}" onclick="customReset();"/>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</div>
-                <div class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</div>
             </div>
 
             <table class="table table-bordered">
@@ -138,5 +144,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function customReset()
+    {
+        document.getElementById("txtSearch").value = "";
+    }
+</script>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -22,10 +23,11 @@ public class PrescriptionController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model, String keyword) throws IOException {
+    public String viewSection(Model model, HttpSession session, String keyword) throws IOException {
+        session.setAttribute("keyword", keyword);
         model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand(keyword));
-        model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
         model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload(keyword));
+        model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
         model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
         model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
