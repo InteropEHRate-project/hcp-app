@@ -7,13 +7,13 @@
 
     <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <table class="table table-bordered">
+            <table id="table" class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
                     <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
@@ -86,7 +86,7 @@
             <p th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"><br>
             <h5 th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
-            <table class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
+            <table id="uploadTable" class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
                 <thead class="thead-light">
                 <tr>
                     <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
@@ -151,5 +151,20 @@
         document.getElementById("txtSearch").value = "";
     }
 </script>
+
+
+
+<!--Advanced table with filtration and pagination-->
+
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--        $('#table').DataTable();-->
+<!--    } );-->
+<!--</script>-->
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--        $('#uploadTable').DataTable();-->
+<!--    } );-->
+<!--</script>-->
 </body>
 </html>
