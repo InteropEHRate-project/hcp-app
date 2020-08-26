@@ -13,6 +13,9 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Prescr
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -213,6 +216,12 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         log.info("Prescription sent to S-EHR");
         this.prescriptionInfoCommands.clear();
         this.prescriptionRepository.deleteAll();
+    }
+
+    @Override
+    public Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.prescriptionRepository.findAll(pageable);
     }
 
     private static List<PrescriptionInfoCommand> toSortMethodCommand(List<PrescriptionInfoCommand> med) {

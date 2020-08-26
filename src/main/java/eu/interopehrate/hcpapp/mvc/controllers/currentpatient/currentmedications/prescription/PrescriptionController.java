@@ -1,8 +1,10 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription;
 
+import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/current-patient/current-medications/prescription")
@@ -25,12 +28,7 @@ public class PrescriptionController {
     @RequestMapping("/view-section")
     public String viewSection(Model model, HttpSession session, String keyword) throws IOException {
         session.setAttribute("keyword", keyword);
-        model.addAttribute("prescriptionCommand", prescriptionService.prescriptionCommand(keyword));
-        model.addAttribute("prescriptionCommandUpload", prescriptionService.prescriptionCommandUpload(keyword));
-        model.addAttribute("prescriptionService", prescriptionService.getCurrentD2DConnection());
-        model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
-        model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
-        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
+        return this.findPaginated(1, model, keyword);
     }
 
     @GetMapping
@@ -80,5 +78,25 @@ public class PrescriptionController {
     public String sendToSehr() throws IOException {
         this.prescriptionService.callSendPrescription();
         return "redirect:/current-patient/current-medications/prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable (value = "pageNo") int pageNo, Model model, String keyword) throws IOException {
+        //PAGE SIZE is hardcoded HERE
+        int pageSize = 5;
+        Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
+        List<PrescriptionEntity> listPrescriptions = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listPrescriptions", listPrescriptions);
+        model.addAttribute("prescriptionCommand", this.prescriptionService.prescriptionCommand(keyword));
+        model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
+        model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
+        model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
+
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
     }
 }

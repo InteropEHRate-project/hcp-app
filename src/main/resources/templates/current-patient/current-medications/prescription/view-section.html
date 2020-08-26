@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
@@ -83,10 +84,10 @@
                 </tbody>
             </table>
 
-            <p th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"><br>
-            <h5 th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}"
+            <p th:if="${!listPrescriptions.isEmpty()}"><br>
+            <h5 th:if="${!listPrescriptions.isEmpty()}"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
-            <table id="uploadTable" class="table table-bordered" th:if="${!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()}">
+            <table id="uploadTable" class="table table-bordered" th:if="${!listPrescriptions.isEmpty()}">
                 <thead class="thead-light">
                 <tr>
                     <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
@@ -97,7 +98,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="prUpload : ${prescriptionCommandUpload.getPrescriptionInfoCommand()}">
+                <tr th:each="prUpload : ${listPrescriptions}">
                     <td th:text="${prUpload.getDrugName()}"></td>
                     <td th:text="${prUpload.getDrugDosage()}"></td>
                     <td th:utext="${prUpload.getTimings() + '<br/>'}"></td>
@@ -127,6 +128,29 @@
                 </tbody>
             </table>
 
+            <div th:if = "${totalPages > 1}">
+                <div class = "row col-sm-10">
+                    <div class = "col-sm-3">
+                        Total Rows: [[${totalItems}]]
+                    </div>
+                    <div class = "col-sm-auto">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${i}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+                    </div>
+                    <div class = "col-sm-1">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${currentPage + 1}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${totalPages}}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary"
@@ -134,7 +158,7 @@
                        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.add}">Add</a>
                 </div>
             </div>
-            <div class="btn-toolbar float-left" role="toolbar" th:if="${(!prescriptionCommandUpload.getPrescriptionInfoCommand().isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
+            <div class="btn-toolbar float-left" role="toolbar" th:if="${(!listPrescriptions.isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-outline-primary"
                        th:href="@{/current-patient/current-medications/prescription/sendToSehr}"
@@ -142,15 +166,15 @@
                 </div>
             </div>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.previous}">Previous</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a></li>
-                </ul>
-            </nav>
+<!--            <nav aria-label="Page navigation example">-->
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.previous}">Previous</a></li>-->
+<!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a></li>-->
+<!--                </ul>-->
+<!--            </nav>-->
 
         </div>
     </div>
