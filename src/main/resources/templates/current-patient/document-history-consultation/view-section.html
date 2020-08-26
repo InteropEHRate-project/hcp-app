@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.pat.history}">pat history</title>
+    <title th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">document history</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -25,7 +25,42 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
+            <div class="m-5"></div>
+            <div class="btn-toolbar float-right" role="toolbar">
+                <div class="btn-group mr-2" role="group">
+                    <a href="#" class="btn disabled" style="background-color: lightgray"
+                       th:text="#{ips.translate.label}">language of the section</a>
+                    <a href="#" class="btn btn-primary"
+                       th:styleappend="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section')}"
+                       th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary"
+                       th:styleappend="${documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section')}"
+                       th:text="#{ips.translate.button.translated}">Translated version</a>
+                </div>
+            </div>
             <p><h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.current.patient.consultation.localDateTimeHistoryConsultation}">Date</th>
+                    <th th:text="#{template.current.patient.consultation.locationHospital}">Location Hospital</th>
+                    <th th:text="#{template.current.patient.consultation.exam}">Exam</th>
+                    <th th:text="#{template.current.patient.consultation.view}">View</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="hc : ${documentHistoryConsultation.documentHistoryConsultationInfoCommandList}">
+                    <td style="background-color: azure"
+                        th:style="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
+                        th:text="${{hc.localDateTimeHistoryConsultation}}"></td>
+                    <td th:text="${{hc.locationHospital}}"></td>
+                    <td th:text="${{hc.exam}}"></td>
+                    <td th:text="${{hc.view}}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

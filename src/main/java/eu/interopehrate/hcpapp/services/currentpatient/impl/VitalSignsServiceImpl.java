@@ -68,7 +68,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .map(hapiToCommandVitalSigns::convert)
                 .collect(Collectors.toList());
 
-        //vitalSignsInfoCommands.addAll(this.vitalSignsInfoCommandsList);
+        vitalSignsInfoCommands.addAll(this.vitalSignsInfoCommandsList);
         return VitalSignsCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .vitalSignsInfoCommands(vitalSignsInfoCommands)
