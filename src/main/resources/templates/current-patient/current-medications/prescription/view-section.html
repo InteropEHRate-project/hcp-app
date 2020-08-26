@@ -128,28 +128,23 @@
                 </tbody>
             </table>
 
-            <div th:if = "${totalPages > 1}">
-                <div class = "row col-sm-10">
-                    <div class = "col-sm-3">
-                        Total Rows: [[${totalItems}]]
-                    </div>
-                    <div class = "col-sm-auto">
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${i}}">[[${i}]]</a>
-						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-					</span>
-                    </div>
-                    <div class = "col-sm-1">
-                        <a th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${currentPage + 1}}">Next</a>
-                        <span th:unless="${currentPage < totalPages}">Next</span>
-                    </div>
-
-                    <div class="col-sm-1">
-                        <a th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${totalPages}}">Last</a>
-                        <span th:unless="${currentPage < totalPages}">Last</span>
-                    </div>
-                </div>
-            </div>
+            <nav th:if = "${totalPages > 1}">
+                <ul class="pagination">
+                    <li class="page-item disabled"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a></li>
+                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a class="page-link"  th:if="${currentPage != i}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${i}}">[[${i}]]</a>
+                        <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"  th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${currentPage + 1}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"  th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${totalPages}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
+                    </li>
+                </ul>
+            </nav>
 
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
@@ -158,6 +153,7 @@
                        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.add}">Add</a>
                 </div>
             </div>
+
             <div class="btn-toolbar float-left" role="toolbar" th:if="${(!listPrescriptions.isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-outline-primary"
@@ -165,16 +161,6 @@
                        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
                 </div>
             </div>
-
-<!--            <nav aria-label="Page navigation example">-->
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.previous}">Previous</a></li>-->
-<!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-<!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                    <li class="page-item"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a></li>-->
-<!--                </ul>-->
-<!--            </nav>-->
 
         </div>
     </div>

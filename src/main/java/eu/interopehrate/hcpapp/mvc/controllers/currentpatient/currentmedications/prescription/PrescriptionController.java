@@ -84,7 +84,7 @@ public class PrescriptionController {
     @RequestMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo, Model model, String keyword) throws IOException {
         //PAGE SIZE is hardcoded HERE
-        int pageSize = 5;
+        int pageSize = 3;
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
         List<PrescriptionEntity> listPrescriptions = page.getContent();
 
