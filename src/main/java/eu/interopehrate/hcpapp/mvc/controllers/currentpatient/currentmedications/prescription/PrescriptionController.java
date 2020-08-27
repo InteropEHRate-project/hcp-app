@@ -92,11 +92,6 @@ public class PrescriptionController {
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<PrescriptionEntity> listPrescriptions = page.getContent();
 
-        Page<PrescriptionInfoCommand> prescriptionInfoCommandPage = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keyword).getPageInfoCommand();
-        model.addAttribute("totalItemsSEHR", prescriptionInfoCommandPage.getTotalElements());
-        model.addAttribute("totalPagesSEHR", prescriptionInfoCommandPage.getTotalPages());
-        model.addAttribute("currentPageSEHR", pageNoSEHR);
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
@@ -105,6 +100,7 @@ public class PrescriptionController {
         model.addAttribute("listPrescriptions", listPrescriptions);
 
         model.addAttribute("prescriptionCommand", this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keyword));
+        model.addAttribute("currentPageSEHR", pageNoSEHR);
         model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
         model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
         model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
