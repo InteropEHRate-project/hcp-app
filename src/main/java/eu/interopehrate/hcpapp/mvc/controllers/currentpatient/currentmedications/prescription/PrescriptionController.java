@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription;
 
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
@@ -99,8 +100,13 @@ public class PrescriptionController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("listPrescriptions", listPrescriptions);
 
-        model.addAttribute("prescriptionCommand", this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keyword));
+        PrescriptionCommand prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keyword);
+        List<PrescriptionInfoCommand> listPrescriptionsSEHR = prescriptionCommand.getPageInfoCommand().getContent();
+        model.addAttribute("prescriptionCommand", prescriptionCommand);
+        model.addAttribute("listPrescriptionsSEHR", listPrescriptionsSEHR);
         model.addAttribute("currentPageSEHR", pageNoSEHR);
+        model.addAttribute("totalPagesSEHR", prescriptionCommand.getPageInfoCommand().getTotalPages());
+        model.addAttribute("totalItemsSEHR", prescriptionCommand.getPageInfoCommand().getTotalElements());
         model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
         model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
         model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
