@@ -130,17 +130,24 @@
 
             <nav th:if = "${totalPages > 1}">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a></li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
+                    </li>
                     <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                        <a class="page-link"  th:if="${currentPage != i}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${i}}">[[${i}]]</a>
+                        <a class="page-link"  th:if="${currentPage != i}"
+                           th:href="@{'/current-patient/current-medications/prescription/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                         <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
                     </li>
                     <li class="page-item">
-                        <a class="page-link"  th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${currentPage + 1}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                        <a class="page-link"  th:if="${currentPage < totalPages}"
+                           th:href="@{'/current-patient/current-medications/prescription/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
                         <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
                     </li>
                     <li class="page-item">
-                        <a class="page-link"  th:if="${currentPage < totalPages}" th:href="@{'/current-patient/current-medications/prescription/page/' + ${totalPages}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                        <a class="page-link"  th:if="${currentPage < totalPages}"
+                           th:href="@{'/current-patient/current-medications/prescription/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
                         <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
                     </li>
                 </ul>

@@ -33,5 +33,5 @@ public interface PrescriptionService {
 
     void sendPrescription(Bundle medicationRequest) throws IOException;
 
-    Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize);
+    Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 }

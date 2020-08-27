@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -219,8 +220,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    public Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+    public Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField).ascending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.prescriptionRepository.findAll(pageable);
     }
 
