@@ -87,6 +87,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 this.isFiltered = true;
                 this.isEmpty = false;
             }
+            toSortMethodCommand(prescriptionInfoCommandList);
             return PrescriptionCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .prescriptionInfoCommand(prescriptionInfoCommandList)
