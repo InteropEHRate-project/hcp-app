@@ -105,7 +105,7 @@
                         <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
                            th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${totalPagesSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
                            th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
-                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
+                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
                     </li>
                 </ul>
             </nav>

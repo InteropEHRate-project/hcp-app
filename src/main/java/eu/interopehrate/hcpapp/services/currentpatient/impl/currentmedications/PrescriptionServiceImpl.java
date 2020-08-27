@@ -68,6 +68,33 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
 
+//        This helps you to create a local prescription list for testing:
+//        List<PrescriptionInfoCommand> prescriptions = new ArrayList<>();
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(0).setDrugName("A");
+//        prescriptions.get(0).setStatus("Active");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(1).setDrugName("B");
+//        prescriptions.get(1).setStatus("Stopped");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(2).setDrugName("b");
+//        prescriptions.get(2).setStatus("Active");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(3).setDrugName("D");
+//        prescriptions.get(3).setStatus("Active");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(4).setDrugName("E");
+//        prescriptions.get(4).setStatus("On-hold");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(5).setDrugName("F");
+//        prescriptions.get(5).setStatus("Active");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(6).setDrugName("G");
+//        prescriptions.get(6).setStatus("Stopped");
+//        prescriptions.add(new PrescriptionInfoCommand());
+//        prescriptions.get(7).setDrugName("H");
+//        prescriptions.get(7).setStatus("Active");
+
         if (Objects.nonNull(keyword) && !keyword.equals("")) {
             //The filtration is happening...
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
@@ -84,47 +111,45 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 this.isEmpty = false;
             }
             toSortMethodCommand(prescriptionInfoCommandList);
+            //Pagination generation
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions, pageable, prescriptions.size());
+            try {
+                int index = (pageNo - 1) * pageSize;
+                Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptionInfoCommandList.subList(index, index + pageSize), pageable, prescriptionInfoCommandList.size());
+                return PrescriptionCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .pageInfoCommand(page)
+                        .build();
+            } catch (IndexOutOfBoundsException ignored) {
+                int index = (pageNo - 1) * pageSize;
+                Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptionInfoCommandList.subList(index, prescriptionInfoCommandList.size()), pageable, prescriptionInfoCommandList.size());
+                return PrescriptionCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .pageInfoCommand(page)
+                        .build();
+            }
+        }
+        this.isFiltered = false;
+        this.isEmpty = false;
+        toSortMethodCommand(prescriptions);
+
+        //Pagination generation
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        try {
+            int index = (pageNo - 1) * pageSize;
+            Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions.subList(index, index + pageSize), pageable, prescriptions.size());
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .pageInfoCommand(page)
+                    .build();
+        } catch (IndexOutOfBoundsException ignored) {
+            int index = (pageNo - 1) * pageSize;
+            Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions.subList(index, prescriptions.size()), pageable, prescriptions.size());
             return PrescriptionCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .pageInfoCommand(page)
                     .build();
         }
-        this.isFiltered = false;
-        this.isEmpty = false;
-        toSortMethodCommand(prescriptions);
-//        Sort sort = Sort.by(sortField).ascending();
-//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-//
-//        List<List<PrescriptionInfoCommand>> listOfListsOfPrescriptions = new ArrayList<>();
-//        List<PrescriptionInfoCommand> listOfPrescriptions = new ArrayList<>();
-//        try {
-//            while (!prescriptions.isEmpty()) {
-//                int i = 0;
-//                do {
-//                    listOfPrescriptions.add(prescriptions.get(i));
-//                    i++;
-//                } while ( i < 3);   //change condition for "i" to change the page size.
-//                listOfListsOfPrescriptions.add(listOfPrescriptions);
-//                listOfPrescriptions = new ArrayList<>();
-//                for (int j = 0; j < i; j++) {
-//                    prescriptions.remove(0);
-//                }
-//            }
-//        } catch (IndexOutOfBoundsException ignored) {
-//            listOfListsOfPrescriptions.add(listOfPrescriptions);
-//            prescriptions.clear();
-//        }
-//        Page<List<PrescriptionInfoCommand>> page = new PageImpl<>(listOfListsOfPrescriptions);
-
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions, pageable, prescriptions.size());
-
-        return PrescriptionCommand.builder()
-                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .pageInfoCommand(page)
-                .build();
     }
 
     @Override
