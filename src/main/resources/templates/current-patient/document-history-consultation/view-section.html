@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +15,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
-
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container">
@@ -40,7 +38,19 @@
                        th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
-            <p><h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+            <p>
+            <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
+                Consultation</h3></p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Filter by
+                    Speciality
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Cardiology</a>
+                    <a class="dropdown-item" href="#">Psychiatry</a>
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
@@ -57,7 +67,11 @@
                         th:text="${{hc.localDateTimeHistoryConsultation}}"></td>
                     <td th:text="${{hc.locationHospital}}"></td>
                     <td th:text="${{hc.exam}}"></td>
-                    <td th:text="${{hc.view}}"></td>
+                    <td th:text="${{hc.view}}">
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.open}">Open</a>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -22,7 +22,7 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand() {
         List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommand = new ArrayList<>();
-        this.documentHistoryConsultationInfoCommand1.setLocationHospital("Bucuresti");
+        this.documentHistoryConsultationInfoCommand1.setLocationHospital("Bucharest");
         this.documentHistoryConsultationInfoCommand1.setExam("Visit");
         documentHistoryConsultationInfoCommand.add(this.documentHistoryConsultationInfoCommand1);
 

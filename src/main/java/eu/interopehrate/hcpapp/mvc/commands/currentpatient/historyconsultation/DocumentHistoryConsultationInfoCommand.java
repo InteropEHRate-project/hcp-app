@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 public class DocumentHistoryConsultationInfoCommand {
 
+    @NotEmpty
+    @NotNull
+    private String speciality;
+
     @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
     private LocalDateTime localDateTimeHistoryConsultation;
 
