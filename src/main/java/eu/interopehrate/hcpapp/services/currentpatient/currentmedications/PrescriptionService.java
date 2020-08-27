@@ -17,9 +17,7 @@ public interface PrescriptionService {
 
     CurrentD2DConnection getCurrentD2DConnection();
 
-    PrescriptionCommand prescriptionCommand(String keyword) throws IOException;
-
-    PrescriptionCommand prescriptionCommandUpload(String keyword);
+    PrescriptionCommand prescriptionCommand(int pageNo, int pageSize, String keyword) throws IOException;
 
     PrescriptionInfoCommand prescriptionInfoCommandById(Long id);
 

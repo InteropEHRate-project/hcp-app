@@ -13,10 +13,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Prescr
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -65,12 +62,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     //The method can filter and return only records that contains the keyword in the drugName if it is the case.
     @Override
-    public PrescriptionCommand prescriptionCommand(String keyword) {
+    public PrescriptionCommand prescriptionCommand(int pageNo, int pageSize, String keyword) {
         var prescriptions = this.currentPatient.prescriptionList()
                 .stream()
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
-        toSortMethodCommand(prescriptions);
 
         if (Objects.nonNull(keyword) && !keyword.equals("")) {
             //The filtration is happening...
@@ -88,46 +84,46 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 this.isEmpty = false;
             }
             toSortMethodCommand(prescriptionInfoCommandList);
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions, pageable, prescriptions.size());
             return PrescriptionCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .prescriptionInfoCommand(prescriptionInfoCommandList)
+                    .pageInfoCommand(page)
                     .build();
         }
         this.isFiltered = false;
         this.isEmpty = false;
-        return PrescriptionCommand.builder()
-                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .prescriptionInfoCommand(prescriptions)
-                .build();
-    }
+        toSortMethodCommand(prescriptions);
+//        Sort sort = Sort.by(sortField).ascending();
+//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+//
+//        List<List<PrescriptionInfoCommand>> listOfListsOfPrescriptions = new ArrayList<>();
+//        List<PrescriptionInfoCommand> listOfPrescriptions = new ArrayList<>();
+//        try {
+//            while (!prescriptions.isEmpty()) {
+//                int i = 0;
+//                do {
+//                    listOfPrescriptions.add(prescriptions.get(i));
+//                    i++;
+//                } while ( i < 3);   //change condition for "i" to change the page size.
+//                listOfListsOfPrescriptions.add(listOfPrescriptions);
+//                listOfPrescriptions = new ArrayList<>();
+//                for (int j = 0; j < i; j++) {
+//                    prescriptions.remove(0);
+//                }
+//            }
+//        } catch (IndexOutOfBoundsException ignored) {
+//            listOfListsOfPrescriptions.add(listOfPrescriptions);
+//            prescriptions.clear();
+//        }
+//        Page<List<PrescriptionInfoCommand>> page = new PageImpl<>(listOfListsOfPrescriptions);
 
-    //The method can filter and return only records that contains the keyword in the drugName if it is the case.
-    @Override
-    public PrescriptionCommand prescriptionCommandUpload(String keyword) {
-        if (Objects.nonNull(keyword) && !keyword.equals("")) {
-            List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
-            for (PrescriptionInfoCommand pr : this.prescriptionInfoCommands) {
-                if (pr.getDrugName().toLowerCase().contains(keyword.toLowerCase())) {
-                    prescriptionInfoCommandList.add(pr);
-                }
-            }
-            if (prescriptionInfoCommandList.isEmpty()) {
-                this.isEmpty = true;
-                this.isFiltered = false;
-            } else {
-                this.isFiltered = true;
-                this.isEmpty = false;
-            }
-            return PrescriptionCommand.builder()
-                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .prescriptionInfoCommand(prescriptionInfoCommandList)
-                    .build();
-        }
-        this.isFiltered = false;
-        this.isEmpty = false;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions, pageable, prescriptions.size());
+
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .prescriptionInfoCommand(this.prescriptionInfoCommands)
+                .pageInfoCommand(page)
                 .build();
     }
 
