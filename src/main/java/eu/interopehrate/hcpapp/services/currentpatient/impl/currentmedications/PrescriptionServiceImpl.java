@@ -68,33 +68,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
 
-//        This helps you to create a local prescription list for testing:
-//        List<PrescriptionInfoCommand> prescriptions = new ArrayList<>();
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(0).setDrugName("A");
-//        prescriptions.get(0).setStatus("Active");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(1).setDrugName("B");
-//        prescriptions.get(1).setStatus("Stopped");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(2).setDrugName("b");
-//        prescriptions.get(2).setStatus("Active");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(3).setDrugName("D");
-//        prescriptions.get(3).setStatus("Active");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(4).setDrugName("E");
-//        prescriptions.get(4).setStatus("On-hold");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(5).setDrugName("F");
-//        prescriptions.get(5).setStatus("Active");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(6).setDrugName("G");
-//        prescriptions.get(6).setStatus("Stopped");
-//        prescriptions.add(new PrescriptionInfoCommand());
-//        prescriptions.get(7).setDrugName("H");
-//        prescriptions.get(7).setStatus("Active");
-
         if (Objects.nonNull(keyword) && !keyword.equals("")) {
             //The filtration is happening...
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
@@ -113,21 +86,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             toSortMethodCommand(prescriptionInfoCommandList);
             //Pagination generation
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            try {
-                int index = (pageNo - 1) * pageSize;
-                Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptionInfoCommandList.subList(index, index + pageSize), pageable, prescriptionInfoCommandList.size());
-                return PrescriptionCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .pageInfoCommand(page)
-                        .build();
-            } catch (IndexOutOfBoundsException ignored) {
-                int index = (pageNo - 1) * pageSize;
-                Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptionInfoCommandList.subList(index, prescriptionInfoCommandList.size()), pageable, prescriptionInfoCommandList.size());
-                return PrescriptionCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .pageInfoCommand(page)
-                        .build();
-            }
+            Page<PrescriptionInfoCommand> page = createPageFromList(prescriptionInfoCommandList, pageable, pageNo, pageSize);
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .pageInfoCommand(page)
+                    .build();
         }
         this.isFiltered = false;
         this.isEmpty = false;
@@ -135,21 +98,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
         //Pagination generation
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        try {
-            int index = (pageNo - 1) * pageSize;
-            Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions.subList(index, index + pageSize), pageable, prescriptions.size());
-            return PrescriptionCommand.builder()
-                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .pageInfoCommand(page)
-                    .build();
-        } catch (IndexOutOfBoundsException ignored) {
-            int index = (pageNo - 1) * pageSize;
-            Page<PrescriptionInfoCommand> page = new PageImpl<>(prescriptions.subList(index, prescriptions.size()), pageable, prescriptions.size());
-            return PrescriptionCommand.builder()
-                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .pageInfoCommand(page)
-                    .build();
-        }
+        Page<PrescriptionInfoCommand> page = createPageFromList(prescriptions, pageable, pageNo, pageSize);
+        return PrescriptionCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .pageInfoCommand(page)
+                .build();
     }
 
     @Override
@@ -339,5 +292,15 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 break;
         }
         return result;
+    }
+
+    private static Page<PrescriptionInfoCommand> createPageFromList(List<PrescriptionInfoCommand> list, Pageable pageable, int pageNo, int pageSize) {
+        try {
+            int index = (pageNo - 1) * pageSize;
+            return new PageImpl<>(list.subList(index, index + pageSize), pageable, list.size());
+        } catch (IndexOutOfBoundsException ignored) {
+            int index = (pageNo - 1) * pageSize;
+            return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
+        }
     }
 }
