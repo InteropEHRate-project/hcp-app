@@ -155,53 +155,6 @@
                     </script>
                 </div>
 
-<!--                <p th:text="#{fragment.current.patient.navigation.left.medication.summary.prescription.medication.timings}">Timings</p>-->
-<!--                <div class="form-row">-->
-<!--                    <div class="col-sm-6">-->
-<!--                        <div class="form-group row">-->
-<!--                            <label for="frequency" class="col-sm-4 col-form-label">Times per day:</label>-->
-<!--                            <div class="col-sm-5">-->
-<!--                                <input id="frequency" type="text" class="form-control" th:classappend="${#fields.hasErrors('frequency')} ? 'is-invalid' :''" th:field="*{frequency}">-->
-<!--                                <div class="invalid-feedback" th:if="${#fields.hasErrors('frequency')}">-->
-<!--                                    <ul>-->
-<!--                                        <li th:each="err : ${#fields.errors('frequency')}" th:text="${err}">err</li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group row">-->
-<!--                            <label for="period" class="col-sm-5 col-form-label">Per:</label>-->
-<!--                            <div class="col-sm-5">-->
-<!--                                <input id="period" type="text" class="form-control" th:classappend="${#fields.hasErrors('period')} ? 'is-invalid' :''" th:field="*{period}">-->
-<!--                                <div class="invalid-feedback" th:if="${#fields.hasErrors('period')}">-->
-<!--                                    <ul>-->
-<!--                                        <li th:each="err : ${#fields.errors('period')}" th:text="${err}">err</li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group row">-->
-<!--                            <label for="periodUnit" class="col-sm-5 col-form-label">Unit:</label>-->
-<!--                            <div class="col-sm-5">-->
-<!--                                <select class="form-control" id="periodUnit" th:field="*{periodUnit}">-->
-<!--                                    <option selected value="">Choose...</option>-->
-<!--                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="minute">minute</option>-->
-<!--                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="hour">hour</option>-->
-<!--                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="day">day</option>-->
-<!--                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="week">week</option>-->
-<!--                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="month">month</option>-->
-<!--                                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('periodUnit')} ? 'is-invalid' :''" value="year">year</option>-->
-<!--                                </select>-->
-<!--                                <div class="invalid-feedback" th:if="${#fields.hasErrors('periodUnit')}">-->
-<!--                                    <ul>-->
-<!--                                        <li th:each="err : ${#fields.errors('periodUnit')}" th:text="${err}">err</li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
                 <div class="text-right"><br>
                     <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">Save</button>
                 </div>

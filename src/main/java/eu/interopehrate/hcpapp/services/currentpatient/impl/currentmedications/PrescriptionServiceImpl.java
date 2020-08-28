@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -18,10 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,8 +27,8 @@ import java.util.stream.Collectors;
 public class PrescriptionServiceImpl implements PrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
-    private List<PrescriptionInfoCommand> prescriptionInfoCommands = new ArrayList<>();
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
+    private EntityToCommandPrescription entityToCommandPrescription = new EntityToCommandPrescription();
     @Autowired
     private PrescriptionRepository prescriptionRepository;
     @Autowired
@@ -107,11 +105,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public PrescriptionInfoCommand prescriptionInfoCommandById(Long id) {
-        return this.prescriptionInfoCommands
-                .stream()
-                .filter(prescription -> prescription.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("id not found"));
+        if (this.prescriptionRepository.findById(id).isPresent()) {
+            return this.entityToCommandPrescription.convert(this.prescriptionRepository.findById(id).get());
+        } else {
+            throw new NoSuchElementException("id not found");
+        }
     }
 
     @Override
@@ -126,13 +124,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.prescriptionRepository.save(prescriptionEntity);
         //Adding the ID from the database to the InfoCommand
         prescriptionInfoCommand.setId(prescriptionEntity.getId());
-        this.prescriptionInfoCommands.add(prescriptionInfoCommand);
-        this.prescriptionInfoCommands = toSortMethodCommand(this.prescriptionInfoCommands);
     }
 
     @Override
     public void deletePrescription(Long drugId) {
-        this.prescriptionInfoCommands.removeIf(pre -> pre.getId().equals(drugId));
         this.prescriptionRepository.deleteById(drugId);
     }
 
@@ -160,12 +155,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
         prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
         prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionInfoCommand.getPeriodUnit()));
-        prescriptionEntity.setTimings(oldPrescription.getTimings());
+        prescriptionEntity.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
         prescriptionEntity.setStart(prescriptionInfoCommand.getStart());
         prescriptionEntity.setEnd(prescriptionInfoCommand.getEnd());
         this.prescriptionRepository.save(prescriptionEntity);
-
-        this.prescriptionInfoCommands = toSortMethodCommand(this.prescriptionInfoCommands);
     }
 
     @Override
@@ -190,7 +183,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public void sendPrescription(Bundle medicationRequest) throws IOException {
         this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
-        this.prescriptionInfoCommands.clear();
         this.prescriptionRepository.deleteAll();
     }
 
@@ -201,7 +193,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         return this.prescriptionRepository.findAll(pageable);
     }
 
-    private static List<PrescriptionInfoCommand> toSortMethodCommand(List<PrescriptionInfoCommand> med) {
+    private static void toSortMethodCommand(List<PrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
             if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
                 return -1;
@@ -223,7 +215,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             }
             return 0;
         });
-        return med;
     }
 
     private static MedicationRequest createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
