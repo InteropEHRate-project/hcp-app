@@ -53,6 +53,10 @@ public class CurrentPatient {
         return vitalSignsBundle;
     }
 
+    public void setVitalSignsBundle(Bundle vitalSignsBundle) {
+        this.vitalSignsBundle = vitalSignsBundle;
+    }
+
     public Bundle getPrescriptionTranslated() {
         return prescriptionTranslated;
     }
@@ -102,6 +106,17 @@ public class CurrentPatient {
         }
     }
 
+    public void initVitalSigns(Bundle vital) {
+        try {
+            this.vitalSignsBundle = vital;
+            this.vitalSignsTranslated = this.translateService.translate(vital, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.vitalSignsTranslated = vitalSignsBundle;
+        }
+
+    }
+
     public void initImageReport(Bundle imageRep) {
         try {
             this.imageReport = imageRep;
@@ -122,6 +137,8 @@ public class CurrentPatient {
         this.prescriptionTranslated = null;
         this.laboratoryResults = null;
         this.laboratoryResultsTranslated = null;
+        this.vitalSignsBundle = null;
+        this.vitalSignsTranslated = null;
         this.imageReport = null;
         this.imageReportTranslated = null;
     }

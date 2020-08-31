@@ -34,12 +34,20 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     @Autowired
     private VitalSignsRepository vitalSignsRepository;
     private CurrentD2DConnection currentD2DConnection;
+    private Bundle vitalSignsBundle;
 
     public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns,
-                                 CurrentD2DConnection currentD2DConnection) {
+                                 CurrentD2DConnection currentD2DConnection) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
+        File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        this.vitalSignsBundle = parser.parseResource(Bundle.class, lineReadtest);
+        this.currentPatient.initVitalSigns(vitalSignsBundle);
+
     }
 
     @Override
@@ -48,13 +56,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     @Override
-    public VitalSignsCommand vitalSignsCommand() throws IOException {
-
-        File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        Bundle vitalSignsBundle = parser.parseResource(Bundle.class, lineReadtest);
+    public VitalSignsCommand vitalSignsCommand() {
 
         var vitalSigns = vitalSignsBundle.getEntry()
                 .stream()
@@ -68,7 +70,6 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .map(hapiToCommandVitalSigns::convert)
                 .collect(Collectors.toList());
 
-        vitalSignsInfoCommands.addAll(this.vitalSignsInfoCommandsList);
         return VitalSignsCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .vitalSignsInfoCommands(vitalSignsInfoCommands)
@@ -130,6 +131,8 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     public void sendVitalSigns(Bundle vitalSigns) throws IOException {
         this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
+        this.vitalSignsInfoCommandsList.clear();
+        this.vitalSignsRepository.deleteAll();
     }
 
     private static Observation createVitalSignsFromEntity(VitalSignsEntity vitalSignsEntity) {
