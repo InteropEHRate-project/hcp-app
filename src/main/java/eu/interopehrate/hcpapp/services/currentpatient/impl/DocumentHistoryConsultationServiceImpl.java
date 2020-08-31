@@ -12,31 +12,34 @@ import java.util.List;
 @Service
 public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryConsultationService {
     private CurrentPatient currentPatient;
-
+    private List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
     private DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand1 = new DocumentHistoryConsultationInfoCommand();
     private DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand2 = new DocumentHistoryConsultationInfoCommand();
 
     public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient) {
         this.currentPatient = currentPatient;
+
+        this.documentHistoryConsultationInfoCommand1.setSpeciality("Cardiology");
+        this.documentHistoryConsultationInfoCommand1.setLocationHospital("Bucharest");
+        this.documentHistoryConsultationInfoCommand1.setExam("Visit");
+        this.documentHistoryConsultationInfoCommand2.setSpeciality("Psychiatry");
+        this.documentHistoryConsultationInfoCommand2.setLocationHospital("Timisoara");
+        this.documentHistoryConsultationInfoCommand2.setExam("Visit");
+        this.documentHistoryConsultationInfoCommands.add(this.documentHistoryConsultationInfoCommand1);
+        this.documentHistoryConsultationInfoCommands.add(this.documentHistoryConsultationInfoCommand2);
     }
 
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
-        List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommand = new ArrayList<>();
-        this.documentHistoryConsultationInfoCommand1.setSpeciality("Cardiology");
-        this.documentHistoryConsultationInfoCommand1.setLocationHospital("Bucharest");
-        this.documentHistoryConsultationInfoCommand1.setExam("Visit");
-
-        this.documentHistoryConsultationInfoCommand2.setSpeciality("Psychiatry");
-        this.documentHistoryConsultationInfoCommand2.setLocationHospital("Bucharest");
-        this.documentHistoryConsultationInfoCommand2.setExam("Visit");
-
-        documentHistoryConsultationInfoCommand.add(this.documentHistoryConsultationInfoCommand1);
-        documentHistoryConsultationInfoCommand.add(this.documentHistoryConsultationInfoCommand2);
-
+        if (speciality.equalsIgnoreCase("all")) {
+            return DocumentHistoryConsultationCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .documentHistoryConsultationInfoCommandList(documentHistoryConsultationInfoCommands)
+                    .build();
+        }
         return DocumentHistoryConsultationCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .documentHistoryConsultationInfoCommandList(documentHistoryConsultationInfoCommand)
+                .documentHistoryConsultationInfoCommandList(filter(this.documentHistoryConsultationInfoCommands, speciality))
                 .build();
     }
 

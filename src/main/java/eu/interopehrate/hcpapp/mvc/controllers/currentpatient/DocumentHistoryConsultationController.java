@@ -18,9 +18,8 @@ public class DocumentHistoryConsultationController {
     }
 
     @GetMapping
-    @RequestMapping("/view-section")
-    public String viewSection(Model model, String speciality) {
-        model.addAttribute("speciality", speciality);
+    @RequestMapping("/view-section/{speciality}")
+    public String viewSection(Model model, @PathVariable(value = "speciality") String speciality) {
         model.addAttribute("documentHistoryConsultation", documentHistoryConsultationService.documentHistoryConsultationCommand(speciality));
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION;
     }

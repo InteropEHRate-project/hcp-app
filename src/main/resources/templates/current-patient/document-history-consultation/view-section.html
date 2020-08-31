@@ -30,24 +30,27 @@
                        th:text="#{ips.translate.label}">language of the section</a>
                     <a href="#" class="btn btn-primary"
                        th:styleappend="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section')}"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section/all')}"
                        th:text="#{ips.translate.button.original}">Initial version</a>
                     <a href="#" class="btn btn-primary"
                        th:styleappend="${documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section')}"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}"
                        th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
             <p>
-            <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
-                Consultation</h3></p>
+            <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Filter by
-                    Speciality
-                </button>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.speciality}">Filter by Speciality</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Cardiology</a>
-                    <a class="dropdown-item" href="#">Psychiatry</a>
+                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/cardiology}"
+                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
+                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/psychiatry}"
+                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}"
+                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.reset}">RESET</a>
                 </div>
             </div>
             <br>
