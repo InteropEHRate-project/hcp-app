@@ -5,6 +5,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultati
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,8 +19,9 @@ public class DocumentHistoryConsultationController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model) {
-        model.addAttribute("documentHistoryConsultation", documentHistoryConsultationService.documentHistoryConsultationCommand());
+    public String viewSection(Model model, String speciality) {
+        model.addAttribute("speciality", speciality);
+        model.addAttribute("documentHistoryConsultation", documentHistoryConsultationService.documentHistoryConsultationCommand(speciality));
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION;
     }
 }

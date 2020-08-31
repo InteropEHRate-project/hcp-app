@@ -14,21 +14,41 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     private CurrentPatient currentPatient;
 
     private DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand1 = new DocumentHistoryConsultationInfoCommand();
+    private DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand2 = new DocumentHistoryConsultationInfoCommand();
 
     public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient) {
         this.currentPatient = currentPatient;
     }
 
     @Override
-    public DocumentHistoryConsultationCommand documentHistoryConsultationCommand() {
+    public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
         List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommand = new ArrayList<>();
+        this.documentHistoryConsultationInfoCommand1.setSpeciality("Cardiology");
         this.documentHistoryConsultationInfoCommand1.setLocationHospital("Bucharest");
         this.documentHistoryConsultationInfoCommand1.setExam("Visit");
+
+        this.documentHistoryConsultationInfoCommand2.setSpeciality("Psychiatry");
+        this.documentHistoryConsultationInfoCommand2.setLocationHospital("Bucharest");
+        this.documentHistoryConsultationInfoCommand2.setExam("Visit");
+
         documentHistoryConsultationInfoCommand.add(this.documentHistoryConsultationInfoCommand1);
+        documentHistoryConsultationInfoCommand.add(this.documentHistoryConsultationInfoCommand2);
 
         return DocumentHistoryConsultationCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .documentHistoryConsultationInfoCommandList(documentHistoryConsultationInfoCommand)
                 .build();
     }
+
+    private static List<DocumentHistoryConsultationInfoCommand> filter(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {
+        List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
+        for (DocumentHistoryConsultationInfoCommand dc : list) {
+            if (dc.getSpeciality().equalsIgnoreCase(speciality)) {
+                documentHistoryConsultationInfoCommands.add(dc);
+            }
+        }
+        return documentHistoryConsultationInfoCommands;
+    }
+
+
 }
