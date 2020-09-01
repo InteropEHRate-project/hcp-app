@@ -39,17 +39,23 @@
                 </div>
             </div>
             <p>
-            <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+            <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
+                Consultation</h3></p>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.speciality}">Filter by Speciality</button>
+                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.speciality}">
+                    Filter by Speciality
+                </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/cardiology}"
+                    <a class="dropdown-item"
+                       th:href="@{/current-patient/document-history-consultation/view-section/cardiology}"
                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
-                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/psychiatry}"
+                    <a class="dropdown-item"
+                       th:href="@{/current-patient/document-history-consultation/view-section/psychiatry}"
                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}"
+                    <a class="dropdown-item"
+                       th:href="@{/current-patient/document-history-consultation/view-section/all}"
                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.reset}">RESET</a>
                 </div>
             </div>
@@ -71,7 +77,10 @@
                     <td th:text="${{hc.locationHospital}}"></td>
                     <td th:text="${{hc.exam}}"></td>
                     <td th:text="${{hc.view}}">
-                        <button type="button" class="btn btn-primary">Open</button>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary"
+                               th:text="#{fragment.current.patient.navigation.left.document.history.consultation.open}">Open</a>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
