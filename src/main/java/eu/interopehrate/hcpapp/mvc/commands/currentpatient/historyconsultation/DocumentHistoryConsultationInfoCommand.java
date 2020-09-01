@@ -26,8 +26,4 @@ public class DocumentHistoryConsultationInfoCommand {
     @NotEmpty
     @NotNull
     private String exam;
-
-    @NotEmpty
-    @NotNull
-    private String view;
 }
