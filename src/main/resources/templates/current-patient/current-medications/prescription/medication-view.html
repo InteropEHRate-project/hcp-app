@@ -38,33 +38,33 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <p><h3 th:text="${medicationCommand.getMedicationInfoCommandList().get(0).getDrugName()}">drug name</h3></p>
+                            <p><h3 th:text="${medicationCommand.getMedicationInfoCommand().getDrugName()}">drug name</h3></p>
                         </div>
-                        <div class="card-body" th:each="med : ${medicationCommand.getMedicationInfoCommandList()}">
+                        <div class="card-body">
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription}">Date of Prescription</h5>
-                            <p class="card-text" th:text="${med.getDateOfPrescription()}">date of prescription</p>
+                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getDateOfPrescription()}">date of prescription</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.author}">Author</h5>
                             <p class="card-text" th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}">author</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug dosage</h5>
-                            <p class="card-text" th:text="${med.getDrugDosage()}">drug dosage</p>
+                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getDrugDosage()}">drug dosage</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</h5>
-                            <p class="card-text" th:utext="${med.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">timings</p>
+                            <p class="card-text" th:utext="${medicationCommand.getMedicationInfoCommand().getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">timings</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start}">Start</h5>
-                            <p class="card-text" th:text="${med.getStart()}">start</p>
+                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getStart()}">start</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end}">End</h5>
-                            <p class="card-text" th:text="${med.getEnd()}">end</p>
+                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getEnd()}">end</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</h5>
-                            <p class="card-text" style="background-color: azure" th:style="${!medicationCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${med.getNotes()}">notes</p>
+                            <p class="card-text" style="background-color: azure" th:style="${!medicationCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${medicationCommand.getMedicationInfoCommand().getNotes()}">notes</p>
 
                             <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</h5>
-                            <th:block th:switch="${med.getStatus()}">
+                            <th:block th:switch="${medicationCommand.getMedicationInfoCommand().getStatus()}">
                                 <div th:case="'Active'">
                                     <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
                                 </div>
