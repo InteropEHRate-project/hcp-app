@@ -114,7 +114,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
-        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
+        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency().toString());
         prescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 
         PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(prescriptionInfoCommand);
@@ -142,7 +142,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         oldPrescription.setFrequency(prescriptionInfoCommand.getFrequency());
         oldPrescription.setPeriod(prescriptionInfoCommand.getPeriod());
         oldPrescription.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
-        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
+        oldPrescription.setTimings(prescriptionInfoCommand.getFrequency().toString());
         oldPrescription.setStart(prescriptionInfoCommand.getStart());
         oldPrescription.setEnd(prescriptionInfoCommand.getEnd());
 
@@ -155,7 +155,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
         prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
         prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionInfoCommand.getPeriodUnit()));
-        prescriptionEntity.setTimings(prescriptionInfoCommand.getFrequency() + " times per day");
+        prescriptionEntity.setTimings(prescriptionInfoCommand.getFrequency().toString());
         prescriptionEntity.setStart(prescriptionInfoCommand.getStart());
         prescriptionEntity.setEnd(prescriptionInfoCommand.getEnd());
         this.prescriptionRepository.save(prescriptionEntity);

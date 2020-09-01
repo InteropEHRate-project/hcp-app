@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="col-md-3"><br>
-                        <label for="frequency" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">Times per day:</label>
+                        <label for="frequency" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.Times.per.day}">Times per day:</label>
                         <input id="frequency" type="text" class="form-control" th:classappend="${#fields.hasErrors('frequency')} ? 'is-invalid' :''" th:field="*{frequency}">
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('frequency')}">
                             <ul>
