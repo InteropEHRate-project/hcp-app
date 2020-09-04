@@ -11,7 +11,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.Pr
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
-import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +34,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
-    private final TranslateService translateService;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection, TranslateService translateService) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.currentD2DConnection = currentD2DConnection;
-        this.translateService = translateService;
     }
 
     @Override
@@ -174,13 +171,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
                 prescription.getEntry().get(i).setResource(med);
                 this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-                try {
-                    med = this.translateService.translate(med, Locale.ITALY, Locale.UK);
-                } catch (Exception e) {
-                    log.error("Error calling translation service.", e);
-                } finally {
-                    this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-                }
+                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
             }
             this.sendPrescription(prescription);
         } else {

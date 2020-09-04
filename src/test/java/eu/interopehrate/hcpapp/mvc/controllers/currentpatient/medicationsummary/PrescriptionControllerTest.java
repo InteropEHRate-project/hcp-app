@@ -8,7 +8,6 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications.PrescriptionServiceImpl;
-import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -36,13 +35,11 @@ class PrescriptionControllerTest {
     private HttpSession session;
     @Mock
     private CurrentPatient currentPatient;
-    @Mock
-    private TranslateService translateService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        PrescriptionService service = new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.currentD2DConnection, this.translateService);
+        PrescriptionService service = new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.currentD2DConnection);
         this.controller = new PrescriptionController(service);
     }
 
