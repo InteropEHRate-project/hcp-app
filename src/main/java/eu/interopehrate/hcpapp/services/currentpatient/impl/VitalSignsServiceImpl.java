@@ -30,16 +30,16 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandVitalSigns hapiToCommandVitalSigns;
     private List<VitalSignsInfoCommand> vitalSignsInfoCommandsList = new ArrayList<>();
-    private CommandToEntityVitalSigns entityToVitalSigns = new CommandToEntityVitalSigns();
     @Autowired
     private VitalSignsRepository vitalSignsRepository;
+    private final CommandToEntityVitalSigns entityToVitalSigns;
     private CurrentD2DConnection currentD2DConnection;
     private Bundle vitalSignsBundle;
 
-    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns,
-                                 CurrentD2DConnection currentD2DConnection) throws IOException {
+    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
+        this.entityToVitalSigns = entityToVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
         File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
         FileInputStream file = new FileInputStream(json);
@@ -90,14 +90,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand) {
-
         VitalSignsEntity vitalSignsEntity = this.entityToVitalSigns.convert(vitalSignsInfoCommand);
-        vitalSignsEntity.setAnalysisName(vitalSignsInfoCommand.getAnalysisName());
-
-        vitalSignsEntity.setLocalDateOfVitalSign(vitalSignsInfoCommand.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign());
-        vitalSignsEntity.setCurrentValue(vitalSignsInfoCommand.getVitalSignsInfoCommandSample().getCurrentValue());
-        vitalSignsEntity.setUnitOfMeasurement(vitalSignsInfoCommand.getVitalSignsInfoCommandSample().getUnitOfMeasurement());
-
         vitalSignsRepository.save(vitalSignsEntity);
         vitalSignsInfoCommandsList.add(vitalSignsInfoCommand);
     }
@@ -142,7 +135,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.getCode().addChild("coding");
         vitalSigns.getCode().setCoding(new ArrayList<>());
         vitalSigns.getCode().getCoding().add(new Coding());
-        vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisName());
+        vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisType().getName());
 
         Calendar when = Calendar.getInstance();
         int y = vitalSignsEntity.getLocalDateOfVitalSign().getYear();

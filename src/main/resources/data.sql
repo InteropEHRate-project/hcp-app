@@ -34,3 +34,7 @@ insert into HCO_ADDRESS (hco_id, address_id) values ((select id from HEALTH_CARE
 insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 25'));
 insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 26'));
 insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 27'));
+
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Heart rate', 'Heart beats per minute');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Systolic blood pressure', 'Systolic blood pressure');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diastolic blood pressure', 'Diastolic blood pressure');
