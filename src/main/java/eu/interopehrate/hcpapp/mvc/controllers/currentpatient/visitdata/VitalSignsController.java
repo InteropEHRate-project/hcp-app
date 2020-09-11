@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
+import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
@@ -18,9 +19,11 @@ import java.io.IOException;
 @RequestMapping("/current-patient/visit-data/vital-signs")
 public class VitalSignsController {
     private VitalSignsService vitalSignsService;
+    private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
-    public VitalSignsController(VitalSignsService vitalSignsService) {
+    public VitalSignsController(VitalSignsService vitalSignsService, VitalSignsTypesRepository vitalSignsTypesRepository) {
         this.vitalSignsService = vitalSignsService;
+        this.vitalSignsTypesRepository = vitalSignsTypesRepository;
     }
 
     @GetMapping
@@ -36,6 +39,7 @@ public class VitalSignsController {
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
         model.addAttribute("vitalSignsInfoCommand", new VitalSignsInfoCommand());
+        model.addAttribute("vitalSignsTypes", this.vitalSignsTypesRepository.findAll());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
     }
 

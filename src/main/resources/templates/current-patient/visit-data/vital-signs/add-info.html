@@ -47,12 +47,12 @@
 
                 <div class="form-row">
                     <div class="col-md-6">
-                        <label for="analysisName"
-                               th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.name}">Vital
-                            Sign Name</label>
-                        <input id="analysisName" type="text" class="form-control"
-                               th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" placeholder=""
-                               th:field="*{analysisName}"/>
+                        <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.name}">Vital Sign Name</label>
+                        <select class="form-control" id="analysisName" th:field="*{analysisName}">
+                            <div  th:each="type : ${vitalSignsTypes}">
+                                <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
+                            </div>
+                        </select>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('analysisName')}" th:text="${err}">err</li>
