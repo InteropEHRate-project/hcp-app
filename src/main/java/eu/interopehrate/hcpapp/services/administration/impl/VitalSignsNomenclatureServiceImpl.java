@@ -16,12 +16,12 @@ public class VitalSignsNomenclatureServiceImpl implements VitalSignsNomenclature
     }
 
     @Override
-    public List<VitalSignsTypesEntity> getVitalSignsTypes() {
+    public List<VitalSignsTypesEntity> getVitalSignsTypesEntity() {
         return this.vitalSignsTypesRepository.findAll();
     }
 
     @Override
-    public void addVitalSignsType(VitalSignsTypesEntity vitalSignsTypesEntity) {
+    public void addVitalSignsTypesEntity(VitalSignsTypesEntity vitalSignsTypesEntity) {
         if (this.vitalSignsTypesRepository.findAll().contains(vitalSignsTypesEntity)) {
             return;
         }

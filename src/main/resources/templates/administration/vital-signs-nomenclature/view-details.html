@@ -37,7 +37,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="type : ${vitalSignsTypes}">
+                <tr th:each="type : ${vitalSignsNomenclature}">
                     <td th:text="${type.getName()}"></td>
                     <td th:text="${type.getDescription()}"></td>
                 </tr>
@@ -48,7 +48,7 @@
             <br>
             <h2 th:text="#{template.administration.vital.signs.nomenclature.add}">Add vital sign</h2>
             <div class="m-5"></div>
-            <form action="#" th:action="@{/administration/vital-signs-nomenclature/save-add}" th:object="${vitalSignsType}" method="post">
+            <form action="#" th:action="@{/administration/vital-signs-nomenclature/save-add}" th:object="${vitalSignsTypesEntity}" method="post">
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p th:text="#{template.errors.message}">Please correct the errors below</p>
                 </div>

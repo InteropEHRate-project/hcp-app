@@ -5,6 +5,6 @@ import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
 import java.util.List;
 
 public interface VitalSignsNomenclatureService {
-    List<VitalSignsTypesEntity> getVitalSignsTypes();
-    void addVitalSignsType(VitalSignsTypesEntity vitalSignsTypesEntity);
+    List<VitalSignsTypesEntity> getVitalSignsTypesEntity();
+    void addVitalSignsTypesEntity(VitalSignsTypesEntity vitalSignsTypesEntity);
 }
