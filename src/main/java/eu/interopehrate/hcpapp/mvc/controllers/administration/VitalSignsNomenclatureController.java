@@ -25,7 +25,7 @@ public class VitalSignsNomenclatureController {
     @GetMapping
     @RequestMapping("/view-details")
     public String detailsTemplate(Model model) {
-        model.addAttribute("vitalSignsNomenclature", this.vitalSignsNomenclatureService.getVitalSignsTypesEntity());
+        model.addAttribute("vitalSignsNomenclature", this.vitalSignsNomenclatureService.getVitalSignsTypes());
         model.addAttribute("vitalSignsTypesEntity", new VitalSignsTypesEntity());
         return TemplateNames.ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS;
     }
@@ -36,7 +36,7 @@ public class VitalSignsNomenclatureController {
         if (bindingResult.hasErrors()) {
             return TemplateNames.ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS;
         }
-        this.vitalSignsNomenclatureService.addVitalSignsTypesEntity(vitalSignsTypesEntity);
+        this.vitalSignsNomenclatureService.addVitalSignsType(vitalSignsTypesEntity);
         return "redirect:/administration/vital-signs-nomenclature/view-details";
     }
 }
