@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="#{template.administration.health.care.organization.title}">Organization</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header::navigation-top">navigation-top</div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div th:replace="administration/fragments/navigation::navigation-left">navigation-left</div>
+        </div>
+        <div class="col-9">
+            <div class="m-3"></div>
+            <h2 th:text="#{fragment.administration.navigation.left.vital.signs.nomenclature}">Vital Signs
+                Nomenclature</h2>
+            <div class="m-5"></div>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.administration.vital.signs.nomenclature.name}">Name</th>
+                    <th th:text="#{template.administration.vital.signs.nomenclature.description}">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="type : ${vitalSignsNomenclature}">
+                    <td th:text="${type.getName()}"></td>
+                    <td th:text="${type.getDescription()}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="m-3"></div>
+            <br>
+            <h2 th:text="#{template.administration.vital.signs.nomenclature.add}">Add vital sign</h2>
+            <div class="m-5"></div>
+            <form action="#" th:action="@{/administration/vital-signs-nomenclature/save-add}" th:object="${vitalSignsTypesEntity}" method="post">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:text="#{template.errors.message}">Please correct the errors below</p>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="name" th:text="#{template.administration.vital.signs.nomenclature.name}">Name</label>
+                        <input id="name" type="text" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' :''" th:field="*{name}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('name')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="description" th:text="#{template.administration.vital.signs.nomenclature.description}">Description</label>
+                        <input id="description" type="text" class="form-control" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' :''" th:field="*{description}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('description')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-toolbar float-right" role="toolbar">
+                    <div class="text-right"><br>
+                        <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -10,6 +10,7 @@ public interface TemplateNames {
     String ADMINISTRATION_HEALTH_CARE_PROFESSIONAL_ADD_PAGE = "administration/health-care-professional/upload-page";
     String ADMINISTRATION_INITIAL_DOWNLOAD_FROM_SEHR = "administration/initial-download/from-sehr";
     String ADMINISTRATION_AUDIT_INFORMATION_VIEW_DETAILS = "administration/audit-information/view-details";
+    String ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS = "administration/vital-signs-nomenclature/view-details";
 
     // Current Patient
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_VIEW_SECTION = "current-patient/current-medications/statement/view-section";
