@@ -22,6 +22,9 @@ public class VitalSignsNomenclatureServiceImpl implements VitalSignsNomenclature
 
     @Override
     public void addVitalSignsTypesEntity(VitalSignsTypesEntity vitalSignsTypesEntity) {
+        if (this.vitalSignsTypesRepository.findAll().contains(vitalSignsTypesEntity)) {
+            return;
+        }
         this.vitalSignsTypesRepository.save(vitalSignsTypesEntity);
     }
 }
