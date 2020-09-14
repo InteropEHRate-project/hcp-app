@@ -25,7 +25,7 @@ public class VitalSignsNomenclatureController {
     @GetMapping
     @RequestMapping("/view-details")
     public String detailsTemplate(Model model) {
-        model.addAttribute("vitalSignsNomenclature", this.vitalSignsNomenclatureService.getVitalSignsTypes());
+        model.addAttribute("vitalSignsTypes", this.vitalSignsNomenclatureService.getVitalSignsTypes());
         model.addAttribute("vitalSignsTypesEntity", new VitalSignsTypesEntity());
         return TemplateNames.ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS;
     }
