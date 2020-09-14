@@ -26,13 +26,13 @@ public class VitalSignsNomenclatureController {
     @RequestMapping("/view-details")
     public String detailsTemplate(Model model) {
         model.addAttribute("vitalSignsTypes", this.vitalSignsNomenclatureService.getVitalSignsTypes());
-        model.addAttribute("vitalSignsTypesEntity", new VitalSignsTypesEntity());
+        model.addAttribute("vitalSignsType", new VitalSignsTypesEntity());
         return TemplateNames.ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute VitalSignsTypesEntity vitalSignsTypesEntity, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute("vitalSignsType") VitalSignsTypesEntity vitalSignsTypesEntity, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return TemplateNames.ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS;
         }
