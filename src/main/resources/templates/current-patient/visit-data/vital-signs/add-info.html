@@ -78,9 +78,8 @@
                             </ul>
                         </div>
                         <select class="form-control" id="analysisName" th:field="*{analysisName}">
-                            <div  th:each="type : ${vitalSignsTypes}">
-                                <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
-                            </div>
+                            <option input type="text" class="form-control" th:each="type : ${vitalSignsTypes}"
+                                    th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
                         </select>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
                             <ul>
@@ -88,26 +87,6 @@
                             </ul>
                         </div>
                     </div>
-
-
-                    <!--                    <div class="col-md-6">-->
-                    <!--                        <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date}">Date of Vital Signs</label><br>-->
-                    <!--                        <div class="row">-->
-                    <!--                            <div class='col-sm-6'>-->
-                    <!--                                    <input id="localDateOfVitalSign" type='text' class="form-control" th:classappend="${#fields.hasErrors('localDateOfVitalSign')} ? 'is-invalid' :''" th:field="*{localDateOfVitalSign}" placeholder="Chose date"   />-->
-                    <!--                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('localDateOfVitalSign')}">-->
-                    <!--                                        <ul>-->
-                    <!--                                            <li th:each="err : ${#fields.errors('localDateOfVitalSign')}" th:text="${err}">err</li>-->
-                    <!--                                        </ul>-->
-                    <!--                                    </div>-->
-                    <!--                            </div>-->
-                    <!--                            <script type="text/javascript">-->
-                    <!--                                $(function () {-->
-                    <!--                                    $('#localDateOfVitalSign').datetimepicker({format: "dd/MM/yyyy h:mm a"});-->
-                    <!--                                });-->
-                    <!--                            </script>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
 
                     <div class="col-md-6">
                         <label for="localDateOfVitalSign"
