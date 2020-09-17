@@ -63,24 +63,32 @@
 
                 <div class="form-row">
                     <div class="col-md-6">
-                        <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.name}">Vital Sign Name</label>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                                <li><a href="#">HTML</a></li>
-                                <li><a href="#">CSS</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                                <li><a href="#">jQuery</a></li>
-                                <li><a href="#">Bootstrap</a></li>
-                                <li><a href="#">Angular</a></li>
-                            </ul>
-                        </div>
+                        <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.type}">Vital Sign Type</label>
+
+<!--                        <div class="dropdown">-->
+<!--                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options<span class="caret"></span></button>-->
+<!--                            <ul class="dropdown-menu" id="analysisName" th:field="*{analysisName}">-->
+<!--                                <input class="form-control" id="myInput" type="text" placeholder="Search..">-->
+<!--                                <li input type="text" class="form-control" th:each="type : ${vitalSignsTypes}"-->
+<!--                                    th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+
+<!--                        <select class="mdb-select md-form" searchable="Search here..">-->
+<!--                            <option value="" disabled selected>Choose your country</option>-->
+<!--                            <option value="1">USA</option>-->
+<!--                            <option value="2">Germany</option>-->
+<!--                            <option value="3">France</option>-->
+<!--                            <option value="3">Poland</option>-->
+<!--                            <option value="3">Japan</option>-->
+<!--                        </select>-->
+
                         <select class="form-control" id="analysisName" th:field="*{analysisName}">
+                            <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.choose}">Choose a type</option>
                             <option input type="text" class="form-control" th:each="type : ${vitalSignsTypes}"
                                     th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
                         </select>
+
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('analysisName')}" th:text="${err}">err</li>
@@ -174,6 +182,12 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+    });
+</script>
+<script>
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').materialSelect();
     });
 </script>
 
