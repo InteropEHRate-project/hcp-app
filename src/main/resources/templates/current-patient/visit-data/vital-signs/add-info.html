@@ -13,7 +13,10 @@
     <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"
+          th:href="@{/css/5.0.1tempusdominus-bootstrap-4.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
+          th:href="@{/css/4.0.6-rc.0select2.min.css}"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
@@ -30,15 +33,15 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script data-th-src="@{/js/4.0.6-rc.0select2.min.js}"></script>
 
     <style>
-        /* Style the input field */
-        #myInput {
-            padding: 20px;
-            margin-top: -6px;
-            border: 0;
-            border-radius: 0;
-            background: #f1f1f1;
+        .select2-container .select2-selection--single{
+            height:34px !important;
+        }
+        .select2-container--default .select2-selection--single{
+            border: 1px solid #ccc !important;
+            border-radius: 0px !important;
         }
     </style>
 
@@ -64,36 +67,17 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.type}">Vital Sign Type</label>
-
-<!--                        <div class="dropdown">-->
-<!--                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Options<span class="caret"></span></button>-->
-<!--                            <ul class="dropdown-menu" id="analysisName" th:field="*{analysisName}">-->
-<!--                                <input class="form-control" id="myInput" type="text" placeholder="Search..">-->
-<!--                                <li input type="text" class="form-control" th:each="type : ${vitalSignsTypes}"-->
-<!--                                    th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-
-<!--                        <select class="mdb-select md-form" searchable="Search here..">-->
-<!--                            <option value="" disabled selected>Choose your country</option>-->
-<!--                            <option value="1">USA</option>-->
-<!--                            <option value="2">Germany</option>-->
-<!--                            <option value="3">France</option>-->
-<!--                            <option value="3">Poland</option>-->
-<!--                            <option value="3">Japan</option>-->
-<!--                        </select>-->
-
-                        <select class="form-control" id="analysisName" th:field="*{analysisName}">
+                        <select class="form-control select2" id="analysisName" th:field="*{analysisName}">
                             <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.choose}">Choose a type</option>
                             <option input type="text" class="form-control" th:each="type : ${vitalSignsTypes}"
                                     th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
                         </select>
-
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('analysisName')}" th:text="${err}">err</li>
                             </ul>
                         </div>
+                        <br>
                     </div>
 
                     <div class="col-md-6">
@@ -175,20 +159,7 @@
     });
 </script>
 <script>
-    $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $(".dropdown-menu li").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
-<script>
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').materialSelect();
-    });
+    $('.select2').select2();
 </script>
 
 </body>
