@@ -54,23 +54,22 @@
        href="../diagnostic-results/laboratory-results/observation-laboratory-view.html"
        th:href="@{/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view}"
        th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.tests}">Laboratory Tests</a>
+    <a class="flex-sm-fill text-sm-left nav-link"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-imaging')} ? 'active' : ''"
+       href="../diagnostic-imaging/view-section.html"
+       th:href="@{/current-patient/diagnostic-imaging/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging}">Diagnostic imaging</a>
     <div class="dropdown-divider"></div>
+
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
            aria-expanded="false" th:text="#{template.current.patient.visit.data}">Visit Data</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item nav-link"
-               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/visit-data/vital-signs')} ? 'active' : ''"
-               href="../vital-signs/view-section.html"
-               th:href="@{/current-patient/visit-data/vital-signs/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.vital.signs}">Vital Signs</a>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/reason/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.reason}">Reason</a>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/ph-exam/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.ph.exam}">PH Exam</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/vital-signs/view-section}" th:text="#{fragment.current.patient.navigation.left.vital.signs}">Vital Signs</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/reason/view-section}" th:text="#{fragment.current.patient.navigation.left.reason}">Reason</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/ph-exam/view-section}" th:text="#{fragment.current.patient.navigation.left.ph.exam}">PH Exam</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/conclusion/view-section}"
-               th:text="#{fragment.current.patient.navigation.left.conclusion}">Conclusion</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/conclusion/view-section}" th:text="#{fragment.current.patient.navigation.left.conclusion}">Conclusion</a>
         </div>
     </li>
     <!--    <a class="flex-sm-fill text-sm-left nav-link"-->
