@@ -111,6 +111,7 @@ public class CurrentD2DConnection implements DisposableBean {
             this.indexPatientDataCommand.setIpsReceived(false);
             this.indexPatientDataCommand.setPrescriptionReceived(false);
             this.indexPatientDataCommand.setLaboratoryResultsReceived(false);
+            this.indexPatientDataCommand.setImageReportReceived(false);
         }
     }
 
@@ -201,6 +202,7 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onImageReportReceived");
                 CurrentD2DConnection.this.currentPatient.initImageReport(bundle);
+                CurrentD2DConnection.this.indexPatientDataCommand.setImageReportReceived(true);
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after ImageReport was received", e);
