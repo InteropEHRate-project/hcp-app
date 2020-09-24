@@ -83,4 +83,13 @@ public class BundleProcessor {
                 .map(Observation.class::cast)
                 .collect(Collectors.toList());
     }
+
+    public List<Media> mediaList() {
+        return this.bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Media))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(Media.class::cast)
+                .collect(Collectors.toList());
+    }
 }

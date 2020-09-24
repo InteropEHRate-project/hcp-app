@@ -224,6 +224,22 @@ public class CurrentPatient {
         }
     }
 
+    public List<Media> mediaList() {
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.imageReportTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.imageReportTranslated).mediaList();
+            }
+        } else {
+            if (Objects.isNull(this.imageReport)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.imageReport).mediaList();
+            }
+        }
+    }
+
     public List<Observation> vitalSignsList() {
         if (displayTranslatedVersion) {
             if (Objects.isNull(vitalSignsTranslated)) {

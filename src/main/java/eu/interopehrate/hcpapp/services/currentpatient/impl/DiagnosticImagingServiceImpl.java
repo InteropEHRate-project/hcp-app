@@ -1,57 +1,43 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.diagnosticresults.media.HapiToCommandImage;
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.media.ImageCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
 import lombok.SneakyThrows;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Media;
-import org.hl7.fhir.r4.model.ResourceType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
-    private Bundle imageReport;
+    private final CurrentPatient currentPatient;
     private HapiToCommandImage hapiToCommandImage;
     private static final String TMP_FILES_PREFIX = "hcp-app-dicom-";
     private static final String dicomCommand = "$dicom:get -l \"%s\"";
     private static final String weasisCommand = "cmd /c start weasis://%s";
 
     @SneakyThrows
-    public DiagnosticImagingServiceImpl(HapiToCommandImage hapiToCommandImage) {
+    public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage) {
+        this.currentPatient = currentPatient;
         this.hapiToCommandImage = hapiToCommandImage;
-
-        File json = new ClassPathResource("Medical_Image_V1.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        this.imageReport = parser.parseResource(Bundle.class, lineReadtest);
     }
 
     @Override
     public ImageCommand imageCommand() {
-        var mediaList = imageReport.getEntry()
+        var imageInfoCommands = currentPatient.mediaList()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Media))
-                .map(Bundle.BundleEntryComponent::getResource)
-                .map(Media.class::cast)
-                .collect(Collectors.toList());
-        var imagesInfoCommands = mediaList
-                .stream()
-                .map(this.hapiToCommandImage::convert)
+                .map(hapiToCommandImage::convert)
                 .collect(Collectors.toList());
         return ImageCommand.builder()
-                .imageInfoCommands(imagesInfoCommands)
+                .imageInfoCommands(imageInfoCommands)
                 .build();
     }
 
@@ -78,17 +64,5 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
     }
 }
