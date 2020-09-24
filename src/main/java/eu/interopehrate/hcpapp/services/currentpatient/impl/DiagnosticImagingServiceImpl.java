@@ -4,7 +4,6 @@ import eu.interopehrate.hcpapp.converters.fhir.diagnosticresults.media.HapiToCom
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.media.ImageCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,6 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     private static final String dicomCommand = "$dicom:get -l \"%s\"";
     private static final String weasisCommand = "cmd /c start weasis://%s";
 
-    @SneakyThrows
     public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage) {
         this.currentPatient = currentPatient;
         this.hapiToCommandImage = hapiToCommandImage;
