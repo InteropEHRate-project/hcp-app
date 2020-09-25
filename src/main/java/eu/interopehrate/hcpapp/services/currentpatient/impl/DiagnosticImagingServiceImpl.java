@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import eu.interopehrate.hcpapp.converters.fhir.diagnosticresults.media.HapiToCommandImage;
+import eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging.HapiToCommandImage;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.media.ImageCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;

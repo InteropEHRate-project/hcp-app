@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.media;
+package eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging;
 
 import lombok.Builder;
 import lombok.Getter;

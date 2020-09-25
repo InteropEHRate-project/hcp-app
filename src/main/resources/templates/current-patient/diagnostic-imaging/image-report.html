@@ -28,7 +28,7 @@
             <br>
             <div class="row justify-content-center">
                 <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
-                    <h5><td th:text="${image.getName()}"></td></h5>
+                    <h5><td th:text="${image.getDateOfExam()} + ' ' + ${image.getName()}"></td></h5>
                     <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
                     <br>
                 </tr>

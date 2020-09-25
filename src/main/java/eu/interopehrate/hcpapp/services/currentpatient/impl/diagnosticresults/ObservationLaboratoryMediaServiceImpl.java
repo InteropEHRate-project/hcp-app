@@ -2,8 +2,8 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl.diagnosticresults;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import eu.interopehrate.hcpapp.converters.fhir.diagnosticresults.media.HapiToCommandImage;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.media.ImageCommand;
+import eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging.HapiToCommandImage;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.diagnosticresults.ObservationLaboratoryMediaService;
 import lombok.SneakyThrows;
 import org.hl7.fhir.r4.model.Bundle;
