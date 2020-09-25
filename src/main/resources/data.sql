@@ -35,9 +35,16 @@ insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from
 insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 26'));
 insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 27'));
 
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Heart rate', 'Heart beats per minute');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Systolic blood pressure', 'Systolic blood pressure');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diastolic blood pressure', 'Diastolic blood pressure');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Temperature', 'Body temperature');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Height', 'Body height');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, description) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Weight', 'Body weight');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FC', 'Frequenza cardiaca', 'bpm', '0-300', '8867-4');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FR', 'Frequenza respiratoria', 'atti/min', '0-60', '9279-1');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sat Oxy', 'Oxygen saturation in Arterial blood by Pulse oximetry', '%', '0-100', '59408-5');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Weight', 'Weight', 'kg', '', '29463-7');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Heart rate', 'Heart rate', '/min', '', '73799-9');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'SpO2', 'SpO2', '%', '', '59407-7');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Mean Arterial pressure', 'Mean Arterial pressure', 'mm[Hg]', '', '8478-0');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body height', 'Body height', 'cm', '', '8302-2');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinine', 'Creatinine', 'mg/dL', '', '3097-3');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Systolic Blood Pressure', 'Systolic Blood Pressure', 'mmHg', '0-300', '8480-6');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body Weight', 'Body Weight', 'kg', '0-300', '3141-9');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diastolic Blood Pressure', 'Diastolic Blood Pressure', 'mmHg', '0-300', '8462-4');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucose [Mass/volume] in Serum or Plasma', 'Glucose [Mass/volume] in Serum or Plasma', 'mg/dL', '', '2345-7');

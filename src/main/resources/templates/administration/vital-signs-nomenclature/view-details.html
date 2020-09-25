@@ -31,13 +31,17 @@
                 <thead class="thead-light">
                 <tr>
                     <th th:text="#{template.administration.vital.signs.nomenclature.name}">Name</th>
-                    <th th:text="#{template.administration.vital.signs.nomenclature.description}">Description</th>
+                    <th th:text="#{template.administration.vital.signs.nomenclature.comment}">Comment</th>
+                    <th th:text="#{template.administration.vital.signs.nomenclature.unit}">Unit of measure</th>
+                    <th th:text="#{template.administration.vital.signs.nomenclature.range}">Range</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="type : ${vitalSignsTypes}">
                     <td th:text="${type.getName()}"></td>
-                    <td th:text="${type.getDescription()}"></td>
+                    <td th:text="${type.getComm()}"></td>
+                    <td th:text="${type.getUcum()}"></td>
+                    <td th:text="${type.getBioprm_range()}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -62,11 +66,32 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="description" th:text="#{template.administration.vital.signs.nomenclature.description}">Description</label>
-                        <input id="description" type="text" class="form-control" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' :''" th:field="*{description}">
-                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
+                        <label for="comm" th:text="#{template.administration.vital.signs.nomenclature.comment}">Comment</label>
+                        <input id="comm" type="text" class="form-control" th:classappend="${#fields.hasErrors('comm')} ? 'is-invalid' :''" th:field="*{comm}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('comm')}">
                             <ul>
-                                <li th:each="err : ${#fields.errors('description')}" th:text="${err}">err</li>
+                                <li th:each="err : ${#fields.errors('comm')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="ucum" th:text="#{template.administration.vital.signs.nomenclature.unit}">Unit of measure</label>
+                        <input id="ucum" type="text" class="form-control" th:classappend="${#fields.hasErrors('ucum')} ? 'is-invalid' :''" th:field="*{ucum}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('ucum')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('ucum')}" th:text="${err}">err</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="bioprm_range" th:text="#{template.administration.vital.signs.nomenclature.range}">Range</label>
+                        <input id="bioprm_range" type="text" class="form-control" th:classappend="${#fields.hasErrors('bioprm_range')} ? 'is-invalid' :''" th:field="*{bioprm_range}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('bioprm_range')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('bioprm_range')}" th:text="${err}">err</li>
                             </ul>
                         </div>
                     </div>

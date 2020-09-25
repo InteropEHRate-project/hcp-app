@@ -22,8 +22,16 @@ public class VitalSignsTypesEntity extends HCPApplicationEntity {
     private String name;
     @NotNull
     @NotEmpty
-    @Column(name = "DESCRIPTION")
-    private String description;
+    @Column(name = "COMM")
+    private String comm;
+    @NotNull
+    @NotEmpty
+    @Column(name = "UCUM")
+    private String ucum;
+    @Column(name = "BIOPRM_RANGE")
+    private String bioprm_range;
+    @Column(name = "LOINC")
+    private String loinc;
 
     @Override
     public boolean equals(Object o) {
