@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.converters.fhir;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
-import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Observation;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -23,9 +22,7 @@ public class HapiToCommandVitalSigns implements Converter<Observation, VitalSign
         VitalSignsInfoCommand vitalSignsInfoCommand = new VitalSignsInfoCommand();
 
         if (Objects.nonNull(observation.getCode())) {
-            for (Coding coding : observation.getCode().getCoding()) {
-                vitalSignsInfoCommand.setAnalysisName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
-            }
+            observation.getCode().getCoding().forEach(coding -> vitalSignsInfoCommand.setAnalysisName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
 
         if (Objects.nonNull(observation.getEffectiveDateTimeType())) {

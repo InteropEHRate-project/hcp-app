@@ -50,11 +50,11 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
 
     private static List<DocumentHistoryConsultationInfoCommand> filter(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {
         List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
-        for (DocumentHistoryConsultationInfoCommand dc : list) {
+        list.forEach(dc -> {
             if (dc.getSpeciality().equalsIgnoreCase(speciality)) {
                 documentHistoryConsultationInfoCommands.add(dc);
             }
-        }
+        });
         return documentHistoryConsultationInfoCommands;
     }
 }

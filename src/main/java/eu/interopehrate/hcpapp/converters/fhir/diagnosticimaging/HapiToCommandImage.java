@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageInfoCommand;
-import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Media;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -23,9 +22,7 @@ public class HapiToCommandImage implements Converter<Media, ImageInfoCommand> {
         ImageInfoCommand imageInfoCommand = new ImageInfoCommand();
 
         if (image.hasType() && image.getType().hasCoding()) {
-            for (Coding coding : image.getType().getCoding()) {
-                imageInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
-            }
+            image.getType().getCoding().forEach(coding -> imageInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
 
         if (image.hasContent()) {

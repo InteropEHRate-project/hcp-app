@@ -69,11 +69,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         if (Objects.nonNull(keyword) && !keyword.equals("")) {
             //The filtration is happening...
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
-            for (PrescriptionInfoCommand pr : prescriptions) {
+            prescriptions.forEach((pr) -> {
                 if (pr.getDrugName().toLowerCase().contains(keyword.toLowerCase())) {
                     prescriptionInfoCommandList.add(pr);
                 }
-            }
+            });
             if (prescriptionInfoCommandList.isEmpty()) {
                 this.isEmpty = true;
                 this.isFiltered = false;

@@ -18,9 +18,7 @@ public class VitalSignsCommand {
 
     public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
         List<LocalDateTime> withDuplicates = new ArrayList<>();
-        for (int i = 0; i < vitalSignsInfoCommands.size(); i++) {
-            withDuplicates.add(vitalSignsInfoCommands.get(i).getVitalSignsInfoCommandSample().getLocalDateOfVitalSign());
-        }
+        this.vitalSignsInfoCommands.forEach(vital -> withDuplicates.add(vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()));
 
         List<LocalDateTime> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
         Collections.sort(noDuplicates);
@@ -29,9 +27,7 @@ public class VitalSignsCommand {
 
     public List<String> vitalSignsAnalysesWithoutDuplicates() {
         List<String> withDuplicates = new ArrayList<>();
-        for (int i = 0; i < vitalSignsInfoCommands.size(); i++) {
-            withDuplicates.add(vitalSignsInfoCommands.get(i).getAnalysisName());
-        }
+        this.vitalSignsInfoCommands.forEach(vital -> withDuplicates.add(vital.getAnalysisName()));
 
         List<String> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
         Collections.sort(noDuplicates);
@@ -43,16 +39,11 @@ public class VitalSignsCommand {
         List<String> analysisList = this.vitalSignsAnalysesWithoutDuplicates();
         List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
 
-        for (int i = 0; i < analysisList.size(); i++) {
-            for (int j = 0; j < dateTimeList.size(); j++) {
-                for (int k = 0; k < vitalSignsInfoCommands.size(); k++) {
-                    if (analysisList.get(i).equals(vitalSignsInfoCommands.get(k).getAnalysisName()) &&
-                            (dateTimeList.get(j).equals(vitalSignsInfoCommands.get(k).getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()))) {
-                        mapPair.put(analysisList.get(i), dateTimeList.get(j), vitalSignsInfoCommands.get(k).getVitalSignsInfoCommandSample().getCurrentValue() + " " + vitalSignsInfoCommands.get(k).getVitalSignsInfoCommandSample().getUnitOfMeasurement());
-                    }
-                }
+        analysisList.forEach(an -> dateTimeList.forEach(date -> this.vitalSignsInfoCommands.forEach(vital -> {
+            if (an.equals(vital.getAnalysisName()) && (date.equals(vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()))) {
+                mapPair.put(an, date, vital.getVitalSignsInfoCommandSample().getCurrentValue() + " " + vital.getVitalSignsInfoCommandSample().getUnitOfMeasurement());
             }
-        }
+        })));
         return mapPair;
     }
 

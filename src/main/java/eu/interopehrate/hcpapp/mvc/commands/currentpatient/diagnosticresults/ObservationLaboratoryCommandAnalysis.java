@@ -15,9 +15,7 @@ public class ObservationLaboratoryCommandAnalysis {
     public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
 
         List<LocalDateTime> withDuplicates = new ArrayList<>();
-        for (ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis : this.observationLaboratoryInfoCommandAnalyses) {
-            withDuplicates.add(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getSample());
-        }
+        this.observationLaboratoryInfoCommandAnalyses.forEach(obs -> withDuplicates.add(obs.getObservationLaboratoryInfoCommandSample().getSample()));
         List<LocalDateTime> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
         Collections.sort(noDuplicates);
         return noDuplicates;
@@ -25,9 +23,7 @@ public class ObservationLaboratoryCommandAnalysis {
 
     public List<String> observationLaboratoryInfoCommandAnalysesWithoutDuplicates() {
         List<String> withDuplicates = new ArrayList<>();
-        for (ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis : this.observationLaboratoryInfoCommandAnalyses) {
-            withDuplicates.add(observationLaboratoryInfoCommandAnalysis.getAnalysis());
-        }
+        this.observationLaboratoryInfoCommandAnalyses.forEach(obs -> withDuplicates.add(obs.getAnalysis()));
         List<String> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
         Collections.sort(noDuplicates);
         return noDuplicates;
@@ -39,21 +35,17 @@ public class ObservationLaboratoryCommandAnalysis {
         List<String> analysisList = this.observationLaboratoryInfoCommandAnalysesWithoutDuplicates();
         List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
 
-        for (String s : analysisList) {
-            for (LocalDateTime localDateTime : dateTimeList) {
-                for (ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis : this.observationLaboratoryInfoCommandAnalyses) {
-                    if (s.equals(observationLaboratoryInfoCommandAnalysis.getAnalysis()) &&
-                            (localDateTime.equals(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getSample()))) {
-                        if (Objects.isNull(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getCurrentValue())
-                                || Objects.isNull(observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getUnit())) {
-                            mapPair.put(s, localDateTime, "-");
-                        } else {
-                            mapPair.put(s, localDateTime, observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getCurrentValue() + " " + observationLaboratoryInfoCommandAnalysis.getObservationLaboratoryInfoCommandSample().getUnit());
-                        }
-                    }
+        analysisList.forEach(an -> dateTimeList.forEach(date -> this.observationLaboratoryInfoCommandAnalyses.forEach(obs -> {
+            if (an.equals(obs.getAnalysis()) &&
+                    (date.equals(obs.getObservationLaboratoryInfoCommandSample().getSample()))) {
+                if (Objects.isNull(obs.getObservationLaboratoryInfoCommandSample().getCurrentValue())
+                        || Objects.isNull(obs.getObservationLaboratoryInfoCommandSample().getUnit())) {
+                    mapPair.put(an, date, "-");
+                } else {
+                    mapPair.put(an, date, obs.getObservationLaboratoryInfoCommandSample().getCurrentValue() + " " + obs.getObservationLaboratoryInfoCommandSample().getUnit());
                 }
             }
-        }
+        })));
         return mapPair;
     }
 
