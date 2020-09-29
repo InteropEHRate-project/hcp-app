@@ -72,13 +72,13 @@
                         <h3 class="mt-5" th:text="#{fragment.main.connected}">Connected</h3>
                     </div>
                     <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
-                        <h5 style="color: red" class="row justify-content-center">Transmission error, please retry!</h5>
+                        <h5 style="color: red" class="row justify-content-center" th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
                     </div>
                     <div th:if="${index.patientDataCommand.getIpsReceived()
                     && index.patientDataCommand.getPrescriptionReceived()
                     && index.patientDataCommand.getLaboratoryResultsReceived()
                     && index.patientDataCommand.getImageReportReceived()}">
-                        <h5 style="color: green" class="row justify-content-center">Transmission completed!</h5>
+                        <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
                     </div>
                     <div class="row justify-content-center">
                         <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}" th:href="@{/index/close-connection}">Close connection</a>
@@ -132,7 +132,7 @@
                         <h3 th:text="#{fragment.main.connected}">Connected</h3>
                     </div>
                     <div th:if="${index.patientDataCommand.getIpsReceived()}">
-                        <h5 style="color: green" class="row justify-content-center">Transmission completed!</h5>
+                        <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
                     </div>
                     <div class="row justify-content-center">
                         <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.cloud.connection}" th:href="@{/index/close-cloud-connection}">Close connection</a>
