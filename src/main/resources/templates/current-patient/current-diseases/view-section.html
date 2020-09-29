@@ -59,12 +59,32 @@
                     <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}" th:text="#{crud.button.add}">add</a>
                 </div>
             </div>
+            <br><br>
+
+            <table id="uploadTable" class="table table-bordered" th:if="${!notes.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.current.patient.currentDisease.list.statement.notes}">Notes</th>
+                    <th th:text="#{template.current.patient.currentDisease.list.statement.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="note : ${notes}">
+                    <td class="col-10" th:text="${note}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/delete(note=${note})}" th:text="#{crud.button.delete}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
             <br><br>
-            <form>
+            <form th:action="@{/current-patient/current-diseases/save-note}" method="post">
                 <div class="form-group">
-                    <label for="notes" th:text="#{template.current.patient.currentDisease.list.statement.notes}">Notes</label>
-                    <textarea class="form-control" id="notes" rows="3"></textarea>
+                    <label for="note" th:text="#{template.current.patient.currentDisease.list.statement.notes}">Notes</label>
+                    <textarea class="form-control" rows="3" type="input" name="note" id="note"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{crud.button.save}">Save</button>
             </form>

@@ -6,10 +6,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,6 +23,7 @@ public class CurrentDiseaseController {
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         model.addAttribute("currentDiseaseCommand", currentDiseaseService.currentDiseasesSection());
+        model.addAttribute("notes", this.currentDiseaseService.currentDiseasesSection().getListOfNotes());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION;
     }
 
@@ -43,6 +41,20 @@ public class CurrentDiseaseController {
             return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
         }
         currentDiseaseService.insertCurrentDisease(currentDiseaseInfoCommand);
+        return "redirect:/current-patient/current-diseases/view-section";
+    }
+
+    @PostMapping
+    @RequestMapping("/save-note")
+    public String saveAdd(String note) {
+        currentDiseaseService.insertNote(note);
+        return "redirect:/current-patient/current-diseases/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String delete(@RequestParam("note") String note) {
+        this.currentDiseaseService.deleteNote(note);
         return "redirect:/current-patient/current-diseases/view-section";
     }
 }

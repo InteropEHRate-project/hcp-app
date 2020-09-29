@@ -8,4 +8,8 @@ public interface CurrentDiseaseService {
     CurrentDiseaseCommand currentDiseasesSection();
 
     void insertCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseCommand);
+
+    void insertNote(String note);
+
+    void deleteNote(String note);
 }

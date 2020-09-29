@@ -16,6 +16,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private CurrentPatient currentPatient;
     private HapiToCommandCurrentDisease hapiToCommandCurrentDisease;
     private List<CurrentDiseaseInfoCommand> currentDiseaseInfoCommandList = new ArrayList<>();
+    private final List<String> listOfNotes = new ArrayList<>();
 
     public CurrentDiseaseServiceImpl(CurrentPatient currentPatient, HapiToCommandCurrentDisease hapiToCommandCurrentDisease) {
         this.currentPatient = currentPatient;
@@ -32,11 +33,24 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         return CurrentDiseaseCommand.builder()
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .currentDiseaseInfoCommand(currentDiseasesList)
+                .listOfNotes(this.listOfNotes)
                 .build();
     }
 
     @Override
     public void insertCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand) {
         currentDiseaseInfoCommandList.add(currentDiseaseInfoCommand);
+    }
+
+    @Override
+    public void insertNote(String note) {
+        if (note != null && !note.trim().equals("")) {
+            this.listOfNotes.add(note);
+        }
+    }
+
+    @Override
+    public void deleteNote(String note) {
+        this.listOfNotes.removeIf(x -> x.equals(note));
     }
 }

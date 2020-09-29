@@ -10,4 +10,5 @@ import java.util.List;
 public class CurrentDiseaseCommand {
     private Boolean displayTranslatedVersion;
     private List<CurrentDiseaseInfoCommand> currentDiseaseInfoCommand;
+    private List<String> listOfNotes;
 }
