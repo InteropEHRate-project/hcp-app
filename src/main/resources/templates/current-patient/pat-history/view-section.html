@@ -92,28 +92,87 @@
 
     <div class="row">
         <div class="col-4">
-            <form>
+            <table class="table table-bordered" th:if="${!patHis.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.current.patient.pat.history.patient.history.notes}">Patient History notes</th>
+                    <th th:text="#{template.current.patient.currentDisease.list.statement.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="patHis : ${patHis}">
+                    <td class="col-2" th:text="${patHis}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/pat-history/delete-patHis(patHis=${patHis})}" th:text="#{crud.button.delete}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <form th:action="@{/current-patient/pat-history/save-patHis}" method="post">
                 <div class="form-group">
-                    <label for="patientHistory" th:text="#{template.current.patient.pat.history.patient.history}">Patient History</label>
-                    <textarea class="form-control" id="patientHistory" rows="3"></textarea>
+                    <label for="patHis" th:text="#{template.current.patient.pat.history.patient.history}">Patient History</label>
+                    <textarea class="form-control" name="patHis" id="patHis" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{crud.button.save}">Save</button>
             </form>
         </div>
+
         <div class="col-4">
-            <form>
+            <table class="table table-bordered" th:if="${!socHis.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.current.patient.pat.history.social.history.notes}">Social History notes</th>
+                    <th th:text="#{template.current.patient.currentDisease.list.statement.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="socHis : ${socHis}">
+                    <td class="col-2" th:text="${socHis}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/pat-history/delete-socHis(socHis=${socHis})}" th:text="#{crud.button.delete}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <form th:action="@{/current-patient/pat-history/save-socHis}" method="post">
                 <div class="form-group">
-                    <label for="socialHistory" th:text="#{template.current.patient.pat.history.social.history}">Social History</label>
-                    <textarea class="form-control" id="socialHistory" rows="3"></textarea>
+                    <label for="socHis" th:text="#{template.current.patient.pat.history.social.history}">Social History</label>
+                    <textarea class="form-control" name="socHis" id="socHis" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{crud.button.save}">Save</button>
             </form>
         </div>
+
         <div class="col-4">
-            <form>
+            <table class="table table-bordered" th:if="${!famHis.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.current.patient.pat.history.family.history.notes}">Family History notes</th>
+                    <th th:text="#{template.current.patient.currentDisease.list.statement.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="famHis : ${famHis}">
+                    <td class="col-2" th:text="${famHis}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/pat-history/delete-famHis(famHis=${famHis})}" th:text="#{crud.button.delete}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <form th:action="@{/current-patient/pat-history/save-famHis}" method="post">
                 <div class="form-group">
-                    <label for="familyHistory" th:text="#{template.current.patient.pat.history.family.history}">Family History</label>
-                    <textarea class="form-control" id="familyHistory" rows="3"></textarea>
+                    <label for="famHis" th:text="#{template.current.patient.pat.history.family.history}">Family History</label>
+                    <textarea class="form-control" name="famHis" id="famHis" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{crud.button.save}">Save</button>
             </form>

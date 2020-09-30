@@ -33,7 +33,7 @@ class PatHistoryControllerTest {
 
     @Test
     void viewSection() throws Exception {
-        when(this.patHistoryService.currentDiseasesSection()).thenReturn(this.patHistoryCommand);
+        when(this.patHistoryService.patHistorySection()).thenReturn(this.patHistoryCommand);
         this.mockMvc.perform(MockMvcRequestBuilders.get("/current-patient/pat-history/view-section"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name(TemplateNames.CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION))

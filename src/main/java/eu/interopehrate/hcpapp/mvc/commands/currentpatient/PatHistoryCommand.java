@@ -10,4 +10,7 @@ import java.util.List;
 public class PatHistoryCommand {
     private Boolean displayTranslatedVersion;
     private List<PatHistoryInfoCommand> patHistoryInfoCommands;
+    private List<String> listOfPatHis;
+    private List<String> listOfSocHis;
+    private List<String> listOfFamHis;
 }

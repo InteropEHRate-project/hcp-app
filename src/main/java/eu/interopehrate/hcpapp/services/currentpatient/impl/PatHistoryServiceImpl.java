@@ -12,6 +12,9 @@ import java.util.List;
 @Service
 public class PatHistoryServiceImpl implements PatHistoryService {
     private CurrentPatient currentPatient;
+    private final List<String> listOfPatHis = new ArrayList<>();
+    private final List<String> listOfSocHis = new ArrayList<>();
+    private final List<String> listOfFamHis = new ArrayList<>();
 
     //HARCODED DATA
     private PatHistoryInfoCommand patHistoryInfoCommand1 = new PatHistoryInfoCommand();
@@ -22,7 +25,7 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     }
 
     @Override
-    public PatHistoryCommand currentDiseasesSection() {
+    public PatHistoryCommand patHistorySection() {
         List<PatHistoryInfoCommand> patHistoryInfoCommands = new ArrayList<>();
         this.patHistoryInfoCommand1.setDiagnosis("diagnosis data 1");
         this.patHistoryInfoCommand1.setYearOfDiagnosis(2013);
@@ -36,6 +39,45 @@ public class PatHistoryServiceImpl implements PatHistoryService {
         return PatHistoryCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .patHistoryInfoCommands(patHistoryInfoCommands)
+                .listOfPatHis(this.listOfPatHis)
+                .listOfSocHis(this.listOfSocHis)
+                .listOfFamHis(this.listOfFamHis)
                 .build();
+    }
+
+    @Override
+    public void insertPatHis(String patHis) {
+        if (patHis != null && !patHis.trim().equals("") && !this.listOfPatHis.contains(patHis)) {
+            this.listOfPatHis.add(patHis);
+        }
+    }
+
+    @Override
+    public void deletePatHis(String patHis) {
+        this.listOfPatHis.removeIf(x -> x.equals(patHis));
+    }
+
+    @Override
+    public void insertSocHis(String socHis) {
+        if (socHis != null && !socHis.trim().equals("") && !this.listOfSocHis.contains(socHis)) {
+            this.listOfSocHis.add(socHis);
+        }
+    }
+
+    @Override
+    public void deleteSocHis(String socHis) {
+        this.listOfSocHis.removeIf(x -> x.equals(socHis));
+    }
+
+    @Override
+    public void insertFamHis(String famHis) {
+        if (famHis != null && !famHis.trim().equals("") && !this.listOfFamHis.contains(famHis)) {
+            this.listOfFamHis.add(famHis);
+        }
+    }
+
+    @Override
+    public void deleteFamHis(String famHis) {
+        this.listOfFamHis.removeIf(x -> x.equals(famHis));
     }
 }

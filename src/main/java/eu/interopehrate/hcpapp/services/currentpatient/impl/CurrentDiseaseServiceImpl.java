@@ -44,7 +44,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
 
     @Override
     public void insertNote(String note) {
-        if (note != null && !note.trim().equals("")) {
+        if (note != null && !note.trim().equals("") && !this.listOfNotes.contains(note)) {
             this.listOfNotes.add(note);
         }
     }
