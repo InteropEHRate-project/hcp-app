@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -10,7 +11,7 @@ import java.util.*;
 @Getter
 public class ObservationLaboratoryCommandAnalysis {
     private Boolean displayTranslatedVersion;
-    private List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses;
+    private Page<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses;
 
     public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
 

@@ -66,7 +66,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
 
-        if (Objects.nonNull(keyword) && !keyword.equals("")) {
+        if (Objects.nonNull(keyword) && !keyword.trim().equals("")) {
             //The filtration is happening...
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
             prescriptions.forEach((pr) -> {
