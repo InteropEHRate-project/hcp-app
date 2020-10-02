@@ -53,8 +53,8 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="an : ${labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates()}">
-                        <div th:with="map=${labResultsAnalysisCommand.valueReturn()}">
+                    <tr th:each="an : ${labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(currentPage)}">
+                        <div th:with="map=${labResultsAnalysisCommand.valueReturn(currentPage)}">
                             <td style="background-color: azure" th:style="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{an}}"></td>
                             <th:block th:each="sample : ${labResultsAnalysisCommand.localDateTimeListWithoutDuplicates()}">
                                 <div th:with="boolVal=${labResultsAnalysisCommand.getResultOfAnalysis(an, sample)}">
