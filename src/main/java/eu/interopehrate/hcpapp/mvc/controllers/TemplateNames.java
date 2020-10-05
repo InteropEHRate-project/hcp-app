@@ -26,7 +26,6 @@ public interface TemplateNames {
     String CURRENT_PATIENT_ALLERGIES_ADD_PAGE = "current-patient/allergies/add-info";
     String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/current-medications/prescription/add-info";
     String CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE = "current-patient/current-medications/prescription/update-info";
-    String CURRENT_PATIENT_IMMUNIZATIONS_VIEW_SECTION = "current-patient/immunization/view-section";
     String CURRENT_PATIENT_MEDICAL_DEVICES_DEVICE_VIEW_SECTION = "current-patient/medical-devices/device/view-section";
     String CURRENT_PATIENT_MEDICAL_DEVICES_USE_DEVICE_STATEMENT_VIEW_SECTION = "current-patient/medical-devices/use-device-statement/view-section";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW = "current-patient/diagnostic-results/laboratory-results/observation-laboratory-view";
@@ -60,8 +59,6 @@ public interface TemplateNames {
     String CURRENT_PATIENT_PREGNANCY_STATUS_VIEW_SECTION = "current-patient/pregnancy/status/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_ALCOHOL_VIEW_SECTION = "current-patient/social-history/alcohol/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_TOBACCO_VIEW_SECTION = "current-patient/social-history/tobacco/view-section";
-    String CURRENT_PATIENT_PLAN_OF_CARE_VIEW_SECTION = "current-patient/plan-care/view-section";
-    String CURRENT_PATIENT_FUNCTIONAL_STATUS_VIEW_SECTION = "current-patient/functional-status/view-section";
 
     //Emergency
     String EMERGENCY_INDEX_TEMPLATE = "emergency/emergency-index";
