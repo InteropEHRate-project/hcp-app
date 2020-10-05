@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">allergies intolerances</title>
+    <title th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -28,9 +28,9 @@
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
         </div>
         <div class="col-9">
-            <h2 th:text="#{template.current.patient.allergies.add.allergies}">Add Allergies and Intolerances information</h2>
+            <h2 th:text="#{template.current.patient.allergies.add.allergy}">Add Allergy information</h2>
             <div class="m-5"></div>
-            <form action="#" th:action="@{/current-patient/allergies-intolerances/save-add}"
+            <form action="#" th:action="@{/current-patient/allergies/save-add}"
                   th:object="${allergyIntoleranceInfoCommand}" method="post">
 
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/current-patient/allergies-intolerances")
+@RequestMapping("/current-patient/allergies")
 public class AllergyIntoleranceController {
     private AllergyIntoleranceService allergyIntoleranceService;
 
@@ -26,23 +26,23 @@ public class AllergyIntoleranceController {
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         model.addAttribute("allergyIntolerance", allergyIntoleranceService.allergyIntoleranceInfoCommand());
-        return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_ALLERGIES_VIEW_SECTION;
     }
 
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
         model.addAttribute("allergyIntoleranceInfoCommand", new AllergyIntoleranceInfoCommand());
-        return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE;
+        return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
     public String saveAdd(@Valid @ModelAttribute AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return TemplateNames.CURRENT_PATIENT_ALLERGIES_INTOLERANCES_ADD_PAGE;
+            return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
         }
         allergyIntoleranceService.insertAllergyIntolerance(allergyIntoleranceInfoCommand);
-        return "redirect:/current-patient/allergies-intolerances/view-section";
+        return "redirect:/current-patient/allergies/view-section";
     }
 }

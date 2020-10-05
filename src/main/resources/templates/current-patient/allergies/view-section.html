@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">allergies intolerances</title>
+    <title th:text="#{fragment.current.patient.navigation.left.allergies}">allergies intolerances</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -32,21 +32,21 @@
                        th:text="#{ips.translate.label}">language of the section</a>
                     <a href="#" class="btn btn-primary"
                        th:styleappend="${!allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies-intolerances/view-section')}"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies/view-section')}"
                        th:text="#{ips.translate.button.original}">Initial version</a>
                     <a href="#" class="btn btn-primary"
                        th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies-intolerances/view-section')}"
+                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies/view-section')}"
                        th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
             <p>
-            <h3 th:text="#{fragment.current.patient.navigation.left.allergies.intolerances}">allergies</h3></p>
+            <h3 th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</h3></p>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th th:text="#{template.current.patient.allergies.category}">Category</th>
                     <th th:text="#{template.current.patient.allergies.name}">Name</th>
+                    <th th:text="#{template.current.patient.allergies.category}">Category</th>
                     <th th:text="#{template.current.patient.allergies.type}">Type</th>
                     <th th:text="#{template.current.patient.allergies.symptoms}">Symptoms</th>
                     <th th:text="#{template.current.patient.allergies.comments}">Comments</th>
@@ -68,7 +68,7 @@
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary"
-                       th:href="@{/current-patient/allergies-intolerances/open-add-page}" th:text="#{crud.button.add}">Add</a>
+                       th:href="@{/current-patient/allergies/open-add-page}" th:text="#{crud.button.add}">Add</a>
                 </div>
             </div>
         </div>
