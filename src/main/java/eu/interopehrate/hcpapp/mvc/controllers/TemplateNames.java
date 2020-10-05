@@ -54,9 +54,6 @@ public interface TemplateNames {
     String CURRENT_PATIENT_REASON_VIEW_SECTION = "current-patient/visit-data/reason/view-section";
     String CURRENT_PATIENT_PH_EXAM_VIEW_SECTION = "current-patient/visit-data/ph-exam/view-section";
     String CURRENT_PATIENT_CONCLUSION_VIEW_SECTION = "current-patient/visit-data/conclusion/view-section";
-    String CURRENT_PATIENT_PREGNANCY_EDD_VIEW_SECTION = "current-patient/pregnancy/edd/view-section";
-    String CURRENT_PATIENT_PREGNANCY_OUTCOME_VIEW_SECTION = "current-patient/pregnancy/outcome/view-section";
-    String CURRENT_PATIENT_PREGNANCY_STATUS_VIEW_SECTION = "current-patient/pregnancy/status/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_ALCOHOL_VIEW_SECTION = "current-patient/social-history/alcohol/view-section";
     String CURRENT_PATIENT_SOCIAL_HISTORY_TOBACCO_VIEW_SECTION = "current-patient/social-history/tobacco/view-section";
 
