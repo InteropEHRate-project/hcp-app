@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.3.4.RELEASE</version>
         <relativePath/>
     </parent>
     <groupId>eu.interopehrate.hcpapp</groupId>
@@ -15,7 +15,7 @@
     <description>Reference HCP application</description>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>15</java.version>
         <hapi.fhir.version>4.1.0</hapi.fhir.version>
         <font-awesome.version>5.11.2</font-awesome.version>
     </properties>
@@ -37,6 +37,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
             <version>${font-awesome.version}</version>
@@ -45,6 +50,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>9.0</version>
         </dependency>
 
         <dependency>
