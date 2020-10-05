@@ -1,25 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title th:text="#{fragment.current.patient.navigation.left.allergies}">allergies intolerances</title>
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-<div th:replace="fragments/header::navigation-top">navigation-top</div>
-<div class="container">
+<div layout:fragment="content" class="container">
     <div class="row">
         <div class="col-3">
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
@@ -28,16 +15,9 @@
             <div class="m-5"></div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray"
-                       th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary"
-                       th:styleappend="${!allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies/view-section')}"
-                       th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary"
-                       th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies/view-section')}"
-                       th:text="#{ips.translate.button.translated}">Translated version</a>
+                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.original}">Original</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>
                 </div>
             </div>
             <p>
@@ -54,9 +34,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="ai : ${allergyIntolerance.allergyIntoleranceList}">
-                    <td style="background-color: azure"
-                        th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
-                        th:text="${{ai.name}}"></td>
+                    <td style="background-color: azure" th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ai.name}}"></td>
                     <td th:text="${{ai.category}}"></td>
                     <td th:text="${{ai.type}}"></td>
                     <td th:text="${{ai.symptoms}}"></td>
