@@ -1,17 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title th:text="#{fragment.current.patient.navigation.left.vital.signs}">vital signs</title>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
 <style>
     .scrollBar {
@@ -21,8 +13,7 @@
     }
 </style>
 <body>
-<div th:replace="fragments/header::navigation-top">navigation-top</div>
-<div class="container">
+<div layout:fragment="content" class="container">
     <div class="row">
         <div class="col-3">
             <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
@@ -31,16 +22,9 @@
             <div class="m-5"></div>
             <div class="btn-toolbar float-right" role="toolbar">
                 <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray"
-                       th:text="#{ips.translate.label}">Language of the section</a>
-                    <a href="#" class="btn btn-primary"
-                       th:styleappend="${!vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/visit-data/vital-signs/view-section')}"
-                       th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary"
-                       th:styleappend="${vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/visit-data/vital-signs/view-section')}"
-                       th:text="#{ips.translate.button.translated}">Translated version</a>
+                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">Language of the section</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${!vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/visit-data/vital-signs/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+                    <a href="#" class="btn btn-primary" th:styleappend="${vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/visit-data/vital-signs/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
                 </div>
             </div>
             <p>
@@ -65,7 +49,6 @@
                                 <div th:if="${map.get(an,sample) != null}">
                                     <td th:text="${{map.get(an,sample)}}"></td>
                                 </div>
-
                             </th:block>
                         </div>
                     </tr>
@@ -73,16 +56,12 @@
                 </table>
 
                 <p th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}"><br>
-                <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}"
-                    th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital
-                    Signs to upload in S-EHR</h5></p>
+                <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h5></p>
 
                 <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
                     <thead class="thead-light">
                     <tr>
-                        <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">
-                            Analysis
-                        </th>
+                        <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
                         <th:block th:each="sample : ${vitalSignsUpload.localDateTimeListWithoutDuplicates()}">
                             <th th:text="${{sample}}"></th>
                         </th:block>
@@ -101,45 +80,16 @@
                             </th:block>
                         </div>
                     </tr>
-
-
-                    <!--                        <td>-->
-                    <!--                            <div class="btn-group" role="group">-->
-                    <!--                                <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(-->
-                    <!--                            id=${{prUpload.getId()}},-->
-                    <!--                            drug=${{prUpload.getDrugName()}},-->
-                    <!--                            status=${{prUpload.getStatus()}},-->
-                    <!--                            notes=${{prUpload.getNotes()}},-->
-                    <!--                            timings=${{prUpload.getTimings()}},-->
-                    <!--                            drugDosage=${{prUpload.getDrugDosage()}},-->
-                    <!--                            dateOfPrescription=${{prUpload.getDateOfPrescription()}},-->
-                    <!--                            start=${{prUpload.getStart()}},-->
-                    <!--                            end=${{prUpload.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>-->
-
-                    <!--&lt;!&ndash;                                <a href="#"&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                   th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.edit}">Edit</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                <a href="#"&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                   th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.delete}">Delete</a>&ndash;&gt;-->
-                    <!--                            </div>-->
-                    <!--                        </td>-->
-                    </tr>
                     </tbody>
                 </table>
                 <div class="btn-toolbar float-right" role="toolbar">
                     <div class="btn-group" role="group">
-                        <a href="#" class="btn btn-primary"
-                           th:href="@{/current-patient/visit-data/vital-signs/open-add-page}"
-                           th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.add}">Add</a>
+                        <a href="#" class="btn btn-primary" th:href="@{/current-patient/visit-data/vital-signs/open-add-page}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.add}">Add</a>
                     </div>
                 </div>
-                <div class="btn-toolbar float-left" role="toolbar"
-                     th:if="${(!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()) && (vitalSignsService.getConnectedThread() != null)}">
+                <div class="btn-toolbar float-left" role="toolbar" th:if="${(!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()) && (vitalSignsService.getConnectedThread() != null)}">
                     <div class="btn-group" role="group">
-                        <a href="#" class="btn btn-outline-primary"
-                           th:href="@{/current-patient/visit-data/vital-signs/sendToSehr}"
-                           th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.send.to.sehr}"></a>
+                        <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/visit-data/vital-signs/sendToSehr}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.send.to.sehr}"></a>
                     </div>
                 </div>
             </div>
