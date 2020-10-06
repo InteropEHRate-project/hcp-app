@@ -1,50 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" layout:decorate="~{layouts/layoutadministration}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title th:text="#{fragment.administration.navigation.left.audit.information}">Audit Information</title>
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
 
 <body>
-<div th:replace="fragments/header::navigation-top">navigation-top</div>
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="administration/fragments/navigation::navigation-left">navigation-left</div>
-        </div>
-        <div class="col-9">
-            <p><h3 th:text="#{fragment.administration.navigation.left.audit.information}">Audit Information</h3></p>
-            <div class="m-5"></div>
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th th:text="#{template.administration.audit.information.date.time}">Event Date</th>
-                        <th th:text="#{template.administration.audit.information.type}">Event Type</th>
-                        <th th:text="#{template.administration.audit.information.details}">Event Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="event : ${auditInformation}">
-                        <td th:text="${#temporals.format(event.dateTime, 'dd-MM-yyyy HH:mm:ss')}"></td>
-                        <td th:text="${event.type}"></td>
-                        <td th:text="${event.details}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div layout:fragment="content">
+    <p><h3 th:text="#{fragment.administration.navigation.left.audit.information}">Audit Information</h3></p>
+    <div class="m-5"></div>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{template.administration.audit.information.date.time}">Event Date</th>
+            <th th:text="#{template.administration.audit.information.type}">Event Type</th>
+            <th th:text="#{template.administration.audit.information.details}">Event Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="event : ${auditInformation}">
+            <td th:text="${#temporals.format(event.dateTime, 'dd-MM-yyyy HH:mm:ss')}"></td>
+            <td th:text="${event.type}"></td>
+            <td th:text="${event.details}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
