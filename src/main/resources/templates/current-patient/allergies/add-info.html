@@ -7,7 +7,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 th:text="#{template.current.patient.allergies.add.allergy}">Add Allergy information</h2>
+    <h2 th:text="#{fragment.current.patient.navigation.left.allergies.add.allergy}">Add Allergy information</h2>
     <div class="m-5"></div>
     <form action="#" th:action="@{/current-patient/allergies/save-add}"
           th:object="${allergyIntoleranceInfoCommand}" method="post">
@@ -18,7 +18,7 @@
 
         <div class="form-row">
             <div class="col-md-6">
-                <label for="category" th:text="#{template.current.patient.allergies.category}">Category</label>
+                <label for="category" th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</label>
                 <input id="category" type="text" class="form-control"
                        th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''"
                        th:field="*{category}">
@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-md-6">
-                <label for="name" th:text="#{template.current.patient.allergies.name}">Name</label>
+                <label for="name" th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</label>
                 <input id="name" type="text" class="form-control"
                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' :''" th:field="*{name}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-md-6"><br>
-                <label for="type" th:text="#{template.current.patient.allergies.type}">Type</label><br>
+                <label for="type" th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</label><br>
                 <input id="type" type="text" class="form-control"
                        th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
@@ -52,7 +52,7 @@
             </div>
 
             <div class="col-md-6"><br>
-                <label for="symptoms" th:text="#{template.current.patient.allergies.symptoms}">Symptoms</label><br>
+                <label for="symptoms" th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</label><br>
                 <input id="symptoms" type="text" class="form-control"
                        th:classappend="${#fields.hasErrors('symptoms')} ? 'is-invalid' :''"
                        th:field="*{symptoms}">
@@ -65,13 +65,13 @@
         </div>
         <div class="form-row">
             <div class="col-md-12"><br>
-                <label for="comments" th:text="#{template.current.patient.allergies.comments}">Comments</label>
+                <label for="comments" th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</label>
                 <input id="comments" type="text" class="form-control" th:field="*{comments}">
             </div>
         </div>
 
         <div class="text-right"><br>
-            <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">Save</button>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
         </div>
     </form>
 </div>

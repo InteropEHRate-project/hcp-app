@@ -3,7 +3,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.vital.signs}">vital signs</title>
+    <title th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
@@ -28,9 +28,9 @@
         </div>
         <div class="form-row">
             <div class="col-md-6">
-                <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.type}">Vital Sign Type</label>
+                <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.type}">Vital Sign Type</label>
                 <select class="form-control select2" id="analysisName" th:field="*{analysisName}">
-                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.choose}">Choose a type</option>
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.choose}">Choose a type</option>
                     <option input type="text" class="form-control" th:each="type : ${vitalSignsTypes}" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
                 </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
@@ -75,7 +75,7 @@
         </div>
 
         <div class="text-right"><br>
-            <button type="submit" class="btn btn-primary" th:text="#{crud.button.save}">Save</button>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
         </div>
     </form>
 </div>

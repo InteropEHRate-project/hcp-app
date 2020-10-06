@@ -18,14 +18,14 @@
             </div>
         </div>
     </div>
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.currentDiseases}">Current Diseases</h3></p>
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.current.diseases}">Current Diseases</h3></p>
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
-            <th th:text="#{template.current.patient.currentDisease.list.statement.disease}">disease</th>
-            <th th:text="#{template.current.patient.currentDisease.list.statement.date.of.diagnosis}">date of diagnosis</th>
-            <th th:text="#{template.current.patient.currentDisease.list.statement.comment}">comment</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
         </tr>
         </thead>
         <tbody>
@@ -47,8 +47,8 @@
     <table id="uploadTable" class="table table-bordered" th:if="${!notes.isEmpty()}">
         <thead class="thead-light">
         <tr>
-            <th th:text="#{template.current.patient.currentDisease.list.statement.notes}">Notes</th>
-            <th th:text="#{template.current.patient.currentDisease.list.statement.action}">Action</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.notes}">Notes</th>
+            <th th:text="#{button.action}">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -66,10 +66,10 @@
     <br><br>
     <form th:action="@{/current-patient/current-diseases/save-note}" method="post">
         <div class="form-group">
-            <label for="note" th:text="#{template.current.patient.currentDisease.list.statement.notes}">Notes</label>
+            <label for="note" th:text="#{fragment.current.patient.navigation.left.current.diseases.notes}">Notes</label>
             <textarea class="form-control" rows="3" type="input" name="note" id="note"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary mb-2" th:text="#{crud.button.save}">Save</button>
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
     </form>
 </div>
 </body>

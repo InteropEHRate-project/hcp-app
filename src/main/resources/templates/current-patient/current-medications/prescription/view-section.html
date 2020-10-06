@@ -151,10 +151,10 @@
 
                     <a href="#"
                        th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"
-                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.edit}">Edit</a>
+                       th:text="#{crud.button.edit}">Edit</a>
                     <a href="#"
                        th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"
-                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.delete}">Delete</a>
+                       th:text="#{crud.button.delete}">Delete</a>
                 </div>
             </td>
         </tr>
@@ -190,7 +190,7 @@
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary"
                th:href="@{/current-patient/current-medications/prescription/open-add-page}"
-               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.add}">Add</a>
+               th:text="#{crud.button.add}">Add</a>
         </div>
     </div>
 

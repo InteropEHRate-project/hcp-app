@@ -3,7 +3,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.tests}">Laboratory tests</title>
+    <title th:text="#{fragment.current.patient.navigation.left.laboratory.tests}">Laboratory tests</title>
 </head>
 <style>
     .scrollBar {
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div th:replace="current-patient/diagnostic-results/fragments/navigation::navigation-top">navigation-top</div>
-    <p><h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
+    <p><h5 th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
     <div class="scrollBar">
         <table class="table table-bordered">
             <thead class="thead-light">

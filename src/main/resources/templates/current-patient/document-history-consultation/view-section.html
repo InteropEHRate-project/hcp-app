@@ -25,17 +25,17 @@
             <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/cardiology}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
             <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/psychiatry}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.reset}">RESET</a>
+            <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}" th:text="#{button.reset}">RESET</a>
         </div>
     </div>
     <br>
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
-            <th th:text="#{template.current.patient.consultation.localDateTimeHistoryConsultation}">Date</th>
-            <th th:text="#{template.current.patient.consultation.locationHospital}">Location Hospital</th>
-            <th th:text="#{template.current.patient.consultation.exam}">Exam</th>
-            <th th:text="#{template.current.patient.consultation.view}">View</th>
+            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</th>
+            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.location}">Location Hospital</th>
+            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.exam}">Exam</th>
+            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.view}">View</th>
         </tr>
         </thead>
         <tbody>
@@ -46,7 +46,7 @@
             <td>
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary"
-                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.open}">Open</a>
+                       th:text="#{button.open}">Open</a>
                 </div>
             </td>
         </tr>

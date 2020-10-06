@@ -3,7 +3,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.vital.signs}">vital signs</title>
+    <title th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</title>
 </head>
 <style>
     .scrollBar {
@@ -23,7 +23,7 @@
         </div>
     </div>
     <p>
-    <h3 th:text="#{fragment.current.patient.navigation.left.vital.signs}">vital signs</h3></p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</h3></p>
 
     <div class="scrollBar">
         <table class="table table-bordered">
@@ -79,7 +79,7 @@
         </table>
         <div class="btn-toolbar float-right" role="toolbar">
             <div class="btn-group" role="group">
-                <a href="#" class="btn btn-primary" th:href="@{/current-patient/visit-data/vital-signs/open-add-page}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.add}">Add</a>
+                <a href="#" class="btn btn-primary" th:href="@{/current-patient/visit-data/vital-signs/open-add-page}" th:text="#{crud.button.add}">Add</a>
             </div>
         </div>
         <div class="btn-toolbar float-left" role="toolbar" th:if="${(!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()) && (vitalSignsService.getConnectedThread() != null)}">

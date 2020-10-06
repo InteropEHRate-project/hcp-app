@@ -11,7 +11,7 @@
     <form  method="post" enctype="multipart/form-data" th:action="@{/administration/health-care-professional/uploadFile}" th:object="${certificate}">
         <label class="control-label" th:text="#{template.administration.select.file}">Select File</label>
         <input id="file" name="file" type="file" class="file">
-        <button type="submit" class="btn btn-primary" th:text="#{crud.button.submit}">Submit</button>
+        <button type="submit" class="btn btn-primary" th:text="#{button.submit}">Submit</button>
     </form>
 </div>
 </body>

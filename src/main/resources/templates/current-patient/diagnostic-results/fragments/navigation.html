@@ -18,7 +18,7 @@
 <body>
 <div th:fragment="navigation-top">
     <div class="m-5"></div>
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.tests}">laboratory tests</h3></p>
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.laboratory.tests}">laboratory tests</h3></p>
     <ul class="nav nav-tabs">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"
@@ -28,12 +28,12 @@
                role="button"
                aria-haspopup="true"
                aria-expanded="false"
-               th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results}">laboratory results</a>
+               th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results}">laboratory results</a>
             <div class="dropdown-menu">
                 <a class="dropdown-item"
                    href="../laboratory-results/observation-laboratory-view.html"
                    th:href="@{/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view}"
-                   th:text="#{fragment.current.patient.navigation.left.diagnostic.results.laboratory.results.observation.laboratory}">observation laboratory</a>
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">observation laboratory</a>
                 <a class="dropdown-item"
                    href="../laboratory-results/organization-laboratory-view.html"
                    th:href="@{/current-patient/diagnostic-results/laboratory-results/organization-laboratory-view}"
