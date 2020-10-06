@@ -7,39 +7,32 @@
 </head>
 
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
-        </div>
-        <div class="col-9">
-            <div th:if="${exception != null}" class="m-3 alert alert-danger">
-                <p th:text="${exception}">Exception</p>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <p><h3 th:text="#{diagnostic.imaging.DICOM.test.images}">DICOM test images</h3></p>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/view-ecg}" th:text="#{diagnostic.imaging.DICOM.ECG}">Electrocardiogram</a></h5>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div>
-                                <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/view-mr}" th:text="#{diagnostic.imaging.DICOM.MR}">Magnetic Resonance</a></h5>
-                            </div>
-                        </div>
+<div layout:fragment="content">
+    <div th:if="${exception != null}" class="m-3 alert alert-danger">
+        <p th:text="${exception}">Exception</p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <p><h3 th:text="#{diagnostic.imaging.DICOM.test.images}">DICOM test images</h3></p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/view-ecg}" th:text="#{diagnostic.imaging.DICOM.ECG}">Electrocardiogram</a></h5>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div>
+                        <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/view-mr}" th:text="#{diagnostic.imaging.DICOM.MR}">Magnetic Resonance</a></h5>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/view-section}" th:text="#{crud.button.back}">Back</a>
-                </div>
-            </div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/view-section}" th:text="#{crud.button.back}">Back</a>
         </div>
     </div>
 </div>

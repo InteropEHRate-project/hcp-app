@@ -6,44 +6,37 @@
     <title th:text="#{fragment.current.patient.navigation.left.current.medications.medication.statement}">medication statement</title>
 </head>
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+<div layout:fragment="content">
+    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group btn-group-sm mr-2" role="group">
+            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!statementCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/statement/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${statementCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/statement/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
         </div>
-        <div class="col-9">
-            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group btn-group-sm mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!statementCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/statement/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${statementCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/statement/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
-                </div>
-            </div>
-            <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.medication.statement}">medication statement</h5></p>
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th th:text="#{template.current.patient.current.medication.statement.medication}">medication</th>
-                        <th th:text="#{template.current.patient.current.medication.statement.status}">status</th>
-                        <th th:text="#{template.current.patient.current.medication.statement.effective}">effective</th>
-                        <th th:text="#{template.current.patient.current.medication.statement.dosage.patient.instructions}">dosage - patient instructions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="ms : ${statementCommand.statementList}">
-                        <td th:text="${{ms.medication}}"></td>
-                        <td th:text="${{ms.status}}"></td>
-                        <td th:text="${{#temporals.format(ms.effective, 'dd-MM-yyyy')}}"></td>
-                        <td style="background-color: azure" th:style="${!statementCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ms.patientInstructions}}"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/statement/open-add-page}" th:text="#{crud.button.add}">add</a>
-                </div>
-            </div>
+    </div>
+    <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.medication.statement}">medication statement</h5></p>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{template.current.patient.current.medication.statement.medication}">medication</th>
+            <th th:text="#{template.current.patient.current.medication.statement.status}">status</th>
+            <th th:text="#{template.current.patient.current.medication.statement.effective}">effective</th>
+            <th th:text="#{template.current.patient.current.medication.statement.dosage.patient.instructions}">dosage - patient instructions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ms : ${statementCommand.statementList}">
+            <td th:text="${{ms.medication}}"></td>
+            <td th:text="${{ms.status}}"></td>
+            <td th:text="${{#temporals.format(ms.effective, 'dd-MM-yyyy')}}"></td>
+            <td style="background-color: azure" th:style="${!statementCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ms.patientInstructions}}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/statement/open-add-page}" th:text="#{crud.button.add}">add</a>
         </div>
     </div>
 </div>

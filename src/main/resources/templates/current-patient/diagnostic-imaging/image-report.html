@@ -7,26 +7,19 @@
 </head>
 
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
-        </div>
-        <div class="col-9">
+<div layout:fragment="content">
+    <br>
+    <div class="row justify-content-center">
+        <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
+            <h5><td th:text="${image.getDateOfExam()} + ' ' + ${image.getName()}"></td></h5>
+            <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
             <br>
-            <div class="row justify-content-center">
-                <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
-                    <h5><td th:text="${image.getDateOfExam()} + ' ' + ${image.getName()}"></td></h5>
-                    <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
-                    <br>
-                </tr>
-            </div>
-            <br>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/view-section}" th:text="#{crud.button.back}">Back</a>
-                </div>
-            </div>
+        </tr>
+    </div>
+    <br>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/view-section}" th:text="#{crud.button.back}">Back</a>
         </div>
     </div>
 </div>

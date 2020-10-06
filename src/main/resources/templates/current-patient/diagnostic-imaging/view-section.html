@@ -7,27 +7,20 @@
 </head>
 
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
-        </div>
-        <div class="col-9">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <p><h3 th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging}">Diagnostic Imaging</h3></p>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/DICOM}" th:text="#{diagnostic.imaging.DICOM.content}">DICOM Content</a></h5>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div>
-                                <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/image-report}" th:text="#{diagnostic.imaging.Image.Report}">Image Report</a></h5>
-                            </div>
-                        </div>
+<div layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <p><h3 th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging}">Diagnostic Imaging</h3></p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/DICOM}" th:text="#{diagnostic.imaging.DICOM.content}">DICOM Content</a></h5>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div>
+                        <h5><a class="card-title" th:href="@{/current-patient/diagnostic-imaging/image-report}" th:text="#{diagnostic.imaging.Image.Report}">Image Report</a></h5>
                     </div>
                 </div>
             </div>
