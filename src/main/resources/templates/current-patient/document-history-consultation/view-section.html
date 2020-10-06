@@ -6,61 +6,52 @@
     <title th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">document history</title>
 </head>
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
-        </div>
-        <div class="col-9">
-            <div class="m-5"></div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.translated}">Translated version</a>
-                </div>
-            </div>
-            <p>
-            <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
-                Consultation</h3></p>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.speciality}">
-                    Filter by Speciality
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/cardiology}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
-                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/psychiatry}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.reset}">RESET</a>
-                </div>
-            </div>
-            <br>
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                <tr>
-                    <th th:text="#{template.current.patient.consultation.localDateTimeHistoryConsultation}">Date</th>
-                    <th th:text="#{template.current.patient.consultation.locationHospital}">Location Hospital</th>
-                    <th th:text="#{template.current.patient.consultation.exam}">Exam</th>
-                    <th th:text="#{template.current.patient.consultation.view}">View</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="hc : ${documentHistoryConsultation.documentHistoryConsultationInfoCommandList}">
-                    <td style="background-color: azure" th:style="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{hc.localDateTimeHistoryConsultation}}"></td>
-                    <td th:text="${{hc.locationHospital}}"></td>
-                    <td th:text="${{hc.exam}}"></td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary"
-                               th:text="#{fragment.current.patient.navigation.left.document.history.consultation.open}">Open</a>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<div layout:fragment="content">
+    <div class="m-5"></div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.original}">Initial version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultation.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.translated}">Translated version</a>
         </div>
     </div>
+    <p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.speciality}">
+            Filter by Speciality
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/cardiology}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
+            <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/psychiatry}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.reset}">RESET</a>
+        </div>
+    </div>
+    <br>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{template.current.patient.consultation.localDateTimeHistoryConsultation}">Date</th>
+            <th th:text="#{template.current.patient.consultation.locationHospital}">Location Hospital</th>
+            <th th:text="#{template.current.patient.consultation.exam}">Exam</th>
+            <th th:text="#{template.current.patient.consultation.view}">View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hc : ${documentHistoryConsultation.documentHistoryConsultationInfoCommandList}">
+            <td style="background-color: azure" th:style="${!documentHistoryConsultation.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{hc.localDateTimeHistoryConsultation}}"></td>
+            <td th:text="${{hc.locationHospital}}"></td>
+            <td th:text="${{hc.exam}}"></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary"
+                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.open}">Open</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
