@@ -22,9 +22,9 @@
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
-            <th th:text="#{fragment.current.patient.pat.history.diagnosis}">diagnosis</th>
-            <th th:text="#{fragment.current.patient.pat.history.year.of.diagnosis}">year of diagnosis</th>
-            <th th:text="#{fragment.current.patient.pat.history.comments}">comments</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis}">diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.year.of.diagnosis}">year of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.comments}">comments</th>
         </tr>
         </thead>
         <tbody>
@@ -41,30 +41,30 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col" th:text="#{fragment.current.patient.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
-            <th scope="col" th:text="#{fragment.current.patient.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
+            <th scope="col" th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
+            <th scope="col" th:text="#{fragment.current.patient.navigation.left.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
         </tr>
         </thead>
         <tbody class="col-6">
         <tr>
-            <th scope="row" th:text="#{fragment.current.patient.pat.history.hypertension}">hypertension</th>
-            <td th:text="#{fragment.current.patient.pat.history.no}">No</td>
+            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.hypertension}">hypertension</th>
+            <td th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</td>
         </tr>
         <tr>
-            <th scope="row" th:text="#{fragment.current.patient.pat.history.diabetes}">diabetes</th>
-            <td th:text="#{fragment.current.patient.pat.history.yes}">Yes</td>
+            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.diabetes}">diabetes</th>
+            <td th:text="#{fragment.current.patient.navigation.left.pat.history.yes}">Yes</td>
         </tr>
         <tr>
-            <th scope="row" th:text="#{fragment.current.patient.pat.history.dyslipidemia}">dyslipidemia</th>
-            <td colspan="2" th:text="#{fragment.current.patient.pat.history.no}">No</td>
+            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.dyslipidemia}">dyslipidemia</th>
+            <td colspan="2" th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</td>
         </tr>
         <tr>
-            <th scope="row" th:text="#{fragment.current.patient.pat.history.current.past.smoker}">current/past smoker</th>
-            <td colspan="2" th:text="#{fragment.current.patient.pat.history.yes}">Yes</td>
+            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.current.past.smoker}">current/past smoker</th>
+            <td colspan="2" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}">Yes</td>
         </tr>
         <tr>
-            <th scope="row" th:text="#{fragment.current.patient.pat.history.family.history.of.cvd}">family history of CVD</th>
-            <td colspan="2" th:text="#{fragment.current.patient.pat.history.no}">No</td>
+            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.family.history.of.cvd}">family history of CVD</th>
+            <td colspan="2" th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</td>
         </tr>
         </tbody>
     </table>
@@ -75,7 +75,7 @@
             <table class="table table-bordered" th:if="${!patHis.isEmpty()}">
                 <thead class="thead-light">
                 <tr>
-                    <th th:text="#{fragment.current.patient.pat.history.patient.history.notes}">Patient History notes</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history.notes}">Patient History notes</th>
                     <th th:text="#{button.action}">Action</th>
                 </tr>
                 </thead>
@@ -93,7 +93,7 @@
 
             <form th:action="@{/current-patient/pat-history/save-patHis}" method="post">
                 <div class="form-group">
-                    <label for="patHis" th:text="#{fragment.current.patient.pat.history.patient.history}">Patient History</label>
+                    <label for="patHis" th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history}">Patient History</label>
                     <textarea class="form-control" name="patHis" id="patHis" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
@@ -104,7 +104,7 @@
             <table class="table table-bordered" th:if="${!socHis.isEmpty()}">
                 <thead class="thead-light">
                 <tr>
-                    <th th:text="#{fragment.current.patient.pat.history.social.history.notes}">Social History notes</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.pat.history.social.history.notes}">Social History notes</th>
                     <th th:text="#{button.action}">Action</th>
                 </tr>
                 </thead>
@@ -122,7 +122,7 @@
 
             <form th:action="@{/current-patient/pat-history/save-socHis}" method="post">
                 <div class="form-group">
-                    <label for="socHis" th:text="#{fragment.current.patient.pat.history.social.history}">Social History</label>
+                    <label for="socHis" th:text="#{fragment.current.patient.navigation.left.pat.history.social.history}">Social History</label>
                     <textarea class="form-control" name="socHis" id="socHis" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
@@ -133,7 +133,7 @@
             <table class="table table-bordered" th:if="${!famHis.isEmpty()}">
                 <thead class="thead-light">
                 <tr>
-                    <th th:text="#{fragment.current.patient.pat.history.family.history.notes}">Family History notes</th>
+                    <th th:text="#{fragment.current.patient.navigation.left.pat.history.family.history.notes}">Family History notes</th>
                     <th th:text="#{button.action}">Action</th>
                 </tr>
                 </thead>
@@ -151,7 +151,7 @@
 
             <form th:action="@{/current-patient/pat-history/save-famHis}" method="post">
                 <div class="form-group">
-                    <label for="famHis" th:text="#{fragment.current.patient.pat.history.family.history}">Family History</label>
+                    <label for="famHis" th:text="#{fragment.current.patient.navigation.left.pat.history.family.history}">Family History</label>
                     <textarea class="form-control" name="famHis" id="famHis" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
