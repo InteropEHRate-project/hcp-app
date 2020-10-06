@@ -39,15 +39,18 @@
 </head>
 <body>
 
-<div th:replace="fragments/header::navigation-top">navigation-top</div>
+<wrapper class="d-flex flex-column">
+    <div th:replace="fragments/header::navigation-top">navigation-top</div>
 
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+    <main class="container flex-fill">
+        <div class="row">
+            <div class="col-3">
+                <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+            </div>
+            <div layout:fragment="content" class="col-9">content</div>
         </div>
-    </div>
-</div>
+    </main>
+</wrapper>
 
 </body>
 </html>
