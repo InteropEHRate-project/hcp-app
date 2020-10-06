@@ -1,57 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" layout:decorate="~{layouts/layoutadministration}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title th:text="#{template.administration.health.care.organization.title}">Organization</title>
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
 </head>
 
 <body>
-<div th:replace="fragments/header::navigation-top">navigation-top</div>
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="administration/fragments/navigation::navigation-left">navigation-left</div>
+<div layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 th:text="#{template.administration.health.care.organization.card.header}">Health care organization</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.code}">Code</h5>
+                    <p class="card-text" th:text="${healthCareOrganization.code}">code</p>
+
+                    <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.name}">Name</h5>
+                    <p class="card-text" th:text="${healthCareOrganization.name}">name</p>
+
+                    <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.phone}">Phone</h5>
+                    <p class="card-text" th:text="${healthCareOrganization.phone}">phone</p>
+
+                    <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.address}">Address</h5>
+                    <p class="card-text" th:text="${healthCareOrganization.address}">address</p>
+                </div>
+            </div>
         </div>
-        <div class="col-9">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 th:text="#{template.administration.health.care.organization.card.header}">Health care organization</h5>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.code}">Code</h5>
-                            <p class="card-text" th:text="${healthCareOrganization.code}">code</p>
-
-                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.name}">Name</h5>
-                            <p class="card-text" th:text="${healthCareOrganization.name}">name</p>
-
-                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.phone}">Phone</h5>
-                            <p class="card-text" th:text="${healthCareOrganization.phone}">phone</p>
-
-                            <h5 class="card-title" th:text="#{template.administration.health.care.organization.card.body.title.address}">Address</h5>
-                            <p class="card-text" th:text="${healthCareOrganization.address}">address</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/administration/health-care-organization/open-add-page}" th:text="#{crud.button.uploadCertificate}">upload certificate</a>
-                </div>
-            </div>
+    </div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/administration/health-care-organization/open-add-page}" th:text="#{crud.button.uploadCertificate}">upload certificate</a>
         </div>
     </div>
 </div>
