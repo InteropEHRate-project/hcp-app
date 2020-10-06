@@ -6,69 +6,64 @@
     <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
 </head>
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+<div layout:fragment="content">
+    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group btn-group-sm mr-2" role="group">
+            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
         </div>
-        <div class="col-9">
-            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group btn-group-sm mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
-                </div>
-            </div>
-            <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
+    </div>
+    <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
 
-            <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-                        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter</button></p>
-            <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
-            <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
-            <div class="collapse" id="collapseExample">
-                <div class="btn-toolbar float-left" role="toolbar">
-                    <div class="btn-group btn-group-sm mr-2" role="group">
-                        <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
-                            <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
-                            <button type="submit" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
-                            <input type="button" class="btn btn-light" name="reset" th:value="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.reset}" onclick="customReset();"/>
-                        </form>
+    <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter}">Filter</button></p>
+    <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
+    <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
+    <div class="collapse" id="collapseExample">
+        <div class="btn-toolbar float-left" role="toolbar">
+            <div class="btn-group btn-group-sm mr-2" role="group">
+                <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
+                    <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
+                    <button type="submit" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
+                    <input type="button" class="btn btn-light" name="reset" th:value="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.reset}" onclick="customReset();"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table id="table" class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.action}">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pr : ${listPrescriptionsSEHR}">
+            <td style="background-color: azure" th:style="${!prescriptionCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${pr.getDrugName()}"></td>
+            <td th:text="${pr.getDrugDosage()}"></td>
+            <td th:utext="${pr.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
+            <td>
+                <th:block th:switch="${pr.getStatus()}">
+                    <div th:case="'Active'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
                     </div>
-                </div>
-            </div>
-
-            <table id="table" class="table table-bordered">
-                <thead class="thead-light">
-                <tr>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.action}">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="pr : ${listPrescriptionsSEHR}">
-                    <td style="background-color: azure" th:style="${!prescriptionCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${pr.getDrugName()}"></td>
-                    <td th:text="${pr.getDrugDosage()}"></td>
-                    <td th:utext="${pr.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
-                    <td>
-                        <th:block th:switch="${pr.getStatus()}">
-                            <div th:case="'Active'">
-                                <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
-                            </div>
-                            <div th:case="'On-Hold'">
-                                <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
-                            </div>
-                            <div th:case="'Stopped'">
-                                <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
-                            </div>
-                        </th:block>
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
+                    <div th:case="'On-Hold'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
+                    </div>
+                    <div th:case="'Stopped'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
+                    </div>
+                </th:block>
+            </td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
                             id=${{pr.getId()}},
                             drug=${{pr.getDrugName()}},
                             status=${{pr.getStatus()}},
@@ -78,72 +73,72 @@
                             dateOfPrescription=${{pr.getDateOfPrescription()}},
                             start=${{pr.getStart()}},
                             end=${{pr.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-            <nav th:if = "${totalPagesSEHR > 1}">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#"
-                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItemsSEHR}">Total Rows: totalItems</a>
-                    </li>
-                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPagesSEHR)}">
-                        <a class="page-link"  th:if="${currentPageSEHR != i}"
-                           th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                        <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPageSEHR != i}">[[${i}]]</span>  &nbsp; &nbsp;
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
-                           th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${currentPageSEHR + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
-                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
-                           th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${totalPagesSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
-                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
-                    </li>
-                </ul>
-            </nav>
+    <nav th:if = "${totalPagesSEHR > 1}">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#"
+                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItemsSEHR}">Total Rows: totalItems</a>
+            </li>
+            <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPagesSEHR)}">
+                <a class="page-link"  th:if="${currentPageSEHR != i}"
+                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPageSEHR != i}">[[${i}]]</span>  &nbsp; &nbsp;
+            </li>
+            <li class="page-item">
+                <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
+                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${currentPageSEHR + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
+                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${totalPagesSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
+            </li>
+        </ul>
+    </nav>
 
-            <p th:if="${!listPrescriptions.isEmpty()}"><br>
-            <h5 th:if="${!listPrescriptions.isEmpty()}"
-                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
-            <table id="uploadTable" class="table table-bordered" th:if="${!listPrescriptions.isEmpty()}">
-                <thead class="thead-light">
-                <tr>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
-                    <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.actions}">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="prUpload : ${listPrescriptions}">
-                    <td th:text="${prUpload.getDrugName()}"></td>
-                    <td th:text="${prUpload.getDrugDosage()}"></td>
-                    <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
-                    <td>
-                        <th:block th:switch="${prUpload.getStatus()}">
-                            <div th:case="'Active'">
-                                <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
-                            </div>
-                            <div th:case="'On-Hold'">
-                                <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
-                            </div>
-                            <div th:case="'Stopped'">
-                                <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
-                            </div>
-                        </th:block>
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
+    <p th:if="${!listPrescriptions.isEmpty()}"><br>
+    <h5 th:if="${!listPrescriptions.isEmpty()}"
+        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
+    <table id="uploadTable" class="table table-bordered" th:if="${!listPrescriptions.isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.actions}">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="prUpload : ${listPrescriptions}">
+            <td th:text="${prUpload.getDrugName()}"></td>
+            <td th:text="${prUpload.getDrugDosage()}"></td>
+            <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
+            <td>
+                <th:block th:switch="${prUpload.getStatus()}">
+                    <div th:case="'Active'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
+                    </div>
+                    <div th:case="'On-Hold'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
+                    </div>
+                    <div th:case="'Stopped'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
+                    </div>
+                </th:block>
+            </td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
                             id=${{prUpload.getId()}},
                             drug=${{prUpload.getDrugName()}},
                             status=${{prUpload.getStatus()}},
@@ -154,59 +149,56 @@
                             start=${{prUpload.getStart()}},
                             end=${{prUpload.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
 
-                            <a href="#"
-                               th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"
-                               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.edit}">Edit</a>
-                            <a href="#"
-                               th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"
-                               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.delete}">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <nav th:if = "${totalPages > 1}">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
-                    </li>
-                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                        <a class="page-link"  th:if="${currentPage != i}"
-                           th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                        <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link"  th:if="${currentPage < totalPages}"
-                           th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
-                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link"  th:if="${currentPage < totalPages}"
-                           th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
-                        <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary"
-                       th:href="@{/current-patient/current-medications/prescription/open-add-page}"
-                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.add}">Add</a>
+                    <a href="#"
+                       th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.edit}">Edit</a>
+                    <a href="#"
+                       th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.delete}">Delete</a>
                 </div>
-            </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-            <div class="btn-toolbar float-left" role="toolbar" th:if="${(!listPrescriptions.isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-outline-primary"
-                       th:href="@{/current-patient/current-medications/prescription/sendToSehr}"
-                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
-                </div>
-            </div>
+    <nav th:if = "${totalPages > 1}">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
+            </li>
+            <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <a class="page-link"  th:if="${currentPage != i}"
+                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+            </li>
+            <li class="page-item">
+                <a class="page-link"  th:if="${currentPage < totalPages}"
+                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link"  th:if="${currentPage < totalPages}"
+                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
+            </li>
+        </ul>
+    </nav>
 
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary"
+               th:href="@{/current-patient/current-medications/prescription/open-add-page}"
+               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.add}">Add</a>
+        </div>
+    </div>
+
+    <div class="btn-toolbar float-left" role="toolbar" th:if="${(!listPrescriptions.isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-outline-primary"
+               th:href="@{/current-patient/current-medications/prescription/sendToSehr}"
+               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
         </div>
     </div>
 </div>

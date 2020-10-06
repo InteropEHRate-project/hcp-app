@@ -6,73 +6,65 @@
     <title th:text="#{fragment.current.patient.navigation.left.current.medications.medication}">medication</title>
 </head>
 <body>
-<div layout:fragment="content" class="container">
-    <div class="row">
-        <div class="col-3">
-            <div th:replace="current-patient/fragments/navigation::navigation-left">navigation-left</div>
+<div layout:fragment="content">
+    <div class="m-5"></div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Original</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>
         </div>
-        <div class="col-9">
-            <div class="m-5"></div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group mr-2" role="group">
-                    <a href="#" class="btn disabled" style="background-color: lightgray"
-                       th:text="#{ips.translate.label}">language of the section</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${!medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.original}">Original</a>
-                    <a href="#" class="btn btn-primary" th:styleappend="${medicationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>
+    </div>
+    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
+    <p></p>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <p><h3 th:text="${medicationCommand.getMedicationInfoCommand().getDrugName()}">drug name</h3></p>
                 </div>
-            </div>
-            <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
-            <p></p>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <p><h3 th:text="${medicationCommand.getMedicationInfoCommand().getDrugName()}">drug name</h3></p>
+                <div class="card-body">
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription}">Date of Prescription</h5>
+                    <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getDateOfPrescription()}">date of prescription</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.author}">Author</h5>
+                    <p class="card-text" th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}">author</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug dosage</h5>
+                    <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getDrugDosage()}">drug dosage</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</h5>
+                    <p class="card-text" th:utext="${medicationCommand.getMedicationInfoCommand().getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">timings</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start}">Start</h5>
+                    <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getStart()}">start</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end}">End</h5>
+                    <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getEnd()}">end</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</h5>
+                    <p class="card-text" style="background-color: azure" th:style="${!medicationCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${medicationCommand.getMedicationInfoCommand().getNotes()}">notes</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</h5>
+                    <th:block th:switch="${medicationCommand.getMedicationInfoCommand().getStatus()}">
+                        <div th:case="'Active'">
+                            <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
                         </div>
-                        <div class="card-body">
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription}">Date of Prescription</h5>
-                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getDateOfPrescription()}">date of prescription</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.author}">Author</h5>
-                            <p class="card-text" th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}">author</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug dosage</h5>
-                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getDrugDosage()}">drug dosage</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</h5>
-                            <p class="card-text" th:utext="${medicationCommand.getMedicationInfoCommand().getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">timings</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start}">Start</h5>
-                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getStart()}">start</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end}">End</h5>
-                            <p class="card-text" th:text="${medicationCommand.getMedicationInfoCommand().getEnd()}">end</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</h5>
-                            <p class="card-text" style="background-color: azure" th:style="${!medicationCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${medicationCommand.getMedicationInfoCommand().getNotes()}">notes</p>
-
-                            <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</h5>
-                            <th:block th:switch="${medicationCommand.getMedicationInfoCommand().getStatus()}">
-                                <div th:case="'Active'">
-                                    <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
-                                </div>
-                                <div th:case="'On-Hold'">
-                                    <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
-                                </div>
-                                <div th:case="'Stopped'">
-                                    <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
-                                </div>
-                            </th:block>
+                        <div th:case="'On-Hold'">
+                            <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
                         </div>
-                    </div>
+                        <div th:case="'Stopped'">
+                            <p class="card-text" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
+                        </div>
+                    </th:block>
                 </div>
             </div>
-            <div class="btn-toolbar float-right" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/view-section}" th:text="#{crud.button.back}">Back</a>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/view-section}" th:text="#{crud.button.back}">Back</a>
         </div>
     </div>
 </div>
