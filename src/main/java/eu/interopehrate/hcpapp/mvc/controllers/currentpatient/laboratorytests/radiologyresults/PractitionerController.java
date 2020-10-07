@@ -11,6 +11,6 @@ public class PractitionerController {
     @GetMapping
     @RequestMapping("/practitioner-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_PRACTITIONER_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_RADIOLOGY_RESULTS_PRACTITIONER_VIEW;
     }
 }

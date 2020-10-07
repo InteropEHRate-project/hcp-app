@@ -11,6 +11,6 @@ public class LaboratoryResultsOtherResultsController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_OTHER_RESULTS_VIEW_SECTION;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_OTHER_RESULTS_VIEW_SECTION;
     }
 }

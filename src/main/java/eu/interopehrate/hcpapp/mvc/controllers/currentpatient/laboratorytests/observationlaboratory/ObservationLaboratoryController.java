@@ -32,6 +32,6 @@ public class ObservationLaboratoryController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", ObservationLaboratoryCommandAnalysis.getTotalPages());
         model.addAttribute("totalItems", ObservationLaboratoryCommandAnalysis.getTotalElements());
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW;
     }
 }

@@ -11,6 +11,6 @@ public class PathologyObservationLaboratoryMediaController {
     @GetMapping
     @RequestMapping("/observation-laboratory-media-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_PATHOLOGY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW;
     }
 }

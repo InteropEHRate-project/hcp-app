@@ -11,6 +11,6 @@ public class ImagingStudyController {
     @GetMapping
     @RequestMapping("/imaging-study-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_IMAGING_STUDY_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_RADIOLOGY_RESULTS_IMAGING_STUDY_VIEW;
     }
 }
