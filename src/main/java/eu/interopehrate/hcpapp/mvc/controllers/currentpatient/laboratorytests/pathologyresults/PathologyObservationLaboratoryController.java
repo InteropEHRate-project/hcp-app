@@ -12,6 +12,6 @@ public class PathologyObservationLaboratoryController {
     @GetMapping
     @RequestMapping("/observation-laboratory-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_OBSERVATION_PATHOLOGY_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_PATHOLOGY_RESULTS_OBSERVATION_PATHOLOGY_VIEW;
     }
 }

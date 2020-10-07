@@ -11,6 +11,6 @@ public class DeviceController {
     @GetMapping
     @RequestMapping("/device-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_DEVICE_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_RADIOLOGY_RESULTS_DEVICE_VIEW;
     }
 }

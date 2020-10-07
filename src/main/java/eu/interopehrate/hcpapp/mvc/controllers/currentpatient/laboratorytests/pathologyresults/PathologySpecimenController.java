@@ -11,6 +11,6 @@ public class PathologySpecimenController {
     @GetMapping
     @RequestMapping("/specimen-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_SPECIMEN_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_PATHOLOGY_RESULTS_SPECIMEN_VIEW;
     }
 }

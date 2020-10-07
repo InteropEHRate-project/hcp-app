@@ -11,6 +11,6 @@ public class PathologyOrganisationLaboratoryController {
     @GetMapping
     @RequestMapping("/organization-laboratory-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_PATHOLOGY_RESULTS_ORGANISATION_LABORATORY_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_RESULTS_PATHOLOGY_RESULTS_ORGANISATION_LABORATORY_VIEW;
     }
 }

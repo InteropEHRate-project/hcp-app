@@ -11,6 +11,6 @@ public class ObservationRadiologyController {
     @GetMapping
     @RequestMapping("/observation-radiology-view")
     public String viewSection() {
-        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_OBSERVATION_VIEW;
+        return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_RADIOLOGY_RESULTS_OBSERVATION_VIEW;
     }
 }
