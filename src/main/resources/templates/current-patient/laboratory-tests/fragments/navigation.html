@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>navigation</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div th:fragment="navigation-top">
+    <div class="m-5"></div>
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.laboratory.tests}">laboratory tests</h3></p>
+    <ul class="nav nav-tabs">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/laboratory-tests/laboratory-results')} ? 'active' : ''"
+               data-toggle="dropdown"
+               href="#"
+               role="button"
+               aria-haspopup="true"
+               aria-expanded="false"
+               th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results}">laboratory results</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"
+                   href="../laboratory-results/observation-laboratory-view.html"
+                   th:href="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">observation laboratory</a>
+                <a class="dropdown-item"
+                   href="../laboratory-results/organization-laboratory-view.html"
+                   th:href="@{/current-patient/laboratory-tests/laboratory-results/organization-laboratory-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.organization.laboratory}">organization laboratory</a>
+                <a class="dropdown-item"
+                   href="../laboratory-results/observation-laboratory-media-view.html"
+                   th:href="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-media-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory.media}">observation laboratory media</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/laboratory-tests/pathology-results')} ? 'active' : ''"
+               data-toggle="dropdown"
+               href="#"
+               role="button"
+               aria-haspopup="true"
+               aria-expanded="false"
+               th:text="#{fragment.current.patient.navigation.left.laboratory.tests.pathology.results}">pathology results</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"
+                   href="../pathology-results/observation-laboratory-view.html"
+                   th:href="@{/current-patient/laboratory-tests/pathology-results/observation-laboratory-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.pathology.results.observation.laboratory}">observation laboratory</a>
+                <a class="dropdown-item"
+                   href="../pathology-results/specimen-view.html"
+                   th:href="@{/current-patient/laboratory-tests/pathology-results/specimen-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.pathology.results.specimen}">specimen</a>
+                <a class="dropdown-item"
+                   href="../pathology-results/organization-laboratory-view.html"
+                   th:href="@{/current-patient/laboratory-tests/pathology-results/organization-laboratory-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.pathology.results.organization.laboratory}">organization laboratory</a>
+                <a class="dropdown-item"
+                   href="../pathology-results/observation-laboratory-media-view.html"
+                   th:href="@{/current-patient/laboratory-tests/pathology-results/observation-laboratory-media-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.pathology.results.observation.laboratory.media}">observation laboratory media</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/laboratory-tests/radiology-results')} ? 'active' : ''"
+               data-toggle="dropdown"
+               href="#"
+               role="button"
+               aria-haspopup="true"
+               aria-expanded="false"
+               th:text="#{fragment.current.patient.navigation.left.laboratory.tests.radiology.results}">Radiology results</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"
+                   href="../radiology-results/observation-radiology-view.html"
+                   th:href="@{/current-patient/laboratory-tests/radiology-results/observation-radiology-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.radiology.results.observation.radiology}">observation radiology</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/device-view.html"
+                   th:href="@{/current-patient/laboratory-tests/radiology-results/device-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.radiology.results.device}">device</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/imaging-study-view.html"
+                   th:href="@{/current-patient/laboratory-tests/radiology-results/imaging-study-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.radiology.results.imaging}">imaging study</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/organization-view.html"
+                   th:href="@{/current-patient/laboratory-tests/radiology-results/organization-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.radiology.results.organization}">organization</a>
+                <a class="dropdown-item"
+                   href="../radiology-results/practitioner-view.html"
+                   th:href="@{/current-patient/laboratory-tests/radiology-results/practitioner-view}"
+                   th:text="#{fragment.current.patient.navigation.left.laboratory.tests.radiology.results.practitioner}">practitioner</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/laboratory-tests/other-results')} ? 'active' : ''"
+               href="../other-results/view-section.html"
+               th:href="@{/current-patient/laboratory-tests/other-results/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.laboratory.tests.other.results}">Other results</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

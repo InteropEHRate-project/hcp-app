@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnosticresults.DoubleKeyHashMap;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.DoubleKeyHashMap;
 import lombok.Builder;
 import lombok.Getter;
 

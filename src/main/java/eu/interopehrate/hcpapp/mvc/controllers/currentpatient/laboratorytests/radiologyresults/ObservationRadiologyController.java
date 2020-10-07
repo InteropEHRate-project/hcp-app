@@ -1,0 +1,16 @@
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests.radiologyresults;
+
+import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/current-patient/laboratory-tests/radiology-results")
+public class ObservationRadiologyController {
+    @GetMapping
+    @RequestMapping("/observation-radiology-view")
+    public String viewSection() {
+        return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_OBSERVATION_VIEW;
+    }
+}

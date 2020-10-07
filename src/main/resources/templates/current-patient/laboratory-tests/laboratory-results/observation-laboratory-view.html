@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.laboratory.tests}">Laboratory tests</title>
+</head>
+<style>
+    .scrollBar {
+        width: auto;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+</style>
+<body>
+<div layout:fragment="content">
+    <div class="m-5"></div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.original}">Initial version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+        </div>
+    </div>
+    <div th:replace="current-patient/laboratory-tests/fragments/navigation::navigation-top">navigation-top</div>
+    <p><h5 th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
+    <div class="scrollBar">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+            <th:block th:each="sample : ${labResultsAnalysisCommand.localDateTimeListWithoutDuplicates()}">
+                <th th:text="${{sample}}"></th>
+            </th:block>
+            </thead>
+
+            <tbody>
+            <tr th:each="an : ${labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(currentPage)}">
+                <div th:with="map=${labResultsAnalysisCommand.valueReturn(currentPage)}">
+                    <td style="background-color: azure" th:style="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{an}}"></td>
+                    <th:block th:each="sample : ${labResultsAnalysisCommand.localDateTimeListWithoutDuplicates()}">
+                        <div th:with="boolVal=${labResultsAnalysisCommand.getResultOfAnalysis(an, sample)}">
+                            <td th:if="${map.get(an,sample) == null}">-</td>
+                            <div th:if="${map.get(an,sample) != null}">
+                                <td th:text="${{map.get(an,sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' " data-toggle="tooltip" data-placement="bottom" th:title="${labResultsAnalysisCommand.getStringForTooltip(an)}"></td>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav th:if = "${totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <a class="page-link"  th:if="${currentPage != i}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${i}}">[[${i}]]</a>
+                    <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                </li>
+                <li class="page-item">
+                    <a class="page-link"  th:if="${currentPage < totalPages}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage + 1}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                    <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"  th:if="${currentPage < totalPages}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${totalPages}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                    <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+</body>
+</html>
