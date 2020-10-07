@@ -53,7 +53,7 @@
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/laboratory-tests')} ? 'active' : ''"
        href="../laboratory-tests/laboratory-results/observation-laboratory-view.html"
        th:href="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}"
-       th:text="#{fragment.current.patient.navigation.left.laboratory.test}">Laboratory Tests</a>
+       th:text="#{fragment.current.patient.navigation.left.laboratory.tests}">Laboratory Tests</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/diagnostic-imaging')} ? 'active' : ''"
        href="../diagnostic-imaging/view-section.html"
