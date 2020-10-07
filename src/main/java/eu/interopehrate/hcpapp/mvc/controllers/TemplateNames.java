@@ -27,9 +27,6 @@ public interface TemplateNames {
     String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/current-medications/prescription/add-info";
     String CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE = "current-patient/current-medications/prescription/update-info";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW = "current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_SPECIMEN_VIEW = "current-patient/laboratory-tests/laboratory-results/specimen-view";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_REQUEST_VIEW = "current-patient/laboratory-tests/laboratory-results/request-view";
-    String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_RESULT_VIEW = "current-patient/laboratory-tests/laboratory-results/result-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_ORGANIZATION_LABORATORY_VIEW = "current-patient/laboratory-tests/laboratory-results/organization-laboratory-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW = "current-patient/laboratory-tests/laboratory-results/observation-laboratory-media-view";
     String CURRENT_PATIENT_DIAGNOSTIC_RESULT_RADIOLOGY_RESULTS_OBSERVATION_VIEW = "current-patient/laboratory-tests/radiology-results/observation-radiology-view";
