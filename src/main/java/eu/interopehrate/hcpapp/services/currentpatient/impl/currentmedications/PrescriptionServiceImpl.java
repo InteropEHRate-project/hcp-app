@@ -29,17 +29,17 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private final HapiToCommandPrescription hapiToCommandPrescription;
     private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
     private EntityToCommandPrescription entityToCommandPrescription = new EntityToCommandPrescription();
-    @Autowired
-    private PrescriptionRepository prescriptionRepository;
+    private final PrescriptionRepository prescriptionRepository;
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
     private CurrentD2DConnection currentD2DConnection;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CurrentD2DConnection currentD2DConnection) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
+        this.prescriptionRepository = prescriptionRepository;
         this.currentD2DConnection = currentD2DConnection;
     }
 

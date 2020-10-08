@@ -18,12 +18,29 @@
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group mr-2" role="group">
             <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-            <a href="#" class="btn btn-primary" th:styleappend="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.original}">Initial version</a>
-            <a href="#" class="btn btn-primary" th:styleappend="${labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/diagnostic-results/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.original}">Initial version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view')}" th:text="#{ips.translate.button.translated}">Translated version</a>
         </div>
     </div>
     <div th:replace="current-patient/laboratory-tests/fragments/navigation::navigation-top">navigation-top</div>
     <p><h5 th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">observation laboratory</h5></p>
+
+    <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+               th:text="#{button.filter}">Filter</button></p>
+    <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
+    <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
+    <div class="collapse" id="collapseExample">
+        <div class="btn-toolbar float-left" role="toolbar">
+            <div class="btn-group btn-group-sm mr-2" role="group">
+                <form th:action="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}" method="get">
+                    <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
+                    <button type="submit" class="btn btn-primary" th:text="#{button.filter}">Filter 🡣</button>
+                    <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="scrollBar">
         <table class="table table-bordered">
             <thead class="thead-light">
@@ -76,6 +93,12 @@
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+</script>
+<script>
+    function customReset()
+    {
+        document.getElementById("txtSearch").value = "";
+    }
 </script>
 
 
