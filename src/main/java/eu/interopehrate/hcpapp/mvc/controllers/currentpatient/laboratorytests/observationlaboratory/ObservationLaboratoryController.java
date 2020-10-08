@@ -28,8 +28,9 @@ public class ObservationLaboratoryController {
     }
 
     @GetMapping
-    @RequestMapping("/observation-laboratory-view/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model, String keyword) {
+    @RequestMapping("/observation-laboratory-view/page/{pageNo}/keyword/{keyword}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model,
+                                @PathVariable(value = "keyword") String keyword) {
         this.observationLaboratoryService.observationLaboratoryInfoCommandAnalysis(keyword).createPagination(pageNo);
         model.addAttribute("labResultsAnalysisCommand", this.observationLaboratoryService.observationLaboratoryInfoCommandAnalysis(keyword));
         model.addAttribute("currentPage", pageNo);

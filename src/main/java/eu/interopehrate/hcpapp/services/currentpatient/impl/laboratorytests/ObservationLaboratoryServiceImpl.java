@@ -43,6 +43,16 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
                 .map(hapiToCommandObservationLaboratory::convert)
                 .collect(Collectors.toList());
 
+        if (keyword == null || keyword.equals("empty") || keyword.trim().equals("")) {
+            observationLaboratoryInfoCommandAnalyses.forEach(ObservationLaboratoryInfoCommandAnalysis::setIsInLimits);
+            this.isFiltered = false;
+            this.isEmpty = false;
+            return ObservationLaboratoryCommandAnalysis.builder()
+                    .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                    .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses)
+                    .build();
+        }
+
         if (Objects.nonNull(keyword) && !keyword.trim().equals("")) {
             //The filtration is happening...
             List<ObservationLaboratoryInfoCommandAnalysis> laboratoryInfoCommandList = new ArrayList<>();
