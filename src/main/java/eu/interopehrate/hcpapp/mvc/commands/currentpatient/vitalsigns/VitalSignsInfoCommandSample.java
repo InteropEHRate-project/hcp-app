@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class VitalSignsInfoCommandSample {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
-    private LocalDateTime localDateOfVitalSign;
+    private LocalDateTime localDateOfVitalSign = LocalDateTime.now();
 
     private double currentValue;
 
