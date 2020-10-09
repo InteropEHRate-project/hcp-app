@@ -49,14 +49,14 @@
             <td th:text="${pr.getDrugDosage()}"></td>
             <td th:utext="${pr.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
             <td>
-                <th:block th:switch="${pr.getStatus()}">
-                    <div th:case="'Active'">
-                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
+                <th:block th:switch="${pr.getStatus().toLowerCase()}">
+                    <div th:case="'active'">
+                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Active</p>
                     </div>
-                    <div th:case="'On-Hold'">
+                    <div th:case="'on hold'">
                         <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
                     </div>
-                    <div th:case="'Stopped'">
+                    <div th:case="'stopped'">
                         <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
                     </div>
                 </th:block>
@@ -122,14 +122,14 @@
             <td th:text="${prUpload.getDrugDosage()}"></td>
             <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
             <td>
-                <th:block th:switch="${prUpload.getStatus()}">
-                    <div th:case="'Active'">
+                <th:block th:switch="${prUpload.getStatus().toLowerCase()}">
+                    <div th:case="'active'">
                         <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
                     </div>
-                    <div th:case="'On-Hold'">
+                    <div th:case="'on-hold'">
                         <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
                     </div>
-                    <div th:case="'Stopped'">
+                    <div th:case="'stopped'">
                         <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
                     </div>
                 </th:block>
