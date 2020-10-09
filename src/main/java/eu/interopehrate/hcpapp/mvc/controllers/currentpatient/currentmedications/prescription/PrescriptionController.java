@@ -27,9 +27,11 @@ public class PrescriptionController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model, HttpSession session, String keyword) throws IOException {
-        session.setAttribute("keyword", keyword);
-        return this.findPaginated(1, 1, "status", "asc", model, keyword);
+    public String viewSection(Model model, HttpSession session, String keywordPrescription) throws IOException {
+        this.prescriptionService.setEmpty(false);
+        this.prescriptionService.setFiltered(false);
+        session.setAttribute("keywordPrescription", keywordPrescription);
+        return this.findPaginated(1, 1, "status", "asc", model, keywordPrescription);
     }
 
     @GetMapping
@@ -82,12 +84,13 @@ public class PrescriptionController {
     }
 
     @GetMapping
-    @RequestMapping("/view-section/page/{pageNo}/{pageNoSEHR}")
+    @RequestMapping("/view-section/page/{pageNo}/{pageNoSEHR}/keywordPrescription/{keywordPrescription}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @PathVariable (value = "pageNoSEHR") int pageNoSEHR,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
-                                Model model, String keyword) throws IOException {
+                                Model model,
+                                @PathVariable(value = "keywordPrescription") String keywordPrescription) throws IOException {
         //PAGE SIZE is hardcoded HERE
         int pageSize = 3;
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize, sortField, sortDir);
@@ -100,7 +103,7 @@ public class PrescriptionController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("listPrescriptions", listPrescriptions);
 
-        PrescriptionCommand prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keyword);
+        PrescriptionCommand prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keywordPrescription);
         List<PrescriptionInfoCommand> listPrescriptionsSEHR = prescriptionCommand.getPageInfoCommand().getContent();
         model.addAttribute("prescriptionCommand", prescriptionCommand);
         model.addAttribute("listPrescriptionsSEHR", listPrescriptionsSEHR);

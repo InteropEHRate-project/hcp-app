@@ -14,7 +14,10 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Prescr
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -44,6 +47,16 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
+    public void setFiltered(boolean filtered) {
+        isFiltered = filtered;
+    }
+
+    @Override
+    public void setEmpty(boolean empty) {
+        isEmpty = empty;
+    }
+
+    @Override
     public boolean isFiltered() {
         return this.isFiltered;
     }
@@ -66,6 +79,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 .map(this.hapiToCommandPrescription::convert)
                 .collect(Collectors.toList());
 
+        if (keyword == null || keyword.equals("empty") || keyword.trim().equals("")) {
+            this.isFiltered = false;
+            this.isEmpty = false;
+            toSortMethodCommand(prescriptions);
+            //Pagination generation
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            Page<PrescriptionInfoCommand> page = createPageFromListOfCommand(prescriptions, pageable, pageNo, pageSize);
+            return PrescriptionCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .pageInfoCommand(page)
+                    .build();
+        }
+
         if (Objects.nonNull(keyword) && !keyword.trim().equals("")) {
             //The filtration is happening...
             List<PrescriptionInfoCommand> prescriptionInfoCommandList = new ArrayList<>();
@@ -84,7 +110,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             toSortMethodCommand(prescriptionInfoCommandList);
             //Pagination generation
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            Page<PrescriptionInfoCommand> page = createPageFromList(prescriptionInfoCommandList, pageable, pageNo, pageSize);
+            Page<PrescriptionInfoCommand> page = createPageFromListOfCommand(prescriptionInfoCommandList, pageable, pageNo, pageSize);
             return PrescriptionCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .pageInfoCommand(page)
@@ -96,7 +122,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
         //Pagination generation
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<PrescriptionInfoCommand> page = createPageFromList(prescriptions, pageable, pageNo, pageSize);
+        Page<PrescriptionInfoCommand> page = createPageFromListOfCommand(prescriptions, pageable, pageNo, pageSize);
         return PrescriptionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .pageInfoCommand(page)
@@ -188,12 +214,37 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {
-        Sort sort = Sort.by(sortField).ascending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.prescriptionRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<PrescriptionEntity> listOfPrescription = this.prescriptionRepository.findAll();
+        toSortMethodEntity(listOfPrescription);
+        return createPageFromListofEntity(listOfPrescription, pageable, pageNo, pageSize);
     }
 
     private static void toSortMethodCommand(List<PrescriptionInfoCommand> med) {
+        med.sort((o1, o2) -> {
+            if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
+                return -1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+                return -1;
+            }
+            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Stopped")) {
+                return -1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
+                return 1;
+            }
+            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
+                return 1;
+            }
+            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Active")) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+    private static void toSortMethodEntity(List<PrescriptionEntity> med) {
         med.sort((o1, o2) -> {
             if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
                 return -1;
@@ -285,7 +336,17 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         return result;
     }
 
-    private static Page<PrescriptionInfoCommand> createPageFromList(List<PrescriptionInfoCommand> list, Pageable pageable, int pageNo, int pageSize) {
+    private static Page<PrescriptionInfoCommand> createPageFromListOfCommand(List<PrescriptionInfoCommand> list, Pageable pageable, int pageNo, int pageSize) {
+        try {
+            int index = (pageNo - 1) * pageSize;
+            return new PageImpl<>(list.subList(index, index + pageSize), pageable, list.size());
+        } catch (IndexOutOfBoundsException ignored) {
+            int index = (pageNo - 1) * pageSize;
+            return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
+        }
+    }
+
+    private static Page<PrescriptionEntity> createPageFromListofEntity(List<PrescriptionEntity> list, Pageable pageable, int pageNo, int pageSize) {
         try {
             int index = (pageNo - 1) * pageSize;
             return new PageImpl<>(list.subList(index, index + pageSize), pageable, list.size());

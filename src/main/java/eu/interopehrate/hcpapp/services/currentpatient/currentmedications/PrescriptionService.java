@@ -11,6 +11,10 @@ import java.io.IOException;
 
 public interface PrescriptionService {
 
+    void setFiltered(boolean filtered);
+
+    void setEmpty(boolean empty);
+
     boolean isFiltered();
 
     boolean isEmpty();

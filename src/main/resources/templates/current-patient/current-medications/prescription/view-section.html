@@ -25,7 +25,7 @@
         <div class="btn-toolbar float-left" role="toolbar">
             <div class="btn-group btn-group-sm mr-2" role="group">
                 <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
-                    <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
+                    <input id="txtSearch" type="text" name="keywordPrescription" th:value="${session.keywordPrescription}">
                     <button type="submit" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
                     <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>
                 </form>
@@ -86,20 +86,18 @@
                    th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItemsSEHR}">Total Rows: totalItems</a>
             </li>
             <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPagesSEHR)}">
-                <a class="page-link"  th:if="${currentPageSEHR != i}"
-                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <a class="page-link"  th:if="${currentPageSEHR != i && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${i} + '/keywordPrescription/' + ${session.keywordPrescription} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <a class="page-link"  th:if="${(currentPageSEHR != i && session.keywordPrescription == null) || (currentPageSEHR != i && session.keywordPrescription.trim().equals(''))}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${i} + '/keywordPrescription/empty' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                 <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPageSEHR != i}">[[${i}]]</span>  &nbsp; &nbsp;
             </li>
             <li class="page-item">
-                <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
-                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${currentPageSEHR + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${currentPageSEHR + 1} + '/keywordPrescription/' + ${session.keywordPrescription} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                <a class="page-link"  th:if="${(currentPageSEHR < totalPagesSEHR && session.keywordPrescription == null) || (currentPageSEHR < totalPagesSEHR && session.keywordPrescription.trim().equals(''))}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${currentPageSEHR + 1} + '/keywordPrescription/empty' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
                 <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
             </li>
             <li class="page-item">
-                <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR}"
-                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${totalPagesSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                <a class="page-link"  th:if="${currentPageSEHR < totalPagesSEHR && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${totalPagesSEHR} + '/keywordPrescription/' + ${session.keywordPrescription} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                <a class="page-link"  th:if="${(currentPageSEHR < totalPagesSEHR && session.keywordPrescription == null) || (currentPageSEHR < totalPagesSEHR && session.keywordPrescription.trim().equals(''))}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage} + '/' + ${totalPagesSEHR} + '/keywordPrescription/empty' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
                 <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPageSEHR < totalPagesSEHR}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
             </li>
         </ul>
@@ -167,20 +165,18 @@
                 <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
             </li>
             <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                <a class="page-link"  th:if="${currentPage != i}"
-                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <a class="page-link"  th:if="${currentPage != i && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <a class="page-link"  th:if="${(currentPage != i && session.keywordPrescription == null) || (currentPage != i && session.keywordPrescription.trim().equals(''))}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                 <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
             </li>
             <li class="page-item">
-                <a class="page-link"  th:if="${currentPage < totalPages}"
-                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                <a class="page-link"  th:if="${currentPage < totalPages && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                <a class="page-link"  th:if="${(currentPage < totalPages && session.keywordPrescription == null) || (currentPage < totalPages && session.keywordPrescription.trim().equals(''))}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
                 <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
             </li>
             <li class="page-item">
-                <a class="page-link"  th:if="${currentPage < totalPages}"
-                   th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                   th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                <a class="page-link"  th:if="${currentPage < totalPages && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                <a class="page-link"  th:if="${(currentPage < totalPages && session.keywordPrescription == null) || (currentPage < totalPages && session.keywordPrescription.trim().equals(''))}" th:href="@{'/current-patient/current-medications/prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
                 <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
             </li>
         </ul>
@@ -203,11 +199,5 @@
     </div>
 </div>
 
-<script>
-    function customReset()
-    {
-        document.getElementById("txtSearch").value = "";
-    }
-</script>
 </body>
 </html>
