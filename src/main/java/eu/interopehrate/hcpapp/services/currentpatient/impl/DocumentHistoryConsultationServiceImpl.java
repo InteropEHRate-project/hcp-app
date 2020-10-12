@@ -24,6 +24,8 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     private final CurrentPatient currentPatient;
     private final Bundle docHistoryConsult;
     private final HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation;
+    private boolean isFiltered = false;
+    private boolean isEmpty = false;
 
     @SneakyThrows
     public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation) {
@@ -36,6 +38,16 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
         IParser parser = FhirContext.forR4().newJsonParser();
         this.docHistoryConsult = parser.parseResource(Bundle.class, lineReadtest);
         this.currentPatient.initDocHistoryConsultation(this.docHistoryConsult);
+    }
+
+    @Override
+    public boolean isFiltered() {
+        return isFiltered;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return isEmpty;
     }
 
     @Override
@@ -52,10 +64,20 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
                 .collect(Collectors.toList());
 
         if (speciality.equalsIgnoreCase("all")) {
+            this.isFiltered = false;
+            this.isEmpty = false;
             return DocumentHistoryConsultationCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .documentHistoryConsultationInfoCommandList(docHistoryConsultationCommands)
                     .build();
+        }
+        this.isEmpty = false;
+        if (!docHistoryConsultationCommands.isEmpty() && filter(docHistoryConsultationCommands, speciality).isEmpty()) {
+            this.isEmpty = true;
+            this.isFiltered = false;
+        }
+        if (!docHistoryConsultationCommands.isEmpty() && !filter(docHistoryConsultationCommands, speciality).isEmpty()) {
+            this.isFiltered = true;
         }
         return DocumentHistoryConsultationCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())

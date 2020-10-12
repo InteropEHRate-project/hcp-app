@@ -28,6 +28,8 @@
             <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all}" th:text="#{button.reset}">RESET</a>
         </div>
     </div>
+    <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
+    <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
     <br>
     <table class="table table-bordered">
         <thead class="thead-light">
