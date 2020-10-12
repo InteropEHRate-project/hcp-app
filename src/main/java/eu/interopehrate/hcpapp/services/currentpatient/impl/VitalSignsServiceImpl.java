@@ -47,7 +47,6 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         IParser parser = FhirContext.forR4().newJsonParser();
         this.vitalSignsBundle = parser.parseResource(Bundle.class, lineReadtest);
         this.currentPatient.initVitalSigns(vitalSignsBundle);
-
     }
 
     @Override
@@ -57,7 +56,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public VitalSignsCommand vitalSignsCommand() {
-
+        this.currentPatient.setVitalSignsBundle(vitalSignsBundle);
         var vitalSigns = vitalSignsBundle.getEntry()
                 .stream()
                 .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
