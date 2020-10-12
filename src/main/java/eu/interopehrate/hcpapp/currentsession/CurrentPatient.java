@@ -57,6 +57,10 @@ public class CurrentPatient {
         this.vitalSignsBundle = vitalSignsBundle;
     }
 
+    public void setVitalSignsTranslated(Bundle vitalSignsTranslated) {
+        this.vitalSignsTranslated = vitalSignsTranslated;
+    }
+
     public Bundle getPrescriptionTranslated() {
         return prescriptionTranslated;
     }

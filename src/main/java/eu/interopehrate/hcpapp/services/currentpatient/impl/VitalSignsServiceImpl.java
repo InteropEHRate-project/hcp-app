@@ -11,6 +11,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
+import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,12 +33,15 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private final CommandToEntityVitalSigns entityToVitalSigns;
     private CurrentD2DConnection currentD2DConnection;
     private Bundle vitalSignsBundle;
+    private final TranslateService translateService;
 
-    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection) throws IOException {
+    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, TranslateService translateService) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.entityToVitalSigns = entityToVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
+        this.translateService = translateService;
+
         File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
         FileInputStream file = new FileInputStream(json);
         String lineReadtest = readFromInputStream(file);
@@ -56,7 +57,8 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public VitalSignsCommand vitalSignsCommand() {
-        this.currentPatient.setVitalSignsBundle(vitalSignsBundle);
+        this.currentPatient.setVitalSignsBundle(this.vitalSignsBundle);
+        this.currentPatient.setVitalSignsTranslated(this.translateService.translate(this.vitalSignsBundle, Locale.ITALY, Locale.UK));
         var vitalSigns = vitalSignsBundle.getEntry()
                 .stream()
                 .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
