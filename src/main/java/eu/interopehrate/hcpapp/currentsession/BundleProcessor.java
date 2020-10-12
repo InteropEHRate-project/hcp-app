@@ -92,4 +92,13 @@ public class BundleProcessor {
                 .map(Media.class::cast)
                 .collect(Collectors.toList());
     }
+
+    public List<DocumentReference> docHistoryConsultationList() {
+        return this.bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.DocumentReference))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(DocumentReference.class::cast)
+                .collect(Collectors.toList());
+    }
 }

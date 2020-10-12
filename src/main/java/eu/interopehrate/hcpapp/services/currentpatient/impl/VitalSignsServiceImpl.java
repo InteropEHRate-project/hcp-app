@@ -77,18 +77,6 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .build();
     }
 
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
-    }
-
     @Override
     public void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand) {
         VitalSignsEntity vitalSignsEntity = this.entityToVitalSigns.convert(vitalSignsInfoCommand);
@@ -183,5 +171,17 @@ public class VitalSignsServiceImpl implements VitalSignsService {
             default:
                 return -1;
         }
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 }

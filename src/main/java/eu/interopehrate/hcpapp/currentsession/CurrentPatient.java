@@ -34,6 +34,8 @@ public class CurrentPatient {
     private Bundle imageReportTranslated;
     private Bundle vitalSignsBundle;
     private Bundle vitalSignsTranslated;
+    private Bundle docHistoryConsult;
+    private Bundle docHistoryConsultTranslated;
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
@@ -131,6 +133,16 @@ public class CurrentPatient {
         }
     }
 
+    public void initDocHistoryConsultation(Bundle docHistoryConsultation) {
+        try {
+            this.docHistoryConsult = docHistoryConsultation;
+            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsultation, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.docHistoryConsultTranslated = this.docHistoryConsult;
+        }
+    }
+
     public void reset() {
         this.displayTranslatedVersion = Boolean.TRUE;
         this.patient = null;
@@ -145,6 +157,8 @@ public class CurrentPatient {
         this.vitalSignsTranslated = null;
         this.imageReport = null;
         this.imageReportTranslated = null;
+        this.docHistoryConsult = null;
+        this.docHistoryConsultTranslated = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
@@ -256,6 +270,22 @@ public class CurrentPatient {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(vitalSignsBundle).vitalSignsList();
+            }
+        }
+    }
+
+    public List<DocumentReference> docHistoryConsultationList() {
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.docHistoryConsultTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.docHistoryConsultTranslated).docHistoryConsultationList();
+            }
+        } else {
+            if (Objects.isNull(this.docHistoryConsult)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList();
             }
         }
     }

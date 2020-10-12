@@ -1,50 +1,65 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandDocHistoryConsultation;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
+import lombok.SneakyThrows;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.DocumentReference;
+import org.hl7.fhir.r4.model.ResourceType;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryConsultationService {
-    private CurrentPatient currentPatient;
-    private List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
-    private DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand1 = new DocumentHistoryConsultationInfoCommand();
-    private DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand2 = new DocumentHistoryConsultationInfoCommand();
+    private final CurrentPatient currentPatient;
+    private final Bundle docHistoryConsult;
+    private final HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation;
 
-    public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient) {
+    @SneakyThrows
+    public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation) {
         this.currentPatient = currentPatient;
+        this.hapiToCommandDocHistoryConsultation = hapiToCommandDocHistoryConsultation;
 
-        this.documentHistoryConsultationInfoCommand1.setLocalDateTimeHistoryConsultation(LocalDateTime.of(2020, 8, 2, 10, 51));
-        this.documentHistoryConsultationInfoCommand1.setSpeciality("Cardiology");
-        this.documentHistoryConsultationInfoCommand1.setLocationHospital("Bucharest");
-        this.documentHistoryConsultationInfoCommand1.setExam("Visit");
-
-        this.documentHistoryConsultationInfoCommand2.setLocalDateTimeHistoryConsultation(LocalDateTime.of(2020, 6, 5, 10, 31));
-        this.documentHistoryConsultationInfoCommand2.setSpeciality("Psychiatry");
-        this.documentHistoryConsultationInfoCommand2.setLocationHospital("Timisoara");
-        this.documentHistoryConsultationInfoCommand2.setExam("Visit");
-
-        this.documentHistoryConsultationInfoCommands.add(this.documentHistoryConsultationInfoCommand1);
-        this.documentHistoryConsultationInfoCommands.add(this.documentHistoryConsultationInfoCommand2);
+        File json = new ClassPathResource("MedicalDocumentReferenceExampleBundle.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        this.docHistoryConsult = parser.parseResource(Bundle.class, lineReadtest);
+        this.currentPatient.initDocHistoryConsultation(this.docHistoryConsult);
     }
 
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
+        var docHistoryConsultations = this.docHistoryConsult.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.DocumentReference))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(DocumentReference.class::cast)
+                .collect(Collectors.toList());
+
+        var docHistoryConsultationCommands = docHistoryConsultations.stream()
+                .map(this.hapiToCommandDocHistoryConsultation::convert)
+                .collect(Collectors.toList());
+
         if (speciality.equalsIgnoreCase("all")) {
             return DocumentHistoryConsultationCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .documentHistoryConsultationInfoCommandList(documentHistoryConsultationInfoCommands)
+                    .documentHistoryConsultationInfoCommandList(docHistoryConsultationCommands)
                     .build();
         }
         return DocumentHistoryConsultationCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .documentHistoryConsultationInfoCommandList(filter(this.documentHistoryConsultationInfoCommands, speciality))
+                .documentHistoryConsultationInfoCommandList(filter(docHistoryConsultationCommands, speciality))
                 .build();
     }
 
@@ -56,5 +71,17 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
             }
         });
         return documentHistoryConsultationInfoCommands;
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 }
