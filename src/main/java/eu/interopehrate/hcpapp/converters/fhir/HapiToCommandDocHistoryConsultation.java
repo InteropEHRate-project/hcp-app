@@ -7,6 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
+import java.util.Base64;
 
 @Component
 public class HapiToCommandDocHistoryConsultation implements Converter<DocumentReference, DocumentHistoryConsultationInfoCommand> {
@@ -37,6 +38,20 @@ public class HapiToCommandDocHistoryConsultation implements Converter<DocumentRe
                 && source.getContext().getPracticeSetting().hasCoding() && source.getContext().getPracticeSetting().getCoding().get(0).hasDisplay()) {
             documentHistoryConsultationInfoCommand.setSpeciality(source.getContext().getPracticeSetting().getCoding().get(0).getDisplay());
         }
+        if (source.hasContent() && source.getContent().get(0).hasAttachment()
+                && source.getContent().get(0).getAttachment().hasContentType()
+                && source.getContent().get(0).getAttachment().hasData()) {
+            documentHistoryConsultationInfoCommand.setDataType(source.getContent().get(0).getAttachment().getContentType());
+            documentHistoryConsultationInfoCommand.setDataContent(dataBase64(source.getContent().get(0).getAttachment().getData()));
+            String dataToDisplay = String.join(",", "data:"
+                    + documentHistoryConsultationInfoCommand.getDataType() + ";base64", documentHistoryConsultationInfoCommand.getDataContent());
+            documentHistoryConsultationInfoCommand.setDataCompleteText(dataToDisplay);
+            documentHistoryConsultationInfoCommand.setData(source.getContent().get(0).getAttachment().getData());
+        }
         return documentHistoryConsultationInfoCommand;
+    }
+
+    private static String dataBase64(byte[] picture) {
+        return Base64.getEncoder().encodeToString(picture);
     }
 }

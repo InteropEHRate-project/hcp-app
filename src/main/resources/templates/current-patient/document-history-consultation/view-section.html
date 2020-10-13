@@ -48,8 +48,8 @@
             <td th:text="${{hc.getExam()}}"></td>
             <td>
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary"
-                       th:text="#{button.open}">Open</a>
+<!--                    <a class="btn btn-primary" th:href="@{'/current-patient/document-history-consultation/pdf/' + ${hc.getData()}}" th:text="#{button.open}">Open</a>-->
+                    <a href="#" class="btn btn-primary" target="_blank" th:text="#{button.open}">Open</a>
                 </div>
             </td>
         </tr>
