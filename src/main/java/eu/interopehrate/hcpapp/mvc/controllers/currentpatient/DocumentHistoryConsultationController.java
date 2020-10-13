@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import org.springframework.stereotype.Controller;
@@ -31,10 +32,13 @@ public class DocumentHistoryConsultationController {
     }
 
     @GetMapping
-    @RequestMapping("/pdf/{data}")
-    public OutputStream pdf(@PathVariable(value = "data") byte[] data) throws IOException {
+    @RequestMapping("/pdf/{speciality}/{exam}/{date}")
+    public OutputStream pdf(@PathVariable(value = "speciality") String speciality,
+                            @PathVariable(value = "exam") String exam,
+                            @PathVariable(value = "date")String date) throws IOException {
         OutputStream out = new FileOutputStream("documentHistoryConsultation.pdf");
-        out.write(data);
+        DocumentHistoryConsultationInfoCommand doc = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).find(exam, date);
+        out.write(doc.getData());
         out.close();
         return out;
     }

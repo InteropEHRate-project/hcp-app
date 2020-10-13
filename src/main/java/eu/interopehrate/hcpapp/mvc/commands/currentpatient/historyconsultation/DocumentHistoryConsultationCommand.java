@@ -10,4 +10,13 @@ import java.util.List;
 public class DocumentHistoryConsultationCommand {
     private Boolean displayTranslatedVersion;
     private List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommandList;
+
+    public DocumentHistoryConsultationInfoCommand find(String exam, String date) {
+        for (DocumentHistoryConsultationInfoCommand doc : this.documentHistoryConsultationInfoCommandList) {
+            if (doc.getExam().equals(exam) && doc.getDate().toString().equals(date)) {
+                return doc;
+            }
+        }
+        return null;
+    }
 }
