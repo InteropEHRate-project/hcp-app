@@ -3,14 +3,13 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandDocHistoryConsultation;
+import eu.interopehrate.hcpapp.currentsession.BundleProcessor;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import lombok.SneakyThrows;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.DocumentReference;
-import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -52,14 +51,8 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
 
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
-        var docHistoryConsultations = this.docHistoryConsult.getEntry()
+        var docHistoryConsultationCommands = new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.DocumentReference))
-                .map(Bundle.BundleEntryComponent::getResource)
-                .map(DocumentReference.class::cast)
-                .collect(Collectors.toList());
-
-        var docHistoryConsultationCommands = docHistoryConsultations.stream()
                 .map(this.hapiToCommandDocHistoryConsultation::convert)
                 .collect(Collectors.toList());
 

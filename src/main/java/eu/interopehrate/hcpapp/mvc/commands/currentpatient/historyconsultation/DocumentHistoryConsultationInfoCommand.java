@@ -24,5 +24,14 @@ public class DocumentHistoryConsultationInfoCommand {
     private String exam;
     @NotEmpty
     @NotNull
+    private String dataType;
+    @NotEmpty
+    @NotNull
+    private String dataContent;
+    @NotEmpty
+    @NotNull
+    private String dataCompleteText;
+    @NotEmpty
+    @NotNull
     private byte[] data;
 }
