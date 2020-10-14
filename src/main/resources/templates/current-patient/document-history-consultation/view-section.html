@@ -48,9 +48,9 @@
             <td th:text="${{hc.getExam()}}"></td>
             <td>
                 <div class="btn-group" role="group">
-<!--                    <a class="btn btn-primary" th:href="@{'/current-patient/document-history-consultation/pdf/' + ${hc.getData()}}" th:text="#{button.open}">Open</a>-->
                     <a class="btn btn-primary" target="_blank"
-                       th:href="@{'/current-patient/document-history-consultation/pdf/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}" th:text="#{button.open}">Open</a>
+                       th:href="@{'/current-patient/document-history-consultation/file-view/show-document/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
+                       th:text="#{button.open}">Open</a>
                 </div>
             </td>
         </tr>
