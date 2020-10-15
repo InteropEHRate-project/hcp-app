@@ -52,11 +52,4 @@ public class VitalSignsController {
         vitalSignsService.insertVitalSigns(vitalSignsInfoCommand);
         return "redirect:/current-patient/visit-data/vital-signs/view-section";
     }
-
-    @GetMapping
-    @RequestMapping("/sendToSehr")
-    public String sendToSehr() throws IOException {
-        this.vitalSignsService.callVitalSigns();
-        return "redirect:/current-patient/visit-data/vital-signs/view-section";
-    }
 }

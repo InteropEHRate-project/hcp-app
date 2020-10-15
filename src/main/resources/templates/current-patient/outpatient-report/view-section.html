@@ -66,9 +66,8 @@
         </tbody>
     </table>
 
-    <p th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}"><br>
+    <p th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
     <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h5></p>
-
     <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
         <thead class="thead-light">
         <tr>
@@ -93,6 +92,14 @@
         </tr>
         </tbody>
     </table>
+
+    <br>
+    <div class="btn-toolbar justify-content-center" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/outpatient-report/sendToSehr}"
+               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+        </div>
+    </div>
 
 </div>
 </body>

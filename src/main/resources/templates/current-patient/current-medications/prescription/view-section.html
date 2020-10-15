@@ -184,17 +184,7 @@
 
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
-            <a href="#" class="btn btn-primary"
-               th:href="@{/current-patient/current-medications/prescription/open-add-page}"
-               th:text="#{crud.button.add}">Add</a>
-        </div>
-    </div>
-
-    <div class="btn-toolbar float-left" role="toolbar" th:if="${(!listPrescriptions.isEmpty()) && (prescriptionService.getConnectedThread() != null)}">
-        <div class="btn-group" role="group">
-            <a href="#" class="btn btn-outline-primary"
-               th:href="@{/current-patient/current-medications/prescription/sendToSehr}"
-               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/open-add-page}" th:text="#{crud.button.add}">Add</a>
         </div>
     </div>
 </div>

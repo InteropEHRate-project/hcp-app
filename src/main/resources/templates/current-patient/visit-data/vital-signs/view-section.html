@@ -82,11 +82,6 @@
                 <a href="#" class="btn btn-primary" th:href="@{/current-patient/visit-data/vital-signs/open-add-page}" th:text="#{crud.button.add}">Add</a>
             </div>
         </div>
-        <div class="btn-toolbar float-left" role="toolbar" th:if="${(!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()) && (vitalSignsService.getConnectedThread() != null)}">
-            <div class="btn-group" role="group">
-                <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/visit-data/vital-signs/sendToSehr}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.send.to.sehr}"></a>
-            </div>
-        </div>
     </div>
 </div>
 <script>
