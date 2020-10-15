@@ -11,6 +11,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.Pr
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,8 +211,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         }
     }
 
+    @SneakyThrows
     @Override
-    public void sendPrescription(Bundle medicationRequest) throws IOException {
+    public void sendPrescription(Bundle medicationRequest) {
         this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
         this.prescriptionRepository.deleteAll();

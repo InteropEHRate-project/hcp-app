@@ -12,6 +12,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSigns
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,8 +110,9 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         }
     }
 
+    @SneakyThrows
     @Override
-    public void sendVitalSigns(Bundle vitalSigns) throws IOException {
+    public void sendVitalSigns(Bundle vitalSigns) {
         this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
         this.vitalSignsInfoCommandsList.clear();
