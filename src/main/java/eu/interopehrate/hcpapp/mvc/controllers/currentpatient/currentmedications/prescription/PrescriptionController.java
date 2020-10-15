@@ -31,7 +31,7 @@ public class PrescriptionController {
         this.prescriptionService.setEmpty(false);
         this.prescriptionService.setFiltered(false);
         session.setAttribute("keywordPrescription", keywordPrescription);
-        return this.findPaginated(1, 1, "status", "asc", model, keywordPrescription);
+        return this.findPaginated(1, 1, keywordPrescription, model);
     }
 
     @GetMapping
@@ -87,20 +87,16 @@ public class PrescriptionController {
     @RequestMapping("/view-section/page/{pageNo}/{pageNoSEHR}/keywordPrescription/{keywordPrescription}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @PathVariable (value = "pageNoSEHR") int pageNoSEHR,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model,
-                                @PathVariable(value = "keywordPrescription") String keywordPrescription) throws IOException {
+                                @PathVariable(value = "keywordPrescription") String keywordPrescription,
+                                Model model) throws IOException {
         //PAGE SIZE is hardcoded HERE
         int pageSize = 3;
-        Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
         List<PrescriptionEntity> listPrescriptions = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
         model.addAttribute("listPrescriptions", listPrescriptions);
 
         PrescriptionCommand prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keywordPrescription);

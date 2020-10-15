@@ -47,6 +47,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
+    public PrescriptionRepository getPrescriptionRepository() {
+        return prescriptionRepository;
+    }
+
+    @Override
     public void setFiltered(boolean filtered) {
         isFiltered = filtered;
     }
@@ -213,7 +218,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    public Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {
+    public Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         List<PrescriptionEntity> listOfPrescription = this.prescriptionRepository.findAll();
         toSortMethodEntity(listOfPrescription);
