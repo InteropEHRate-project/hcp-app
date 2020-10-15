@@ -10,6 +10,7 @@
 <div layout:fragment="content">
     <br>
     <div class="row justify-content-center">
+        <h5><p th:if="${imageCommand.getImageInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.no.data.available}">No Data available</p></h5>
         <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
             <h5><td th:text="${image.getDateOfExam()} + ' ' + ${image.getName()}"></td></h5>
             <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
