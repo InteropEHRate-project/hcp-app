@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.documenthistoryconsultation.DocumentHistoryConsultationController;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

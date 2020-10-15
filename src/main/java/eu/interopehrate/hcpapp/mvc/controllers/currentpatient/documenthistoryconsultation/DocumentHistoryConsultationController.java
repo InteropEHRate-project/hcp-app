@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.documenthistoryconsultation;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
