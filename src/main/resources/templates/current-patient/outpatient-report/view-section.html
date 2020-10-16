@@ -87,12 +87,14 @@
     </table>
 
     <br>
-    <div class="btn-toolbar justify-content-center" role="toolbar">
+    <div class="btn-toolbar justify-content-center" role="toolbar"
+         th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) || (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/outpatient-report/sendToSehr}"
                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
         </div>
     </div>
+    <p><h5 th:if="${(prescriptionService.getConnectedThread() == null) || (listPrescriptions.isEmpty() && vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5></p>
 
 </div>
 </body>
