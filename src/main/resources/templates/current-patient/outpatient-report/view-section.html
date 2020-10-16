@@ -20,7 +20,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
-            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.actions}">Actions</th>
+            <th th:text="#{button.action}">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -53,13 +53,6 @@
                             dateOfPrescription=${{prUpload.getDateOfPrescription()}},
                             start=${{prUpload.getStart()}},
                             end=${{prUpload.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
-
-                    <a href="#"
-                       th:href="@{/current-patient/current-medications/prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"
-                       th:text="#{crud.button.edit}">Edit</a>
-                    <a href="#"
-                       th:href="@{/current-patient/current-medications/prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"
-                       th:text="#{crud.button.delete}">Delete</a>
                 </div>
             </td>
         </tr>
