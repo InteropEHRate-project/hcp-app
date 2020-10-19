@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns;
 
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.DoubleKeyHashMap;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import java.util.List;
 public class VitalSignsCommand {
     private Boolean displayTranslatedVersion;
     private List<VitalSignsInfoCommand> vitalSignsInfoCommands;
-    private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
     public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
         List<LocalDateTime> withDuplicates = new ArrayList<>();

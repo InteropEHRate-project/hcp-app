@@ -16,10 +16,57 @@
             border-radius: 0px !important;
         }
     </style>
+
     <script>
-        function selectFunction() {
-            document.getElementById("analysisName").select();
-        }
+        $(document).ready(function () {
+            var unit = "";
+            document.getElementById("analysisName").addEventListener("change", test);
+
+            function test() {
+                switch (document.getElementById("analysisName").value) {
+                    case "FC":
+                        unit = "bpm";
+                        break;
+                    case "FR":
+                        unit = "atti/min";
+                        break;
+                    case "Sat Oxy":
+                        unit = "%";
+                        break;
+                    case "Weight":
+                        unit = "kg";
+                        break;
+                    case "Heart rate":
+                        unit = "/min";
+                        break;
+                    case "SpO2":
+                        unit = "%";
+                        break;
+                    case "Mean Arterial pressure":
+                        unit = "mm[Hg]";
+                        break;
+                    case "Body height":
+                        unit = "cm";
+                        break;
+                    case "Creatinine":
+                        unit = "mg/dL";
+                        break;
+                    case "Systolic Blood Pressure":
+                        unit = "mmHg";
+                        break;
+                    case "Body Weight":
+                        unit = "kg";
+                        break;
+                    case "Diastolic Blood Pressure":
+                        unit = "mmHg";
+                        break;
+                    case "Glucose [Mass/volume] in Serum or Plasma":
+                        unit = "mg/dL";
+                        break;
+                }
+                document.getElementById("unitOfMeasurement").setAttribute("value", unit);
+            }
+        })
     </script>
 </head>
 <body>
@@ -70,7 +117,7 @@
 
             <div class="col-md-6">
                 <label for="unitOfMeasurement" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.unit}">Unit of Measurement</label><br>
-                <input id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
+                <input style="pointer-events: none; opacity: 0.6; background-color: lightgray" id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('vitalSignsInfoCommandSample.unitOfMeasurement')}" th:text="${err}">err</li>

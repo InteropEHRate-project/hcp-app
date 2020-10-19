@@ -40,7 +40,6 @@ public class VitalSignsController {
     public String openAddPage(Model model) {
         model.addAttribute("vitalSignsInfoCommand", new VitalSignsInfoCommand());
         model.addAttribute("vitalSignsTypes", this.vitalSignsTypesRepository.findAll());
-        model.addAttribute("correlations", this.vitalSignsService.correlations());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
     }
 
