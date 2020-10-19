@@ -32,6 +32,7 @@ public class VitalSignsController {
         model.addAttribute("vitalSigns", vitalSignsService.vitalSignsCommand());
         model.addAttribute("vitalSignsUpload", vitalSignsService.vitalSignsUpload());
         model.addAttribute("vitalSignsService", vitalSignsService.getCurrentD2DConnection());
+        model.addAttribute("correlations",vitalSignsService.vitalSignsUpload().correlations());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION;
     }
 
