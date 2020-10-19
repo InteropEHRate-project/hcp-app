@@ -32,7 +32,6 @@ public class VitalSignsController {
         model.addAttribute("vitalSigns", vitalSignsService.vitalSignsCommand());
         model.addAttribute("vitalSignsUpload", vitalSignsService.vitalSignsUpload());
         model.addAttribute("vitalSignsService", vitalSignsService.getCurrentD2DConnection());
-        model.addAttribute("correlations",vitalSignsService.vitalSignsUpload().correlations());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION;
     }
 
@@ -41,6 +40,7 @@ public class VitalSignsController {
     public String openAddPage(Model model) {
         model.addAttribute("vitalSignsInfoCommand", new VitalSignsInfoCommand());
         model.addAttribute("vitalSignsTypes", this.vitalSignsTypesRepository.findAll());
+        model.addAttribute("correlations", this.vitalSignsService.correlations());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
     }
 

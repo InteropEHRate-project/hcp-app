@@ -1,13 +1,15 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns;
 
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.DoubleKeyHashMap;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 @Builder
 @Getter
@@ -45,13 +47,5 @@ public class VitalSignsCommand {
             }
         })));
         return mapPair;
-    }
-
-    public HashMap correlations() {
-        HashMap<String, String> correlationUnitWithType = new HashMap<>();
-        for (VitalSignsTypesEntity entity : vitalSignsTypesRepository.findAll()) {
-            correlationUnitWithType.put(entity.getName(), entity.getUcum());
-        }
-        return correlationUnitWithType;
     }
 }

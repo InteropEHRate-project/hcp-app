@@ -7,7 +7,9 @@ import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
@@ -35,13 +37,15 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private CurrentD2DConnection currentD2DConnection;
     private Bundle vitalSignsBundle;
     private final TranslateService translateService;
+    private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
-    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, TranslateService translateService) throws IOException {
+    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, TranslateService translateService, VitalSignsTypesRepository vitalSignsTypesRepository) throws IOException {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.entityToVitalSigns = entityToVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
         this.translateService = translateService;
+        this.vitalSignsTypesRepository = vitalSignsTypesRepository;
 
         File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
         FileInputStream file = new FileInputStream(json);
@@ -117,6 +121,15 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         log.info("VitalSigns sent to S-EHR");
         this.vitalSignsInfoCommandsList.clear();
         this.vitalSignsRepository.deleteAll();
+    }
+
+    @Override
+    public HashMap correlations() {
+        HashMap<String, String> correlationUnitWithType = new HashMap<>();
+        for (VitalSignsTypesEntity entity : this.vitalSignsTypesRepository.findAll()) {
+            correlationUnitWithType.put(entity.getName(), entity.getUcum());
+        }
+        return correlationUnitWithType;
     }
 
     private static Observation createVitalSignsFromEntity(VitalSignsEntity vitalSignsEntity) {
