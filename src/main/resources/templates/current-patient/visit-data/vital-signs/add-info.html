@@ -20,9 +20,9 @@
     <script>
         $(document).ready(function () {
             var unit = "";
-            document.getElementById("analysisName").addEventListener("change", test);
+            document.getElementById("analysisName").addEventListener("change", setUnit);
 
-            function test() {
+            function setUnit() {
                 switch (document.getElementById("analysisName").value) {
                     case "FC":
                         unit = "bpm";
