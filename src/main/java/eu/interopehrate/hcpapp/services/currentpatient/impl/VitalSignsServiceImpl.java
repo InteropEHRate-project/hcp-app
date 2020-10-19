@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
@@ -120,6 +121,15 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         log.info("VitalSigns sent to S-EHR");
         this.vitalSignsInfoCommandsList.clear();
         this.vitalSignsRepository.deleteAll();
+    }
+
+    @Override
+    public HashMap correlations() {
+        HashMap<String, String> correlationUnitWithType = new HashMap<>();
+        for (VitalSignsTypesEntity entity : this.vitalSignsTypesRepository.findAll()) {
+            correlationUnitWithType.put(entity.getName(), entity.getUcum());
+        }
+        return correlationUnitWithType;
     }
 
     private static Observation createVitalSignsFromEntity(VitalSignsEntity vitalSignsEntity) {

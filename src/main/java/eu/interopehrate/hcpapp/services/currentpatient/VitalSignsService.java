@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSigns
 import org.hl7.fhir.r4.model.Bundle;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public interface VitalSignsService {
 
@@ -20,4 +21,6 @@ public interface VitalSignsService {
     void callVitalSigns() throws IOException;
 
     void sendVitalSigns(Bundle vitalSigns) throws IOException;
+
+    HashMap correlations();
 }

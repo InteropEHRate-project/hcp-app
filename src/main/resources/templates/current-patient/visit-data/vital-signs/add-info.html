@@ -17,7 +17,11 @@
         }
     </style>
 
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const map = [[${correlations}]];
+        /*]]>*/
+
         $(document).ready(function () {
             var unit = "";
             document.getElementById("analysisName").addEventListener("change", setUnit);
@@ -117,7 +121,7 @@
 
             <div class="col-md-6">
                 <label for="unitOfMeasurement" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.unit}">Unit of Measurement</label><br>
-                <input style="pointer-events: none; opacity: 0.6; background-color: lightgray" id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
+                <input style="pointer-events: none; opacity: 0.8; background-color: lightgray" id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('vitalSignsInfoCommandSample.unitOfMeasurement')}" th:text="${err}">err</li>
