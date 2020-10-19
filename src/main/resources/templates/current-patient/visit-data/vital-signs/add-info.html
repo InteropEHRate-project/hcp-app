@@ -27,48 +27,7 @@
             document.getElementById("analysisName").addEventListener("change", setUnit);
 
             function setUnit() {
-                switch (document.getElementById("analysisName").value) {
-                    case "FC":
-                        unit = "bpm";
-                        break;
-                    case "FR":
-                        unit = "atti/min";
-                        break;
-                    case "Sat Oxy":
-                        unit = "%";
-                        break;
-                    case "Weight":
-                        unit = "kg";
-                        break;
-                    case "Heart rate":
-                        unit = "/min";
-                        break;
-                    case "SpO2":
-                        unit = "%";
-                        break;
-                    case "Mean Arterial pressure":
-                        unit = "mm[Hg]";
-                        break;
-                    case "Body height":
-                        unit = "cm";
-                        break;
-                    case "Creatinine":
-                        unit = "mg/dL";
-                        break;
-                    case "Systolic Blood Pressure":
-                        unit = "mmHg";
-                        break;
-                    case "Body Weight":
-                        unit = "kg";
-                        break;
-                    case "Diastolic Blood Pressure":
-                        unit = "mmHg";
-                        break;
-                    case "Glucose [Mass/volume] in Serum or Plasma":
-                        unit = "mg/dL";
-                        break;
-                }
-                document.getElementById("unitOfMeasurement").setAttribute("value", unit);
+                document.getElementById("unitOfMeasurement").setAttribute("value", map[document.getElementById("analysisName").value]);
             }
         })
     </script>
