@@ -9,6 +9,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
         http.authorizeRequests()
                 .antMatchers("/administration/vital-signs-nomenclature/**", "/h2-console/**").hasRole("ADMIN")
                 .anyRequest().hasAnyRole("DOCTOR", "ADMIN")
