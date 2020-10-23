@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @Scope("session")
@@ -24,11 +25,16 @@ public class IndexController {
 
     public IndexController(IndexService indexService) {
         this.indexService = indexService;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = null;
+        if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication())) {
+            principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
         if(principal instanceof UserDetails) {
             this.username = ((UserDetails) principal).getUsername();
-        } else {
+        } else if (Objects.nonNull(principal)) {
             this.username = principal.toString();
+        } else {
+            this.username = null;
         }
     }
 
