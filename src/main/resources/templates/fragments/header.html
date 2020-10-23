@@ -56,15 +56,18 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="locales" role="button" data-toggle="dropdown" th:text="#{language.change}">Language</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="?lang=en" value="en"
-                           th:text="#{lang.eng}">English</a>
-                        <a class="dropdown-item" href="?lang=ro" value="ro"
-                           th:text="#{lang.ro}">Romanian</a>
+                        <a class="dropdown-item" href="?lang=en" value="en" th:text="#{lang.eng}">English</a>
+                        <a class="dropdown-item" href="?lang=ro" value="ro" th:text="#{lang.ro}">Romanian</a>
                         <a class="dropdown-item" href="?lang=it" value="it" th:text="#{lang.it}">Italian</a>
                     </div>
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div class="justify-content-center">
+        <span style="color: white" th:text="#{fragment.main.username} + ' ' + ${session.username} + ' '">Username:</span>
+        <a href="#" class="btn btn-primary" th:text="#{button.logout}" th:href="@{/logout}">Logout</a>
     </div>
 </nav>
 

@@ -4,6 +4,8 @@ import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,16 +20,29 @@ import javax.validation.Valid;
 @Scope("session")
 public class IndexController {
     private IndexService indexService;
+    private String username;
 
     public IndexController(IndexService indexService) {
         this.indexService = indexService;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            this.username = ((UserDetails) principal).getUsername();
+        } else {
+            this.username = principal.toString();
+        }
     }
 
     @RequestMapping({"/", "/index"})
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         session.setAttribute("mySessionAttribute", indexService.indexCommand());
+        session.setAttribute("username", this.username);
         return TemplateNames.INDEX_TEMPLATE;
+    }
+
+    @RequestMapping("/accessDenied")
+    public String accessDenied() {
+        return TemplateNames.ACCESS_DENIED;
     }
 
     @RequestMapping("/index/open-connection")
