@@ -13,4 +13,6 @@ public interface DocumentHistoryConsultationService {
     DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality);
 
     List<DocumentHistoryConsultationInfoCommand> filterByDate(List<DocumentHistoryConsultationInfoCommand> list, String style);
+
+    List<DocumentHistoryConsultationInfoCommand> filterBetween(List<DocumentHistoryConsultationInfoCommand> list, String start, String end);
 }

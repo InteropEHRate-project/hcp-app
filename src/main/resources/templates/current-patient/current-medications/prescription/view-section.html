@@ -18,7 +18,7 @@
     <p><h5 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</h5></p>
 
     <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-               th:text="#{button.filter}">Filter</button></p>
+               th:text="#{button.filter.arrow}">Filter</button></p>
     <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
     <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
     <div class="collapse" id="collapseExample">

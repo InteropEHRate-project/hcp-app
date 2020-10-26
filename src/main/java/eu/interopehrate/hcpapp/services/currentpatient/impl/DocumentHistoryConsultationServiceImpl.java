@@ -119,6 +119,53 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
         return list;
     }
 
+    @Override
+    public List<DocumentHistoryConsultationInfoCommand> filterBetween(List<DocumentHistoryConsultationInfoCommand> list, String start, String end) {
+        List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
+        if ((start != null || !start.equals("")) && (end == null || end.equals(""))) {
+            for (var doc : list) {
+                if (doc.getDate().getYear() >= Integer.parseInt(start)) {
+                    returnedList.add(doc);
+                }
+            }
+            if (!returnedList.isEmpty()) {
+                this.isEmpty = false;
+                this.isFiltered = true;
+            } else {
+                this.isEmpty = true;
+                this.isFiltered = false;
+            }
+            return returnedList;
+        } else if ((end != null || !end.equals("")) && (start == null || start.equals(""))) {
+            for (var doc : list) {
+                if (doc.getDate().getYear() <= Integer.parseInt(end)) {
+                    returnedList.add(doc);
+                }
+            }
+            if (!returnedList.isEmpty()) {
+                this.isEmpty = false;
+                this.isFiltered = true;
+            } else {
+                this.isEmpty = true;
+                this.isFiltered = false;
+            }
+            return returnedList;
+        }
+        for (var doc : list) {
+            if (doc.getDate().getYear() >= Integer.parseInt(start) && doc.getDate().getYear() <= Integer.parseInt(end)) {
+                returnedList.add(doc);
+            }
+        }
+        if (!returnedList.isEmpty()) {
+            this.isEmpty = false;
+            this.isFiltered = true;
+        } else {
+            this.isEmpty = true;
+            this.isFiltered = false;
+        }
+        return returnedList;
+    }
+
     private static List<DocumentHistoryConsultationInfoCommand> filter(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {
         List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
         list.forEach(dc -> {
