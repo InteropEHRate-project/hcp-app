@@ -18,9 +18,14 @@ public class DocumentHistoryConsultationController {
     }
 
     @GetMapping
-    @RequestMapping("/view-section/{speciality}")
-    public String viewSection(Model model, @PathVariable(value = "speciality") String speciality) {
-        model.addAttribute("documentHistoryConsultation", documentHistoryConsultationService.documentHistoryConsultationCommand(speciality));
+    @RequestMapping("/view-section/{speciality}/{style}")
+    public String viewSection(Model model,
+                              @PathVariable(value = "speciality") String speciality,
+                              @PathVariable(value = "style") String style) {
+
+        var docHisList = documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).getDocumentHistoryConsultationInfoCommandList();
+
+        model.addAttribute("documentHistoryConsultationList", this.documentHistoryConsultationService.filterByDate(docHisList, style));
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION;

@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,6 +77,46 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .documentHistoryConsultationInfoCommandList(filter(docHistoryConsultationCommands, speciality))
                 .build();
+    }
+
+    @Override
+    public List<DocumentHistoryConsultationInfoCommand> filterByDate(List<DocumentHistoryConsultationInfoCommand> list, String style) {
+        List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
+        if (!style.equals("all")) {
+            if (style.equals("last-year")) {
+                for (DocumentHistoryConsultationInfoCommand doc : list) {
+                    if (LocalDate.now().getYear() - doc.getDate().getYear() <= 1) {
+                        returnedList.add(doc);
+                    }
+                }
+                if (!returnedList.isEmpty()) {
+                    this.isEmpty = false;
+                    this.isFiltered = true;
+                } else {
+                    this.isEmpty = true;
+                    this.isFiltered = false;
+                }
+                return returnedList;
+            }
+            if (style.equals("last-5-years")) {
+                for (DocumentHistoryConsultationInfoCommand doc : list) {
+                    if (LocalDate.now().getYear() - doc.getDate().getYear() <= 5) {
+                        returnedList.add(doc);
+                    }
+                }
+                if (!returnedList.isEmpty()) {
+                    this.isEmpty = false;
+                    this.isFiltered = true;
+                } else {
+                    this.isEmpty = true;
+                    this.isFiltered = false;
+                }
+                return returnedList;
+            }
+            this.isFiltered = false;
+            this.isEmpty = false;
+        }
+        return list;
     }
 
     private static List<DocumentHistoryConsultationInfoCommand> filter(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {

@@ -46,7 +46,7 @@
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/document-history-consultation')} ? 'active' : ''"
        href="../document-history-consultation/view-section.html"
-       th:href="@{/current-patient/document-history-consultation/view-section/all}"
+       th:href="@{/current-patient/document-history-consultation/view-section/all/all}"
        th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
         Consultation</a>
     <a class="flex-sm-fill text-sm-left nav-link"

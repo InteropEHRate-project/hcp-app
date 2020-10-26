@@ -28,7 +28,6 @@ class DocumentHistoryConsultationControllerTest {
     private DocumentHistoryConsultationController documentHistoryConsultationController;
     private DocumentHistoryConsultationCommand documentHistoryConsultationCommand;
     private MockMvc mockMvc;
-    private String speciality;
 
     @BeforeEach
     void setUp() {
@@ -38,11 +37,10 @@ class DocumentHistoryConsultationControllerTest {
 
     @Test
     void viewSection() throws Exception {
-        String spec = "{/speciality}";
-        when(this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality)).thenReturn(this.documentHistoryConsultationCommand);
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/current-patient/document-history-consultation/view-section/spec"))
+        when(this.documentHistoryConsultationService.documentHistoryConsultationCommand("all")).thenReturn(this.documentHistoryConsultationCommand);
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/current-patient/document-history-consultation/view-section/all/all"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name(TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION))
-                .andExpect(MockMvcResultMatchers.model().attribute("documentHistoryConsultation",speciality));
+                .andExpect(MockMvcResultMatchers.model().attributeExists("documentHistoryConsultationList"));
     }
 }
