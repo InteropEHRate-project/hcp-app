@@ -36,6 +36,8 @@ public class CurrentPatient {
     private Bundle vitalSignsTranslated;
     private Bundle docHistoryConsult;
     private Bundle docHistoryConsultTranslated;
+    private Bundle patHisBundle;
+    private Bundle patHisBundleTranslated;
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
@@ -43,8 +45,12 @@ public class CurrentPatient {
         this.terminalFhirContext = terminalFhirContext;
     }
 
-    public Bundle getLaboratoryResults() {
-        return laboratoryResults;
+    public Bundle getPatHisBundle() {
+        return patHisBundle;
+    }
+
+    public Bundle getPatHisBundleTranslated() {
+        return patHisBundleTranslated;
     }
 
     public Bundle getPrescription() {
@@ -140,6 +146,16 @@ public class CurrentPatient {
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.docHistoryConsultTranslated = this.docHistoryConsult;
+        }
+    }
+
+    public void initPatHisConsultation(Bundle patHisConsultation) {
+        try {
+            this.patHisBundle = patHisConsultation;
+            this.patHisBundleTranslated = this.translateService.translate(patHisConsultation, Locale.ITALY, Locale.UK);
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.patHisBundleTranslated = this.patHisBundle;
         }
     }
 

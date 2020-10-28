@@ -101,4 +101,22 @@ public class BundleProcessor {
                 .map(DocumentReference.class::cast)
                 .collect(Collectors.toList());
     }
+
+    public List<Observation> patHisConsultationObservationsList() {
+        return this.bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(Observation.class::cast)
+                .collect(Collectors.toList());
+    }
+
+    public List<Condition> patHisConsultationConditionsList() {
+        return this.bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Condition))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(Condition.class::cast)
+                .collect(Collectors.toList());
+    }
 }

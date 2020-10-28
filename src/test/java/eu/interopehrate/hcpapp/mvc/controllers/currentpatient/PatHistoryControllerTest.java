@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.PatHistoryCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import org.junit.jupiter.api.BeforeEach;

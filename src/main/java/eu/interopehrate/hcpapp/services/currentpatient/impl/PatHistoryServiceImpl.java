@@ -1,13 +1,22 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandDiagnosis;
+import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandRiskFactor;
+import eu.interopehrate.hcpapp.currentsession.BundleProcessor;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.PatHistoryCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.PatHistoryInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
+import lombok.SneakyThrows;
+import org.hl7.fhir.r4.model.Bundle;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PatHistoryServiceImpl implements PatHistoryService {
@@ -16,29 +25,67 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     private final List<String> listOfSocHis = new ArrayList<>();
     private final List<String> listOfFamHis = new ArrayList<>();
 
-    //HARCODED DATA
-    private PatHistoryInfoCommand patHistoryInfoCommand1 = new PatHistoryInfoCommand();
-    private PatHistoryInfoCommand patHistoryInfoCommand2 = new PatHistoryInfoCommand();
+    private final BundleProcessor bundleProcessor;
+    private final BundleProcessor bundleProcessorTranslated;
+    private final HapiToCommandRiskFactor hapiToCommandRiskFactor;
+    private final HapiToCommandDiagnosis hapiToCommandDiagnosis;
 
-    public PatHistoryServiceImpl(CurrentPatient currentPatient) {
+    @SneakyThrows
+    public PatHistoryServiceImpl(CurrentPatient currentPatient, HapiToCommandRiskFactor hapiToCommandRiskFactor, HapiToCommandDiagnosis hapiToCommandDiagnosis) {
         this.currentPatient = currentPatient;
+        this.hapiToCommandRiskFactor = hapiToCommandRiskFactor;
+        this.hapiToCommandDiagnosis = hapiToCommandDiagnosis;
+
+        File json = new ClassPathResource("PathologyCompositionExampleIPS.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        Bundle patHisBundle = parser.parseResource(Bundle.class, lineReadtest);
+        this.currentPatient.initPatHisConsultation(patHisBundle);
+        this.bundleProcessor = new BundleProcessor(this.currentPatient.getPatHisBundle());
+        this.bundleProcessorTranslated = new BundleProcessor(this.currentPatient.getPatHisBundleTranslated());
     }
 
     @Override
     public PatHistoryCommand patHistorySection() {
-        List<PatHistoryInfoCommand> patHistoryInfoCommands = new ArrayList<>();
-        this.patHistoryInfoCommand1.setDiagnosis("diagnosis data 1");
-        this.patHistoryInfoCommand1.setYearOfDiagnosis(2013);
-        this.patHistoryInfoCommand1.setComments("xxx...");
-        this.patHistoryInfoCommand2.setDiagnosis("diagnosis data 2");
-        this.patHistoryInfoCommand2.setYearOfDiagnosis(2017);
-        this.patHistoryInfoCommand2.setComments("yyy...");
-        patHistoryInfoCommands.add(this.patHistoryInfoCommand1);
-        patHistoryInfoCommands.add(this.patHistoryInfoCommand2);
+        if (this.currentPatient.getDisplayTranslatedVersion()) {
+            var riskFactors = this.bundleProcessorTranslated.patHisConsultationObservationsList();
+            var diagnoses = this.bundleProcessorTranslated.patHisConsultationConditionsList();
+
+            var riskFactorInfoCommands = riskFactors
+                    .stream()
+                    .map(hapiToCommandRiskFactor::convert)
+                    .collect(Collectors.toList());
+            var diagnosisInfoCommands = diagnoses
+                    .stream()
+                    .map(hapiToCommandDiagnosis::convert)
+                    .collect(Collectors.toList());
+
+            return PatHistoryCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .patHistoryInfoCommandRiskFactors(riskFactorInfoCommands)
+                    .patHistoryInfoCommandDiagnoses(diagnosisInfoCommands)
+                    .listOfPatHis(this.listOfPatHis)
+                    .listOfSocHis(this.listOfSocHis)
+                    .listOfFamHis(this.listOfFamHis)
+                    .build();
+        }
+        var riskFactors = this.bundleProcessor.patHisConsultationObservationsList();
+        var diagnoses = this.bundleProcessor.patHisConsultationConditionsList();
+
+        var riskFactorInfoCommands = riskFactors
+                .stream()
+                .map(hapiToCommandRiskFactor::convert)
+                .collect(Collectors.toList());
+        var diagnosisInfoCommands = diagnoses
+                .stream()
+                .map(hapiToCommandDiagnosis::convert)
+                .collect(Collectors.toList());
 
         return PatHistoryCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .patHistoryInfoCommands(patHistoryInfoCommands)
+                .patHistoryInfoCommandRiskFactors(riskFactorInfoCommands)
+                .patHistoryInfoCommandDiagnoses(diagnosisInfoCommands)
                 .listOfPatHis(this.listOfPatHis)
                 .listOfSocHis(this.listOfSocHis)
                 .listOfFamHis(this.listOfFamHis)
@@ -79,5 +126,17 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     @Override
     public void deleteFamHis(String famHis) {
         this.listOfFamHis.removeIf(x -> x.equals(famHis));
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 }
