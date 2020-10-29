@@ -22,8 +22,13 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
         if (source.hasMedicationCodeableConcept() && source.getMedicationCodeableConcept().hasCoding()) {
             source.getMedicationCodeableConcept().getCoding().forEach(coding -> prescriptionInfoCommand.setDrugName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
-        if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasAdditionalInstruction()) {
-            prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getAdditionalInstructionFirstRep().getText());
+        if (this.currentPatient.getDisplayTranslatedVersion() && source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute()
+                && source.getDosageInstructionFirstRep().getRoute().hasCoding() && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().hasDisplayElement()
+                && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().hasExtension()
+                && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
+            prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
+        } else if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute() && source.getDosageInstructionFirstRep().getRoute().hasCoding()) {
+            prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplay());
         }
         if (source.hasStatus() && source.getStatus().getDisplay() != null) {
             prescriptionInfoCommand.setStatus(source.getStatus().getDisplay());
