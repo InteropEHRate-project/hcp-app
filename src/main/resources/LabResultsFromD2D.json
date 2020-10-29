@@ -1,27 +1,27 @@
 {
   "resourceType": "Bundle",
-  "id": "84f0da8b-d591-433e-aa49-9b3ec1e43356",
+  "id": "ec6c8747-aa90-437c-9c0f-de109fcc42e2",
   "meta": {
-    "lastUpdated": "2020-08-05T12:56:30.903+02:00"
+    "lastUpdated": "2020-09-24T12:09:11.381+03:00"
   },
   "type": "searchset",
   "total": 2,
   "link": [
     {
       "relation": "self",
-      "url": "http://localhost:8080/NCP/fhir/DiagnosticReport?_include=DiagnosticReport%3Aresult&_sort=-date&category=LAB&patient=Patient%2F31"
+      "url": "http://213.249.46.205:8080/NCP/fhir/DiagnosticReport?_include=DiagnosticReport%3Aresult&_sort=-date&category=LAB&patient=Patient%2F31&status=final"
     }
   ],
   "entry": [
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/DiagnosticReport/73",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/DiagnosticReport/73",
       "resource": {
         "resourceType": "DiagnosticReport",
         "id": "73",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://interopehrate.eu/fhir/StructureDefinition/StructureDefinition-DiagnosticReportUvIps-LaboratoryResult-IEHR"
           ]
@@ -29,7 +29,7 @@
         "language": "it-IT",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> Test diagnostici rilevanti e/o dati di laboratorio </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> Eritrociti </td><td>4.12 x10^6/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Emoglobina </td><td>11.3 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ematocrito (HCT) </td><td>33.2 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Volume corpuscolare medio (MCV) </td><td>80.6 fL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Contenuto corpuscolare medio HGB (MCH) </td><td>27.4 Pg </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Concentrazione corpuscolare media HGB (MCHC) </td><td>34.0 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione volume eritrocitario (RDW CV) </td><td>13.3 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza curva distribuzione eritrociti (RDW SD) </td><td>39.1 fL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Piastrine </td><td>359.0 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Leucociti </td><td>7.07 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Neutrofili </td><td>4.4 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Linfociti </td><td>1.58 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Monociti </td><td>0.8 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Eosinofili </td><td>0.25 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Basofili </td><td>0.04 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Neutrofili % </td><td>62.3 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Linfociti % </td><td>22.3 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Monociti % </td><td>11.3 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Eosinofili % </td><td>3.5 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Basofili % </td><td>0.6 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Tempo di protrombina (PT) </td><td>32.0 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Tempo di protrombina (PT INR) </td><td>2.57 00 </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Tempo di protrombina (PT ratio) </td><td>2.45 ratio </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Tempo di tromboplastina parziale attivato (aPTT) </td><td>1.14 ratio </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> BNP </td><td>Campione insufficiente</td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Transaminasi G.P. (ALT) </td><td>25.0 IU/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Gamma-GT </td><td>55.0 IU/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Bilirubina Totale Reflex </td><td>0.2 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Glicemia </td><td>80.0 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Creatinina (metodo enzimatico) </td><td>0.27 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Azotemia </td><td>33.0 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Potassiemia </td><td>Campione emolizzato</td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Sodiemia </td><td>138.0 mEq/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Calcemia </td><td>9.5 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Osmolalita' </td><td>275.6 mOsm/Kg </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ferro </td><td>32.0 µg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Albumina </td><td>4.0 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Proteine Totali </td><td>6.8 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Proteina C Reattiva </td><td>2.54 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Esame chimico e morfologico delle urine </td><td>Niente da segnalare</td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione piastrine (PDW) </td><td>12.9 fL </td><td/><td> - </td><td>FINAL</td></tr></tbody></table></div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> Test diagnostici rilevanti e/o dati di laboratorio </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> Eritrociti </td><td>4.12 x10^6/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Emoglobina </td><td>11.3 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ematocrito (HCT) </td><td>33.2 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Volume corpuscolare medio (MCV) </td><td>80.6 fL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Contenuto corpuscolare medio HGB (MCH) </td><td>27.4 Pg </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Concentrazione corpuscolare media HGB (MCHC) </td><td>34.0 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione volume eritrocitario (RDW CV) </td><td>13.3 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza curva distribuzione eritrociti (RDW SD) </td><td>39.1 fL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Piastrine </td><td>359.0 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Leucociti </td><td>7.07 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Neutrofili </td><td>4.4 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Linfociti </td><td>1.58 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Monociti </td><td>0.8 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Eosinofili </td><td>0.25 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Basofili </td><td>0.04 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Neutrofili % </td><td>62.3 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Linfociti % </td><td>22.3 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Monociti % </td><td>11.3 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Eosinofili % </td><td>3.5 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Basofili % </td><td>0.6 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Tempo di protrombina (PT) </td><td>32.0 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Tempo di protrombina (PT INR) </td><td>2.57 00 </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Tempo di protrombina (PT ratio) </td><td>2.45 ratio </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Tempo di tromboplastina parziale attivato (aPTT) </td><td>1.14 ratio </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> BNP </td><td>Campione insufficiente</td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Transaminasi G.P. (ALT) </td><td>25.0 IU/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Gamma-GT </td><td>55.0 IU/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Bilirubina Totale Reflex </td><td>0.2 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Glicemia </td><td>80.0 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Creatinina (metodo enzimatico) </td><td>0.27 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Azotemia </td><td>33.0 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Potassiemia </td><td>Campione emolizzato</td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Sodiemia </td><td>138.0 mEq/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Calcemia </td><td>9.5 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Osmolalita' </td><td>275.6 mOsm/Kg </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ferro </td><td>32.0 µg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Albumina </td><td>4.0 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Proteine Totali </td><td>6.8 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Proteina C Reattiva </td><td>2.54 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Esame chimico e morfologico delle urine </td><td>Niente da segnalare</td><td></td><td></td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione piastrine (PDW) </td><td>12.9 fL </td><td></td><td> - </td><td>FINAL</td></tr></tbody></table></div>"
         },
         "identifier": [
           {
@@ -209,14 +209,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/DiagnosticReport/34",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/DiagnosticReport/34",
       "resource": {
         "resourceType": "DiagnosticReport",
         "id": "34",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://interopehrate.eu/fhir/StructureDefinition/StructureDefinition-DiagnosticReportUvIps-LaboratoryResult-IEHR"
           ]
@@ -224,7 +224,7 @@
         "language": "it-IT",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> Test diagnostici rilevanti e/o dati di laboratorio </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> Eritrociti </td><td>4.2 x10^6/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Emoglobina </td><td>11.6 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ematocrito (HCT) </td><td>33.9 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Volume corpuscolare medio (MCV) </td><td>80.7 fL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Contenuto corpuscolare medio HGB (MCH) </td><td>27.6 Pg </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Concentrazione corpuscolare media HGB (MCHC) </td><td>34.2 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione volume eritrocitario (RDW CV) </td><td>13.5 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza curva distribuzione eritrociti (RDW SD) </td><td>39.3 fL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Piastrine </td><td>290.0 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Leucociti </td><td>8.71 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Neutrofili </td><td>5.66 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Linfociti </td><td>1.45 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Monociti </td><td>1.38 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Eosinofili </td><td>0.2 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Basofili </td><td>0.02 x10^3/µL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Neutrofili % </td><td>65.1 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Linfociti % </td><td>16.6 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Monociti % </td><td>15.8 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Eosinofili % </td><td>2.3 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Basofili % </td><td>0.2 % </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> BNP </td><td>36.0 ng/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Transaminasi G.P. (ALT) </td><td>13.0 IU/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Gamma-GT </td><td>50.0 IU/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Bilirubina Totale Reflex </td><td>0.7 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Glicemia </td><td>87.0 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Creatinina (metodo enzimatico) </td><td>0.25 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Azotemia </td><td>41.0 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Potassiemia </td><td>3.2 mEq/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Sodiemia </td><td>132.0 mEq/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Calcemia </td><td>9.8 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Osmolalita' </td><td>266.2 mOsm/Kg </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ferro </td><td>19.0 µg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Albumina </td><td>4.7 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Proteine Totali </td><td>7.1 g/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Proteina C Reattiva </td><td>7.0 mg/dL </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Procalcitonina </td><td>0.22 µg/L </td><td/><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Esame chimico e morfologico delle urine </td><td>Niente da segnalare</td><td/><td/><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza distribuzione piastrine (PDW) </td><td>13.3 fL </td><td/><td> - </td><td>FINAL</td></tr></tbody></table></div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\"> Test diagnostici rilevanti e/o dati di laboratorio </div><table class=\"hapiPropertyTable\"><tbody><tr><td>Status</td><td>FINAL</td></tr></tbody></table><table class=\"hapiTableOfValues\"><thead><tr><td>Name</td><td>Value</td><td>Interpretation</td><td>Reference Range</td><td>Status</td></tr></thead><tbody><tr class=\"hapiTableOfValuesRowOdd\"><td> Eritrociti </td><td>4.2 x10^6/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Emoglobina </td><td>11.6 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ematocrito (HCT) </td><td>33.9 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Volume corpuscolare medio (MCV) </td><td>80.7 fL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Contenuto corpuscolare medio HGB (MCH) </td><td>27.6 Pg </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Concentrazione corpuscolare media HGB (MCHC) </td><td>34.2 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Ampiezza distribuzione volume eritrocitario (RDW CV) </td><td>13.5 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza curva distribuzione eritrociti (RDW SD) </td><td>39.3 fL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Piastrine </td><td>290.0 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Leucociti </td><td>8.71 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Neutrofili </td><td>5.66 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Linfociti </td><td>1.45 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Monociti </td><td>1.38 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Eosinofili </td><td>0.2 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Basofili </td><td>0.02 x10^3/µL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Neutrofili % </td><td>65.1 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Linfociti % </td><td>16.6 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Monociti % </td><td>15.8 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Eosinofili % </td><td>2.3 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Basofili % </td><td>0.2 % </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> BNP </td><td>36.0 ng/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Transaminasi G.P. (ALT) </td><td>13.0 IU/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Gamma-GT </td><td>50.0 IU/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Bilirubina Totale Reflex </td><td>0.7 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Glicemia </td><td>87.0 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Creatinina (metodo enzimatico) </td><td>0.25 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Azotemia </td><td>41.0 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Potassiemia </td><td>3.2 mEq/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Sodiemia </td><td>132.0 mEq/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Calcemia </td><td>9.8 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Osmolalita' </td><td>266.2 mOsm/Kg </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ferro </td><td>19.0 µg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Albumina </td><td>4.7 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Proteine Totali </td><td>7.1 g/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Proteina C Reattiva </td><td>7.0 mg/dL </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Procalcitonina </td><td>0.22 µg/L </td><td></td><td> - </td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowOdd\"><td> Esame chimico e morfologico delle urine </td><td>Niente da segnalare</td><td></td><td></td><td>FINAL</td></tr><tr class=\"hapiTableOfValuesRowEven\"><td> Ampiezza distribuzione piastrine (PDW) </td><td>13.3 fL </td><td></td><td> - </td><td>FINAL</td></tr></tbody></table></div>"
         },
         "identifier": [
           {
@@ -395,14 +395,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/35",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/35",
       "resource": {
         "resourceType": "Observation",
         "id": "35",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -463,14 +463,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/36",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/36",
       "resource": {
         "resourceType": "Observation",
         "id": "36",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -531,14 +531,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/37",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/37",
       "resource": {
         "resourceType": "Observation",
         "id": "37",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -599,14 +599,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/38",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/38",
       "resource": {
         "resourceType": "Observation",
         "id": "38",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -667,14 +667,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/39",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/39",
       "resource": {
         "resourceType": "Observation",
         "id": "39",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -735,14 +735,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/40",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/40",
       "resource": {
         "resourceType": "Observation",
         "id": "40",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -803,14 +803,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/41",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/41",
       "resource": {
         "resourceType": "Observation",
         "id": "41",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -871,14 +871,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/42",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/42",
       "resource": {
         "resourceType": "Observation",
         "id": "42",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -939,14 +939,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/43",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/43",
       "resource": {
         "resourceType": "Observation",
         "id": "43",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1007,14 +1007,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/44",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/44",
       "resource": {
         "resourceType": "Observation",
         "id": "44",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1075,14 +1075,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/45",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/45",
       "resource": {
         "resourceType": "Observation",
         "id": "45",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1143,14 +1143,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/46",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/46",
       "resource": {
         "resourceType": "Observation",
         "id": "46",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1211,14 +1211,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/47",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/47",
       "resource": {
         "resourceType": "Observation",
         "id": "47",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1279,14 +1279,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/48",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/48",
       "resource": {
         "resourceType": "Observation",
         "id": "48",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1347,14 +1347,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/49",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/49",
       "resource": {
         "resourceType": "Observation",
         "id": "49",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1415,14 +1415,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/50",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/50",
       "resource": {
         "resourceType": "Observation",
         "id": "50",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1483,14 +1483,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/51",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/51",
       "resource": {
         "resourceType": "Observation",
         "id": "51",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1551,14 +1551,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/52",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/52",
       "resource": {
         "resourceType": "Observation",
         "id": "52",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1619,14 +1619,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/53",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/53",
       "resource": {
         "resourceType": "Observation",
         "id": "53",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1687,14 +1687,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/54",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/54",
       "resource": {
         "resourceType": "Observation",
         "id": "54",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1755,14 +1755,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/55",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/55",
       "resource": {
         "resourceType": "Observation",
         "id": "55",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1823,14 +1823,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/56",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/56",
       "resource": {
         "resourceType": "Observation",
         "id": "56",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1891,14 +1891,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/57",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/57",
       "resource": {
         "resourceType": "Observation",
         "id": "57",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -1959,14 +1959,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/58",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/58",
       "resource": {
         "resourceType": "Observation",
         "id": "58",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2027,14 +2027,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/59",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/59",
       "resource": {
         "resourceType": "Observation",
         "id": "59",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2095,14 +2095,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/60",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/60",
       "resource": {
         "resourceType": "Observation",
         "id": "60",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2163,14 +2163,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/61",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/61",
       "resource": {
         "resourceType": "Observation",
         "id": "61",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2231,14 +2231,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/62",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/62",
       "resource": {
         "resourceType": "Observation",
         "id": "62",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2299,14 +2299,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/63",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/63",
       "resource": {
         "resourceType": "Observation",
         "id": "63",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2367,14 +2367,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/64",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/64",
       "resource": {
         "resourceType": "Observation",
         "id": "64",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2435,14 +2435,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/65",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/65",
       "resource": {
         "resourceType": "Observation",
         "id": "65",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2503,14 +2503,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/66",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/66",
       "resource": {
         "resourceType": "Observation",
         "id": "66",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2571,14 +2571,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/67",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/67",
       "resource": {
         "resourceType": "Observation",
         "id": "67",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2639,14 +2639,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/68",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/68",
       "resource": {
         "resourceType": "Observation",
         "id": "68",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2707,14 +2707,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/69",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/69",
       "resource": {
         "resourceType": "Observation",
         "id": "69",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2775,14 +2775,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/70",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/70",
       "resource": {
         "resourceType": "Observation",
         "id": "70",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2843,14 +2843,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/71",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/71",
       "resource": {
         "resourceType": "Observation",
         "id": "71",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2891,14 +2891,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/72",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/72",
       "resource": {
         "resourceType": "Observation",
         "id": "72",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -2959,14 +2959,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/74",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/74",
       "resource": {
         "resourceType": "Observation",
         "id": "74",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3027,14 +3027,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/75",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/75",
       "resource": {
         "resourceType": "Observation",
         "id": "75",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3095,14 +3095,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/76",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/76",
       "resource": {
         "resourceType": "Observation",
         "id": "76",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3163,14 +3163,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/77",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/77",
       "resource": {
         "resourceType": "Observation",
         "id": "77",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3231,14 +3231,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/78",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/78",
       "resource": {
         "resourceType": "Observation",
         "id": "78",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3299,14 +3299,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/79",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/79",
       "resource": {
         "resourceType": "Observation",
         "id": "79",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3367,14 +3367,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/80",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/80",
       "resource": {
         "resourceType": "Observation",
         "id": "80",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3435,14 +3435,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/81",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/81",
       "resource": {
         "resourceType": "Observation",
         "id": "81",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3503,14 +3503,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/82",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/82",
       "resource": {
         "resourceType": "Observation",
         "id": "82",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3571,14 +3571,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/83",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/83",
       "resource": {
         "resourceType": "Observation",
         "id": "83",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3639,14 +3639,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/84",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/84",
       "resource": {
         "resourceType": "Observation",
         "id": "84",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3707,14 +3707,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/85",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/85",
       "resource": {
         "resourceType": "Observation",
         "id": "85",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3775,14 +3775,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/86",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/86",
       "resource": {
         "resourceType": "Observation",
         "id": "86",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3843,14 +3843,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/87",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/87",
       "resource": {
         "resourceType": "Observation",
         "id": "87",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3911,14 +3911,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/88",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/88",
       "resource": {
         "resourceType": "Observation",
         "id": "88",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -3979,14 +3979,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/89",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/89",
       "resource": {
         "resourceType": "Observation",
         "id": "89",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4047,14 +4047,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/90",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/90",
       "resource": {
         "resourceType": "Observation",
         "id": "90",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4115,14 +4115,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/91",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/91",
       "resource": {
         "resourceType": "Observation",
         "id": "91",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4183,14 +4183,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/92",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/92",
       "resource": {
         "resourceType": "Observation",
         "id": "92",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4251,14 +4251,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/93",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/93",
       "resource": {
         "resourceType": "Observation",
         "id": "93",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4319,14 +4319,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/94",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/94",
       "resource": {
         "resourceType": "Observation",
         "id": "94",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4387,14 +4387,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/95",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/95",
       "resource": {
         "resourceType": "Observation",
         "id": "95",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4455,14 +4455,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/96",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/96",
       "resource": {
         "resourceType": "Observation",
         "id": "96",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4523,14 +4523,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/97",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/97",
       "resource": {
         "resourceType": "Observation",
         "id": "97",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4591,14 +4591,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/98",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/98",
       "resource": {
         "resourceType": "Observation",
         "id": "98",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4644,14 +4644,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/99",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/99",
       "resource": {
         "resourceType": "Observation",
         "id": "99",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4712,14 +4712,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/100",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/100",
       "resource": {
         "resourceType": "Observation",
         "id": "100",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4780,14 +4780,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/101",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/101",
       "resource": {
         "resourceType": "Observation",
         "id": "101",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4848,14 +4848,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/102",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/102",
       "resource": {
         "resourceType": "Observation",
         "id": "102",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4916,14 +4916,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/103",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/103",
       "resource": {
         "resourceType": "Observation",
         "id": "103",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -4984,14 +4984,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/104",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/104",
       "resource": {
         "resourceType": "Observation",
         "id": "104",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5052,14 +5052,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/105",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/105",
       "resource": {
         "resourceType": "Observation",
         "id": "105",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5105,14 +5105,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/106",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/106",
       "resource": {
         "resourceType": "Observation",
         "id": "106",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5173,14 +5173,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/107",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/107",
       "resource": {
         "resourceType": "Observation",
         "id": "107",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5241,14 +5241,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/108",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/108",
       "resource": {
         "resourceType": "Observation",
         "id": "108",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5309,14 +5309,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/109",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/109",
       "resource": {
         "resourceType": "Observation",
         "id": "109",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5377,14 +5377,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/110",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/110",
       "resource": {
         "resourceType": "Observation",
         "id": "110",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5445,14 +5445,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/111",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/111",
       "resource": {
         "resourceType": "Observation",
         "id": "111",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5513,14 +5513,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/112",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/112",
       "resource": {
         "resourceType": "Observation",
         "id": "112",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5581,14 +5581,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/113",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/113",
       "resource": {
         "resourceType": "Observation",
         "id": "113",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
@@ -5629,14 +5629,14 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/NCP/fhir/Observation/114",
+      "fullUrl": "http://213.249.46.205:8080/NCP/fhir/Observation/114",
       "resource": {
         "resourceType": "Observation",
         "id": "114",
         "meta": {
           "versionId": "1",
-          "lastUpdated": "2020-08-05T12:31:03.901+02:00",
-          "source": "#st0V7JyEUXsTAqul",
+          "lastUpdated": "2020-08-06T14:15:08.802+03:00",
+          "source": "#AoeEr5NWLQyt5p1C",
           "profile": [
             "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-laboratory-uv-ips"
           ]
