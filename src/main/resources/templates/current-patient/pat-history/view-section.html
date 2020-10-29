@@ -29,8 +29,7 @@
         </thead>
         <tbody>
         <tr th:each="patHistory : ${patHistoryCommand.getPatHistoryInfoCommandDiagnoses()}">
-            <!--                            <td style="background-color: azure" th:style="${!patHistoryCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${patHistory.getDiagnosis()}">diagnosis</td>-->
-            <td th:text="${patHistory.getDiagnosis()}">diagnosis</td>
+            <td style="background-color: azure" th:style="${!patHistoryCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${patHistory.getDiagnosis()}">diagnosis</td>
             <td th:text="${{patHistory.getYearOfDiagnosis()}}">year of diagnosis</td>
             <td th:text="${patHistory.getComments()}">comments</td>
         </tr>
@@ -41,30 +40,15 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col" th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
-            <th scope="col" th:text="#{fragment.current.patient.navigation.left.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
         </tr>
         </thead>
-        <tbody class="col-6">
+        <tbody th:each="risk : ${patHistoryCommand.getPatHistoryInfoCommandRiskFactors()}">
         <tr>
-            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.hypertension}">hypertension</th>
-            <td th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</td>
-        </tr>
-        <tr>
-            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.diabetes}">diabetes</th>
-            <td th:text="#{fragment.current.patient.navigation.left.pat.history.yes}">Yes</td>
-        </tr>
-        <tr>
-            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.dyslipidemia}">dyslipidemia</th>
-            <td colspan="2" th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</td>
-        </tr>
-        <tr>
-            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.current.past.smoker}">current/past smoker</th>
-            <td colspan="2" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}">Yes</td>
-        </tr>
-        <tr>
-            <th scope="row" th:text="#{fragment.current.patient.navigation.left.pat.history.family.history.of.cvd}">family history of CVD</th>
-            <td colspan="2" th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</td>
+            <td style="background-color: azure" th:style="${!patHistoryCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${risk.getRiskFactor()}"></td>
+            <td th:if="${risk.isState()}" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}"></td>
+            <td th:unless="${risk.isState()}" th:text="#{fragment.current.patient.navigation.left.pat.history.no}"></td>
         </tr>
         </tbody>
     </table>
