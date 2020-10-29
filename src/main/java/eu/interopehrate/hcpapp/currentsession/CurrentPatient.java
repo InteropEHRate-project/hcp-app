@@ -334,10 +334,12 @@ public class CurrentPatient {
         return certificate.toString();
     }
 
-    // todo - nicuj, code review
     public static String extractExtensionText(Coding coding, CurrentPatient currentPatient) {
-        if (currentPatient.getDisplayTranslatedVersion() && coding.hasExtension()) {
-            return coding.getExtension().get(0).getExtension().get(1).getValue().toString();
+        if (currentPatient.getDisplayTranslatedVersion()
+                && coding.hasDisplayElement()
+                && coding.getDisplayElement().hasExtension()
+                && coding.getDisplayElement().getExtensionFirstRep().hasExtension()) {
+            return coding.getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString();
         } else {
             return coding.getDisplay();
         }
