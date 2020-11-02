@@ -4,6 +4,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">document history</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -38,19 +40,10 @@
                 <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all/last-year}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.year}">Last Year</a>
                 <a class="dropdown-item" th:href="@{/current-patient/document-history-consultation/view-section/all/last-5-years}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.five.years}">Last 5 Years</a>
                 <form class="form-inline justify-content-center">
-                    <div class="form-group mb-2">
-                        <label for="inputYears" class="sr-only">Input Years</label>
-                        <input type="text" readonly class="form-control-plaintext" id="inputYears" th:value="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.years.manually}">
-                    </div>
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="start" class="sr-only">YYYY</label>
-                        <input type="text" class="form-control" id="start"
-                               th:placeholder="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.start} + ' ' + YYYY" name="start">
-                    </div>
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="end" class="sr-only">YYYY</label>
-                        <input type="text" class="form-control" id="end"
-                               th:placeholder="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.end} + ' ' + YYYY" name="end">
+                    <p th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.period.between}"></p>
+                    <div class="form-group justify-content-center">
+                        <input id="start" type="date" class="form-control col-sm-6" name="start">
+                        <input id="end" type="date" class="form-control col-sm-6" name="end">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.filter.period}">Filter</button>
                 </form>

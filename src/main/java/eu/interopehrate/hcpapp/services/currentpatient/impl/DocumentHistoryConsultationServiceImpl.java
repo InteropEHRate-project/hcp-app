@@ -17,6 +17,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -121,24 +122,13 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
 
     @Override
     public List<DocumentHistoryConsultationInfoCommand> filterBetween(List<DocumentHistoryConsultationInfoCommand> list, String start, String end) {
+        LocalDate startDate;
+        LocalDate endDate;
         List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
-        if ((start != null || !start.equals("")) && (end == null || end.equals(""))) {
+        if (Objects.nonNull(start) && !start.equals("") && (Objects.isNull(end) || end.equals(""))) {
+            startDate = LocalDate.parse(start);
             for (var doc : list) {
-                if (doc.getDate().getYear() >= Integer.parseInt(start)) {
-                    returnedList.add(doc);
-                }
-            }
-            if (!returnedList.isEmpty()) {
-                this.isEmpty = false;
-                this.isFiltered = true;
-            } else {
-                this.isEmpty = true;
-                this.isFiltered = false;
-            }
-            return returnedList;
-        } else if ((end != null || !end.equals("")) && (start == null || start.equals(""))) {
-            for (var doc : list) {
-                if (doc.getDate().getYear() <= Integer.parseInt(end)) {
+                if (startDate.compareTo(doc.getDate()) <= 0) {
                     returnedList.add(doc);
                 }
             }
@@ -151,8 +141,26 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
             }
             return returnedList;
         }
+        if (Objects.nonNull(end) && !end.equals("") && (Objects.isNull(start) || start.equals(""))) {
+            endDate = LocalDate.parse(end);
+            for (var doc : list) {
+                if (endDate.compareTo(doc.getDate()) >= 0) {
+                    returnedList.add(doc);
+                }
+            }
+            if (!returnedList.isEmpty()) {
+                this.isEmpty = false;
+                this.isFiltered = true;
+            } else {
+                this.isEmpty = true;
+                this.isFiltered = false;
+            }
+            return returnedList;
+        }
+        startDate = LocalDate.parse(start);
+        endDate = LocalDate.parse(end);
         for (var doc : list) {
-            if (doc.getDate().getYear() >= Integer.parseInt(start) && doc.getDate().getYear() <= Integer.parseInt(end)) {
+            if (startDate.compareTo(doc.getDate()) <= 0 && doc.getDate().compareTo(endDate) <= 0) {
                 returnedList.add(doc);
             }
         }

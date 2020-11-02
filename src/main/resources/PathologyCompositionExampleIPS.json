@@ -2,602 +2,455 @@
   "resourceType": "Bundle",
   "id": "3124678",
   "type": "collection",
-  "timestamp": "2020-10-28T13:28:28.915+01:00",
-  "entry": [
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Composition/1",
-      "resource": {
-        "resourceType": "Composition",
-        "id": "1",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Composition-uv-ips"
-          ]
-        },
-        "status": "preliminary",
-        "type": {
-          "coding": [
-            {
-              "system": "http://loinc.org",
-              "code": "60591-5"
-            }
-          ]
-        },
-        "subject": {
-          "reference": "Patient/23"
-        },
-        "date": "2020-10-28T13:28:28+01:00",
-        "author": [
-          {
-            "reference": "Practitioner/1"
-          }
-        ],
-        "title": "International Patient Summary",
-        "section": [
-          {
-            "title": "Result Section",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://loinc.org",
-                  "code": "30954-2"
-                }
-              ]
-            },
-            "text": {
-              "status": "extensions",
-              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the results of observations about the patient</div>"
-            },
-            "entry": [
-              {
-                "reference": "Observation/1"
-              },
-              {
-                "reference": "Observation/2"
-              },
-              {
-                "reference": "Observation/3"
-              },
-              {
-                "reference": "Observation/4"
-              },
-              {
-                "reference": "Observation/5"
-              }
-            ]
-          },
-          {
-            "title": "History of Problems Section",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://loinc.org",
-                  "code": "11348-0",
-                  "display": "History of Past illness Narrative"
-                }
-              ]
-            },
-            "text": {
-              "status": "extensions",
-              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains past problems</div>"
-            },
-            "entry": [
-              {
-                "reference": "Condition/2"
-              },
-              {
-                "reference": "Condition/3"
-              },
-              {
-                "reference": "Condition/4"
-              }
-            ]
-          },
-          {
-            "title": "Medication Summary section",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://loinc.org",
-                  "code": "10160-0"
-                }
-              ]
-            },
-            "text": {
-              "status": "extensions",
-              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the Medication the patient is taking</div>"
-            },
-            "entry": [
-              {
-                "reference": "MedicationStatement/1"
-              }
-            ]
-          },
-          {
-            "title": "Allergie and Intollerance  section",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://loinc.org",
-                  "code": "48765-2"
-                }
-              ]
-            },
-            "text": {
-              "status": "extensions",
-              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the known Allergies and Intolerances</div>"
-            },
-            "entry": [
-              {
-                "reference": "AllergyIntolerance/1"
-              }
-            ]
-          },
-          {
-            "title": "Current Problems section",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://loinc.org",
-                  "code": "11450-4"
-                }
-              ]
-            },
-            "text": {
-              "status": "extensions",
-              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the current Problems of the patient</div>"
-            },
-            "entry": [
-              {
-                "reference": "Condition/1"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Patient/23",
-      "resource": {
-        "resourceType": "Patient",
-        "id": "23",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips"
-          ]
-        },
-        "name": [
-          {
-            "family": "Smith",
-            "given": [
-              "Markus"
-            ]
-          }
-        ],
-        "gender": "male",
-        "birthDate": "1983-12-05"
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Practitioner/1",
-      "resource": {
-        "resourceType": "Practitioner",
-        "id": "1",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Practitioner-uv-ips"
-          ]
-        },
-        "name": [
-          {
-            "family": "Meier",
-            "given": [
-              "Michael"
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/1",
-      "resource": {
-        "resourceType": "Observation",
-        "id": "1",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips"
-          ]
-        },
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "laboratory"
-              }
-            ]
-          }
-        ],
+  "timestamp": "2020-10-30T13:34:57.764+01:00",
+  "entry": [ {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Composition/1",
+    "resource": {
+      "resourceType": "Composition",
+      "id": "1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Composition-uv-ips" ]
+      },
+      "status": "preliminary",
+      "type": {
+        "coding": [ {
+          "system": "http://loinc.org",
+          "code": "60591-5"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "date": "2020-10-30T13:34:57+01:00",
+      "author": [ {
+        "reference": "Practitioner/1"
+      } ],
+      "title": "International Patient Summary",
+      "section": [ {
+        "title": "Result Section",
         "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "266894000",
-              "display": "Family history: Cardiovascular disease (situation)"
-            }
-          ]
+          "coding": [ {
+            "system": "http://loinc.org",
+            "code": "30954-2"
+          } ]
         },
-        "subject": {
-          "reference": "Patient/23"
+        "text": {
+          "status": "extensions",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the results of observations about the patient</div>"
         },
-        "effectiveDateTime": "2020-10-28T13:28:28+01:00",
-        "valueBoolean": true
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/2",
-      "resource": {
-        "resourceType": "Observation",
-        "id": "2",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips"
-          ]
-        },
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "laboratory"
-              }
-            ]
-          }
-        ],
+        "entry": [ {
+          "reference": "Observation/1"
+        }, {
+          "reference": "Observation/2"
+        }, {
+          "reference": "Observation/3"
+        }, {
+          "reference": "Observation/4"
+        }, {
+          "reference": "Observation/5"
+        } ]
+      }, {
+        "title": "History of Problems Section",
         "code": {
-          "coding": [
-            {
-              "system": "http://loinc.org",
-              "code": "45643-4",
-              "display": "Hypertension [Minimum Data Set]"
-            }
-          ]
+          "coding": [ {
+            "system": "http://loinc.org",
+            "code": "11348-0",
+            "display": "History of Past illness Narrative"
+          } ]
         },
-        "subject": {
-          "reference": "Patient/23"
+        "text": {
+          "status": "extensions",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains past problems</div>"
         },
-        "effectiveDateTime": "2020-10-28T13:28:28+01:00",
-        "valueBoolean": true
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/3",
-      "resource": {
-        "resourceType": "Observation",
-        "id": "3",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips"
-          ]
-        },
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "laboratory"
-              }
-            ]
-          }
-        ],
+        "entry": [ {
+          "reference": "Condition/2"
+        }, {
+          "reference": "Condition/3"
+        }, {
+          "reference": "Condition/4"
+        } ]
+      }, {
+        "title": "Medication Summary section",
         "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "370992007",
-              "display": "Dyslipidemia (disorder)"
-            }
-          ]
+          "coding": [ {
+            "system": "http://loinc.org",
+            "code": "10160-0"
+          } ]
         },
-        "subject": {
-          "reference": "Patient/23"
+        "text": {
+          "status": "extensions",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the Medication the patient is taking</div>"
         },
-        "effectiveDateTime": "2020-10-28T13:28:28+01:00",
-        "valueBoolean": false
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/4",
-      "resource": {
-        "resourceType": "Observation",
-        "id": "4",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips"
-          ]
-        },
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "laboratory"
-              }
-            ]
-          }
-        ],
+        "entry": [ {
+          "reference": "MedicationStatement/1"
+        } ]
+      }, {
+        "title": "Allergie and Intollerance  section",
         "code": {
-          "coding": [
-            {
-              "system": "http://loinc.org",
-              "code": "72166-2",
-              "display": "Tobacco smoking status"
-            }
-          ]
+          "coding": [ {
+            "system": "http://loinc.org",
+            "code": "48765-2"
+          } ]
         },
-        "subject": {
-          "reference": "Patient/23"
+        "text": {
+          "status": "extensions",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the known Allergies and Intolerances</div>"
         },
-        "effectiveDateTime": "2020-10-28T13:28:28+01:00",
-        "valueBoolean": false
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/5",
-      "resource": {
-        "resourceType": "Observation",
-        "id": "5",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips"
-          ]
-        },
-        "status": "final",
-        "category": [
-          {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                "code": "laboratory"
-              }
-            ]
-          }
-        ],
+        "entry": [ {
+          "reference": "AllergyIntolerance/1"
+        } ]
+      }, {
+        "title": "Current Problems section",
         "code": {
-          "coding": [
-            {
-              "system": "http://loinc.org",
-              "code": "55399-0",
-              "display": "Diabetes tracking panel"
-            }
-          ]
+          "coding": [ {
+            "system": "http://loinc.org",
+            "code": "11450-4"
+          } ]
         },
-        "subject": {
-          "reference": "Patient/23"
+        "text": {
+          "status": "extensions",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This section contains the current Problems of the patient</div>"
         },
-        "effectiveDateTime": "2020-10-28T13:28:28+01:00",
-        "valueBoolean": true
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/2",
-      "resource": {
-        "resourceType": "Condition",
-        "id": "2",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips"
-          ]
-        },
-        "clinicalStatus": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              "code": "active",
-              "display": "Active"
-            }
-          ]
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "14669001",
-              "display": "Acute renal failure syndrome (disorder)"
-            }
-          ]
-        },
-        "subject": {
-          "reference": "Patient/23"
-        },
-        "onsetDateTime": "2003",
-        "note": [
-          {
-            "text": "Specified as due to procedure"
-          }
-        ]
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/3",
-      "resource": {
-        "resourceType": "Condition",
-        "id": "3",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips"
-          ]
-        },
-        "clinicalStatus": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              "code": "active",
-              "display": "Active"
-            }
-          ]
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "363346000",
-              "display": "Malignant neoplastic disease (disorder)"
-            }
-          ]
-        },
-        "subject": {
-          "reference": "Patient/23"
-        },
-        "onsetDateTime": "2014",
-        "note": [
-          {
-            "text": "Patient did  6 cycles of Chemotherapy"
-          }
-        ]
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/4",
-      "resource": {
-        "resourceType": "Condition",
-        "id": "4",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips"
-          ]
-        },
-        "clinicalStatus": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              "code": "active",
-              "display": "Active"
-            }
-          ]
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "http://snomed.info/sct",
-              "code": "87628006",
-              "display": "Bacterial infectious disease (disorder)"
-            }
-          ]
-        },
-        "subject": {
-          "reference": "Patient/23"
-        },
-        "onsetDateTime": "2017",
-        "note": [
-          {
-            "text": "Patient had headaches, fever, stiff neck, seizures"
-          }
-        ]
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/1",
-      "resource": {
-        "resourceType": "Condition",
-        "id": "1",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips"
-          ]
-        },
-        "clinicalStatus": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              "code": "inactive",
-              "display": "Inactive"
-            }
-          ]
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips",
-              "code": "no-problem-info",
-              "display": "No information about problems"
-            }
-          ]
-        },
-        "subject": {
-          "reference": "Patient/23"
-        }
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/AllergyIntolerance/1",
-      "resource": {
-        "resourceType": "AllergyIntolerance",
-        "id": "1",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/AllergyIntolerance-uv-ips"
-          ]
-        },
-        "verificationStatus": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
-              "code": "entered-in-error",
-              "display": "Entered in Error"
-            }
-          ]
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips",
-              "code": "no-allergy-info",
-              "display": "No information about allergies"
-            }
-          ]
-        },
-        "patient": {
-          "reference": "Patient/23"
-        }
-      }
-    },
-    {
-      "fullUrl": "http://interopehrate.eu/fhir/Resources/MedicationStatement/1",
-      "resource": {
-        "resourceType": "MedicationStatement",
-        "id": "1",
-        "meta": {
-          "profile": [
-            "http://hl7.org/fhir/uv/ips/StructureDefinition/MedicationStatement-uv-ips"
-          ]
-        },
-        "status": "entered-in-error",
-        "medicationCodeableConcept": {
-          "coding": [
-            {
-              "system": "http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips",
-              "code": "no-medication-info",
-              "display": "No information about medications"
-            }
-          ]
-        },
-        "subject": {
-          "reference": "Patient/23"
-        },
-        "_effectiveDateTime": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
-              "valueCode": "unknown"
-            }
-          ]
-        }
+        "entry": [ {
+          "reference": "Condition/1"
+        } ]
+      } ]
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Patient/23",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "23",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips" ]
+      },
+      "name": [ {
+        "family": "Smith",
+        "given": [ "Markus" ]
+      } ],
+      "gender": "male",
+      "birthDate": "1983-12-05"
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Practitioner/1",
+    "resource": {
+      "resourceType": "Practitioner",
+      "id": "1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Practitioner-uv-ips" ]
+      },
+      "name": [ {
+        "family": "Meier",
+        "given": [ "Michael" ]
+      } ]
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/1",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips" ]
+      },
+      "status": "final",
+      "category": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "laboratory"
+        } ]
+      } ],
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "Z82.49",
+          "display": "Family history of ischemic heart disease and other diseases of the circulatory system"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "effectiveDateTime": "2020-10-30T13:34:57+01:00",
+      "valueBoolean": true
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/2",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "2",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips" ]
+      },
+      "status": "final",
+      "category": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "laboratory"
+        } ]
+      } ],
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "I10",
+          "display": "Essential (primary) hypertension"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "effectiveDateTime": "2020-10-30T13:34:57+01:00",
+      "valueBoolean": true
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/3",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "3",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips" ]
+      },
+      "status": "final",
+      "category": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "laboratory"
+        } ]
+      } ],
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "E78.8",
+          "display": "Other disorders of lipoprotein metabolism"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "effectiveDateTime": "2020-10-30T13:34:57+01:00",
+      "valueBoolean": false
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/4",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "4",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips" ]
+      },
+      "status": "final",
+      "category": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "laboratory"
+        } ]
+      } ],
+      "code": {
+        "coding": [ {
+          "system": "http://loinc.org",
+          "code": "72166-2",
+          "display": "Tobacco smoking status"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "effectiveDateTime": "2020-10-30T13:34:57+01:00",
+      "valueBoolean": false
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Observation/5",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "5",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips" ]
+      },
+      "status": "final",
+      "category": [ {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "laboratory"
+        } ]
+      } ],
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "E13",
+          "display": "Other specified diabetes mellitus"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "effectiveDateTime": "2020-10-30T13:34:57+01:00",
+      "valueBoolean": true
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/2",
+    "resource": {
+      "resourceType": "Condition",
+      "id": "2",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips" ]
+      },
+      "clinicalStatus": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+          "code": "active",
+          "display": "Active"
+        } ]
+      },
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "N17",
+          "display": "Acute kidney failure"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "onsetDateTime": "2003",
+      "note": [ {
+        "text": "Specified as due to procedure"
+      } ]
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/3",
+    "resource": {
+      "resourceType": "Condition",
+      "id": "3",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips" ]
+      },
+      "clinicalStatus": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+          "code": "active",
+          "display": "Active"
+        } ]
+      },
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "C80.1",
+          "display": "Malignant (primary) neoplasm, unspecified"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "onsetDateTime": "2014",
+      "note": [ {
+        "text": "Patient did  6 cycles of Chemotherapy"
+      } ]
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/4",
+    "resource": {
+      "resourceType": "Condition",
+      "id": "4",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips" ]
+      },
+      "clinicalStatus": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+          "code": "active",
+          "display": "Active"
+        } ]
+      },
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/sid/icd-10",
+          "code": "A49.9",
+          "display": "Bacterial infection, unspecified"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "onsetDateTime": "2017",
+      "note": [ {
+        "text": "Patient had headaches, fever, stiff neck, seizures"
+      } ]
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/Condition/1",
+    "resource": {
+      "resourceType": "Condition",
+      "id": "1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips" ]
+      },
+      "clinicalStatus": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+          "code": "inactive",
+          "display": "Inactive"
+        } ]
+      },
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips",
+          "code": "no-problem-info",
+          "display": "No information about problems"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
       }
     }
-  ]
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/AllergyIntolerance/1",
+    "resource": {
+      "resourceType": "AllergyIntolerance",
+      "id": "1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/AllergyIntolerance-uv-ips" ]
+      },
+      "verificationStatus": {
+        "coding": [ {
+          "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
+          "code": "entered-in-error",
+          "display": "Entered in Error"
+        } ]
+      },
+      "code": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips",
+          "code": "no-allergy-info",
+          "display": "No information about allergies"
+        } ]
+      },
+      "patient": {
+        "reference": "Patient/23"
+      }
+    }
+  }, {
+    "fullUrl": "http://interopehrate.eu/fhir/Resources/MedicationStatement/1",
+    "resource": {
+      "resourceType": "MedicationStatement",
+      "id": "1",
+      "meta": {
+        "profile": [ "http://hl7.org/fhir/uv/ips/StructureDefinition/MedicationStatement-uv-ips" ]
+      },
+      "status": "entered-in-error",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips",
+          "code": "no-medication-info",
+          "display": "No information about medications"
+        } ]
+      },
+      "subject": {
+        "reference": "Patient/23"
+      },
+      "_effectiveDateTime": {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+          "valueCode": "unknown"
+        } ]
+      }
+    }
+  } ]
 }
