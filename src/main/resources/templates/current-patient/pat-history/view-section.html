@@ -47,8 +47,8 @@
         <tbody th:each="risk : ${patHistoryCommand.getPatHistoryInfoCommandRiskFactors()}">
         <tr>
             <td style="background-color: azure" th:style="${!patHistoryCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${risk.getRiskFactor()}"></td>
-            <td th:if="${risk.isState()}" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}"></td>
-            <td th:unless="${risk.isState()}" th:text="#{fragment.current.patient.navigation.left.pat.history.no}"></td>
+            <td th:if="${risk.isState()}" class="text-warning" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}"></td>
+            <td th:unless="${risk.isState()}" class="text-primary" th:text="#{fragment.current.patient.navigation.left.pat.history.no}"></td>
         </tr>
         </tbody>
     </table>
