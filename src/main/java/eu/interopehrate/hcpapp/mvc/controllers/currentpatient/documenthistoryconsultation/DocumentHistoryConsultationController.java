@@ -30,7 +30,7 @@ public class DocumentHistoryConsultationController {
                               String start, String end, HttpSession session) {
 
         List<DocumentHistoryConsultationInfoCommand> docHisList;
-        if ((start == null && end == null) || (start.equals("") && end.equals(""))) {
+        if ((start == null && end == null) || (start.equalsIgnoreCase("") && end.equalsIgnoreCase(""))) {
             docHisList = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).getDocumentHistoryConsultationInfoCommandList();
             docHisList = this.documentHistoryConsultationService.filterByDate(docHisList, date);
         } else {

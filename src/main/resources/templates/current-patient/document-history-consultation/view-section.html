@@ -25,10 +25,25 @@
                 Filter by Speciality
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/cardiology/' + ${session.date}}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
-                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/psychiatry/' + ${session.date}}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
+                <a class="dropdown-item" th:if="${session.startDate != null && session.endDate != null}"
+                   th:href="@{'/current-patient/document-history-consultation/view-section/cardiology/' + ${session.date} + '?start=' + ${session.startDate} + '&end=' + ${session.endDate}}"
+                   th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
+                <a class="dropdown-item" th:unless="${session.startDate != null && session.endDate != null}"
+                   th:href="@{'/current-patient/document-history-consultation/view-section/cardiology/' + ${session.date}}"
+                   th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
+                <a class="dropdown-item" th:if="${session.startDate != null && session.endDate != null}"
+                   th:href="@{'/current-patient/document-history-consultation/view-section/psychiatry/' + ${session.date} + '?start=' + ${session.startDate} + '&end=' + ${session.endDate}}"
+                   th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
+                <a class="dropdown-item" th:unless="${session.startDate != null && session.endDate != null}"
+                   th:href="@{'/current-patient/document-history-consultation/view-section/psychiatry/' + ${session.date}}"
+                   th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/all/' + ${session.date}}" th:text="#{button.reset}">RESET</a>
+                <a class="dropdown-item" th:if="${session.startDate != null && session.endDate != null}"
+                   th:href="@{'/current-patient/document-history-consultation/view-section/all/' + ${session.date} + '?start=' + ${session.startDate} + '&end=' + ${session.endDate}}"
+                   th:text="#{button.reset}">RESET</a>
+                <a class="dropdown-item" th:unless="${session.startDate != null && session.endDate != null}"
+                   th:href="@{'/current-patient/document-history-consultation/view-section/all/' + ${session.date}}"
+                   th:text="#{button.reset}">RESET</a>
             </div>
         </div>
 
