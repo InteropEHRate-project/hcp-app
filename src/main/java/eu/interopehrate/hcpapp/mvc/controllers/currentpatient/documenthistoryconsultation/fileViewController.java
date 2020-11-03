@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.documenthistoryconsultation;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import org.springframework.stereotype.Controller;
@@ -23,10 +22,18 @@ public class fileViewController {
     public String showDocument(Model model,
                                @PathVariable(value = "speciality") String speciality,
                                @PathVariable(value = "exam") String exam,
-                               @PathVariable(value = "date")String date) {
-        DocumentHistoryConsultationInfoCommand doc = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).find(exam, date);
-        model.addAttribute("dataString", doc.getDataCompleteText());
-        model.addAttribute("dataArray", doc.getData());
+                               @PathVariable(value = "date") String date) {
+        model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).find(exam, date).getDataCompleteText());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE;
+    }
+
+    @GetMapping
+    @RequestMapping("/show-document-new-tab/{speciality}/{exam}/{date}")
+    public String showDocumentInNewTab(Model model,
+                                       @PathVariable(value = "speciality") String speciality,
+                                       @PathVariable(value = "exam") String exam,
+                                       @PathVariable(value = "date") String date) {
+        model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).find(exam, date).getDataCompleteText());
+        return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE_NEW_TAB;
     }
 }

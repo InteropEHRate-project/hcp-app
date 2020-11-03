@@ -23,16 +23,16 @@ public class DocumentHistoryConsultationController {
     }
 
     @GetMapping
-    @RequestMapping("/view-section/{speciality}/{style}")
+    @RequestMapping("/view-section/{speciality}/{date}")
     public String viewSection(Model model,
                               @PathVariable(value = "speciality") String speciality,
-                              @PathVariable(value = "style") String style,
+                              @PathVariable(value = "date") String date,
                               String start, String end, HttpSession session) {
 
         List<DocumentHistoryConsultationInfoCommand> docHisList;
         if ((start == null && end == null) || (start.equals("") && end.equals(""))) {
             docHisList = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).getDocumentHistoryConsultationInfoCommandList();
-            docHisList = this.documentHistoryConsultationService.filterByDate(docHisList, style);
+            docHisList = this.documentHistoryConsultationService.filterByDate(docHisList, date);
         } else {
             try {
                 docHisList = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).getDocumentHistoryConsultationInfoCommandList();
@@ -40,17 +40,17 @@ public class DocumentHistoryConsultationController {
             }
             catch (NumberFormatException e) {
                 docHisList = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).getDocumentHistoryConsultationInfoCommandList();
-                docHisList = this.documentHistoryConsultationService.filterByDate(docHisList, style);
+                docHisList = this.documentHistoryConsultationService.filterByDate(docHisList, date);
             }
         }
         if (Objects.nonNull(start) && Objects.nonNull(end)  && (start.equalsIgnoreCase("") && end.equalsIgnoreCase(""))) {
-            style = "all";
+            date = "all";
         }
         model.addAttribute("documentHistoryConsultationList", docHisList);
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());
         session.setAttribute("speciality", speciality);
-        session.setAttribute("style", style);
+        session.setAttribute("date", date);
         session.setAttribute("startDate", start);
         session.setAttribute("endDate", end);
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION;

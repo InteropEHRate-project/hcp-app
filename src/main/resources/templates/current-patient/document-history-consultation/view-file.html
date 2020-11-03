@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">document history</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
-<div class="container">
+<div layout:fragment="content">
+    <div class="m-5"></div>
+<!--    <div class="btn-toolbar float-right" role="toolbar">-->
+<!--        <div class="btn-group mr-2" role="group">-->
+<!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+<!--            <a href="#" class="btn btn-primary" th:styleappend="${!documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
+<!--            <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
+<!--        </div>-->
+<!--    </div>-->
+    <p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+
     <iframe th:src="${dataString}" width="800" height="800"></iframe>
+
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{'/current-patient/document-history-consultation/view-section/' + ${session.speciality} + '/' + ${session.date}}" th:text="#{button.back}">Back</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

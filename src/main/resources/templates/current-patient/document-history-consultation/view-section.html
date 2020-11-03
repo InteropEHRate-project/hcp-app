@@ -25,10 +25,10 @@
                 Filter by Speciality
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/cardiology/' + ${session.style}}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
-                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/psychiatry/' + ${session.style}}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
+                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/cardiology/' + ${session.date}}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</a>
+                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/psychiatry/' + ${session.date}}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/all/' + ${session.style}}" th:text="#{button.reset}">RESET</a>
+                <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/all/' + ${session.date}}" th:text="#{button.reset}">RESET</a>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
     <p class="col-form-label" th:if="${isFiltered && (session.startDate == null && session.endDate == null || session.startDate.equalsIgnoreCase('') && session.endDate.equalsIgnoreCase(''))}"
        th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered} + '<br/>'
         + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'
-        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.style}">Filtered list</p>
+        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">Filtered list</p>
     <p class="col-form-label" th:if="${isFiltered && ((session.startDate != null && session.endDate != null) && (!session.startDate.equalsIgnoreCase('') && !session.endDate.equalsIgnoreCase('')))}"
        th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered} + '<br/>'
         + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'
@@ -89,10 +89,16 @@
             <td th:text="${{hc.getLocationHospital()}}"></td>
             <td th:text="${{hc.getExam()}}"></td>
             <td>
-                <div class="btn-group" role="group">
-                    <a class="btn btn-primary" target="_blank"
-                       th:href="@{'/current-patient/document-history-consultation/file-view/show-document/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
-                       th:text="#{button.open}">Open</a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{button.open}">Open</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item"
+                           th:href="@{'/current-patient/document-history-consultation/file-view/show-document/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
+                           th:text="#{button.open}">Open</a>
+                        <a class="dropdown-item"  target="_blank"
+                           th:href="@{'/current-patient/document-history-consultation/file-view/show-document-new-tab/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
+                           th:text="#{button.open.in.new.tab}">Open in new tab</a>
+                    </div>
                 </div>
             </td>
         </tr>
