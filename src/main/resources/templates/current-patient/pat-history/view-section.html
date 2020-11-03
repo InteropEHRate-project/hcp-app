@@ -90,16 +90,6 @@
                 </tr>
                 </tbody>
             </table>
-
-            <form th:action="@{/current-patient/pat-history/save-patHis}" method="post">
-                <div class="form-group">
-                    <label for="patHis"
-                           th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history}">Patient
-                        History</label>
-                    <textarea class="form-control" name="patHis" id="patHis" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
-            </form>
         </div>
 
         <div class="col-4">
@@ -117,16 +107,6 @@
                 </tr>
                 </tbody>
             </table>
-
-            <form th:action="@{/current-patient/pat-history/save-socHis}" method="post">
-                <div class="form-group">
-                    <label for="socHis"
-                           th:text="#{fragment.current.patient.navigation.left.pat.history.social.history}">Social
-                        History</label>
-                    <textarea class="form-control" name="socHis" id="socHis" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
-            </form>
         </div>
 
         <div class="col-4">
@@ -144,8 +124,24 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
 
-            <form th:action="@{/current-patient/pat-history/save-famHis}" method="post">
+        <div class="container">
+            <form th:action="@{/current-patient/pat-history/save}" method="post">
+                <div class="form-group">
+                    <label for="patHis"
+                           th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history}">Patient
+                        History</label>
+                    <textarea class="form-control" name="patHis" id="patHis" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="socHis"
+                           th:text="#{fragment.current.patient.navigation.left.pat.history.social.history}">Social
+                        History</label>
+                    <textarea class="form-control" name="socHis" id="socHis" rows="3"></textarea>
+                </div>
+
                 <div class="form-group">
                     <label for="famHis"
                            th:text="#{fragment.current.patient.navigation.left.pat.history.family.history}">Family

@@ -4,7 +4,9 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/current-patient/pat-history")
@@ -26,44 +28,11 @@ public class PatHistoryController {
     }
 
     @PostMapping
-    @RequestMapping("/save-patHis")
-    public String savePatHis(String patHis) {
+    @RequestMapping("/save")
+    public String saveSocHis(String patHis, String socHis, String famHis) {
         this.patHistoryService.insertPatHis(patHis);
-        return "redirect:/current-patient/pat-history/view-section";
-    }
-
-    @DeleteMapping
-    @RequestMapping("/delete-patHis")
-    public String deletePatHis(@RequestParam("patHis") String patHis) {
-        this.patHistoryService.deletePatHis(patHis);
-        return "redirect:/current-patient/pat-history/view-section";
-    }
-
-    @PostMapping
-    @RequestMapping("/save-socHis")
-    public String saveSocHis(String socHis) {
         this.patHistoryService.insertSocHis(socHis);
-        return "redirect:/current-patient/pat-history/view-section";
-    }
-
-    @DeleteMapping
-    @RequestMapping("/delete-socHis")
-    public String deleteSocHis(@RequestParam("socHis") String socHis) {
-        this.patHistoryService.deleteSocHis(socHis);
-        return "redirect:/current-patient/pat-history/view-section";
-    }
-
-    @PostMapping
-    @RequestMapping("/save-famHis")
-    public String saveFamHis(String famHis) {
         this.patHistoryService.insertFamHis(famHis);
-        return "redirect:/current-patient/pat-history/view-section";
-    }
-
-    @DeleteMapping
-    @RequestMapping("/delete-famHis")
-    public String deleteFamHis(@RequestParam("famHis") String famHis) {
-        this.patHistoryService.deleteFamHis(famHis);
         return "redirect:/current-patient/pat-history/view-section";
     }
 }
