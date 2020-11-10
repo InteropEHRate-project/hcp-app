@@ -208,6 +208,33 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.error("Error after ImageReport was received", e);
             }
         }
+
+        @Override
+        public void onPathologyHistoryInformationReceived(Bundle bundle) {
+            try {
+                log.info("onPathologyHistoryInformationReceived");
+            } catch (Exception e) {
+                log.error("Error after PathologyHistoryInformation was received", e);
+            }
+        }
+
+        @Override
+        public void onMedicalDocumentConsultationReceived(Bundle bundle) {
+            try {
+                log.info("onMedicalDocumentConsultationReceived");
+            } catch (Exception e) {
+                log.error("Error after MedicalDocumentConsultation was received", e);
+            }
+        }
+
+        @Override
+        public void onVitalSignsReceived(Bundle bundle) {
+            try {
+                log.info("onVitalSignsReceived");
+            } catch (Exception e) {
+                log.error("Error after VitalSigns was received", e);
+            }
+        }
     }
 
     public void certificate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {

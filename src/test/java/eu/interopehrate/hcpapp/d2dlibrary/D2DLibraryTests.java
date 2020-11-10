@@ -79,6 +79,21 @@ public class D2DLibraryTests {
             public void onImageReportReceived(Bundle bundle) {
 
             }
+
+            @Override
+            public void onPathologyHistoryInformationReceived(Bundle bundle) {
+
+            }
+
+            @Override
+            public void onMedicalDocumentConsultationReceived(Bundle bundle) {
+
+            }
+
+            @Override
+            public void onVitalSignsReceived(Bundle bundle) {
+
+            }
         }
 
         D2DHRExchangeListeners d2DHRExchangeListeners = new D2DHRExchangeListenersTestImpl();
