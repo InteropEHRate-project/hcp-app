@@ -8,10 +8,6 @@ import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,17 +83,5 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     @Override
     public void deleteFamHis(String famHis) {
         this.listOfFamHis.removeIf(x -> x.equals(famHis));
-    }
-
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
     }
 }

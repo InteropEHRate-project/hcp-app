@@ -175,6 +175,8 @@ public class CurrentPatient {
         this.imageReportTranslated = null;
         this.docHistoryConsult = null;
         this.docHistoryConsultTranslated = null;
+        this.patHisBundle = null;
+        this.patHisBundleTranslated = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
