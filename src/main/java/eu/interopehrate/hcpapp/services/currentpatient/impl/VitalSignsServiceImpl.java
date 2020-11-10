@@ -63,11 +63,10 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     @Override
     public VitalSignsCommand vitalSignsCommand() {
         this.currentPatient.setVitalSignsBundle(this.vitalSignsBundle);
-        this.currentPatient.setVitalSignsTranslated(this.translateService.translate(this.vitalSignsBundle, Locale.ITALY, Locale.UK));
-        var vitalSigns = vitalSignsBundle.getEntry()
+        var vitalSigns = this.currentPatient.vitalSignsList()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
-                .map(Bundle.BundleEntryComponent::getResource)
+                //  .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
+                //  .map(Bundle.BundleEntryComponent::getResource)
                 .map(Observation.class::cast)
                 .collect(Collectors.toList());
 

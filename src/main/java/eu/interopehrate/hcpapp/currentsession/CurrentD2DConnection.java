@@ -235,6 +235,8 @@ public class CurrentD2DConnection implements DisposableBean {
         public void onVitalSignsReceived(Bundle bundle) {
             try {
                 log.info("onVitalSignsReceived");
+                CurrentD2DConnection.this.currentPatient.initVitalSigns(bundle);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after VitalSigns was received", e);
             }
