@@ -224,6 +224,8 @@ public class CurrentD2DConnection implements DisposableBean {
         public void onMedicalDocumentConsultationReceived(Bundle bundle) {
             try {
                 log.info("onMedicalDocumentConsultationReceived");
+                CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundle);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after MedicalDocumentConsultation was received", e);
             }

@@ -1,19 +1,17 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandDocHistoryConsultation;
-import eu.interopehrate.hcpapp.currentsession.BundleProcessor;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import lombok.SneakyThrows;
-import org.hl7.fhir.r4.model.Bundle;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 @Service
 public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryConsultationService {
     private final CurrentPatient currentPatient;
-    private final Bundle docHistoryConsult;
     private final HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
@@ -32,13 +29,6 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation) {
         this.currentPatient = currentPatient;
         this.hapiToCommandDocHistoryConsultation = hapiToCommandDocHistoryConsultation;
-
-        File json = new ClassPathResource("MedicalDocumentReferenceExampleBundle.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        this.docHistoryConsult = parser.parseResource(Bundle.class, lineReadtest);
-        this.currentPatient.initDocHistoryConsultation(this.docHistoryConsult);
     }
 
     @Override
@@ -53,7 +43,7 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
 
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
-        var docHistoryConsultationCommands = new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList()
+        var docHistoryConsultationCommands = this.currentPatient.docHistoryConsultationList()
                 .stream()
                 .map(this.hapiToCommandDocHistoryConsultation::convert)
                 .collect(Collectors.toList());
