@@ -306,6 +306,38 @@ public class CurrentPatient {
         }
     }
 
+    public List<Observation> patHisConsultationRiskFactorsList() {
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.patHisBundleTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.patHisBundleTranslated).patHisConsultationObservationsList();
+            }
+        } else {
+            if (Objects.isNull(this.patHisBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.patHisBundle).patHisConsultationObservationsList();
+            }
+        }
+    }
+
+    public List<Condition> patHisConsultationDiagnosesList() {
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.patHisBundleTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.patHisBundleTranslated).patHisConsultationConditionsList();
+            }
+        } else {
+            if (Objects.isNull(this.patHisBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.patHisBundle).patHisConsultationConditionsList();
+            }
+        }
+    }
+
     public Boolean getDisplayTranslatedVersion() {
         return this.displayTranslatedVersion;
     }

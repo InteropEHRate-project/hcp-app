@@ -213,6 +213,8 @@ public class CurrentD2DConnection implements DisposableBean {
         public void onPathologyHistoryInformationReceived(Bundle bundle) {
             try {
                 log.info("onPathologyHistoryInformationReceived");
+                CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundle);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after PathologyHistoryInformation was received", e);
             }
