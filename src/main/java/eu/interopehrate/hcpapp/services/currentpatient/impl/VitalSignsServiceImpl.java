@@ -1,7 +1,5 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityVitalSigns;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -18,10 +16,12 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,13 +46,6 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         this.currentD2DConnection = currentD2DConnection;
         this.translateService = translateService;
         this.vitalSignsTypesRepository = vitalSignsTypesRepository;
-
-        File json = new ClassPathResource("VITAL_SIGN_EXAMPLE.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        this.vitalSignsBundle = parser.parseResource(Bundle.class, lineReadtest);
-        this.currentPatient.initVitalSigns(vitalSignsBundle);
     }
 
     @Override
@@ -65,8 +58,6 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         this.currentPatient.setVitalSignsBundle(this.vitalSignsBundle);
         var vitalSigns = this.currentPatient.vitalSignsList()
                 .stream()
-                //  .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
-                //  .map(Bundle.BundleEntryComponent::getResource)
                 .map(Observation.class::cast)
                 .collect(Collectors.toList());
 
