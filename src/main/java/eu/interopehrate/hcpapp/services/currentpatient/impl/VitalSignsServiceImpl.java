@@ -11,7 +11,6 @@ import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
-import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
@@ -35,16 +34,13 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private VitalSignsRepository vitalSignsRepository;
     private final CommandToEntityVitalSigns entityToVitalSigns;
     private CurrentD2DConnection currentD2DConnection;
-    private Bundle vitalSignsBundle;
-    private final TranslateService translateService;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
-    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, TranslateService translateService, VitalSignsTypesRepository vitalSignsTypesRepository) throws IOException {
+    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository) {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.entityToVitalSigns = entityToVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
-        this.translateService = translateService;
         this.vitalSignsTypesRepository = vitalSignsTypesRepository;
     }
 
@@ -55,13 +51,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public VitalSignsCommand vitalSignsCommand() {
-        this.currentPatient.setVitalSignsBundle(this.vitalSignsBundle);
-        var vitalSigns = this.currentPatient.vitalSignsList()
-                .stream()
-                .map(Observation.class::cast)
-                .collect(Collectors.toList());
-
-        var vitalSignsInfoCommands = vitalSigns
+        var vitalSignsInfoCommands = this.currentPatient.vitalSignsList()
                 .stream()
                 .map(hapiToCommandVitalSigns::convert)
                 .collect(Collectors.toList());
@@ -87,7 +77,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .build();
     }
 
-    public void callVitalSigns() throws IOException {
+    public void callVitalSigns() {
         if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
             Bundle vital = new Bundle();
             vital.setEntry(new ArrayList<>());
