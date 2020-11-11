@@ -14,7 +14,6 @@ import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -30,15 +29,16 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandVitalSigns hapiToCommandVitalSigns;
     private List<VitalSignsInfoCommand> vitalSignsInfoCommandsList = new ArrayList<>();
-    @Autowired
     private VitalSignsRepository vitalSignsRepository;
     private final CommandToEntityVitalSigns entityToVitalSigns;
     private CurrentD2DConnection currentD2DConnection;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
-    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository) {
+    public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, VitalSignsRepository vitalSignsRepository,
+                                 CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository) {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
+        this.vitalSignsRepository = vitalSignsRepository;
         this.entityToVitalSigns = entityToVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
         this.vitalSignsTypesRepository = vitalSignsTypesRepository;
