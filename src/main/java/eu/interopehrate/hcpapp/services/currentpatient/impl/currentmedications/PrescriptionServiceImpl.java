@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -194,7 +193,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    public void callSendPrescription() throws IOException {
+    public void callSendPrescription() {
         if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
             Bundle prescription = new Bundle();
             prescription.setEntry(new ArrayList<>());
