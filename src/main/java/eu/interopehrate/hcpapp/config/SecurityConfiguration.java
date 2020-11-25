@@ -1,4 +1,5 @@
 package eu.interopehrate.hcpapp.config;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,8 +16,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/administration/vital-signs-nomenclature/**", "/h2-console/**").hasRole("ADMIN")
                 .anyRequest().hasAnyRole("DOCTOR", "ADMIN")
                 .and()
-                .formLogin()
+                .httpBasic()
                 .and()
                 .exceptionHandling().accessDeniedPage("/accessDenied");
+
+        http.formLogin()
+                .and()
+                .logout();
     }
 }
