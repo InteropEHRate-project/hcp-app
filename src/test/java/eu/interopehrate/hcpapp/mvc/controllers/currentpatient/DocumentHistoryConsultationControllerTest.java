@@ -37,7 +37,7 @@ class DocumentHistoryConsultationControllerTest {
 
     @Test
     void viewSection() throws Exception {
-        when(this.documentHistoryConsultationService.documentHistoryConsultationCommand("all")).thenReturn(this.documentHistoryConsultationCommand);
+        when(this.documentHistoryConsultationService.documentHistoryConsultationCommand("all", "all", "", "")).thenReturn(this.documentHistoryConsultationCommand);
         this.mockMvc.perform(MockMvcRequestBuilders.get("/current-patient/document-history-consultation/view-section/all/all"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name(TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION))

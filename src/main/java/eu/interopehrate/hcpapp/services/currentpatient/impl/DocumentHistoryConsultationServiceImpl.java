@@ -33,7 +33,7 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
         this.currentPatient = currentPatient;
         this.hapiToCommandDocHistoryConsultation = hapiToCommandDocHistoryConsultation;
 
-        File json = new ClassPathResource("MedicalDocumentReferenceExampleBundle.json").getFile();
+        File json = new ClassPathResource("MedicalDocumentReferenceExampleBundle2.json").getFile();
         FileInputStream file = new FileInputStream(json);
         String lineReadtest = readFromInputStream(file);
         IParser parser = FhirContext.forR4().newJsonParser();
@@ -52,73 +52,51 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     }
 
     @Override
-    public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
+    public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) {
         var docHistoryConsultationCommands = new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList()
                 .stream()
                 .map(this.hapiToCommandDocHistoryConsultation::convert)
                 .collect(Collectors.toList());
-
-        if (speciality.equalsIgnoreCase("all")) {
-            this.isFiltered = false;
-            this.isEmpty = false;
-            return DocumentHistoryConsultationCommand.builder()
-                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                    .documentHistoryConsultationInfoCommandList(docHistoryConsultationCommands)
-                    .build();
+        if (Objects.nonNull(speciality) && !speciality.equals("")) {
+            docHistoryConsultationCommands = filterBySpeciality(docHistoryConsultationCommands, speciality);
         }
-        this.isEmpty = false;
-        if (!docHistoryConsultationCommands.isEmpty() && filter(docHistoryConsultationCommands, speciality).isEmpty()) {
-            this.isEmpty = true;
-            this.isFiltered = false;
-        }
-        if (!docHistoryConsultationCommands.isEmpty() && !filter(docHistoryConsultationCommands, speciality).isEmpty()) {
-            this.isFiltered = true;
+        if (Objects.nonNull(date) && !date.equals("")) {
+            if (date.equalsIgnoreCase("all")) {
+                return DocumentHistoryConsultationCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .documentHistoryConsultationInfoCommandList(docHistoryConsultationCommands)
+                        .build();
+            }
+            if (date.equalsIgnoreCase("lastYear")) {
+                start = LocalDate.now().getYear() - 1 + "-01-01";
+                end = LocalDate.now().toString();
+                return DocumentHistoryConsultationCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .documentHistoryConsultationInfoCommandList(filterBetween(docHistoryConsultationCommands, start, end))
+                        .build();
+            }
+            if (date.equalsIgnoreCase("last5Years")) {
+                start = LocalDate.now().getYear() - 5 + "-01-01";
+                end = LocalDate.now().toString();
+                return DocumentHistoryConsultationCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .documentHistoryConsultationInfoCommandList(filterBetween(docHistoryConsultationCommands, start, end))
+                        .build();
+            }
         }
         return DocumentHistoryConsultationCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .documentHistoryConsultationInfoCommandList(filter(docHistoryConsultationCommands, speciality))
+                .documentHistoryConsultationInfoCommandList(filterBetween(docHistoryConsultationCommands, start, end))
                 .build();
     }
 
-    @Override
-    public List<DocumentHistoryConsultationInfoCommand> filterBetween(List<DocumentHistoryConsultationInfoCommand> list, String start, String end) {
-        LocalDate startDate;
-        LocalDate endDate;
+    private List<DocumentHistoryConsultationInfoCommand> filterBetween(List<DocumentHistoryConsultationInfoCommand> list, String start, String end) {
+        if ((Objects.isNull(start) || start.equals("")) && (Objects.isNull(end) || end.equals(""))) {
+            return list;
+        }
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
         List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
-        if (Objects.nonNull(start) && !start.equals("") && (Objects.isNull(end) || end.equals(""))) {
-            startDate = LocalDate.parse(start);
-            for (var doc : list) {
-                if (startDate.compareTo(doc.getDate()) <= 0) {
-                    returnedList.add(doc);
-                }
-            }
-            if (!returnedList.isEmpty()) {
-                this.isEmpty = false;
-                this.isFiltered = true;
-            } else {
-                this.isEmpty = true;
-                this.isFiltered = false;
-            }
-            return returnedList;
-        }
-        if (Objects.nonNull(end) && !end.equals("") && (Objects.isNull(start) || start.equals(""))) {
-            endDate = LocalDate.parse(end);
-            for (var doc : list) {
-                if (endDate.compareTo(doc.getDate()) >= 0) {
-                    returnedList.add(doc);
-                }
-            }
-            if (!returnedList.isEmpty()) {
-                this.isEmpty = false;
-                this.isFiltered = true;
-            } else {
-                this.isEmpty = true;
-                this.isFiltered = false;
-            }
-            return returnedList;
-        }
-        startDate = LocalDate.parse(start);
-        endDate = LocalDate.parse(end);
         for (var doc : list) {
             if (startDate.compareTo(doc.getDate()) <= 0 && doc.getDate().compareTo(endDate) <= 0) {
                 returnedList.add(doc);
@@ -134,7 +112,10 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
         return returnedList;
     }
 
-    private static List<DocumentHistoryConsultationInfoCommand> filter(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {
+    private static List<DocumentHistoryConsultationInfoCommand> filterBySpeciality(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {
+        if (speciality.equalsIgnoreCase("all")) {
+            return list;
+        }
         List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
         list.forEach(dc -> {
             if (dc.getSpeciality().equalsIgnoreCase(speciality)) {

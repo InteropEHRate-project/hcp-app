@@ -22,8 +22,9 @@ public class fileViewController {
     public String showDocument(Model model,
                                @PathVariable(value = "speciality") String speciality,
                                @PathVariable(value = "exam") String exam,
-                               @PathVariable(value = "date") String date) {
-        model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).find(exam, date).getDataCompleteText());
+                               @PathVariable(value = "date") String date,
+                               String start, String end) {
+        model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).find(exam, date).getDataCompleteText());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE;
     }
 
@@ -32,8 +33,9 @@ public class fileViewController {
     public String showDocumentInNewTab(Model model,
                                        @PathVariable(value = "speciality") String speciality,
                                        @PathVariable(value = "exam") String exam,
-                                       @PathVariable(value = "date") String date) {
-        model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality).find(exam, date).getDataCompleteText());
+                                       @PathVariable(value = "date") String date,
+                                       String start, String end) {
+        model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).find(exam, date).getDataCompleteText());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE_NEW_TAB;
     }
 }
