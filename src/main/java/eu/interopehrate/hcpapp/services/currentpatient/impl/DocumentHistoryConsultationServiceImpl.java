@@ -1,13 +1,19 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandDocHistoryConsultation;
+import eu.interopehrate.hcpapp.currentsession.BundleProcessor;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import lombok.SneakyThrows;
+import org.hl7.fhir.r4.model.Bundle;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +26,19 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     private final HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
+    private final Bundle docHistoryConsult;
 
     @SneakyThrows
     public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation) {
         this.currentPatient = currentPatient;
         this.hapiToCommandDocHistoryConsultation = hapiToCommandDocHistoryConsultation;
+
+        File json = new ClassPathResource("MedicalDocumentReferenceExampleBundle.json").getFile();
+        FileInputStream file = new FileInputStream(json);
+        String lineReadtest = readFromInputStream(file);
+        IParser parser = FhirContext.forR4().newJsonParser();
+        this.docHistoryConsult = parser.parseResource(Bundle.class, lineReadtest);
+        this.currentPatient.initDocHistoryConsultation(this.docHistoryConsult);
     }
 
     @Override
@@ -39,7 +53,7 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
 
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality) {
-        var docHistoryConsultationCommands = this.currentPatient.docHistoryConsultationList()
+        var docHistoryConsultationCommands = new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList()
                 .stream()
                 .map(this.hapiToCommandDocHistoryConsultation::convert)
                 .collect(Collectors.toList());
@@ -64,46 +78,6 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .documentHistoryConsultationInfoCommandList(filter(docHistoryConsultationCommands, speciality))
                 .build();
-    }
-
-    @Override
-    public List<DocumentHistoryConsultationInfoCommand> filterByDate(List<DocumentHistoryConsultationInfoCommand> list, String style) {
-        List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
-        if (!style.equals("all")) {
-            if (style.equals("last-year")) {
-                for (DocumentHistoryConsultationInfoCommand doc : list) {
-                    if (LocalDate.now().getYear() - doc.getDate().getYear() <= 1) {
-                        returnedList.add(doc);
-                    }
-                }
-                if (!returnedList.isEmpty()) {
-                    this.isEmpty = false;
-                    this.isFiltered = true;
-                } else {
-                    this.isEmpty = true;
-                    this.isFiltered = false;
-                }
-                return returnedList;
-            }
-            if (style.equals("last-5-years")) {
-                for (DocumentHistoryConsultationInfoCommand doc : list) {
-                    if (LocalDate.now().getYear() - doc.getDate().getYear() <= 5) {
-                        returnedList.add(doc);
-                    }
-                }
-                if (!returnedList.isEmpty()) {
-                    this.isEmpty = false;
-                    this.isFiltered = true;
-                } else {
-                    this.isEmpty = true;
-                    this.isFiltered = false;
-                }
-                return returnedList;
-            }
-            this.isFiltered = false;
-            this.isEmpty = false;
-        }
-        return list;
     }
 
     @Override
@@ -168,5 +142,17 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
             }
         });
         return documentHistoryConsultationInfoCommands;
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 }
