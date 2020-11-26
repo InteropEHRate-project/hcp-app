@@ -101,8 +101,18 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
         if ((Objects.isNull(start) || start.equals("")) && (Objects.isNull(end) || end.equals(""))) {
             return list;
         }
-        LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end);
+        LocalDate startDate;
+        LocalDate endDate;
+        if (!start.equals("") && end.equals("")) {
+            startDate = LocalDate.parse(start);
+            endDate = LocalDate.MAX;
+        } else if (start.equals("") && !end.equals("")) {
+            startDate = LocalDate.MIN;
+            endDate = LocalDate.parse(end);
+        } else {
+            startDate = LocalDate.parse(start);
+            endDate = LocalDate.parse(end);
+        }
         List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
         for (var doc : list) {
             if (startDate.compareTo(doc.getDate()) <= 0 && doc.getDate().compareTo(endDate) <= 0) {

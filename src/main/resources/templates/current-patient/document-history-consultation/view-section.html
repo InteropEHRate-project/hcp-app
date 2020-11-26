@@ -40,7 +40,7 @@
             </div>
         </fieldset>
 
-        <fieldset class="form-group col-3">
+        <fieldset class="form-group col-6">
             <legend class="col-form-label col-sm-2 pt-0" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</legend>
             <div class="col-sm-10">
                 <div class="form-check">
@@ -53,9 +53,17 @@
                     <label class="form-check-label" for="last5Years"
                            th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.five.years}">Last 5 Years</label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="date" id="custom" value="custom">
-                    <label class="form-check-label" for="custom">Custom</label>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Start</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="inputEmail3" placeholder="Email" name="start">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">End</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="inputPassword3" placeholder="Password" name="end">
+                    </div>
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="form-check">
@@ -71,57 +79,11 @@
         </div>
     </form>
 
-<!--        <div class="form-inline">-->
-<!--            <div class="dropdown">-->
-<!--                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date}">-->
-<!--                    Filter by Date-->
-<!--                </button>-->
-<!--                <div class="dropdown-menu">-->
-<!--                    <a class="dropdown-item"-->
-<!--                       th:href="@{'/current-patient/document-history-consultation/view-section/' + '?speciality=' + ${session.speciality} + '&start=' + ${lastYear + '-01-01'} + '&end=' + ${now}}"-->
-<!--                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.year}">Last Year</a>-->
-<!--                    <a class="dropdown-item"-->
-<!--                       th:href="@{'/current-patient/document-history-consultation/view-section/' + '?speciality=' + ${session.speciality} + '&start=' + ${last5Years + '-01-01'} + '&end=' + ${now}}"-->
-<!--                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.five.years}">Last 5 Years</a>-->
-<!--                    <form class="form-inline justify-content-center">-->
-<!--                        <p th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.period.between}"></p>-->
-<!--                        <div class="form-group justify-content-center">-->
-<!--                            <input id="start" type="date" class="form-control col-sm-11" name="start">-->
-<!--                        </div>-->
-<!--                        <div class="form-group justify-content-center">-->
-<!--                            <input id="end" type="date" class="form-control col-sm-11" name="end">-->
-<!--                        </div>-->
-<!--                        <button type="submit" class="btn btn-primary mb-2" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.filter.period}">Filter</button>-->
-<!--                    </form>-->
-<!--                    <div class="dropdown-divider"></div>-->
-<!--                    <a class="dropdown-item" th:href="@{'/current-patient/document-history-consultation/view-section/' + '?speciality=' + ${session.speciality}}"-->
-<!--                       th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
+    <h5 th:if="${session.speciality == null}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.filter}">Please, set a filter to view data</h5>
     <p class="col-form-label" th:if="${session.speciality != null && session.date != null}"
        th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.parameters} + '<br/>'
         + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'
         + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">Parameters:</p>
-
-<!--    <p class="col-form-label" th:if="${isFiltered && (session.startDate == null && session.endDate == null || session.startDate.equalsIgnoreCase('') && session.endDate.equalsIgnoreCase(''))}"-->
-<!--       th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">Filtered list</p>-->
-<!--    <p class="col-form-label" th:if="${isFiltered && ((session.startDate != null && session.endDate != null) && (!session.startDate.equalsIgnoreCase('') && !session.endDate.equalsIgnoreCase('')))}"-->
-<!--       th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.startDate} + ' - ' + ${session.endDate}"></p>-->
-<!--    <p class="col-form-label" th:if="${isFiltered && session.startDate != null && !session.startDate.equalsIgnoreCase('') && (session.endDate == null || session.endDate.equalsIgnoreCase(''))}"-->
-<!--       th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ' >= ' + ${session.startDate}"></p>-->
-<!--    <p class="col-form-label" th:if="${isFiltered && session.endDate != null && !session.endDate.equalsIgnoreCase('') && (session.startDate == null || session.startDate.equalsIgnoreCase(''))}"-->
-<!--       th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'-->
-<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ' <= ' + ${session.endDate}"></p>-->
-<!--    <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>-->
     <br>
     <table class="table table-bordered">
         <thead class="thead-light">
