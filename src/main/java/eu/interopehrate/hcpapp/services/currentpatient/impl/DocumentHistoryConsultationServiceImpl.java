@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -53,6 +54,12 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
 
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) {
+        if (Objects.isNull(speciality) && Objects.isNull(date)) {
+            return DocumentHistoryConsultationCommand.builder()
+                    .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                    .documentHistoryConsultationInfoCommandList(Collections.emptyList())
+                    .build();
+        }
         var docHistoryConsultationCommands = new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList()
                 .stream()
                 .map(this.hapiToCommandDocHistoryConsultation::convert)
