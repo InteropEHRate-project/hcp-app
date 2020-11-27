@@ -21,28 +21,15 @@ import java.util.Objects;
 @Scope("session")
 public class IndexController {
     private IndexService indexService;
-    private String username;
 
     public IndexController(IndexService indexService) {
         this.indexService = indexService;
-        Object principal = null;
-        if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication())) {
-            principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
-        if(principal instanceof UserDetails) {
-            this.username = ((UserDetails) principal).getUsername();
-        } else if (Objects.nonNull(principal)) {
-            this.username = principal.toString();
-        } else {
-            this.username = null;
-        }
     }
 
     @RequestMapping({"/", "/index"})
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         session.setAttribute("mySessionAttribute", indexService.indexCommand());
-        session.setAttribute("username", this.username);
         return TemplateNames.INDEX_TEMPLATE;
     }
 
