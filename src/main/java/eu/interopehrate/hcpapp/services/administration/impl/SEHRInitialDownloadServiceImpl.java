@@ -39,6 +39,6 @@ public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadServic
         SEHRInitialDownloadEntity sehrInitialDownloadEntity = CollectionUtils.isEmpty(all) ? new SEHRInitialDownloadEntity() : all.get(0);
         BeanUtils.copyProperties(sehrInitialDownloadCommand, sehrInitialDownloadEntity);
         sehrInitialDownloadRepository.save(sehrInitialDownloadEntity);
-        auditInformationService.auditEvent(AuditEventType.SAVE_INITIAL_SHER_DOWNLOAD, sehrInitialDownloadCommand.toString());
+        auditInformationService.auditEvent(AuditEventType.SAVE_INITIAL_SEHR_DOWNLOAD, sehrInitialDownloadCommand.toString());
     }
 }

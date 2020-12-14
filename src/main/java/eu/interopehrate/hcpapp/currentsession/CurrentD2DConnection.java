@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
@@ -35,13 +37,15 @@ public class CurrentD2DConnection implements DisposableBean {
     @Value("${ips.validator.pack}")
     private String ipsValidatorPackPath;
     private TerminalFhirContext terminalFhirContext;
+    private AuditInformationService auditInformationService;
 
     public CurrentD2DConnection(CurrentPatient currentPatient,
-                                D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext) {
+                                D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.d2DConnectionOperations = d2DConnectionOperations;
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.terminalFhirContext = terminalFhirContext;
+        this.auditInformationService = auditInformationService;
     }
 
     public ConnectedThread getConnectedThread() {
@@ -172,6 +176,7 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.info("onPrescriptionReceived");
                 CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);
                 CurrentD2DConnection.this.indexPatientDataCommand.setPrescriptionReceived(true);
+                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing Prescription Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after Prescription was received", e);
@@ -191,6 +196,7 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.info("onLaboratoryResultsReceived");
                 CurrentD2DConnection.this.currentPatient.initLaboratoryResults(bundle);
                 CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
+                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after Prescription was received", e);
@@ -203,6 +209,7 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.info("onImageReportReceived");
                 CurrentD2DConnection.this.currentPatient.initImageReport(bundle);
                 CurrentD2DConnection.this.indexPatientDataCommand.setImageReportReceived(true);
+                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing ImageReport Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after ImageReport was received", e);
@@ -214,6 +221,7 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onPathologyHistoryInformationReceived");
                 CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundle);
+                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing PathologyHistory Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after PathologyHistoryInformation was received", e);
@@ -225,6 +233,7 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onMedicalDocumentConsultationReceived");
                 CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundle);
+                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing DocumentConsultation Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after MedicalDocumentConsultation was received", e);
@@ -236,6 +245,7 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onVitalSignsReceived");
                 CurrentD2DConnection.this.currentPatient.initVitalSigns(bundle);
+                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing VitalSigns Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after VitalSigns was received", e);

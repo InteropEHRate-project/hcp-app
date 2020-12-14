@@ -6,9 +6,11 @@ import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandP
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import lombok.SneakyThrows;
@@ -38,6 +40,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private CurrentD2DConnection currentD2DConnection;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
+    private AuditInformationService auditInformationService;
 
     public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
@@ -215,6 +218,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public void sendPrescription(Bundle medicationRequest) {
         this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
+        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
         this.prescriptionRepository.deleteAll();
     }
 

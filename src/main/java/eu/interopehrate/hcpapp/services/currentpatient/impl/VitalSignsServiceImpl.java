@@ -6,10 +6,12 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private final CommandToEntityVitalSigns entityToVitalSigns;
     private CurrentD2DConnection currentD2DConnection;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
+    private AuditInformationService auditInformationService;
 
     public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, VitalSignsRepository vitalSignsRepository,
                                  CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository) {
@@ -99,6 +102,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     public void sendVitalSigns(Bundle vitalSigns) {
         this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
+        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send VitalSigns to S-EHR");
         this.vitalSignsInfoCommandsList.clear();
         this.vitalSignsRepository.deleteAll();
     }

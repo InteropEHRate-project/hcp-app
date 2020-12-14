@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.AuditInformationRepository;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
+import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.data.domain.Sort;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class AuditInformationServiceImpl implements AuditInformationService {
 
@@ -32,6 +34,7 @@ public class AuditInformationServiceImpl implements AuditInformationService {
 
     @Override
     public List<AuditInformationEntity> getAuditInformationCommand() {
+        log.info("Auditing");
         return auditInformationRepository.findAll(Sort.sort(AuditInformationEntity.class).by(AuditInformationEntity::getDateTime).descending());
     }
 
