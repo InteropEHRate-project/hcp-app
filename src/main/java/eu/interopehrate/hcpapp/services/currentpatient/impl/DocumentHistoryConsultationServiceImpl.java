@@ -1,23 +1,15 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandDocHistoryConsultation;
-import eu.interopehrate.hcpapp.currentsession.BundleProcessor;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import lombok.SneakyThrows;
-import org.hl7.fhir.r4.model.Bundle;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -27,19 +19,13 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     private final HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
-    private final Bundle docHistoryConsult;
+    private final CurrentD2DConnection currentD2DConnection;
 
     @SneakyThrows
-    public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation) {
+    public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandDocHistoryConsultation = hapiToCommandDocHistoryConsultation;
-
-        File json = new ClassPathResource("MedicalDocumentReferenceExampleBundle2.json").getFile();
-        FileInputStream file = new FileInputStream(json);
-        String lineReadtest = readFromInputStream(file);
-        IParser parser = FhirContext.forR4().newJsonParser();
-        this.docHistoryConsult = parser.parseResource(Bundle.class, lineReadtest);
-        this.currentPatient.initDocHistoryConsultation(this.docHistoryConsult);
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
@@ -53,104 +39,44 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     }
 
     @Override
-    public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) {
-        if (Objects.isNull(speciality) && Objects.isNull(date)) {
+    public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) throws Exception {
+        if (Objects.isNull(speciality) || Objects.isNull(date) || Objects.isNull(start) || Objects.isNull(end)) {
             return DocumentHistoryConsultationCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .documentHistoryConsultationInfoCommandList(Collections.emptyList())
                     .build();
         }
-        var docHistoryConsultationCommands = new BundleProcessor(this.docHistoryConsult).docHistoryConsultationList()
-                .stream()
-                .map(this.hapiToCommandDocHistoryConsultation::convert)
-                .collect(Collectors.toList());
-        if (Objects.nonNull(speciality) && !speciality.equals("")) {
-            docHistoryConsultationCommands = filterBySpeciality(docHistoryConsultationCommands, speciality);
-        }
-        if (Objects.nonNull(date) && !date.equals("")) {
-            if (date.equalsIgnoreCase("all")) {
-                return DocumentHistoryConsultationCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .documentHistoryConsultationInfoCommandList(docHistoryConsultationCommands)
-                        .build();
-            }
-            if (date.equalsIgnoreCase("lastYear")) {
-                start = LocalDate.now().getYear() - 1 + "-01-01";
-                end = LocalDate.now().toString();
-                return DocumentHistoryConsultationCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .documentHistoryConsultationInfoCommandList(filterBetween(docHistoryConsultationCommands, start, end))
-                        .build();
-            }
-            if (date.equalsIgnoreCase("last5Years")) {
-                start = LocalDate.now().getYear() - 5 + "-01-01";
-                end = LocalDate.now().toString();
-                return DocumentHistoryConsultationCommand.builder()
-                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                        .documentHistoryConsultationInfoCommandList(filterBetween(docHistoryConsultationCommands, start, end))
-                        .build();
-            }
-        }
-        return DocumentHistoryConsultationCommand.builder()
-                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .documentHistoryConsultationInfoCommandList(filterBetween(docHistoryConsultationCommands, start, end))
-                .build();
-    }
-
-    private List<DocumentHistoryConsultationInfoCommand> filterBetween(List<DocumentHistoryConsultationInfoCommand> list, String start, String end) {
-        if ((Objects.isNull(start) || start.equals("")) && (Objects.isNull(end) || end.equals(""))) {
-            return list;
-        }
         LocalDate startDate;
         LocalDate endDate;
-        if (!start.equals("") && end.equals("")) {
+        if (!start.equals("") && !end.equals("")) {
             startDate = LocalDate.parse(start);
-            endDate = LocalDate.MAX;
+            endDate = LocalDate.parse(end);
+        } else if (start.equals("") && end.equals("") && date.equalsIgnoreCase("all")) {
+            startDate = LocalDate.MIN;
+            endDate = LocalDate.now();
+        } else if (start.equals("") && end.equals("") && date.equalsIgnoreCase("lastYear")) {
+            startDate = LocalDate.now().minusYears(1);
+            endDate = LocalDate.now();
+        } else if (start.equals("") && end.equals("") && date.equalsIgnoreCase("last5Years")) {
+            startDate = LocalDate.now().minusYears(5);
+            endDate = LocalDate.now();
         } else if (start.equals("") && !end.equals("")) {
             startDate = LocalDate.MIN;
             endDate = LocalDate.parse(end);
         } else {
             startDate = LocalDate.parse(start);
-            endDate = LocalDate.parse(end);
+            endDate = LocalDate.now();
         }
-        List<DocumentHistoryConsultationInfoCommand> returnedList = new ArrayList<>();
-        for (var doc : list) {
-            if (startDate.compareTo(doc.getDate()) <= 0 && doc.getDate().compareTo(endDate) <= 0) {
-                returnedList.add(doc);
-            }
-        }
-        if (!returnedList.isEmpty()) {
-            this.isEmpty = false;
-            this.isFiltered = true;
-        } else {
-            this.isEmpty = true;
-            this.isFiltered = false;
-        }
-        return returnedList;
-    }
+        this.currentD2DConnection.getConnectedThread().sendMedicalDocumentRequest(startDate, endDate, speciality);
 
-    private static List<DocumentHistoryConsultationInfoCommand> filterBySpeciality(List<DocumentHistoryConsultationInfoCommand> list, String speciality) {
-        if (speciality.equalsIgnoreCase("all")) {
-            return list;
-        }
-        List<DocumentHistoryConsultationInfoCommand> documentHistoryConsultationInfoCommands = new ArrayList<>();
-        list.forEach(dc -> {
-            if (dc.getSpeciality().equalsIgnoreCase(speciality)) {
-                documentHistoryConsultationInfoCommands.add(dc);
-            }
-        });
-        return documentHistoryConsultationInfoCommands;
-    }
+        var list = this.currentPatient.docHistoryConsultationList()
+                .stream()
+                .map(this.hapiToCommandDocHistoryConsultation::convert)
+                .collect(Collectors.toList());
 
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
+        return DocumentHistoryConsultationCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .documentHistoryConsultationInfoCommandList(list)
+                .build();
     }
 }

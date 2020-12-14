@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/document-history-consultation")
@@ -26,16 +25,7 @@ public class DocumentHistoryConsultationController {
     public String viewSection(Model model, HttpSession session,
                               String speciality,
                               String date,
-                              String start, String end) {
-        if ((Objects.nonNull(start) && Objects.nonNull(end)) && (!start.equals("") || !end.equals(""))) {
-            if (!start.equals("") && end.equals("")) {
-                date = start + " <--> XXX";
-            } else if (start.equals("") && !end.equals("")) {
-                date = "XXX <--> " + end;
-            } else {
-                date = start + " <--> " + end;
-            }
-        }
+                              String start, String end) throws Exception {
         DocumentHistoryConsultationCommand docHisCommand = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end);
 
         session.setAttribute("speciality", speciality);

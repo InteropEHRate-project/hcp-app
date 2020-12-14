@@ -8,5 +8,5 @@ public interface DocumentHistoryConsultationService {
 
     boolean isEmpty();
 
-    DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end);
+    DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) throws Exception;
 }

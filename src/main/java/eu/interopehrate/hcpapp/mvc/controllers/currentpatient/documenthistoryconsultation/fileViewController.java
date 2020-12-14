@@ -23,7 +23,7 @@ public class fileViewController {
                                @PathVariable(value = "speciality") String speciality,
                                @PathVariable(value = "exam") String exam,
                                @PathVariable(value = "date") String date,
-                               String start, String end) {
+                               String start, String end) throws Exception {
         model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).find(exam, date).getDataCompleteText());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE;
     }
@@ -34,7 +34,7 @@ public class fileViewController {
                                        @PathVariable(value = "speciality") String speciality,
                                        @PathVariable(value = "exam") String exam,
                                        @PathVariable(value = "date") String date,
-                                       String start, String end) {
+                                       String start, String end) throws Exception {
         model.addAttribute("dataString", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).find(exam, date).getDataCompleteText());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE_NEW_TAB;
     }
