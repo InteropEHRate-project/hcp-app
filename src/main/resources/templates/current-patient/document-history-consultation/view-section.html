@@ -19,6 +19,10 @@
 <!--    </div>-->
 
     <p><h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+    <br>
+    <div th:if="${currentD2DConnection.getConnectedThread() == null}">
+        <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.no.connection}">The connection with S-EHR is not established</h5>
+    </div>
 
     <form class="row">
         <fieldset class="form-group col-2">
@@ -78,12 +82,17 @@
         + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'
         + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">Parameters:</p>
             <br>
-            <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
+            <div th:if="${currentD2DConnection.getConnectedThread() != null}">
+                <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
+            </div>
         </div>
     </form>
 
-    <h5 th:if="${session.speciality == null}" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.filter}">Please, set a filter to view data</h5>
+    <div th:if="${session.speciality == null && currentD2DConnection.getConnectedThread() != null}">
+        <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.filter}">Please, set a filter to view data</h5>
+    </div>
     <br>
+
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>

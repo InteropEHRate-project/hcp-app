@@ -32,6 +32,7 @@ public class DocumentHistoryConsultationController {
         session.setAttribute("date", date);
         session.setAttribute("startDate", start);
         session.setAttribute("endDate", end);
+        model.addAttribute("currentD2DConnection", this.documentHistoryConsultationService.getCurrentD2DConnection());
         model.addAttribute("documentHistoryConsultationList", docHisCommand.getDocumentHistoryConsultationInfoCommandList());
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());

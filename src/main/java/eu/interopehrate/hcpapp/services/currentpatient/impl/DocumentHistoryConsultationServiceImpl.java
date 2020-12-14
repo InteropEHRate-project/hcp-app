@@ -29,6 +29,11 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     }
 
     @Override
+    public CurrentD2DConnection getCurrentD2DConnection() {
+        return currentD2DConnection;
+    }
+
+    @Override
     public boolean isFiltered() {
         return isFiltered;
     }
