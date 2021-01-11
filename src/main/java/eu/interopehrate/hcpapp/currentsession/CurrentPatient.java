@@ -372,7 +372,7 @@ public class CurrentPatient {
         if (currentPatient.getDisplayTranslatedVersion()
                 && coding.hasDisplayElement()
                 && coding.getDisplayElement().hasExtension()
-                && coding.getDisplayElement().getExtensionFirstRep().hasExtension()) {
+                && coding.getDisplayElement().getExtensionFirstRep().hasExtension() && coding.getDisplayElement().getExtensionFirstRep().getExtension().size() >= 2) {
             return coding.getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString();
         } else {
             return coding.getDisplay();
