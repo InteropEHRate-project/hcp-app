@@ -12,6 +12,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Medica
 import eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications.MedicationServiceImpl;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
+import eu.interopehrate.ihs.terminalclient.services.ExtendWithTranslationService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
@@ -49,12 +50,14 @@ public class MedicationControllerTest {
     @Mock
     private ConceptTranslateService conceptTranslateService;
     @Mock
+    private ExtendWithTranslationService extendWithTranslationService;
+    @Mock
     private TerminalFhirContext terminalFhirContext;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        MedicationService service = new MedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext));
+        MedicationService service = new MedicationServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext));
         HealthCareProfessionalServiceImpl healthCareProfessionalService = new HealthCareProfessionalServiceImpl(healthCareProfessionalRepository, new EntityToCommandHealthCareProfessional());
         this.controller = new MedicationController(service, healthCareProfessionalService);
     }

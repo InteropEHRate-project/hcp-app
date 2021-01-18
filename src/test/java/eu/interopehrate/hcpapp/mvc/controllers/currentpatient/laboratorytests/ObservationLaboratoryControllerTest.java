@@ -9,6 +9,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests.Obse
 import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.ConceptTranslateService;
+import eu.interopehrate.ihs.terminalclient.services.ExtendWithTranslationService;
 import eu.interopehrate.ihs.terminalclient.services.MachineTranslateService;
 import eu.interopehrate.ihs.terminalclient.services.impl.CodesConversionServiceImpl;
 import eu.interopehrate.ihs.terminalclient.services.impl.TranslateServiceImpl;
@@ -33,6 +34,8 @@ class ObservationLaboratoryControllerTest {
     @Mock
     private ConceptTranslateService conceptTranslateService;
     @Mock
+    private ExtendWithTranslationService extendWithTranslationService;
+    @Mock
     private TerminalFhirContext terminalFhirContext;
     @Mock
     private HttpSession httpSession;
@@ -40,7 +43,9 @@ class ObservationLaboratoryControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext), new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)));
+        ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(
+                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
+                new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)));
         this.controller = new ObservationLaboratoryController(service);
     }
 
