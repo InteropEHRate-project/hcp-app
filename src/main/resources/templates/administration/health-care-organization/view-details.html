@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" layout:decorate="~{layouts/layoutadministration}"
       xmlns:layout="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:text="#{template.administration.health.care.organization.title}">Organization</title>
 </head>
@@ -30,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="btn-toolbar float-right" role="toolbar">
+    <div class="btn-toolbar float-right" role="toolbar" sec:authorize="hasRole('ROLE_ADMIN')">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/administration/health-care-organization/open-add-page}" th:text="#{button.upload.certificate}">upload certificate</a>
         </div>

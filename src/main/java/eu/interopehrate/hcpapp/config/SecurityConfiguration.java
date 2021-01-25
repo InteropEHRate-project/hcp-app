@@ -19,8 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
 
         http.authorizeRequests()
-                .antMatchers("/administration/vital-signs-nomenclature/**", "/h2-console/**").hasRole("ADMIN")
-                .anyRequest().hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers("/h2-console/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .and()
