@@ -93,6 +93,7 @@ public class CurrentD2DConnection implements DisposableBean {
         try {
             this.d2DConnectionOperations.sendPractitionerIdentity(this.connectedThread);
             this.connectedThread.sendHCPCertificate();
+            this.connectedThread.sendSymKey();
         } catch (Exception e) {
             this.closeConnection();
             throw new RuntimeException(e);
