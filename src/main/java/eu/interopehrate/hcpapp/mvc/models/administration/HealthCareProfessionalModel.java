@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.administration;
+package eu.interopehrate.hcpapp.mvc.models.administration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
