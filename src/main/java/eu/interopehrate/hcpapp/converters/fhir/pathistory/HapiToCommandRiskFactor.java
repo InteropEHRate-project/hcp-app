@@ -24,8 +24,8 @@ public class HapiToCommandRiskFactor implements Converter<Observation, PatHistor
         if (Objects.nonNull(source.getCode())) {
             source.getCode().getCoding().forEach(coding -> patHistoryInfoCommandRiskFactor.setRiskFactor(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
-        if (source.hasValue() && ((BooleanType)source.getValue()).hasValue()) {
-            patHistoryInfoCommandRiskFactor.setState(((BooleanType)source.getValue()).getValue());
+        if (source.hasValue() && ((BooleanType) source.getValue()).hasValue()) {
+            patHistoryInfoCommandRiskFactor.setState(((BooleanType) source.getValue()).getValue());
         }
 
         return patHistoryInfoCommandRiskFactor;

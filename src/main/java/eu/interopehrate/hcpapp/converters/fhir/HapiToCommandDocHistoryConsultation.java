@@ -24,12 +24,12 @@ public class HapiToCommandDocHistoryConsultation implements Converter<DocumentRe
                     .toLocalDate());
         }
         if (source.hasCustodian() && (source.getCustodian().getResource() != null)
-                && ((Organization)source.getCustodian().getResource()).hasAddress()
-                && ((Organization)source.getCustodian().getResource()).getAddress().get(0).hasCity()
-                && ((Organization)source.getCustodian().getResource()).getAddress().get(0).hasCountry()) {
-            documentHistoryConsultationInfoCommand.setLocationHospital(((Organization)source.getCustodian().getResource()).getAddress().get(0).getCity()
+                && ((Organization) source.getCustodian().getResource()).hasAddress()
+                && ((Organization) source.getCustodian().getResource()).getAddress().get(0).hasCity()
+                && ((Organization) source.getCustodian().getResource()).getAddress().get(0).hasCountry()) {
+            documentHistoryConsultationInfoCommand.setLocationHospital(((Organization) source.getCustodian().getResource()).getAddress().get(0).getCity()
                     + ", "
-                    + ((Organization)source.getCustodian().getResource()).getAddress().get(0).getCountry());
+                    + ((Organization) source.getCustodian().getResource()).getAddress().get(0).getCountry());
         }
         if (source.hasContent() && source.getContent().get(0).hasAttachment() && source.getContent().get(0).getAttachment().hasTitle()) {
             documentHistoryConsultationInfoCommand.setExam(source.getContent().get(0).getAttachment().getTitle());

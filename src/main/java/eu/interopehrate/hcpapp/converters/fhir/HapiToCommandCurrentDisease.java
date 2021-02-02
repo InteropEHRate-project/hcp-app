@@ -34,7 +34,7 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                     .map(c -> c.getSystem() + ":" + c.getCode())
                     .collect(Collectors.joining("; ")));
 
-            for(Coding coding : condition.getCode().getCoding()) {
+            for (Coding coding : condition.getCode().getCoding()) {
                 currentDiseaseInfoCommand.setDisease(CurrentPatient.extractExtensionText(coding, this.currentPatient));
             }
         }
@@ -51,8 +51,8 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                     .map(Coding::getCode)
                     .collect(Collectors.joining("; ")));
 
-            for(CodeableConcept codeableConcept : condition.getCategory()) {
-                for(Coding coding : codeableConcept.getCoding()) {
+            for (CodeableConcept codeableConcept : condition.getCategory()) {
+                for (Coding coding : codeableConcept.getCoding()) {
                     currentDiseaseInfoCommand.setCategoryName(CurrentPatient.extractExtensionText(coding, this.currentPatient));
                 }
             }

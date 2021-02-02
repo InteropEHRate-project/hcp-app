@@ -43,8 +43,8 @@ public class PrescriptionController {
 
     @GetMapping
     @RequestMapping("/view-section/page/{pageNo}/{pageNoSEHR}/keywordPrescription/{keywordPrescription}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-                                @PathVariable (value = "pageNoSEHR") int pageNoSEHR,
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @PathVariable(value = "pageNoSEHR") int pageNoSEHR,
                                 @PathVariable(value = "keywordPrescription") String keywordPrescription,
                                 Model model) throws IOException {
         //PAGE SIZE is hardcoded HERE

@@ -43,7 +43,7 @@ public class HealthCareProfessionalServiceImpl implements HealthCareProfessional
             HealthCareProfessionalEntity healthCareProfessionalEntity = healthCareProfessionalRepository.getOne(certificateId);
             Byte[] byteObjects = new Byte[file.getBytes().length];
             int i = 0;
-            for (byte b : file.getBytes()){
+            for (byte b : file.getBytes()) {
                 byteObjects[i++] = b;
             }
             healthCareProfessionalEntity.setCertificate(byteObjects);

@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @Slf4j
 @Service
-public class  HealthCareOrganizationServiceImpl implements HealthCareOrganizationService {
+public class HealthCareOrganizationServiceImpl implements HealthCareOrganizationService {
     private HealthCareOrganizationRepository healthCareOrganizationRepository;
     private EntityToCommandHealthCareOrganization entityToCommandHealthCareOrganization;
 
@@ -37,7 +37,7 @@ public class  HealthCareOrganizationServiceImpl implements HealthCareOrganizatio
             HealthCareOrganizationEntity healthCareOrganizationEntity = healthCareOrganizationRepository.getOne(certificateId);
             Byte[] byteObjects = new Byte[file.getBytes().length];
             int i = 0;
-            for (byte b : file.getBytes()){
+            for (byte b : file.getBytes()) {
                 byteObjects[i++] = b;
             }
             healthCareOrganizationEntity.setCertificate(byteObjects);

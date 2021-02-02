@@ -4,8 +4,6 @@ import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Objects;
 
 @Controller
 @Scope("session")
@@ -77,7 +74,7 @@ public class IndexController {
 
     @PostMapping
     @RequestMapping("/index/download-ips")
-    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, Model model) throws Exception{
+    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             if (indexCommand.getCloudConnectionState() == null) {
                 indexCommand.setCloudConnectionState(CloudConnectionState.OFF);

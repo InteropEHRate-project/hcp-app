@@ -27,6 +27,6 @@ public class IndexPatientDataCommand {
 
     public Boolean hasData() {
         return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) ||
-                Objects.nonNull(birthDate) || Objects.nonNull(consent)||Objects.nonNull(certificate);
+                Objects.nonNull(birthDate) || Objects.nonNull(consent) || Objects.nonNull(certificate);
     }
 }

@@ -24,8 +24,8 @@ public class HapiToCommandDiagnosis implements Converter<Condition, PatHistoryIn
         if (Objects.nonNull(source.getCode())) {
             source.getCode().getCoding().forEach(coding -> patHistoryInfoCommandDiagnosis.setDiagnosis(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
-        if (source.hasOnset() && Objects.nonNull(((DateTimeType)source.getOnset()).getYear())) {
-            patHistoryInfoCommandDiagnosis.setYearOfDiagnosis(((DateTimeType)source.getOnset()).getYear());
+        if (source.hasOnset() && Objects.nonNull(((DateTimeType) source.getOnset()).getYear())) {
+            patHistoryInfoCommandDiagnosis.setYearOfDiagnosis(((DateTimeType) source.getOnset()).getYear());
         }
         if (source.hasNote() && source.getNoteFirstRep().hasText()) {
             patHistoryInfoCommandDiagnosis.setComments(source.getNoteFirstRep().getText());
