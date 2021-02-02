@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutadministration}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.administration.navigation.left.hcps}">HCPs</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <p><h3 th:text="#{fragment.administration.navigation.left.hcps}">HCPs</h3></p>
+    <div class="m-5"></div>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{template.administration.hcps.name}">Name</th>
+            <th th:text="#{template.administration.hcps.occupation}">Occupation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hcp : ${hcps}">
+            <td th:text="${hcp.name}"></td>
+            <td th:text="${hcp.occupation}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
