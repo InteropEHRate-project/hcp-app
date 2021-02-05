@@ -47,6 +47,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_DIAGNOSTIC_IMAGING_DICOM = "current-patient/diagnostic-imaging/DICOM";
     String CURRENT_PATIENT_DIAGNOSTIC_IMAGING_IMAGE_REPORT = "current-patient/diagnostic-imaging/image-report";
     String CURRENT_PATIENT_OUTPATIENT_REPORT = "current-patient/outpatient-report/view-section";
+    String CURRENT_PATIENT_SEND_TO_OTHER_HCP = "current-patient/send-to-other-hcp/view-section";
 
     // Visit data
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/visit-data/vital-signs/view-section";

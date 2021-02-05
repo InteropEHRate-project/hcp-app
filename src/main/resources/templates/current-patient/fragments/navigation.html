@@ -81,6 +81,14 @@
        href="../outpatient-report/view-section.html"
        th:href="@{/current-patient/outpatient-report/view-section}"
        th:text="#{fragment.current.patient.navigation.left.outpatient.report}">Outpatient Report</a>
+
+    <div class="dropdown-divider"></div>
+
+    <a class="flex-sm-fill text-sm-left nav-link"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/send-to-other-hcp')} ? 'active' : ''"
+       href="../send-to-other-hcp/view-section.html"
+       th:href="@{/current-patient/send-to-other-hcp/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.send.to.other.hcp}">Send to other HCP</a>
 </div>
 </body>
 </html>

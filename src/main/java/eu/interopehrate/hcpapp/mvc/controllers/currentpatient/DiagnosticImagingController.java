@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticimaging;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;

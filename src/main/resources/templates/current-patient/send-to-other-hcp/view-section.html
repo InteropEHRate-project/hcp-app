@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.outpatient.report}">Outpatient report</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.send.to.other.hcp}">Send to other HCP</h3></p>
+    <div class="m-5"></div>
+    <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{template.administration.hcps.name}">Name</th>
+            <th th:text="#{template.administration.hcps.occupation}">Occupation</th>
+            <th th:text="#{button.action}">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hcp : ${hcps}">
+            <td th:text="${hcp.name}"></td>
+            <td th:text="${hcp.occupation}"></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.send}">Send</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
