@@ -11,21 +11,21 @@
     <p><h3 th:text="#{fragment.current.patient.navigation.left.send.to.other.hcp}">Send to other HCP</h3></p>
     <div class="m-5"></div>
     <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
-    <p><h5 th:if="${connectedThread == null}" th:text="#{fragment.current.patient.navigation.left.connection.required}">Connection with S-EHR app is required</h5></p>
+    <p><h5 th:if="${patient == null}" th:text="#{fragment.current.patient.navigation.left.connection.required}">Connection required</h5></p>
 
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
             <th th:text="#{template.administration.hcps.name}">Name</th>
             <th th:text="#{template.administration.hcps.occupation}">Occupation</th>
-            <th th:if="${connectedThread != null}" th:text="#{button.action}">Action</th>
+            <th th:if="${patient != null}" th:text="#{button.action}">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="hcp : ${hcps}">
             <td th:text="${hcp.name}"></td>
             <td th:text="${hcp.occupation}"></td>
-            <td th:if="${connectedThread != null}">
+            <td th:if="${patient != null}">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.send}" th:href="@{/current-patient/send-to-other-hcp/send-patient(
                             initialHcpId=${{hcp.id}})}">Send</a>
@@ -34,6 +34,8 @@
         </tr>
         </tbody>
     </table>
+    <p><h5 th:if="${isWorking}" th:text="${'Patient has been successfully sent to ' + hcpName}">xxx</h5></p>
+    <p><h5 th:if="${isWorking  == false}">Patient was not sent</h5></p>
 </div>
 </body>
 </html>

@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class HealthCareProfessionalModel {
+    @JsonProperty("id")
+    private Long id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("occupation")
