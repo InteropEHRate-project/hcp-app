@@ -24,6 +24,7 @@ public class IndexPatientDataCommand {
     private Boolean imageReportReceived = false;
     private String certificate;
     private Integer age;
+    private String country;
 
     public Boolean hasData() {
         return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) ||

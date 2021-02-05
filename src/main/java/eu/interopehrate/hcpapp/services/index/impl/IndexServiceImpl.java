@@ -74,6 +74,11 @@ public class IndexServiceImpl implements IndexService {
                 patientDataCommand.setBirthDate(currentPatient.getPatient().getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                 patientDataCommand.setAge(Period.between(patientDataCommand.getBirthDate(), LocalDate.now()).getYears());
             }
+            if (Objects.nonNull(this.currentPatient.getPatient().getAddress())
+                    && this.currentPatient.getPatient().getAddress().size() > 0
+                    && this.currentPatient.getPatient().getAddressFirstRep().hasCountry()) {
+                patientDataCommand.setCountry(this.currentPatient.getPatient().getAddressFirstRep().getCountry());
+            }
         }
         if (Objects.nonNull(currentPatient.getConsent())) {
             patientDataCommand.setConsent(currentPatient.getConsentAsString());
