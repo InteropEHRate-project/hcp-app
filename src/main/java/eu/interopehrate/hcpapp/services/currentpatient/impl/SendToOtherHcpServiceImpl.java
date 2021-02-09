@@ -5,12 +5,16 @@ import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
 import eu.interopehrate.hcpapp.services.currentpatient.SendToOtherHcpService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     private final CurrentPatient currentPatient;
@@ -27,6 +31,16 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         this.currentPatient = currentPatient;
         this.indexService = indexService;
         this.restTemplate = restTemplate;
+    }
+
+    @Override
+    public List hcpsList() {
+        try {
+            return this.restTemplate.getForObject(this.hospitalServicesUrl + this.hcpsListUrl, List.class);
+        } catch (ResourceAccessException e) {
+            log.error("Connection refused");
+            return null;
+        }
     }
 
     @Override

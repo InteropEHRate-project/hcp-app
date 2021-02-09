@@ -4,36 +4,27 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.SendToOtherHcpService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
 @RequestMapping("/current-patient/send-to-other-hcp")
 public class SendToOtherHcpController {
-    @Value("${hcp.app.hospital.services.url}")
-    private String hospitalServicesUrl;
-    @Value("${hcp.app.hospital.services.hcps.list.url}")
-    private String hcpsListUrl;
-    @Value("${hcp.app.hospital.services.patients.transfer.url}")
-    private String patientsTransferUrl;
     private final CurrentPatient currentPatient;
-    private final RestTemplate restTemplate;
     private List hcpList;
     private final SendToOtherHcpService sendToOtherHcpService;
 
-    public SendToOtherHcpController(CurrentPatient currentPatient, RestTemplate restTemplate, SendToOtherHcpService sendToOtherHcpService) {
+    public SendToOtherHcpController(CurrentPatient currentPatient, SendToOtherHcpService sendToOtherHcpService) {
         this.currentPatient = currentPatient;
-        this.restTemplate = restTemplate;
         this.sendToOtherHcpService = sendToOtherHcpService;
     }
 
@@ -41,16 +32,16 @@ public class SendToOtherHcpController {
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         model.addAttribute("patient", this.currentPatient.getPatient());
-        boolean error = false;
-        try {
-            this.hcpList = this.restTemplate.getForObject(this.hospitalServicesUrl + this.hcpsListUrl, List.class);
-            model.addAttribute("hcps", this.hcpList);
-        } catch (ResourceAccessException e) {
-            log.error("Connection refused");
+        this.hcpList = this.sendToOtherHcpService.hcpsList();
+        boolean error;
+        if (Objects.isNull(this.hcpList)) {
             error = true;
-        } finally {
-            model.addAttribute("error", error);
+            this.hcpList = Collections.emptyList();
+        } else {
+            error = false;
         }
+        model.addAttribute("error", error);
+        model.addAttribute("hcps", this.hcpList);
         return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
     }
 
