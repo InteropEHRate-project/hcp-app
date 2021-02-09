@@ -2,8 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
-import eu.interopehrate.hcpapp.services.index.IndexService;
+import eu.interopehrate.hcpapp.services.currentpatient.SendToOtherHcpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -30,13 +28,13 @@ public class SendToOtherHcpController {
     private String patientsTransferUrl;
     private final CurrentPatient currentPatient;
     private final RestTemplate restTemplate;
-    private final IndexService indexService;
     private List hcpList;
+    private final SendToOtherHcpService sendToOtherHcpService;
 
-    public SendToOtherHcpController(CurrentPatient currentPatient, RestTemplate restTemplate, IndexService indexService) {
+    public SendToOtherHcpController(CurrentPatient currentPatient, RestTemplate restTemplate, SendToOtherHcpService sendToOtherHcpService) {
         this.currentPatient = currentPatient;
         this.restTemplate = restTemplate;
-        this.indexService = indexService;
+        this.sendToOtherHcpService = sendToOtherHcpService;
     }
 
     @GetMapping
@@ -59,39 +57,11 @@ public class SendToOtherHcpController {
     @GetMapping
     @RequestMapping("/send-patient")
     public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, Model model) throws Exception {
-        boolean isWorking = false;
-        TransferredPatientModel transferredPatientModel = new TransferredPatientModel();
-        transferredPatientModel.setInitialHcpId(initialHcpId);
-        if (Objects.nonNull(this.currentPatient.getPatient()) && Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand().getId())) {
-            transferredPatientModel.setPatientId(Long.valueOf(this.indexService.indexCommand().getPatientDataCommand().getId()));
-            if (Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand().getFirstName()) &&
-                    Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand().getLastName())) {
-                transferredPatientModel.setName(this.indexService.indexCommand().getPatientDataCommand().getFirstName()
-                        + " " + this.indexService.indexCommand().getPatientDataCommand().getLastName());
-            }
-            if (Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand().getAge())) {
-                transferredPatientModel.setAge(this.indexService.indexCommand().getPatientDataCommand().getAge());
-            }
-            if (Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand().getCountry())) {
-                transferredPatientModel.setCountry(this.indexService.indexCommand().getPatientDataCommand().getCountry());
-            }
-            this.restTemplate.postForLocation(this.hospitalServicesUrl + this.patientsTransferUrl, transferredPatientModel);
-            isWorking = true;
-            model.addAttribute("isWorking", isWorking);
-            return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
-        }
+        model.addAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(initialHcpId));
 
-//        for testing purposes if the connection with S-EHR is not possible
-//        transferredPatientModel.setPatientId(2021L);
-//        transferredPatientModel.setName("Sece");
-//        transferredPatientModel.setAge(28);
-//        transferredPatientModel.setCountry("RO");
-//        this.restTemplate.postForLocation(this.hospitalServicesUrl + this.patientsTransferUrl, transferredPatientModel);
-//        isWorking = true;
-
-        model.addAttribute("isWorking", isWorking);
+        //For displaying the Hcp name where the patient was sent
         for (var hcp : this.hcpList) {
-            if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(transferredPatientModel.getInitialHcpId().intValue())) {
+            if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(initialHcpId.intValue())) {
                 model.addAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
             }
         }
