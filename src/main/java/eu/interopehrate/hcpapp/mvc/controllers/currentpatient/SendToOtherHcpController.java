@@ -49,6 +49,7 @@ public class SendToOtherHcpController {
     @RequestMapping("/send-patient")
     public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, Model model) throws Exception {
         model.addAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(initialHcpId));
+//        this.sendToOtherHcpService.sendEHRs();
 
         //For displaying the Hcp name where the patient was sent
         for (var hcp : this.hcpList) {

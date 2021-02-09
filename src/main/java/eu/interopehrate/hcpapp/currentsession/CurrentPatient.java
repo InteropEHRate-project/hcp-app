@@ -45,6 +45,50 @@ public class CurrentPatient {
         this.terminalFhirContext = terminalFhirContext;
     }
 
+    public Boolean getDisplayTranslatedVersion() {
+        return this.displayTranslatedVersion;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public Consent getConsent() {
+        return consent;
+    }
+
+    public String getConsentAsString() {
+        return consent.getText().getDiv().toString().replaceAll("[<](/)?div[^>]*[>]", "");
+    }
+
+    public Certificate getCertificate() {
+        return certificate;
+    }
+
+    public String getCertificateAsString() {
+        return certificate.toString();
+    }
+
+    public Bundle getPatientSummaryBundle() {
+        return patientSummaryBundle;
+    }
+
+    public Bundle getLaboratoryResults() {
+        return laboratoryResults;
+    }
+
+    public Bundle getImageReport() {
+        return imageReport;
+    }
+
+    public Bundle getVitalSignsBundle() {
+        return vitalSignsBundle;
+    }
+
+    public Bundle getDocHistoryConsult() {
+        return docHistoryConsult;
+    }
+
     public Bundle getPatHisBundle() {
         return patHisBundle;
     }
@@ -61,20 +105,20 @@ public class CurrentPatient {
         return vitalSignsBundle;
     }
 
-    public void setVitalSignsBundle(Bundle vitalSignsBundle) {
-        this.vitalSignsBundle = vitalSignsBundle;
-    }
-
-    public void setVitalSignsTranslated(Bundle vitalSignsTranslated) {
-        this.vitalSignsTranslated = vitalSignsTranslated;
-    }
-
     public Bundle getPrescriptionTranslated() {
         return prescriptionTranslated;
     }
 
     public Bundle getVitalSignsTranslated() {
         return vitalSignsTranslated;
+    }
+
+    public void setVitalSignsBundle(Bundle vitalSignsBundle) {
+        this.vitalSignsBundle = vitalSignsBundle;
+    }
+
+    public void setVitalSignsTranslated(Bundle vitalSignsTranslated) {
+        this.vitalSignsTranslated = vitalSignsTranslated;
     }
 
     public void initPatient(Patient patient) {
@@ -340,32 +384,8 @@ public class CurrentPatient {
         }
     }
 
-    public Boolean getDisplayTranslatedVersion() {
-        return this.displayTranslatedVersion;
-    }
-
     public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
         this.displayTranslatedVersion = displayTranslatedVersion;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public Consent getConsent() {
-        return consent;
-    }
-
-    public String getConsentAsString() {
-        return consent.getText().getDiv().toString().replaceAll("[<](/)?div[^>]*[>]", "");
-    }
-
-    public Certificate getCertificate() {
-        return certificate;
-    }
-
-    public String getCertificateAsString() {
-        return certificate.toString();
     }
 
     public static String extractExtensionText(Coding coding, CurrentPatient currentPatient) {

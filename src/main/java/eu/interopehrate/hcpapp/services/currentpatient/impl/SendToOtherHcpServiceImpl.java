@@ -77,6 +77,12 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
 
     @Override
     public void sendEHRs() {
-
+        this.currentPatient.getPrescription();
+        this.currentPatient.getVitalSigns();
+        this.currentPatient.getPatHisBundle();
+        this.currentPatient.getLaboratoryResults();
+        this.currentPatient.getDocHistoryConsult();
+        this.currentPatient.getImageReport();
+        this.currentPatient.getPatientSummaryBundle();
     }
 }
