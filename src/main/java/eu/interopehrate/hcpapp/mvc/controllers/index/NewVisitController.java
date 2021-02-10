@@ -1,5 +1,6 @@
-package eu.interopehrate.hcpapp.mvc.controllers;
+package eu.interopehrate.hcpapp.mvc.controllers.index;
 
+import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
