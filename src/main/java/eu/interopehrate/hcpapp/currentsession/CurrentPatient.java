@@ -81,10 +81,6 @@ public class CurrentPatient {
         return imageReport;
     }
 
-    public Bundle getVitalSignsBundle() {
-        return vitalSignsBundle;
-    }
-
     public Bundle getDocHistoryConsult() {
         return docHistoryConsult;
     }

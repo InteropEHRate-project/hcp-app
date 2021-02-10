@@ -131,6 +131,7 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
             try {
+                log.info("onPersonalIdentityReceived");
                 CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
                 CurrentD2DConnection.this.currentPatient.initPatient(patient);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
@@ -156,6 +157,7 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onConsentAnswerReceived(String s) {
             try {
+                log.info("onConsentAnswerReceived");
                 CurrentD2DConnection.this.currentPatient.initConsent(s);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();

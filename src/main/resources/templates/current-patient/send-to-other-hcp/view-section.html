@@ -34,8 +34,10 @@
         </tr>
         </tbody>
     </table>
-    <p><h5 th:if="${isWorking}" th:text="${'Patient has been successfully sent to ' + hcpName}">xxx</h5></p>
-    <p><h5 th:if="${isWorking  == false}">Patient was not sent</h5></p>
+    <p><h5 th:if="${isWorking}" th:text="#{fragment.current.patient.navigation.left.patient.sent.successfully} + ' ' + ${hcpName}">Patient has been successfully sent to</h5></p>
+    <p><h5 style="color: red" th:if="${isWorking  == false}" th:text="#{fragment.current.patient.navigation.left.patient.not.sent.successfully}">Patient was not sent</h5></p>
+    <p><h5 th:if="${isEhrTransferred}" th:text="#{fragment.current.patient.navigation.left.ehr.sent.successfully}">Patient's EHR has been successfully sent</h5></p>
+    <p><h5 style="color: red" th:if="${isEhrTransferred  == false}" th:text="#{fragment.current.patient.navigation.left.ehr.not.sent.successfully}">Patient's EHR was not sent</h5></p>
 </div>
 </body>
 </html>
