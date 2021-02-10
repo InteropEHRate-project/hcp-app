@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers;
 
 public interface TemplateNames {
     String INDEX_TEMPLATE = "index";
+    String INDEX_NEW_PATIENT = "index/new-patient";
     String ACCESS_DENIED = "access-denied";
 
     // Administration
