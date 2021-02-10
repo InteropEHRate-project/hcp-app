@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+          th:href="@{/webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
+          th:href="@{/css/4.0.6-rc.0select2.min.css}"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"
+          th:href="@{/css/5.0.1tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+    <script data-th-src="@{/js/4.0.6-rc.0select2.min.js}"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script th:src="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+    <script th:src="@{/assets/moment/moment.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title th:text="#{template.index.title}">HCP Application</title>
+
+</head>
+
+<body>
+<div th:replace="fragments/header::navigation-top">navigation-top</div>
+
+<div class="container">
+    <div th:if="${exception != null}" class="m-3 alert alert-danger">
+        <p th:text="${exception}">Exception</p>
+    </div>
+    <div th:if="${exception == null}">
+        <nav>
+            <div class="nav nav-tabs nav-fill border-bottom-0" id="nav-tab" role="tablist">
+                <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                   class="nav-item nav-link border-0" id="nav-d2d-tab" data-toggle="tab" href="#nav-d2d" role="tab"
+                   aria-controls="nav-d2d"
+                   aria-selected="false">
+                    <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title}"
+                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
+                        Outpatient visit</h3>
+                </a>
+                <a th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                   class="nav-item nav-link border-0" id="nav-cloud-tab" data-toggle="tab" href="#nav-cloud" role="tab"
+                   aria-controls="nav-cloud"
+                   aria-selected="false">
+                    <h3 class="mt-5 text-center" th:text="#{template.index.cloudConnection.title}"
+                        th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}">
+                        Emergency</h3>
+                </a>
+            </div>
+        </nav>
+        <nav class="tab-content" id="nav-tabContent-">
+            <div class="tab-pane" id="nav-d2d">
+                <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                   class="nav-item nav-link border-0" id="nav-d2d-tab-n" data-toggle="tab" href="#nav-d2d-" role="tab"
+                   aria-controls="nav-d2d"
+                   aria-selected="false">
+                    <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.new}"
+                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
+                        Start new visit</h3>
+                </a>
+                <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                   class="nav-item nav-link border-0"  th:href="@{/index/existingVisit}">
+                    <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.existing}"
+                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
+                        Continue existing visit</h3>
+                </a>
+            </div>
+        </nav>
+
+        <nav class="tab-content" id="nav-tabContent" >
+            <div class="tab-pane" id="nav-d2d-e" >
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{template.administration.transferred.name}">Name</th>
+                        <th th:text="#{template.administration.transferred.age}">Age</th>
+                        <th th:text="#{template.administration.transferred.country}">Country</th>
+                        <th th:text="#{button.action}">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+<!--                    <tr th:each="index : ${index}">-->
+<!--                        <td th:text="${{index.name}}"></td>-->
+<!--                        <td th:text="${{index.age}}"></td>-->
+<!--                        <td th:text="${{index.country}}"></td>-->
+<!--                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent-n">
+            <div class="tab-pane" id="nav-d2d-"
+                 th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                 th:classappend="${(index.connectionState != null && index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF)} ? 'active' :''">
+                <div th:if="${index.connectionState == null || index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}"
+                           th:href="@{/index/open-connection}">Open connection</a>
+                    </div>
+                </div>
+                <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime"
+                             height="10" th:height="${index.bluetoothConnectionInfoImageSize}" width="10"
+                             th:width="${index.bluetoothConnectionInfoImageSize}"/>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.discard.connection}"
+                           th:href="@{/index/stop-listening}">Discard</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <h9>(This functionality will be available when <a
+                                href="http://iehrgitlab.ds.unipi.gr/interopehrate/issues/issues/123" target="_blank">this</a>
+                            issue will be closed.)
+                        </h9>
+                    </div>
+                </div>
+                <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.connected}">Connected</h3>
+                    </div>
+                    <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
+                        <h5 style="color: red" class="row justify-content-center"
+                            th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
+                    </div>
+                    <div th:if="${index.patientDataCommand.getIpsReceived()
+                    && index.patientDataCommand.getPrescriptionReceived()
+                    && index.patientDataCommand.getLaboratoryResultsReceived()
+                    && index.patientDataCommand.getImageReportReceived()}">
+                        <h5 style="color: green" class="row justify-content-center"
+                            th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}"
+                           th:href="@{/index/close-connection}">Close connection</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane justify-content-center" id="nav-cloud"
+                 th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                 th:classappend="${(index.cloudConnectionState != null && index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF)} ? 'active' :''">
+                <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the
+                            application in connection mode.</h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.cloud.connection}"
+                           th:href="@{/index/open-cloud-connection}">Open connection</a>
+                    </div>
+                </div>
+                <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}">
+                    <form action="#" th:action="@{/index/download-ips}" th:object="${index}" method="post"
+                          id="qrCodeForm">
+                        <div class="form-row justify-content-center m-3">
+                            <div>
+                                <label class="h3" for="qrCode" th:text="#{template.index.qrCode}"></label>
+                            </div>
+                            <div class="col-6 m-3 text-center">
+                                <textarea onpaste="document.qrCodeForm.submit()" rows="5" class="form-control"
+                                          id="qrCode" th:field="*{qrCode}"
+                                          th:classappend="${#fields.hasErrors('qrCode')} ? 'is-invalid' :''"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('qrCode')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('qrCode')}" th:text="${err}">err</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row justify-content-center">
+                            <button type="submit" class="btn btn-primary m-1"
+                                    th:text="#{template.index.button.download.cloud.connection}">Download
+                            </button>
+                            <a href="#" class="btn btn-primary m-1"
+                               th:text="#{template.index.button.discard.cloud.connection}"
+                               th:href="@{/index/discard-cloud-connection}">Discard</a>
+                        </div>
+                    </form>
+                </div>
+                <!--<div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}" class="m-3">
+                    <div class="row justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>-->
+                <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 th:text="#{fragment.main.connected}">Connected</h3>
+                    </div>
+                    <div th:if="${index.patientDataCommand.getIpsReceived()}">
+                        <h5 style="color: green" class="row justify-content-center"
+                            th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.cloud.connection}"
+                           th:href="@{/index/close-cloud-connection}">Close connection</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
+             class="m-3">
+            <div th:if="${index.patientDataCommand.hasData()}">
+                <div class="row justify-content-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 th:text="#{template.index.general.info}">General info about patient</h5>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getFirstName() != null}">
+                            <h5 class="card-title" th:text="#{template.patient.first.name}">First Name</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getFirstName()}">first name</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getLastName() != null}">
+                            <h5 class="card-title" th:text="#{template.patient.last.name}">Last Name</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getLastName()}">last name</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getGender() != null}">
+                            <h5 class="card-title" th:text="#{template.patient.gender}">Gender</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getGender()}">gender</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getBirthDate() != null}">
+                            <h5 class="card-title" th:text="#{template.patient.birth.date}">Birth date</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getBirthDate()}">birth date</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getId() != null}">
+                            <h5 class="card-title" th:text="#{template.patient.id}">ID Patient</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getId()}">patient id</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
+                            <h5 class="card-title" th:text="#{template.patient.consent}">Consent</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getConsent()}">patient id</p>
+                        </div>
+                        <div class="card-body" th:if="${index.patientDataCommand.getCertificate()!= null}">
+                            <h5 class="card-title" th:text="#{template.patient.certificate}">Certificate details</h5>
+                            <p class="card-text" th:text="${index.patientDataCommand.getCertificate()}">certificate
+                                details</p>
+                        </div>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
+                        <div class="row justify-content-center">
+                            <a href="#" class="btn btn-danger btn-lg"
+                               th:text="#{template.index.button.invalid.certificate}"
+                               th:href="@{/index/close-connection}">Invalid Digital Identity</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{/js/reload-page-sse.js}"></script>
+</body>
+
+</html>

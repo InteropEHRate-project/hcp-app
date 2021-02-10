@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.advice;
 
-import eu.interopehrate.hcpapp.mvc.controllers.IndexController;
+import eu.interopehrate.hcpapp.mvc.controllers.index.IndexController;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

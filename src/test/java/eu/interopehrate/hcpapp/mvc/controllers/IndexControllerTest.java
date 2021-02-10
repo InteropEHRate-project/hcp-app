@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers;
 
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.controllers.index.IndexController;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
