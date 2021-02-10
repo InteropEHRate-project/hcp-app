@@ -68,9 +68,7 @@
                         Outpatient visit</h3>
                 </a>
                 <a th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
-                   class="nav-item nav-link border-0" id="nav-cloud-tab" data-toggle="tab" href="#nav-cloud" role="tab"
-                   aria-controls="nav-cloud"
-                   aria-selected="false">
+                   class="nav-item nav-link border-0" th:href="@{/index/emergency}">
                     <h3 class="mt-5 text-center" th:text="#{template.index.cloudConnection.title}"
                         th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}">
                         Emergency</h3>
@@ -93,6 +91,66 @@
         </nav>
 
         <div class="tab-content" id="nav-tabContent-n">
+            <div class="tab-pane" id="nav-d2d-"
+                 th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                 th:classappend="${(index.connectionState != null && index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF)} ? 'active' :''">
+                <div th:if="${index.connectionState == null || index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}"
+                           th:href="@{/index/open-connection}">Open connection</a>
+                    </div>
+                </div>
+                <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime"
+                             height="10" th:height="${index.bluetoothConnectionInfoImageSize}" width="10"
+                             th:width="${index.bluetoothConnectionInfoImageSize}"/>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.discard.connection}"
+                           th:href="@{/index/stop-listening}">Discard</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <h9>(This functionality will be available when <a
+                                href="http://iehrgitlab.ds.unipi.gr/interopehrate/issues/issues/123" target="_blank">this</a>
+                            issue will be closed.)
+                        </h9>
+                    </div>
+                </div>
+                <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                     class="m-3">
+                    <div class="row justify-content-center">
+                        <h3 class="mt-5" th:text="#{fragment.main.connected}">Connected</h3>
+                    </div>
+                    <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
+                        <h5 style="color: red" class="row justify-content-center"
+                            th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
+                    </div>
+                    <div th:if="${index.patientDataCommand.getIpsReceived()
+                    && index.patientDataCommand.getPrescriptionReceived()
+                    && index.patientDataCommand.getLaboratoryResultsReceived()
+                    && index.patientDataCommand.getImageReportReceived()}">
+                        <h5 style="color: green" class="row justify-content-center"
+                            th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}"
+                           th:href="@{/index/close-connection}">Close connection</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
             <div class="tab-pane justify-content-center" id="nav-cloud"
                  th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
                  th:classappend="${(index.cloudConnectionState != null && index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF)} ? 'active' :''">

@@ -4,6 +4,7 @@ public interface TemplateNames {
     String INDEX_TEMPLATE = "index";
     String INDEX_NEW_PATIENT = "index/new-patient";
     String INDEX_EXISTING_VISIT = "index/existing-visit";
+    String INDEX_EMERGENCY = "index/emergency";
     String ACCESS_DENIED = "access-denied";
 
     // Administration

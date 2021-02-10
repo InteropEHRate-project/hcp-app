@@ -34,7 +34,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <title th:text="#{template.index.new.patient}">New Patient</title>
+    <title th:text="#{template.index.emergency}">Emergency</title>
 
 </head>
 
@@ -46,48 +46,69 @@
         <p th:text="${exception}">Exception</p>
     </div>
 
-    <br><h3 class="text-center" th:text="#{template.index.new.patient}">New Patient</h3></p>
+    <br><h3 class="text-center" th:text="#{template.index.emergency}">Emergency</h3></p>
 
     <div th:if="${exception == null}">
-        <div th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
-             th:classappend="${(index.connectionState != null && index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF)} ? 'active' :''">
-            <div th:if="${index.connectionState == null || index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}" class="m-3">
+        <div th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+             th:classappend="${(index.cloudConnectionState != null && index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF)} ? 'active' :''">
+            <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
+                 class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
+                    <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the
+                        application in connection mode.</h3>
                 </div>
                 <div class="row justify-content-center">
-                    <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}" th:href="@{/index/new-patient/open-connection}">Open connection</a>
+                    <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.cloud.connection}"
+                       th:href="@{/index/open-cloud-connection}">Open connection</a>
                 </div>
             </div>
-            <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}" class="m-3">
-                <div class="row justify-content-center">
-                    <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
-                </div>
-                <div class="row justify-content-center">
-                    <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime" height="10" th:height="${index.bluetoothConnectionInfoImageSize}" width="10" th:width="${index.bluetoothConnectionInfoImageSize}"/>
-                </div>
-                <div class="row justify-content-center">
-                    <a href="#" class="btn btn-primary" th:text="#{template.index.button.discard.connection}" th:href="@{/index/stop-listening}">Discard</a>
-                </div>
-                <div class="row justify-content-center">
-                    <h9>(This functionality will be available when <a href="http://iehrgitlab.ds.unipi.gr/interopehrate/issues/issues/123" target="_blank">this</a> issue will be closed.)</h9>
-                </div>
+            <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}">
+                <form action="#" th:action="@{/index/download-ips}" th:object="${index}" method="post"
+                      id="qrCodeForm">
+                    <div class="form-row justify-content-center m-3">
+                        <div>
+                            <label class="h3" for="qrCode" th:text="#{template.index.qrCode}"></label>
+                        </div>
+                        <div class="col-6 m-3 text-center">
+                                <textarea onpaste="document.qrCodeForm.submit()" rows="5" class="form-control"
+                                          id="qrCode" th:field="*{qrCode}"
+                                          th:classappend="${#fields.hasErrors('qrCode')} ? 'is-invalid' :''"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('qrCode')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('qrCode')}" th:text="${err}">err</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <button type="submit" class="btn btn-primary m-1"
+                                th:text="#{template.index.button.download.cloud.connection}">Download
+                        </button>
+                        <a href="#" class="btn btn-primary m-1"
+                           th:text="#{template.index.button.discard.cloud.connection}"
+                           th:href="@{/index/discard-cloud-connection}">Discard</a>
+                    </div>
+                </form>
             </div>
-            <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
+            <!--<div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}" class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:text="#{fragment.main.connected}">Connected</h3>
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
-                <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
-                    <h5 style="color: red" class="row justify-content-center" th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
+            </div>-->
+            <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
+                 class="m-3">
+                <div class="row justify-content-center">
+                    <h3 th:text="#{fragment.main.connected}">Connected</h3>
                 </div>
-                <div th:if="${index.patientDataCommand.getIpsReceived()
-                    && index.patientDataCommand.getPrescriptionReceived()
-                    && index.patientDataCommand.getLaboratoryResultsReceived()
-                    && index.patientDataCommand.getImageReportReceived()}">
-                    <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+                <div th:if="${index.patientDataCommand.getIpsReceived()}">
+                    <h5 style="color: green" class="row justify-content-center"
+                        th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
                 </div>
                 <div class="row justify-content-center">
-                    <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}" th:href="@{/index/close-connection}">Close connection</a>
+                    <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.cloud.connection}"
+                       th:href="@{/index/close-cloud-connection}">Close connection</a>
                 </div>
                 <div class="row justify-content-center">
                     <p></p>
