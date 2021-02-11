@@ -76,8 +76,8 @@ public class IndexServiceImpl implements IndexService {
             }
             if (Objects.nonNull(this.currentPatient.getPatient().getAddress())
                     && this.currentPatient.getPatient().getAddress().size() > 0
-                    && this.currentPatient.getPatient().getAddressFirstRep().hasCountry()) {
-                patientDataCommand.setCountry(this.currentPatient.getPatient().getAddressFirstRep().getCountry());
+                    && this.currentPatient.getPatient().getAddressFirstRep().hasState()) {
+                patientDataCommand.setCountry(this.currentPatient.getPatient().getAddressFirstRep().getState());
             }
         }
         if (Objects.nonNull(currentPatient.getConsent())) {

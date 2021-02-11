@@ -84,6 +84,9 @@ public class CurrentPatient {
             file = new ClassPathResource("MedicalDocumentReferenceExampleBundle2.json").getFile();
             this.docHistoryConsult = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
             this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsult, Locale.UK);
+
+            file = new ClassPathResource("PatientDataExample.json").getFile();
+            this.patient = (Patient) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
         }
     }
 

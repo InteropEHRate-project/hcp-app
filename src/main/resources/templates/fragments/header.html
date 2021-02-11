@@ -92,7 +92,7 @@
                           th:unless="${session == null}">Age: </span>
                 </li>
                 <li class="nav-item disabled">
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="#{fragment.main.navigation.top.country} + ' -'">Country: -</span>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:text="#{fragment.main.navigation.top.country} + ${' ' + session.mySessionAttribute.getPatientDataCommand().getCountry()}">Country: -</span>
                 </li>
             </ul>
         </div>

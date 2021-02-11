@@ -4,7 +4,6 @@ import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +20,6 @@ import javax.validation.Valid;
 @Scope("session")
 public class IndexController {
     private IndexService indexService;
-    @Value("${hcp.app.hospital.services.url}")
-    private String hospitalServicesUrl;
 
     public IndexController(IndexService indexService) {
         this.indexService = indexService;
@@ -32,7 +29,6 @@ public class IndexController {
     @RequestMapping({"/", "/index"})
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
-    //    model.addAttribute("index", new RestTemplate().postForObject(this.hospitalServicesUrl, 1L, List.class));
         session.setAttribute("mySessionAttribute", indexService.indexCommand());
         return TemplateNames.INDEX_TEMPLATE;
     }
