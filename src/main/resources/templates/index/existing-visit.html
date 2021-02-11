@@ -49,8 +49,11 @@
 
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
-
+<div class="m-5"></div>
 <div class="container">
+    <h2 class="text-center" th:text="#{template.index.existing.visit}">Continue existing visit</h2>
+    <h3 class="mt-4" th:text="#{fragment.main.details.the.button}"> Select patient from the table</h3>
+    <br>
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
@@ -61,13 +64,18 @@
         </tr>
         </thead>
         <tbody>
-        <!--                    <tr th:each="index : ${index}">-->
-        <!--                        <td th:text="${{index.name}}"></td>-->
-        <!--                        <td th:text="${{index.age}}"></td>-->
-        <!--                        <td th:text="${{index.country}}"></td>-->
-        <!--                    </tr>-->
+        <tr th:each="existingVisit : ${existingVisit}">
+            <td th:text="${{existingVisit.name}}"></td>
+            <td th:text="${{existingVisit.age}}"></td>
+            <td th:text="${{existingVisit.country}}"></td>
+        </tr>
         </tbody>
     </table>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/index/}" th:text="#{button.back}">Back</a>
+        </div>
+    </div>
 </div>
 <script data-th-src="@{/js/reload-page-sse.js}"></script>
 
