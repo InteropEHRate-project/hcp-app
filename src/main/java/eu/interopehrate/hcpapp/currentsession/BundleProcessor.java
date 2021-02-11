@@ -119,4 +119,13 @@ public class BundleProcessor {
                 .map(Condition.class::cast)
                 .collect(Collectors.toList());
     }
+
+    public List<DiagnosticReport> diagnosticReportList() {
+        return this.bundle.getEntry()
+                .stream()
+                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.DiagnosticReport))
+                .map(Bundle.BundleEntryComponent::getResource)
+                .map(DiagnosticReport.class::cast)
+                .collect(Collectors.toList());
+    }
 }
