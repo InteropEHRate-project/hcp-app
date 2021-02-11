@@ -31,7 +31,7 @@ public class ContinueExistingVisitController {
     @RequestMapping({"/existing-visit"})
     public String indexTemplate(Model model) {
         List<HealthCareProfessionalEntity> all = this.healthCareProfessionalRepository.findAll();
-        model.addAttribute("index", new RestTemplate().postForObject(this.hospitalServicesUrl + "/patients" + "/list", all.get(0).getId(), List.class));
+        model.addAttribute("existingVisit", restTemplate.postForObject(this.hospitalServicesUrl + "/patients" + "/list", all.get(0).getId(), List.class));
         return TemplateNames.INDEX_EXISTING_VISIT;
     }
 }
