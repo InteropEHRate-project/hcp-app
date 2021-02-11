@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     private final CurrentPatient currentPatient;
-    private HapiToCommandImage hapiToCommandImage;
+    private final HapiToCommandImage hapiToCommandImage;
     private static final String TMP_FILES_PREFIX = "hcp-app-dicom-";
     private static final String dicomCommand = "$dicom:get -l \"%s\"";
     private static final String weasisCommand = "cmd /c start weasis://%s";

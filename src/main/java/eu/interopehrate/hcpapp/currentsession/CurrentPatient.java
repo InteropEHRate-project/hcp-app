@@ -1,13 +1,20 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.security.cert.Certificate;
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +26,8 @@ public class CurrentPatient {
     private static final Logger logger = LoggerFactory.getLogger(CurrentPatient.class);
     private final TranslateService translateService;
     private final CodesConversionService codesConversionService;
-    private TerminalFhirContext terminalFhirContext;
-    private Boolean displayTranslatedVersion = Boolean.TRUE;
+    private final TerminalFhirContext terminalFhirContext;
+    private Boolean displayTranslatedVersion = Boolean.FALSE;
     private Patient patient;
     private Consent consent;
     private Bundle patientSummaryBundle;
@@ -38,11 +45,50 @@ public class CurrentPatient {
     private Bundle docHistoryConsultTranslated;
     private Bundle patHisBundle;
     private Bundle patHisBundleTranslated;
+    @Value("${hcp.without.connection}")
+    private Boolean withoutConnection;
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
         this.codesConversionService = codesConversionService;
         this.terminalFhirContext = terminalFhirContext;
+    }
+
+    @PostConstruct
+    private void initializeBundles() throws IOException {
+        if (this.withoutConnection) {
+            File file = new ClassPathResource("PatientSummary_IPS.json").getFile();
+            this.patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.patientSummaryBundleTranslated = this.translateService.translate(this.patientSummaryBundle, Locale.UK);
+
+            file = new ClassPathResource("LabResultsFromD2D.json").getFile();
+            this.laboratoryResults = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.laboratoryResultsTranslated = this.translateService.translate(this.laboratoryResults, Locale.UK);
+
+            file = new ClassPathResource("Prescription_MedicationRequest-example.json").getFile();
+            this.prescription = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.prescriptionTranslated = this.translateService.translate(this.prescription, Locale.UK);
+
+            file = new ClassPathResource("DiagnosticImaging_ImageReport.json").getFile();
+            this.imageReport = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.imageReportTranslated = this.translateService.translate(this.imageReport, Locale.UK);
+
+            file = new ClassPathResource("VitalSignsExample.json").getFile();
+            this.vitalSignsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.vitalSignsTranslated = this.translateService.translate(this.vitalSignsBundle, Locale.UK);
+
+            file = new ClassPathResource("PathologyHistoryCompositionExampleIPS.json").getFile();
+            this.patHisBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.patHisBundleTranslated = this.translateService.translate(this.patHisBundle, Locale.UK);
+
+            file = new ClassPathResource("MedicalDocumentReferenceExampleBundle2.json").getFile();
+            this.docHistoryConsult = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+            this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsult, Locale.UK);
+        }
+    }
+
+    public Boolean getWithoutConnection() {
+        return withoutConnection;
     }
 
     public Boolean getDisplayTranslatedVersion() {
@@ -89,10 +135,6 @@ public class CurrentPatient {
         return patHisBundle;
     }
 
-    public Bundle getPatHisBundleTranslated() {
-        return patHisBundleTranslated;
-    }
-
     public Bundle getPrescription() {
         return prescription;
     }
@@ -107,14 +149,6 @@ public class CurrentPatient {
 
     public Bundle getVitalSignsTranslated() {
         return vitalSignsTranslated;
-    }
-
-    public void setVitalSignsBundle(Bundle vitalSignsBundle) {
-        this.vitalSignsBundle = vitalSignsBundle;
-    }
-
-    public void setVitalSignsTranslated(Bundle vitalSignsTranslated) {
-        this.vitalSignsTranslated = vitalSignsTranslated;
     }
 
     public void initPatient(Patient patient) {

@@ -1,0 +1,90 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "MedicationRequest/3",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "3",
+        "meta": {
+          "profile": [
+            "http://interopehrate.eu/fhir/StructureDefinition/MedicationRequest-prescription-IEHR"
+          ]
+        },
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "320422006",
+              "display": "Teofillina 200mg"
+            }
+          ],
+          "text": "Teofillina 200mg"
+        },
+        "subject": {
+          "reference": "Patient/3466"
+        },
+        "authoredOn": "2019-03-01",
+        "requester": {
+          "reference": "Practitioner/example"
+        },
+        "reasonCode": [
+          {
+            "text": "Gestione dell'Asma'"
+          }
+        ],
+        "dosageInstruction": [
+          {
+            "additionalInstruction": [
+              {
+                "text": "Assumere durante i pasti"
+              }
+            ],
+            "timing": {
+              "repeat": {
+                "boundsPeriod": {
+                  "start": "2020-01-16",
+                  "end": "2020-01-20"
+                },
+                "frequency": 2,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "394899003",
+                  "display": "Somministrazione orale"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "type": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+                      "code": "ordered",
+                      "display": "Ordered"
+                    }
+                  ]
+                },
+                "doseQuantity": {
+                  "value": 1,
+                  "unit": "tablet",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "tbl"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
