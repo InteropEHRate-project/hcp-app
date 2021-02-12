@@ -57,33 +57,69 @@ public class CurrentPatient {
     @PostConstruct
     private void initializeBundles() throws IOException {
         if (this.withoutConnection) {
-            File file = new ClassPathResource("PatientSummary_IPS.json").getFile();
-            this.patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.patientSummaryBundleTranslated = this.translateService.translate(this.patientSummaryBundle, Locale.UK);
+            File file;
+            try {
+                file = new ClassPathResource("PatientSummary_IPS.json").getFile();
+                this.patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.patientSummaryBundleTranslated = this.translateService.translate(this.patientSummaryBundle, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.patientSummaryBundleTranslated = this.patientSummaryBundle;
+            }
 
-            file = new ClassPathResource("LabResultsFromD2D.json").getFile();
-            this.laboratoryResults = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.laboratoryResultsTranslated = this.translateService.translate(this.laboratoryResults, Locale.UK);
+            try {
+                file = new ClassPathResource("LabResultsFromD2D.json").getFile();
+                this.laboratoryResults = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.laboratoryResultsTranslated = this.translateService.translate(this.laboratoryResults, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.laboratoryResultsTranslated = this.laboratoryResults;
+            }
 
-            file = new ClassPathResource("Prescription_MedicationRequest-example.json").getFile();
-            this.prescription = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.prescriptionTranslated = this.translateService.translate(this.prescription, Locale.UK);
+            try {
+                file = new ClassPathResource("Prescription_MedicationRequest-example.json").getFile();
+                this.prescription = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.prescriptionTranslated = this.translateService.translate(this.prescription, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.prescriptionTranslated = this.prescription;
+            }
 
-            file = new ClassPathResource("DiagnosticImaging_ImageReport.json").getFile();
-            this.imageReport = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.imageReportTranslated = this.translateService.translate(this.imageReport, Locale.UK);
+            try {
+                file = new ClassPathResource("DiagnosticImaging_ImageReport.json").getFile();
+                this.imageReport = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.imageReportTranslated = this.translateService.translate(this.imageReport, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.imageReportTranslated = this.imageReport;
+            }
 
-            file = new ClassPathResource("VitalSignsExample.json").getFile();
-            this.vitalSignsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.vitalSignsTranslated = this.translateService.translate(this.vitalSignsBundle, Locale.UK);
+            try {
+                file = new ClassPathResource("VitalSignsExample.json").getFile();
+                this.vitalSignsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.vitalSignsTranslated = this.translateService.translate(this.vitalSignsBundle, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.vitalSignsTranslated = this.vitalSignsBundle;
+            }
 
-            file = new ClassPathResource("PathologyHistoryCompositionExampleIPS.json").getFile();
-            this.patHisBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.patHisBundleTranslated = this.translateService.translate(this.patHisBundle, Locale.UK);
+            try {
+                file = new ClassPathResource("PathologyHistoryCompositionExampleIPS.json").getFile();
+                this.patHisBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.patHisBundleTranslated = this.translateService.translate(this.patHisBundle, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.patHisBundleTranslated = this.patHisBundle;
+            }
 
-            file = new ClassPathResource("MedicalDocumentReferenceExampleBundle2.json").getFile();
-            this.docHistoryConsult = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
-            this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsult, Locale.UK);
+            try {
+                file = new ClassPathResource("MedicalDocumentReferenceExampleBundle2.json").getFile();
+                this.docHistoryConsult = (Bundle) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
+                this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsult, Locale.UK);
+            } catch (Exception e) {
+                logger.error("Error calling translation service.", e);
+                this.docHistoryConsultTranslated = this.docHistoryConsult;
+            }
 
             file = new ClassPathResource("PatientDataExample.json").getFile();
             this.patient = (Patient) FhirContext.forR4().newJsonParser().parseResource(Files.readString(file.toPath()));
