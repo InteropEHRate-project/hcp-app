@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
@@ -87,6 +88,15 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     @Override
     public Boolean sendEHRs() throws IOException {
         boolean isAnyEHRTransferred = false;
+        if (Objects.nonNull(this.currentPatient.getPatient())) {
+            EHRModel ehrModel = new EHRModel();
+            ehrModel.setEhrType(EHRType.PATIENT_DEMOGRAPHIC_DATA);
+            ehrModel.setPatientId(Long.valueOf(this.currentPatient.getPatient().getId().substring(this.currentPatient.getPatient().getId().indexOf("/") + 1)));
+            ehrModel.setContent(convertPatientIntoString(this.currentPatient.getPatient()));
+            this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
+            isAnyEHRTransferred = true;
+        }
+
         if (Objects.nonNull(this.currentPatient.getPatientSummaryBundle())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.IPS);
@@ -158,6 +168,14 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         IParser iParser = new JsonParser();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         iParser.compose(byteArrayOutputStream, bundle);
+        byteArrayOutputStream.close();
+        return byteArrayOutputStream.toString();
+    }
+
+    private static String convertPatientIntoString(Patient patient) throws IOException {
+        IParser iParser = new JsonParser();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        iParser.compose(byteArrayOutputStream, patient);
         byteArrayOutputStream.close();
         return byteArrayOutputStream.toString();
     }

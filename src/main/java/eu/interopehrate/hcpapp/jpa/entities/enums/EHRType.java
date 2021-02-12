@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.jpa.entities.enums;
 
 public enum EHRType {
+    PATIENT_DEMOGRAPHIC_DATA,
     IPS,
     PRESCRIPTION,
     LAB_RESULTS,
