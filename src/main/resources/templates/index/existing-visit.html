@@ -53,6 +53,7 @@
 <div class="container">
     <h2 class="text-center" th:text="#{template.index.existing.visit}">Continue existing visit</h2>
     <h3 class="mt-4" th:text="#{fragment.main.details.the.button}"> Select patient from the table</h3>
+    <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
     <br>
     <table class="table table-bordered">
         <thead class="thead-light">
