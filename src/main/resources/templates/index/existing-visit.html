@@ -69,6 +69,11 @@
             <td th:text="${{existingVisit.name}}"></td>
             <td th:text="${{existingVisit.age}}"></td>
             <td th:text="${{existingVisit.country}}"></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary" th:href="@{/index/retrieve-patient(id=${{existingVisit.patientId}})}">Retrieve Patient</a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
