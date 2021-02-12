@@ -78,6 +78,9 @@
             <span style="color: cornflowerblue; font: message-box"
                   th:if="${session.mySessionAttribute.getCloudConnectionState() != null && session.mySessionAttribute.getCloudConnectionState() == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
                   th:text="#{template.index.cloudConnection.title}"></span>
+            <span style="color: cornflowerblue; font: message-box"
+                  th:if="${session.withoutConnection}"
+                  th:text="#{template.index.simulation}"></span>
         </div>
         <div class="collapse navbar-collapse flex-column" id="navbarResponsive2">
             <ul class="navbar-nav ml-auto">

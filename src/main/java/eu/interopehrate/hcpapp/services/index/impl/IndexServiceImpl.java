@@ -42,6 +42,10 @@ public class IndexServiceImpl implements IndexService {
         this.currentPatient = currentPatient;
     }
 
+    public CurrentPatient getCurrentPatient() {
+        return currentPatient;
+    }
+
     @Override
     public IndexCommand indexCommand() throws Exception {
         IndexCommand indexCommand = new IndexCommand();

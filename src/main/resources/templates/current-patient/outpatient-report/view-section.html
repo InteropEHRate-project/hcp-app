@@ -94,7 +94,14 @@
                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
         </div>
     </div>
-    <p><h5 th:if="${(prescriptionService.getConnectedThread() == null) || (listPrescriptions.isEmpty() && vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5></p>
+    <div class="btn-toolbar justify-content-center" role="toolbar" th:if="${session.withoutConnection}">
+        <a class="btn btn-outline-primary" href="#" th:if="${session.withoutConnection}"
+           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+    </div>
+    <p><h5 th:if="${((prescriptionService.getConnectedThread() == null) || (listPrescriptions.isEmpty() && vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())) &&
+    session.withoutConnection == false}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5></p>
+    <br>
+    <p><h5 th:if="${session.withoutConnection}">This is a simulation and the "Send to S-EHR" button is visible but it doesn't do anything.</h5></p>
 
 </div>
 </body>

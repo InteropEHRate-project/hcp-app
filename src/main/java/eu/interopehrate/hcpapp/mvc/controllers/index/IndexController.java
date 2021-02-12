@@ -30,6 +30,7 @@ public class IndexController {
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         session.setAttribute("mySessionAttribute", indexService.indexCommand());
+        session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
         return TemplateNames.INDEX_TEMPLATE;
     }
 
