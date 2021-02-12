@@ -52,7 +52,60 @@
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 
-<div class="container">
+<div class="container" th:if="${session.withoutConnection}">
+    <br>
+    <p><h1 class="text-center">This is a simulation of a current patient</h1></p>
+
+    <div class="m-3">
+        <div th:if="${index.patientDataCommand.hasData()}">
+            <div class="row justify-content-center">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 th:text="#{template.index.general.info}">General info about patient</h5>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getFirstName() != null}">
+                        <h5 class="card-title" th:text="#{template.patient.first.name}">First Name</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getFirstName()}">first name</p>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getLastName() != null}">
+                        <h5 class="card-title" th:text="#{template.patient.last.name}">Last Name</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getLastName()}">last name</p>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getGender() != null}">
+                        <h5 class="card-title" th:text="#{template.patient.gender}">Gender</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getGender()}">gender</p>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getBirthDate() != null}">
+                        <h5 class="card-title" th:text="#{template.patient.birth.date}">Birth date</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getBirthDate()}">birth date</p>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getId() != null}">
+                        <h5 class="card-title" th:text="#{template.patient.id}">ID Patient</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getId()}">patient id</p>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
+                        <h5 class="card-title" th:text="#{template.patient.consent}">Consent</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getConsent()}">patient id</p>
+                    </div>
+                    <div class="card-body" th:if="${index.patientDataCommand.getCertificate()!= null}">
+                        <h5 class="card-title" th:text="#{template.patient.certificate}">Certificate details</h5>
+                        <p class="card-text" th:text="${index.patientDataCommand.getCertificate()}">certificate
+                            details</p>
+                    </div>
+                </div>
+                <div class="card-body" th:if="${index.patientDataCommand.getConsent() != null}">
+                    <div class="row justify-content-center">
+                        <a href="#" class="btn btn-danger btn-lg"
+                           th:text="#{template.index.button.invalid.certificate}"
+                           th:href="@{/index/close-connection}">Invalid Digital Identity</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" th:if="${session.withoutConnection == false}">
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>

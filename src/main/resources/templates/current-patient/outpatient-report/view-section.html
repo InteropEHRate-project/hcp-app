@@ -101,7 +101,7 @@
     <p><h5 th:if="${((prescriptionService.getConnectedThread() == null) || (listPrescriptions.isEmpty() && vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())) &&
     session.withoutConnection == false}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5></p>
     <br>
-    <p><h5 th:if="${session.withoutConnection}">This is a simulation and the "Send to S-EHR" button is visible but it doesn't do anything.</h5></p>
+    <p><h5 th:if="${session.withoutConnection}">This is a simulation and the "Send to S-EHR" button is visible but it doesn't do much.</h5></p>
 
 </div>
 </body>
