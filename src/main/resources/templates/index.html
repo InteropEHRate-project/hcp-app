@@ -110,7 +110,7 @@
         <p th:text="${exception}">Exception</p>
     </div>
     <div th:if="${exception == null}">
-        <nav>
+        <nav th:if="${!index.getPatientDataCommand().hasData()}">
             <div class="nav nav-tabs nav-fill border-bottom-0" id="nav-tab" role="tablist">
                 <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
                    class="nav-item nav-link border-0" id="nav-d2d-tab" data-toggle="tab" href="#nav-d2d" role="tab"
@@ -273,8 +273,9 @@
             </div>
         </div>
 
-        <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
-             class="m-3">
+        <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON ||
+        index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON ||
+        index.getPatientDataCommand().hasData()}" class="m-3">
             <div th:if="${index.patientDataCommand.hasData()}">
                 <div class="row justify-content-center">
                     <div class="card">

@@ -81,6 +81,9 @@
             <span style="color: cornflowerblue; font: message-box"
                   th:if="${session.withoutConnection}"
                   th:text="#{template.index.simulation}"></span>
+            <span style="color: cornflowerblue; font: message-box"
+                  th:if="${session.isExtractedData}"
+                  th:text="#{template.index.extracted}"></span>
         </div>
         <div class="collapse navbar-collapse flex-column" id="navbarResponsive2">
             <ul class="navbar-nav ml-auto">

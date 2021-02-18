@@ -54,6 +54,66 @@ public class CurrentPatient {
         this.terminalFhirContext = terminalFhirContext;
     }
 
+    public void setPatientSummaryBundleTranslated(Bundle patientSummaryBundleTranslated) {
+        this.patientSummaryBundleTranslated = patientSummaryBundleTranslated;
+    }
+
+    public void setPrescriptionTranslated(Bundle prescriptionTranslated) {
+        this.prescriptionTranslated = prescriptionTranslated;
+    }
+
+    public void setLaboratoryResultsTranslated(Bundle laboratoryResultsTranslated) {
+        this.laboratoryResultsTranslated = laboratoryResultsTranslated;
+    }
+
+    public void setImageReportTranslated(Bundle imageReportTranslated) {
+        this.imageReportTranslated = imageReportTranslated;
+    }
+
+    public void setVitalSignsTranslated(Bundle vitalSignsTranslated) {
+        this.vitalSignsTranslated = vitalSignsTranslated;
+    }
+
+    public void setDocHistoryConsultTranslated(Bundle docHistoryConsultTranslated) {
+        this.docHistoryConsultTranslated = docHistoryConsultTranslated;
+    }
+
+    public void setPatHisBundleTranslated(Bundle patHisBundleTranslated) {
+        this.patHisBundleTranslated = patHisBundleTranslated;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public void setPatientSummaryBundle(Bundle patientSummaryBundle) {
+        this.patientSummaryBundle = patientSummaryBundle;
+    }
+
+    public void setPrescription(Bundle prescription) {
+        this.prescription = prescription;
+    }
+
+    public void setLaboratoryResults(Bundle laboratoryResults) {
+        this.laboratoryResults = laboratoryResults;
+    }
+
+    public void setImageReport(Bundle imageReport) {
+        this.imageReport = imageReport;
+    }
+
+    public void setVitalSignsBundle(Bundle vitalSignsBundle) {
+        this.vitalSignsBundle = vitalSignsBundle;
+    }
+
+    public void setDocHistoryConsult(Bundle docHistoryConsult) {
+        this.docHistoryConsult = docHistoryConsult;
+    }
+
+    public void setPatHisBundle(Bundle patHisBundle) {
+        this.patHisBundle = patHisBundle;
+    }
+
     @PostConstruct
     private void initializeBundles() throws IOException {
         if (this.withoutConnection) {

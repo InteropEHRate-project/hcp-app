@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @Controller
 @Scope("session")
 public class IndexController {
-    private IndexService indexService;
+    private final IndexService indexService;
 
     public IndexController(IndexService indexService) {
         this.indexService = indexService;

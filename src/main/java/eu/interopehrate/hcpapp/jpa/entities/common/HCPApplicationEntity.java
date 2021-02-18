@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 public class HCPApplicationEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.ContinueExistingVisitService;
+import eu.interopehrate.hcpapp.services.index.impl.ContinueExistingVisitServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -52,8 +54,9 @@ public class ContinueExistingVisitController {
 
     @GetMapping
     @RequestMapping({"/retrieve-patient"})
-    public String retrievePatient(Model model, @RequestParam(name = "patientId") Long patientId) {
+    public String retrievePatient(HttpSession httpSession, @RequestParam(name = "patientId") Long patientId) {
         this.continueExistingVisitService.retrieveEHRs(patientId);
+        httpSession.setAttribute("isExtractedData", ContinueExistingVisitServiceImpl.isExtractedData);
         return TemplateNames.INDEX_EXISTING_VISIT;
     }
 }
