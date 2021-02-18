@@ -52,8 +52,8 @@ public class ContinueExistingVisitController {
 
     @GetMapping
     @RequestMapping({"/retrieve-patient"})
-    public String retrievePatient(Model model, @RequestParam(name = "id") Long id) {
-
-        return TemplateNames.INDEX_TEMPLATE;
+    public String retrievePatient(Model model, @RequestParam(name = "patientId") Long patientId) {
+        this.continueExistingVisitService.retrieveEHRs(patientId);
+        return TemplateNames.INDEX_EXISTING_VISIT;
     }
 }

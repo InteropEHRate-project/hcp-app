@@ -27,8 +27,8 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
     }
 
     @Override
-    public void retrieveEHRs(Long id) {
-        List ehrs = this.restTemplate.postForObject(this.url + "/ehrs" + "/list", id, List.class);
+    public void retrieveEHRs(Long patientId) {
+        List ehrs = this.restTemplate.postForObject(this.url + "/ehrs" + "/list", patientId, List.class);
 
     }
 }
