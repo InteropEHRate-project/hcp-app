@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @Scope("session")
@@ -30,7 +31,9 @@ public class IndexController {
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         session.setAttribute("mySessionAttribute", indexService.indexCommand());
-        session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
+        if (Objects.nonNull(this.indexService.getCurrentPatient())) {
+            session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
+        }
         return TemplateNames.INDEX_TEMPLATE;
     }
 

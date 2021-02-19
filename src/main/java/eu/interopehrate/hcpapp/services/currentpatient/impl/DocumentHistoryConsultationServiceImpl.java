@@ -5,6 +5,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
+import eu.interopehrate.hcpapp.services.index.impl.ContinueExistingVisitServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,16 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
         }
 
         if (Objects.isNull(speciality) || Objects.isNull(date) || Objects.isNull(start) || Objects.isNull(end)) {
+            if (ContinueExistingVisitServiceImpl.isExtractedData) {
+                var documentList = this.currentPatient.docHistoryConsultationList().stream()
+                        .map(this.hapiToCommandDocHistoryConsultation::convert)
+                        .collect(Collectors.toList());
+
+                return DocumentHistoryConsultationCommand.builder()
+                        .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                        .documentHistoryConsultationInfoCommandList(documentList)
+                        .build();
+            }
             return DocumentHistoryConsultationCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .documentHistoryConsultationInfoCommandList(Collections.emptyList())

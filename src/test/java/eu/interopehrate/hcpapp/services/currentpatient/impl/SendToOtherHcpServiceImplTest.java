@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.jpa.entities.enums.EHRType;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.EHRModel;
+import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.Bundle;
@@ -11,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
@@ -18,6 +20,7 @@ import java.io.IOException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 class SendToOtherHcpServiceImplTest {
     @Value("${hcp.app.hospital.services.url}")
     private String hospitalServicesUrl;
@@ -43,6 +46,10 @@ class SendToOtherHcpServiceImplTest {
         String json = os.toString();
         ehrModel.setContent(json);
 
-        this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel);
+        try {
+            this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel);
+        } catch (ResourceAccessException e) {
+            log.error("Connection refused");
+        }
     }
 }

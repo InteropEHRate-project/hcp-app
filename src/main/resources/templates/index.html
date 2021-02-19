@@ -331,7 +331,7 @@
 </div>
 <div class="text-center" th:if="${index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON &&
         index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON &&
-        index.getPatientDataCommand().hasData()}">
+        index.getPatientDataCommand().hasData() && !session.withoutConnection}">
     <a href="#" class="btn btn-primary" th:href="@{/index/clear-data}" th:text="#{button.clear.data}">Clear data</a>
 </div>
 <script data-th-src="@{/static/js/reload-page-sse.js}"></script>
