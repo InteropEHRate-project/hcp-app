@@ -54,7 +54,8 @@
 
 <div class="container" th:if="${session.withoutConnection}">
     <br>
-    <p><h1 class="text-center">This is a simulation of a current patient</h1></p>
+    <p>
+    <h1 class="text-center">This is a simulation of a current patient</h1></p>
 
     <div class="m-3">
         <div th:if="${index.patientDataCommand.hasData()}">
@@ -133,12 +134,14 @@
                 <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
                    class="nav-item nav-link border-0" th:href="@{/index/new-patient}">
                     <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.new}"
-                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">Start new visit</h3>
+                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
+                        Start new visit</h3>
                 </a>
                 <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
                    class="nav-item nav-link border-0" th:href="@{/index/existing-visit}">
                     <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.existing}"
-                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">Continue existing visit</h3>
+                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
+                        Continue existing visit</h3>
                 </a>
             </div>
         </nav>
@@ -150,7 +153,8 @@
                 <div th:if="${index.connectionState == null || index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}"
                      class="m-3">
                     <div class="row justify-content-center">
-                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
+                        <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the
+                            application in connection mode.</h3>
                     </div>
                     <div class="row justify-content-center">
                         <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}"
@@ -160,7 +164,8 @@
                 <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}"
                      class="m-3">
                     <div class="row justify-content-center">
-                        <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to establish the bluetooth connection</h3>
+                        <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to
+                            establish the bluetooth connection</h3>
                     </div>
                     <div class="row justify-content-center">
                         <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime"
@@ -323,6 +328,11 @@
             </div>
         </div>
     </div>
+</div>
+<div class="text-center" th:if="${index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON &&
+        index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON &&
+        index.getPatientDataCommand().hasData()}">
+    <a href="#" class="btn btn-primary" th:href="@{/index/clear-data}" th:text="#{button.clear.data}">Clear data</a>
 </div>
 <script data-th-src="@{/static/js/reload-page-sse.js}"></script>
 </body>

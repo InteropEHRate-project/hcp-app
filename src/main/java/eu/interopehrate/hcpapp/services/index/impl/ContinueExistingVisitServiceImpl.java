@@ -31,11 +31,6 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
     }
 
     @Override
-    public Patient retrievePatient() {
-        return null;
-    }
-
-    @Override
     public void retrieveEHRs(Long patientId) {
         isExtractedData = true;
         List ehrs = this.restTemplate.postForObject(this.url + "/ehrs" + "/list", patientId, List.class);
@@ -82,5 +77,11 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
                 this.currentPatient.setVitalSignsTranslated(this.translateService.translate(this.currentPatient.getVitalSigns(), Locale.UK));
             }
         }
+    }
+
+    @Override
+    public void clearData() {
+        isExtractedData = false;
+        currentPatient.reset();
     }
 }
