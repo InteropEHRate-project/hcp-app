@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
-import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -30,13 +29,11 @@ public class ContinueExistingVisitController {
     @Value("${hcp.app.hospital.services.url}")
     private String hospitalServicesUrl;
     private final ContinueExistingVisitService continueExistingVisitService;
-    private final CurrentPatient currentPatient;
 
-    public ContinueExistingVisitController(RestTemplate restTemplate, HealthCareProfessionalRepository healthCareProfessionalRepository, ContinueExistingVisitService continueExistingVisitService, CurrentPatient currentPatient) {
+    public ContinueExistingVisitController(RestTemplate restTemplate, HealthCareProfessionalRepository healthCareProfessionalRepository, ContinueExistingVisitService continueExistingVisitService) {
         this.restTemplate = restTemplate;
         this.healthCareProfessionalRepository = healthCareProfessionalRepository;
         this.continueExistingVisitService = continueExistingVisitService;
-        this.currentPatient = currentPatient;
     }
 
     @GetMapping

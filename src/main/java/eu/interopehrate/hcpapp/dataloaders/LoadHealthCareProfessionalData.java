@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 public class LoadHealthCareProfessionalData {
-    private HealthCareProfessionalRepository healthCareProfessionalRepository;
+    private final HealthCareProfessionalRepository healthCareProfessionalRepository;
 
     public LoadHealthCareProfessionalData(HealthCareProfessionalRepository healthCareProfessionalRepository) {
         this.healthCareProfessionalRepository = healthCareProfessionalRepository;
