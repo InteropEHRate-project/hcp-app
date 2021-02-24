@@ -120,6 +120,8 @@ public class CurrentD2DConnection implements DisposableBean {
             this.indexPatientDataCommand.setPrescriptionReceived(false);
             this.indexPatientDataCommand.setLaboratoryResultsReceived(false);
             this.indexPatientDataCommand.setImageReportReceived(false);
+            this.indexPatientDataCommand.setPatHisReceived(false);
+            this.indexPatientDataCommand.setVitalSignsReceived(false);
         }
     }
 
@@ -227,6 +229,7 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onPathologyHistoryInformationReceived");
                 CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundle);
+                CurrentD2DConnection.this.indexPatientDataCommand.setPatHisReceived(true);
                 auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing PathologyHistory Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
@@ -252,6 +255,7 @@ public class CurrentD2DConnection implements DisposableBean {
             try {
                 log.info("onVitalSignsReceived");
                 CurrentD2DConnection.this.currentPatient.initVitalSigns(bundle);
+                CurrentD2DConnection.this.indexPatientDataCommand.setVitalSignsReceived(true);
                 auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing VitalSigns Received");
                 CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
