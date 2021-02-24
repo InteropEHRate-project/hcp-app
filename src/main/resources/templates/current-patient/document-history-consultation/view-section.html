@@ -115,10 +115,10 @@
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{button.open}">Open</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item"
-                           th:href="@{'/current-patient/document-history-consultation/file-view/show-document/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
+                           th:href="@{'/current-patient/document-history-consultation/file-view/show-document/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
                            th:text="#{button.open}">Open</a>
                         <a class="dropdown-item"  target="_blank"
-                           th:href="@{'/current-patient/document-history-consultation/file-view/show-document-new-tab/' + ${hc.getSpeciality()} + '/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
+                           th:href="@{'/current-patient/document-history-consultation/file-view/show-document-new-tab/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
                            th:text="#{button.open.in.new.tab}">Open in new tab</a>
                     </div>
                 </div>
