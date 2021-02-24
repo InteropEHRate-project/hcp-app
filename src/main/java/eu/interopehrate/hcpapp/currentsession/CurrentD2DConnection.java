@@ -35,12 +35,12 @@ public class CurrentD2DConnection implements DisposableBean {
     private BluetoothConnection bluetoothConnection;
     private ConnectedThread connectedThread;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
-    private IndexPatientDataCommand indexPatientDataCommand;
+    private final IndexPatientDataCommand indexPatientDataCommand;
     @Value("${ips.validator.pack}")
     private String ipsValidatorPackPath;
     private TerminalFhirContext terminalFhirContext;
-    private AuditInformationService auditInformationService;
-    private Semaphore docHisSemaphore = new Semaphore(1);
+    private final AuditInformationService auditInformationService;
+    private final Semaphore docHisSemaphore = new Semaphore(1);
 
     public CurrentD2DConnection(CurrentPatient currentPatient,
                                 D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext, AuditInformationService auditInformationService) {

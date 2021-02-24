@@ -56,9 +56,21 @@
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>
-
     <br>
-    <h3 class="text-center" th:text="#{template.index.new.patient}">New Patient</h3></p>
+    <div class="card-body row justify-content-center" th:if="${index.patientDataCommand.getIpsReceived()
+                    && index.patientDataCommand.getPrescriptionReceived()
+                    && index.patientDataCommand.getLaboratoryResultsReceived()
+                    && index.patientDataCommand.getImageReportReceived()
+                    && index.patientDataCommand.getPatHisReceived()
+                    && index.patientDataCommand.getVitalSignsReceived()}">
+        <a class="btn btn-primary" th:href="@{/index}" th:text="#{template.index.return.to.home}">Return to Home</a>
+    </div>
+    <h3 class="text-center" th:unless="${index.patientDataCommand.getIpsReceived()
+                    && index.patientDataCommand.getPrescriptionReceived()
+                    && index.patientDataCommand.getLaboratoryResultsReceived()
+                    && index.patientDataCommand.getImageReportReceived()
+                    && index.patientDataCommand.getPatHisReceived()
+                    && index.patientDataCommand.getVitalSignsReceived()}" th:text="#{template.index.new.patient}">New Patient</h3></p>
 
     <div th:if="${exception == null}">
         <div th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
@@ -111,8 +123,7 @@
                     && index.patientDataCommand.getImageReportReceived()
                     && index.patientDataCommand.getPatHisReceived()
                     && index.patientDataCommand.getVitalSignsReceived()}">
-                    <h5 style="color: green" class="row justify-content-center"
-                        th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+                    <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
                 </div>
                 <div class="row justify-content-center">
                     <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}"
