@@ -120,8 +120,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/PatientSummary_IPS.json");
                 this.patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.patientSummaryBundleTranslated = this.translateService.translate(this.patientSummaryBundle, Locale.ITALY, Locale.UK);
-                this.patientSummaryBundleTranslated = this.translateService.translate(this.patientSummaryBundleTranslated, Locale.UK);
+                this.patientSummaryBundleTranslated = this.translateService.translate(this.patientSummaryBundle, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.patientSummaryBundleTranslated = this.patientSummaryBundle;
@@ -130,8 +129,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/LabResultsFromD2D.json");
                 this.laboratoryResults = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.laboratoryResultsTranslated = this.translateService.translate(this.laboratoryResults, Locale.ITALY, Locale.UK);
-                this.laboratoryResultsTranslated = this.translateService.translate(this.laboratoryResultsTranslated, Locale.UK);
+                this.laboratoryResultsTranslated = this.translateService.translate(this.laboratoryResults, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.laboratoryResultsTranslated = this.laboratoryResults;
@@ -140,8 +138,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/Prescription_MedicationRequest-example.json");
                 this.prescription = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.prescriptionTranslated = this.translateService.translate(this.prescription, Locale.ITALY, Locale.UK);
-                this.prescriptionTranslated = this.translateService.translate(this.prescriptionTranslated, Locale.UK);
+                this.prescriptionTranslated = this.translateService.translate(this.prescription, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.prescriptionTranslated = this.prescription;
@@ -150,8 +147,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/DiagnosticImaging_ImageReport.json");
                 this.imageReport = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.imageReportTranslated = this.translateService.translate(this.imageReport, Locale.ITALY, Locale.UK);
-                this.imageReportTranslated = this.translateService.translate(this.imageReportTranslated, Locale.UK);
+                this.imageReportTranslated = this.translateService.translate(this.imageReport, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.imageReportTranslated = this.imageReport;
@@ -160,8 +156,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/VitalSignsExample.json");
                 this.vitalSignsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.vitalSignsTranslated = this.translateService.translate(this.vitalSignsBundle, Locale.ITALY, Locale.UK);
-                this.vitalSignsTranslated = this.translateService.translate(this.vitalSignsTranslated, Locale.UK);
+                this.vitalSignsTranslated = this.translateService.translate(this.vitalSignsBundle, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.vitalSignsTranslated = this.vitalSignsBundle;
@@ -170,8 +165,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/PathologyHistoryCompositionExampleIPS.json");
                 this.patHisBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.patHisBundleTranslated = this.translateService.translate(this.patHisBundle, Locale.ITALY, Locale.UK);
-                this.patHisBundleTranslated = this.translateService.translate(this.patHisBundleTranslated, Locale.UK);
+                this.patHisBundleTranslated = this.translateService.translate(this.patHisBundle, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.patHisBundleTranslated = this.patHisBundle;
@@ -180,8 +174,7 @@ public class CurrentPatient {
             try {
                 in = getClass().getResourceAsStream("/MedicalDocumentReferenceExampleBundle2.json");
                 this.docHistoryConsult = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
-                this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsult, Locale.ITALY, Locale.UK);
-                this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsultTranslated, Locale.UK);
+                this.docHistoryConsultTranslated = this.translateService.translate(this.docHistoryConsult, Locale.UK);
             } catch (Exception e) {
                 logger.error("Error calling translation service.", e);
                 this.docHistoryConsultTranslated = this.docHistoryConsult;
@@ -266,8 +259,7 @@ public class CurrentPatient {
     public void initPatientSummary(Bundle patientSummary) {
         try {
             patientSummaryBundle = patientSummary;
-            patientSummaryBundleTranslated = translateService.translate(patientSummaryBundle, Locale.ITALY, Locale.UK);
-            patientSummaryBundleTranslated = translateService.translate(patientSummaryBundleTranslated, Locale.UK);
+            patientSummaryBundleTranslated = translateService.translate(patientSummaryBundle, Locale.UK);
             patientSummaryBundleTranslated = codesConversionService.convert(patientSummaryBundleTranslated);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
@@ -278,8 +270,7 @@ public class CurrentPatient {
     public void initPrescription(Bundle prescription) {
         try {
             this.prescription = prescription;
-            this.prescriptionTranslated = this.translateService.translate(prescription, Locale.ITALY, Locale.UK);
-            this.prescriptionTranslated = this.translateService.translate(prescriptionTranslated, Locale.UK);
+            this.prescriptionTranslated = this.translateService.translate(prescription, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.prescriptionTranslated = prescription;
@@ -289,8 +280,7 @@ public class CurrentPatient {
     public void initLaboratoryResults(Bundle obs) {
         try {
             this.laboratoryResults = obs;
-            this.laboratoryResultsTranslated = this.translateService.translate(laboratoryResults, Locale.ITALY, Locale.UK);
-            this.laboratoryResultsTranslated = this.translateService.translate(laboratoryResultsTranslated, Locale.UK);
+            this.laboratoryResultsTranslated = this.translateService.translate(laboratoryResults, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.laboratoryResultsTranslated = laboratoryResults;
@@ -300,8 +290,7 @@ public class CurrentPatient {
     public void initVitalSigns(Bundle vital) {
         try {
             this.vitalSignsBundle = vital;
-            this.vitalSignsTranslated = this.translateService.translate(vitalSignsBundle, Locale.ITALY, Locale.UK);
-            this.vitalSignsTranslated = this.translateService.translate(vitalSignsTranslated, Locale.UK);
+            this.vitalSignsTranslated = this.translateService.translate(vitalSignsBundle, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.vitalSignsTranslated = vitalSignsBundle;
@@ -312,8 +301,7 @@ public class CurrentPatient {
     public void initImageReport(Bundle imageRep) {
         try {
             this.imageReport = imageRep;
-            this.imageReportTranslated = this.translateService.translate(imageReport, Locale.ITALY, Locale.UK);
-            this.imageReportTranslated = this.translateService.translate(imageReportTranslated, Locale.UK);
+            this.imageReportTranslated = this.translateService.translate(imageReport, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.imageReportTranslated = this.imageReport;
@@ -323,8 +311,7 @@ public class CurrentPatient {
     public void initDocHistoryConsultation(Bundle docHistoryConsultation) {
         try {
             this.docHistoryConsult = docHistoryConsultation;
-            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsult, Locale.ITALY, Locale.UK);
-            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsultTranslated, Locale.UK);
+            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsult, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.docHistoryConsultTranslated = this.docHistoryConsult;
@@ -334,8 +321,7 @@ public class CurrentPatient {
     public void initPatHisConsultation(Bundle patHisConsultation) {
         try {
             this.patHisBundle = patHisConsultation;
-            this.patHisBundleTranslated = this.translateService.translate(patHisBundle, Locale.ITALY, Locale.UK);
-            this.patHisBundleTranslated = this.translateService.translate(patHisBundleTranslated, Locale.UK);
+            this.patHisBundleTranslated = this.translateService.translate(patHisBundle, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.patHisBundleTranslated = this.patHisBundle;
