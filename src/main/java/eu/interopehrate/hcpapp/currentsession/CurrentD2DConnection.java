@@ -22,8 +22,10 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Semaphore;
 
 @Slf4j
 @Component
@@ -38,6 +40,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private String ipsValidatorPackPath;
     private TerminalFhirContext terminalFhirContext;
     private AuditInformationService auditInformationService;
+    private Semaphore docHisSemaphore = new Semaphore(1);
 
     public CurrentD2DConnection(CurrentPatient currentPatient,
                                 D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext, AuditInformationService auditInformationService) {
@@ -237,9 +240,10 @@ public class CurrentD2DConnection implements DisposableBean {
                 log.info("onMedicalDocumentConsultationReceived");
                 CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundle);
                 auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing DocumentConsultation Received");
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
             } catch (Exception e) {
                 log.error("Error after MedicalDocumentConsultation was received", e);
+            } finally {
+                docHisSemaphore.release();
             }
         }
 
@@ -264,5 +268,15 @@ public class CurrentD2DConnection implements DisposableBean {
         keyStore.load(new FileInputStream(keystore), password);
         java.security.cert.X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
         this.indexPatientDataCommand.setCertificate(cert.getIssuerX500Principal().getName());
+    }
+
+    public void sendMedicalDocumentRequest(LocalDate startDate, LocalDate endDate, String speciality) throws Exception {
+        docHisSemaphore.acquire();
+        this.connectedThread.sendMedicalDocumentRequest(startDate, endDate, speciality);
+    }
+
+    public void waitForDocumentHistoryInit() throws InterruptedException {
+        docHisSemaphore.acquire();
+        docHisSemaphore.release();
     }
 }
