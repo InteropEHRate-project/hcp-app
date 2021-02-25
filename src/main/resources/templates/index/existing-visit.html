@@ -44,6 +44,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!--    <style>-->
+<!--        .hidden {-->
+<!--            display:none;-->
+<!--        }-->
+<!--        .loader {-->
+<!--            position:fixed;-->
+<!--            height:50%;-->
+<!--            width:60%;-->
+<!--            background-color: grey;-->
+<!--            opacity:0.5;-->
+<!--        }-->
+<!--        .loader-text {-->
+<!--            position:fixed;-->
+<!--            top:45%;-->
+<!--            left:45%;-->
+<!--        }-->
+<!--    </style>-->
+
     <title th:text="#{template.index.title}">HCP Application</title>
 </head>
 
@@ -82,8 +100,29 @@
             <a href="#" class="btn btn-primary" th:href="@{/index/}" th:text="#{button.back}">Back</a>
         </div>
     </div>
-</div>
-<script data-th-src="@{/js/reload-page-sse.js}"></script>
 
+<!--    <div class="loader hidden" id="loading">-->
+<!--        <span class="loader-text">Loading...</span>-->
+<!--    </div>-->
+</div>
+<!--<script>-->
+<!--    var delay = 2000;-->
+<!--    var els = document.getElementsByClassName('external-link');-->
+<!--    var loader = document.getElementById('loading');-->
+<!--    for(var i = 0;i < els.length;i++){-->
+<!--        els[i].addEventListener('click', function(e) {-->
+<!--            var source = e.target || e.srcElement;-->
+<!--            e.preventDefault();-->
+<!--            loader.className = loader.className.replace('hidden', '');-->
+
+<!--            setTimeout(function() {-->
+<!--                window.open(source.href);-->
+<!--                loader.className += 'hidden';-->
+<!--            }, delay);-->
+<!--        }, false);-->
+<!--    }-->
+<!--</script>-->
+
+<script data-th-src="@{/js/reload-page-sse.js}"></script>
 </body>
 </html>

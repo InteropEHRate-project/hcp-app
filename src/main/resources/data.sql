@@ -26,11 +26,11 @@ insert into HEALTH_CARE_OCCUPATIONS (created_date, updated_date, version, name, 
     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Medical officer (general)', (select id from health_care_occupation_groups where isco_code = '2211'));
 
 insert into PERSONS (created_date, updated_date, version, first_name, last_name, gender, birth_date)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Tiberiu', 'Popescu', 'MALE', parsedatetime('01-01-1990', 'dd-MM-yyyy'));
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Enzo Anselmo', 'Ferrari', 'MALE', parsedatetime('01-01-1990', 'dd-MM-yyyy'));
 
-insert into HEALTH_CARE_PROFESSIONAL (id, OCCUPATION_ID) values ((select id from persons where first_name = 'Tiberiu'), (select id from health_care_occupations where name = 'Medical doctor (general)'));
+insert into HEALTH_CARE_PROFESSIONAL (id, OCCUPATION_ID) values ((select id from persons where first_name = 'Enzo Anselmo'), (select id from health_care_occupations where name = 'Medical doctor (general)'));
 
-insert into PERSON_ADDRESS (person_id, address_id) values ((select id from persons where first_name = 'Tiberiu'), (select id from addresses where postal_code = '013685'));
+insert into PERSON_ADDRESS (person_id, address_id) values ((select id from persons where first_name = 'Enzo Anselmo'), (select id from addresses where postal_code = '013685'));
 
 insert into HEALTH_CARE_ORGANIZATION (created_date, updated_date, version, code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'SCUBA', 'Spitalul Clinic de Urgenta Bagdasar-Arseni');
 

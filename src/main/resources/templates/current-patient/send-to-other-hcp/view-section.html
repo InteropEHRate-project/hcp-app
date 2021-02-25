@@ -27,8 +27,8 @@
             <td th:text="${hcp.occupation}"></td>
             <td th:if="${patient != null}">
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.send}" th:href="@{/current-patient/send-to-other-hcp/send-patient(
-                            initialHcpId=${{hcp.id}})}">Send</a>
+                    <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.send.and.close}" th:href="@{/current-patient/send-to-other-hcp/send-patient(
+                            initialHcpId=${{hcp.id}})}">Send and Close</a>
                 </div>
             </td>
         </tr>
