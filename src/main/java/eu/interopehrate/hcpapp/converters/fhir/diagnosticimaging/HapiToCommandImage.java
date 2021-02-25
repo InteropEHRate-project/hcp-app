@@ -22,20 +22,20 @@ public class HapiToCommandImage implements Converter<Media, ImageInfoCommand> {
         ImageInfoCommand imageInfoCommand = new ImageInfoCommand();
 
         if (image.hasType() && image.getType().hasCoding()) {
-            image.getType().getCoding().forEach(coding -> imageInfoCommand.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+            image.getType().getCoding().forEach(coding -> imageInfoCommand.setImageName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
 
         if (image.hasContent()) {
             imageInfoCommand.setImageType(image.getContent().getContentType());
             imageInfoCommand.setImageContent(pictureBase64(image.getContent().getData()));
-            imageInfoCommand.setSize(image.getContent().getSize());
+            imageInfoCommand.setSizeOfImage(image.getContent().getSize());
 
             String imageToDisplay = String.join(",", "data:" + imageInfoCommand.getImageType() + ";base64", imageInfoCommand.getImageContent());
             imageInfoCommand.setCompleteStringForImageDisplaying(imageToDisplay);
         }
 
         if (image.hasCreatedDateTimeType()) {
-            imageInfoCommand.setDateOfExam(image.getCreatedDateTimeType().getValue()
+            imageInfoCommand.setDateOfImage(image.getCreatedDateTimeType().getValue()
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());

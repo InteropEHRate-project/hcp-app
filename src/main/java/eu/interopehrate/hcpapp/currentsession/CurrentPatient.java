@@ -445,6 +445,22 @@ public class CurrentPatient {
         }
     }
 
+    public List<DiagnosticReport> diagnosticReportList() {
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.imageReportTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.imageReportTranslated).diagnosticReportList();
+            }
+        } else {
+            if (Objects.isNull(this.imageReport)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.imageReport).diagnosticReportList();
+            }
+        }
+    }
+
     public List<Observation> vitalSignsList() {
         if (displayTranslatedVersion) {
             if (Objects.isNull(vitalSignsTranslated)) {

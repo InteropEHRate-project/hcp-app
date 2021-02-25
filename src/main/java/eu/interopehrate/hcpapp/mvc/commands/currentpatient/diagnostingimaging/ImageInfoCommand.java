@@ -8,11 +8,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ImageInfoCommand {
-    private String name;
+    private String imageName;
     private String imageType;
     private String imageContent;
-    private int size;
-    private LocalDate dateOfExam;
-
+    private int sizeOfImage;
+    private LocalDate dateOfImage;
     private String completeStringForImageDisplaying;
 }

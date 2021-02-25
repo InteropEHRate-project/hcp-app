@@ -9,4 +9,5 @@ import java.util.List;
 @Getter
 public class ImageCommand {
     private List<ImageInfoCommand> imageInfoCommands;
+    private List<DiagnosticReportInfoCommand> diagnosticReportInfoCommands;
 }

@@ -12,11 +12,35 @@
     <div class="row justify-content-center">
         <h5><p th:if="${imageCommand.getImageInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.no.data.available}">No Data available</p></h5>
         <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
-            <h5><td th:text="${image.getDateOfExam()} + ' ' + ${image.getName()}"></td></h5>
+            <h5><td th:text="${image.getDateOfImage()} + ' ' + ${image.getImageName()}"></td></h5>
             <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
             <br>
         </tr>
     </div>
+<!--    <br>-->
+
+<!--    <table class="table table-bordered">-->
+<!--        <thead class="thead-light">-->
+<!--        <tr>-->
+<!--            <th th:text="#{template.administration.hcps.name}">Name</th>-->
+<!--            <th th:text="#{template.administration.hcps.occupation}">Occupation</th>-->
+<!--            <th th:if="${patient != null}" th:text="#{button.action}">Action</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="hcp : ${hcps}">-->
+<!--            <td th:text="${hcp.name}"></td>-->
+<!--            <td th:text="${hcp.occupation}"></td>-->
+<!--            <td th:if="${patient != null}">-->
+<!--                <div class="btn-group" role="group">-->
+<!--                    <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.send.and.close}" th:href="@{/current-patient/send-to-other-hcp/send-patient(-->
+<!--                            initialHcpId=${{hcp.id}})}">Send and Close</a>-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
     <br>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
