@@ -158,7 +158,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     @Override
     public void sendPrescription() {
         for (PrescriptionEntity pr : this.prescriptionRepository.findAll()) {
-            this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer-prescription", this.entityToCommandPrescription.convert(pr), Boolean.class);
+            this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer-prescription", this.entityToCommandPrescription.convert(pr));
         }
     }
 
