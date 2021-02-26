@@ -22,7 +22,7 @@
                     <p class="card-text" th:text="${prescription.getDateOfPrescription()}">date of prescription</p>
 
                     <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.author}">Author</h5>
-                    <p class="card-text" th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}">author</p>
+                    <p class="card-text" th:text="${prescription.getAuthor()}">author</p>
 
                     <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug dosage</h5>
                     <p class="card-text" th:text="${prescription.getDrugDosage()}">drug dosage</p>

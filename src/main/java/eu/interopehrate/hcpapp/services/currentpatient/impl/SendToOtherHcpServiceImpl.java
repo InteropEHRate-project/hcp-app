@@ -160,6 +160,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         for (PrescriptionEntity pr : this.prescriptionRepository.findAll()) {
             this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer-prescription", this.entityToCommandPrescription.convert(pr));
         }
+        this.prescriptionRepository.deleteAll();
     }
 
     private static String convertBundleIntoString(Bundle bundle) throws IOException {
