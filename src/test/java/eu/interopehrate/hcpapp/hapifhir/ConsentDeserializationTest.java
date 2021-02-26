@@ -30,11 +30,8 @@ public class ConsentDeserializationTest {
     public void testConsent() {
         String consentAsString = consent.getText().getDiv().toString();
         consentAsString = consentAsString.replaceAll("[<](/)?div[^>]*[>]", "");
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@");
         System.out.println(consentAsString);
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
+        System.out.println("@@@");
     }
-
-
 }
