@@ -2,7 +2,9 @@ package eu.interopehrate.hcpapp.services.index.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.hcpapp.converters.linkedhashmap.LinkedHashMapToPrescriptionEntity;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.services.index.ContinueExistingVisitService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.Bundle;
@@ -18,16 +20,20 @@ import java.util.Locale;
 @Service
 public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitService {
     private final RestTemplate restTemplate;
-    @Value("${hcp.app.hospital.services.url}")
-    private String url;
     private final CurrentPatient currentPatient;
     private final TranslateService translateService;
+    private final PrescriptionRepository prescriptionRepository;
+    private final LinkedHashMapToPrescriptionEntity linkedHashMapToPrescriptionEntity;
+    @Value("${hcp.app.hospital.services.url}")
+    private String url;
     public static Boolean isExtractedData = false;
 
-    public ContinueExistingVisitServiceImpl(RestTemplate restTemplate, CurrentPatient currentPatient, TranslateService translateService) {
+    public ContinueExistingVisitServiceImpl(RestTemplate restTemplate, CurrentPatient currentPatient, TranslateService translateService, PrescriptionRepository prescriptionRepository, LinkedHashMapToPrescriptionEntity linkedHashMapToPrescriptionEntity) {
         this.restTemplate = restTemplate;
         this.currentPatient = currentPatient;
         this.translateService = translateService;
+        this.prescriptionRepository = prescriptionRepository;
+        this.linkedHashMapToPrescriptionEntity = linkedHashMapToPrescriptionEntity;
     }
 
     @Override
@@ -76,6 +82,10 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
                 this.currentPatient.setVitalSignsBundle(parser.parseResource(Bundle.class, str));
                 this.currentPatient.setVitalSignsTranslated(this.translateService.translate(this.currentPatient.getVitalSigns(), Locale.UK));
             }
+        }
+        var prescriptions = this.restTemplate.getForObject(this.url + "/ehrs" + "/retrieve-added-prescription", List.class);
+        for (int i = 0; i < prescriptions.size(); i++) {
+            this.prescriptionRepository.save(this.linkedHashMapToPrescriptionEntity.convert((LinkedHashMap) prescriptions.get(i)));
         }
     }
 
