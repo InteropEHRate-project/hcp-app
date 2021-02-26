@@ -14,7 +14,8 @@ import java.time.LocalDate;
 @Controller
 @RequestMapping("/current-patient/document-history-consultation")
 public class DocumentHistoryConsultationController {
-    private DocumentHistoryConsultationService documentHistoryConsultationService;
+    private final DocumentHistoryConsultationService documentHistoryConsultationService;
+    public static DocumentHistoryConsultationCommand docHisCommand;
 
     public DocumentHistoryConsultationController(DocumentHistoryConsultationService historyConsultationService) {
         this.documentHistoryConsultationService = historyConsultationService;
@@ -26,7 +27,7 @@ public class DocumentHistoryConsultationController {
                               String speciality,
                               String date,
                               String start, String end) throws Exception {
-        DocumentHistoryConsultationCommand docHisCommand = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end);
+        docHisCommand = this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end);
 
         session.setAttribute("speciality", speciality);
         session.setAttribute("date", date);

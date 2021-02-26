@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging.HapiToCommandDiagnosticReport;
 import eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging.HapiToCommandImage;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
@@ -19,23 +20,30 @@ import java.util.stream.Collectors;
 public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandImage hapiToCommandImage;
+    private final HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport;
     private static final String TMP_FILES_PREFIX = "hcp-app-dicom-";
     private static final String dicomCommand = "$dicom:get -l \"%s\"";
     private static final String weasisCommand = "cmd /c start weasis://%s";
 
-    public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage) {
+    public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage, HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport) {
         this.currentPatient = currentPatient;
         this.hapiToCommandImage = hapiToCommandImage;
+        this.hapiToCommandDiagnosticReport = hapiToCommandDiagnosticReport;
     }
 
     @Override
     public ImageCommand imageCommand() {
         var imageInfoCommands = currentPatient.mediaList()
                 .stream()
-                .map(hapiToCommandImage::convert)
+                .map(this.hapiToCommandImage::convert)
+                .collect(Collectors.toList());
+        var diagnosticReports = this.currentPatient.diagnosticReportList()
+                .stream()
+                .map(this.hapiToCommandDiagnosticReport::convert)
                 .collect(Collectors.toList());
         return ImageCommand.builder()
                 .imageInfoCommands(imageInfoCommands)
+                .diagnosticReportInfoCommands(diagnosticReports)
                 .build();
     }
 

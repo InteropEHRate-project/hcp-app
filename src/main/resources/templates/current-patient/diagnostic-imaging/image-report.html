@@ -12,11 +12,42 @@
     <div class="row justify-content-center">
         <h5><p th:if="${imageCommand.getImageInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.no.data.available}">No Data available</p></h5>
         <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
-            <h5><td th:text="${image.getDateOfExam()} + ' ' + ${image.getName()}"></td></h5>
+            <h5><td th:text="${image.getDateOfImage()} + ' ' + ${image.getImageName()}"></td></h5>
             <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
             <br>
         </tr>
     </div>
+    <br>
+    <h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.related.documents}">Related Documents</h5>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.name}">Name</th>
+            <th th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.date}">Date</th>
+            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.view}">View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="image : ${imageCommand.getDiagnosticReportInfoCommands()}">
+            <td th:text="${{image.getNameDiagnostic()}}"></td>
+            <td th:text="${{image.getDateOfReport()}}"></td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{button.open}">Open</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item"
+                           th:href="@{'/current-patient/diagnostic-imaging/file-view/show-document/' + ${image.getNameDiagnostic()} + '/' + ${image.getDateOfReport()}}"
+                           th:text="#{button.open}">Open</a>
+                        <a class="dropdown-item"  target="_blank"
+                           th:href="@{'/current-patient/diagnostic-imaging/file-view/show-document-new-tab/' + ${image.getNameDiagnostic()} + '/' + ${image.getDateOfReport()}}"
+                           th:text="#{button.open.in.new.tab}">Open in new tab</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
     <br>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">

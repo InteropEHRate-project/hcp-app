@@ -22,6 +22,8 @@ public class IndexPatientDataCommand {
     private Boolean prescriptionReceived = false;
     private Boolean laboratoryResultsReceived = false;
     private Boolean imageReportReceived = false;
+    private Boolean patHisReceived = false;
+    private Boolean vitalSignsReceived = false;
     private String certificate;
     private Integer age;
     private String country;

@@ -259,7 +259,7 @@ public class CurrentPatient {
     public void initPatientSummary(Bundle patientSummary) {
         try {
             patientSummaryBundle = patientSummary;
-            patientSummaryBundleTranslated = translateService.translate(patientSummary, Locale.UK);
+            patientSummaryBundleTranslated = translateService.translate(patientSummaryBundle, Locale.UK);
             patientSummaryBundleTranslated = codesConversionService.convert(patientSummaryBundleTranslated);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
@@ -280,7 +280,7 @@ public class CurrentPatient {
     public void initLaboratoryResults(Bundle obs) {
         try {
             this.laboratoryResults = obs;
-            this.laboratoryResultsTranslated = this.translateService.translate(obs, Locale.UK);
+            this.laboratoryResultsTranslated = this.translateService.translate(laboratoryResults, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.laboratoryResultsTranslated = laboratoryResults;
@@ -290,7 +290,7 @@ public class CurrentPatient {
     public void initVitalSigns(Bundle vital) {
         try {
             this.vitalSignsBundle = vital;
-            this.vitalSignsTranslated = this.translateService.translate(vital, Locale.UK);
+            this.vitalSignsTranslated = this.translateService.translate(vitalSignsBundle, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.vitalSignsTranslated = vitalSignsBundle;
@@ -301,7 +301,7 @@ public class CurrentPatient {
     public void initImageReport(Bundle imageRep) {
         try {
             this.imageReport = imageRep;
-            this.imageReportTranslated = this.translateService.translate(imageRep, Locale.UK);
+            this.imageReportTranslated = this.translateService.translate(imageReport, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.imageReportTranslated = this.imageReport;
@@ -311,7 +311,7 @@ public class CurrentPatient {
     public void initDocHistoryConsultation(Bundle docHistoryConsultation) {
         try {
             this.docHistoryConsult = docHistoryConsultation;
-            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsultation, Locale.UK);
+            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsult, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.docHistoryConsultTranslated = this.docHistoryConsult;
@@ -321,7 +321,7 @@ public class CurrentPatient {
     public void initPatHisConsultation(Bundle patHisConsultation) {
         try {
             this.patHisBundle = patHisConsultation;
-            this.patHisBundleTranslated = this.translateService.translate(patHisConsultation, Locale.UK);
+            this.patHisBundleTranslated = this.translateService.translate(patHisBundle, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.patHisBundleTranslated = this.patHisBundle;
@@ -441,6 +441,22 @@ public class CurrentPatient {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(this.imageReport).mediaList();
+            }
+        }
+    }
+
+    public List<DiagnosticReport> diagnosticReportList() {
+        if (this.displayTranslatedVersion) {
+            if (Objects.isNull(this.imageReportTranslated)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.imageReportTranslated).diagnosticReportList();
+            }
+        } else {
+            if (Objects.isNull(this.imageReport)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(this.imageReport).diagnosticReportList();
             }
         }
     }

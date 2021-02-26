@@ -1,5 +1,6 @@
-package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
+package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticImaging;
 
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/current-patient/diagnostic-imaging")
 public class DiagnosticImagingController {
     private final DiagnosticImagingService diagnosticImagingService;
+    public static ImageCommand imageCommand;
 
     public DiagnosticImagingController(DiagnosticImagingService diagnosticImagingService) {
         this.diagnosticImagingService = diagnosticImagingService;
@@ -31,7 +33,8 @@ public class DiagnosticImagingController {
     @GetMapping
     @RequestMapping("/image-report")
     public String imageReportSection(Model model) {
-        model.addAttribute("imageCommand", this.diagnosticImagingService.imageCommand());
+        imageCommand = this.diagnosticImagingService.imageCommand();
+        model.addAttribute("imageCommand", imageCommand);
         return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_IMAGING_IMAGE_REPORT;
     }
 

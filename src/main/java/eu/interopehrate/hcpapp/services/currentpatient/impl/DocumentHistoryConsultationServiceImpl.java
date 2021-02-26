@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.D
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import eu.interopehrate.hcpapp.services.index.impl.ContinueExistingVisitServiceImpl;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryConsultationService {
     private final CurrentPatient currentPatient;
@@ -47,10 +49,10 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) throws Exception {
         if (this.currentPatient.getWithoutConnection()) {
-            var documentList = this.currentPatient.docHistoryConsultationList().stream()
+            var documentList = this.currentPatient.docHistoryConsultationList()
+                    .stream()
                     .map(this.hapiToCommandDocHistoryConsultation::convert)
                     .collect(Collectors.toList());
-
             return DocumentHistoryConsultationCommand.builder()
                     .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                     .documentHistoryConsultationInfoCommandList(documentList)
@@ -62,7 +64,6 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
                 var documentList = this.currentPatient.docHistoryConsultationList().stream()
                         .map(this.hapiToCommandDocHistoryConsultation::convert)
                         .collect(Collectors.toList());
-
                 return DocumentHistoryConsultationCommand.builder()
                         .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                         .documentHistoryConsultationInfoCommandList(documentList)
@@ -94,16 +95,17 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
             startDate = LocalDate.parse(start);
             endDate = LocalDate.now();
         }
-        this.currentD2DConnection.getConnectedThread().sendMedicalDocumentRequest(startDate, endDate, speciality);
+        this.currentD2DConnection.sendMedicalDocumentRequest(startDate, endDate, speciality);
+        this.currentD2DConnection.waitForDocumentHistoryInit();
 
         var list = this.currentPatient.docHistoryConsultationList()
                 .stream()
                 .map(this.hapiToCommandDocHistoryConsultation::convert)
                 .collect(Collectors.toList());
-
         return DocumentHistoryConsultationCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .documentHistoryConsultationInfoCommandList(list)
                 .build();
     }
+
 }

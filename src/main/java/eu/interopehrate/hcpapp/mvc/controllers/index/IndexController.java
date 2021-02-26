@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
 import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
+import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
@@ -21,9 +22,11 @@ import java.util.Objects;
 @Scope("session")
 public class IndexController {
     private final IndexService indexService;
+    private final HealthCareProfessionalRepository healthCareProfessionalRepository;
 
-    public IndexController(IndexService indexService) {
+    public IndexController(IndexService indexService, HealthCareProfessionalRepository healthCareProfessionalRepository) {
         this.indexService = indexService;
+        this.healthCareProfessionalRepository = healthCareProfessionalRepository;
     }
 
     @GetMapping
@@ -31,6 +34,7 @@ public class IndexController {
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         session.setAttribute("mySessionAttribute", indexService.indexCommand());
+        session.setAttribute("hcpName", this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
         if (Objects.nonNull(this.indexService.getCurrentPatient())) {
             session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
         }
