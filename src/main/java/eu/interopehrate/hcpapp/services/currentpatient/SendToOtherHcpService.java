@@ -8,4 +8,5 @@ public interface SendToOtherHcpService {
     List hcpsList();
     Boolean sendCurrentPatient(Long initialHcpId) throws Exception;
     Boolean sendEHRs() throws IOException;
+    void sendPrescription();
 }

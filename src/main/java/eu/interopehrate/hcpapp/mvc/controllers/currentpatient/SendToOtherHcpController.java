@@ -57,6 +57,7 @@ public class SendToOtherHcpController {
                 model.addAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
             }
         }
+        this.sendToOtherHcpService.sendPrescription();
         this.currentPatient.reset();
         return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
     }
