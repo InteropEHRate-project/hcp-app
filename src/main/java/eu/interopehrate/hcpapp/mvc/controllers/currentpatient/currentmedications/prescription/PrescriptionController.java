@@ -20,6 +20,8 @@ import java.util.List;
 @RequestMapping("/current-patient/current-medications/prescription")
 public class PrescriptionController {
     private final PrescriptionService prescriptionService;
+    public static PrescriptionCommand prescriptionCommand;
+    public static List<PrescriptionEntity> prescriptionEntityList;
 
     public PrescriptionController(PrescriptionService prescriptionService) {
         this.prescriptionService = prescriptionService;
@@ -50,14 +52,14 @@ public class PrescriptionController {
         //PAGE SIZE is hardcoded HERE
         int pageSize = 3;
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
-        List<PrescriptionEntity> listPrescriptions = page.getContent();
+        PrescriptionController.prescriptionEntityList = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("listPrescriptions", listPrescriptions);
+        model.addAttribute("listPrescriptions", prescriptionEntityList);
 
-        PrescriptionCommand prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keywordPrescription);
+        PrescriptionController.prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keywordPrescription);
         List<PrescriptionInfoCommand> listPrescriptionsSEHR = prescriptionCommand.getPageInfoCommand().getContent();
         model.addAttribute("prescriptionCommand", prescriptionCommand);
         model.addAttribute("listPrescriptionsSEHR", listPrescriptionsSEHR);

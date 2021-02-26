@@ -9,32 +9,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-
 @Controller
 @RequestMapping("/current-patient/current-medications/prescription")
 public class MedicationController {
-    private final MedicationService medicationService;
     private final HealthCareProfessionalServiceImpl healthCareProfessionalService;
+    private final MedicationService medicationService;
 
-    public MedicationController(MedicationService medicationService, HealthCareProfessionalServiceImpl healthCareProfessionalService) {
-        this.medicationService = medicationService;
+    public MedicationController(HealthCareProfessionalServiceImpl healthCareProfessionalService, MedicationService medicationService) {
         this.healthCareProfessionalService = healthCareProfessionalService;
+        this.medicationService = medicationService;
+    }
+
+    @GetMapping
+    @RequestMapping("/idToMedicationSEHR")
+    public String viewSEHRSection(@RequestParam(name = "id") String id, Model model) {
+        model.addAttribute("prescription", PrescriptionController.prescriptionCommand.find(Long.parseLong(id)));
+        model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
 
     @GetMapping
     @RequestMapping("/idToMedication")
-    public String viewSection(@RequestParam(name = "id") String id,
-                              @RequestParam(name = "drug") String drug,
-                              @RequestParam(name = "status") String status,
-                              @RequestParam(name = "notes") String notes,
-                              @RequestParam(name = "timings") String timings,
-                              @RequestParam(name = "drugDosage") String drugDosage,
-                              @RequestParam(name = "dateOfPrescription") LocalDate dateOfPrescription,
-                              @RequestParam(name = "start") LocalDate start,
-                              @RequestParam(name = "end") LocalDate end,
-                              Model model) {
-        model.addAttribute("medicationCommand", medicationService.medicationCommand(id, drug, status, notes, timings, drugDosage, dateOfPrescription, start, end));
+    public String viewSection(@RequestParam(name = "id") String id, Model model) {
+        model.addAttribute("prescription", this.medicationService.find(Long.parseLong(id)));
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
