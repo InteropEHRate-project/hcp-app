@@ -24,6 +24,7 @@ public class MedicationController {
     @RequestMapping("/idToMedicationSEHR")
     public String viewSEHRSection(@RequestParam(name = "id") String id, Model model) {
         model.addAttribute("prescription", PrescriptionController.prescriptionCommand.find(Long.parseLong(id)));
+        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
@@ -32,6 +33,7 @@ public class MedicationController {
     @RequestMapping("/idToMedication")
     public String viewSection(@RequestParam(name = "id") String id, Model model) {
         model.addAttribute("prescription", this.medicationService.find(Long.parseLong(id)));
+        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
