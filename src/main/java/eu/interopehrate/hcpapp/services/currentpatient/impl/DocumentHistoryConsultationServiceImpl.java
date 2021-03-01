@@ -107,5 +107,4 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
                 .documentHistoryConsultationInfoCommandList(list)
                 .build();
     }
-
 }

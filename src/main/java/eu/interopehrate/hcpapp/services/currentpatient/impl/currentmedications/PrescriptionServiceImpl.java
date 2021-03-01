@@ -40,13 +40,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private CurrentD2DConnection currentD2DConnection;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
-    private AuditInformationService auditInformationService;
+    private final AuditInformationService auditInformationService;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.prescriptionRepository = prescriptionRepository;
         this.currentD2DConnection = currentD2DConnection;
+        this.auditInformationService = auditInformationService;
+    }
+
+    @Override
+    public CurrentPatient getCurrentPatient() {
+        return currentPatient;
     }
 
     @Override

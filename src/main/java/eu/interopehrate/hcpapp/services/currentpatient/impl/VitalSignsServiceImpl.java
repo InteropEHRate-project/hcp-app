@@ -35,16 +35,17 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private final CommandToEntityVitalSigns entityToVitalSigns;
     private CurrentD2DConnection currentD2DConnection;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
-    private AuditInformationService auditInformationService;
+    private final AuditInformationService auditInformationService;
 
     public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, VitalSignsRepository vitalSignsRepository,
-                                 CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository) {
+                                 CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.vitalSignsRepository = vitalSignsRepository;
         this.entityToVitalSigns = entityToVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
         this.vitalSignsTypesRepository = vitalSignsTypesRepository;
+        this.auditInformationService = auditInformationService;
     }
 
     @Override

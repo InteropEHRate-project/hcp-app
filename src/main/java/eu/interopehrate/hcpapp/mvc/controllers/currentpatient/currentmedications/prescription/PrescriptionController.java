@@ -49,6 +49,8 @@ public class PrescriptionController {
                                 @PathVariable(value = "pageNoSEHR") int pageNoSEHR,
                                 @PathVariable(value = "keywordPrescription") String keywordPrescription,
                                 Model model) throws IOException {
+        model.addAttribute("currentPatient", this.prescriptionService.getCurrentPatient());
+
         //PAGE SIZE is hardcoded HERE
         int pageSize = 3;
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
