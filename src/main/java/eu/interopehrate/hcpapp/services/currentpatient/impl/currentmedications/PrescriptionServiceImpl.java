@@ -154,6 +154,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
+        prescriptionInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency().toString());
         prescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
 

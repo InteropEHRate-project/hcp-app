@@ -35,7 +35,7 @@ class SendToOtherHcpServiceImplTest {
     void sendEHRs() throws IOException {
         EHRModel ehrModel = new EHRModel();
         ehrModel.setEhrType(EHRType.IPS);
-        ehrModel.setPatientId(1L);
+        ehrModel.setPatientId("1");
 
         Bundle content = new Bundle();
         // Serialize Atom Feed

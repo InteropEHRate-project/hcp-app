@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 public class PrescriptionInfoCommand {
     private Long id;
+    private String patientId;
     @NotEmpty
     @NotNull
     private String status;

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class TransferredPatientModel {
     @JsonProperty("patientId")
-    private Long patientId;
+    private String patientId;
     @JsonProperty("initialHcpId")
     private Long initialHcpId;
     @JsonProperty("name")

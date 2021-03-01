@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "PRESCRIPTION")
 public class PrescriptionEntity extends HCPApplicationEntity {
+    private String patientId;
     private String drugName;
     private String drugDosage;
     private Integer frequency;

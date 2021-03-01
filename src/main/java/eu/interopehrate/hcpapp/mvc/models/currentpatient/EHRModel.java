@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class EHRModel {
     @JsonProperty("patientId")
-    private Long patientId;
+    private String patientId;
     @JsonProperty("EHR_TYPE")
     private EHRType ehrType;
     @JsonProperty("CONTENT")
