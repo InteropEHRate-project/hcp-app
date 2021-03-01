@@ -37,7 +37,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
     }
 
     @Override
-    public void retrieveEHRs(Long patientId) {
+    public void retrieveEHRs(String patientId) {
         isExtractedData = true;
         List ehrs = this.restTemplate.postForObject(this.url + "/ehrs" + "/list", patientId, List.class);
 
@@ -83,7 +83,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
                 this.currentPatient.setVitalSignsTranslated(this.translateService.translate(this.currentPatient.getVitalSigns(), Locale.UK));
             }
         }
-        var prescriptions = this.restTemplate.getForObject(this.url + "/ehrs" + "/retrieve-added-prescription", List.class);
+        var prescriptions = this.restTemplate.postForObject(this.url + "/ehrs" + "/retrieve-added-prescription", patientId , List.class);
         for (int i = 0; i < prescriptions.size(); i++) {
             this.prescriptionRepository.save(this.linkedHashMapToPrescriptionEntity.convert((LinkedHashMap) prescriptions.get(i)));
         }

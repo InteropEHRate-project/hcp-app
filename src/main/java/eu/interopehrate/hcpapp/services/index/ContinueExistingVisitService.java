@@ -1,7 +1,6 @@
 package eu.interopehrate.hcpapp.services.index;
 
 public interface ContinueExistingVisitService {
-    void retrieveEHRs(Long patientId);
-
+    void retrieveEHRs(String patientId);
     void clearData();
 }

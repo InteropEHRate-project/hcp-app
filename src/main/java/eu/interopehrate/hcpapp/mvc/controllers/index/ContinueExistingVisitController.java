@@ -54,7 +54,7 @@ public class ContinueExistingVisitController {
 
     @GetMapping
     @RequestMapping({"/retrieve-patient"})
-    public String retrievePatient(HttpSession httpSession, @RequestParam(name = "patientId") Long patientId) {
+    public String retrievePatient(HttpSession httpSession, @RequestParam(name = "patientId") String patientId) {
         this.continueExistingVisitService.retrieveEHRs(patientId);
         httpSession.setAttribute("isExtractedData", ContinueExistingVisitServiceImpl.isExtractedData);
         return TemplateNames.INDEX_EXISTING_VISIT;
