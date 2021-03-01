@@ -92,6 +92,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
     @Override
     public void clearData() {
         isExtractedData = false;
-        currentPatient.reset();
+        this.currentPatient.reset();
+        this.prescriptionRepository.deleteAll();
     }
 }
