@@ -5,47 +5,55 @@
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">document history</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
-<!--    <div class="btn-toolbar float-right" role="toolbar">-->
-<!--        <div class="btn-group mr-2" role="group">-->
-<!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
-<!--            <a href="#" class="btn btn-primary" th:styleappend="${!documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
-<!--            <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="btn-toolbar float-right" role="toolbar">-->
+    <!--        <div class="btn-group mr-2" role="group">-->
+    <!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+    <!--            <a href="#" class="btn btn-primary" th:styleappend="${!documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
+    <!--            <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+    <p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
     <br>
     <div th:if="${currentD2DConnection.getConnectedThread() == null && !session.withoutConnection}">
         <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.no.connection}">The connection with S-EHR is not established</h5>
     </div>
 
-    <form class="row">
+    <form class="row" th:action="@{/current-patient/document-history-consultation/filter}" method="post">
         <fieldset class="form-group col-2">
-            <legend class="col-form-label col-sm-2 pt-0" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.speciality}">Speciality</legend>
+            <legend class="col-form-label col-sm-2 pt-0"
+                    th:text="#{fragment.current.patient.navigation.left.document.history.consultation.speciality}">Speciality</legend>
             <div class="col-sm-10">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="speciality" id="cardiology" value="cardiology">
-                    <label class="form-check-label" for="cardiology" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</label>
+                    <label class="form-check-label" for="cardiology"
+                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="speciality" id="psychiatry" value="psychiatry">
-                    <label class="form-check-label" for="psychiatry" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</label>
+                    <label class="form-check-label" for="psychiatry"
+                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</label>
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="speciality" id="all" value="all" checked>
-                    <label class="form-check-label" for="all" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>
+                    <label class="form-check-label" for="all"
+                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>
                 </div>
             </div>
         </fieldset>
 
         <fieldset class="form-group col-5">
-            <legend class="col-form-label col-sm-2 pt-0" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</legend>
+            <legend class="col-form-label col-sm-2 pt-0"
+                    th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date
+            </legend>
             <div class="col-sm-10">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="date" id="lastYear" value="lastYear" checked>
@@ -72,7 +80,8 @@
                 <div class="dropdown-divider"></div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="date" id="all2" value="all" checked>
-                    <label class="form-check-label" for="all2" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>
+                    <label class="form-check-label" for="all2"
+                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>
                 </div>
             </div>
         </fieldset>
@@ -80,13 +89,15 @@
             <p class="col-form-label" th:if="${session.speciality != null && session.date != null}"
                th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.parameters} + '<br/>'
         + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'
-        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">Parameters:</p>
+        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">
+                Parameters:</p>
             <br>
             <div th:if="${currentD2DConnection.getConnectedThread() != null}">
                 <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
             </div>
             <h5 th:if="${session.withoutConnection}">Filtration function not available in Simulation mode.</h5>
-            <h5 th:if="${session.isExtractedData}">Filtration function in "Extracted patient phase" not available for the moment.</h5>
+            <h5 th:if="${session.isExtractedData}">Filtration function in "Extracted patient phase" not available for
+                the moment.</h5>
         </div>
     </form>
 
@@ -99,7 +110,9 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</th>
-            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.location}">Location Hospital</th>
+            <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.location}">Location
+                Hospital
+            </th>
             <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.exam}">Exam</th>
             <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.view}">View</th>
         </tr>
@@ -112,12 +125,14 @@
             <td th:text="${{hc.getExam()}}"></td>
             <td>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{button.open}">Open</button>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                            th:text="#{button.open}">Open
+                    </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item"
                            th:href="@{'/current-patient/document-history-consultation/file-view/show-document/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
                            th:text="#{button.open}">Open</a>
-                        <a class="dropdown-item"  target="_blank"
+                        <a class="dropdown-item" target="_blank"
                            th:href="@{'/current-patient/document-history-consultation/file-view/show-document-new-tab/' + ${hc.getExam()} + '/' + ${hc.getDate()}}"
                            th:text="#{button.open.in.new.tab}">Open in new tab</a>
                     </div>

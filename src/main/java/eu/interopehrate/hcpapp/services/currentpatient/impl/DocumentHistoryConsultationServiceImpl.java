@@ -47,6 +47,18 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     }
 
     @Override
+    public DocumentHistoryConsultationCommand getData() {
+        var list = this.currentPatient.docHistoryConsultationList()
+                .stream()
+                .map(this.hapiToCommandDocHistoryConsultation::convert)
+                .collect(Collectors.toList());
+        return DocumentHistoryConsultationCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .documentHistoryConsultationInfoCommandList(list)
+                .build();
+    }
+
+    @Override
     public DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) throws Exception {
         if (this.currentPatient.getWithoutConnection()) {
             var documentList = this.currentPatient.docHistoryConsultationList()
