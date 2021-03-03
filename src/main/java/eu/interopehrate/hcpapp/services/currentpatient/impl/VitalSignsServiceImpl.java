@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandVitalSigns;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityVitalSigns;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -22,7 +23,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,19 +34,22 @@ import java.util.stream.Collectors;
 public class VitalSignsServiceImpl implements VitalSignsService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandVitalSigns hapiToCommandVitalSigns;
-    private List<VitalSignsInfoCommand> vitalSignsInfoCommandsList = new ArrayList<>();
-    private VitalSignsRepository vitalSignsRepository;
-    private final CommandToEntityVitalSigns entityToVitalSigns;
-    private CurrentD2DConnection currentD2DConnection;
+    private final VitalSignsRepository vitalSignsRepository;
+    private final CommandToEntityVitalSigns commandToEntityVitalSigns;
+    private final EntityToCommandVitalSigns entityToCommandVitalSigns;
+    private final CurrentD2DConnection currentD2DConnection;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
     private final AuditInformationService auditInformationService;
 
     public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, VitalSignsRepository vitalSignsRepository,
-                                 CommandToEntityVitalSigns entityToVitalSigns, CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository, AuditInformationService auditInformationService) {
+                                 CommandToEntityVitalSigns commandToEntityVitalSigns, EntityToCommandVitalSigns entityToCommandVitalSigns,
+                                 CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository,
+                                 AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.vitalSignsRepository = vitalSignsRepository;
-        this.entityToVitalSigns = entityToVitalSigns;
+        this.commandToEntityVitalSigns = commandToEntityVitalSigns;
+        this.entityToCommandVitalSigns = entityToCommandVitalSigns;
         this.currentD2DConnection = currentD2DConnection;
         this.vitalSignsTypesRepository = vitalSignsTypesRepository;
         this.auditInformationService = auditInformationService;
@@ -68,16 +75,20 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand) {
-        VitalSignsEntity vitalSignsEntity = this.entityToVitalSigns.convert(vitalSignsInfoCommand);
+        vitalSignsInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
+        VitalSignsEntity vitalSignsEntity = this.commandToEntityVitalSigns.convert(vitalSignsInfoCommand);
         vitalSignsRepository.save(vitalSignsEntity);
-        vitalSignsInfoCommandsList.add(vitalSignsInfoCommand);
     }
 
     @Override
     public VitalSignsCommand vitalSignsUpload() {
+        var vitalSignsList = this.vitalSignsRepository.findAll()
+                .stream()
+                .map(this.entityToCommandVitalSigns::convert)
+                .collect(Collectors.toList());
         return VitalSignsCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .vitalSignsInfoCommands(this.vitalSignsInfoCommandsList)
+                .vitalSignsInfoCommands(vitalSignsList)
                 .build();
     }
 
@@ -104,7 +115,6 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
         auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send VitalSigns to S-EHR");
-        this.vitalSignsInfoCommandsList.clear();
         this.vitalSignsRepository.deleteAll();
     }
 

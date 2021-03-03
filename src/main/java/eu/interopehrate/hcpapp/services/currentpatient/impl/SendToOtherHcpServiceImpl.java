@@ -1,10 +1,13 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.entity.EntityToCommandPrescription;
+import eu.interopehrate.hcpapp.converters.entity.EntityToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.EHRType;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.EHRModel;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
@@ -32,7 +35,9 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     private final IndexService indexService;
     private final RestTemplate restTemplate;
     private final PrescriptionRepository prescriptionRepository;
+    private final VitalSignsRepository vitalSignsRepository;
     private final EntityToCommandPrescription entityToCommandPrescription;
+    private final EntityToCommandVitalSigns entityToCommandVitalSigns;
     @Value("${hcp.app.hospital.services.url}")
     private String hospitalServicesUrl;
     @Value("${hcp.app.hospital.services.hcps.list.url}")
@@ -41,12 +46,15 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     private String patientsTransferUrl;
 
     public SendToOtherHcpServiceImpl(CurrentPatient currentPatient, IndexService indexService, RestTemplate restTemplate,
-                                     PrescriptionRepository prescriptionRepository, EntityToCommandPrescription entityToCommandPrescription) {
+                                     PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
+                                     EntityToCommandPrescription entityToCommandPrescription, EntityToCommandVitalSigns entityToCommandVitalSigns) {
         this.currentPatient = currentPatient;
         this.indexService = indexService;
         this.restTemplate = restTemplate;
         this.prescriptionRepository = prescriptionRepository;
+        this.vitalSignsRepository = vitalSignsRepository;
         this.entityToCommandPrescription = entityToCommandPrescription;
+        this.entityToCommandVitalSigns = entityToCommandVitalSigns;
     }
 
     @Override
@@ -161,6 +169,14 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
             this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer-prescription", this.entityToCommandPrescription.convert(pr));
         }
         this.prescriptionRepository.deleteAll();
+    }
+
+    @Override
+    public void sendVitalSigns() {
+        for (VitalSignsEntity v : this.vitalSignsRepository.findAll()) {
+            this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer-vital-signs", this.entityToCommandVitalSigns.convert(v));
+        }
+        this.vitalSignsRepository.deleteAll();
     }
 
     private static String convertBundleIntoString(Bundle bundle) throws IOException {

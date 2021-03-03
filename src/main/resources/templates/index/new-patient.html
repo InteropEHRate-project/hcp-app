@@ -101,7 +101,12 @@
             <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
                  class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:text="#{fragment.main.connected}">Connected</h3>
+                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}" th:text="#{fragment.main.connection.in.progress}">Connection in progress...</h3>
+                </div>
+                <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
                 <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
                     <h5 style="color: red" class="row justify-content-center"
@@ -109,6 +114,9 @@
                 </div>
                 <div th:if="${index.transmissionCompleted}">
                     <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+                </div>
+                <div class="row justify-content-center">
+                    <h3 class="mt-5" th:if="${index.transmissionCompleted}" th:text="#{fragment.main.connected}">Connected</h3>
                 </div>
                 <div class="row justify-content-center">
                     <a href="#" class="btn btn-primary" th:text="#{template.index.button.close.connection}"

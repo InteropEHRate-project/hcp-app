@@ -53,12 +53,19 @@ public class SendToOtherHcpController {
         model.addAttribute("isEhrTransferred", this.sendToOtherHcpService.sendEHRs());
 
         //For displaying the Hcp name where the patient was sent
-        for (var hcp : this.hcpList) {
-            if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(initialHcpId.intValue())) {
-                model.addAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
+        try {
+            for (var hcp : this.hcpList) {
+                if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(initialHcpId.intValue())) {
+                    model.addAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("hcpName", "");
         }
+
         this.sendToOtherHcpService.sendPrescription();
+        this.sendToOtherHcpService.sendVitalSigns();
         this.currentPatient.reset();
         if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
             session.removeAttribute("mySessionAttribute");

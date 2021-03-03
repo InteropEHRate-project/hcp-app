@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "VITAL_SIGNS")
 public class VitalSignsEntity extends HCPApplicationEntity {
+    private String patientId;
     @OneToOne(optional = false)
     @JoinColumn(name = "ANALYSIS_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_TYPES"))
     private VitalSignsTypesEntity analysisType;

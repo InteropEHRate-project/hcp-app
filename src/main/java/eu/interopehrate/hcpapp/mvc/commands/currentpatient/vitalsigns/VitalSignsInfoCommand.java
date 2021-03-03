@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class VitalSignsInfoCommand {
+    private Long id;
+    private String patientId;
     @NotEmpty
     @NotNull
     private String analysisName;
