@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
+import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
@@ -114,6 +115,7 @@ public class CurrentPatient {
     @PostConstruct
     private void initializeBundles() {
         if (this.withoutConnection) {
+            IndexCommand.transmissionCompleted = true;
             InputStream in;
             in = getClass().getResourceAsStream("/PatientDataExample.json");
             this.patient = (Patient) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));

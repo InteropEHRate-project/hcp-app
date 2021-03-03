@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -47,7 +48,7 @@ public class SendToOtherHcpController {
 
     @GetMapping
     @RequestMapping("/send-patient")
-    public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, Model model) throws Exception {
+    public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, Model model, HttpSession session) throws Exception {
         model.addAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(initialHcpId));
         model.addAttribute("isEhrTransferred", this.sendToOtherHcpService.sendEHRs());
 
@@ -59,6 +60,9 @@ public class SendToOtherHcpController {
         }
         this.sendToOtherHcpService.sendPrescription();
         this.currentPatient.reset();
+        if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
+            session.removeAttribute("mySessionAttribute");
+        }
         return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
     }
 }

@@ -70,6 +70,11 @@
 <div class="m-5"></div>
 <div class="container">
     <h2 class="text-center" th:text="#{template.index.existing.visit}">Continue existing visit</h2>
+
+    <div th:if="${index.transmissionCompleted}">
+        <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+    </div>
+
     <h3 class="mt-4" th:text="#{fragment.main.details.the.button}"> Select patient from the table</h3>
     <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
     <br>
