@@ -3,8 +3,10 @@ package eu.interopehrate.hcpapp.services.index.impl;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.linkedhashmap.LinkedHashMapToPrescriptionEntity;
+import eu.interopehrate.hcpapp.converters.linkedhashmap.LinkedHashMapToVitalSignsEntity;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.services.index.ContinueExistingVisitService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.Bundle;
@@ -23,17 +25,24 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
     private final CurrentPatient currentPatient;
     private final TranslateService translateService;
     private final PrescriptionRepository prescriptionRepository;
+    private final VitalSignsRepository vitalSignsRepository;
     private final LinkedHashMapToPrescriptionEntity linkedHashMapToPrescriptionEntity;
+    private final LinkedHashMapToVitalSignsEntity linkedHashMapToVitalSignsEntity;
     @Value("${hcp.app.hospital.services.url}")
     private String url;
     public static Boolean isExtractedData = false;
 
-    public ContinueExistingVisitServiceImpl(RestTemplate restTemplate, CurrentPatient currentPatient, TranslateService translateService, PrescriptionRepository prescriptionRepository, LinkedHashMapToPrescriptionEntity linkedHashMapToPrescriptionEntity) {
+    public ContinueExistingVisitServiceImpl(RestTemplate restTemplate, CurrentPatient currentPatient, TranslateService translateService,
+                                            PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
+                                            LinkedHashMapToPrescriptionEntity linkedHashMapToPrescriptionEntity,
+                                            LinkedHashMapToVitalSignsEntity linkedHashMapToVitalSignsEntity) {
         this.restTemplate = restTemplate;
         this.currentPatient = currentPatient;
         this.translateService = translateService;
         this.prescriptionRepository = prescriptionRepository;
+        this.vitalSignsRepository = vitalSignsRepository;
         this.linkedHashMapToPrescriptionEntity = linkedHashMapToPrescriptionEntity;
+        this.linkedHashMapToVitalSignsEntity = linkedHashMapToVitalSignsEntity;
     }
 
     @Override
@@ -83,9 +92,14 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
                 this.currentPatient.setVitalSignsTranslated(this.translateService.translate(this.currentPatient.getVitalSigns(), Locale.UK));
             }
         }
+
         var prescriptions = this.restTemplate.postForObject(this.url + "/ehrs" + "/retrieve-added-prescription", patientId , List.class);
-        for (int i = 0; i < prescriptions.size(); i++) {
-            this.prescriptionRepository.save(this.linkedHashMapToPrescriptionEntity.convert((LinkedHashMap) prescriptions.get(i)));
+        for (Object prescription : prescriptions) {
+            this.prescriptionRepository.save(this.linkedHashMapToPrescriptionEntity.convert((LinkedHashMap) prescription));
+        }
+        var vitalSigns = this.restTemplate.postForObject(this.url + "/ehrs" + "/retrieve-added-vital-signs", patientId, List.class);
+        for (Object vitalSign : vitalSigns) {
+            this.vitalSignsRepository.save(this.linkedHashMapToVitalSignsEntity.convert((LinkedHashMap) vitalSign));
         }
     }
 

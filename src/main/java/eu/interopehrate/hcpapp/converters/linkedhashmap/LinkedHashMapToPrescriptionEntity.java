@@ -13,8 +13,8 @@ public class LinkedHashMapToPrescriptionEntity implements Converter<LinkedHashMa
     @Override
     public PrescriptionEntity convert(LinkedHashMap source) {
         PrescriptionEntity prescriptionEntity = new PrescriptionEntity();
-        if (Objects.nonNull(source.get("id"))) {
-            prescriptionEntity.setId(Long.parseLong(source.get("id").toString()));
+        if (Objects.nonNull(source.get("patient"))) {
+            prescriptionEntity.setPatientId(((LinkedHashMap) source.get("patient")).get("patientId").toString());
         }
         prescriptionEntity.setStatus(source.get("status").toString());
         prescriptionEntity.setFrequency((Integer) source.get("frequency"));
