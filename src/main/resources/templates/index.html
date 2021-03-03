@@ -192,12 +192,7 @@
                         <h5 style="color: red" class="row justify-content-center"
                             th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
                     </div>
-                    <div th:if="${index.patientDataCommand.getIpsReceived()
-                    && index.patientDataCommand.getPrescriptionReceived()
-                    && index.patientDataCommand.getLaboratoryResultsReceived()
-                    && index.patientDataCommand.getImageReportReceived()
-                    && index.patientDataCommand.getPatHisReceived()
-                    && index.patientDataCommand.getVitalSignsReceived()}">
+                    <div th:if="${index.transmissionCompleted}">
                         <h5 style="color: green" class="row justify-content-center"
                             th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
                     </div>

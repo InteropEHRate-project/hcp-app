@@ -1,10 +1,14 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
+import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/index")
@@ -16,8 +20,12 @@ public class NewVisitController {
     }
 
     @RequestMapping("/new-patient")
-    public String indexTemplate(Model model) throws Exception {
+    public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
+        IndexCommand indexCommand = indexService.indexCommand();
+        if (Objects.isNull(session.getAttribute("mySessionAttribute")) && IndexCommand.transmissionCompleted) {
+            session.setAttribute("mySessionAttribute", indexCommand);
+        }
         return TemplateNames.INDEX_NEW_PATIENT;
     }
 

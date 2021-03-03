@@ -33,7 +33,6 @@ public class IndexController {
     @RequestMapping({"/", "/index"})
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
-        session.setAttribute("mySessionAttribute", indexService.indexCommand());
         session.setAttribute("hcpName", this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
         if (Objects.nonNull(this.indexService.getCurrentPatient())) {
             session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
@@ -53,8 +52,11 @@ public class IndexController {
     }
 
     @RequestMapping("/index/close-connection")
-    public String closeConnection() {
+    public String closeConnection(HttpSession session) {
         indexService.closeConnection();
+        if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
+            session.removeAttribute("mySessionAttribute");
+        }
         return "redirect:/index";
     }
 

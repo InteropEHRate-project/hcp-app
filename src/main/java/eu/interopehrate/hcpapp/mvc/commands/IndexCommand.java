@@ -16,6 +16,7 @@ public class IndexCommand {
     private D2DConnectionState connectionState;
     private CloudConnectionState cloudConnectionState;
     private IndexPatientDataCommand patientDataCommand;
+    public static Boolean transmissionCompleted = false;
 
     @NotEmpty
     @NotNull

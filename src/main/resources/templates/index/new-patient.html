@@ -57,20 +57,10 @@
         <p th:text="${exception}">Exception</p>
     </div>
     <br>
-    <div class="card-body row justify-content-center" th:if="${index.patientDataCommand.getIpsReceived()
-                    && index.patientDataCommand.getPrescriptionReceived()
-                    && index.patientDataCommand.getLaboratoryResultsReceived()
-                    && index.patientDataCommand.getImageReportReceived()
-                    && index.patientDataCommand.getPatHisReceived()
-                    && index.patientDataCommand.getVitalSignsReceived()}">
+    <div class="card-body row justify-content-center" th:if="${index.transmissionCompleted}">
         <a class="btn btn-primary" th:href="@{/index}" th:text="#{template.index.return.to.home}">Return to Home</a>
     </div>
-    <h3 class="text-center" th:unless="${index.patientDataCommand.getIpsReceived()
-                    && index.patientDataCommand.getPrescriptionReceived()
-                    && index.patientDataCommand.getLaboratoryResultsReceived()
-                    && index.patientDataCommand.getImageReportReceived()
-                    && index.patientDataCommand.getPatHisReceived()
-                    && index.patientDataCommand.getVitalSignsReceived()}" th:text="#{template.index.new.patient}">New Patient</h3></p>
+    <h3 class="text-center" th:unless="${index.transmissionCompleted}" th:text="#{template.index.new.patient}">New Patient</h3></p>
 
     <div th:if="${exception == null}">
         <div th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
@@ -117,12 +107,7 @@
                     <h5 style="color: red" class="row justify-content-center"
                         th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
                 </div>
-                <div th:if="${index.patientDataCommand.getIpsReceived()
-                    && index.patientDataCommand.getPrescriptionReceived()
-                    && index.patientDataCommand.getLaboratoryResultsReceived()
-                    && index.patientDataCommand.getImageReportReceived()
-                    && index.patientDataCommand.getPatHisReceived()
-                    && index.patientDataCommand.getVitalSignsReceived()}">
+                <div th:if="${index.transmissionCompleted}">
                     <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
                 </div>
                 <div class="row justify-content-center">

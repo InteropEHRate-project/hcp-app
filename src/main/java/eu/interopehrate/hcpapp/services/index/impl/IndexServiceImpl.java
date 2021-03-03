@@ -107,6 +107,7 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setImageReportReceived(true);
             patientDataCommand.setPatHisReceived(true);
             patientDataCommand.setVitalSignsReceived(true);
+            IndexCommand.transmissionCompleted = true;
         }
 
         patientDataCommand.setCertificate(currentD2DConnection.getIndexPatientDataCommand().getCertificate());

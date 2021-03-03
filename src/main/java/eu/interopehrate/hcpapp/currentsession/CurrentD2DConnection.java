@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
+import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
@@ -122,6 +123,7 @@ public class CurrentD2DConnection implements DisposableBean {
             this.indexPatientDataCommand.setImageReportReceived(false);
             this.indexPatientDataCommand.setPatHisReceived(false);
             this.indexPatientDataCommand.setVitalSignsReceived(false);
+            IndexCommand.transmissionCompleted = false;
         }
     }
 
