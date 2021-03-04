@@ -48,20 +48,20 @@ public class SendToOtherHcpController {
 
     @GetMapping
     @RequestMapping("/send-patient")
-    public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, Model model, HttpSession session) throws Exception {
-        model.addAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(initialHcpId));
-        model.addAttribute("isEhrTransferred", this.sendToOtherHcpService.sendEHRs());
+    public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, HttpSession session) throws Exception {
+        session.setAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(initialHcpId));
+        session.setAttribute("isEhrTransferred", this.sendToOtherHcpService.sendEHRs());
 
         //For displaying the Hcp name where the patient was sent
         try {
             for (var hcp : this.hcpList) {
                 if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(initialHcpId.intValue())) {
-                    model.addAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
+                    session.setAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("hcpName", "");
+            session.setAttribute("hcpName", "");
         }
 
         this.sendToOtherHcpService.sendPrescription();
@@ -70,6 +70,6 @@ public class SendToOtherHcpController {
         if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
             session.removeAttribute("mySessionAttribute");
         }
-        return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
+        return "redirect:/index";
     }
 }

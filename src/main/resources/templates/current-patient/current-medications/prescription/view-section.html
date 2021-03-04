@@ -195,7 +195,7 @@
         </ul>
     </nav>
 
-    <div class="btn-toolbar float-right" role="toolbar">
+    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/open-add-page}" th:text="#{crud.button.add}">Add</a>
         </div>

@@ -56,6 +56,11 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     @Override
+    public CurrentPatient getCurrentPatient() {
+        return currentPatient;
+    }
+
+    @Override
     public CurrentD2DConnection getCurrentD2DConnection() {
         return currentD2DConnection;
     }

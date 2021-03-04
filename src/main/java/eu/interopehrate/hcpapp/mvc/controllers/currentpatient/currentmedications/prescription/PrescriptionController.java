@@ -33,6 +33,7 @@ public class PrescriptionController {
         this.prescriptionService.setEmpty(false);
         this.prescriptionService.setFiltered(false);
         session.setAttribute("keywordPrescription", keywordPrescription);
+        model.addAttribute("patient", this.prescriptionService.getCurrentPatient().getPatient());
         return this.findPaginated(1, 1, keywordPrescription, model);
     }
 

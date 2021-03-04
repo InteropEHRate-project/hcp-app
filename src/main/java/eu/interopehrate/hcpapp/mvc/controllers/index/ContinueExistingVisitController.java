@@ -70,7 +70,7 @@ public class ContinueExistingVisitController {
             session.setAttribute("mySessionAttribute", indexCommand);
         }
         model.addAttribute("index", indexService.indexCommand());
-        return TemplateNames.INDEX_EXISTING_VISIT;
+        return "redirect:/index";
     }
 
     @GetMapping
