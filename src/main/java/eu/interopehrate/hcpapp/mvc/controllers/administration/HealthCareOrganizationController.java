@@ -19,7 +19,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/administration/health-care-organization")
 public class HealthCareOrganizationController {
-    private HealthCareOrganizationService healthCareOrganizationService;
+    private final HealthCareOrganizationService healthCareOrganizationService;
 
     public HealthCareOrganizationController(HealthCareOrganizationService healthCareOrganizationService) {
         this.healthCareOrganizationService = healthCareOrganizationService;
@@ -28,7 +28,7 @@ public class HealthCareOrganizationController {
     @GetMapping
     @RequestMapping("/view-details")
     public String detailsTemplate(Model model) {
-        HealthCareOrganizationCommand healthCareOrganizationCommand = healthCareOrganizationService.getHealthCareOrganization();
+        HealthCareOrganizationCommand healthCareOrganizationCommand = this.healthCareOrganizationService.getHealthCareOrganization();
         model.addAttribute("healthCareOrganization", healthCareOrganizationCommand);
         return TemplateNames.ADMINISTRATION_HEALTH_CARE_ORGANIZATION_VIEW_DETAILS;
     }
@@ -44,7 +44,7 @@ public class HealthCareOrganizationController {
     public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
         modelMap.addAttribute("file", file);
         Long id = 1L;
-        healthCareOrganizationService.saveFile(id, file);
+        this.healthCareOrganizationService.saveFile(id, file);
 
         log.info("File uploaded: " + file.getOriginalFilename());
         return "redirect:/administration/health-care-organization/view-details";

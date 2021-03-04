@@ -12,13 +12,14 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
 @Service
 public class HealthCareProfessionalServiceImpl implements HealthCareProfessionalService {
-    private HealthCareProfessionalRepository healthCareProfessionalRepository;
-    private EntityToCommandHealthCareProfessional entityToCommandHealthCareProfessional;
+    private final HealthCareProfessionalRepository healthCareProfessionalRepository;
+    private final EntityToCommandHealthCareProfessional entityToCommandHealthCareProfessional;
 
     public HealthCareProfessionalServiceImpl(HealthCareProfessionalRepository healthCareProfessionalRepository,
                                              EntityToCommandHealthCareProfessional entityToCommandHealthCareProfessional) {
@@ -49,7 +50,7 @@ public class HealthCareProfessionalServiceImpl implements HealthCareProfessional
             healthCareProfessionalEntity.setCertificate(byteObjects);
 
             healthCareProfessionalRepository.save(healthCareProfessionalEntity);
-            log.info("Entity Certificate: " + healthCareProfessionalEntity.getCertificate().toString());
+            log.info("Entity Certificate: " + Arrays.toString(healthCareProfessionalEntity.getCertificate()));
         } catch (IOException e) {
             log.error("Error occurred", e);
             e.printStackTrace();

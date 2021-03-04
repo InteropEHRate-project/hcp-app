@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/administration/health-care-professional")
 public class HealthCareProfessionalController {
-    private HealthCareProfessionalService healthCareProfessionalService;
+    private final HealthCareProfessionalService healthCareProfessionalService;
 
     public HealthCareProfessionalController(HealthCareProfessionalService healthCareProfessionalService) {
         this.healthCareProfessionalService = healthCareProfessionalService;
@@ -27,7 +27,7 @@ public class HealthCareProfessionalController {
     @GetMapping
     @RequestMapping("/view-details")
     public String viewDetails(Model model) {
-        model.addAttribute("healthCareProfessional", healthCareProfessionalService.getHealthCareProfessional());
+        model.addAttribute("healthCareProfessional", this.healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.ADMINISTRATION_HEALTH_CARE_PROFESSIONAL_VIEW_DETAILS;
     }
 
@@ -42,7 +42,7 @@ public class HealthCareProfessionalController {
     public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
         modelMap.addAttribute("file", file);
         Long id = 1L;
-        healthCareProfessionalService.saveFile(id, file);
+        this.healthCareProfessionalService.saveFile(id, file);
 
         log.info("File uploaded: " + file.getOriginalFilename());
         return "redirect:/administration/health-care-professional/view-details";

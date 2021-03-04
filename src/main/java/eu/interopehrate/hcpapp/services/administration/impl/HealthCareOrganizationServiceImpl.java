@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Slf4j
 @Service
 public class HealthCareOrganizationServiceImpl implements HealthCareOrganizationService {
-    private HealthCareOrganizationRepository healthCareOrganizationRepository;
-    private EntityToCommandHealthCareOrganization entityToCommandHealthCareOrganization;
+    private final HealthCareOrganizationRepository healthCareOrganizationRepository;
+    private final EntityToCommandHealthCareOrganization entityToCommandHealthCareOrganization;
 
     public HealthCareOrganizationServiceImpl(HealthCareOrganizationRepository healthCareOrganizationRepository,
                                              EntityToCommandHealthCareOrganization entityToCommandHealthCareOrganization) {
@@ -43,7 +44,7 @@ public class HealthCareOrganizationServiceImpl implements HealthCareOrganization
             healthCareOrganizationEntity.setCertificate(byteObjects);
 
             healthCareOrganizationRepository.save(healthCareOrganizationEntity);
-            log.info("Entity Certificate: " + healthCareOrganizationEntity.getCertificate().toString());
+            log.info("Entity Certificate: " + Arrays.toString(healthCareOrganizationEntity.getCertificate()));
         } catch (IOException e) {
             log.error("Error occurred", e);
             e.printStackTrace();

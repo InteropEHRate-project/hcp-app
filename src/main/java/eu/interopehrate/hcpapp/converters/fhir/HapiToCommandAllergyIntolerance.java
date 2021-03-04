@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.converters.fhir;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntoleranceInfoCommand;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
 import org.hl7.fhir.r4.model.Identifier;
 import org.springframework.core.convert.converter.Converter;
