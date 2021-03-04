@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class ObservationLaboratoryServiceImpl implements ObservationLaboratoryService {
-    private CurrentPatient currentPatient;
-    private HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory;
+    private final CurrentPatient currentPatient;
+    private final HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
 

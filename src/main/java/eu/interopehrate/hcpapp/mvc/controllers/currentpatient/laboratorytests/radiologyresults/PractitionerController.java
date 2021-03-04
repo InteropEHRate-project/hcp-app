@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/current-patient/laboratory-tests/radiology-results")
 public class PractitionerController {
+
     @GetMapping
     @RequestMapping("/practitioner-view")
     public String viewSection() {

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PatHistoryServiceImpl implements PatHistoryService {
-    private CurrentPatient currentPatient;
+    private final CurrentPatient currentPatient;
     private final List<String> listOfPatHis = new ArrayList<>();
     private final List<String> listOfSocHis = new ArrayList<>();
     private final List<String> listOfFamHis = new ArrayList<>();

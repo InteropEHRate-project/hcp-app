@@ -8,10 +8,10 @@ import java.util.List;
 @Builder
 @Getter
 public class PatHistoryCommand {
-    private Boolean displayTranslatedVersion;
-    private List<PatHistoryInfoCommandDiagnosis> patHistoryInfoCommandDiagnoses;
-    private List<PatHistoryInfoCommandRiskFactor> patHistoryInfoCommandRiskFactors;
-    private List<String> listOfPatHis;
-    private List<String> listOfSocHis;
-    private List<String> listOfFamHis;
+    private final Boolean displayTranslatedVersion;
+    private final List<PatHistoryInfoCommandDiagnosis> patHistoryInfoCommandDiagnoses;
+    private final List<PatHistoryInfoCommandRiskFactor> patHistoryInfoCommandRiskFactors;
+    private final List<String> listOfPatHis;
+    private final List<String> listOfSocHis;
+    private final List<String> listOfFamHis;
 }

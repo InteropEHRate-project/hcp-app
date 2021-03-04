@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/current-patient/pat-history")
 public class PatHistoryController {
-    private PatHistoryService patHistoryService;
+    private final PatHistoryService patHistoryService;
 
     public PatHistoryController(PatHistoryService patHistoryService) {
         this.patHistoryService = patHistoryService;

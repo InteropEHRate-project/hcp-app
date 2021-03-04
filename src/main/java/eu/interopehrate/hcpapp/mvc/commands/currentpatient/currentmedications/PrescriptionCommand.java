@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 @Builder
 @Getter
 public class PrescriptionCommand {
-    private Boolean displayTranslatedVersion;
-    private Page<PrescriptionInfoCommand> pageInfoCommand;
+    private final Boolean displayTranslatedVersion;
+    private final Page<PrescriptionInfoCommand> pageInfoCommand;
 
     public PrescriptionInfoCommand find(Long id) {
         for (PrescriptionInfoCommand pr : this.pageInfoCommand) {

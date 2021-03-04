@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
 public class IndexServiceImpl implements IndexService {
     @Value("${bluetooth.connection.info.image.size}")
     private String bluetoothConnectionInfoImageSize;
-    private BluetoothConnectionService bluetoothConnectionService;
+    private final BluetoothConnectionService bluetoothConnectionService;
 
-    private CurrentD2DConnection currentD2DConnection;
-    private CloudConnection cloudConnection;
-    private CurrentPatient currentPatient;
+    private final CurrentD2DConnection currentD2DConnection;
+    private final CloudConnection cloudConnection;
+    private final CurrentPatient currentPatient;
 
     public IndexServiceImpl(BluetoothConnectionService bluetoothConnectionService,
                             CurrentD2DConnection currentD2DConnection,

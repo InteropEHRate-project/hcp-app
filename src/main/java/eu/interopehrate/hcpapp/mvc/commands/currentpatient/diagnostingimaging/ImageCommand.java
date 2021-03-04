@@ -8,8 +8,8 @@ import java.util.List;
 @Builder
 @Getter
 public class ImageCommand {
-    private List<ImageInfoCommand> imageInfoCommands;
-    private List<DiagnosticReportInfoCommand> diagnosticReportInfoCommands;
+    private final List<ImageInfoCommand> imageInfoCommands;
+    private final List<DiagnosticReportInfoCommand> diagnosticReportInfoCommands;
 
     public DiagnosticReportInfoCommand find(String nameDiagnostic, String dateOfReport) {
         for (DiagnosticReportInfoCommand diag : this.diagnosticReportInfoCommands) {

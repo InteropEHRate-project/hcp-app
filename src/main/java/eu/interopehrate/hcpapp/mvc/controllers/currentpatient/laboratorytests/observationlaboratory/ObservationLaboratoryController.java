@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/current-patient/laboratory-tests/laboratory-results")
 public class ObservationLaboratoryController {
-    private ObservationLaboratoryService observationLaboratoryService;
+    private final ObservationLaboratoryService observationLaboratoryService;
 
     public ObservationLaboratoryController(ObservationLaboratoryService observationLaboratoryService) {
         this.observationLaboratoryService = observationLaboratoryService;

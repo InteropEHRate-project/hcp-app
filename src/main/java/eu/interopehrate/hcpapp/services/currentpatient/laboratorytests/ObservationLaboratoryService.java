@@ -4,8 +4,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.Obser
 
 public interface ObservationLaboratoryService {
     boolean isFiltered();
-
     boolean isEmpty();
-
     ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis(String keyword);
 }

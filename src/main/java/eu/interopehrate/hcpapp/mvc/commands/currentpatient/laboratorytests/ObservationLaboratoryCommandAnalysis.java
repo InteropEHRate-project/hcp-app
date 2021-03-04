@@ -13,11 +13,11 @@ import java.util.*;
 @Builder
 @Getter
 public class ObservationLaboratoryCommandAnalysis {
-    private Boolean displayTranslatedVersion;
-    private List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses;
+    private final Boolean displayTranslatedVersion;
+    private final List<ObservationLaboratoryInfoCommandAnalysis> observationLaboratoryInfoCommandAnalyses;
 
     //PAGE SIZE is hardcoded HERE
-    private static int pageSize = 10;
+    private static final int pageSize = 10;
     private static int totalPages;
     private static long totalElements;
 
@@ -32,7 +32,7 @@ public class ObservationLaboratoryCommandAnalysis {
     public void createPagination(int pageNo) {
         //Pagination generation
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<String> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo, pageSize);
+        Page<String> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo);
         totalElements = page.getTotalElements();
         totalPages = page.getTotalPages();
     }
@@ -48,11 +48,11 @@ public class ObservationLaboratoryCommandAnalysis {
     public List<String> observationLaboratoryInfoCommandAnalysesWithoutDuplicates(int pageNo) {
         //Pagination generation
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<String> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo, pageSize);
+        Page<String> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo);
         return page.getContent();
     }
 
-
+    @SuppressWarnings("rawtypes")
     public DoubleKeyHashMap valueReturn(int pageNo) {
         DoubleKeyHashMap<String, LocalDateTime, String> mapPair = new DoubleKeyHashMap<>();
         List<String> analysisList = this.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(pageNo);
@@ -90,12 +90,12 @@ public class ObservationLaboratoryCommandAnalysis {
         return "No value found";
     }
 
-    private static Page<String> createPageFromList(List<String> list, Pageable pageable, int pageNo, int pageSize) {
+    private static Page<String> createPageFromList(List<String> list, Pageable pageable, int pageNo) {
         try {
-            int index = (pageNo - 1) * pageSize;
-            return new PageImpl<>(list.subList(index, index + pageSize), pageable, list.size());
+            int index = (pageNo - 1) * ObservationLaboratoryCommandAnalysis.pageSize;
+            return new PageImpl<>(list.subList(index, index + ObservationLaboratoryCommandAnalysis.pageSize), pageable, list.size());
         } catch (IndexOutOfBoundsException ignored) {
-            int index = (pageNo - 1) * pageSize;
+            int index = (pageNo - 1) * ObservationLaboratoryCommandAnalysis.pageSize;
             return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
         }
     }

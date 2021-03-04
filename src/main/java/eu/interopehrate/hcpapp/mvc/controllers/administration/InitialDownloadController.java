@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/administration/initial-download")
 public class InitialDownloadController {
-    private SEHRInitialDownloadService sehrInitialDownloadService;
+    private final SEHRInitialDownloadService sehrInitialDownloadService;
 
     public InitialDownloadController(SEHRInitialDownloadService sehrInitialDownloadService) {
         this.sehrInitialDownloadService = sehrInitialDownloadService;
@@ -22,7 +22,7 @@ public class InitialDownloadController {
     @GetMapping
     @RequestMapping("/get-sehr-initial")
     public String getSEHRInitial(Model model) {
-        SEHRInitialDownloadCommand sehrInitialDownloadCommand = sehrInitialDownloadService.getInitialConfig();
+        SEHRInitialDownloadCommand sehrInitialDownloadCommand = this.sehrInitialDownloadService.getInitialConfig();
         model.addAttribute("sehrInitialDownload", sehrInitialDownloadCommand);
         return TemplateNames.ADMINISTRATION_INITIAL_DOWNLOAD_FROM_SEHR;
     }
@@ -30,7 +30,7 @@ public class InitialDownloadController {
     @PostMapping
     @RequestMapping("/save-sehr-initial")
     public String saveSEHRInitial(@ModelAttribute SEHRInitialDownloadCommand command) {
-        sehrInitialDownloadService.saveInitialConfig(command);
+        this.sehrInitialDownloadService.saveInitialConfig(command);
         return "redirect:/administration/initial-download/get-sehr-initial";
     }
 }

@@ -6,6 +6,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class MedicationCommand {
-    private Boolean displayTranslatedVersion;
-    private MedicationInfoCommand medicationInfoCommand;
+    private final Boolean displayTranslatedVersion;
+    private final MedicationInfoCommand medicationInfoCommand;
 }

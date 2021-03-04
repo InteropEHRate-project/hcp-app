@@ -37,7 +37,8 @@ public class IndexController {
         if (Objects.isNull(session.getAttribute("mySessionAttribute")) && IndexCommand.transmissionCompleted) {
             session.setAttribute("mySessionAttribute", indexCommand);
         }
-        session.setAttribute("hcpName", this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
+        session.setAttribute("hcpName",
+                this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
         if (Objects.nonNull(this.indexService.getCurrentPatient())) {
             session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
         }
