@@ -19,7 +19,6 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class AuditInformationServiceImpl implements AuditInformationService {
-
     private final AuditInformationRepository auditInformationRepository;
     private final AdmissionDataAuditService admissionDataAuditService;
     private final CurrentPatient currentPatient;

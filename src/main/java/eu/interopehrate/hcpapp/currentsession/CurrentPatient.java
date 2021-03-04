@@ -52,6 +52,10 @@ public class CurrentPatient {
         this.terminalFhirContext = terminalFhirContext;
     }
 
+    public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
+        this.displayTranslatedVersion = displayTranslatedVersion;
+    }
+
     public void setPatientSummaryBundleTranslated(Bundle patientSummaryBundleTranslated) {
         this.patientSummaryBundleTranslated = patientSummaryBundleTranslated;
     }
@@ -525,10 +529,6 @@ public class CurrentPatient {
                 return new BundleProcessor(this.patHisBundle).patHisConsultationConditionsList();
             }
         }
-    }
-
-    public void setDisplayTranslatedVersion(Boolean displayTranslatedVersion) {
-        this.displayTranslatedVersion = displayTranslatedVersion;
     }
 
     public static String extractExtensionText(Coding coding, CurrentPatient currentPatient) {

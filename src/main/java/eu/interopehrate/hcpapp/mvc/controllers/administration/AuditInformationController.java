@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/administration/audit-information")
 public class AuditInformationController {
-    private AuditInformationService auditInformationService;
+    private final AuditInformationService auditInformationService;
 
     public AuditInformationController(AuditInformationService auditInformationService) {
         this.auditInformationService = auditInformationService;

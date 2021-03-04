@@ -8,8 +8,8 @@ import java.util.List;
 @Builder
 @Getter
 public class CurrentMedicationsCommand {
-    private Boolean displayTranslatedVersion;
-    private List<CurrentMedicationsStatementCommand> statementList;
-    private List<PrescriptionCommand> prescriptionList;
-    private List<MedicationCommand> medicationList;
+    private final Boolean displayTranslatedVersion;
+    private final List<CurrentMedicationsStatementCommand> statementList;
+    private final List<PrescriptionCommand> prescriptionList;
+    private final List<MedicationCommand> medicationList;
 }

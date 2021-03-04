@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/current-patient/demographic-information")
 public class DemographicInformationController {
-    private IndexService indexService;
+    private final IndexService indexService;
 
     public DemographicInformationController(IndexService indexService) {
         this.indexService = indexService;

@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
+package eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy;
 
 import lombok.Getter;
 import lombok.Setter;

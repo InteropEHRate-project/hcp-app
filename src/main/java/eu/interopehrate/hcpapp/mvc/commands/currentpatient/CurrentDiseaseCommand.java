@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 @Getter
 public class CurrentDiseaseCommand {
-    private Boolean displayTranslatedVersion;
-    private List<CurrentDiseaseInfoCommand> currentDiseaseInfoCommand;
-    private List<String> listOfNotes;
+    private final Boolean displayTranslatedVersion;
+    private final List<CurrentDiseaseInfoCommand> currentDiseaseInfoCommand;
+    private final List<String> listOfNotes;
 }

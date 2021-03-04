@@ -4,8 +4,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.Im
 
 public interface DiagnosticImagingService {
     ImageCommand imageCommand();
-
     void displayEcgDemo();
-
     void displayMrDemo();
 }

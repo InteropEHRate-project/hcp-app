@@ -10,6 +10,6 @@ public class CloudConnectionSseCommand {
         RELOAD_PAGE, DISPLAY_TEXT
     }
 
-    private SseCommandAction action;
-    private String text;
+    private final SseCommandAction action;
+    private final String text;
 }

@@ -6,12 +6,8 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.D
 
 public interface DocumentHistoryConsultationService {
     CurrentD2DConnection getCurrentD2DConnection();
-
     boolean isFiltered();
-
     boolean isEmpty();
-
     DocumentHistoryConsultationCommand getData();
-
     DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) throws Exception;
 }

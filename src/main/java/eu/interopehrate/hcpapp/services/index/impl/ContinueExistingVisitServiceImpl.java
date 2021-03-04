@@ -45,6 +45,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
         this.linkedHashMapToVitalSignsEntity = linkedHashMapToVitalSignsEntity;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void retrieveEHRs(String patientId) {
         isExtractedData = true;

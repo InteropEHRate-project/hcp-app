@@ -2,8 +2,8 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergyIntolerance;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntoleranceCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntoleranceInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService {
-    private CurrentPatient currentPatient;
-    private HapiToCommandAllergyIntolerance hapiToCommandAllergyIntolerance;
-    private List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfoCommands = new ArrayList<>();
+    private final CurrentPatient currentPatient;
+    private final HapiToCommandAllergyIntolerance hapiToCommandAllergyIntolerance;
+    private final List<AllergyIntoleranceInfoCommand> allergyIntoleranceInfoCommands = new ArrayList<>();
 
     public AllergyIntoleranceServiceImpl(CurrentPatient currentPatient,
                                          HapiToCommandAllergyIntolerance hapiToCommandAllergyIntolerance) {

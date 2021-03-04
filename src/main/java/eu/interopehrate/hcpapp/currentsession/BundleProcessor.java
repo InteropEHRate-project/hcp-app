@@ -15,8 +15,8 @@ public class BundleProcessor {
 
     public Optional<Patient> patient() {
         return bundle.getEntry().stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Patient))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Patient))
                 .map(Patient.class::cast)
                 .findFirst();
     }
@@ -24,8 +24,8 @@ public class BundleProcessor {
     public List<AllergyIntolerance> allergyIntoleranceList() {
         return bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.AllergyIntolerance))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.AllergyIntolerance))
                 .map(AllergyIntolerance.class::cast)
                 .collect(Collectors.toList());
     }
@@ -33,8 +33,8 @@ public class BundleProcessor {
     public List<MedicationStatement> medicationStatementList() {
         return bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationStatement))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationStatement))
                 .map(MedicationStatement.class::cast)
                 .collect(Collectors.toList());
     }
@@ -42,8 +42,8 @@ public class BundleProcessor {
     public List<Medication> medicationList() {
         return bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Medication))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Medication))
                 .map(Medication.class::cast)
                 .collect(Collectors.toList());
     }
@@ -51,8 +51,8 @@ public class BundleProcessor {
     public List<Condition> conditionList() {
         return bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Condition))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition))
                 .map(Condition.class::cast)
                 .collect(Collectors.toList());
     }
@@ -60,8 +60,8 @@ public class BundleProcessor {
     public List<Observation> laboratoryList() {
         return bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Observation))
                 .map(Observation.class::cast)
                 .collect(Collectors.toList());
     }
@@ -69,8 +69,8 @@ public class BundleProcessor {
     public List<MedicationRequest> prescriptionList() {
         return this.bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.MedicationRequest))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest))
                 .map(MedicationRequest.class::cast)
                 .collect(Collectors.toList());
     }
@@ -78,8 +78,8 @@ public class BundleProcessor {
     public List<Observation> vitalSignsList() {
         return bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Observation))
                 .map(Observation.class::cast)
                 .collect(Collectors.toList());
     }
@@ -87,8 +87,8 @@ public class BundleProcessor {
     public List<Media> mediaList() {
         return this.bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Media))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Media))
                 .map(Media.class::cast)
                 .collect(Collectors.toList());
     }
@@ -96,8 +96,8 @@ public class BundleProcessor {
     public List<DocumentReference> docHistoryConsultationList() {
         return this.bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.DocumentReference))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.DocumentReference))
                 .map(DocumentReference.class::cast)
                 .collect(Collectors.toList());
     }
@@ -105,8 +105,8 @@ public class BundleProcessor {
     public List<Observation> patHisConsultationObservationsList() {
         return this.bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Observation))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Observation))
                 .map(Observation.class::cast)
                 .collect(Collectors.toList());
     }
@@ -114,8 +114,8 @@ public class BundleProcessor {
     public List<Condition> patHisConsultationConditionsList() {
         return this.bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Condition))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition))
                 .map(Condition.class::cast)
                 .collect(Collectors.toList());
     }
@@ -123,8 +123,8 @@ public class BundleProcessor {
     public List<DiagnosticReport> diagnosticReportList() {
         return this.bundle.getEntry()
                 .stream()
-                .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.DiagnosticReport))
                 .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.DiagnosticReport))
                 .map(DiagnosticReport.class::cast)
                 .collect(Collectors.toList());
     }

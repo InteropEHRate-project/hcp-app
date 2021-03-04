@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.documenthistoryconsultation;
 
-import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,7 @@ import java.time.LocalDate;
 public class DocumentHistoryConsultationController {
     private final DocumentHistoryConsultationService documentHistoryConsultationService;
 
-    public DocumentHistoryConsultationController(DocumentHistoryConsultationService historyConsultationService, CurrentPatient currentPatient) {
+    public DocumentHistoryConsultationController(DocumentHistoryConsultationService historyConsultationService) {
         this.documentHistoryConsultationService = historyConsultationService;
     }
 
@@ -46,7 +45,8 @@ public class DocumentHistoryConsultationController {
         session.setAttribute("startDate", start);
         session.setAttribute("endDate", end);
         model.addAttribute("currentD2DConnection", this.documentHistoryConsultationService.getCurrentD2DConnection());
-        model.addAttribute("documentHistoryConsultationList", this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).getDocumentHistoryConsultationInfoCommandList());
+        model.addAttribute("documentHistoryConsultationList",
+                this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).getDocumentHistoryConsultationInfoCommandList());
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());
         model.addAttribute("lastYear", LocalDate.now().getYear() - 1);

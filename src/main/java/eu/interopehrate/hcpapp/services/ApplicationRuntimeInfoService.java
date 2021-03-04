@@ -5,6 +5,5 @@ import org.hl7.fhir.r4.model.Practitioner;
 
 public interface ApplicationRuntimeInfoService {
     Organization organization();
-
     Practitioner practitioner();
 }

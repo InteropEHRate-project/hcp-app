@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdmissionDataAuditServiceImpl implements AdmissionDataAuditService {
-    private AdmissionDataAuditRepository admissionDataAuditRepository;
-    private CurrentPatient currentPatient;
-    private ApplicationRuntimeInfoService applicationRuntimeInfoService;
+    private final AdmissionDataAuditRepository admissionDataAuditRepository;
+    private final CurrentPatient currentPatient;
+    private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
 
     public AdmissionDataAuditServiceImpl(AdmissionDataAuditRepository admissionDataAuditRepository,
                                          CurrentPatient currentPatient,
@@ -31,23 +31,6 @@ public class AdmissionDataAuditServiceImpl implements AdmissionDataAuditService 
         this.currentPatient = currentPatient;
         this.applicationRuntimeInfoService = applicationRuntimeInfoService;
     }
-
-//    @Override
-//    public void saveAdmissionData() {
-//        AdmissionDataAuditEntity admissionDataAuditEntity = new AdmissionDataAuditEntity();
-//        admissionDataAuditEntity.setDateTime(LocalDateTime.now());
-//        admissionDataAuditEntity.setType(AuditEventType.ADMISSION_DATA);
-//        admissionDataAuditEntity.setPatientName("patientName");
-//        admissionDataAuditEntity.setPatientId("patientId");
-//        admissionDataAuditEntity.setDateOfBirth(LocalDate.now());
-//        admissionDataAuditEntity.setGender("genderPatient");
-//        admissionDataAuditEntity.setHcpName("hcpName");
-//        admissionDataAuditEntity.setHcpId("idHCP");
-//        admissionDataAuditEntity.setHospitalName("hospitalName");
-//        admissionDataAuditEntity.setHospitalId("hospitalId");
-//        admissionDataAuditEntity.setDetails(admissionDataAuditEntity.toString());
-//        admissionDataAuditRepository.save(admissionDataAuditEntity);
-//    }
 
     @Override
     public void saveAdmissionData() {

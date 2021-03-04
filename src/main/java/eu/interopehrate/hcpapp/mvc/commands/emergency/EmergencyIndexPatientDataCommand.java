@@ -11,7 +11,6 @@ import java.util.Objects;
 @Setter
 @Component
 public class EmergencyIndexPatientDataCommand {
-
     private String id;
     private String lastName;
     private String firstName;
@@ -20,7 +19,8 @@ public class EmergencyIndexPatientDataCommand {
     private Boolean ipsReceived = false;
 
     public Boolean hasData() {
-        return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) || Objects.nonNull(gender) || Objects.nonNull(birthDate);
+        return Objects.nonNull(id) || Objects.nonNull(lastName) || Objects.nonNull(firstName) ||
+                Objects.nonNull(gender) || Objects.nonNull(birthDate);
     }
 }
 

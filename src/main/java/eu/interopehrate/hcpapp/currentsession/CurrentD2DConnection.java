@@ -4,7 +4,6 @@ import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
-import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.ConnectedThread;
 import eu.interopehrate.td2de.api.D2DConnectionListeners;
@@ -39,16 +38,14 @@ public class CurrentD2DConnection implements DisposableBean {
     private final IndexPatientDataCommand indexPatientDataCommand;
     @Value("${ips.validator.pack}")
     private String ipsValidatorPackPath;
-    private TerminalFhirContext terminalFhirContext;
     private final AuditInformationService auditInformationService;
     private final Semaphore docHisSemaphore = new Semaphore(1);
 
-    public CurrentD2DConnection(CurrentPatient currentPatient,
-                                D2DConnectionOperations d2DConnectionOperations, IndexPatientDataCommand indexPatientDataCommand, TerminalFhirContext terminalFhirContext, AuditInformationService auditInformationService) {
+    public CurrentD2DConnection(CurrentPatient currentPatient, D2DConnectionOperations d2DConnectionOperations,
+                                IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.d2DConnectionOperations = d2DConnectionOperations;
         this.indexPatientDataCommand = indexPatientDataCommand;
-        this.terminalFhirContext = terminalFhirContext;
         this.auditInformationService = auditInformationService;
     }
 

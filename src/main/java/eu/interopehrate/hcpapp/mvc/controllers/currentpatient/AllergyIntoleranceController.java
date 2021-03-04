@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.AllergyIntoleranceInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntoleranceInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/current-patient/allergies")
 public class AllergyIntoleranceController {
-    private AllergyIntoleranceService allergyIntoleranceService;
+    private final AllergyIntoleranceService allergyIntoleranceService;
 
     public AllergyIntoleranceController(AllergyIntoleranceService allergyIntoleranceService) {
         this.allergyIntoleranceService = allergyIntoleranceService;
@@ -25,7 +25,7 @@ public class AllergyIntoleranceController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
-        model.addAttribute("allergyIntolerance", allergyIntoleranceService.allergyIntoleranceInfoCommand());
+        model.addAttribute("allergyIntolerance", this.allergyIntoleranceService.allergyIntoleranceInfoCommand());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_VIEW_SECTION;
     }
 
@@ -42,7 +42,7 @@ public class AllergyIntoleranceController {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
         }
-        allergyIntoleranceService.insertAllergyIntolerance(allergyIntoleranceInfoCommand);
+        this.allergyIntoleranceService.insertAllergyIntolerance(allergyIntoleranceInfoCommand);
         return "redirect:/current-patient/allergies/view-section";
     }
 }

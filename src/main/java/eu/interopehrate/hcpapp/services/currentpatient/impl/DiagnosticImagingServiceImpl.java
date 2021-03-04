@@ -25,7 +25,8 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     private static final String dicomCommand = "$dicom:get -l \"%s\"";
     private static final String weasisCommand = "cmd /c start weasis://%s";
 
-    public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage, HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport) {
+    public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage,
+                                        HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport) {
         this.currentPatient = currentPatient;
         this.hapiToCommandImage = hapiToCommandImage;
         this.hapiToCommandDiagnosticReport = hapiToCommandDiagnosticReport;

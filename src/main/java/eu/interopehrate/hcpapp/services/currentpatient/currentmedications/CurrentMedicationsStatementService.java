@@ -5,6 +5,5 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.Cu
 
 public interface CurrentMedicationsStatementService {
     CurrentMedicationsCommand statementCommand();
-
     void insertCurrentMedicationsStatement(CurrentMedicationsStatementCommand currentMedicationsStatementCommand);
 }

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/current-patient/current-diseases")
 public class CurrentDiseaseController {
-    private CurrentDiseaseService currentDiseaseService;
+    private final CurrentDiseaseService currentDiseaseService;
 
     public CurrentDiseaseController(CurrentDiseaseService currentDiseaseService) {
         this.currentDiseaseService = currentDiseaseService;
@@ -22,7 +22,7 @@ public class CurrentDiseaseController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
-        model.addAttribute("currentDiseaseCommand", currentDiseaseService.currentDiseasesSection());
+        model.addAttribute("currentDiseaseCommand", this.currentDiseaseService.currentDiseasesSection());
         model.addAttribute("notes", this.currentDiseaseService.currentDiseasesSection().getListOfNotes());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION;
     }
@@ -40,14 +40,14 @@ public class CurrentDiseaseController {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
         }
-        currentDiseaseService.insertCurrentDisease(currentDiseaseInfoCommand);
+        this.currentDiseaseService.insertCurrentDisease(currentDiseaseInfoCommand);
         return "redirect:/current-patient/current-diseases/view-section";
     }
 
     @PostMapping
     @RequestMapping("/save-note")
     public String saveAdd(String note) {
-        currentDiseaseService.insertNote(note);
+        this.currentDiseaseService.insertNote(note);
         return "redirect:/current-patient/current-diseases/view-section";
     }
 

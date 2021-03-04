@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
-    private CurrentPatient currentPatient;
-    private HapiToCommandCurrentDisease hapiToCommandCurrentDisease;
-    private List<CurrentDiseaseInfoCommand> currentDiseaseInfoCommandList = new ArrayList<>();
+    private final CurrentPatient currentPatient;
+    private final HapiToCommandCurrentDisease hapiToCommandCurrentDisease;
+    private final List<CurrentDiseaseInfoCommand> currentDiseaseInfoCommandList = new ArrayList<>();
     private final List<String> listOfNotes = new ArrayList<>();
 
     public CurrentDiseaseServiceImpl(CurrentPatient currentPatient, HapiToCommandCurrentDisease hapiToCommandCurrentDisease) {

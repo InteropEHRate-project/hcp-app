@@ -63,8 +63,8 @@ public class CloudConnection implements DisposableBean {
 
             List<Patient> patientList = cloudIps.getEntry()
                     .stream()
-                    .filter(bec -> bec.getResource().getResourceType().equals(ResourceType.Patient))
                     .map(Bundle.BundleEntryComponent::getResource)
+                    .filter(resource -> resource.getResourceType().equals(ResourceType.Patient))
                     .map(Patient.class::cast)
                     .collect(Collectors.toList());
 

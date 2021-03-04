@@ -6,10 +6,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCom
 
 public interface CurrentDiseaseService {
     CurrentDiseaseCommand currentDiseasesSection();
-
     void insertCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseCommand);
-
     void insertNote(String note);
-
     void deleteNote(String note);
 }

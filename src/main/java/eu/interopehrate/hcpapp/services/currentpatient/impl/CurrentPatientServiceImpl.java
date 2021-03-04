@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CurrentPatientServiceImpl implements CurrentPatientService {
-    private CurrentPatient currentPatient;
+    private final CurrentPatient currentPatient;
 
     public CurrentPatientServiceImpl(CurrentPatient currentPatient) {
         this.currentPatient = currentPatient;
