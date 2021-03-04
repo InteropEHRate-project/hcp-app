@@ -16,6 +16,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Prescr
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,12 +33,12 @@ import java.util.stream.Collectors;
 public class PrescriptionServiceImpl implements PrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
-    private CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
-    private EntityToCommandPrescription entityToCommandPrescription = new EntityToCommandPrescription();
+    private final CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
+    private final EntityToCommandPrescription entityToCommandPrescription = new EntityToCommandPrescription();
     private final PrescriptionRepository prescriptionRepository;
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
-    private CurrentD2DConnection currentD2DConnection;
+    private final CurrentD2DConnection currentD2DConnection;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
     private final AuditInformationService auditInformationService;
@@ -174,31 +175,17 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void updatePrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
+        prescriptionInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
+        prescriptionInfoCommand.setAuthor(this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " +
+                this.healthCareProfessionalService.getHealthCareProfessional().getLastName());
         PrescriptionInfoCommand oldPrescription = prescriptionInfoCommandById(prescriptionInfoCommand.getId());
-        oldPrescription.setDrugName(prescriptionInfoCommand.getDrugName());
-        oldPrescription.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
-        oldPrescription.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
-        oldPrescription.setNotes(prescriptionInfoCommand.getNotes());
-        oldPrescription.setStatus(prescriptionInfoCommand.getStatus());
-        oldPrescription.setFrequency(prescriptionInfoCommand.getFrequency());
-        oldPrescription.setPeriod(prescriptionInfoCommand.getPeriod());
-        oldPrescription.setPeriodUnit(prescriptionInfoCommand.getPeriodUnit());
+        BeanUtils.copyProperties(prescriptionInfoCommand, oldPrescription);
         oldPrescription.setTimings(prescriptionInfoCommand.getFrequency().toString());
-        oldPrescription.setStart(prescriptionInfoCommand.getStart());
-        oldPrescription.setEnd(prescriptionInfoCommand.getEnd());
 
         PrescriptionEntity prescriptionEntity = this.prescriptionRepository.getOne(prescriptionInfoCommand.getId());
-        prescriptionEntity.setDrugName(prescriptionInfoCommand.getDrugName());
-        prescriptionEntity.setDateOfPrescription(prescriptionInfoCommand.getDateOfPrescription());
-        prescriptionEntity.setDrugDosage(prescriptionInfoCommand.getDrugDosage());
-        prescriptionEntity.setNotes(prescriptionInfoCommand.getNotes());
-        prescriptionEntity.setStatus(prescriptionInfoCommand.getStatus());
-        prescriptionEntity.setFrequency(prescriptionInfoCommand.getFrequency());
-        prescriptionEntity.setPeriod(prescriptionInfoCommand.getPeriod());
+        BeanUtils.copyProperties(prescriptionInfoCommand, prescriptionEntity);
         prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionInfoCommand.getPeriodUnit()));
         prescriptionEntity.setTimings(prescriptionInfoCommand.getFrequency().toString());
-        prescriptionEntity.setStart(prescriptionInfoCommand.getStart());
-        prescriptionEntity.setEnd(prescriptionInfoCommand.getEnd());
         this.prescriptionRepository.save(prescriptionEntity);
     }
 
