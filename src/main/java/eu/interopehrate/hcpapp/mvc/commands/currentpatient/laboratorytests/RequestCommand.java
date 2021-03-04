@@ -8,6 +8,6 @@ import java.util.List;
 @Builder
 @Getter
 public class RequestCommand {
-    private Boolean displayTranslatedVersion;
-    private List<RequestInfoCommand> requestInfoCommandList;
+    private final Boolean displayTranslatedVersion;
+    private final List<RequestInfoCommand> requestInfoCommandList;
 }

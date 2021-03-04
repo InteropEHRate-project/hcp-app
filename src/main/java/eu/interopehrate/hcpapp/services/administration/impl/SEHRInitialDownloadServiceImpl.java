@@ -15,9 +15,9 @@ import java.util.List;
 
 @Service
 public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadService {
-    private SEHRInitialDownloadRepository sehrInitialDownloadRepository;
-    private EntityToCommandSEHRInitialDownload entityToCommandSEHRInitialDownload;
-    private AuditInformationService auditInformationService;
+    private final SEHRInitialDownloadRepository sehrInitialDownloadRepository;
+    private final EntityToCommandSEHRInitialDownload entityToCommandSEHRInitialDownload;
+    private final AuditInformationService auditInformationService;
 
     public SEHRInitialDownloadServiceImpl(SEHRInitialDownloadRepository sehrInitialDownloadRepository,
                                           EntityToCommandSEHRInitialDownload entityToCommandSEHRInitialDownload,

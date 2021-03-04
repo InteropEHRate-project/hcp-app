@@ -123,6 +123,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         this.vitalSignsRepository.deleteAll();
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public HashMap correlations() {
         HashMap<String, String> correlationUnitWithType = new HashMap<>();

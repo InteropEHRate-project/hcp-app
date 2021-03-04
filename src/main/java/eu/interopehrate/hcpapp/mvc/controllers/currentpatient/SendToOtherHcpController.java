@@ -21,6 +21,7 @@ import java.util.Objects;
 @RequestMapping("/current-patient/send-to-other-hcp")
 public class SendToOtherHcpController {
     private final CurrentPatient currentPatient;
+    @SuppressWarnings("rawtypes")
     private List hcpList;
     private final SendToOtherHcpService sendToOtherHcpService;
 
@@ -46,6 +47,7 @@ public class SendToOtherHcpController {
         return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
     }
 
+    @SuppressWarnings("rawtypes")
     @GetMapping
     @RequestMapping("/send-patient")
     public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, HttpSession session) throws Exception {

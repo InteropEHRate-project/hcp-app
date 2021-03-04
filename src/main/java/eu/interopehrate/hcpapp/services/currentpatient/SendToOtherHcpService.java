@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface SendToOtherHcpService {
+    @SuppressWarnings("rawtypes")
     List hcpsList();
     Boolean sendCurrentPatient(Long initialHcpId) throws Exception;
     Boolean sendEHRs() throws IOException;

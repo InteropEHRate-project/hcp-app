@@ -8,6 +8,6 @@ import java.util.List;
 @Builder
 @Getter
 public class SpecimenCommand {
-    private Boolean displayTranslatedVersion;
-    private List<SpecimenInfoCommand> specimenInfoCommandList;
+    private final Boolean displayTranslatedVersion;
+    private final List<SpecimenInfoCommand> specimenInfoCommandList;
 }

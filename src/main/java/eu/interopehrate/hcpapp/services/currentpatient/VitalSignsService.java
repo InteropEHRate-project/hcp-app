@@ -17,5 +17,6 @@ public interface VitalSignsService {
     void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand);
     void callVitalSigns() throws IOException;
     void sendVitalSigns(Bundle vitalSigns) throws IOException;
+    @SuppressWarnings("rawtypes")
     HashMap correlations();
 }

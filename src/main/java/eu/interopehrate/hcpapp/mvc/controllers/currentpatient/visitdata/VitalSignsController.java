@@ -18,7 +18,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/current-patient/visit-data/vital-signs")
 public class VitalSignsController {
-    private VitalSignsService vitalSignsService;
+    private final VitalSignsService vitalSignsService;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
     public VitalSignsController(VitalSignsService vitalSignsService, VitalSignsTypesRepository vitalSignsTypesRepository) {

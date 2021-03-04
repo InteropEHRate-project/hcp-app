@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/current-patient")
 public class SwitchLanguageController {
-    private CurrentPatientService currentPatientService;
+    private final CurrentPatientService currentPatientService;
 
     public SwitchLanguageController(CurrentPatientService currentPatientService) {
         this.currentPatientService = currentPatientService;
@@ -19,7 +19,7 @@ public class SwitchLanguageController {
     @RequestMapping("/switch-display-language")
     public String switchLanguage(@RequestParam(name = "displayTranslatedVersion") String displayTranslatedVersion,
                                  @RequestParam(name = "redirect-to") String redirectTo) {
-        currentPatientService.setDisplayTranslatedVersion(Boolean.valueOf(displayTranslatedVersion));
+        this.currentPatientService.setDisplayTranslatedVersion(Boolean.valueOf(displayTranslatedVersion));
         return "redirect:" + redirectTo;
     }
 }

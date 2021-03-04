@@ -60,7 +60,4 @@ public interface TemplateNames {
     String CURRENT_PATIENT_REASON_VIEW_SECTION = "current-patient/visit-data/reason/view-section";
     String CURRENT_PATIENT_PH_EXAM_VIEW_SECTION = "current-patient/visit-data/ph-exam/view-section";
     String CURRENT_PATIENT_CONCLUSION_VIEW_SECTION = "current-patient/visit-data/conclusion/view-section";
-
-    //Emergency
-    String EMERGENCY_INDEX_TEMPLATE = "emergency/emergency-index";
 }

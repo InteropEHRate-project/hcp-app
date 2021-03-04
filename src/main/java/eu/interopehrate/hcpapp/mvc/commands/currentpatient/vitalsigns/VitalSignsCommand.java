@@ -13,8 +13,8 @@ import java.util.List;
 @Builder
 @Getter
 public class VitalSignsCommand {
-    private Boolean displayTranslatedVersion;
-    private List<VitalSignsInfoCommand> vitalSignsInfoCommands;
+    private final Boolean displayTranslatedVersion;
+    private final List<VitalSignsInfoCommand> vitalSignsInfoCommands;
 
     public List<LocalDateTime> localDateTimeListWithoutDuplicates() {
         List<LocalDateTime> withDuplicates = new ArrayList<>();
@@ -34,6 +34,7 @@ public class VitalSignsCommand {
         return noDuplicates;
     }
 
+    @SuppressWarnings("rawtypes")
     public DoubleKeyHashMap valueReturn() {
         DoubleKeyHashMap<String, LocalDateTime, String> mapPair = new DoubleKeyHashMap<>();
         List<String> analysisList = this.vitalSignsAnalysesWithoutDuplicates();

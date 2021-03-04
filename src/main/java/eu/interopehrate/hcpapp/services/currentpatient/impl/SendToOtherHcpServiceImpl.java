@@ -57,6 +57,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         this.entityToCommandVitalSigns = entityToCommandVitalSigns;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public List hcpsList() {
         try {
