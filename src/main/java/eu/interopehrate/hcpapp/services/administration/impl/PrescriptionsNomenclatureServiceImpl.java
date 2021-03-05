@@ -5,6 +5,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.services.administration.PrescriptionsNomenclatureService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,7 +18,9 @@ public class PrescriptionsNomenclatureServiceImpl implements PrescriptionsNomenc
 
     @Override
     public List<PrescriptionTypesEntity> getPrescriptionTypes() {
-        return this.prescriptionTypesRepository.findAll();
+        var list = this.prescriptionTypesRepository.findAll();
+        Collections.sort(list);
+        return list;
     }
 
 //    @Override

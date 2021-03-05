@@ -16,13 +16,13 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{template.administration.prescriptions.nomenclature.name}">Name</th>
-            <th th:text="#{template.administration.prescriptions.nomenclature.comment}">Comment</th>
+            <th th:text="#{template.administration.prescriptions.nomenclature.drug.class}">Drug class</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="type : ${prescriptionTypes}">
             <td th:text="${type.getName()}"></td>
-            <td th:text="${type.getComm()}"></td>
+            <td th:text="${type.getDrugClass()}"></td>
         </tr>
         </tbody>
     </table>
