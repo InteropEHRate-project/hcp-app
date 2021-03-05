@@ -21,12 +21,6 @@ public class PrescriptionInfoCommand {
     private Integer period = 1;
     private String periodUnit = "day";
     private String timings;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate start = LocalDate.now();
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate end;
     @NotEmpty
     @NotNull
     private String drugName;
@@ -40,4 +34,8 @@ public class PrescriptionInfoCommand {
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfPrescription = LocalDate.now();
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate start = LocalDate.now();
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate end;
 }

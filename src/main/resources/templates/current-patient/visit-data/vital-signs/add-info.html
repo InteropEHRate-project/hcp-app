@@ -6,17 +6,6 @@
     <title th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-
-    <style>
-        .select2-container .select2-selection--single{
-            height:34px !important;
-        }
-        .select2-container--default .select2-selection--single{
-            border: 1px solid #ccc !important;
-            border-radius: 0px !important;
-        }
-    </style>
-
     <script th:inline="javascript">
         /*<![CDATA[*/
         const map = [[${correlations}]];
@@ -31,6 +20,8 @@
             }
         })
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -44,9 +35,10 @@
         <div class="form-row">
             <div class="col-md-6">
                 <label for="analysisName" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.type}">Vital Sign Type</label>
-                <select class="form-control select2" id="analysisName" th:field="*{analysisName}">
+                <select class="form-control" id="analysisName" th:field="*{analysisName}">
                     <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.choose}">Choose a type</option>
-                    <option input type="text" class="form-control" th:each="type : ${vitalSignsTypes}" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''" th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
+                    <option input type="text" class="form-control" th:each="type : ${vitalSignsTypes}" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''"
+                            th:value="${type.getName()}" th:text="${type.getName()}">Analysis name</option>
                 </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('analysisName')}">
                     <ul>
@@ -70,7 +62,8 @@
         <div class="form-row">
             <div class="col-md-6">
                 <label for="currentValue" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value}">Value of the Vital Signs</label><br>
-                <input id="currentValue" type="number" step="0.01" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.currentValue}">
+                <input id="currentValue" type="number" step="0.01" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')} ? 'is-invalid' :''"
+                       th:field="*{vitalSignsInfoCommandSample.currentValue}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('vitalSignsInfoCommandSample.currentValue')}" th:text="${err}">err</li>
@@ -80,7 +73,8 @@
 
             <div class="col-md-6">
                 <label for="unitOfMeasurement" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.unit}">Unit of Measurement</label><br>
-                <input style="pointer-events: none; opacity: 0.8; background-color: lightgray" id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''" th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
+                <input style="pointer-events: none; opacity: 0.8; background-color: lightgray" id="unitOfMeasurement" type="text" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')} ? 'is-invalid' :''"
+                       th:field="*{vitalSignsInfoCommandSample.unitOfMeasurement}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.unitOfMeasurement')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('vitalSignsInfoCommandSample.unitOfMeasurement')}" th:text="${err}">err</li>
@@ -111,11 +105,8 @@
     });
 
     $('#datetimepicker1').datetimepicker({
-        format: 'DD/MM/YYYY h:mm A'
+        format: 'MM/dd/yyyy h:mm a'
     });
-</script>
-<script>
-    $('.select2').select2();
 </script>
 
 </body>

@@ -5,7 +5,8 @@
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -21,7 +22,7 @@
             <input id="drugId" type="hidden" th:field="*{id}">
             <div class="col-md-6">
                 <label for="drugName" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug name</label>
-                <select class="form-control select2" id="drugName" th:field="*{drugName}">
+                <select class="form-control" id="drugName" th:field="*{drugName}">
                     <option selected value="" th:text="#{fragment.current.patient.navigation.left.current.medication.choose}">Choose a drug</option>
                     <option input type="text" class="form-control" th:each="type : ${prescriptionTypes}" th:classappend="${#fields.hasErrors('drugName')} ? 'is-invalid' :''"
                             th:value="${type.getName()}" th:text="${type.getName()}">Drug name</option>

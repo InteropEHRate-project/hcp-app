@@ -11,8 +11,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class VitalSignsInfoCommandSample {
-    @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
+    @NotEmpty
+    @NotNull
+    @DateTimeFormat(pattern = "MM/dd/yyyy h:mm a")
     private LocalDateTime localDateOfVitalSign = LocalDateTime.now();
+    @NotEmpty
+    @NotNull
     private double currentValue;
     @NotEmpty
     @NotNull
