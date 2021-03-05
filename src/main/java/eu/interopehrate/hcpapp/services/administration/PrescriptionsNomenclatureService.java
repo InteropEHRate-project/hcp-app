@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PrescriptionsNomenclatureService {
     List<PrescriptionTypesEntity> getPrescriptionTypes();
-//    void addVitalSignsType(VitalSignsTypesEntity vitalSignsTypesEntity);
+    void addPrescriptionType(PrescriptionTypesEntity prescriptionTypesEntity);
 }

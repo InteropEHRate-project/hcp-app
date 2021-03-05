@@ -23,11 +23,11 @@ public class PrescriptionsNomenclatureServiceImpl implements PrescriptionsNomenc
         return list;
     }
 
-//    @Override
-//    public void addVitalSignsType(VitalSignsTypesEntity vitalSignsTypesEntity) {
-//        if (this.vitalSignsTypesRepository.findAll().contains(vitalSignsTypesEntity)) {
-//            return;
-//        }
-//        this.vitalSignsTypesRepository.save(vitalSignsTypesEntity);
-//    }
+    @Override
+    public void addPrescriptionType(PrescriptionTypesEntity prescriptionTypesEntity) {
+        if (this.prescriptionTypesRepository.findAll().contains(prescriptionTypesEntity)) {
+            return;
+        }
+        this.prescriptionTypesRepository.save(prescriptionTypesEntity);
+    }
 }
