@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/index")
 public class EmergencyController {
@@ -16,7 +19,13 @@ public class EmergencyController {
     }
 
     @RequestMapping("/emergency")
-    public String indexTemplate(Model model) throws Exception {
+    public String indexTemplate(HttpSession session, Model model) throws Exception {
+        if (Objects.nonNull(session.getAttribute("isWorking"))) {
+            session.removeAttribute("isWorking");
+        }
+        if (Objects.nonNull(session.getAttribute("isEhrTransferred"))) {
+            session.removeAttribute("isEhrTransferred");
+        }
         model.addAttribute("index", indexService.indexCommand());
         return TemplateNames.INDEX_EMERGENCY;
     }

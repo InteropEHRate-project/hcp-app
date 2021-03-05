@@ -72,6 +72,6 @@ public class SendToOtherHcpController {
         if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
             session.removeAttribute("mySessionAttribute");
         }
-        return "redirect:/index";
+        return "redirect:/index/close-connection";
     }
 }

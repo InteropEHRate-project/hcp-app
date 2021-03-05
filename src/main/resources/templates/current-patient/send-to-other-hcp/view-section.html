@@ -11,7 +11,8 @@
     <p><h3 th:text="#{fragment.current.patient.navigation.left.send.to.other.hcp}">Send to other HCP</h3></p>
     <div class="m-5"></div>
     <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
-    <p><h5 th:if="${patient == null && !session.withoutConnection}" th:text="#{fragment.current.patient.navigation.left.connection.required}">Connection required</h5></p>
+    <p><h5 th:if="${patient == null && session.withoutConnection != null && !session.withoutConnection}"
+           th:text="#{fragment.current.patient.navigation.left.connection.required}">Connection required</h5></p>
 
     <table class="table table-bordered">
         <thead class="thead-light">

@@ -44,7 +44,13 @@ public class ContinueExistingVisitController {
 
     @GetMapping
     @RequestMapping({"/existing-visit"})
-    public String indexTemplate(Model model) throws Exception {
+    public String indexTemplate(HttpSession session, Model model) throws Exception {
+        if (Objects.nonNull(session.getAttribute("isWorking"))) {
+            session.removeAttribute("isWorking");
+        }
+        if (Objects.nonNull(session.getAttribute("isEhrTransferred"))) {
+            session.removeAttribute("isEhrTransferred");
+        }
         model.addAttribute("index", indexService.indexCommand());
         boolean error = false;
         try {
