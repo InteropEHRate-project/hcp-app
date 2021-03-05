@@ -18,8 +18,12 @@
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group mr-2" role="group">
             <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">Language of the section</a>
-            <a href="#" class="btn btn-primary" th:styleappend="${!vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/visit-data/vital-signs/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>
-            <a href="#" class="btn btn-primary" th:styleappend="${vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/visit-data/vital-signs/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${!vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+               th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/visit-data/vital-signs/view-section')}"
+               th:text="#{ips.translate.button.original}">Initial version</a>
+            <a href="#" class="btn btn-primary" th:styleappend="${vitalSigns.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+               th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/visit-data/vital-signs/view-section')}"
+               th:text="#{ips.translate.button.translated}">Translated version</a>
         </div>
     </div>
     <p>
@@ -28,11 +32,12 @@
     <div class="scrollBar">
         <table class="table table-bordered">
             <thead class="thead-light">
-            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis
-            </th>
-            <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
-                <th th:text="${{sample}}"></th>
-            </th:block>
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+                <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
+                    <th th:text="${{sample}}"></th>
+                </th:block>
+            </tr>
             </thead>
 
             <tbody>

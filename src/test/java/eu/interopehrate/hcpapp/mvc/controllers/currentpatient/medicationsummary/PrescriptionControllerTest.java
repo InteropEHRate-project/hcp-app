@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandP
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
@@ -41,11 +42,13 @@ class PrescriptionControllerTest {
     private PrescriptionRepository prescriptionRepository;
     @Mock
     private AuditInformationService auditInformationService;
+    @Mock
+    private PrescriptionTypesRepository prescriptionTypesRepository;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        PrescriptionService service = new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.prescriptionRepository, this.currentD2DConnection, auditInformationService);
+        PrescriptionService service = new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.prescriptionRepository, this.currentD2DConnection, auditInformationService, prescriptionTypesRepository);
         this.controller = new PrescriptionController(service);
     }
 

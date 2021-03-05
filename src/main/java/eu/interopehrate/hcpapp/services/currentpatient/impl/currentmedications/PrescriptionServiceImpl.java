@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
@@ -42,13 +43,20 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private boolean isFiltered = false;
     private boolean isEmpty = false;
     private final AuditInformationService auditInformationService;
+    private final PrescriptionTypesRepository prescriptionTypesRepository;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, PrescriptionTypesRepository prescriptionTypesRepository) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.prescriptionRepository = prescriptionRepository;
         this.currentD2DConnection = currentD2DConnection;
         this.auditInformationService = auditInformationService;
+        this.prescriptionTypesRepository = prescriptionTypesRepository;
+    }
+
+    @Override
+    public PrescriptionTypesRepository getPrescriptionTypesRepository() {
+        return prescriptionTypesRepository;
     }
 
     @Override

@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import java.io.IOException;
 
 public interface PrescriptionService {
+    PrescriptionTypesRepository getPrescriptionTypesRepository();
     CurrentPatient getCurrentPatient();
     PrescriptionRepository getPrescriptionRepository();
     void setFiltered(boolean filtered);

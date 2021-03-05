@@ -40,6 +40,7 @@ public class PrescriptionController {
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
+        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
         model.addAttribute("prescriptionInfoCommand", new PrescriptionInfoCommand());
         return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE;
     }
@@ -96,6 +97,7 @@ public class PrescriptionController {
     @GetMapping
     @RequestMapping("/open-update-page")
     public String openUpdatePage(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
         model.addAttribute("prescriptionInfoCommand", this.prescriptionService.prescriptionInfoCommandById(id));
         return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
     }
