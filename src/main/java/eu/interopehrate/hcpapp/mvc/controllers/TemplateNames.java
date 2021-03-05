@@ -15,6 +15,7 @@ public interface TemplateNames {
     String ADMINISTRATION_INITIAL_DOWNLOAD_FROM_SEHR = "administration/initial-download/from-sehr";
     String ADMINISTRATION_AUDIT_INFORMATION_VIEW_DETAILS = "administration/audit-information/view-details";
     String ADMINISTRATION_VITAL_SIGNS_NOMENCLATURE_VIEW_DETAILS = "administration/vital-signs-nomenclature/view-details";
+    String ADMINISTRATION_PRESCRIPTIONS_NOMENCLATURE_VIEW_DETAILS = "administration/prescriptions-nomenclature/view-details";
     String ADMINISTRATION_HCPS_VIEW_DETAILS = "administration/hcps/view-details";
 
     // Current Patient
