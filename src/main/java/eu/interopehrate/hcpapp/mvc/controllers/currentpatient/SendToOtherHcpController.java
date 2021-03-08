@@ -58,12 +58,12 @@ public class SendToOtherHcpController {
         try {
             for (var hcp : this.hcpList) {
                 if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(initialHcpId.intValue())) {
-                    session.setAttribute("hcpName", ((LinkedHashMap) hcp).get("name"));
+                    session.setAttribute("transferHcpName", ((LinkedHashMap) hcp).get("name"));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("hcpName", "");
+            session.setAttribute("transferHcpName", "");
         }
 
         this.sendToOtherHcpService.sendPrescription();
