@@ -7,10 +7,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -52,6 +49,12 @@ public class VitalSignsController {
             return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
         }
         vitalSignsService.insertVitalSigns(vitalSignsInfoCommand);
+        return "redirect:/current-patient/visit-data/vital-signs/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String deleteData(@RequestParam(name = "an") String an, @RequestParam(name = "sample") String sample) {
         return "redirect:/current-patient/visit-data/vital-signs/view-section";
     }
 }

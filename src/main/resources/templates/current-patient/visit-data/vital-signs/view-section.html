@@ -61,6 +61,7 @@
         <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
             <thead class="thead-light">
             <tr>
+<!--                <th th:text="#{crud.button.actions}">Actions</th>-->
                 <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
                 <th:block th:each="sample : ${vitalSignsUpload.localDateTimeListWithoutDuplicates()}">
                     <th th:text="${{sample}}"></th>
@@ -74,9 +75,15 @@
                     <th:block th:each="sample : ${vitalSignsUpload.localDateTimeListWithoutDuplicates()}">
                         <td th:if="${map.get(an,sample) == null}">-</td>
                         <div th:if="${map.get(an,sample) != null}">
-                            <td th:text="${{map.get(an,sample)}}"></td>
+                            <td>
+                                <p th:text="${{map.get(an,sample)}}"></p>
+                                <div class="btn-group" role="group">
+<!--                                    <a href="#" class="btn btn-info" th:text="#{crud.button.edit}">Edit</a>-->
+                                    <a href="#" class="btn btn-danger" th:href="@{/current-patient/visit-data/vital-signs/delete(an = ${{an}}, sample = ${{sample}})}"
+                                       th:text="#{crud.button.delete}">Delete</a>
+                                </div>
+                            </td>
                         </div>
-
                     </th:block>
                 </div>
             </tr>
