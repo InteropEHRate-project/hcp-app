@@ -134,132 +134,154 @@ public class CurrentD2DConnection implements DisposableBean {
     private class D2DHRExchangeListener implements D2DHRExchangeListeners {
         @Override
         public void onPersonalIdentityReceived(Patient patient) {
-            try {
-                log.info("onPersonalIdentityReceived");
-                CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
-                CurrentD2DConnection.this.currentPatient.initPatient(patient);
-                CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
-                CurrentD2DConnection.this.certificate();
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after personal identity was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onPersonalIdentityReceived");
+                    CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
+                    CurrentD2DConnection.this.currentPatient.initPatient(patient);
+                    CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
+                    CurrentD2DConnection.this.certificate();
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after personal identity was received", e);
+                }
+            });
         }
 
         @Override
         public void onPatientSummaryReceived(Bundle bundle) {
-            try {
-                log.info("onPatientSummaryReceived");
-                CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
-                CurrentD2DConnection.this.indexPatientDataCommand.setIpsReceived(true);
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after Patient Summary was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onPatientSummaryReceived");
+                    CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
+                    CurrentD2DConnection.this.indexPatientDataCommand.setIpsReceived(true);
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after Patient Summary was received", e);
+                }
+            });
         }
 
         @Override
         public void onConsentAnswerReceived(String s) {
-            try {
-                log.info("onConsentAnswerReceived");
-                CurrentD2DConnection.this.currentPatient.initConsent(s);
-                CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after consent answer was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onConsentAnswerReceived");
+                    CurrentD2DConnection.this.currentPatient.initConsent(s);
+                    CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after consent answer was received", e);
+                }
+            });
         }
 
         @Override
         public void onNoConformantPatientSummaryReceived() {
-            log.error("onNoConformantPatientSummaryReceived");
-            indexPatientDataCommand.setNoConformantJSON(true);
-            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            CompletableFuture.runAsync(() -> {
+                log.error("onNoConformantPatientSummaryReceived");
+                indexPatientDataCommand.setNoConformantJSON(true);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            });
         }
 
         @Override
         public void onPrescriptionReceived(Bundle medicationRequest) {
-            try {
-                log.info("onPrescriptionReceived");
-                CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);
-                CurrentD2DConnection.this.indexPatientDataCommand.setPrescriptionReceived(true);
-                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing Prescription Received");
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after Prescription was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onPrescriptionReceived");
+                    CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);
+                    CurrentD2DConnection.this.indexPatientDataCommand.setPrescriptionReceived(true);
+                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing Prescription Received");
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after Prescription was received", e);
+                }
+            });
         }
 
         @Override
         public void onNoConformantPrescriptionReceived() {
-            log.error("onNoConformantPrescriptionReceived");
-            indexPatientDataCommand.setNoConformantJSON(true);
-            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            CompletableFuture.runAsync(() -> {
+                log.error("onNoConformantPrescriptionReceived");
+                indexPatientDataCommand.setNoConformantJSON(true);
+                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+            });
         }
 
         @Override
         public void onLaboratoryResultsReceived(Bundle bundle) {
-            try {
-                log.info("onLaboratoryResultsReceived");
-                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(bundle);
-                CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
-                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after Prescription was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onLaboratoryResultsReceived");
+                    CurrentD2DConnection.this.currentPatient.initLaboratoryResults(bundle);
+                    CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
+                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after Prescription was received", e);
+                }
+            });
         }
 
         @Override
         public void onImageReportReceived(Bundle bundle) {
-            try {
-                log.info("onImageReportReceived");
-                CurrentD2DConnection.this.currentPatient.initImageReport(bundle);
-                CurrentD2DConnection.this.indexPatientDataCommand.setImageReportReceived(true);
-                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing ImageReport Received");
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after ImageReport was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onImageReportReceived");
+                    CurrentD2DConnection.this.currentPatient.initImageReport(bundle);
+                    CurrentD2DConnection.this.indexPatientDataCommand.setImageReportReceived(true);
+                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing ImageReport Received");
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after ImageReport was received", e);
+                }
+            });
         }
 
         @Override
         public void onPathologyHistoryInformationReceived(Bundle bundle) {
-            try {
-                log.info("onPathologyHistoryInformationReceived");
-                CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundle);
-                CurrentD2DConnection.this.indexPatientDataCommand.setPatHisReceived(true);
-                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing PathologyHistory Received");
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after PathologyHistoryInformation was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onPathologyHistoryInformationReceived");
+                    CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundle);
+                    CurrentD2DConnection.this.indexPatientDataCommand.setPatHisReceived(true);
+                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing PathologyHistory Received");
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after PathologyHistoryInformation was received", e);
+                }
+            });
         }
 
         @Override
         public void onMedicalDocumentConsultationReceived(Bundle bundle) {
-            try {
-                log.info("onMedicalDocumentConsultationReceived");
-                CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundle);
-                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing DocumentConsultation Received");
-            } catch (Exception e) {
-                log.error("Error after MedicalDocumentConsultation was received", e);
-            } finally {
-                docHisSemaphore.release();
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onMedicalDocumentConsultationReceived");
+                    CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundle);
+                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing DocumentConsultation Received");
+                } catch (Exception e) {
+                    log.error("Error after MedicalDocumentConsultation was received", e);
+                } finally {
+                    docHisSemaphore.release();
+                }
+            });
         }
 
         @Override
         public void onVitalSignsReceived(Bundle bundle) {
-            try {
-                log.info("onVitalSignsReceived");
-                CurrentD2DConnection.this.currentPatient.initVitalSigns(bundle);
-                CurrentD2DConnection.this.indexPatientDataCommand.setVitalSignsReceived(true);
-                auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing VitalSigns Received");
-                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-            } catch (Exception e) {
-                log.error("Error after VitalSigns was received", e);
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    log.info("onVitalSignsReceived");
+                    CurrentD2DConnection.this.currentPatient.initVitalSigns(bundle);
+                    CurrentD2DConnection.this.indexPatientDataCommand.setVitalSignsReceived(true);
+                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing VitalSigns Received");
+                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
+                } catch (Exception e) {
+                    log.error("Error after VitalSigns was received", e);
+                }
+            });
         }
     }
 
