@@ -80,7 +80,7 @@
                  class="m-3">
                 <div class="row justify-content-center">
                     <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to
-                        establish the bluetooth connection</h3>
+                        establish the connection</h3>
                 </div>
                 <div class="row justify-content-center">
                     <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime" height="10"
@@ -98,10 +98,9 @@
                     </h9>
                 </div>
             </div>
-            <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
-                 class="m-3">
+            <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}" th:text="#{fragment.main.connection.in.progress}">Connection in progress...</h3>
+                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}">Connection established. Waiting for patient's EHRs...</h3>
                 </div>
                 <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">
                     <div class="spinner-border text-primary" role="status">
@@ -124,6 +123,14 @@
                 </div>
                 <div class="row justify-content-center">
                     <p></p>
+                </div>
+                <div class="text-center" th:if="${!index.transmissionCompleted}">
+                    <p th:if="${index.patientDataCommand.ipsReceived}">IPS received</p>
+                    <p th:if="${index.getPatientDataCommand().getLaboratoryResultsReceived()}">Laboratory results received</p>
+                    <p th:if="${index.getPatientDataCommand().getPrescriptionReceived()}">Prescription received</p>
+                    <p th:if="${index.getPatientDataCommand().getImageReportReceived()}">Image report received</p>
+                    <p th:if="${index.getPatientDataCommand().getPatHisReceived()}">Pathology history received</p>
+                    <p th:if="${index.getPatientDataCommand().getVitalSignsReceived()}">Vital signs received</p>
                 </div>
             </div>
         </div>

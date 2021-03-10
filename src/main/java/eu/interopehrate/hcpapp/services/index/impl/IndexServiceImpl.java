@@ -95,18 +95,18 @@ public class IndexServiceImpl implements IndexService {
             patientDataCommand.setNoConformantJSON(true);
         }
 
+        patientDataCommand.setIpsReceived(this.currentD2DConnection.getIndexPatientDataCommand().getIpsReceived());
+        patientDataCommand.setPrescriptionReceived(this.currentD2DConnection.getIndexPatientDataCommand().getPrescriptionReceived());
+        patientDataCommand.setLaboratoryResultsReceived(this.currentD2DConnection.getIndexPatientDataCommand().getLaboratoryResultsReceived());
+        patientDataCommand.setImageReportReceived(this.currentD2DConnection.getIndexPatientDataCommand().getImageReportReceived());
+        patientDataCommand.setPatHisReceived(this.currentD2DConnection.getIndexPatientDataCommand().getPatHisReceived());
+        patientDataCommand.setVitalSignsReceived(this.currentD2DConnection.getIndexPatientDataCommand().getVitalSignsReceived());
         if (this.currentD2DConnection.getIndexPatientDataCommand().getIpsReceived() &&
                 this.currentD2DConnection.getIndexPatientDataCommand().getPrescriptionReceived() &&
                 this.currentD2DConnection.getIndexPatientDataCommand().getLaboratoryResultsReceived() &&
                 this.currentD2DConnection.getIndexPatientDataCommand().getImageReportReceived() &&
                 this.currentD2DConnection.getIndexPatientDataCommand().getPatHisReceived() &&
                 this.currentD2DConnection.getIndexPatientDataCommand().getVitalSignsReceived()) {
-            patientDataCommand.setIpsReceived(true);
-            patientDataCommand.setPrescriptionReceived(true);
-            patientDataCommand.setLaboratoryResultsReceived(true);
-            patientDataCommand.setImageReportReceived(true);
-            patientDataCommand.setPatHisReceived(true);
-            patientDataCommand.setVitalSignsReceived(true);
             IndexCommand.transmissionCompleted = true;
         }
 
