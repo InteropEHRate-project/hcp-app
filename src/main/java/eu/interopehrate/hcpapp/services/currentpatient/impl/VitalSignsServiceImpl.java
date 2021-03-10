@@ -23,10 +23,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -83,6 +82,16 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSignsInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         VitalSignsEntity vitalSignsEntity = this.commandToEntityVitalSigns.convert(vitalSignsInfoCommand);
         vitalSignsRepository.save(vitalSignsEntity);
+    }
+
+    @Override
+    public void deleteVitalSign(String an, String sample) {
+        LocalDateTime localDateTime = LocalDateTime.parse(sample , DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
+        for (VitalSignsEntity v : this.vitalSignsRepository.findAll()) {
+            if (v.getLocalDateOfVitalSign().equals(localDateTime) && v.getAnalysisType().getName().equalsIgnoreCase(an)) {
+                this.vitalSignsRepository.delete(v);
+            }
+        }
     }
 
     @Override

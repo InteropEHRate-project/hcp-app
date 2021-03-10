@@ -54,7 +54,8 @@ public class VitalSignsController {
 
     @DeleteMapping
     @RequestMapping("/delete")
-    public String deleteData(@RequestParam(name = "an") String an, @RequestParam(name = "sample") String sample) {
+    public String deleteData(@RequestParam(name = "an") String an, @RequestParam(name = "sample") String sample) throws IOException {
+        this.vitalSignsService.deleteVitalSign(an, sample);
         return "redirect:/current-patient/visit-data/vital-signs/view-section";
     }
 }

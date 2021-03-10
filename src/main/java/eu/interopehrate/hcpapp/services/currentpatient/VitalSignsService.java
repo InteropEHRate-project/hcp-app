@@ -15,6 +15,7 @@ public interface VitalSignsService {
     VitalSignsCommand vitalSignsCommand() throws IOException;
     VitalSignsCommand vitalSignsUpload();
     void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand);
+    void deleteVitalSign(String an, String sample);
     void callVitalSigns() throws IOException;
     void sendVitalSigns(Bundle vitalSigns) throws IOException;
     @SuppressWarnings("rawtypes")
