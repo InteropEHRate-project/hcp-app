@@ -3,7 +3,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</title>
+    <title th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">Vital signs</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <script th:inline="javascript">
@@ -26,9 +26,9 @@
 <body>
 <div layout:fragment="content">
     <div class="m-3"></div>
-    <h2 th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.add.vital.signs}">Add Vital Signs information</h2>
+    <h2 th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.edit.vital.signs}">Edit Vital Signs information</h2>
     <div class="m-5"></div>
-    <form action="#" th:action="@{/current-patient/visit-data/vital-signs/save-add}" th:object="${vitalSignsInfoCommand}" method="post">
+    <form action="#" th:action="@{/current-patient/visit-data/vital-signs/edit}" th:object="${vitalSignsInfoCommand}" method="post">
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p>Please correct the errors below</p>
         </div>
@@ -51,7 +51,7 @@
             <div class="col-md-6">
                 <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date}">Date:</label><br>
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" th:field="*{vitalSignsInfoCommandSample.localDateOfVitalSign}" id="localDateOfVitalSign" placeholder="Date"/>
+                    <input type="text" class="form-control datetimepicker-input" id="localDateOfVitalSign" data-target="#datetimepicker1" th:field="*{vitalSignsInfoCommandSample.localDateOfVitalSign}"/>
                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                     </div>

@@ -78,7 +78,8 @@
                             <td>
                                 <p th:text="${{map.get(an,sample)}}"></p>
                                 <div class="btn-group" role="group">
-<!--                                    <a href="#" class="btn btn-info" th:text="#{crud.button.edit}">Edit</a>-->
+                                    <a href="#" class="btn btn-info" th:href="@{/current-patient/visit-data/vital-signs/open-edit-page(an = ${{an}}, sample = ${{sample}})}"
+                                       th:text="#{crud.button.edit}">Edit</a>
                                     <a href="#" class="btn btn-danger" th:href="@{/current-patient/visit-data/vital-signs/delete(an = ${{an}}, sample = ${{sample}})}"
                                        th:text="#{crud.button.delete}">Delete</a>
                                 </div>

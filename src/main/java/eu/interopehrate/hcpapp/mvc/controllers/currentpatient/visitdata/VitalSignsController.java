@@ -17,6 +17,7 @@ import java.io.IOException;
 public class VitalSignsController {
     private final VitalSignsService vitalSignsService;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
+    private static VitalSignsInfoCommand oldVitalSign;
 
     public VitalSignsController(VitalSignsService vitalSignsService, VitalSignsTypesRepository vitalSignsTypesRepository) {
         this.vitalSignsService = vitalSignsService;
@@ -56,6 +57,28 @@ public class VitalSignsController {
     @RequestMapping("/delete")
     public String deleteData(@RequestParam(name = "an") String an, @RequestParam(name = "sample") String sample) throws IOException {
         this.vitalSignsService.deleteVitalSign(an, sample);
+        return "redirect:/current-patient/visit-data/vital-signs/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-edit-page")
+    public String openEditPage(@RequestParam(name = "an") String an, @RequestParam(name = "sample") String sample, Model model) {
+        VitalSignsController.oldVitalSign = this.vitalSignsService.getVitalSign(an, sample);
+        model.addAttribute("vitalSignsInfoCommand", VitalSignsController.oldVitalSign);
+        model.addAttribute("vitalSignsTypes", this.vitalSignsTypesRepository.findAll());
+
+        model.addAttribute("correlations", this.vitalSignsService.correlations());
+        return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_EDIT_PAGE;
+    }
+
+    @PutMapping
+    @RequestMapping("/edit")
+    public String update(@Valid @ModelAttribute VitalSignsInfoCommand newVitalSignsInfoCommand, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("vitalSignsInfoCommand", newVitalSignsInfoCommand);
+            return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_EDIT_PAGE;
+        }
+        this.vitalSignsService.editVitalSign(newVitalSignsInfoCommand, VitalSignsController.oldVitalSign);
         return "redirect:/current-patient/visit-data/vital-signs/view-section";
     }
 }

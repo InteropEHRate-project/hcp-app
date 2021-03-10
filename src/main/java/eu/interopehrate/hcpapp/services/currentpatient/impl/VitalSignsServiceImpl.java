@@ -95,6 +95,30 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     @Override
+    public VitalSignsInfoCommand getVitalSign(String an, String sample) {
+        LocalDateTime localDateTime = LocalDateTime.parse(sample , DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
+        for (VitalSignsEntity v : this.vitalSignsRepository.findAll()) {
+            if (v.getLocalDateOfVitalSign().equals(localDateTime) && v.getAnalysisType().getName().equalsIgnoreCase(an)) {
+                return this.entityToCommandVitalSigns.convert(v);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void editVitalSign(VitalSignsInfoCommand newVitalSign, VitalSignsInfoCommand oldVitalSign) {
+        newVitalSign.setPatientId(this.currentPatient.getPatient().getId());
+        newVitalSign.setId(this.idByAnAndSample(oldVitalSign.getAnalysisName(), oldVitalSign.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()));
+        VitalSignsEntity oldVitalSignsEntity = this.vitalSignsRepository.getOne(newVitalSign.getId());
+        VitalSignsEntity temporaryVitalSignsEntity = this.commandToEntityVitalSigns.convert(newVitalSign);
+        oldVitalSignsEntity.setLocalDateOfVitalSign(temporaryVitalSignsEntity.getLocalDateOfVitalSign());
+        oldVitalSignsEntity.setUnitOfMeasurement(temporaryVitalSignsEntity.getUnitOfMeasurement());
+        oldVitalSignsEntity.setCurrentValue(temporaryVitalSignsEntity.getCurrentValue());
+        oldVitalSignsEntity.setAnalysisType(temporaryVitalSignsEntity.getAnalysisType());
+        this.vitalSignsRepository.save(oldVitalSignsEntity);
+    }
+
+    @Override
     public VitalSignsCommand vitalSignsUpload() {
         var vitalSignsList = this.vitalSignsRepository.findAll()
                 .stream()
@@ -208,5 +232,14 @@ public class VitalSignsServiceImpl implements VitalSignsService {
             }
         }
         return resultStringBuilder.toString();
+    }
+
+    private Long idByAnAndSample(String an, LocalDateTime sample) {
+        for (VitalSignsEntity v : this.vitalSignsRepository.findAll()) {
+            if (v.getLocalDateOfVitalSign().equals(sample) && v.getAnalysisType().getName().equalsIgnoreCase(an)) {
+                return v.getId();
+            }
+        }
+        return null;
     }
 }

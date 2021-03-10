@@ -58,6 +58,7 @@ public interface TemplateNames {
     // Visit data
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/visit-data/vital-signs/view-section";
     String CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE = "current-patient/visit-data/vital-signs/add-info";
+    String CURRENT_PATIENT_VITAL_SIGNS_EDIT_PAGE = "current-patient/visit-data/vital-signs/edit-info";
     String CURRENT_PATIENT_REASON_VIEW_SECTION = "current-patient/visit-data/reason/view-section";
     String CURRENT_PATIENT_PH_EXAM_VIEW_SECTION = "current-patient/visit-data/ph-exam/view-section";
     String CURRENT_PATIENT_CONCLUSION_VIEW_SECTION = "current-patient/visit-data/conclusion/view-section";
