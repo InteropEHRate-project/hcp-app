@@ -7,7 +7,7 @@ import java.util.List;
 public interface SendToOtherHcpService {
     @SuppressWarnings("rawtypes")
     List hcpsList();
-    Boolean sendCurrentPatient(Long initialHcpId) throws Exception;
+    Boolean sendCurrentPatient(Long hcpId) throws Exception;
     Boolean sendEHRs() throws IOException;
     void sendPrescription();
     void sendVitalSigns();

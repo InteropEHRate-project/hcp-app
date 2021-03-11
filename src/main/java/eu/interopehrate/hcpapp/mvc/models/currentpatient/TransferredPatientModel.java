@@ -11,6 +11,8 @@ public class TransferredPatientModel {
     private String patientId;
     @JsonProperty("initialHcpId")
     private Long initialHcpId;
+    @JsonProperty("hcpId")
+    private Long hcpId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("age")

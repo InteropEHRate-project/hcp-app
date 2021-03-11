@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.EHRType;
+import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
@@ -44,10 +45,11 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     private String hcpsListUrl;
     @Value("${hcp.app.hospital.services.patients.transfer.url}")
     private String patientsTransferUrl;
+    private final HealthCareProfessionalRepository healthCareProfessionalRepository;
 
     public SendToOtherHcpServiceImpl(CurrentPatient currentPatient, IndexService indexService, RestTemplate restTemplate,
                                      PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
-                                     EntityToCommandPrescription entityToCommandPrescription, EntityToCommandVitalSigns entityToCommandVitalSigns) {
+                                     EntityToCommandPrescription entityToCommandPrescription, EntityToCommandVitalSigns entityToCommandVitalSigns, HealthCareProfessionalRepository healthCareProfessionalRepository) {
         this.currentPatient = currentPatient;
         this.indexService = indexService;
         this.restTemplate = restTemplate;
@@ -55,6 +57,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         this.vitalSignsRepository = vitalSignsRepository;
         this.entityToCommandPrescription = entityToCommandPrescription;
         this.entityToCommandVitalSigns = entityToCommandVitalSigns;
+        this.healthCareProfessionalRepository = healthCareProfessionalRepository;
     }
 
     @SuppressWarnings("rawtypes")
@@ -69,9 +72,10 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     }
 
     @Override
-    public Boolean sendCurrentPatient(Long initialHcpId) throws Exception {
+    public Boolean sendCurrentPatient(Long hcpId) throws Exception {
         TransferredPatientModel transferredPatientModel = new TransferredPatientModel();
-        transferredPatientModel.setInitialHcpId(initialHcpId);
+        transferredPatientModel.setInitialHcpId(this.healthCareProfessionalRepository.findAll().get(0).getId());
+        transferredPatientModel.setHcpId(hcpId);
         if (Objects.nonNull(this.currentPatient.getPatient()) &&
                 Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand()) &&
                 Objects.nonNull(this.indexService.indexCommand().getPatientDataCommand().getId())) {

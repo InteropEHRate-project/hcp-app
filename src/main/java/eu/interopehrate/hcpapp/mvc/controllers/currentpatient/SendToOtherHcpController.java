@@ -50,14 +50,14 @@ public class SendToOtherHcpController {
     @SuppressWarnings("rawtypes")
     @GetMapping
     @RequestMapping("/send-patient")
-    public String sendPatient(@RequestParam(name = "initialHcpId") Long initialHcpId, HttpSession session) throws Exception {
-        session.setAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(initialHcpId));
+    public String sendPatient(@RequestParam(name = "hcpId") Long hcpId, HttpSession session) throws Exception {
+        session.setAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(hcpId));
         session.setAttribute("isEhrTransferred", this.sendToOtherHcpService.sendEHRs());
 
         //For displaying the Hcp name where the patient was sent
         try {
             for (var hcp : this.hcpList) {
-                if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(initialHcpId.intValue())) {
+                if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(hcpId.intValue())) {
                     session.setAttribute("transferHcpName", ((LinkedHashMap) hcp).get("name"));
                 }
             }
