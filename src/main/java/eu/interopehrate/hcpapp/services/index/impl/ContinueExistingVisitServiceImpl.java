@@ -5,6 +5,7 @@ import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.converters.linkedhashmap.LinkedHashMapToPrescriptionEntity;
 import eu.interopehrate.hcpapp.converters.linkedhashmap.LinkedHashMapToVitalSignsEntity;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.services.index.ContinueExistingVisitService;
@@ -31,11 +32,12 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
     @Value("${hcp.app.hospital.services.url}")
     private String url;
     public static Boolean isExtractedData = false;
+    private final HealthCareProfessionalRepository healthCareProfessionalRepository;
 
     public ContinueExistingVisitServiceImpl(RestTemplate restTemplate, CurrentPatient currentPatient, TranslateService translateService,
                                             PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
                                             LinkedHashMapToPrescriptionEntity linkedHashMapToPrescriptionEntity,
-                                            LinkedHashMapToVitalSignsEntity linkedHashMapToVitalSignsEntity) {
+                                            LinkedHashMapToVitalSignsEntity linkedHashMapToVitalSignsEntity, HealthCareProfessionalRepository healthCareProfessionalRepository) {
         this.restTemplate = restTemplate;
         this.currentPatient = currentPatient;
         this.translateService = translateService;
@@ -43,6 +45,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
         this.vitalSignsRepository = vitalSignsRepository;
         this.linkedHashMapToPrescriptionEntity = linkedHashMapToPrescriptionEntity;
         this.linkedHashMapToVitalSignsEntity = linkedHashMapToVitalSignsEntity;
+        this.healthCareProfessionalRepository = healthCareProfessionalRepository;
     }
 
     @SuppressWarnings("rawtypes")
@@ -109,5 +112,11 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
         isExtractedData = false;
         this.currentPatient.reset();
         this.prescriptionRepository.deleteAll();
+    }
+
+    @Override
+    @SuppressWarnings("rawtypes")
+    public List getListOfPatients() {
+        return restTemplate.postForObject(this.url + "/patients" + "/list", this.healthCareProfessionalRepository.findAll().get(0).getId(), List.class);
     }
 }
