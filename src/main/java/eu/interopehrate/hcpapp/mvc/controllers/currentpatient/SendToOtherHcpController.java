@@ -50,28 +50,26 @@ public class SendToOtherHcpController {
     @SuppressWarnings("rawtypes")
     @GetMapping
     @RequestMapping("/send-patient")
-    public String sendPatient(@RequestParam(name = "hcpId") Long hcpId, HttpSession session) throws Exception {
-        session.setAttribute("isWorking", this.sendToOtherHcpService.sendCurrentPatient(hcpId));
-        session.setAttribute("isEhrTransferred", this.sendToOtherHcpService.sendEHRs());
+    public String sendPatient(@RequestParam(name = "hcpId") Long hcpId, HttpSession session) {
+        if (this.sendToOtherHcpService.sendPatient(hcpId)) {
+            session.setAttribute("isWorking", true);
 
-        //For displaying the Hcp name where the patient was sent
-        try {
-            for (var hcp : this.hcpList) {
-                if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(hcpId.intValue())) {
-                    session.setAttribute("transferHcpName", ((LinkedHashMap) hcp).get("name"));
+            //For displaying the Hcp name where the patient was sent
+            try {
+                for (var hcp : this.hcpList) {
+                    if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(hcpId.intValue())) {
+                        session.setAttribute("transferHcpName", ((LinkedHashMap) hcp).get("name"));
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                session.setAttribute("transferHcpName", "");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.setAttribute("transferHcpName", "");
+            if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
+                session.removeAttribute("mySessionAttribute");
+            }
+            return "redirect:/index/close-connection";
         }
-
-        this.sendToOtherHcpService.sendPrescription();
-        this.sendToOtherHcpService.sendVitalSigns();
-        this.currentPatient.reset();
-        if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
-            session.removeAttribute("mySessionAttribute");
-        }
-        return "redirect:/index/close-connection";
+        return "redirect:/current-patient/send-to-other-hcp/view-section";
     }
 }

@@ -24,9 +24,6 @@ public class NewVisitController {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
             session.removeAttribute("isWorking");
         }
-        if (Objects.nonNull(session.getAttribute("isEhrTransferred"))) {
-            session.removeAttribute("isEhrTransferred");
-        }
         model.addAttribute("index", indexService.indexCommand());
         IndexCommand indexCommand = indexService.indexCommand();
         if (Objects.isNull(session.getAttribute("mySessionAttribute")) && IndexCommand.transmissionCompleted) {

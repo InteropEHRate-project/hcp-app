@@ -18,15 +18,13 @@ import java.util.List;
 public class HcpsController {
     @Value("${hcp.app.hospital.services.url}")
     private String hospitalServicesUrl;
-    @Value("${hcp.app.hospital.services.hcps.list.url}")
-    private String hcpsListUrl;
 
     @GetMapping
     @RequestMapping("/view-details")
     public String detailsTemplate(Model model) {
         boolean error = false;
         try {
-            model.addAttribute("hcps", new RestTemplate().getForObject(this.hospitalServicesUrl + this.hcpsListUrl, List.class));
+            model.addAttribute("hcps", new RestTemplate().getForObject(this.hospitalServicesUrl + "/hcps" + "/list", List.class));
         } catch (ResourceAccessException e) {
             log.error("Connection refused");
             error = true;

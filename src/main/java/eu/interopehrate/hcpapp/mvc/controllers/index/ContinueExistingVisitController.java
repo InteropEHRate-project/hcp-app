@@ -36,9 +36,6 @@ public class ContinueExistingVisitController {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
             session.removeAttribute("isWorking");
         }
-        if (Objects.nonNull(session.getAttribute("isEhrTransferred"))) {
-            session.removeAttribute("isEhrTransferred");
-        }
         model.addAttribute("index", indexService.indexCommand());
         boolean error = false;
         try {

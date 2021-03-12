@@ -14,6 +14,10 @@ import eu.interopehrate.hcpapp.mvc.models.currentpatient.EHRModel;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
 import eu.interopehrate.hcpapp.services.currentpatient.SendToOtherHcpService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.JsonParser;
@@ -41,10 +45,6 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     private final EntityToCommandVitalSigns entityToCommandVitalSigns;
     @Value("${hcp.app.hospital.services.url}")
     private String hospitalServicesUrl;
-    @Value("${hcp.app.hospital.services.hcps.list.url}")
-    private String hcpsListUrl;
-    @Value("${hcp.app.hospital.services.patients.transfer.url}")
-    private String patientsTransferUrl;
     private final HealthCareProfessionalRepository healthCareProfessionalRepository;
 
     public SendToOtherHcpServiceImpl(CurrentPatient currentPatient, IndexService indexService, RestTemplate restTemplate,
@@ -60,11 +60,19 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         this.healthCareProfessionalRepository = healthCareProfessionalRepository;
     }
 
+    @Getter
+    @Setter
+    @Builder
+    private static class PatientHcp {
+        String patientId;
+        Long hcpId;
+    }
+
     @SuppressWarnings("rawtypes")
     @Override
     public List hcpsList() {
         try {
-            return this.restTemplate.getForObject(this.hospitalServicesUrl + this.hcpsListUrl, List.class);
+            return this.restTemplate.getForObject(this.hospitalServicesUrl + "/hcps" + "/list", List.class);
         } catch (ResourceAccessException e) {
             log.error("Connection refused");
             return null;
@@ -72,7 +80,24 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     }
 
     @Override
-    public Boolean sendCurrentPatient(Long hcpId) throws Exception {
+    public Boolean sendPatient(Long hcpId) {
+        String patientId = this.currentPatient.getPatient().getId();
+        if (!this.restTemplate.postForObject(this.hospitalServicesUrl + "/patients" + "/is-patient-existing-already", patientId, Boolean.class)) {
+            this.sendCurrentPatient(hcpId);
+            this.sendEHRs();
+            this.sendPrescription();
+            this.sendVitalSigns();
+            this.currentPatient.reset();
+            return Boolean.TRUE;
+        }
+        if (this.restTemplate.postForObject(this.hospitalServicesUrl + "/patients" + "/send-patient-to-hcp", PatientHcp.builder().patientId(patientId).hcpId(hcpId).build(), Boolean.class)) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+    @SneakyThrows
+    public void sendCurrentPatient(Long hcpId) {
         TransferredPatientModel transferredPatientModel = new TransferredPatientModel();
         transferredPatientModel.setInitialHcpId(this.healthCareProfessionalRepository.findAll().get(0).getId());
         transferredPatientModel.setHcpId(hcpId);
@@ -91,81 +116,70 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
             if (Objects.nonNull(patientDataCommand.getCountry())) {
                 transferredPatientModel.setCountry(patientDataCommand.getCountry());
             }
-            this.restTemplate.postForLocation(this.hospitalServicesUrl + this.patientsTransferUrl, transferredPatientModel);
-            return true;
+            this.restTemplate.postForLocation(this.hospitalServicesUrl + "/patients" + "/transfer", transferredPatientModel);
         }
-        return false;
     }
 
-    @Override
-    public Boolean sendEHRs() throws IOException {
-        boolean isAnyEHRTransferred = false;
+    @SneakyThrows
+    public void sendEHRs() {
+        String patientId = this.currentPatient.getPatient().getId();
         if (Objects.nonNull(this.currentPatient.getPatient())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.PATIENT_DEMOGRAPHIC_DATA);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertPatientIntoString(this.currentPatient.getPatient()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
 
         if (Objects.nonNull(this.currentPatient.getPatientSummaryBundle())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.IPS);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getPatientSummaryBundle()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
         if (Objects.nonNull(this.currentPatient.getPrescription())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.PRESCRIPTION);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getPrescription()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
         if (Objects.nonNull(this.currentPatient.getLaboratoryResults())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.LAB_RESULTS);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getLaboratoryResults()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
         if (Objects.nonNull(this.currentPatient.getVitalSigns())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.VITAL_SIGNS);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getVitalSigns()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
         if (Objects.nonNull(this.currentPatient.getImageReport())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.IMAGE_REPORT);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getImageReport()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
         if (Objects.nonNull(this.currentPatient.getPatHisBundle()))  {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.PATHOLOGY_HISTORY);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getPatHisBundle()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
         if (Objects.nonNull(this.currentPatient.getDocHistoryConsult())) {
             EHRModel ehrModel = new EHRModel();
             ehrModel.setEhrType(EHRType.DOC_HISTORY);
-            ehrModel.setPatientId(this.currentPatient.getPatient().getId());
+            ehrModel.setPatientId(patientId);
             ehrModel.setContent(convertBundleIntoString(this.currentPatient.getDocHistoryConsult()));
             this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/transfer", ehrModel, Boolean.class);
-            isAnyEHRTransferred = true;
         }
-        return isAnyEHRTransferred;
     }
 
     @Override
