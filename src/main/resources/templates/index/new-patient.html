@@ -100,7 +100,7 @@
             </div>
             <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}">Connection established. Waiting for patient's EHRs...</h3>
+                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}" th:text="#{template.index.waiting}">Connection established. Waiting for patient's EHRs...</h3>
                 </div>
                 <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">
                     <div class="spinner-border text-primary" role="status">
@@ -125,12 +125,12 @@
                     <p></p>
                 </div>
                 <div class="text-center" th:if="${!index.transmissionCompleted}">
-                    <p th:if="${index.patientDataCommand.ipsReceived}">IPS received</p>
-                    <p th:if="${index.getPatientDataCommand().getLaboratoryResultsReceived()}">Laboratory results received</p>
-                    <p th:if="${index.getPatientDataCommand().getPrescriptionReceived()}">Prescription received</p>
-                    <p th:if="${index.getPatientDataCommand().getImageReportReceived()}">Image report received</p>
-                    <p th:if="${index.getPatientDataCommand().getPatHisReceived()}">Pathology history received</p>
-                    <p th:if="${index.getPatientDataCommand().getVitalSignsReceived()}">Vital signs received</p>
+                    <p th:if="${index.patientDataCommand.ipsReceived}" th:text="#{template.index.ips.received}">IPS received</p>
+                    <p th:if="${index.getPatientDataCommand().getLaboratoryResultsReceived()}" th:text="#{template.index.laboratory.received}">Laboratory results received</p>
+                    <p th:if="${index.getPatientDataCommand().getPrescriptionReceived()}" th:text="#{template.index.prescription.received}">Prescription received</p>
+                    <p th:if="${index.getPatientDataCommand().getImageReportReceived()}" th:text="#{template.index.image.report.received}">Image report received</p>
+                    <p th:if="${index.getPatientDataCommand().getPatHisReceived()}" th:text="#{template.index.pat.his.received}">Pathology history received</p>
+                    <p th:if="${index.getPatientDataCommand().getVitalSignsReceived()}" th:text="#{template.index.vital.signs.received}">Vital signs received</p>
                 </div>
             </div>
         </div>

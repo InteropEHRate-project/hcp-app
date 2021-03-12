@@ -9,4 +9,5 @@ public interface SendToOtherHcpService {
     Boolean sendPatient(Long hcpId);
     void sendPrescription();
     void sendVitalSigns();
+    String getTransferHcpName(Long hcpId);
 }

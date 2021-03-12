@@ -44,27 +44,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!--    <style>-->
-<!--        .hidden {-->
-<!--            display:none;-->
-<!--        }-->
-<!--        .loader {-->
-<!--            position:fixed;-->
-<!--            height:50%;-->
-<!--            width:60%;-->
-<!--            background-color: grey;-->
-<!--            opacity:0.5;-->
-<!--        }-->
-<!--        .loader-text {-->
-<!--            position:fixed;-->
-<!--            top:45%;-->
-<!--            left:45%;-->
-<!--        }-->
-<!--    </style>-->
-
     <title th:text="#{template.index.title}">HCP Application</title>
 </head>
-
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="m-5"></div>
@@ -75,8 +56,8 @@
         <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
     </div>
 
-    <h3 class="mt-4" th:text="#{fragment.main.details.the.button}"> Select patient from the table</h3>
-    <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
+    <h3 class="mt-4" th:text="#{fragment.main.details.the.button}">Select patient from the table</h3>
+    <h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5>
     <br>
     <table class="table table-bordered">
         <thead class="thead-light">
@@ -105,28 +86,7 @@
             <a href="#" class="btn btn-primary" th:href="@{/index/}" th:text="#{button.back}">Back</a>
         </div>
     </div>
-
-<!--    <div class="loader hidden" id="loading">-->
-<!--        <span class="loader-text">Loading...</span>-->
-<!--    </div>-->
 </div>
-<!--<script>-->
-<!--    var delay = 2000;-->
-<!--    var els = document.getElementsByClassName('external-link');-->
-<!--    var loader = document.getElementById('loading');-->
-<!--    for(var i = 0;i < els.length;i++){-->
-<!--        els[i].addEventListener('click', function(e) {-->
-<!--            var source = e.target || e.srcElement;-->
-<!--            e.preventDefault();-->
-<!--            loader.className = loader.className.replace('hidden', '');-->
-
-<!--            setTimeout(function() {-->
-<!--                window.open(source.href);-->
-<!--                loader.className += 'hidden';-->
-<!--            }, delay);-->
-<!--        }, false);-->
-<!--    }-->
-<!--</script>-->
 
 <script data-th-src="@{/js/reload-page-sse.js}"></script>
 </body>

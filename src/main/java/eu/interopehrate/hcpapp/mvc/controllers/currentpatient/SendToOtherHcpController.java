@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +20,6 @@ import java.util.Objects;
 @RequestMapping("/current-patient/send-to-other-hcp")
 public class SendToOtherHcpController {
     private final CurrentPatient currentPatient;
-    @SuppressWarnings("rawtypes")
-    private List hcpList;
     private final SendToOtherHcpService sendToOtherHcpService;
 
     public SendToOtherHcpController(CurrentPatient currentPatient, SendToOtherHcpService sendToOtherHcpService) {
@@ -31,40 +28,29 @@ public class SendToOtherHcpController {
     }
 
     @GetMapping
+    @SuppressWarnings("rawtypes")
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         model.addAttribute("patient", this.currentPatient.getPatient());
-        this.hcpList = this.sendToOtherHcpService.hcpsList();
+        List hcpList = this.sendToOtherHcpService.hcpsList();
         boolean error;
-        if (Objects.isNull(this.hcpList)) {
+        if (Objects.isNull(hcpList)) {
             error = true;
-            this.hcpList = Collections.emptyList();
+            hcpList = Collections.emptyList();
         } else {
             error = false;
         }
         model.addAttribute("error", error);
-        model.addAttribute("hcps", this.hcpList);
+        model.addAttribute("hcps", hcpList);
         return TemplateNames.CURRENT_PATIENT_SEND_TO_OTHER_HCP;
     }
 
-    @SuppressWarnings("rawtypes")
     @GetMapping
     @RequestMapping("/send-patient")
     public String sendPatient(@RequestParam(name = "hcpId") Long hcpId, HttpSession session) {
         if (this.sendToOtherHcpService.sendPatient(hcpId)) {
             session.setAttribute("isWorking", true);
-
-            //For displaying the Hcp name where the patient was sent
-            try {
-                for (var hcp : this.hcpList) {
-                    if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(hcpId.intValue())) {
-                        session.setAttribute("transferHcpName", ((LinkedHashMap) hcp).get("name"));
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                session.setAttribute("transferHcpName", "");
-            }
+            session.setAttribute("transferHcpName", this.sendToOtherHcpService.getTransferHcpName(hcpId));
             if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
                 session.removeAttribute("mySessionAttribute");
             }

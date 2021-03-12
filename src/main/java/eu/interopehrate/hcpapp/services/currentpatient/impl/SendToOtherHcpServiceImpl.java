@@ -30,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,8 +69,8 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         Long hcpId;
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
+    @SuppressWarnings("rawtypes")
     public List hcpsList() {
         try {
             return this.restTemplate.getForObject(this.hospitalServicesUrl + "/hcps" + "/list", List.class);
@@ -196,6 +197,23 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
             this.restTemplate.postForLocation(this.hospitalServicesUrl + "/ehrs" + "/transfer-vital-signs", this.entityToCommandVitalSigns.convert(v));
         }
         this.vitalSignsRepository.deleteAll();
+    }
+
+    @Override
+    @SuppressWarnings("rawtypes")
+    public String getTransferHcpName(Long hcpId) {
+        //For displaying the Hcp name where the patient was sent
+        try {
+            for (var hcp : this.hcpsList()) {
+                if (hcp instanceof LinkedHashMap && ((LinkedHashMap) hcp).get("id").equals(hcpId.intValue())) {
+                    return ((LinkedHashMap) hcp).get("name").toString();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+        return "";
     }
 
     private static String convertBundleIntoString(Bundle bundle) throws IOException {
