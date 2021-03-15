@@ -77,6 +77,11 @@
     <div class="dropdown-divider"></div>
 
     <a class="flex-sm-fill text-sm-left nav-link"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/hospital-discharge-report')} ? 'active' : ''"
+       href="../hospital-discharge-report/view-section.html"
+       th:href="@{/current-patient/hospital-discharge-report/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</a>
+    <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/outpatient-report')} ? 'active' : ''"
        href="../outpatient-report/view-section.html"
        th:href="@{/current-patient/outpatient-report/view-section}"

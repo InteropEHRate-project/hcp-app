@@ -8,7 +8,7 @@
 
 <body>
 <div layout:fragment="content">
-    <h3 th:text="#{fragment.current.patient.navigation.left.send.to.other.hcp}">Send to other HCP</h3>
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.send.to.other.hcp}">Send to other HCP</h3></p>
     <div class="m-5"></div>
     <h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5>
     <h5 th:if="${patient == null && session.withoutConnection != null && !session.withoutConnection}"
