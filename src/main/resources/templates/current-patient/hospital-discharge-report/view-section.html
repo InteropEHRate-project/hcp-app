@@ -9,6 +9,34 @@
 <body>
 <div layout:fragment="content">
     <p><h3 th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</h3></p>
+
+    <table class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getListOfReasons().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reasons}">Reasons</th>
+            <th th:text="#{button.action}">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reason : ${hospitalDischargeReportCommand.getListOfReasons()}">
+            <td class="col-10" th:text="${reason}"></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-danger" th:href="@{/current-patient/hospital-discharge-report/delete(reason=${reason})}" th:text="#{crud.button.delete}">Delete</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <form th:action="@{/current-patient/hospital-discharge-report/save-reason}" method="post">
+        <div class="form-group">
+            <label for="reason" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason for hospitalization:</label>
+            <textarea class="form-control" rows="3" type="input" name="reason" id="reason"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
+    </form>
 </div>
 </body>
 </html>
