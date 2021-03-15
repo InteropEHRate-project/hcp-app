@@ -23,16 +23,48 @@ public class HospitalDischargeReportController {
     }
 
     @PostMapping
-    @RequestMapping("/save-reason")
-    public String saveAdd(String reason) {
+    @RequestMapping("/save")
+    public String saveAdd(String reason, String finding, String procedure, String condition, String instruction) {
         this.hospitalDischargeReportService.insertReason(reason);
+        this.hospitalDischargeReportService.insertFinding(finding);
+        this.hospitalDischargeReportService.insertProcedure(procedure);
+        this.hospitalDischargeReportService.insertCondition(condition);
+        this.hospitalDischargeReportService.insertInstruction(instruction);
         return "redirect:/current-patient/hospital-discharge-report/view-section";
     }
 
     @DeleteMapping
-    @RequestMapping("/delete")
+    @RequestMapping("/delete-reason")
     public String deleteReason(@RequestParam("reason") String reason) {
         this.hospitalDischargeReportService.deleteReason(reason);
+        return "redirect:/current-patient/hospital-discharge-report/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete-finding")
+    public String deleteFinding(@RequestParam("finding") String finding) {
+        this.hospitalDischargeReportService.deleteFinding(finding);
+        return "redirect:/current-patient/hospital-discharge-report/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete-procedure")
+    public String deleteProcedure(@RequestParam("procedure") String procedure) {
+        this.hospitalDischargeReportService.deleteProcedure(procedure);
+        return "redirect:/current-patient/hospital-discharge-report/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete-condition")
+    public String deleteCondition(@RequestParam("condition") String condition) {
+        this.hospitalDischargeReportService.deleteCondition(condition);
+        return "redirect:/current-patient/hospital-discharge-report/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete-instruction")
+    public String deleteInstruction(@RequestParam("instruction") String instruction) {
+        this.hospitalDischargeReportService.deleteInstruction(instruction);
         return "redirect:/current-patient/hospital-discharge-report/view-section";
     }
 }
