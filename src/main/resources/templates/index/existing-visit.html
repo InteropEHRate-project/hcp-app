@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,6 +46,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.visibility = "visible";
+        }
+
+        // function redirect() {
+        //     window.location = "https://www.google.com/";
+        // }
+    </script>
+
     <title th:text="#{template.index.title}">HCP Application</title>
 </head>
 <body>
@@ -75,7 +87,7 @@
             <td th:text="${{existingVisit.country}}"></td>
             <td>
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/index/retrieve-patient(patientId=${{existingVisit.patientId}})}">Retrieve Patient</a>
+                    <a class="btn btn-primary" th:href="@{/index/retrieve-patient(patientId=${{existingVisit.patientId}})}" onclick="showLoading()">Retrieve Patient</a>
                 </div>
             </td>
         </tr>
@@ -84,6 +96,12 @@
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/index/}" th:text="#{button.back}">Back</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="spinner-border text-primary" id="loading" role="status" style="width: 5rem; height: 5rem; visibility: hidden">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
 </div>
