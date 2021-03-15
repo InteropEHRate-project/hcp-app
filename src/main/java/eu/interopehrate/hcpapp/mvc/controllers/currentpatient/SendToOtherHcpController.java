@@ -54,8 +54,11 @@ public class SendToOtherHcpController {
             if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
                 session.removeAttribute("mySessionAttribute");
             }
+            session.setAttribute("alreadyAdded", Boolean.FALSE);
             return "redirect:/index/close-connection";
         }
+        session.setAttribute("transferHcpName", this.sendToOtherHcpService.getTransferHcpName(hcpId));
+        session.setAttribute("alreadyAdded", Boolean.TRUE);
         return "redirect:/current-patient/send-to-other-hcp/view-section";
     }
 }

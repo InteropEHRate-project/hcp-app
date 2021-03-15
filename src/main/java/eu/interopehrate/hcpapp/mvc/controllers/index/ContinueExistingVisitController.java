@@ -72,6 +72,9 @@ public class ContinueExistingVisitController {
         if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
             session.removeAttribute("mySessionAttribute");
         }
+        if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
+            session.removeAttribute("alreadyAdded");
+        }
         return "redirect:/index";
     }
 }
