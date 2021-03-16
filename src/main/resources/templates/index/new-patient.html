@@ -129,7 +129,7 @@
             </div>
         </div>
     </div>
-    <div class="btn-toolbar float-right" role="toolbar">
+    <div class="btn-toolbar float-right" role="toolbar" th:unless="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/index/}" th:text="#{button.back}">Back</a>
         </div>

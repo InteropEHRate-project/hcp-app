@@ -95,9 +95,11 @@
             <div th:if="${currentD2DConnection.getConnectedThread() != null}">
                 <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
             </div>
-            <h5 th:if="${session.withoutConnection}">Filtration function not available in Simulation mode.</h5>
-            <h5 th:if="${session.isExtractedData}">Filtration function in "Extracted patient phase" not available for
-                the moment.</h5>
+            <h5 th:if="${session.withoutConnection}"
+                th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available}">Filtration function not available in Simulation mode</h5>
+            <h5 th:if="${session.isExtractedData}"
+                th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available.in.simulation}">
+                Filtration function in "Extracted patient phase" not available for the moment</h5>
         </div>
     </form>
 
