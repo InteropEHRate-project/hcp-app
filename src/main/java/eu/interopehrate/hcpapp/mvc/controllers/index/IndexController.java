@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
-import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -8,14 +7,10 @@ import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
@@ -40,6 +35,9 @@ public class IndexController {
         if (Objects.isNull(session.getAttribute("hcpName"))) {
             session.setAttribute("hcpName",
                     this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
+        }
+        if (Objects.nonNull(session.getAttribute("itWorked"))) {
+            session.removeAttribute("itWorked");
         }
         if (Objects.nonNull(this.indexService.getCurrentPatient())) {
             session.setAttribute("withoutConnection", this.indexService.getCurrentPatient().getWithoutConnection());
@@ -73,39 +71,6 @@ public class IndexController {
     @RequestMapping("/index/stop-listening")
     public String stopListening() {
         indexService.closeConnection();
-        return "redirect:/index";
-    }
-
-    @RequestMapping("/index/close-cloud-connection")
-    public String closeCloudConnection() {
-        indexService.closeCloudConnection();
-        return "redirect:/index";
-    }
-
-    @PostMapping
-    @RequestMapping("/index/open-cloud-connection")
-    public String openCloudConnection() {
-        indexService.openCloudConnection();
-        return "redirect:/index";
-    }
-
-    @PostMapping
-    @RequestMapping("/index/discard-cloud-connection")
-    public String discardCloudConnection() {
-        indexService.discardCloudConnection();
-        return "redirect:/index";
-    }
-
-    @PostMapping
-    @RequestMapping("/index/download-ips")
-    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            if (indexCommand.getCloudConnectionState() == null) {
-                indexCommand.setCloudConnectionState(CloudConnectionState.OFF);
-            }
-            return "redirect:/index";
-        }
-        session.setAttribute("itWorked", this.indexService.downloadCloudIps(indexCommand.getQrCode()));
         return "redirect:/index";
     }
 }

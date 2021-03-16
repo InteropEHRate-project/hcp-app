@@ -45,9 +45,7 @@
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>
-
-    <br><h3 class="text-center" th:text="#{template.index.emergency}">Emergency</h3></p>
-
+    <br><h3 class="text-center" th:text="#{template.index.emergency}">Emergency</h3>
     <div th:if="${exception == null}">
         <div th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
              th:classappend="${(index.cloudConnectionState != null && index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF)} ? 'active' :''">
@@ -67,12 +65,15 @@
                       id="qrCodeForm">
                     <div class="form-row justify-content-center m-3">
                         <div>
-                            <label class="h3" for="qrCode" th:text="#{template.index.qrCode}"></label>
+                            <label class="h3" for="qrCode" th:text="#{template.index.qrCode}">Scan the patient's QR code to establish the cloud connection</label>
                         </div>
                         <div class="col-6 m-3 text-center">
+                            <h5 class="row justify-content-center" th:if="${session.itWorked != null && session.itWorked == false}" style="color: red"
+                                th:text="#{template.index.invalid.qr.code}">Invalid QR code content</h5>
                                 <textarea onpaste="document.qrCodeForm.submit()" rows="5" class="form-control"
                                           id="qrCode" th:field="*{qrCode}"
-                                          th:classappend="${#fields.hasErrors('qrCode')} ? 'is-invalid' :''"/>
+                                          th:classappend="${#fields.hasErrors('qrCode')} ? 'is-invalid' :''" th:placeholder="#{template.index.type}">
+                                </textarea>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('qrCode')}">
                                 <ul>
                                     <li th:each="err : ${#fields.errors('qrCode')}" th:text="${err}">err</li>
@@ -81,9 +82,7 @@
                         </div>
                     </div>
                     <div class="form-row justify-content-center">
-                        <button type="submit" class="btn btn-primary m-1"
-                                th:text="#{template.index.button.download.cloud.connection}">Download
-                        </button>
+                        <button type="submit" class="btn btn-primary m-1" th:text="#{template.index.button.download.cloud.connection}">Get Data</button>
                         <a href="#" class="btn btn-primary m-1"
                            th:text="#{template.index.button.discard.cloud.connection}"
                            th:href="@{/index/discard-cloud-connection}">Discard</a>
@@ -109,7 +108,7 @@
             </div>
         </div>
     </div>
-    <div class="btn-toolbar float-right" role="toolbar">
+    <div class="btn-toolbar float-right" role="toolbar" th:unless="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/index/}" th:text="#{button.back}">Back</a>
         </div>

@@ -105,7 +105,6 @@
 </div>
 
 <div class="container" th:if="${!session.withoutConnection}">
-    <p><h5 class="row justify-content-center" th:if="${session.itWorked != null && !session.itWorked}" style="color: red" th:text="#{template.index.invalid.qr.code}">Invalid QR code content</h5></p>
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>
