@@ -72,6 +72,7 @@ public class IndexController {
 
     @RequestMapping("/index/stop-listening")
     public String stopListening() {
+        indexService.closeConnection();
         return "redirect:/index";
     }
 

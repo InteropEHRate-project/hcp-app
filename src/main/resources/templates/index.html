@@ -176,12 +176,6 @@
                         <a href="#" class="btn btn-primary" th:text="#{template.index.button.discard.connection}"
                            th:href="@{/index/stop-listening}">Discard</a>
                     </div>
-                    <div class="row justify-content-center">
-                        <h9>(This functionality will be available when <a
-                                href="http://iehrgitlab.ds.unipi.gr/interopehrate/issues/issues/123" target="_blank">this</a>
-                            issue will be closed.)
-                        </h9>
-                    </div>
                 </div>
                 <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
                      class="m-3">
