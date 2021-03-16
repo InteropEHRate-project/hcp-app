@@ -75,15 +75,15 @@
 
     <nav class="navbar navbar-expand-sm navbar-light static-top"
          style="background-color: #e3f2fd;"
-         th:if="${session.mySessionAttribute != null && session.mySessionAttribute.getPatientDataCommand() != null
-             && session.mySessionAttribute.getPatientDataCommand().hasData() && session.mySessionAttribute.getPatientDataCommand().getBirthDate() != null}">
+         th:if="${session.patientNavbar != null && session.patientNavbar.getPatientDataCommand() != null
+             && session.patientNavbar.getPatientDataCommand().hasData() && session.patientNavbar.getPatientDataCommand().getBirthDate() != null}">
         <div class="container">
             <div>
             <span style="color: cornflowerblue; font: message-box"
-                  th:if="${session.mySessionAttribute.getConnectionState() != null && session.mySessionAttribute.getConnectionState() == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                  th:if="${session.patientNavbar.getConnectionState() != null && session.patientNavbar.getConnectionState() == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
                   th:text="#{template.index.d2dConnection.title}"></span>
                 <span style="color: cornflowerblue; font: message-box"
-                      th:if="${session.mySessionAttribute.getCloudConnectionState() != null && session.mySessionAttribute.getCloudConnectionState() == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
+                      th:if="${session.patientNavbar.getCloudConnectionState() != null && session.patientNavbar.getCloudConnectionState() == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
                       th:text="#{template.index.cloudConnection.title}"></span>
                 <span style="color: cornflowerblue; font: message-box"
                       th:if="${session.withoutConnection}"
@@ -95,22 +95,22 @@
             <div class="collapse navbar-collapse flex-column" id="navbarResponsive2">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item disabled">
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getPatientDataCommand().getFirstName() != null}"
-                          th:text="#{fragment.main.navigation.top.name} + ${' ' + session.mySessionAttribute.getPatientDataCommand().getFirstName() + ' '
-                    + session.mySessionAttribute.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name: </span>
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getPatientDataCommand().getFirstName() == null}"
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.patientNavbar.getPatientDataCommand().getFirstName() != null}"
+                          th:text="#{fragment.main.navigation.top.name} + ${' ' + session.patientNavbar.getPatientDataCommand().getFirstName() + ' '
+                    + session.patientNavbar.getPatientDataCommand().getLastName()}" th:unless="${session == null}">Name: </span>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.patientNavbar.getPatientDataCommand().getFirstName() == null}"
                           th:text="#{fragment.main.navigation.top.name} + ' '" th:unless="${session == null}">Name: </span>
                     </li>
                     <li class="nav-item disabled">
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getPatientDataCommand().getAge() != null}"
-                          th:text="#{fragment.main.navigation.top.age} + ${' ' + session.mySessionAttribute.getPatientDataCommand().getAge()}" th:unless="${session == null}">Age: </span>
-                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getPatientDataCommand().getAge() == null}"
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.patientNavbar.getPatientDataCommand().getAge() != null}"
+                          th:text="#{fragment.main.navigation.top.age} + ${' ' + session.patientNavbar.getPatientDataCommand().getAge()}" th:unless="${session == null}">Age: </span>
+                    <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.patientNavbar.getPatientDataCommand().getAge() == null}"
                           th:text="#{fragment.main.navigation.top.age} + ' '" th:unless="${session == null}">Age: </span>
                     </li>
                     <li class="nav-item disabled">
-                        <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.mySessionAttribute.getPatientDataCommand().getCountry() != null}"
-                              th:text="#{fragment.main.navigation.top.country} + ${' ' + session.mySessionAttribute.getPatientDataCommand().getCountry()}">Country: -</span>
-                        <span class="nav-link" style="color: cornflowerblue; font: message-box" th:unless="${session.mySessionAttribute.getPatientDataCommand().getCountry() != null}"
+                        <span class="nav-link" style="color: cornflowerblue; font: message-box" th:if="${session.patientNavbar.getPatientDataCommand().getCountry() != null}"
+                              th:text="#{fragment.main.navigation.top.country} + ${' ' + session.patientNavbar.getPatientDataCommand().getCountry()}">Country: -</span>
+                        <span class="nav-link" style="color: cornflowerblue; font: message-box" th:unless="${session.patientNavbar.getPatientDataCommand().getCountry() != null}"
                               th:text="#{fragment.main.navigation.top.country} + ' -'">Country: -</span>
                     </li>
                 </ul>

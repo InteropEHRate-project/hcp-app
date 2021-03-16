@@ -23,6 +23,9 @@ public class EmergencyController {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
             session.removeAttribute("isWorking");
         }
+        if (Objects.nonNull(session.getAttribute("itWorked"))) {
+            session.removeAttribute("itWorked");
+        }
         model.addAttribute("index", indexService.indexCommand());
         return TemplateNames.INDEX_EMERGENCY;
     }

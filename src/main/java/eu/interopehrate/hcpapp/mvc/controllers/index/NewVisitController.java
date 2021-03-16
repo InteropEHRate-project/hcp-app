@@ -24,10 +24,13 @@ public class NewVisitController {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
             session.removeAttribute("isWorking");
         }
+        if (Objects.nonNull(session.getAttribute("itWorked"))) {
+            session.removeAttribute("itWorked");
+        }
         model.addAttribute("index", indexService.indexCommand());
         IndexCommand indexCommand = indexService.indexCommand();
-        if (Objects.isNull(session.getAttribute("mySessionAttribute")) && IndexCommand.transmissionCompleted) {
-            session.setAttribute("mySessionAttribute", indexCommand);
+        if (Objects.isNull(session.getAttribute("patientNavbar")) && IndexCommand.transmissionCompleted) {
+            session.setAttribute("patientNavbar", indexCommand);
         }
         return TemplateNames.INDEX_NEW_PATIENT;
     }

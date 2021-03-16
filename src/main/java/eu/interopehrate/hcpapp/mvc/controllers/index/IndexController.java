@@ -34,8 +34,8 @@ public class IndexController {
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         IndexCommand indexCommand = indexService.indexCommand();
-        if (Objects.isNull(session.getAttribute("mySessionAttribute")) && IndexCommand.transmissionCompleted) {
-            session.setAttribute("mySessionAttribute", indexCommand);
+        if (Objects.isNull(session.getAttribute("patientNavbar")) && IndexCommand.transmissionCompleted) {
+            session.setAttribute("patientNavbar", indexCommand);
         }
         if (Objects.isNull(session.getAttribute("hcpName"))) {
             session.setAttribute("hcpName",
@@ -61,8 +61,8 @@ public class IndexController {
     @RequestMapping("/index/close-connection")
     public String closeConnection(HttpSession session) {
         indexService.closeConnection();
-        if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
-            session.removeAttribute("mySessionAttribute");
+        if (Objects.nonNull(session.getAttribute("patientNavbar"))) {
+            session.removeAttribute("patientNavbar");
         }
         if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
             session.removeAttribute("alreadyAdded");
@@ -98,15 +98,14 @@ public class IndexController {
 
     @PostMapping
     @RequestMapping("/index/download-ips")
-    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, Model model) throws Exception {
+    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             if (indexCommand.getCloudConnectionState() == null) {
                 indexCommand.setCloudConnectionState(CloudConnectionState.OFF);
             }
-            model.addAttribute("index", indexService.indexCommand());
-            return TemplateNames.INDEX_TEMPLATE;
+            return "redirect:/index";
         }
-        this.indexService.downloadCloudIps(indexCommand.getQrCode());
+        session.setAttribute("itWorked", this.indexService.downloadCloudIps(indexCommand.getQrCode()));
         return "redirect:/index";
     }
 }

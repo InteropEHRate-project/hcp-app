@@ -51,8 +51,8 @@ public class SendToOtherHcpController {
         if (this.sendToOtherHcpService.sendPatient(hcpId)) {
             session.setAttribute("isWorking", true);
             session.setAttribute("transferHcpName", this.sendToOtherHcpService.getTransferHcpName(hcpId));
-            if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
-                session.removeAttribute("mySessionAttribute");
+            if (Objects.nonNull(session.getAttribute("patientNavbar"))) {
+                session.removeAttribute("patientNavbar");
             }
             session.setAttribute("alreadyAdded", Boolean.FALSE);
             return "redirect:/index/close-connection";

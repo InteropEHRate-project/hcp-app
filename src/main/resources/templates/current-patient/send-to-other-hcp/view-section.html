@@ -12,7 +12,7 @@
     <div class="m-5"></div>
     <h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5>
     <h5 th:if="${patient == null && session.withoutConnection != null && !session.withoutConnection}"
-           th:text="#{fragment.current.patient.navigation.left.connection.required}">Connection required</h5>
+           th:text="#{fragment.current.patient.navigation.left.patient.required}">Connection required</h5>
     <h5 th:if="${session.alreadyAdded != null && session.transferHcpName != null && session.alreadyAdded}"
         th:text="#{fragment.current.patient.navigation.left.patient.already.added} + ' ' + ${session.transferHcpName}">Patient already sent to</h5>
 

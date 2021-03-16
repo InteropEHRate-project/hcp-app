@@ -137,9 +137,9 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public void downloadCloudIps(String qrCode) {
+    public Boolean downloadCloudIps(String qrCode) {
         System.out.println("QR Code: " + qrCode);
-        cloudConnection.downloadIps(qrCode);
+        return cloudConnection.downloadIps(qrCode);
     }
 
     @Override

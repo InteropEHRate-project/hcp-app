@@ -36,6 +36,9 @@ public class ContinueExistingVisitController {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
             session.removeAttribute("isWorking");
         }
+        if (Objects.nonNull(session.getAttribute("itWorked"))) {
+            session.removeAttribute("itWorked");
+        }
         model.addAttribute("index", indexService.indexCommand());
         boolean error = false;
         try {
@@ -51,15 +54,14 @@ public class ContinueExistingVisitController {
 
     @GetMapping
     @RequestMapping({"/retrieve-patient"})
-    public String retrievePatient(Model model, HttpSession session, @RequestParam(name = "patientId") String patientId) throws Exception {
+    public String retrievePatient(HttpSession session, @RequestParam(name = "patientId") String patientId) throws Exception {
         this.continueExistingVisitService.retrieveEHRs(patientId);
         session.setAttribute("isExtractedData", ContinueExistingVisitServiceImpl.isExtractedData);
         IndexCommand.transmissionCompleted = true;
         IndexCommand indexCommand = indexService.indexCommand();
-        if (Objects.isNull(session.getAttribute("mySessionAttribute"))) {
-            session.setAttribute("mySessionAttribute", indexCommand);
+        if (Objects.isNull(session.getAttribute("patientNavbar"))) {
+            session.setAttribute("patientNavbar", indexCommand);
         }
-        model.addAttribute("index", indexService.indexCommand());
         return "redirect:/index";
     }
 
@@ -69,8 +71,8 @@ public class ContinueExistingVisitController {
         continueExistingVisitService.clearData();
         session.setAttribute("isExtractedData", ContinueExistingVisitServiceImpl.isExtractedData);
         IndexCommand.transmissionCompleted = false;
-        if (Objects.nonNull(session.getAttribute("mySessionAttribute"))) {
-            session.removeAttribute("mySessionAttribute");
+        if (Objects.nonNull(session.getAttribute("patientNavbar"))) {
+            session.removeAttribute("patientNavbar");
         }
         if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
             session.removeAttribute("alreadyAdded");

@@ -51,11 +51,9 @@
 
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
-
 <div class="container" th:if="${session.withoutConnection}">
     <br>
-    <p>
-    <h1 class="text-center">This is a simulation of a current patient</h1></p>
+    <p><h1 class="text-center">This is a simulation of a current patient</h1></p>
 
     <div class="m-3">
         <div th:if="${index.patientDataCommand.hasData()}">
@@ -106,7 +104,8 @@
     </div>
 </div>
 
-<div class="container" th:if="${session.withoutConnection == false}">
+<div class="container" th:if="${!session.withoutConnection}">
+    <p><h5 class="row justify-content-center" th:if="${session.itWorked != null && !session.itWorked}" style="color: red" th:text="#{template.index.invalid.qr.code}">Invalid QR code content</h5></p>
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>
@@ -233,9 +232,7 @@
                             </div>
                         </div>
                         <div class="form-row justify-content-center">
-                            <button type="submit" class="btn btn-primary m-1"
-                                    th:text="#{template.index.button.download.cloud.connection}">Download
-                            </button>
+                            <button type="submit" class="btn btn-primary m-1" th:text="#{template.index.button.download.cloud.connection}">Get data</button>
                             <a href="#" class="btn btn-primary m-1"
                                th:text="#{template.index.button.discard.cloud.connection}"
                                th:href="@{/index/discard-cloud-connection}">Discard</a>

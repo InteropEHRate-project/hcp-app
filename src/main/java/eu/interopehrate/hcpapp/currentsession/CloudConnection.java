@@ -45,8 +45,8 @@ public class CloudConnection implements DisposableBean {
         this.connectionState = CloudConnectionState.OFF;
     }
 
-    public void downloadIps(String url) {
-        this.openConnection(url);
+    public Boolean downloadIps(String url) {
+        return this.openConnection(url);
     }
 
     public void close() {
@@ -57,7 +57,7 @@ public class CloudConnection implements DisposableBean {
         return this.connectionState;
     }
 
-    private void openConnection(String url) {
+    private Boolean openConnection(String url) {
         try {
             Bundle cloudIps = this.emergencyService.getIps(url);
 
@@ -74,13 +74,16 @@ public class CloudConnection implements DisposableBean {
                 this.connectionState = CloudConnectionState.ON;
                 this.indexPatientDataCommand.setIpsReceived(true);
                 this.auditInformationService.auditEmergencyGetIps();
+                return Boolean.TRUE;
             } else {
                 this.closeConnection();
+                return Boolean.TRUE;
             }
 
         } catch (Exception e) {
             this.closeConnection();
             e.printStackTrace();
+            return Boolean.FALSE;
         }
     }
 

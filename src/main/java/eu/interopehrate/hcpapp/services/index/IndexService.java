@@ -15,7 +15,7 @@ public interface IndexService {
     void closeConnection();
     void openCloudConnection();
     void discardCloudConnection();
-    void downloadCloudIps(String qrCode);
+    Boolean downloadCloudIps(String qrCode);
     void closeCloudConnection();
     void certificate() throws CertificateException, InvalidKeyException, NoSuchAlgorithmException, KeyStoreException,
             OperatorCreationException, NoSuchProviderException, SignatureException, IOException;
