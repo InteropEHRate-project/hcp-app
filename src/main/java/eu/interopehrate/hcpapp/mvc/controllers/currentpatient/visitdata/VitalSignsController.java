@@ -45,8 +45,10 @@ public class VitalSignsController {
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute VitalSignsInfoCommand vitalSignsInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute VitalSignsInfoCommand vitalSignsInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("vitalSignsTypes", this.vitalSignsTypesRepository.findAll());
+            model.addAttribute("correlations", this.vitalSignsService.correlations());
             return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
         }
         vitalSignsService.insertVitalSigns(vitalSignsInfoCommand);
