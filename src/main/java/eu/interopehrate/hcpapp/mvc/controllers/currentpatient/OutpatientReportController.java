@@ -34,13 +34,18 @@ public class OutpatientReportController {
 
     @GetMapping
     @RequestMapping("/sendToSehr")
-    public String sendToSehr() throws IOException {
+    public String sendToSehr(Model model) throws IOException {
         if (!this.prescriptionService.getPrescriptionRepository().findAll().isEmpty() && Objects.nonNull(this.prescriptionService.getCurrentD2DConnection().getConnectedThread())) {
             this.prescriptionService.callSendPrescription();
         }
         if (!this.vitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() && Objects.nonNull(this.vitalSignsService.getCurrentD2DConnection().getConnectedThread())) {
             this.vitalSignsService.callVitalSigns();
         }
-        return "redirect:/current-patient/outpatient-report/view-section";
+        model.addAttribute("dataSent", Boolean.TRUE);
+        model.addAttribute("listPrescriptions", this.prescriptionService.getPrescriptionRepository().findAll());
+        model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
+        model.addAttribute("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
+        model.addAttribute("vitalSignsService", this.vitalSignsService.getCurrentD2DConnection());
+        return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT;
     }
 }
