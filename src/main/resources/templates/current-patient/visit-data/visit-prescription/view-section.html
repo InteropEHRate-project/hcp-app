@@ -3,14 +3,13 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescription}">prescription</title>
+    <title th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescription}">prescription</h3></p>
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</h3></p>
     <div class="m-5"></div>
-
     <div th:if="${!listPrescriptions.isEmpty()}">
         <h5 th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
 

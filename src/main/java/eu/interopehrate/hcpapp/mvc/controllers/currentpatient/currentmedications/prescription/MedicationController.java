@@ -28,13 +28,4 @@ public class MedicationController {
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
-
-    @GetMapping
-    @RequestMapping("/idToMedication")
-    public String viewSection(@RequestParam(name = "id") String id, Model model) {
-        model.addAttribute("prescription", this.medicationService.find(Long.parseLong(id)));
-        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
-        model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
-        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
-    }
 }

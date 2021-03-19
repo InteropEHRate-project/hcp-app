@@ -37,7 +37,7 @@ public class MedicationControllerTest {
 
     @Test
     void viewSection() {
-        String returnedString = this.controller.viewSection("10", this.model);
+        String returnedString = this.controller.viewSEHRSection("10", this.model);
         Assertions.assertEquals(TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW, returnedString);
         verify(this.model, times(1)).addAttribute(eq("doctor"), any(HealthCareProfessionalCommand.class));
     }
