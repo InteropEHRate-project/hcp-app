@@ -7,4 +7,5 @@ import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 public interface MedicationService {
     CurrentPatient getCurrentPatient();
     PrescriptionEntity find(Long id);
+    PrescriptionEntity visitFind(Long id);
 }

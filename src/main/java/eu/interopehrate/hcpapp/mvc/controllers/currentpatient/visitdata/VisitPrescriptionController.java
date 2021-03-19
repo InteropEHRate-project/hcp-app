@@ -4,7 +4,8 @@ import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
+import eu.interopehrate.hcpapp.services.administration.impl.HealthCareProfessionalServiceImpl;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,13 @@ public class VisitPrescriptionController {
     private final PrescriptionService prescriptionService;
     public static PrescriptionCommand prescriptionCommand;
     public static List<PrescriptionEntity> prescriptionEntityList;
+    private final HealthCareProfessionalServiceImpl healthCareProfessionalService;
+    private final MedicationService medicationService;
 
-    public VisitPrescriptionController(PrescriptionService prescriptionService) {
+    public VisitPrescriptionController(PrescriptionService prescriptionService, HealthCareProfessionalServiceImpl healthCareProfessionalService, MedicationService medicationService) {
         this.prescriptionService = prescriptionService;
+        this.healthCareProfessionalService = healthCareProfessionalService;
+        this.medicationService = medicationService;
     }
 
     @GetMapping
@@ -107,10 +112,19 @@ public class VisitPrescriptionController {
     @RequestMapping("/update")
     public String update(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("prescriptionInfoCommand", prescriptionInfoCommand);
+            model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
             return TemplateNames.CURRENT_PATIENT_VISIT_PRESCRIPTION_UPDATE_PAGE;
         }
         this.prescriptionService.updatePrescription(prescriptionInfoCommand);
         return "redirect:/current-patient/visit-data/visit-prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/idToMedication")
+    public String viewSection(@RequestParam(name = "id") String id, Model model) {
+        model.addAttribute("prescription", this.medicationService.visitFind(Long.parseLong(id)));
+        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
+        model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
+        return TemplateNames.CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_MEDICATION_VIEW_SECTION;
     }
 }

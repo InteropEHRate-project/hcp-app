@@ -61,8 +61,9 @@ public interface TemplateNames {
     String CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE = "current-patient/visit-data/vital-signs/add-info";
     String CURRENT_PATIENT_VITAL_SIGNS_EDIT_PAGE = "current-patient/visit-data/vital-signs/edit-info";
     String CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_VIEW_SECTION = "current-patient/visit-data/visit-prescription/view-section";
-    String CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_ADD_PAGE="current-patient/visit-data/visit-prescription/add-info";
-    String CURRENT_PATIENT_VISIT_PRESCRIPTION_UPDATE_PAGE="current-patient/visit-data/visit-prescription/update-info";
+    String CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_MEDICATION_VIEW_SECTION = "current-patient/visit-data/visit-prescription/medication-view";
+    String CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_ADD_PAGE = "current-patient/visit-data/visit-prescription/add-info";
+    String CURRENT_PATIENT_VISIT_PRESCRIPTION_UPDATE_PAGE = "current-patient/visit-data/visit-prescription/update-info";
     String CURRENT_PATIENT_REASON_VIEW_SECTION = "current-patient/visit-data/reason/view-section";
     String CURRENT_PATIENT_PH_EXAM_VIEW_SECTION = "current-patient/visit-data/ph-exam/view-section";
     String CURRENT_PATIENT_CONCLUSION_VIEW_SECTION = "current-patient/visit-data/conclusion/view-section";
