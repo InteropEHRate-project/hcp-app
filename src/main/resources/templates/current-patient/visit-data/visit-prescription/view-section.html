@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescription}">prescription</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="m-5"></div>
+<!--    <div class="btn-toolbar float-right" role="toolbar">-->
+<!--                <div class="btn-group btn-group-sm mr-2" role="group">-->
+<!--                    <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+<!--                    <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"-->
+<!--                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}"-->
+<!--                       th:text="#{ips.translate.button.original}">Initial version</a>-->
+<!--                    <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"-->
+<!--                       th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}"-->
+<!--                       th:text="#{ips.translate.button.translated}">Translated version</a>-->
+<!--                </div>-->
+<!--    </div>-->
+    <p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescription}">prescription</h3></p>
+
+<!--        <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"-->
+<!--                   th:text="#{button.filter.arrow}">Filter</button></p>-->
+<!--        <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>-->
+<!--        <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>-->
+<!--        <div class="collapse" id="collapseExample">-->
+<!--            <div class="btn-toolbar float-left" role="toolbar">-->
+<!--                <div class="btn-group btn-group-sm mr-2" role="group">-->
+<!--                    <form th:action="@{/current-patient/visit-data/visit-prescription/view-section}" method="get">-->
+<!--                        <input id="txtSearch" type="text" name="keywordPrescription" th:value="${session.keywordPrescription}">-->
+<!--                        <button type="submit" class="btn btn-primary"-->
+<!--                                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>-->
+<!--                        <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+    <h5  th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
+    <table id="uploadTable" class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.name}">Drug Name</th>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.dosage}">Drug Dosage</th>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.timings}">Timing</th>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.status}">Status</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="prUpload : ${listPrescriptions}">
+            <td th:text="${prUpload.getDrugName()}"></td>
+            <td th:text="${prUpload.getDrugDosage()}"></td>
+            <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.visit.data.prescription.medication.times.per.day}"></td>
+            <td>
+                <th:block th:switch="${prUpload.getStatus().toLowerCase()}">
+                    <div th:case="'active'">
+                        <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.active}">Active</p>
+                    </div>
+                    <div th:case="'on-hold'">
+                        <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.on.hold}">On-Hold</p>
+                    </div>
+                    <div th:case="'stopped'">
+                        <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.stopped}">Stopped</p>
+                    </div>
+                </th:block>
+            </td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-primary"
+                       th:href="@{/current-patient/visit-data/visit-prescription/idToMedication(id=${{prUpload.getId()}})}"
+                       th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication Details</a>
+                    <a href="#"
+                       th:href="@{/current-patient/visit-data/visit-prescription/open-update-page(id=${{prUpload.getId()}})}"
+                       class="btn btn-info"
+                       th:text="#{crud.button.edit}">Edit</a>
+                    <a href="#"
+                       th:href="@{/current-patient/visit-data/visit-prescription/delete(drugId=${{prUpload.getId()}})}"
+                       class="btn btn-danger"
+                       th:text="#{crud.button.delete}">Delete</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary"
+               th:href="@{/current-patient/visit-data/visit-prescription/open-add-page}" th:text="#{crud.button.add}">Add</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
