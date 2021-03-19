@@ -19,7 +19,6 @@ public interface TemplateNames {
     String ADMINISTRATION_HCPS_VIEW_DETAILS = "administration/hcps/view-details";
 
     // Current Patient
-    String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_VIEW_SECTION = "current-patient/current-medications/statement/view-section";
     String CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION = "current-patient/pat-history/view-section";
     String CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION = "current-patient/current-diseases/view-section";
     String CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE = "current-patient/current-diseases/add-info";
@@ -27,13 +26,12 @@ public interface TemplateNames {
     String CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION = "current-patient/document-history-consultation/view-section";
     String CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE = "current-patient/document-history-consultation/view-file";
     String CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_FILE_NEW_TAB = "current-patient/document-history-consultation/view-file-new-tab";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_VIEW_SECTION = "current-patient/current-medications/statement/view-section";
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_ADD_PAGE = "current-patient/current-medications/statement/add-info";
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION = "current-patient/current-medications/prescription/view-section";
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW = "current-patient/current-medications/prescription/medication-view";
     String CURRENT_PATIENT_ALLERGIES_VIEW_SECTION = "current-patient/allergies/view-section";
     String CURRENT_PATIENT_ALLERGIES_ADD_PAGE = "current-patient/allergies/add-info";
-    String CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE = "current-patient/current-medications/prescription/add-info";
-    String CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE = "current-patient/current-medications/prescription/update-info";
     String CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW = "current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
     String CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_ORGANIZATION_LABORATORY_VIEW = "current-patient/laboratory-tests/laboratory-results/organization-laboratory-view";
     String CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_MEDIA_VIEW = "current-patient/laboratory-tests/laboratory-results/observation-laboratory-media-view";
