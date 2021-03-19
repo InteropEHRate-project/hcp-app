@@ -14,7 +14,6 @@
     <h2 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.edit.prescription.information}">Edit Prescription information</h2>
     <div class="m-5"></div>
     <form action="#" th:action="@{/current-patient/current-medications/prescription/update}" th:object="${prescriptionInfoCommand}" method="post">
-
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p th:text="#{template.errors.message}">Please correct the errors below</p>
         </div>

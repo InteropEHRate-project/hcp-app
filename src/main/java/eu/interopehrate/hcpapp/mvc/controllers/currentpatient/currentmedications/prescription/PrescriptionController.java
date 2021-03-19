@@ -79,8 +79,9 @@ public class PrescriptionController {
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
             return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_ADD_PAGE;
         }
         prescriptionService.insertPrescription(prescriptionInfoCommand);
@@ -104,9 +105,9 @@ public class PrescriptionController {
 
     @PostMapping
     @RequestMapping("/update")
-    public String update(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, Model model, BindingResult bindingResult) {
+    public String update(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("prescriptionInfoCommand", prescriptionInfoCommand);
+            model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
             return TemplateNames.CURRENT_PATIENT_PRESCRIPTION_UPDATE_PAGE;
         }
         this.prescriptionService.updatePrescription(prescriptionInfoCommand);

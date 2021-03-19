@@ -75,7 +75,7 @@ public class VitalSignsController {
 
     @PutMapping
     @RequestMapping("/edit")
-    public String update(@Valid @ModelAttribute VitalSignsInfoCommand newVitalSignsInfoCommand, Model model, BindingResult bindingResult) {
+    public String update(@Valid @ModelAttribute VitalSignsInfoCommand newVitalSignsInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("vitalSignsInfoCommand", newVitalSignsInfoCommand);
             return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_EDIT_PAGE;
