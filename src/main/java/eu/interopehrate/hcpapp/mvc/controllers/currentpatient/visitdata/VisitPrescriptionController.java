@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -35,12 +34,9 @@ public class VisitPrescriptionController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model, HttpSession session, String keywordPrescription) throws IOException {
-        this.prescriptionService.setEmpty(false);
-        this.prescriptionService.setFiltered(false);
-        session.setAttribute("keywordPrescription", keywordPrescription);
+    public String viewSection(Model model) throws IOException {
         model.addAttribute("patient", this.prescriptionService.getCurrentPatient().getPatient());
-        return this.findPaginated(1, 1, keywordPrescription, model);
+        return this.findPaginated(1, model);
     }
 
     @GetMapping
@@ -52,34 +48,17 @@ public class VisitPrescriptionController {
     }
 
     @GetMapping
-    @RequestMapping("/view-section/page/{pageNo}/{pageNoSEHR}/keywordPrescription/{keywordPrescription}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                @PathVariable(value = "pageNoSEHR") int pageNoSEHR,
-                                @PathVariable(value = "keywordPrescription") String keywordPrescription,
-                                Model model) throws IOException {
+    @RequestMapping("/view-section/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
         model.addAttribute("currentPatient", this.prescriptionService.getCurrentPatient());
-
         //PAGE SIZE is hardcoded HERE
         int pageSize = 3;
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
         VisitPrescriptionController.prescriptionEntityList = page.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listPrescriptions", prescriptionEntityList);
-
-        VisitPrescriptionController.prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keywordPrescription);
-        List<PrescriptionInfoCommand> listPrescriptionsSEHR = prescriptionCommand.getPageInfoCommand().getContent();
-        model.addAttribute("prescriptionCommand", prescriptionCommand);
-        model.addAttribute("listPrescriptionsSEHR", listPrescriptionsSEHR);
-        model.addAttribute("currentPageSEHR", pageNoSEHR);
-        model.addAttribute("totalPagesSEHR", prescriptionCommand.getPageInfoCommand().getTotalPages());
-        model.addAttribute("totalItemsSEHR", prescriptionCommand.getPageInfoCommand().getTotalElements());
-        model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
-        model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
-        model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
-
         return TemplateNames.CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_VIEW_SECTION;
     }
 
