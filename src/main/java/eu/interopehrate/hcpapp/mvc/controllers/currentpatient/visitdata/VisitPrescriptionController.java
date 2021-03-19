@@ -57,7 +57,7 @@ public class VisitPrescriptionController {
         //PAGE SIZE is hardcoded HERE
         int pageSize = 3;
         Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
-        PrescriptionController.prescriptionEntityList = page.getContent();
+        VisitPrescriptionController.prescriptionEntityList = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -85,6 +85,32 @@ public class VisitPrescriptionController {
             return TemplateNames.CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_ADD_PAGE;
         }
         prescriptionService.insertPrescription(prescriptionInfoCommand);
+        return "redirect:/current-patient/visit-data/visit-prescription/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String delete(@RequestParam("drugId") Long drugId) {
+        this.prescriptionService.deletePrescription(drugId);
+        return "redirect:/current-patient/visit-data/visit-prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-update-page")
+    public String openUpdatePage(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+        model.addAttribute("prescriptionInfoCommand", this.prescriptionService.prescriptionInfoCommandById(id));
+        return TemplateNames.CURRENT_PATIENT_VISIT_PRESCRIPTION_UPDATE_PAGE;
+    }
+
+    @PostMapping
+    @RequestMapping("/update")
+    public String update(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("prescriptionInfoCommand", prescriptionInfoCommand);
+            return TemplateNames.CURRENT_PATIENT_VISIT_PRESCRIPTION_UPDATE_PAGE;
+        }
+        this.prescriptionService.updatePrescription(prescriptionInfoCommand);
         return "redirect:/current-patient/visit-data/visit-prescription/view-section";
     }
 }
