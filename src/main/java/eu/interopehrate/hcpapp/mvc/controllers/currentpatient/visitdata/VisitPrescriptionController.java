@@ -85,8 +85,9 @@ public class VisitPrescriptionController {
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
             return TemplateNames.CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_ADD_PAGE;
         }
         prescriptionService.insertPrescription(prescriptionInfoCommand);

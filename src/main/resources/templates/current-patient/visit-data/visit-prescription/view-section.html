@@ -10,93 +10,96 @@
     <div class="m-5"></div>
     <p><h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescription}">prescription</h3></p>
     <div class="m-5"></div>
-    <h5 th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
 
-    <table id="uploadTable" class="table table-bordered">
-        <thead class="thead-light">
-        <tr>
-            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.name}">Drug Name</th>
-            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.dosage}">Drug Dosage</th>
-            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.timings}">Timing</th>
-            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.status}">Status</th>
-            <th th:text="#{crud.button.actions}">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="prUpload : ${listPrescriptions}">
-            <td th:text="${prUpload.getDrugName()}"></td>
-            <td th:text="${prUpload.getDrugDosage()}"></td>
-            <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.visit.data.prescription.medication.times.per.day}"></td>
-            <td>
-                <th:block th:switch="${prUpload.getStatus().toLowerCase()}">
-                    <div th:case="'active'">
-                        <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.active}">
-                            Active</p>
-                    </div>
-                    <div th:case="'on-hold'">
-                        <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.on.hold}">
-                            On-Hold</p>
-                    </div>
-                    <div th:case="'stopped'">
-                        <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.stopped}">
-                            Stopped</p>
-                    </div>
-                </th:block>
-            </td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary"
-                       th:href="@{/current-patient/visit-data/visit-prescription/idToMedication(id=${{prUpload.getId()}})}"
-                       th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication
-                        Details</a>
-                    <a href="#"
-                       th:href="@{/current-patient/visit-data/visit-prescription/open-update-page(id=${{prUpload.getId()}})}"
-                       class="btn btn-info"
-                       th:text="#{crud.button.edit}">Edit</a>
-                    <a href="#"
-                       th:href="@{/current-patient/visit-data/visit-prescription/delete(drugId=${{prUpload.getId()}})}"
-                       class="btn btn-danger"
-                       th:text="#{crud.button.delete}">Delete</a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div th:if="${!listPrescriptions.isEmpty()}">
+        <h5 th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
 
-    <nav th:if = "${totalPages > 1}">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
-            </li>
-            <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                <a class="page-link"  th:if="${currentPage != i && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}"
-                   th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription}}">[[${i}]]</a>
-                <a class="page-link"  th:if="${(currentPage != i && session.keywordPrescription == null) || (currentPage != i && session.keywordPrescription.trim().equals(''))}"
-                   th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty'}">[[${i}]]</a>
-                <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-            </li>
-            <li class="page-item">
-                <a class="page-link"  th:if="${currentPage < totalPages && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}"
-                   th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription}}"
-                   th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.next}">Next</a>
-                <a class="page-link"  th:if="${(currentPage < totalPages && session.keywordPrescription == null) || (currentPage < totalPages && session.keywordPrescription.trim().equals(''))}"
-                   th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty'}"
-                   th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.next}">Next</a>
-                <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}"
-                      th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.next}">Next</span>
-            </li>
-            <li class="page-item">
-                <a class="page-link"  th:if="${currentPage < totalPages && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}"
-                   th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription}}"
-                   th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.last}">Last</a>
-                <a class="page-link"  th:if="${(currentPage < totalPages && session.keywordPrescription == null) || (currentPage < totalPages && session.keywordPrescription.trim().equals(''))}"
-                   th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty'}"
-                   th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.last}">Last</a>
-                <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}"
-                      th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.last}">Last</span>
-            </li>
-        </ul>
-    </nav>
+        <table id="uploadTable" class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.name}">Drug Name</th>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.dosage}">Drug Dosage</th>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.timings}">Timing</th>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.status}">Status</th>
+                <th th:text="#{crud.button.actions}">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="prUpload : ${listPrescriptions}">
+                <td th:text="${prUpload.getDrugName()}"></td>
+                <td th:text="${prUpload.getDrugDosage()}"></td>
+                <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.visit.data.prescription.medication.times.per.day}"></td>
+                <td>
+                    <th:block th:switch="${prUpload.getStatus().toLowerCase()}">
+                        <div th:case="'active'">
+                            <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.active}">
+                                Active</p>
+                        </div>
+                        <div th:case="'on-hold'">
+                            <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.on.hold}">
+                                On-Hold</p>
+                        </div>
+                        <div th:case="'stopped'">
+                            <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.stopped}">
+                                Stopped</p>
+                        </div>
+                    </th:block>
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="#" class="btn btn-primary"
+                           th:href="@{/current-patient/visit-data/visit-prescription/idToMedication(id=${{prUpload.getId()}})}"
+                           th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication
+                            Details</a>
+                        <a href="#"
+                           th:href="@{/current-patient/visit-data/visit-prescription/open-update-page(id=${{prUpload.getId()}})}"
+                           class="btn btn-info"
+                           th:text="#{crud.button.edit}">Edit</a>
+                        <a href="#"
+                           th:href="@{/current-patient/visit-data/visit-prescription/delete(drugId=${{prUpload.getId()}})}"
+                           class="btn btn-danger"
+                           th:text="#{crud.button.delete}">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav th:if = "${totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <a class="page-link"  th:if="${currentPage != i && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}"
+                       th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription}}">[[${i}]]</a>
+                    <a class="page-link"  th:if="${(currentPage != i && session.keywordPrescription == null) || (currentPage != i && session.keywordPrescription.trim().equals(''))}"
+                       th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${i} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty'}">[[${i}]]</a>
+                    <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                </li>
+                <li class="page-item">
+                    <a class="page-link"  th:if="${currentPage < totalPages && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}"
+                       th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription}}"
+                       th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.next}">Next</a>
+                    <a class="page-link"  th:if="${(currentPage < totalPages && session.keywordPrescription == null) || (currentPage < totalPages && session.keywordPrescription.trim().equals(''))}"
+                       th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${currentPage + 1} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty'}"
+                       th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.next}">Next</a>
+                    <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}"
+                          th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.next}">Next</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"  th:if="${currentPage < totalPages && session.keywordPrescription != null && !session.keywordPrescription.trim().equalsIgnoreCase('')}"
+                       th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '/keywordPrescription/' + ${session.keywordPrescription}}"
+                       th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.last}">Last</a>
+                    <a class="page-link"  th:if="${(currentPage < totalPages && session.keywordPrescription == null) || (currentPage < totalPages && session.keywordPrescription.trim().equals(''))}"
+                       th:href="@{'/current-patient/visit-data/visit-prescription/view-section/page/' + ${totalPages} + '/' + ${currentPageSEHR} + '/keywordPrescription/empty'}"
+                       th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.last}">Last</a>
+                    <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}"
+                          th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.pagination.last}">Last</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
