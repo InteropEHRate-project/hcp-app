@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <p><h3 th:text="#{fragment.administration.navigation.left.audit.information}">Audit Information</h3></p>
     <div class="m-5"></div>
-    <table class="table table-bordered">
+    <table class="table table-bordered" th:if="${!auditInformation.isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{template.administration.audit.information.date.time}">Event Date</th>

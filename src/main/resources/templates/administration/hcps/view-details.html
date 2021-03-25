@@ -11,7 +11,7 @@
     <p><h3 th:text="#{fragment.administration.navigation.left.hcps}">HCPs</h3></p>
     <div class="m-5"></div>
     <p><h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5></p>
-    <table class="table table-bordered">
+    <table class="table table-bordered" th:if="${!hcps.isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{template.administration.hcps.name}">Name</th>

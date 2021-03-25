@@ -51,9 +51,7 @@
         </fieldset>
 
         <fieldset class="form-group col-5">
-            <legend class="col-form-label col-sm-2 pt-0"
-                    th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date
-            </legend>
+            <legend class="col-form-label col-sm-2 pt-0" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</legend>
             <div class="col-sm-10">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="date" id="lastYear" value="lastYear" checked>
@@ -108,7 +106,7 @@
     </div>
     <br>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" th:if="${!documentHistoryConsultationList.isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</th>

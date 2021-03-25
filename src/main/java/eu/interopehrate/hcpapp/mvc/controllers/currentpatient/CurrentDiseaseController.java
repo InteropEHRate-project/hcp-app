@@ -22,6 +22,7 @@ public class CurrentDiseaseController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
+        model.addAttribute("patient", this.currentDiseaseService.getCurrentPatient().getPatient());
         model.addAttribute("currentDiseaseCommand", this.currentDiseaseService.currentDiseasesSection());
         model.addAttribute("notes", this.currentDiseaseService.currentDiseasesSection().getListOfNotes());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION;

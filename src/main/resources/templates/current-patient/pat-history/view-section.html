@@ -27,7 +27,7 @@
     </div>
     <p>
     <h3 th:text="#{fragment.current.patient.navigation.left.pat.history}">Pat History</h3></p>
-    <table class="table table-bordered">
+    <table class="table table-bordered" th:if="${!patHistoryCommand.getPatHistoryInfoCommandDiagnoses().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis}">diagnosis</th>
@@ -49,7 +49,7 @@
     </table>
     <br>
 
-    <table class="table">
+    <table class="table" th:if="${!patHistoryCommand.getPatHistoryInfoCommandRiskFactors().isEmpty()}">
         <thead>
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}"

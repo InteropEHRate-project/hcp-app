@@ -15,9 +15,8 @@
             <a href="#" class="btn btn-primary" th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>
         </div>
     </div>
-    <p>
-    <h3 th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</h3></p>
-    <table class="table table-bordered">
+    <p><h3 th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</h3></p>
+    <table class="table table-bordered" th:if="${!allergyIntolerance.allergyIntoleranceList.isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</th>
@@ -38,7 +37,7 @@
         </tbody>
     </table>
 
-    <div class="btn-toolbar float-right" role="toolbar">
+    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary"
                th:href="@{/current-patient/allergies/open-add-page}" th:text="#{crud.button.add}">Add</a>

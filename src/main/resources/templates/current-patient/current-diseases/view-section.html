@@ -19,7 +19,7 @@
         </div>
     </div>
     <p><h3 th:text="#{fragment.current.patient.navigation.left.current.diseases}">Current Diseases</h3></p>
-    <table class="table table-bordered">
+    <table class="table table-bordered" th:if="${!currentDiseaseCommand.getCurrentDiseaseInfoCommand().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
@@ -37,7 +37,7 @@
         </tr>
         </tbody>
     </table>
-    <div class="btn-toolbar float-right" role="toolbar">
+    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}" th:text="#{crud.button.add}">add</a>
         </div>

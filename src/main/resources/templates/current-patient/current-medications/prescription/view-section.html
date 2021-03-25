@@ -3,14 +3,12 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">prescription</title>
+    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">Prescription</title>
 </head>
 <body>
 <div layout:fragment="content">
 <!--    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>-->
     <div class="m-5"></div>
-    <h3 th:text="#{fragment.current.patient.navigation.left.current.medications}">Current Medications</h3>
-    <br>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group mr-2" role="group">
             <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
@@ -22,24 +20,28 @@
                th:text="#{ips.translate.button.translated}">Translated version</a>
         </div>
     </div>
-    <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-               th:text="#{button.filter.arrow}">Filter</button></p>
-    <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
-    <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
-    <div class="collapse" id="collapseExample">
-        <div class="btn-toolbar float-left" role="toolbar">
-            <div class="btn-group btn-group-sm mr-2" role="group">
-                <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
-                    <input id="txtSearch" type="text" name="keywordPrescription" th:value="${session.keywordPrescription}">
-                    <button type="submit" class="btn btn-primary"
-                            th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
-                    <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>
-                </form>
+    <h3 th:text="#{fragment.current.patient.navigation.left.current.medications}">Current Medications</h3>
+    <br>
+    <div th:if="${!listPrescriptionsSEHR.isEmpty() || isFiltered || isEmpty}">
+        <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                   th:text="#{button.filter.arrow}">Filter</button></p>
+        <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
+        <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
+        <div class="collapse" id="collapseExample">
+            <div class="btn-toolbar float-left" role="toolbar">
+                <div class="btn-group btn-group-sm mr-2" role="group">
+                    <form th:action="@{/current-patient/current-medications/prescription/view-section}" method="get">
+                        <input id="txtSearch" type="text" name="keywordPrescription" th:value="${session.keywordPrescription}">
+                        <button type="submit" class="btn btn-primary"
+                                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
+                        <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <table id="table" class="table table-bordered">
+    <table id="table" class="table table-bordered" th:if="${!listPrescriptionsSEHR.isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>

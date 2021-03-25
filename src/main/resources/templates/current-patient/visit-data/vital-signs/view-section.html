@@ -30,7 +30,7 @@
     <h3 th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</h3></p>
 
     <div class="scrollBar">
-        <table class="table table-bordered">
+        <table class="table table-bordered" th:if="${!vitalSigns.vitalSignsAnalysesWithoutDuplicates().isEmpty()}">
             <thead class="thead-light">
             <tr>
                 <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>

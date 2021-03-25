@@ -25,6 +25,7 @@ public class AllergyIntoleranceController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
+        model.addAttribute("patient", this.allergyIntoleranceService.getCurrentPatient().getPatient());
         model.addAttribute("allergyIntolerance", this.allergyIntoleranceService.allergyIntoleranceInfoCommand());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_VIEW_SECTION;
     }

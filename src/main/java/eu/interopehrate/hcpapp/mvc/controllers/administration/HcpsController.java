@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -27,6 +28,7 @@ public class HcpsController {
             model.addAttribute("hcps", new RestTemplate().getForObject(this.hospitalServicesUrl + "/hcps" + "/list", List.class));
         } catch (ResourceAccessException e) {
             log.error("Connection refused");
+            model.addAttribute("hcps", Collections.emptyList());
             error = true;
         } finally {
             model.addAttribute("error", error);

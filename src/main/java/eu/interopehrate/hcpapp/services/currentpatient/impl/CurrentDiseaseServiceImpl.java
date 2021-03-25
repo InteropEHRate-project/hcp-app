@@ -24,6 +24,11 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     }
 
     @Override
+    public CurrentPatient getCurrentPatient() {
+        return currentPatient;
+    }
+
+    @Override
     public CurrentDiseaseCommand currentDiseasesSection() {
         var currentDiseasesList = currentPatient.conditionsList()
                 .stream()

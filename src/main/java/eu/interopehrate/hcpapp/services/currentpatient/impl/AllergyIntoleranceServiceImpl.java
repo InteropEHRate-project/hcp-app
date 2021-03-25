@@ -24,6 +24,11 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
     }
 
     @Override
+    public CurrentPatient getCurrentPatient() {
+        return currentPatient;
+    }
+
+    @Override
     public AllergyIntoleranceCommand allergyIntoleranceInfoCommand() {
         var allergiesIntolerances = currentPatient.allergyIntoleranceList()
                 .stream()
