@@ -58,7 +58,7 @@
         </tr>
         </tbody>
     </table>
-
+    <br>
     <p th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
     <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h5></p>
     <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
@@ -85,7 +85,11 @@
         </tr>
         </tbody>
     </table>
-
+    <br>
+    <div class="card-body text-center"
+         th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) || (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}">
+        <a class="btn btn-primary" th:href="@{/download-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
+    </div>
     <br>
     <div class="btn-toolbar justify-content-center" role="toolbar"
          th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) || (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}">
@@ -93,6 +97,9 @@
             <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/outpatient-report/sendToSehr}"
                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
         </div>
+    </div>
+    <div class="card-body text-center" th:if="${session.withoutConnection}">
+        <a class="btn btn-primary" th:href="@{/download-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <div class="btn-toolbar justify-content-center" role="toolbar" th:if="${session.withoutConnection}">
         <a class="btn btn-outline-primary" href="#" th:if="${session.withoutConnection}"

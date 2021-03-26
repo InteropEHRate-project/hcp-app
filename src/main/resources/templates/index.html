@@ -317,6 +317,7 @@
 <div class="card-body text-center">
     <p><h5 th:if="${session.isWorking}" th:text="#{fragment.current.patient.navigation.left.patient.sent.successfully} + ' ' + ${session.transferHcpName}">Patient has been successfully sent to</h5></p>
 </div>
+
 <script data-th-src="@{/static/js/reload-page-sse.js}"></script>
 </body>
 
