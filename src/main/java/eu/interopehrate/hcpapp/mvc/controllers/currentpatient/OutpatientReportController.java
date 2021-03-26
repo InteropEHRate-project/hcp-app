@@ -2,11 +2,13 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -16,10 +18,12 @@ import java.util.Objects;
 public class OutpatientReportController {
     private final PrescriptionService prescriptionService;
     private final VitalSignsService vitalSignsService;
+    private final MedicationService medicationService;
 
-    public OutpatientReportController(PrescriptionService prescriptionService, VitalSignsService vitalSignsService) {
+    public OutpatientReportController(PrescriptionService prescriptionService, VitalSignsService vitalSignsService, MedicationService medicationService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
+        this.medicationService = medicationService;
     }
 
     @GetMapping
@@ -30,6 +34,14 @@ public class OutpatientReportController {
         model.addAttribute("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
         model.addAttribute("vitalSignsService", this.vitalSignsService.getCurrentD2DConnection());
         return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT;
+    }
+
+    @GetMapping
+    @RequestMapping("/idToMedication")
+    public String viewSection(@RequestParam(name = "id") String id, Model model) {
+        model.addAttribute("prescription", this.medicationService.visitFind(Long.parseLong(id)));
+        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
+        return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_MEDICATION_VIEW;
     }
 
     @GetMapping

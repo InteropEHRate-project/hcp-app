@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication Details</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="m-5"></div>
+    <h2 th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication Details</h2>
+    <div class="m-5"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <p><h3 th:text="${prescription.getDrugName()}">Drug name</h3></p>
+                </div>
+                <div class="card-body">
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.dateofprescription}">Date of Prescription</h5>
+                    <p class="card-text" th:text="${prescription.getDateOfPrescription()}">date of prescription</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author}">Author</h5>
+                    <p class="card-text" th:text="${prescription.getAuthor()}">author</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.drug.dosage}">Drug dosage</h5>
+                    <p class="card-text" th:text="${prescription.getDrugDosage()}">drug dosage</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.timings}">Timings</h5>
+                    <p class="card-text"
+                       th:utext="${prescription.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.visit.data.prescription.medication.times.per.day}">timings</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.start}">Start</h5>
+                    <p class="card-text" th:text="${prescription.getStart()}">start</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.end}">End</h5>
+                    <p class="card-text" th:text="${prescription.getEnd()}">end</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.notes}">Notes</h5>
+                    <p class="card-text" style="background-color: azure" th:style="${!translation} ? '' : 'background-color: azure'"
+                       th:text="${prescription.getNotes()}">notes</p>
+
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.status}">Status</h5>
+                    <th:block th:switch="${prescription.getStatus()}">
+                        <div th:case="'Active'">
+                            <p class="card-text" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.active}">Active</p>
+                        </div>
+                        <div th:case="'On-Hold'">
+                            <p class="card-text" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.on.hold}">On-Hold</p>
+                        </div>
+                        <div th:case="'Stopped'">
+                            <p class="card-text" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.stopped}">Stopped</p>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/outpatient-report/view-section}" th:text="#{button.back}">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

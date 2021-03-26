@@ -48,15 +48,12 @@
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-primary"
                            th:href="@{/current-patient/visit-data/visit-prescription/idToMedication(id=${{prUpload.getId()}})}"
-                           th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication
-                            Details</a>
+                           th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.medication.details}">Medication Details</a>
                         <a href="#"
-                           th:href="@{/current-patient/visit-data/visit-prescription/open-update-page(id=${{prUpload.getId()}})}"
-                           class="btn btn-info"
+                           th:href="@{/current-patient/visit-data/visit-prescription/open-update-page(id=${{prUpload.getId()}})}" class="btn btn-info"
                            th:text="#{crud.button.edit}">Edit</a>
                         <a href="#"
-                           th:href="@{/current-patient/visit-data/visit-prescription/delete(drugId=${{prUpload.getId()}})}"
-                           class="btn btn-danger"
+                           th:href="@{/current-patient/visit-data/visit-prescription/delete(drugId=${{prUpload.getId()}})}" class="btn btn-danger"
                            th:text="#{crud.button.delete}">Delete</a>
                     </div>
                 </td>

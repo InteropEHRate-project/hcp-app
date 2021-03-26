@@ -43,16 +43,8 @@
             </td>
             <td>
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedication(
-                            id=${{prUpload.getId()}},
-                            drug=${{prUpload.getDrugName()}},
-                            status=${{prUpload.getStatus()}},
-                            notes=${{prUpload.getNotes()}},
-                            timings=${{prUpload.getTimings()}},
-                            drugDosage=${{prUpload.getDrugDosage()}},
-                            dateOfPrescription=${{prUpload.getDateOfPrescription()}},
-                            start=${{prUpload.getStart()}},
-                            end=${{prUpload.getEnd()}})}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
+                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/outpatient-report/idToMedication(id=${{prUpload.getId()}})}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
                 </div>
             </td>
         </tr>
