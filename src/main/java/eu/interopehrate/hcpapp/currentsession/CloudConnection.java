@@ -71,31 +71,46 @@ public class CloudConnection implements DisposableBean {
         try {
             this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
             String patientSummary = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.PATIENT_SUMMARY);
-            Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummary);
-            List<Patient> patientList = patientSummaryBundle.getEntry()
-                    .stream()
-                    .map(Bundle.BundleEntryComponent::getResource)
-                    .filter(resource -> resource.getResourceType().equals(ResourceType.Patient))
-                    .map(Patient.class::cast)
-                    .collect(Collectors.toList());
-            if (patientList.size() > 0) {
-                this.currentPatient.initPatient(patientList.get(0));
-                this.currentPatient.initPatientSummary(patientSummaryBundle);
-                this.connectionState = CloudConnectionState.ON;
-                this.indexPatientDataCommand.setIpsReceived(true);
-                this.auditInformationService.auditEmergencyGetIps();
+            if (patientSummary.equalsIgnoreCase("File not found")) {
+                log.error("PatientSummary not found");
             } else {
-                this.closeConnection();
-                return Boolean.TRUE;
+                Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummary);
+                List<Patient> patientList = patientSummaryBundle.getEntry()
+                        .stream()
+                        .map(Bundle.BundleEntryComponent::getResource)
+                        .filter(resource -> resource.getResourceType().equals(ResourceType.Patient))
+                        .map(Patient.class::cast)
+                        .collect(Collectors.toList());
+                if (patientList.size() > 0) {
+                    this.currentPatient.initPatient(patientList.get(0));
+                    this.currentPatient.initPatientSummary(patientSummaryBundle);
+                    this.connectionState = CloudConnectionState.ON;
+                    this.indexPatientDataCommand.setIpsReceived(true);
+                    this.auditInformationService.auditEmergencyGetIps();
+                    log.info("PatientSummary received from Cloud");
+                } else {
+                    this.closeConnection();
+                    return Boolean.TRUE;
+                }
             }
 
             String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
-            Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
-            this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+            if (laboratoryResults.equalsIgnoreCase("File not found")) {
+                log.error("LaboratoryResults not found");
+            } else {
+                Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
+                this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+                log.info("LaboratoryResults received from Cloud");
+            }
 
             String prescription = this.r2dEmergency.get(this.emergencyToken, FHIRResourceCategory.MEDICATION_REQUEST);
-            Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
-            this.currentPatient.initPrescription(prescriptionBundle);
+            if (prescription.equalsIgnoreCase("File not found")) {
+                log.error("Prescription not found");
+            } else {
+                Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
+                this.currentPatient.initPrescription(prescriptionBundle);
+                log.info("Prescription received from Cloud");
+            }
 
             IndexCommand.transmissionCompleted = Boolean.TRUE;
             return Boolean.TRUE;
