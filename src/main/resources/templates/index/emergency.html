@@ -61,8 +61,7 @@
                 </div>
             </div>
             <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}">
-                <form action="#" th:action="@{/index/download-ips}" th:object="${index}" method="post"
-                      id="qrCodeForm">
+                <form action="#" th:action="@{/index/download-ips}" th:object="${index}" method="post" id="qrCodeForm">
                     <div class="form-row justify-content-center m-3">
                         <div>
                             <label class="h3" for="qrCode" th:text="#{template.index.qrCode}">Scan the patient's QR code to establish the cloud connection</label>
@@ -70,7 +69,7 @@
                         <div class="col-6 m-3 text-center">
                             <h5 class="row justify-content-center" th:if="${session.itWorked != null && session.itWorked == false}" style="color: red"
                                 th:text="#{template.index.invalid.qr.code}">Invalid QR code content</h5>
-                                <textarea onpaste="document.qrCodeForm.submit()" rows="5" class="form-control"
+                                <textarea onpaste="document.qrCodeForm.submit()" rows="10" class="form-control"
                                           id="qrCode" th:field="*{qrCode}"
                                           th:classappend="${#fields.hasErrors('qrCode')} ? 'is-invalid' :''" th:placeholder="#{template.index.type}">
                                 </textarea>

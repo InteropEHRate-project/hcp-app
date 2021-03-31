@@ -7,7 +7,6 @@ import org.bouncycastle.operator.OperatorCreationException;
 import java.io.IOException;
 import java.security.*;
 import java.security.cert.CertificateException;
-import java.text.ParseException;
 
 public interface IndexService {
     CurrentPatient getCurrentPatient();
@@ -16,10 +15,9 @@ public interface IndexService {
     void closeConnection();
     void openCloudConnection();
     void discardCloudConnection();
-    Boolean downloadCloudIps(String qrCode);
-    Boolean downloadCloudLaboratoryResults();
     void closeCloudConnection();
     void requestAccess(String qrCodeContent, String hospitalID) throws Exception;
+    Boolean retrieveData(String qrCodeContent, String hospitalID);
     void certificate() throws CertificateException, InvalidKeyException, NoSuchAlgorithmException, KeyStoreException,
             OperatorCreationException, NoSuchProviderException, SignatureException, IOException;
 }

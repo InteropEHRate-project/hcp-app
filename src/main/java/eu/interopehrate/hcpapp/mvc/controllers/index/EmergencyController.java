@@ -64,17 +64,14 @@ public class EmergencyController {
 
     @PostMapping
     @RequestMapping("/download-ips")
-    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) throws Exception {
+    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             if (indexCommand.getCloudConnectionState() == null) {
                 indexCommand.setCloudConnectionState(CloudConnectionState.OFF);
             }
             return "redirect:/index/emergency";
         }
-        this.indexService.requestAccess(indexCommand.getQrCode(), indexCommand.getHospitalID());
-        Boolean itWorked = this.indexService.downloadCloudIps(indexCommand.getQrCode());
-     //   this.indexService.requestAccess(indexCommand.getQrCode(), indexCommand.getHospitalID());
-        itWorked = this.indexService.downloadCloudLaboratoryResults();
+        Boolean itWorked = this.indexService.retrieveData(indexCommand.getQrCode(), indexCommand.getHospitalID());
         session.setAttribute("itWorked", itWorked);
         if (itWorked) {
             return "redirect:/index";
