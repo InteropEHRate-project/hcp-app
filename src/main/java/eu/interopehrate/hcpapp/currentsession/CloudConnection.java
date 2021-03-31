@@ -88,9 +88,9 @@ public class CloudConnection implements DisposableBean {
                 return Boolean.TRUE;
             }
 //            this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
-//            String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
-//            Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
-//            this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+            String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
+            Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
+            this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
 
             IndexCommand.transmissionCompleted = Boolean.TRUE;
             return Boolean.TRUE;
