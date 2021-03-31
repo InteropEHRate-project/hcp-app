@@ -5,6 +5,7 @@ import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.protocols.common.DocumentCategory;
+import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import eu.interopehrate.r2demergency.R2DEmergencyImpl;
 import eu.interopehrate.r2demergency.api.R2DEmergencyI;
 import lombok.SneakyThrows;
@@ -87,10 +88,14 @@ public class CloudConnection implements DisposableBean {
                 this.closeConnection();
                 return Boolean.TRUE;
             }
-//            this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
+
             String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
             Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
             this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+
+            String prescription = this.r2dEmergency.get(this.emergencyToken, FHIRResourceCategory.MEDICATION_REQUEST);
+            Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
+            this.currentPatient.initPrescription(prescriptionBundle);
 
             IndexCommand.transmissionCompleted = Boolean.TRUE;
             return Boolean.TRUE;

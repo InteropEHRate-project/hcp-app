@@ -50,8 +50,14 @@ public class EmergencyController {
 
     @GetMapping
     @RequestMapping("/close-cloud-connection")
-    public String closeCloudConnection() {
+    public String closeCloudConnection(HttpSession session) {
         this.indexService.closeCloudConnection();
+        if (Objects.nonNull(session.getAttribute("patientNavbar"))) {
+            session.removeAttribute("patientNavbar");
+        }
+        if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
+            session.removeAttribute("alreadyAdded");
+        }
         return "redirect:/index";
     }
 

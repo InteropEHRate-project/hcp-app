@@ -8,8 +8,9 @@
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
-    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>
-    <p></p>
+<!--    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>-->
+    <h3 th:text="#{fragment.current.patient.navigation.left.current.medications.medication}">medication</h3>
+    <br>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
