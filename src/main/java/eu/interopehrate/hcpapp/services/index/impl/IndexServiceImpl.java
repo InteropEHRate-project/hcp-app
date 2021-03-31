@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import eu.interopehrate.r2demergency.api.R2DEmergencyI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class IndexServiceImpl implements IndexService {
     private final CurrentD2DConnection currentD2DConnection;
     private final CloudConnection cloudConnection;
     private final CurrentPatient currentPatient;
+    private R2DEmergencyI r2dEmergency;
 
     public IndexServiceImpl(BluetoothConnectionService bluetoothConnectionService,
                             CurrentD2DConnection currentD2DConnection,
@@ -137,9 +139,19 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
+    public void requestAccess(String qrCodeContent, String hospitalID) throws Exception {
+        this.cloudConnection.requestAccess(qrCodeContent, hospitalID);
+    }
+
+    @Override
     public Boolean downloadCloudIps(String qrCode) {
         System.out.println("QR Code: " + qrCode);
         return cloudConnection.downloadIps(qrCode);
+    }
+
+    @Override
+    public Boolean downloadCloudLaboratoryResults() {
+        return cloudConnection.downloadLaboratoryResults();
     }
 
     @Override

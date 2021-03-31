@@ -21,4 +21,5 @@ public class IndexCommand {
     @NotEmpty
     @NotNull
     private String qrCode;
+    private String hospitalID = "hospital";
 }

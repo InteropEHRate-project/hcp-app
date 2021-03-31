@@ -1,17 +1,16 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.ihs.terminalclient.services.EmergencyService;
+import eu.interopehrate.protocols.common.DocumentCategory;
+import eu.interopehrate.r2demergency.R2DEmergencyImpl;
+import eu.interopehrate.r2demergency.api.R2DEmergencyI;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -20,12 +19,15 @@ public class CloudConnection implements DisposableBean {
     private final CurrentPatient currentPatient;
     private final IndexPatientDataCommand indexPatientDataCommand;
     private final EmergencyService emergencyService;
+    private final R2DEmergencyI r2dEmergency = new R2DEmergencyImpl();
     private final AuditInformationService auditInformationService;
+    private String patientSummary;
+    private String laboratoryResults;
+    private String emergencyToken;
 
     public CloudConnection(CurrentPatient currentPatient,
                            IndexPatientDataCommand indexPatientDataCommand,
-                           EmergencyService emergencyService,
-                           AuditInformationService auditInformationService) {
+                           EmergencyService emergencyService, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.emergencyService = emergencyService;
@@ -46,7 +48,15 @@ public class CloudConnection implements DisposableBean {
     }
 
     public Boolean downloadIps(String url) {
-        return this.openConnection(url);
+        return this.getIps(url);
+    }
+
+    public Boolean downloadLaboratoryResults() {
+        return this.getLaboratoryResults();
+    }
+
+    public void requestAccess(String qrCodeContent, String hospitalID) throws Exception {
+        this.emergencyToken = r2dEmergency.requestAccess(qrCodeContent, hospitalID);
     }
 
     public void close() {
@@ -57,29 +67,25 @@ public class CloudConnection implements DisposableBean {
         return this.connectionState;
     }
 
-    private Boolean openConnection(String url) {
+    private Boolean getIps(String url) {
         try {
-            Bundle cloudIps = this.emergencyService.getIps(url);
+            this.patientSummary = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.PATIENT_SUMMARY);
+            Bundle patientSummary = (Bundle) FhirContext.forR4().newJsonParser().parseResource(this.patientSummary);
+            this.currentPatient.initPatientSummary(patientSummary);
+            return Boolean.TRUE;
+        } catch (Exception e) {
+            this.closeConnection();
+            e.printStackTrace();
+            return Boolean.FALSE;
+        }
+    }
 
-            List<Patient> patientList = cloudIps.getEntry()
-                    .stream()
-                    .map(Bundle.BundleEntryComponent::getResource)
-                    .filter(resource -> resource.getResourceType().equals(ResourceType.Patient))
-                    .map(Patient.class::cast)
-                    .collect(Collectors.toList());
-
-            if (patientList.size() > 0) {
-                this.currentPatient.initPatient(patientList.get(0));
-                this.currentPatient.initPatientSummary(cloudIps);
-                this.connectionState = CloudConnectionState.ON;
-                this.indexPatientDataCommand.setIpsReceived(true);
-                this.auditInformationService.auditEmergencyGetIps();
-                return Boolean.TRUE;
-            } else {
-                this.closeConnection();
-                return Boolean.TRUE;
-            }
-
+    private Boolean getLaboratoryResults() {
+        try {
+            this.laboratoryResults = this.r2dEmergency.get(emergencyToken, DocumentCategory.LABORATORY_REPORT);
+            Bundle laboratoryResults = (Bundle) FhirContext.forR4().newJsonParser().parseResource(this.laboratoryResults);
+            this.currentPatient.initLaboratoryResults(laboratoryResults);
+            return Boolean.TRUE;
         } catch (Exception e) {
             this.closeConnection();
             e.printStackTrace();

@@ -42,6 +42,13 @@ public class EmergencyController {
     }
 
     @GetMapping
+    @RequestMapping("/access-cloud")
+    public String requestAccess(String qrCodeContent, String hospitalID) throws Exception {
+        this.indexService.requestAccess(qrCodeContent, hospitalID);
+        return "redirect:/index/emergency";
+    }
+
+    @GetMapping
     @RequestMapping("/close-cloud-connection")
     public String closeCloudConnection() {
         this.indexService.closeCloudConnection();
@@ -57,14 +64,17 @@ public class EmergencyController {
 
     @PostMapping
     @RequestMapping("/download-ips")
-    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) {
+    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) throws Exception {
         if (bindingResult.hasErrors()) {
             if (indexCommand.getCloudConnectionState() == null) {
                 indexCommand.setCloudConnectionState(CloudConnectionState.OFF);
             }
             return "redirect:/index/emergency";
         }
+        this.indexService.requestAccess(indexCommand.getQrCode(), indexCommand.getHospitalID());
         Boolean itWorked = this.indexService.downloadCloudIps(indexCommand.getQrCode());
+     //   this.indexService.requestAccess(indexCommand.getQrCode(), indexCommand.getHospitalID());
+        itWorked = this.indexService.downloadCloudLaboratoryResults();
         session.setAttribute("itWorked", itWorked);
         if (itWorked) {
             return "redirect:/index";
