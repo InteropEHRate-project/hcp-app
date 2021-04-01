@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,13 @@ public class NewVisitController {
         this.indexService = indexService;
     }
 
+    @GetMapping
+    @RequestMapping("/select")
+    public String select() {
+        return TemplateNames.INDEX_NEW_PATIENT_SELECT;
+    }
+
+    @GetMapping
     @RequestMapping("/new-patient")
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
@@ -33,6 +41,7 @@ public class NewVisitController {
         return TemplateNames.INDEX_NEW_PATIENT;
     }
 
+    @GetMapping
     @RequestMapping("/new-patient/open-connection")
     public String openConnection(HttpSession session) {
         indexService.openConnection();

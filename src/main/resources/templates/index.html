@@ -109,40 +109,25 @@
         <p th:text="${exception}">Exception</p>
     </div>
     <div th:if="${exception == null}">
-        <nav th:if="${!index.getPatientDataCommand().hasData()}">
-            <div class="nav nav-tabs nav-fill border-bottom-0" id="nav-tab" role="tablist">
-                <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
-                   class="nav-item nav-link border-0" id="nav-d2d-tab" data-toggle="tab" href="#nav-d2d" role="tab"
-                   aria-controls="nav-d2d"
-                   aria-selected="false">
+        <div class="card-body row justify-content-center">
+            <nav class="col-3 nav nav-tabs nav-fill border-bottom-0">
+                <a th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                   class="row btn btn-outline-primary nav-item nav-link border-0" th:href="@{/index/select}">
                     <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title}"
-                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
-                        Outpatient visit</h3>
+                        th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}">Outpatient visit</h3>
                 </a>
                 <a th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
-                   class="nav-item nav-link border-0" th:href="@{/index/emergency}">
+                   class="row btn btn-outline-primary nav-item nav-link border-0" th:href="@{/index/emergency}">
                     <h3 class="mt-5 text-center" th:text="#{template.index.cloudConnection.title}"
-                        th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}">
-                        Emergency</h3>
+                        th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}">Emergency</h3>
                 </a>
-            </div>
-        </nav>
-        <nav class="tab-content" id="nav-tabContent-">
-            <div class="tab-pane" id="nav-d2d">
-                <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
-                   class="nav-item nav-link border-0" th:href="@{/index/new-patient}">
-                    <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.new}"
-                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
-                        Start new visit</h3>
+                <a th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
+                   class="row btn btn-outline-primary nav-item nav-link border-0" th:href="@{/index/inpatient}">
+                    <h3 class="mt-5 text-center" th:text="#{template.index.emergency.encounter}"
+                        th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}">Inpatient Encounter</h3>
                 </a>
-                <a th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
-                   class="nav-item nav-link border-0" th:href="@{/index/existing-visit}">
-                    <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.existing}"
-                        th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}">
-                        Continue existing visit</h3>
-                </a>
-            </div>
-        </nav>
+            </nav>
+        </div>
 
         <div class="tab-content" id="nav-tabContent-n">
             <div class="tab-pane" id="nav-d2d-"

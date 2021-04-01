@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,10 +15,10 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
           th:href="@{/webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
-          th:href="@{/css/4.0.6-rc.0select2.min.css}"/>
+          th:href="@{/static/css/4.0.6-rc.0select2.min.css}"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"
-          th:href="@{/css/5.0.1tempusdominus-bootstrap-4.min.css}"/>
+          th:href="@{/static/css/5.0.1tempusdominus-bootstrap-4.min.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
@@ -33,7 +32,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
             th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
-    <script data-th-src="@{/js/4.0.6-rc.0select2.min.js}"></script>
+    <script data-th-src="@{/static/js/4.0.6-rc.0select2.min.js}"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -46,66 +45,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
-        function showLoading() {
-            document.getElementById('loading').style.visibility = "visible";
-        }
+    <title th:text="#{template.index.new.patient}">New patient</title>
 
-        // function redirect() {
-        //     window.location = "https://www.google.com/";
-        // }
-    </script>
-
-    <title th:text="#{template.index.title}">HCP Application</title>
 </head>
+
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
-<div class="m-5"></div>
+
 <div class="container">
-    <h2 class="text-center" th:text="#{template.index.existing.visit}">Continue existing visit</h2>
-
-    <div th:if="${index.transmissionCompleted}">
-        <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
+    <div class="card-body row justify-content-center">
+        <nav class="col-4 nav nav-tabs nav-fill border-bottom-0">
+            <a class="row btn btn-outline-primary nav-item nav-link border-0" th:href="@{/index/new-patient}">
+                <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.new}">Start new visit</h3>
+            </a>
+            <a class="row btn btn-outline-primary nav-item nav-link border-0" th:href="@{/index/existing-visit}">
+                <h3 class="mt-5 text-center" th:text="#{template.index.d2dConnection.title.existing}">Continue existing visit</h3>
+            </a>
+        </nav>
     </div>
-
-    <h3 class="mt-4" th:text="#{fragment.main.details.the.button}">Select patient from the table</h3>
-    <h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5>
-    <br>
-    <table class="table table-bordered">
-        <thead class="thead-light">
-        <tr>
-            <th th:text="#{template.administration.transferred.name}">Name</th>
-            <th th:text="#{template.administration.transferred.age}">Age</th>
-            <th th:text="#{template.administration.transferred.country}">Country</th>
-            <th th:text="#{button.action}">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="existingVisit : ${existingVisit}">
-            <td th:text="${{existingVisit.name}}"></td>
-            <td th:text="${{existingVisit.age}}"></td>
-            <td th:text="${{existingVisit.country}}"></td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a class="btn btn-primary" th:href="@{/index/retrieve-patient(patientId=${{existingVisit.patientId}})}" onclick="showLoading()">Retrieve Patient</a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
-            <a href="#" class="btn btn-primary" th:href="@{/index/select}" th:text="#{button.back}">Back</a>
-        </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="spinner-border text-primary" id="loading" role="status" style="width: 5rem; height: 5rem; visibility: hidden">
-            <span class="sr-only">Loading...</span>
+            <a href="#" class="btn btn-primary" th:href="@{/index}" th:text="#{button.back}">Back</a>
         </div>
     </div>
 </div>
 
-<script data-th-src="@{/js/reload-page-sse.js}"></script>
 </body>
+
 </html>
