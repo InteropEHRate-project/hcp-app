@@ -65,6 +65,7 @@ public class CloudConnection implements DisposableBean {
     private void closeConnection() {
         this.connectionState = CloudConnectionState.OFF;
         this.indexPatientDataCommand.setIpsReceived(false);
+        IndexCommand.transmissionCompleted = Boolean.FALSE;
     }
 
     @SneakyThrows
