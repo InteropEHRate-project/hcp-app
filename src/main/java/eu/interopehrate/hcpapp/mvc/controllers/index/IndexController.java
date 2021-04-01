@@ -65,12 +65,18 @@ public class IndexController {
         if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
             session.removeAttribute("alreadyAdded");
         }
+        if (Objects.nonNull(session.getAttribute("workingSession"))) {
+            session.removeAttribute("workingSession");
+        }
         return "redirect:/index";
     }
 
     @RequestMapping("/index/stop-listening")
-    public String stopListening() {
+    public String stopListening(HttpSession session) {
         indexService.closeConnection();
+        if (Objects.nonNull(session.getAttribute("workingSession"))) {
+            session.removeAttribute("workingSession");
+        }
         return "redirect:/index";
     }
 }

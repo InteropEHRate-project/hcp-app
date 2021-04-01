@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
 import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
+import eu.interopehrate.hcpapp.currentsession.WorkingSession;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
@@ -42,13 +43,6 @@ public class EmergencyController {
     }
 
     @GetMapping
-    @RequestMapping("/access-cloud")
-    public String requestAccess(String qrCodeContent, String hospitalID) throws Exception {
-        this.indexService.requestAccess(qrCodeContent, hospitalID);
-        return "redirect:/index/emergency";
-    }
-
-    @GetMapping
     @RequestMapping("/close-cloud-connection")
     public String closeCloudConnection(HttpSession session) {
         this.indexService.closeCloudConnection();
@@ -58,19 +52,25 @@ public class EmergencyController {
         if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
             session.removeAttribute("alreadyAdded");
         }
+        if (Objects.nonNull(session.getAttribute("workingSession"))) {
+            session.removeAttribute("workingSession");
+        }
         return "redirect:/index";
     }
 
     @GetMapping
     @RequestMapping("/discard-cloud-connection")
-    public String discardCloudConnection() {
+    public String discardCloudConnection(HttpSession session) {
         this.indexService.discardCloudConnection();
+        if (Objects.nonNull(session.getAttribute("workingSession"))) {
+            session.removeAttribute("workingSession");
+        }
         return "redirect:/index";
     }
 
     @PostMapping
-    @RequestMapping("/download-ips")
-    public String downloadIps(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) {
+    @RequestMapping("/access-cloud")
+    public String accessCloud(@Valid @ModelAttribute IndexCommand indexCommand, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             if (indexCommand.getCloudConnectionState() == null) {
                 indexCommand.setCloudConnectionState(CloudConnectionState.OFF);
@@ -80,6 +80,7 @@ public class EmergencyController {
         Boolean itWorked = this.indexService.retrieveData(indexCommand.getQrCode(), indexCommand.getHospitalID());
         session.setAttribute("itWorked", itWorked);
         if (itWorked) {
+            session.setAttribute("workingSession", WorkingSession.EMERGENCY.toString());
             return "redirect:/index";
         }
         return this.openCloudConnection();

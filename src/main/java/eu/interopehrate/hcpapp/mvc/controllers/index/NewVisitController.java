@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
+import eu.interopehrate.hcpapp.currentsession.WorkingSession;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
@@ -33,8 +34,9 @@ public class NewVisitController {
     }
 
     @RequestMapping("/new-patient/open-connection")
-    public String openConnection() {
+    public String openConnection(HttpSession session) {
         indexService.openConnection();
+        session.setAttribute("workingSession", WorkingSession.OUTPATIENT_VISIT.toString());
         return "redirect:/index/new-patient";
     }
 }

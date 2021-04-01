@@ -17,6 +17,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -69,7 +70,9 @@ public class CloudConnection implements DisposableBean {
     @SneakyThrows
     public Boolean download(String qrCodeContent, String hospitalId) {
         try {
-            this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
+            if (Objects.isNull(this.emergencyToken)) {
+                this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
+            }
             String patientSummary = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.PATIENT_SUMMARY);
             if (patientSummary.equalsIgnoreCase("File not found")) {
                 log.error("PatientSummary not found");

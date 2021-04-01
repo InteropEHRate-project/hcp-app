@@ -47,8 +47,7 @@
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/document-history-consultation')} ? 'active' : ''"
        href="../document-history-consultation/view-section.html"
        th:href="@{/current-patient/document-history-consultation/view-section}"
-       th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History
-        Consultation</a>
+       th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</a>
     <a class="flex-sm-fill text-sm-left nav-link"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/laboratory-tests')} ? 'active' : ''"
        href="../laboratory-tests/laboratory-results/observation-laboratory-view.html"
@@ -62,27 +61,32 @@
 
     <div class="dropdown-divider"></div>
 
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown" th:if="${session.workingSession != null}">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
            aria-expanded="false" th:text="#{fragment.current.patient.navigation.left.visit.data.title}">Visit Data</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/vital-signs/view-section}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">Vital Signs</a>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/visit-prescription/view-section}" th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</a>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/reason/view-section}" th:text="#{fragment.current.patient.navigation.left.reason}">Reason</a>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/ph-exam/view-section}" th:text="#{fragment.current.patient.navigation.left.ph.exam}">PH Exam</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/vital-signs/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">Vital Signs</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/visit-prescription/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/reason/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.reason}">Reason</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/ph-exam/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.ph.exam}">PH Exam</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" th:href="@{/current-patient/visit-data/conclusion/view-section}" th:text="#{fragment.current.patient.navigation.left.conclusion}">Conclusion</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/conclusion/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.conclusion}">Conclusion</a>
         </div>
     </li>
 
     <div class="dropdown-divider"></div>
 
-    <a class="flex-sm-fill text-sm-left nav-link"
+    <a class="flex-sm-fill text-sm-left nav-link" th:if="${session.workingSession != null && session.workingSession == 'INPATIENT_ENCOUNTER'}"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/hospital-discharge-report')} ? 'active' : ''"
        href="../hospital-discharge-report/view-section.html"
        th:href="@{/current-patient/hospital-discharge-report/view-section}"
        th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</a>
-    <a class="flex-sm-fill text-sm-left nav-link"
+    <a class="flex-sm-fill text-sm-left nav-link" th:if="${session.workingSession != null && (session.workingSession == 'OUTPATIENT_VISIT' || session.workingSession == 'EMERGENCY')}"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/outpatient-report')} ? 'active' : ''"
        href="../outpatient-report/view-section.html"
        th:href="@{/current-patient/outpatient-report/view-section}"
@@ -90,7 +94,7 @@
 
     <div class="dropdown-divider"></div>
 
-    <a class="flex-sm-fill text-sm-left nav-link"
+    <a class="flex-sm-fill text-sm-left nav-link" th:if="${session.workingSession != null}"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/send-to-other-hcp')} ? 'active' : ''"
        href="../send-to-other-hcp/view-section.html"
        th:href="@{/current-patient/send-to-other-hcp/view-section}"

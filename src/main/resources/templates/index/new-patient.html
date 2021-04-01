@@ -60,7 +60,7 @@
     <div class="card-body row justify-content-center" th:if="${index.transmissionCompleted}">
         <a class="btn btn-primary" th:href="@{/index}" th:text="#{template.index.return.to.home}">Return to Home</a>
     </div>
-    <h3 class="text-center" th:unless="${index.transmissionCompleted}" th:text="#{template.index.new.patient}">New Patient</h3></p>
+    <h3 class="text-center" th:unless="${index.transmissionCompleted}" th:text="#{template.index.new.patient}">New Patient</h3>
 
     <div th:if="${exception == null}">
         <div th:if="${index.cloudConnectionState == null || index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).OFF}"
@@ -76,11 +76,9 @@
                        th:href="@{/index/new-patient/open-connection}">Open connection</a>
                 </div>
             </div>
-            <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}"
-                 class="m-3">
+            <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).PENDING_DEVICE}" class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to
-                        establish the connection</h3>
+                    <h3 class="mt-5" th:text="#{fragment.main.scan.the.qr.code}">Scan the QR code with your S-EHR to establish the connection</h3>
                 </div>
                 <div class="row justify-content-center">
                     <img src="..." th:src="${index.bluetoothConnectionInfoImage}" alt="available at runtime" height="10"

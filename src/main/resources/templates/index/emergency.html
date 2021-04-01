@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div th:if="${index.cloudConnectionState == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).PENDING}">
-                <form action="#" th:action="@{/index/download-ips}" th:object="${index}" method="post" id="qrCodeForm">
+                <form action="#" th:action="@{/index/access-cloud}" th:object="${index}" method="post" id="qrCodeForm">
                     <div class="form-row justify-content-center m-3">
                         <div>
                             <label class="h3" for="qrCode" th:text="#{template.index.qrCode}">Scan the patient's QR code to establish the cloud connection</label>
