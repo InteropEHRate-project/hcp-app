@@ -25,8 +25,8 @@ public class NewVisitController {
         if (Objects.nonNull(session.getAttribute("isWorking"))) {
             session.removeAttribute("isWorking");
         }
-        model.addAttribute("index", indexService.indexCommand());
         IndexCommand indexCommand = indexService.indexCommand();
+        model.addAttribute("index", indexCommand);
         if (Objects.isNull(session.getAttribute("patientNavbar")) && IndexCommand.transmissionCompleted) {
             session.setAttribute("patientNavbar", indexCommand);
         }

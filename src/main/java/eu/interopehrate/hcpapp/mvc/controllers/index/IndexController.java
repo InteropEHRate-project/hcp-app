@@ -68,7 +68,7 @@ public class IndexController {
         if (Objects.nonNull(session.getAttribute("workingSession"))) {
             session.removeAttribute("workingSession");
         }
-        return "redirect:/index";
+        return "redirect:/index/close-cloud-connection";
     }
 
     @RequestMapping("/index/stop-listening")

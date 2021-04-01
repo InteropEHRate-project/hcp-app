@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
+import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.services.index.ContinueExistingVisitService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.hl7.fhir.r4.model.Bundle;
@@ -105,6 +106,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
         for (Object vitalSign : vitalSigns) {
             this.vitalSignsRepository.save(this.linkedHashMapToVitalSignsEntity.convert((LinkedHashMap) vitalSign));
         }
+        IndexCommand.transmissionCompleted = Boolean.TRUE;
     }
 
     @Override
@@ -112,6 +114,7 @@ public class ContinueExistingVisitServiceImpl implements ContinueExistingVisitSe
         isExtractedData = false;
         this.currentPatient.reset();
         this.prescriptionRepository.deleteAll();
+        IndexCommand.transmissionCompleted = Boolean.FALSE;
     }
 
     @Override

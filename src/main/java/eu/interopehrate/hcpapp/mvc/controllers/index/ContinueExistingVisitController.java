@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.index;
 
+import eu.interopehrate.hcpapp.currentsession.WorkingSession;
 import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.ContinueExistingVisitService;
@@ -54,11 +55,11 @@ public class ContinueExistingVisitController {
     public String retrievePatient(HttpSession session, @RequestParam(name = "patientId") String patientId) throws Exception {
         this.continueExistingVisitService.retrieveEHRs(patientId);
         session.setAttribute("isExtractedData", ContinueExistingVisitServiceImpl.isExtractedData);
-        IndexCommand.transmissionCompleted = true;
         IndexCommand indexCommand = indexService.indexCommand();
         if (Objects.isNull(session.getAttribute("patientNavbar"))) {
             session.setAttribute("patientNavbar", indexCommand);
         }
+        session.setAttribute("workingSession", WorkingSession.OUTPATIENT_VISIT.toString());
         return "redirect:/index";
     }
 
@@ -67,12 +68,14 @@ public class ContinueExistingVisitController {
     public String clearData(HttpSession session) {
         continueExistingVisitService.clearData();
         session.setAttribute("isExtractedData", ContinueExistingVisitServiceImpl.isExtractedData);
-        IndexCommand.transmissionCompleted = false;
         if (Objects.nonNull(session.getAttribute("patientNavbar"))) {
             session.removeAttribute("patientNavbar");
         }
         if (Objects.nonNull(session.getAttribute("alreadyAdded"))) {
             session.removeAttribute("alreadyAdded");
+        }
+        if (Objects.nonNull(session.getAttribute("workingSession"))) {
+            session.removeAttribute("workingSession");
         }
         return "redirect:/index";
     }
