@@ -22,6 +22,7 @@ import java.util.*;
 @Component
 public class CurrentPatient {
     private static final Logger logger = LoggerFactory.getLogger(CurrentPatient.class);
+    public static WorkingSession typeOfWorkingSession;
     private final TranslateService translateService;
     private final CodesConversionService codesConversionService;
     private final TerminalFhirContext terminalFhirContext;

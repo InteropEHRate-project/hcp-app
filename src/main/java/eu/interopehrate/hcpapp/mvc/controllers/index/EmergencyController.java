@@ -55,6 +55,9 @@ public class EmergencyController {
         if (Objects.nonNull(session.getAttribute("workingSession"))) {
             session.removeAttribute("workingSession");
         }
+        if (Objects.nonNull(session.getAttribute("emergency"))) {
+            session.removeAttribute("emergency");
+        }
         return "redirect:/index";
     }
 

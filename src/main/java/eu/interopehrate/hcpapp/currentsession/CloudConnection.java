@@ -117,6 +117,7 @@ public class CloudConnection implements DisposableBean {
             }
 
             IndexCommand.transmissionCompleted = Boolean.TRUE;
+            CurrentPatient.typeOfWorkingSession = WorkingSession.EMERGENCY;
             return Boolean.TRUE;
         } catch (Exception e) {
             log.error(e.getMessage());

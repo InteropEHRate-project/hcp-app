@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests.observationlaboratory;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/laboratory-tests/laboratory-results")
@@ -23,6 +25,9 @@ public class ObservationLaboratoryController {
     @GetMapping
     @RequestMapping("/observation-laboratory-view")
     public String viewSection(Model model, HttpSession session, String keyword) {
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
+        }
         session.setAttribute("keyword", keyword);
         return this.findPaginated(1, model, keyword);
     }
