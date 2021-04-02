@@ -6,4 +6,5 @@ public interface ObservationLaboratoryService {
     boolean isFiltered();
     boolean isEmpty();
     ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis(String keyword);
+    void refreshData();
 }

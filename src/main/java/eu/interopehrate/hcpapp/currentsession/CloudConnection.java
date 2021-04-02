@@ -98,15 +98,6 @@ public class CloudConnection implements DisposableBean {
                 }
             }
 
-            String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
-            if (laboratoryResults.equalsIgnoreCase("File not found")) {
-                log.error("LaboratoryResults not found");
-            } else {
-                Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
-                this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
-                log.info("LaboratoryResults received from Cloud");
-            }
-
             String prescription = this.r2dEmergency.get(this.emergencyToken, FHIRResourceCategory.MEDICATION_REQUEST);
             if (prescription.equalsIgnoreCase("File not found")) {
                 log.error("Prescription not found");
@@ -123,6 +114,18 @@ public class CloudConnection implements DisposableBean {
             log.error(e.getMessage());
             this.closeConnection();
             return Boolean.FALSE;
+        }
+    }
+
+    @SneakyThrows
+    public void downloadLabResults() {
+        String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
+        if (laboratoryResults.equalsIgnoreCase("File not found")) {
+            log.error("LaboratoryResults not found");
+        } else {
+            Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
+            this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+            log.info("LaboratoryResults received from Cloud");
         }
     }
 }

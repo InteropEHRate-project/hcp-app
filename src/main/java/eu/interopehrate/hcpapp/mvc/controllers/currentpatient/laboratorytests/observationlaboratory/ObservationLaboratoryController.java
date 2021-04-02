@@ -45,4 +45,11 @@ public class ObservationLaboratoryController {
         model.addAttribute("isEmpty", this.observationLaboratoryService.isEmpty());
         return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW;
     }
+
+    @GetMapping
+    @RequestMapping("/refresh-data")
+    public String refreshData() {
+        this.observationLaboratoryService.refreshData();
+        return "redirect:/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
+    }
 }

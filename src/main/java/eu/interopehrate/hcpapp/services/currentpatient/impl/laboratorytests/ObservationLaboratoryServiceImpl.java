@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests;
 
 import eu.interopehrate.hcpapp.converters.fhir.laboratorytests.HapiToCommandObservationLaboratory;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryInfoCommandAnalysis;
@@ -20,10 +21,12 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
     private final HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory;
     private boolean isFiltered = false;
     private boolean isEmpty = false;
+    private final CloudConnection cloudConnection;
 
-    public ObservationLaboratoryServiceImpl(CurrentPatient currentPatient, HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory) {
+    public ObservationLaboratoryServiceImpl(CurrentPatient currentPatient, HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory, CloudConnection cloudConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandObservationLaboratory = hapiToCommandObservationLaboratory;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -79,5 +82,10 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
                 .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
                 .observationLaboratoryInfoCommandAnalyses(observationLaboratoryInfoCommandAnalyses)
                 .build();
+    }
+
+    @Override
+    public void refreshData() {
+        this.cloudConnection.downloadLabResults();
     }
 }

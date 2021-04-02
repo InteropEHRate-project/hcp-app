@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests;
 
 import eu.interopehrate.hcpapp.converters.fhir.laboratorytests.HapiToCommandObservationLaboratory;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -39,13 +40,17 @@ class ObservationLaboratoryControllerTest {
     private TerminalFhirContext terminalFhirContext;
     @Mock
     private HttpSession httpSession;
+    @Mock
+    private CloudConnection cloudConnection;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ObservationLaboratoryService service = new ObservationLaboratoryServiceImpl(
-                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
-                new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)));
+                new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService),
+                        new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
+                new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService),
+                        new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)), cloudConnection);
         this.controller = new ObservationLaboratoryController(service);
     }
 
