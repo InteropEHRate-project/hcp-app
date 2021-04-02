@@ -353,6 +353,7 @@ public class CurrentPatient {
         this.docHistoryConsultTranslated = null;
         this.patHisBundle = null;
         this.patHisBundleTranslated = null;
+        typeOfWorkingSession = null;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
