@@ -22,7 +22,7 @@
     <p>
     <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
     <br>
-    <div th:if="${currentD2DConnection.getConnectedThread() == null && !session.withoutConnection}">
+    <div th:if="${currentD2DConnection.getConnectedThread() == null && (session.withoutConnection != null && !session.withoutConnection)}">
         <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.no.connection}">The connection with S-EHR is not established</h5>
     </div>
 
@@ -93,7 +93,7 @@
             <div th:if="${currentD2DConnection.getConnectedThread() != null}">
                 <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
             </div>
-            <h5 th:if="${session.withoutConnection}"
+            <h5 th:if="${session.withoutConnection != null && session.withoutConnection}"
                 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available}">Filtration function not available in Simulation mode</h5>
             <h5 th:if="${session.isExtractedData}"
                 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available.in.simulation}">

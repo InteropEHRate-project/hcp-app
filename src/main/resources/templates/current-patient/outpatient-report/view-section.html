@@ -84,25 +84,64 @@
     </div>
     <br>
     <div class="btn-toolbar justify-content-center" role="toolbar"
-         th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) || (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}">
-        <div class="btn-group" role="group">
-            <a href="#" class="btn btn-outline-primary" th:href="@{/current-patient/outpatient-report/sendToSehr}"
-               th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+         th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) ||
+         (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#logout"
+                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
+        <!-- Modal -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="logoutLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">The generation of the document report won't be available after this step. Are you sure?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a class="btn btn-primary" th:href="@{/current-patient/outpatient-report/sendToSehr}"
+                           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card-body text-center" th:if="${session.withoutConnection}">
+    <div class="card-body text-center" th:if="${session.withoutConnection != null && session.withoutConnection}">
         <a class="btn btn-primary" th:href="@{/download-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
-    <div class="btn-toolbar justify-content-center" role="toolbar" th:if="${session.withoutConnection}">
-        <a class="btn btn-outline-primary" href="#" th:if="${session.withoutConnection}"
-           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+    <div class="btn-toolbar justify-content-center" role="toolbar" th:if="${session.withoutConnection != null && session.withoutConnection}">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#logout"
+                th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
+        <!-- Modal -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="logoutLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">The generation of the document report won't be available after this step. Are you sure?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a class="btn btn-primary" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <h5 th:if="${((prescriptionService.getConnectedThread() == null) || (listPrescriptions.isEmpty() && vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())) &&
-    session.withoutConnection == false}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
+    (session.withoutConnection != null && !session.withoutConnection)}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>
     <h5 th:if="${dataSent != null && dataSent}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.data.sent}" style="color: green">Data has been sent to the Smart-EHR</h5>
     <br>
-    <h5 th:if="${session.withoutConnection}"
+    <h5 th:if="${session.withoutConnection != null && session.withoutConnection}"
         th:text="#{fragment.current.patient.navigation.left.outpatient.report.simulation}">This is a simulation and the "Send to S-EHR" button is visible but it doesn't do much</h5>
 
 </div>

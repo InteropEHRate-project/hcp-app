@@ -51,7 +51,7 @@
 
 <body>
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
-<div class="container" th:if="${session.withoutConnection}">
+<div class="container" th:if="${session.withoutConnection != null && session.withoutConnection}">
     <br>
     <h1 class="text-center">This is a simulation of a current patient</h1>
 
@@ -104,7 +104,7 @@
     </div>
 </div>
 
-<div class="container" th:if="${!session.withoutConnection}">
+<div class="container" th:if="${session.withoutConnection != null && !session.withoutConnection}">
     <div th:if="${exception != null}" class="m-3 alert alert-danger">
         <p th:text="${exception}">Exception</p>
     </div>
@@ -296,7 +296,7 @@
 </div>
 <div class="text-center" th:if="${index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON &&
         index.cloudConnectionState != T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON &&
-        index.getPatientDataCommand().hasData() && !session.withoutConnection}">
+        index.getPatientDataCommand().hasData() && (session.withoutConnection != null && !session.withoutConnection)}">
     <a href="#" class="btn btn-primary" th:href="@{/index/clear-data}" th:text="#{button.clear.data}">Clear data</a>
 </div>
 <div class="card-body text-center">

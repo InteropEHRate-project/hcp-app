@@ -86,7 +86,7 @@
                       th:if="${session.patientNavbar.getCloudConnectionState() != null && session.patientNavbar.getCloudConnectionState() == T(eu.interopehrate.hcpapp.currentsession.CloudConnectionState).ON}"
                       th:text="#{template.index.cloudConnection.title}"></span>
                 <span style="color: cornflowerblue; font: message-box"
-                      th:if="${session.withoutConnection}"
+                      th:if="${session.withoutConnection != null && session.withoutConnection}"
                       th:text="#{template.index.simulation}"></span>
                 <span style="color: cornflowerblue; font: message-box"
                       th:if="${session.isExtractedData}"
