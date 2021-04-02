@@ -109,7 +109,7 @@
         <p th:text="${exception}">Exception</p>
     </div>
     <div th:if="${exception == null}">
-        <div class="card-body row justify-content-center" th:if="${!session.isExtractedData}">
+        <div class="card-body row justify-content-center" th:if="${session.isExtractedData == null || !session.isExtractedData}">
             <nav class="col-3 nav nav-tabs nav-fill border-bottom-0">
                 <a th:if="${index.connectionState == null || index.connectionState != T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}"
                    class="row btn btn-outline-primary nav-item nav-link border-0" th:href="@{/index/select}">
