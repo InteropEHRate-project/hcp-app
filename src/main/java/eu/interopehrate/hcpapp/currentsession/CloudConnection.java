@@ -98,15 +98,6 @@ public class CloudConnection implements DisposableBean {
                 }
             }
 
-            String prescription = this.r2dEmergency.get(this.emergencyToken, FHIRResourceCategory.MEDICATION_REQUEST);
-            if (prescription.equalsIgnoreCase("File not found")) {
-                log.error("Prescription not found");
-            } else {
-                Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
-                this.currentPatient.initPrescription(prescriptionBundle);
-                log.info("Prescription received from Cloud");
-            }
-
             IndexCommand.transmissionCompleted = Boolean.TRUE;
             CurrentPatient.typeOfWorkingSession = WorkingSession.EMERGENCY;
             return Boolean.TRUE;
@@ -114,6 +105,18 @@ public class CloudConnection implements DisposableBean {
             log.error(e.getMessage());
             this.closeConnection();
             return Boolean.FALSE;
+        }
+    }
+
+    @SneakyThrows
+    public void downloadPrescription() {
+        String prescription = this.r2dEmergency.get(this.emergencyToken, FHIRResourceCategory.MEDICATION_REQUEST);
+        if (prescription.equalsIgnoreCase("File not found")) {
+            log.error("Prescription not found");
+        } else {
+            Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
+            this.currentPatient.initPrescription(prescriptionBundle);
+            log.info("Prescription received from Cloud");
         }
     }
 

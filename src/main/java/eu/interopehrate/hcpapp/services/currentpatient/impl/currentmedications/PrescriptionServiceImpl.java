@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 import eu.interopehrate.hcpapp.converters.entity.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
@@ -44,14 +45,16 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private boolean isEmpty = false;
     private final AuditInformationService auditInformationService;
     private final PrescriptionTypesRepository prescriptionTypesRepository;
+    private final CloudConnection cloudConnection;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, PrescriptionTypesRepository prescriptionTypesRepository) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, PrescriptionTypesRepository prescriptionTypesRepository, CloudConnection cloudConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.prescriptionRepository = prescriptionRepository;
         this.currentD2DConnection = currentD2DConnection;
         this.auditInformationService = auditInformationService;
         this.prescriptionTypesRepository = prescriptionTypesRepository;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -366,5 +369,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             int index = (pageNo - 1) * pageSize;
             return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
         }
+    }
+
+    @Override
+    public void refreshData() {
+        this.cloudConnection.downloadPrescription();
     }
 }

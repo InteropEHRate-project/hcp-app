@@ -29,4 +29,5 @@ public interface PrescriptionService {
     void callSendPrescription() throws IOException;
     void sendPrescription(Bundle medicationRequest) throws IOException;
     Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize);
+    void refreshData();
 }

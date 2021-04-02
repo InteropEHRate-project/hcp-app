@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/current-medications/prescription")
@@ -29,6 +31,9 @@ public class PrescriptionController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model, HttpSession session, String keywordPrescription) throws IOException {
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
+        }
         this.prescriptionService.setEmpty(false);
         this.prescriptionService.setFiltered(false);
         session.setAttribute("keywordPrescription", keywordPrescription);
@@ -56,5 +61,12 @@ public class PrescriptionController {
         model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
 
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
+    }
+
+    @GetMapping
+    @RequestMapping("/refresh-data")
+    public String refreshData() {
+        this.prescriptionService.refreshData();
+        return "redirect:/current-patient/current-medications/prescription/view-section";
     }
 }
