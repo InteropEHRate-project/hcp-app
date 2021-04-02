@@ -62,13 +62,13 @@
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="m-5"></div>
 <div class="container">
-    <h2 class="text-center" th:text="#{template.index.existing.visit}">Continue existing visit</h2>
+    <h2 class="text-center" th:text="#{template.index.emergency.encounter}">Inpatient Encounter</h2>
 
     <div th:if="${index.transmissionCompleted}">
         <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
     </div>
 
-    <h3 class="mt-4" th:text="#{fragment.select.patient}">Select patient from the table</h3>
+    <h3 class="mt-4" th:text="#{fragment.select.inpatient}">Select an inpatient from the table</h3>
     <h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5>
     <br>
     <table class="table table-bordered">
@@ -81,13 +81,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="existingVisit : ${existingVisit}">
-            <td th:text="${{existingVisit.name}}"></td>
-            <td th:text="${{existingVisit.age}}"></td>
-            <td th:text="${{existingVisit.country}}"></td>
+        <tr th:each="inpatient : ${inpatientList}">
+            <td th:text="${{inpatient.name}}"></td>
+            <td th:text="${{inpatient.age}}"></td>
+            <td th:text="${{inpatient.country}}"></td>
             <td>
                 <div class="btn-group" role="group">
-                    <a class="btn btn-primary" th:href="@{/index/retrieve-patient(patientId=${{existingVisit.patientId}})}" onclick="showLoading()">Retrieve Patient</a>
+                    <a class="btn btn-primary" th:href="@{/index/retrieve-inpatient(patientId=${{inpatient.patientId}})}" onclick="showLoading()">Retrieve Patient</a>
                 </div>
             </td>
         </tr>
@@ -95,7 +95,7 @@
     </table>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
-            <a href="#" class="btn btn-primary" th:href="@{/index/select}" th:text="#{button.back}">Back</a>
+            <a href="#" class="btn btn-primary" th:href="@{/index}" th:text="#{button.back}">Back</a>
         </div>
     </div>
 

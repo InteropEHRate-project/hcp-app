@@ -354,6 +354,7 @@ public class CurrentPatient {
         this.patHisBundle = null;
         this.patHisBundleTranslated = null;
         typeOfWorkingSession = null;
+        IndexCommand.transmissionCompleted = Boolean.FALSE;
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
