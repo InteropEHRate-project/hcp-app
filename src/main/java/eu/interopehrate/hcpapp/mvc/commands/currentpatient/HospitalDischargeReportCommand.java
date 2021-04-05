@@ -1,16 +1,35 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+import java.util.Objects;
 
 @Getter
-@Builder
+@Setter
 public class HospitalDischargeReportCommand {
-    private final List<String> listOfReasons;
-    private final List<String> listOfFindings;
-    private final List<String> listOfProcedures;
-    private final List<String> listOfConditions;
-    private final List<String> listOfInstructions;
+    private final String reasons;
+    private final String findings;
+    private final String procedures;
+    private final String conditions;
+    private final String instructions;
+
+    public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions) {
+        this.reasons = reasons;
+        this.findings = findings;
+        this.procedures = procedures;
+        this.conditions = conditions;
+        this.instructions = instructions;
+    }
+
+    public Boolean hasData() {
+        if ((Objects.nonNull(this.reasons) && !this.reasons.isBlank()) ||
+                (Objects.nonNull(this.findings) && !this.findings.isBlank()) ||
+                (Objects.nonNull(this.procedures) && !this.procedures.isBlank()) ||
+                (Objects.nonNull(this.conditions) && !this.conditions.isBlank()) ||
+                (Objects.nonNull(this.instructions) && !this.instructions.isBlank())) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 }
