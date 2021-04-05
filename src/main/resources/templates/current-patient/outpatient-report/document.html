@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <title th:text="#{fragment.current.patient.navigation.left.outpatient.report}">Outpatient report</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="card-body row justify-content-center">
+        <h2 th:text="#{fragment.current.patient.navigation.left.outpatient.Report}">Outpatient Report</h2>
+    </div>
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!listPrescriptions.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescriptions}">Prescriptions</h5>
+    </div>
+<!--    <table id="uploadTable" class="table table-bordered" th:if="${!listPrescriptions.isEmpty()}">-->
+<!--        <thead class="thead-light">-->
+<!--        <tr>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription}">Date of prescription</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start}">Start</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end.optional}">End</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</th>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author}">Author</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="prUpload : ${listPrescriptions}">-->
+<!--            <td th:text="${prUpload.getDrugName()}"></td>-->
+<!--            <td th:text="${prUpload.getDrugDosage()}"></td>-->
+<!--            <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>-->
+<!--            <td>-->
+<!--                <th:block th:switch="${prUpload.getStatus().toLowerCase()}">-->
+<!--                    <div th:case="'active'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>-->
+<!--                    </div>-->
+<!--                    <div th:case="'on-hold'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>-->
+<!--                    </div>-->
+<!--                    <div th:case="'stopped'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>-->
+<!--                    </div>-->
+<!--                </th:block>-->
+<!--            </td>-->
+<!--            <td th:text="${prUpload.getDateOfPrescription()}"></td>-->
+<!--            <td th:text="${prUpload.getStart()}"></td>-->
+<!--            <td th:text="${prUpload.getEnd()}"></td>-->
+<!--            <td th:text="${prUpload.getNotes()}"></td>-->
+<!--            <td th:text="${prUpload.getAuthor()}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+    <div th:if="${!listPrescriptions.isEmpty()}">
+        <div th:each="prUpload : ${listPrescriptions}">
+            <h6 th:text="${listPrescriptions.indexOf(prUpload) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name} + ': ' + ${prUpload.getDrugName()}">Drug Name</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage} + ': ' + ${prUpload.getDrugDosage()}">Drug Dosage</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings} + ': ' + ${prUpload.getTimings()}">Timings</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status} + ': ' + ${prUpload.getStatus()}">Status</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription} + ': ' + ${prUpload.getDateOfPrescription()}">Date of Prescription</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start} + ': ' + ${prUpload.getStart()}">Start</p>
+            <p th:if="${prUpload.getEnd() != null}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end.optional} + ': ' + ${prUpload.getEnd()}">End</p>
+            <p th:unless="${prUpload.getEnd() != null}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end.optional} + ': -'">End</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes} + ': ' + ${prUpload.getNotes()}">Notes</p>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author} + ': ' + ${prUpload.getAuthor()}">Author</p>
+            <br></br>
+        </div>
+    </div>
+
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">Vital Signs</h5>
+    </div>
+<!--    <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">-->
+<!--        <thead class="thead-light">-->
+<!--        <tr>-->
+<!--            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>-->
+<!--            <th>Value</th>-->
+<!--            <th>Date and time</th>-->
+<!--            <th>Author</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="vital : ${vitalSignsUpload.getVitalSignsInfoCommands()}">-->
+<!--            <td th:text="${vital.getAnalysisName()}"></td>-->
+<!--            <td th:text="${vital.getVitalSignsInfoCommandSample().getCurrentValue()}"></td>-->
+<!--            <td th:text="${vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()}"></td>-->
+<!--            <td th:text="${vital.getAuthor()}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+    <div th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
+        <div th:each="vital : ${vitalSignsUpload.getVitalSignsInfoCommands()}">
+            <h6 th:text="${vitalSignsUpload.getVitalSignsInfoCommands().indexOf(vital) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis} + ': ' + ${vital.getAnalysisName()}">Analysis</p>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value} + ': ' + ${vital.getVitalSignsInfoCommandSample().getCurrentValue()}">Value</p>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date.and.time} + ': ' + ${vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()}">Date and time</p>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author} + ': ' + ${vital.getAuthor()}">Author</p>
+            <br></br>
+        </div>
+    </div>
+</div>
+</body>
+</html>

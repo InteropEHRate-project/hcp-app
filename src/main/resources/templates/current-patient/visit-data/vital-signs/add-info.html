@@ -49,7 +49,7 @@
             </div>
 
             <div class="col-md-6">
-                <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date}">Date:</label><br>
+                <label for="localDateOfVitalSign" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date.of.vital.signs}">Date:</label><br>
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" th:field="*{vitalSignsInfoCommandSample.localDateOfVitalSign}" id="localDateOfVitalSign" placeholder="Date"/>
                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
@@ -61,7 +61,7 @@
 
         <div class="form-row">
             <div class="col-md-6">
-                <label for="currentValue" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value}">Value of the Vital Signs</label><br>
+                <label for="currentValue" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value.of.vital.signs}">Value of the Vital Signs</label><br>
                 <input id="currentValue" type="number" step="0.01" class="form-control" th:classappend="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')} ? 'is-invalid' :''"
                        th:field="*{vitalSignsInfoCommandSample.currentValue}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('vitalSignsInfoCommandSample.currentValue')}">

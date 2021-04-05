@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 public class VitalSignsInfoCommand {
     private Long id;
     private String patientId;
+    private String author;
     @NotEmpty
     @NotNull
     private String analysisName;

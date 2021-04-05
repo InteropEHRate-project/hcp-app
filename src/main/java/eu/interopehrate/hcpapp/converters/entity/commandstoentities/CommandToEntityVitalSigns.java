@@ -21,6 +21,7 @@ public class CommandToEntityVitalSigns implements Converter<VitalSignsInfoComman
     public VitalSignsEntity convert(VitalSignsInfoCommand source) {
         VitalSignsEntity vitalSignsEntity = new VitalSignsEntity();
         vitalSignsEntity.setPatientId(source.getPatientId());
+        vitalSignsEntity.setAuthor(source.getAuthor());
 
         for (VitalSignsTypesEntity vt : this.vitalSignsTypesRepository.findAll()) {
             if (vt.getName().equalsIgnoreCase(source.getAnalysisName())) {

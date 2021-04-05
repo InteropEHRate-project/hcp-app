@@ -80,7 +80,7 @@
     <br>
     <div class="card-body text-center"
          th:if="${!listPrescriptions.isEmpty() || !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
-        <a class="btn btn-primary" th:href="@{/download-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
+        <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
     <div class="btn-toolbar justify-content-center" role="toolbar"

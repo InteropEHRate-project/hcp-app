@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
+import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
@@ -39,11 +40,12 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     private final CurrentD2DConnection currentD2DConnection;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
     private final AuditInformationService auditInformationService;
+    private final HealthCareProfessionalRepository healthCareProfessionalRepository;
 
     public VitalSignsServiceImpl(CurrentPatient currentPatient, HapiToCommandVitalSigns hapiToCommandVitalSigns, VitalSignsRepository vitalSignsRepository,
                                  CommandToEntityVitalSigns commandToEntityVitalSigns, EntityToCommandVitalSigns entityToCommandVitalSigns,
                                  CurrentD2DConnection currentD2DConnection, VitalSignsTypesRepository vitalSignsTypesRepository,
-                                 AuditInformationService auditInformationService) {
+                                 AuditInformationService auditInformationService, HealthCareProfessionalRepository healthCareProfessionalRepository) {
         this.currentPatient = currentPatient;
         this.hapiToCommandVitalSigns = hapiToCommandVitalSigns;
         this.vitalSignsRepository = vitalSignsRepository;
@@ -52,6 +54,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         this.currentD2DConnection = currentD2DConnection;
         this.vitalSignsTypesRepository = vitalSignsTypesRepository;
         this.auditInformationService = auditInformationService;
+        this.healthCareProfessionalRepository = healthCareProfessionalRepository;
     }
 
     @Override
@@ -80,6 +83,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     @Override
     public void insertVitalSigns(VitalSignsInfoCommand vitalSignsInfoCommand) {
         vitalSignsInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
+        vitalSignsInfoCommand.setAuthor(this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
         VitalSignsEntity vitalSignsEntity = this.commandToEntityVitalSigns.convert(vitalSignsInfoCommand);
         vitalSignsRepository.save(vitalSignsEntity);
     }

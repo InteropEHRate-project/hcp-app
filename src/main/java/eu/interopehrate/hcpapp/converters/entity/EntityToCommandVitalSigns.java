@@ -15,6 +15,7 @@ public class EntityToCommandVitalSigns implements Converter<VitalSignsEntity, Vi
         VitalSignsInfoCommand vitalSignsInfoCommand = new VitalSignsInfoCommand();
         vitalSignsInfoCommand.setId(vitalSignsEntity.getId());
         vitalSignsInfoCommand.setPatientId(vitalSignsEntity.getPatientId());
+        vitalSignsInfoCommand.setAuthor(vitalSignsEntity.getAuthor());
         vitalSignsInfoCommand.setAnalysisName(vitalSignsEntity.getAnalysisType().getName());
 
         VitalSignsInfoCommandSample vitalSignsInfoCommandSample = new VitalSignsInfoCommandSample();
