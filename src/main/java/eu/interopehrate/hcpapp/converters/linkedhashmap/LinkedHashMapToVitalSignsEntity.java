@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Objects;
 
 @Component
+@SuppressWarnings("rawtypes")
 public class LinkedHashMapToVitalSignsEntity implements Converter<LinkedHashMap, VitalSignsEntity> {
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
 
@@ -23,6 +24,9 @@ public class LinkedHashMapToVitalSignsEntity implements Converter<LinkedHashMap,
         VitalSignsEntity vitalSignsEntity = new VitalSignsEntity();
         if (Objects.nonNull(source.get("patient"))) {
             vitalSignsEntity.setPatientId(((LinkedHashMap) source.get("patient")).get("patientId").toString());
+        }
+        if (Objects.nonNull(source.get("author"))) {
+            vitalSignsEntity.setAuthor(source.get("author").toString());
         }
 
         for (VitalSignsTypesEntity vt : this.vitalSignsTypesRepository.findAll()) {
