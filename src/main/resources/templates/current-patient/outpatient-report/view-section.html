@@ -83,18 +83,17 @@
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
-    <div class="btn-toolbar justify-content-center" role="toolbar"
-         th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) ||
+    <div class="row justify-content-center" th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) ||
          (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty())}">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#logout"
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
         <!-- Modal -->
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="logoutLabel" aria-hidden="true">
+        <div class="modal fade" id="sendToSehr" tabindex="-1" role="dialog" aria-labelledby="sendToSehrLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</h5>
+                        <h5 class="modal-title" id="sendToSehrLabel" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -111,16 +110,17 @@
             </div>
         </div>
     </div>
+
     <div class="btn-toolbar justify-content-center" role="toolbar" th:if="${session.withoutConnection != null && session.withoutConnection}">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#logout"
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#send"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
         <!-- Modal -->
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="logoutLabel" aria-hidden="true">
+        <div class="modal fade" id="send" tabindex="-1" role="dialog" aria-labelledby="sendLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</h5>
+                        <h5 class="modal-title" id="sendLabel" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -144,7 +144,6 @@
     <br>
     <h5 th:if="${session.withoutConnection != null && session.withoutConnection}"
         th:text="#{fragment.current.patient.navigation.left.outpatient.report.simulation}">This is a simulation and the "Send to S-EHR" button is visible but it doesn't do much</h5>
-
 </div>
 </body>
 </html>
