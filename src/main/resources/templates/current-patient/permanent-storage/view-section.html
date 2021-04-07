@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.store.data}">Store emergency data</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <p></p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.store.data}">Store emergency data</h3>
+    <br>
+    <h5 style="color: green" th:if="${sendSuccessfully != null && sendSuccessfully}" th:text="#{fragment.current.patient.navigation.left.stored.successfully}">Data stored successfully</h5>
+
+    <div class="card-body row justify-content-center">
+        <a class="btn btn-primary btn-lg" th:href="@{/current-patient/permanent-storage/store}" th:text="#{fragment.current.patient.navigation.left.store.data}"></a>
+    </div>
+
+</div>
+</body>
+</html>

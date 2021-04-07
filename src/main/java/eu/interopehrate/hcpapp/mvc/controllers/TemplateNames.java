@@ -58,6 +58,7 @@ public interface TemplateNames {
     String CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT = "current-patient/outpatient-report/document";
     String CURRENT_PATIENT_OUTPATIENT_REPORT_MEDICATION_VIEW = "current-patient/outpatient-report/medication-view";
     String CURRENT_PATIENT_SEND_TO_OTHER_HCP = "current-patient/send-to-other-hcp/view-section";
+    String CURRENT_PATIENT_PERMANENT_STORAGE = "current-patient/permanent-storage/view-section";
 
     // Visit data
     String CURRENT_PATIENT_VITAL_SIGNS_VIEW_SECTION = "current-patient/visit-data/vital-signs/view-section";

@@ -8,7 +8,8 @@
 
 <body>
 <div layout:fragment="content">
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.demographic.information}">Demographic Information</h3></p>
+    <p></p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.demographic.information}">Demographic Information</h3>
     <div th:if="${index.patientDataCommand.hasData()}">
         <table class="table table-bordered">
             <thead class="thead-light">

@@ -91,6 +91,11 @@
        th:text="#{fragment.current.patient.navigation.left.outpatient.report}">Outpatient Report</a>
 
     <div class="dropdown-divider" th:if="${(session.withoutConnection != null && session.withoutConnection) || session.workingSession != null}"></div>
+    <a class="flex-sm-fill text-sm-left nav-link" th:if="${session.workingSession != null && session.workingSession == 'EMERGENCY'}"
+       th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/permanent-storage')} ? 'active' : ''"
+       href="../permanent-storage/view-section.html"
+       th:href="@{/current-patient/permanent-storage/view-section}"
+       th:text="#{fragment.current.patient.navigation.left.store.data}">Store emergency data</a>
     <a class="flex-sm-fill text-sm-left nav-link" th:if="${(session.withoutConnection != null && session.withoutConnection) || session.workingSession != null}"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/send-to-other-hcp')} ? 'active' : ''"
        href="../send-to-other-hcp/view-section.html"
