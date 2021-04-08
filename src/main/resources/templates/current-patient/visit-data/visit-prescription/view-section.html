@@ -7,8 +7,8 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="m-5"></div>
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</h3></p>
+    <p></p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</h3>
     <div class="m-5"></div>
     <div th:if="${!listPrescriptions.isEmpty()}">
         <h5 th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
