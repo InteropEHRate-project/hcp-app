@@ -29,6 +29,7 @@ public class IndexController {
     public String indexTemplate(Model model, HttpSession session) throws Exception {
         model.addAttribute("index", indexService.indexCommand());
         IndexCommand indexCommand = indexService.indexCommand();
+        session.setAttribute("displayTranslatedVersion", this.indexService.getCurrentPatient().getDisplayTranslatedVersion());
         if (Objects.isNull(session.getAttribute("patientNavbar")) && IndexCommand.transmissionCompleted) {
             session.setAttribute("patientNavbar", indexCommand);
         }

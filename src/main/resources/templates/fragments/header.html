@@ -15,15 +15,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
             th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.bundle.min.js}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != '') {
-                    window.location.replace('?lang=' + selectedOption);
-                }
-            });
-        });
+    <script type="text/javascript" th:inline="javascript">
+        function translateEnglish() {
+            /*<![CDATA[*/
+            var displayTranslatedVersion = [[${session.displayTranslatedVersion}]];
+            /*]]>*/
+        }
+        function translateItalian() {
+            /*<![CDATA[*/
+            var displayTranslatedVersion = [[${session.displayTranslatedVersion}]];
+            /*]]>*/
+        }
     </script>
 </head>
 <body>
@@ -58,9 +60,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="" id="locales" role="button" data-toggle="dropdown" th:text="#{language.change}">Language</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="?lang=en" value="en" th:text="#{lang.eng}">English</a>
-                            <a class="dropdown-item" href="?lang=ro" value="ro" th:text="#{lang.ro}">Romanian</a>
-                            <a class="dropdown-item" href="?lang=it" value="it" th:text="#{lang.it}">Italian</a>
+                            <a class="dropdown-item" href="?lang=en" value="en" onclick="translateEnglish()" th:text="#{lang.eng}">English</a>
+<!--                            <a class="dropdown-item" href="?lang=ro" value="ro" th:text="#{lang.ro}">Romanian</a>-->
+                            <a class="dropdown-item" href="?lang=it" value="it" onclick="translateItalian()" th:text="#{lang.it}">Italian</a>
                         </div>
                     </li>
                 </ul>
