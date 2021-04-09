@@ -18,9 +18,7 @@
                 <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultationCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>
             </div>
         </div>
-
-    <p>
-    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3>
     <br>
     <div th:if="${currentD2DConnection.getConnectedThread() == null && (session.withoutConnection != null && !session.withoutConnection)}">
         <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.no.connection}">The connection with S-EHR is not established</h5>

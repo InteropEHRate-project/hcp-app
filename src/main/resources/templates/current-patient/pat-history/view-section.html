@@ -8,24 +8,25 @@
 
 <body>
 <div layout:fragment="content">
-<!--    <div class="btn-toolbar float-right" role="toolbar">-->
-<!--        <div class="btn-group btn-group-sm mr-2" role="group">-->
-<!--            <div class="btn-group mr-2" role="group">-->
-<!--                <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language-->
-<!--                    of the section</a>-->
-<!--                <a href="#" class="btn btn-primary"-->
-<!--                   th:styleappend="${!patHistoryCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"-->
-<!--                   th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/pat-history/view-section')}"-->
-<!--                   th:text="#{ips.translate.button.original}">Initial version</a>-->
-<!--                <a href="#" class="btn btn-primary"-->
-<!--                   th:styleappend="${patHistoryCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"-->
-<!--                   th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/pat-history/view-section')}"-->
-<!--                   th:text="#{ips.translate.button.translated}">Translated version</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <p></p>
+    <div class="m-5"></div>
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group btn-group-sm mr-2" role="group">
+            <div class="btn-group mr-2" role="group">
+                <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language
+                    of the section</a>
+                <a href="#" class="btn btn-primary"
+                   th:styleappend="${!patHistoryCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                   th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/pat-history/view-section')}"
+                   th:text="#{ips.translate.button.original}">Initial version</a>
+                <a href="#" class="btn btn-primary"
+                   th:styleappend="${patHistoryCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
+                   th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/pat-history/view-section')}"
+                   th:text="#{ips.translate.button.translated}">Translated version</a>
+            </div>
+        </div>
+    </div>
     <h3 th:text="#{fragment.current.patient.navigation.left.pat.history}">Pat History</h3>
+    <br>
     <table class="table table-bordered" th:if="${!patHistoryCommand.getPatHistoryInfoCommandDiagnoses().isEmpty()}">
         <thead class="thead-light">
         <tr>
