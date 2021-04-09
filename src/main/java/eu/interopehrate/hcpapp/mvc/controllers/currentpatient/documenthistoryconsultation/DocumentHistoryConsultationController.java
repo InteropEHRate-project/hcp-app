@@ -25,6 +25,7 @@ public class DocumentHistoryConsultationController {
     public String viewSection(Model model) {
         model.addAttribute("getData", this.documentHistoryConsultationService.getData());
         model.addAttribute("currentD2DConnection", this.documentHistoryConsultationService.getCurrentD2DConnection());
+        model.addAttribute("documentHistoryConsultationCommand", this.documentHistoryConsultationService.getData());
         model.addAttribute("documentHistoryConsultationList", this.documentHistoryConsultationService.getData().getDocumentHistoryConsultationInfoCommandList());
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());

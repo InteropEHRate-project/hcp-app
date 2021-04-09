@@ -23,6 +23,7 @@ public class MedicationController {
     @GetMapping
     @RequestMapping("/idToMedicationSEHR")
     public String viewSEHRSection(@RequestParam(name = "id") String id, Model model) {
+        model.addAttribute("prescriptionCommand", PrescriptionController.prescriptionCommand);
         model.addAttribute("prescription", PrescriptionController.prescriptionCommand.find(Long.parseLong(id)));
         model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
