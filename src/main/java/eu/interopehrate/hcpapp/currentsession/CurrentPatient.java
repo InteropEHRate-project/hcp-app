@@ -26,7 +26,7 @@ public class CurrentPatient {
     private final TranslateService translateService;
     private final CodesConversionService codesConversionService;
     private final TerminalFhirContext terminalFhirContext;
-    private Boolean displayTranslatedVersion = Boolean.FALSE;
+    private Boolean displayTranslatedVersion = Boolean.TRUE;
     private Patient patient;
     private Consent consent;
     private Bundle patientSummaryBundle;

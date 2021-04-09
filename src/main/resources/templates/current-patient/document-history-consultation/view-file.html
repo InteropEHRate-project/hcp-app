@@ -10,7 +10,6 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="m-5"></div>
     <!--    <div class="btn-toolbar float-right" role="toolbar">-->
     <!--        <div class="btn-group mr-2" role="group">-->
     <!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
@@ -18,8 +17,8 @@
     <!--            <a href="#" class="btn btn-primary" th:styleappend="${documentHistoryConsultationList.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/document-history-consultation/view-section/all')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
     <!--        </div>-->
     <!--    </div>-->
-    <p>
-    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3></p>
+    <p></p>
+    <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3>
 
     <iframe th:src="${dataString}" width="800" height="800"></iframe>
 
