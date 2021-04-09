@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.documenthistoryconsultation;
 
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DocumentHistoryConsultationService;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,10 @@ public class DocumentHistoryConsultationController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
-        model.addAttribute("getData", this.documentHistoryConsultationService.getData());
+        DocumentHistoryConsultationCommand documentHistoryConsultationCommand = this.documentHistoryConsultationService.getData();
         model.addAttribute("currentD2DConnection", this.documentHistoryConsultationService.getCurrentD2DConnection());
-        model.addAttribute("documentHistoryConsultationCommand", this.documentHistoryConsultationService.getData());
-        model.addAttribute("documentHistoryConsultationList", this.documentHistoryConsultationService.getData().getDocumentHistoryConsultationInfoCommandList());
+        model.addAttribute("documentHistoryConsultationCommand", documentHistoryConsultationCommand);
+        model.addAttribute("documentHistoryConsultationList", documentHistoryConsultationCommand.getDocumentHistoryConsultationInfoCommandList());
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());
         model.addAttribute("lastYear", LocalDate.now().getYear() - 1);
@@ -45,6 +46,7 @@ public class DocumentHistoryConsultationController {
         session.setAttribute("date", date);
         session.setAttribute("startDate", start);
         session.setAttribute("endDate", end);
+        model.addAttribute("documentHistoryConsultationCommand", this.documentHistoryConsultationService.getData());
         model.addAttribute("currentD2DConnection", this.documentHistoryConsultationService.getCurrentD2DConnection());
         model.addAttribute("documentHistoryConsultationList",
                 this.documentHistoryConsultationService.documentHistoryConsultationCommand(speciality, date, start, end).getDocumentHistoryConsultationInfoCommandList());
