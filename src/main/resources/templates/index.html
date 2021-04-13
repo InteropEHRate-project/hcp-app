@@ -53,7 +53,7 @@
 <div th:replace="fragments/header::navigation-top">navigation-top</div>
 <div class="container" th:if="${session.withoutConnection != null && session.withoutConnection}">
     <br>
-    <h1 class="text-center">This is a simulation of a current patient</h1>
+    <h1 class="text-center" th:text="#{simulation}">This is a simulation of a current patient</h1>
 
     <div class="m-3">
         <div th:if="${index.patientDataCommand.hasData()}">

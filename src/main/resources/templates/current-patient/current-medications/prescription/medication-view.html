@@ -10,17 +10,17 @@
     <div class="m-5"></div>
 <!--    <div th:replace="current-patient/current-medications/fragments/navigation::navigation-top">navigation-top</div>-->
     <div class="m-5"></div>
-    <div class="btn-toolbar float-right" role="toolbar">
-        <div class="btn-group mr-2" role="group">
-            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>
-            <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-               th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}"
-               th:text="#{ips.translate.button.original}">Initial version</a>
-            <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"
-               th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}"
-               th:text="#{ips.translate.button.translated}">Translated version</a>
-        </div>
-    </div>
+<!--    <div class="btn-toolbar float-right" role="toolbar">-->
+<!--        <div class="btn-group mr-2" role="group">-->
+<!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+<!--            <a href="#" class="btn btn-primary" th:styleappend="${!prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"-->
+<!--               th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-medications/prescription/view-section')}"-->
+<!--               th:text="#{ips.translate.button.original}">Initial version</a>-->
+<!--            <a href="#" class="btn btn-primary" th:styleappend="${prescriptionCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"-->
+<!--               th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-medications/prescription/view-section')}"-->
+<!--               th:text="#{ips.translate.button.translated}">Translated version</a>-->
+<!--        </div>-->
+<!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.current.medications.medication}">medication</h3>
     <br>
     <div class="row justify-content-center">
