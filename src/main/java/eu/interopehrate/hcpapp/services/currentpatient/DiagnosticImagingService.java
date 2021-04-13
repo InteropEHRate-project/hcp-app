@@ -6,4 +6,5 @@ public interface DiagnosticImagingService {
     ImageCommand imageCommand();
     void displayEcgDemo();
     void displayMrDemo();
+    void refreshData();
 }

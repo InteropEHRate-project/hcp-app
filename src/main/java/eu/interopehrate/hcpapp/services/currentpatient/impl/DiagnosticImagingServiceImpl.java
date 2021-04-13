@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging.HapiToCommandDiagnosticReport;
 import eu.interopehrate.hcpapp.converters.fhir.diagnosticimaging.HapiToCommandImage;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
@@ -21,15 +22,17 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandImage hapiToCommandImage;
     private final HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport;
+    private final CloudConnection cloudConnection;
     private static final String TMP_FILES_PREFIX = "hcp-app-dicom-";
     private static final String dicomCommand = "$dicom:get -l \"%s\"";
     private static final String weasisCommand = "cmd /c start weasis://%s";
 
     public DiagnosticImagingServiceImpl(CurrentPatient currentPatient, HapiToCommandImage hapiToCommandImage,
-                                        HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport) {
+                                        HapiToCommandDiagnosticReport hapiToCommandDiagnosticReport, CloudConnection cloudConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandImage = hapiToCommandImage;
         this.hapiToCommandDiagnosticReport = hapiToCommandDiagnosticReport;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -58,6 +61,11 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     public void displayMrDemo() {
         String classPathFile = "samples/dicom/mr/I0";
         displayEcg(classPathFile);
+    }
+
+    @Override
+    public void refreshData() {
+        this.cloudConnection.downloadImageReport();
     }
 
     private static void displayEcg(String classPathFile) {

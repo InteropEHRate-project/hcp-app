@@ -51,4 +51,11 @@ public class DiagnosticImagingController {
         this.diagnosticImagingService.displayMrDemo();
         return "redirect:/current-patient/diagnostic-imaging/DICOM";
     }
+
+    @GetMapping
+    @RequestMapping("/refresh-data")
+    public String refreshData() {
+        this.diagnosticImagingService.refreshData();
+        return "redirect:/current-patient/diagnostic-imaging/view-section";
+    }
 }

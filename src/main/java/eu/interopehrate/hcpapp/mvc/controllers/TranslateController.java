@@ -20,9 +20,9 @@ public class TranslateController {
     @RequestMapping("/language")
     public String english(@RequestParam(name = "lang") String lang, HttpServletRequest httpServletRequest) {
         if (lang.equals("en")) {
-            currentPatient.setDisplayTranslatedVersion(Boolean.TRUE);
+            this.currentPatient.setDisplayTranslatedVersion(Boolean.TRUE);
         } else if (lang.equals("it")) {
-            currentPatient.setDisplayTranslatedVersion(Boolean.FALSE);
+            this.currentPatient.setDisplayTranslatedVersion(Boolean.FALSE);
         }
         return "redirect:" + httpServletRequest.getHeader("referer");
     }

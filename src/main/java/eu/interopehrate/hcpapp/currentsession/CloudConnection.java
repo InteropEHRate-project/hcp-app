@@ -131,4 +131,16 @@ public class CloudConnection implements DisposableBean {
             log.info("LaboratoryResults received from Cloud");
         }
     }
+
+    @SneakyThrows
+    public void downloadImageReport() {
+        String imageReport = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.IMAGE_REPORT);
+        if (imageReport.equalsIgnoreCase("File not found")) {
+            log.error("ImageReport not found");
+        } else {
+            Bundle imageReportBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(imageReport);
+            this.currentPatient.initImageReport(imageReportBundle);
+            log.info("ImageReport received from Cloud");
+        }
+    }
 }

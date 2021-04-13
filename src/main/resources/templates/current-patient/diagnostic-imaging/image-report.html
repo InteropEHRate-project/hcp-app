@@ -49,7 +49,10 @@
             </tbody>
         </table>
     </div>
-
+    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
+        <a class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/image-report}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
+    </div>
     <br>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">

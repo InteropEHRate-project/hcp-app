@@ -93,7 +93,8 @@
         </nav>
     </div>
     <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
-        <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh-data}">Refresh data</a>
+        <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh-data}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
     </div>
 </div>
 
