@@ -24,6 +24,10 @@ public class TranslateController {
         } else if (lang.equals("it")) {
             this.currentPatient.setDisplayTranslatedVersion(Boolean.FALSE);
         }
-        return "redirect:" + httpServletRequest.getHeader("referer");
+        try {
+            return "redirect:" + httpServletRequest.getHeader("referer");
+        } catch (Exception e) {
+            return "redirect:/index";
+        }
     }
 }
