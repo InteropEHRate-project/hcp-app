@@ -15,6 +15,8 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.Pr
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
+import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
@@ -46,8 +48,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private final AuditInformationService auditInformationService;
     private final PrescriptionTypesRepository prescriptionTypesRepository;
     private final CloudConnection cloudConnection;
+    private final TranslateService translateService;
+    @Autowired
+    private TerminalFhirContext terminalFhirContext;
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, PrescriptionTypesRepository prescriptionTypesRepository, CloudConnection cloudConnection) {
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository,
+                                   CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService,
+                                   PrescriptionTypesRepository prescriptionTypesRepository, CloudConnection cloudConnection, TranslateService translateService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
         this.prescriptionRepository = prescriptionRepository;
@@ -55,6 +62,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.auditInformationService = auditInformationService;
         this.prescriptionTypesRepository = prescriptionTypesRepository;
         this.cloudConnection = cloudConnection;
+        this.translateService = translateService;
     }
 
     @Override
@@ -218,9 +226,22 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         }
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void sendPrescription(Bundle medicationRequest) {
+        // Creates String from the Bundle
+//        FhirContext fhirContext = terminalFhirContext.getContext();
+//        IParser parser = fhirContext.newJsonParser().setPrettyPrint(Boolean.TRUE);
+//        String content = parser.encodeResourceToString(medicationRequest);
+
+        // Tries to translate the English content into Italian
+//        medicationRequest = this.translateService.translate(medicationRequest, Locale.ITALY);
+//        String translatedContent = parser.encodeResourceToString(medicationRequest);
+
+        // Tries to translate the Italian content into English
+//        medicationRequest = this.translateService.translate(medicationRequest, Locale.UK);
+//        String translatedContent = parser.encodeResourceToString(medicationRequest);
+
         this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
         auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
@@ -296,16 +317,16 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         t.getRepeat().setFrequency(prescriptionEntity.getFrequency());
         t.getRepeat().setPeriod(prescriptionEntity.getPeriod());
         t.getRepeat().setPeriodUnit(Timing.UnitsOfTime.fromCode(prescriptionEntity.getPeriodUnit()));
+
         List<Dosage> d = new ArrayList<>();
         d.add(new Dosage().setTiming(t));
         d.get(0).setDoseAndRate(new ArrayList<>());
         d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setUnit(prescriptionEntity.getDrugDosage());
-
+        medicationRequest.setDosageInstruction(d);
         medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
         medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
-        medicationRequest.setDosageInstruction(d);
         medicationRequest.setStatus(MedicationRequest.MedicationRequestStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
 
         medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -319,7 +340,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
             medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
         }
-
         return medicationRequest;
     }
 

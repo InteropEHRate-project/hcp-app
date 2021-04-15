@@ -12,6 +12,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications.PrescriptionServiceImpl;
+import eu.interopehrate.ihs.terminalclient.services.TranslateService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -47,11 +48,15 @@ class PrescriptionControllerTest {
     private PrescriptionTypesRepository prescriptionTypesRepository;
     @Mock
     private CloudConnection cloudConnection;
+    @Mock
+    private TranslateService translateService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        PrescriptionService service = new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.prescriptionRepository, this.currentD2DConnection, auditInformationService, prescriptionTypesRepository, this.cloudConnection);
+        PrescriptionService service =
+                new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.prescriptionRepository, this.currentD2DConnection,
+                        auditInformationService, prescriptionTypesRepository, this.cloudConnection, translateService);
         this.controller = new PrescriptionController(service);
     }
 
