@@ -28,6 +28,7 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
         return currentPatient;
     }
 
+    // HARCODED METHOD
     @Override
     public AllergyIntoleranceCommand allergyIntoleranceInfoCommand() {
         var allergiesIntolerances = currentPatient.allergyIntoleranceList()
@@ -36,7 +37,21 @@ public class AllergyIntoleranceServiceImpl implements AllergyIntoleranceService 
                 .collect(Collectors.toList());
         allergiesIntolerances.addAll(allergyIntoleranceInfoCommands);
         return AllergyIntoleranceCommand.builder()
-                .displayTranslatedVersion(currentPatient.getDisplayTranslatedVersion())
+                .displayTranslatedVersion(Boolean.FALSE)
+                .allergyIntoleranceList(allergiesIntolerances)
+                .build();
+    }
+
+    // HARCODED METHOD
+    @Override
+    public AllergyIntoleranceCommand allergyIntoleranceInfoCommandTranslated() {
+        var allergiesIntolerances = currentPatient.allergyIntoleranceTranslatedList()
+                .stream()
+                .map(hapiToCommandAllergyIntolerance::convert)
+                .collect(Collectors.toList());
+        allergiesIntolerances.addAll(allergyIntoleranceInfoCommands);
+        return AllergyIntoleranceCommand.builder()
+                .displayTranslatedVersion(Boolean.TRUE)
                 .allergyIntoleranceList(allergiesIntolerances)
                 .build();
     }

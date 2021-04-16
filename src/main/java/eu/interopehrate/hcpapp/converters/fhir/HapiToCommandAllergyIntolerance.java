@@ -23,7 +23,8 @@ public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntoler
         AllergyIntoleranceInfoCommand command = new AllergyIntoleranceInfoCommand();
 
         if (Objects.nonNull(allergyIntolerance.getCode())) {
-            allergyIntolerance.getCode().getCoding().forEach(coding -> command.setName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+            // using the method that doesn't take into account the value of "displayTranaslatedVersion" boolean
+            allergyIntolerance.getCode().getCoding().forEach(coding -> command.setName(CurrentPatient.testExtractExtensionText(coding)));
 
             if (Objects.nonNull(allergyIntolerance.getCategory())) {
                 command.setCategory(allergyIntolerance.getCategory()

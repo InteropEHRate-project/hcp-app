@@ -7,5 +7,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntole
 public interface AllergyIntoleranceService {
     CurrentPatient getCurrentPatient();
     AllergyIntoleranceCommand allergyIntoleranceInfoCommand();
+    AllergyIntoleranceCommand allergyIntoleranceInfoCommandTranslated();
     void insertAllergyIntolerance(AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand);
 }

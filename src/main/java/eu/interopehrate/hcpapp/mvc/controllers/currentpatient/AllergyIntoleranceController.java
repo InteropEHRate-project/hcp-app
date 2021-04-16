@@ -27,6 +27,7 @@ public class AllergyIntoleranceController {
     public String viewSection(Model model) {
         model.addAttribute("patient", this.allergyIntoleranceService.getCurrentPatient().getPatient());
         model.addAttribute("allergyIntolerance", this.allergyIntoleranceService.allergyIntoleranceInfoCommand());
+        model.addAttribute("allergyIntoleranceTranslated", this.allergyIntoleranceService.allergyIntoleranceInfoCommandTranslated());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_VIEW_SECTION;
     }
 
