@@ -256,6 +256,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         return createPageFromListofEntity(listOfPrescription, pageable, pageNo, pageSize);
     }
 
+    @Override
+    public void refreshData() {
+        this.cloudConnection.downloadPrescription();
+    }
+
     private static void toSortMethodCommand(List<PrescriptionInfoCommand> med) {
         med.sort((o1, o2) -> {
             if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
@@ -389,10 +394,5 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             int index = (pageNo - 1) * pageSize;
             return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
         }
-    }
-
-    @Override
-    public void refreshData() {
-        this.cloudConnection.downloadPrescription();
     }
 }

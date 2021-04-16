@@ -20,6 +20,7 @@
     <table class="table table-bordered" th:if="${!allergyIntolerance.allergyIntoleranceList.isEmpty()}">
         <thead class="thead-light">
         <tr>
+            <th>Resource</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
@@ -29,7 +30,16 @@
         </thead>
         <tbody>
         <tr th:each="ai : ${allergyIntolerance.allergyIntoleranceList}">
+            <td>Original</td>
             <td style="background-color: azure" th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ai.name}}"></td>
+            <td th:text="${{ai.category}}"></td>
+            <td th:text="${{ai.type}}"></td>
+            <td th:text="${{ai.symptoms}}"></td>
+            <td th:text="${{ai.comments}}"></td>
+        </tr>
+        <tr th:each="ai : ${allergyIntoleranceTranslated.allergyIntoleranceList}">
+            <td>Translated</td>
+            <th style="background-color: azure" th:text="${{ai.name}}"></th>
             <td th:text="${{ai.category}}"></td>
             <td th:text="${{ai.type}}"></td>
             <td th:text="${{ai.symptoms}}"></td>

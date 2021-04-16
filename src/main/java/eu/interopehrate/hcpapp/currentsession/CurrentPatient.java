@@ -358,18 +358,18 @@ public class CurrentPatient {
     }
 
     public List<AllergyIntolerance> allergyIntoleranceList() {
-        if (displayTranslatedVersion) {
-            if (Objects.isNull(patientSummaryBundleTranslated)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(patientSummaryBundleTranslated).allergyIntoleranceList();
-            }
+        if (Objects.isNull(patientSummaryBundle)) {
+            return Collections.emptyList();
         } else {
-            if (Objects.isNull(patientSummaryBundle)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
-            }
+            return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
+        }
+    }
+
+    public List<AllergyIntolerance> allergyIntoleranceTranslatedList() {
+        if (Objects.isNull(patientSummaryBundleTranslated)) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(patientSummaryBundleTranslated).allergyIntoleranceList();
         }
     }
 
@@ -537,6 +537,17 @@ public class CurrentPatient {
     public static String extractExtensionText(Coding coding, CurrentPatient currentPatient) {
         if (currentPatient.getDisplayTranslatedVersion()
                 && coding.hasDisplayElement()
+                && coding.getDisplayElement().hasExtension()
+                && coding.getDisplayElement().getExtensionFirstRep().hasExtension() && coding.getDisplayElement().getExtensionFirstRep().getExtension().size() >= 2) {
+            return coding.getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString();
+        } else {
+            return coding.getDisplay();
+        }
+    }
+
+    // HARCODED METHOD that doesn't take into account the value of "displayTranaslatedVersion" boolean
+    public static String testExtractExtensionText(Coding coding) {
+        if (coding.hasDisplayElement()
                 && coding.getDisplayElement().hasExtension()
                 && coding.getDisplayElement().getExtensionFirstRep().hasExtension() && coding.getDisplayElement().getExtensionFirstRep().getExtension().size() >= 2) {
             return coding.getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString();
