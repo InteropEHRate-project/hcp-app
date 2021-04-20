@@ -10,6 +10,8 @@
 <div layout:fragment="content">
     <p></p>
     <h3 th:text="#{fragment.current.patient.navigation.left.store.data}">Store emergency data</h3>
+    <div class="m-5"></div>
+    <h5 style="color: red" th:if="${error}" th:text="#{connection.fails}">The connection failed</h5>
     <br>
     <h5 style="color: green" th:if="${sendSuccessfully != null && sendSuccessfully}" th:text="#{fragment.current.patient.navigation.left.stored.successfully}">Data stored successfully</h5>
 

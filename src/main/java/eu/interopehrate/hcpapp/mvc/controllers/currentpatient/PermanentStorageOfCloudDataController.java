@@ -25,8 +25,14 @@ public class PermanentStorageOfCloudDataController {
     @GetMapping
     @RequestMapping("/store")
     public String storeData(Model model) {
-        this.permanentStorageOfCloudDataService.storePatientData();
-        model.addAttribute("sendSuccessfully", Boolean.TRUE);
+        boolean error;
+        if (this.permanentStorageOfCloudDataService.storePatientData()) {
+            model.addAttribute("sendSuccessfully", Boolean.TRUE);
+            error = false;
+        } else {
+            error = true;
+        }
+        model.addAttribute("error", error);
         return TemplateNames.CURRENT_PATIENT_PERMANENT_STORAGE;
     }
 }

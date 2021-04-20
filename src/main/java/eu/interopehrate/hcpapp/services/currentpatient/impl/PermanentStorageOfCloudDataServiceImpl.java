@@ -9,18 +9,21 @@ import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel
 import eu.interopehrate.hcpapp.services.currentpatient.PermanentStorageOfCloudDataService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class PermanentStorageOfCloudDataServiceImpl implements PermanentStorageOfCloudDataService {
     private final RestTemplate restTemplate;
@@ -40,57 +43,63 @@ public class PermanentStorageOfCloudDataServiceImpl implements PermanentStorageO
 
     @Override
     @SneakyThrows
-    public void storePatientData() {
+    public Boolean storePatientData() {
         Patient patient = this.currentPatient.getPatient();
         Bundle ips = this.currentPatient.getPatientSummaryBundle();
         Bundle prescriptions = this.currentPatient.getPrescription();
         Bundle laboratoryResults = this.currentPatient.getLaboratoryResults();
         String patientId = this.currentPatient.getPatient().getId();
         IndexPatientDataCommand patientDataCommand = this.indexService.indexCommand().getPatientDataCommand();
-        if (Objects.nonNull(patient) &&
-                Objects.nonNull(patientDataCommand) &&
-                Objects.nonNull(patientDataCommand.getId())) {
-            TransferredPatientModel transferredPatientModel = new TransferredPatientModel();
-            transferredPatientModel.setPatientId(patientDataCommand.getId());
-            if (Objects.nonNull(patientDataCommand.getFirstName()) && Objects.nonNull(patientDataCommand.getLastName())) {
-                transferredPatientModel.setName(patientDataCommand.getFirstName() + " " + patientDataCommand.getLastName());
+        try {
+            if (Objects.nonNull(patient) &&
+                    Objects.nonNull(patientDataCommand) &&
+                    Objects.nonNull(patientDataCommand.getId())) {
+                TransferredPatientModel transferredPatientModel = new TransferredPatientModel();
+                transferredPatientModel.setPatientId(patientDataCommand.getId());
+                if (Objects.nonNull(patientDataCommand.getFirstName()) && Objects.nonNull(patientDataCommand.getLastName())) {
+                    transferredPatientModel.setName(patientDataCommand.getFirstName() + " " + patientDataCommand.getLastName());
+                }
+                if (Objects.nonNull(patientDataCommand.getAge())) {
+                    transferredPatientModel.setAge(patientDataCommand.getAge());
+                }
+                if (Objects.nonNull(patientDataCommand.getCountry())) {
+                    transferredPatientModel.setCountry(patientDataCommand.getCountry());
+                }
+                transferredPatientModel.setInitialHcpId(this.healthCareProfessionalRepository.findAll().get(0).getId());
+                this.restTemplate.postForLocation(this.hospitalServicesUrl + "/patients" + "/permanent-storage", transferredPatientModel);
             }
-            if (Objects.nonNull(patientDataCommand.getAge())) {
-                transferredPatientModel.setAge(patientDataCommand.getAge());
+            if (Objects.nonNull(patient)) {
+                EHRModel ehrModel = new EHRModel();
+                ehrModel.setEhrType(EHRType.PATIENT_DEMOGRAPHIC_DATA);
+                ehrModel.setPatientId(patientId);
+                ehrModel.setContent(convertPatientIntoString(patient));
+                this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
             }
-            if (Objects.nonNull(patientDataCommand.getCountry())) {
-                transferredPatientModel.setCountry(patientDataCommand.getCountry());
+            if (Objects.nonNull(ips)) {
+                EHRModel ehrModel = new EHRModel();
+                ehrModel.setEhrType(EHRType.IPS);
+                ehrModel.setPatientId(patientId);
+                ehrModel.setContent(convertBundleIntoString(ips));
+                this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
             }
-            transferredPatientModel.setInitialHcpId(this.healthCareProfessionalRepository.findAll().get(0).getId());
-            this.restTemplate.postForLocation(this.hospitalServicesUrl + "/patients" + "/permanent-storage", transferredPatientModel);
-        }
-        if (Objects.nonNull(patient)) {
-            EHRModel ehrModel = new EHRModel();
-            ehrModel.setEhrType(EHRType.PATIENT_DEMOGRAPHIC_DATA);
-            ehrModel.setPatientId(patientId);
-            ehrModel.setContent(convertPatientIntoString(patient));
-            this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
-        }
-        if (Objects.nonNull(ips)) {
-            EHRModel ehrModel = new EHRModel();
-            ehrModel.setEhrType(EHRType.IPS);
-            ehrModel.setPatientId(patientId);
-            ehrModel.setContent(convertBundleIntoString(ips));
-            this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
-        }
-        if (Objects.nonNull(prescriptions)) {
-            EHRModel ehrModel = new EHRModel();
-            ehrModel.setEhrType(EHRType.PRESCRIPTION);
-            ehrModel.setPatientId(patientId);
-            ehrModel.setContent(convertBundleIntoString(prescriptions));
-            this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
-        }
-        if (Objects.nonNull(laboratoryResults)) {
-            EHRModel ehrModel = new EHRModel();
-            ehrModel.setEhrType(EHRType.LAB_RESULTS);
-            ehrModel.setPatientId(patientId);
-            ehrModel.setContent(convertBundleIntoString(laboratoryResults));
-            this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
+            if (Objects.nonNull(prescriptions)) {
+                EHRModel ehrModel = new EHRModel();
+                ehrModel.setEhrType(EHRType.PRESCRIPTION);
+                ehrModel.setPatientId(patientId);
+                ehrModel.setContent(convertBundleIntoString(prescriptions));
+                this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
+            }
+            if (Objects.nonNull(laboratoryResults)) {
+                EHRModel ehrModel = new EHRModel();
+                ehrModel.setEhrType(EHRType.LAB_RESULTS);
+                ehrModel.setPatientId(patientId);
+                ehrModel.setContent(convertBundleIntoString(laboratoryResults));
+                this.restTemplate.postForObject(this.hospitalServicesUrl + "/ehrs" + "/permanent-storage", ehrModel, Boolean.class);
+            }
+            return Boolean.TRUE;
+        } catch (ResourceAccessException e) {
+            log.error("Connection refused");
+            return Boolean.FALSE;
         }
     }
 
