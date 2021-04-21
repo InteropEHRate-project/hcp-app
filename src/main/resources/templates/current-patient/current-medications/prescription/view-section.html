@@ -27,6 +27,7 @@
                    th:text="#{button.filter.arrow}">Filter</button></p>
         <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
         <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
+        <p th:if="${session.keywordPrescription != null && session.keywordPrescription != ''}" th:text="${session.keywordPrescription}"></p>
         <div class="collapse" id="collapseExample">
             <div class="btn-toolbar float-left" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
