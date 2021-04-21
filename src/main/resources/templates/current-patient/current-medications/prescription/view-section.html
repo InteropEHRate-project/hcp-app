@@ -34,7 +34,8 @@
                         <input id="txtSearch" type="text" name="keywordPrescription" th:value="${session.keywordPrescription}">
                         <button type="submit" class="btn btn-primary"
                                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.filter.by.drug.name}">Filter by drug name</button>
-                        <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>
+                        <a type="button" class="btn btn-light" th:value="#{button.reset}" onclick="customReset();"
+                               th:href="@{/current-patient/current-medications/prescription/view-section}" th:text="#{button.reset}"></a>
                     </form>
                 </div>
             </div>

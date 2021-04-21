@@ -36,7 +36,8 @@
                     <form th:action="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}" method="get">
                         <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
                         <button type="submit" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.filter.by.analysis}">Filter by analysis</button>
-                        <input type="button" class="btn btn-light" name="reset" th:value="#{button.reset}" onclick="customReset();"/>
+                        <a type="button" class="btn btn-light" th:value="#{button.reset}" onclick="customReset();"
+                           th:href="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}" th:text="#{button.reset}"></a>
                     </form>
                 </div>
             </div>
