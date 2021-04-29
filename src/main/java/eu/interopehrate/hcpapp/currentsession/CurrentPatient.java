@@ -373,19 +373,28 @@ public class CurrentPatient {
         }
     }
 
+    //Original method
+//    public List<Observation> laboratoryList() {
+//        if (displayTranslatedVersion) {
+//            if (Objects.isNull(laboratoryResultsTranslated)) {
+//                return Collections.emptyList();
+//            } else {
+//                return new BundleProcessor(laboratoryResultsTranslated).laboratoryList();
+//            }
+//        } else {
+//            if (Objects.isNull(laboratoryResults)) {
+//                return Collections.emptyList();
+//            } else {
+//                return new BundleProcessor(laboratoryResults).laboratoryList();
+//            }
+//        }
+//    }
+
     public List<Observation> laboratoryList() {
-        if (displayTranslatedVersion) {
-            if (Objects.isNull(laboratoryResultsTranslated)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(laboratoryResultsTranslated).laboratoryList();
-            }
+        if (Objects.isNull(laboratoryResultsTranslated)) {
+            return Collections.emptyList();
         } else {
-            if (Objects.isNull(laboratoryResults)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(laboratoryResults).laboratoryList();
-            }
+            return new BundleProcessor(laboratoryResultsTranslated).laboratoryList();
         }
     }
 

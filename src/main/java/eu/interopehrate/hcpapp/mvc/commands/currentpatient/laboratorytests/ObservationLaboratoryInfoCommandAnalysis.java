@@ -15,6 +15,9 @@ public class ObservationLaboratoryInfoCommandAnalysis {
     private String analysis = "Default Analysis";
     @NotEmpty
     @NotNull
+    private String analysisTranslated = "";
+    @NotEmpty
+    @NotNull
     private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample = new ObservationLaboratoryInfoCommandSample();
     @NotEmpty
     @NotNull

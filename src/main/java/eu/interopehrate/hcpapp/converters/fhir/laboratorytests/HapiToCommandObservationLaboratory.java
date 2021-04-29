@@ -21,8 +21,16 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
     public ObservationLaboratoryInfoCommandAnalysis convert(Observation observation) {
         ObservationLaboratoryInfoCommandAnalysis command = new ObservationLaboratoryInfoCommandAnalysis();
 
-        if (Objects.nonNull(observation.getCode())) {
-            observation.getCode().getCoding().forEach(coding -> command.setAnalysis(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+        if (Objects.nonNull(observation.getCode()) && Objects.nonNull(observation.getCode().getCodingFirstRep()) && observation.getCode().getCodingFirstRep().hasDisplay()) {
+            command.setAnalysis(observation.getCode().getCoding().get(0).getDisplay());
+        }
+
+        if (Objects.nonNull(observation.getCode()) && observation.getCode().hasCoding() && Objects.nonNull(observation.getCode().getCodingFirstRep()) &&
+                observation.getCode().getCodingFirstRep().hasDisplay() && Objects.nonNull(observation.getCode().getCodingFirstRep().getDisplayElement().getExtension()) &&
+                Objects.nonNull(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
+                observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension() &&
+                Objects.nonNull(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).hasValue())) {
+            command.setAnalysisTranslated(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
         }
 
         try {

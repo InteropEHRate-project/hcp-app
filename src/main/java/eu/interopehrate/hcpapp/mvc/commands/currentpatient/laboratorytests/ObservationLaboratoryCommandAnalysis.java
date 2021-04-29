@@ -32,7 +32,7 @@ public class ObservationLaboratoryCommandAnalysis {
     public void createPagination(int pageNo) {
         //Pagination generation
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<String> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo);
+        Page<AnalysisWrapper> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo);
         totalElements = page.getTotalElements();
         totalPages = page.getTotalPages();
     }
@@ -45,21 +45,21 @@ public class ObservationLaboratoryCommandAnalysis {
         return noDuplicates;
     }
 
-    public List<String> observationLaboratoryInfoCommandAnalysesWithoutDuplicates(int pageNo) {
+    public List<AnalysisWrapper> observationLaboratoryInfoCommandAnalysesWithoutDuplicates(int pageNo) {
         //Pagination generation
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<String> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo);
+        Page<AnalysisWrapper> page = createPageFromList(this.noDuplicatesList(), pageable, pageNo);
         return page.getContent();
     }
 
     @SuppressWarnings("rawtypes")
     public DoubleKeyHashMap valueReturn(int pageNo) {
-        DoubleKeyHashMap<String, LocalDateTime, String> mapPair = new DoubleKeyHashMap<>();
-        List<String> analysisList = this.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(pageNo);
+        DoubleKeyHashMap<AnalysisWrapper, LocalDateTime, String> mapPair = new DoubleKeyHashMap<>();
+        List<AnalysisWrapper> analysisList = this.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(pageNo);
         List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
 
         analysisList.forEach(an -> dateTimeList.forEach(date -> this.observationLaboratoryInfoCommandAnalyses.forEach(obs -> {
-            if (an.equals(obs.getAnalysis()) &&
+            if (an.getAnalysis().equals(obs.getAnalysis()) &&
                     (date.equals(obs.getObservationLaboratoryInfoCommandSample().getSample()))) {
                 if (Objects.isNull(obs.getObservationLaboratoryInfoCommandSample().getCurrentValue())
                         || Objects.isNull(obs.getObservationLaboratoryInfoCommandSample().getUnit())) {
@@ -90,21 +90,33 @@ public class ObservationLaboratoryCommandAnalysis {
         return "No value found";
     }
 
-    private static Page<String> createPageFromList(List<String> list, Pageable pageable, int pageNo) {
+    private static Page<AnalysisWrapper> createPageFromList(List<AnalysisWrapper> list, Pageable pageable, int pageNo) {
         try {
             int index = (pageNo - 1) * ObservationLaboratoryCommandAnalysis.pageSize;
-            return new PageImpl<>(list.subList(index, index + ObservationLaboratoryCommandAnalysis.pageSize), pageable, list.size());
+            return new PageImpl(list.subList(index, index + ObservationLaboratoryCommandAnalysis.pageSize), pageable, list.size());
         } catch (IndexOutOfBoundsException ignored) {
             int index = (pageNo - 1) * ObservationLaboratoryCommandAnalysis.pageSize;
-            return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
+            return new PageImpl(list.subList(index, list.size()), pageable, list.size());
         }
     }
 
-    private List<String> noDuplicatesList() {
-        List<String> withDuplicates = new ArrayList<>();
-        this.observationLaboratoryInfoCommandAnalyses.forEach(obs -> withDuplicates.add(obs.getAnalysis()));
-        List<String> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
-        Collections.sort(noDuplicates);
+    private List<AnalysisWrapper> noDuplicatesList() {
+        List<AnalysisWrapper> withDuplicates = new ArrayList<>();
+
+        for (ObservationLaboratoryInfoCommandAnalysis o : this.observationLaboratoryInfoCommandAnalyses) {
+            AnalysisWrapper analysisWrapper = new AnalysisWrapper();
+            analysisWrapper.setAnalysis(o.getAnalysis());
+            analysisWrapper.setAnalysisTranslated(o.getAnalysisTranslated());
+            withDuplicates.add(analysisWrapper);
+        }
+
+        List<AnalysisWrapper> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
+        noDuplicates.sort(new Comparator<AnalysisWrapper>() {
+            @Override
+            public int compare(AnalysisWrapper o1, AnalysisWrapper o2) {
+                return o1.getAnalysis().compareTo(o2.getAnalysis());
+            }
+        });
         return noDuplicates;
     }
 }
