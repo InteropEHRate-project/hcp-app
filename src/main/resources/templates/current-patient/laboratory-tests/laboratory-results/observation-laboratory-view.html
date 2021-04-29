@@ -59,14 +59,12 @@
             <tr th:each="an : ${labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(currentPage)}">
                 <div th:with="map=${labResultsAnalysisCommand.valueReturn(currentPage)}">
                     <td th:text="${{an.getAnalysis()}}"></td>
-                    <th style="background-color: azure" th:style="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
-                        th:text="${{an.getAnalysisTranslated()}}"></th>
+                    <th style="background-color: azure" th:text="${{an.getAnalysisTranslated()}}"></th>
                     <th:block th:each="sample : ${labResultsAnalysisCommand.localDateTimeListWithoutDuplicates()}">
                         <div th:with="boolVal=${labResultsAnalysisCommand.getResultOfAnalysis(an.getAnalysis(), sample)}">
-<!--                            <td th:if="${map.get(an.getAnalysis(),sample) == null}">-</td>-->
-                            <div>
-                                <td th:text="${{map.get(an.getAnalysis(),sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' " data-toggle="tooltip" data-placement="bottom" th:title="${labResultsAnalysisCommand.getStringForTooltip(an.getAnalysis())}"></td>
-                            </div>
+                            <td th:if="${map.get(an,sample) == null}">-</td>
+                            <td th:unless="${map.get(an,sample) == null}" th:text="${{map.get(an,sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' "
+                                data-toggle="tooltip" data-placement="bottom" th:title="${labResultsAnalysisCommand.getStringForTooltip(an.getAnalysis())}"></td>
                         </div>
                     </th:block>
                 </div>
