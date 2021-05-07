@@ -51,8 +51,8 @@
                     <p class="card-text" th:text="${prescription.getEnd()}">end</p>
 
                     <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</h5>
-                    <p class="card-text" style="background-color: azure" th:style="${!translation} ? '' : 'background-color: azure'"
-                       th:text="${prescription.getNotes()}">notes</p>
+                    <p class="card-text"   th:text="${prescription.getNotes()}">notes</p>
+                    <p class="card-text" style="background-color: azure" th:text="${prescription.getNotesTranslated()}">notes</p>
 
                     <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</h5>
                     <th:block th:switch="${prescription.getStatus()}">

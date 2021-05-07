@@ -30,6 +30,9 @@ public class MedicationInfoCommand {
     private String notes;
     @NotEmpty
     @NotNull
+    private String notesTranslated;
+    @NotEmpty
+    @NotNull
     private String status;
     @NotEmpty
     @NotNull

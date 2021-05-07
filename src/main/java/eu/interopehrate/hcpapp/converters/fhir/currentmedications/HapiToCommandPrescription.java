@@ -29,9 +29,12 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
                 && source.getDosageInstructionFirstRep().getRoute().hasCoding() && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().hasDisplayElement()
                 && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().hasExtension()
                 && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
-            prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
+            prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplay());
         } else if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute() && source.getDosageInstructionFirstRep().getRoute().hasCoding()) {
             prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplay());
+        }
+        if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute() && source.getDosageInstructionFirstRep().getRoute().hasCoding()) {
+            prescriptionInfoCommand.setNotesTranslated(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
         }
         if (source.hasStatus() && source.getStatus().getDisplay() != null) {
             prescriptionInfoCommand.setStatus(source.getStatus().getDisplay());

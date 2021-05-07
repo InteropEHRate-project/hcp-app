@@ -414,7 +414,6 @@ public class CurrentPatient {
         }
     }
 
-
     public List<MedicationStatement> medicationStatementList() {
         if (displayTranslatedVersion) {
             if (Objects.isNull(patientSummaryBundleTranslated)) {
@@ -432,18 +431,10 @@ public class CurrentPatient {
     }
 
     public List<MedicationRequest> prescriptionList() {
-        if (this.displayTranslatedVersion) {
-            if (Objects.isNull(this.prescriptionTranslated)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(this.prescriptionTranslated).prescriptionList();
-            }
+        if (Objects.isNull(this.prescriptionTranslated)) {
+            return Collections.emptyList();
         } else {
-            if (Objects.isNull(this.prescription)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(this.prescription).prescriptionList();
-            }
+            return new BundleProcessor(this.prescriptionTranslated).prescriptionList();
         }
     }
 
@@ -570,7 +561,7 @@ public class CurrentPatient {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         ArrayList<Character> chars = new ArrayList<>();
         int i;
-        while((i=reader.read())!=-1){
+        while ((i = reader.read()) != -1) {
             chars.add((char) i);
         }
         reader.close();
