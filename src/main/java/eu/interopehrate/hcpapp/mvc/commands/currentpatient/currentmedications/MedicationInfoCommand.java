@@ -21,6 +21,9 @@ public class MedicationInfoCommand {
     private String drugName;
     @NotEmpty
     @NotNull
+    private String drugNameTranslated;
+    @NotEmpty
+    @NotNull
     private String drugDosage;
     @NotEmpty
     @NotNull

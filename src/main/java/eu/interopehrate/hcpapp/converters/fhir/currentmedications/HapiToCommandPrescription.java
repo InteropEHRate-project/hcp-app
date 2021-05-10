@@ -23,7 +23,10 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
             prescriptionInfoCommand.setId(Long.parseLong(source.getId().substring(source.getId().indexOf("/") + 1)));
         }
         if (source.hasMedicationCodeableConcept() && source.getMedicationCodeableConcept().hasCoding()) {
-            source.getMedicationCodeableConcept().getCoding().forEach(coding -> prescriptionInfoCommand.setDrugName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+            prescriptionInfoCommand.setDrugName(source.getMedicationCodeableConcept().getCoding().get(0).getDisplayElement().toString());
+        }
+        if (source.hasMedicationCodeableConcept() && source.getMedicationCodeableConcept().hasCoding()) {
+            prescriptionInfoCommand.setDrugNameTranslated(source.getMedicationCodeableConcept().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString());
         }
         if (this.currentPatient.getDisplayTranslatedVersion() && source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute()
                 && source.getDosageInstructionFirstRep().getRoute().hasCoding() && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().hasDisplayElement()

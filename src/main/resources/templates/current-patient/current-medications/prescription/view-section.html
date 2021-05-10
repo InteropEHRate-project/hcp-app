@@ -47,6 +47,7 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name.translated}">Drug Name Translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
@@ -55,7 +56,8 @@
         </thead>
         <tbody>
         <tr th:each="pr : ${listPrescriptionsSEHR}">
-            <td style="background-color: azure" th:style="${!prescriptionCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${pr.getDrugName()}"></td>
+            <td  th:text="${pr.getDrugName()}"></td>
+            <td style="background-color: azure" th:text="${pr.getDrugNameTranslated()}"></td>
             <td th:text="${pr.getDrugDosage()}"></td>
             <td th:utext="${pr.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
             <td>
