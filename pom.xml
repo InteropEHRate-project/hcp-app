@@ -15,7 +15,7 @@
     <description>Reference HCP application</description>
 
     <properties>
-        <java.version>15</java.version>
+        <java.version>16</java.version>
         <hapi.fhir.version>4.1.0</hapi.fhir.version>
         <font-awesome.version>5.11.2</font-awesome.version>
     </properties>
