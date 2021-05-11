@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticImaging;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/diagnostic-imaging")
@@ -32,7 +36,10 @@ public class DiagnosticImagingController {
 
     @GetMapping
     @RequestMapping("/image-report")
-    public String imageReportSection(Model model) {
+    public String imageReportSection(Model model, HttpSession session) {
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
+        }
         imageCommand = this.diagnosticImagingService.imageCommand();
         model.addAttribute("imageCommand", imageCommand);
         return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_IMAGING_IMAGE_REPORT;
@@ -56,6 +63,6 @@ public class DiagnosticImagingController {
     @RequestMapping("/refresh-data")
     public String refreshData() {
         this.diagnosticImagingService.refreshData();
-        return "redirect:/current-patient/diagnostic-imaging/view-section";
+        return "redirect:/current-patient/diagnostic-imaging/image-report";
     }
 }
