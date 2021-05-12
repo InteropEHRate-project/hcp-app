@@ -26,7 +26,7 @@ public class PrescriptionInfoCommand {
     private String drugName;
     @NotEmpty
     @NotNull
-    private String drugNameTranslated;
+    private String drugNameTranslated = "";
     @NotEmpty
     @NotNull
     private String drugDosage;
@@ -35,7 +35,7 @@ public class PrescriptionInfoCommand {
     private String notes;
     @NotEmpty
     @NotNull
-    private String notesTranslated;
+    private String notesTranslated = "";
     private String author;
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
