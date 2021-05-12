@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.index;
 
 import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.currentsession.WorkingSession;
-import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.index.IndexService;
 import org.springframework.stereotype.Controller;

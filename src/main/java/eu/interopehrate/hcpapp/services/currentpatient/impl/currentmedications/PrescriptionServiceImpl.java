@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
-import eu.interopehrate.hcpapp.converters.entity.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;

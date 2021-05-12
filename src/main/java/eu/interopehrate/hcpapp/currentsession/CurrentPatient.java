@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
-import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;

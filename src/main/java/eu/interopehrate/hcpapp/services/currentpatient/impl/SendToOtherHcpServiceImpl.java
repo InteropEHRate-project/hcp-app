@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import eu.interopehrate.hcpapp.converters.entity.EntityToCommandPrescription;
-import eu.interopehrate.hcpapp.converters.entity.EntityToCommandVitalSigns;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandPrescription;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
@@ -9,7 +9,7 @@ import eu.interopehrate.hcpapp.jpa.entities.enums.EHRType;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
-import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.EHRModel;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
 import eu.interopehrate.hcpapp.services.currentpatient.SendToOtherHcpService;

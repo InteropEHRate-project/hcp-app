@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.converters.entity;
+package eu.interopehrate.hcpapp.converters.entity.entitytocommand;
 
 import eu.interopehrate.hcpapp.jpa.entities.AuditInformationEntity;
 import eu.interopehrate.hcpapp.mvc.commands.administration.AuditInformationCommand;

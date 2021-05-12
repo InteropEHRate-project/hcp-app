@@ -3,7 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.enums.EHRType;
 import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
-import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.EHRModel;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
 import eu.interopehrate.hcpapp.services.currentpatient.PermanentStorageOfCloudDataService;

@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands;
+package eu.interopehrate.hcpapp.mvc.commands.index;
 
 import eu.interopehrate.hcpapp.currentsession.CloudConnectionState;
 import eu.interopehrate.hcpapp.currentsession.D2DConnectionState;

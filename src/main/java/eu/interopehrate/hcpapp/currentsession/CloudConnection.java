@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
-import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
-import eu.interopehrate.hcpapp.mvc.commands.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.protocols.common.DocumentCategory;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;

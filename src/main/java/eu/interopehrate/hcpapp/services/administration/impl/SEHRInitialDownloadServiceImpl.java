@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
-import eu.interopehrate.hcpapp.converters.entity.EntityToCommandSEHRInitialDownload;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandSEHRInitialDownload;
 import eu.interopehrate.hcpapp.jpa.entities.SEHRInitialDownloadEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.SEHRInitialDownloadRepository;

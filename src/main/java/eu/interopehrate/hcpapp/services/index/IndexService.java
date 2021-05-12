@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.index;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.IndexCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import org.bouncycastle.operator.OperatorCreationException;
 
 import java.io.IOException;

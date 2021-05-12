@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.converters.entity;
+package eu.interopehrate.hcpapp.converters.entity.entitytocommand;
 
 import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
