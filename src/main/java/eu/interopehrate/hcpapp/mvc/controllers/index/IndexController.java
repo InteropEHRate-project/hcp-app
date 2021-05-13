@@ -32,7 +32,7 @@ public class IndexController {
         if (Objects.isNull(session.getAttribute("patientNavbar")) && IndexCommand.transmissionCompleted) {
             session.setAttribute("patientNavbar", indexCommand);
         }
-        if (Objects.isNull(session.getAttribute("hcpName"))) {
+        if (Objects.isNull(session.getAttribute("hcpName")) && Objects.nonNull(this.healthCareProfessionalRepository)) {
             session.setAttribute("hcpName",
                     this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
         }

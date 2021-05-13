@@ -15,8 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class DocumentHistoryConsultationControllerTest {
     @Mock
@@ -34,7 +32,6 @@ class DocumentHistoryConsultationControllerTest {
 
     @Test
     void viewSection() throws Exception {
-        when(this.documentHistoryConsultationService.documentHistoryConsultationCommand(null, null, null, null)).thenReturn(this.documentHistoryConsultationCommand);
         this.mockMvc.perform(MockMvcRequestBuilders.get("/current-patient/document-history-consultation/view-section"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name(TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION))

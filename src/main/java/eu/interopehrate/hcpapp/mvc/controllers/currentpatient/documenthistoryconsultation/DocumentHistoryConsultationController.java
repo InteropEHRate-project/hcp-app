@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/document-history-consultation")
@@ -27,7 +28,9 @@ public class DocumentHistoryConsultationController {
         DocumentHistoryConsultationCommand documentHistoryConsultationCommand = this.documentHistoryConsultationService.getData();
         model.addAttribute("currentD2DConnection", this.documentHistoryConsultationService.getCurrentD2DConnection());
         model.addAttribute("documentHistoryConsultationCommand", documentHistoryConsultationCommand);
-        model.addAttribute("documentHistoryConsultationList", documentHistoryConsultationCommand.getDocumentHistoryConsultationInfoCommandList());
+        if (Objects.nonNull(documentHistoryConsultationCommand)) {
+            model.addAttribute("documentHistoryConsultationList", documentHistoryConsultationCommand.getDocumentHistoryConsultationInfoCommandList());
+        }
         model.addAttribute("isFiltered", this.documentHistoryConsultationService.isFiltered());
         model.addAttribute("isEmpty", this.documentHistoryConsultationService.isEmpty());
         model.addAttribute("lastYear", LocalDate.now().getYear() - 1);

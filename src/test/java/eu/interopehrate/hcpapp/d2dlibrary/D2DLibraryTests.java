@@ -4,7 +4,6 @@ import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.td2de.BluetoothConnection;
 import eu.interopehrate.td2de.api.D2DConnection;
 import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
-import eu.interopehrate.td2de.api.D2DSecurityConnection;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -31,7 +30,7 @@ public class D2DLibraryTests {
     @Test
     public void testGetBTAdapterAddress() throws Exception {
         D2DConnection d2DConnection = new BluetoothConnection();
-        ((D2DSecurityConnection) d2DConnection).fetchCertificate();
+//        ((D2DSecurityConnection) d2DConnection).fetchCertificate();
         String btAdapterAddress = d2DConnection.getBTadapterAddress();
         Assert.assertNotNull(btAdapterAddress);
         System.out.println(btAdapterAddress);
