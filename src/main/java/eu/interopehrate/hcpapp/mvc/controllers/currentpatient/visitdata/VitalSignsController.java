@@ -27,7 +27,7 @@ public class VitalSignsController {
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) throws IOException {
-        model.addAttribute("patient", this.vitalSignsService.getCurrentPatient().getPatient());
+        model.addAttribute("patient", this.vitalSignsService.getCurrentPatient());
         model.addAttribute("vitalSigns", vitalSignsService.vitalSignsCommand());
         model.addAttribute("vitalSignsUpload", vitalSignsService.vitalSignsUpload());
         model.addAttribute("vitalSignsService", vitalSignsService.getCurrentD2DConnection());

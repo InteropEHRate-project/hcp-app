@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/current-patient/current-medications/prescription")
 public class MedicationController {
@@ -24,8 +26,12 @@ public class MedicationController {
     @RequestMapping("/idToMedicationSEHR")
     public String viewSEHRSection(@RequestParam(name = "id") String id, Model model) {
         model.addAttribute("prescriptionCommand", PrescriptionController.prescriptionCommand);
-        model.addAttribute("prescription", PrescriptionController.prescriptionCommand.find(Long.parseLong(id)));
-        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
+        if (Objects.nonNull(PrescriptionController.prescriptionCommand)) {
+            model.addAttribute("prescription", PrescriptionController.prescriptionCommand.find(Long.parseLong(id)));
+        }
+        if (Objects.nonNull(this.medicationService.getCurrentPatient())) {
+            model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
+        }
         model.addAttribute("doctor", healthCareProfessionalService.getHealthCareProfessional());
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW;
     }
