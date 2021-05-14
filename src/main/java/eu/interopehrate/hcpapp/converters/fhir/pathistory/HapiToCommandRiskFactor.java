@@ -21,8 +21,14 @@ public class HapiToCommandRiskFactor implements Converter<Observation, PatHistor
     public PatHistoryInfoCommandRiskFactor convert(Observation source) {
         PatHistoryInfoCommandRiskFactor patHistoryInfoCommandRiskFactor = new PatHistoryInfoCommandRiskFactor();
 
-        if (Objects.nonNull(source.getCode())) {
-            source.getCode().getCoding().forEach(coding -> patHistoryInfoCommandRiskFactor.setRiskFactor(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+        if (Objects.nonNull(source.getCode()) && source.getCode().getCodingFirstRep().hasDisplay()) {
+            patHistoryInfoCommandRiskFactor.setRiskFactor(source.getCode().getCodingFirstRep().getDisplay());
+        }
+        if (Objects.nonNull(source.getCode()) && source.getCode().getCodingFirstRep().hasDisplayElement() &&
+                source.getCode().getCodingFirstRep().getDisplayElement().hasExtension() &&
+                Objects.nonNull(source.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
+                source.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
+            patHistoryInfoCommandRiskFactor.setRiskFactorTranslated(source.getCode().getCodingFirstRep().getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString());
         }
         if (source.hasValue() && ((BooleanType) source.getValue()).hasValue()) {
             patHistoryInfoCommandRiskFactor.setState(((BooleanType) source.getValue()).getValue());

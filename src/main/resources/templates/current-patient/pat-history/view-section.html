@@ -31,6 +31,7 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis}">diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis.translated}">diagnosis translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.year.of.diagnosis}">year of diagnosis
             </th>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.comments}">comments</th>
@@ -38,10 +39,8 @@
         </thead>
         <tbody>
         <tr th:each="patHistory : ${patHistoryCommand.getPatHistoryInfoCommandDiagnoses()}">
-            <td style="background-color: azure"
-                th:style="${!patHistoryCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
-                th:text="${patHistory.getDiagnosis()}">diagnosis
-            </td>
+            <td th:text="${patHistory.getDiagnosis()}">diagnosis</td>
+            <th style="background-color: azure" th:text="${patHistory.getDiagnosisTranslated()}">diagnosis translated</th>
             <td th:text="${{patHistory.getYearOfDiagnosis()}}">year of diagnosis</td>
             <td th:text="${patHistory.getComments()}">comments</td>
         </tr>
@@ -52,23 +51,17 @@
     <table class="table" th:if="${!patHistoryCommand.getPatHistoryInfoCommandRiskFactors().isEmpty()}">
         <thead>
         <tr>
-            <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}"
-                style="background-color: lavender">risk factor
-            </th>
-            <th th:text="#{fragment.current.patient.navigation.left.pat.history.yes.no}"
-                style="background-color: lavender">yes/no
-            </th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor.translated}" style="background-color: lavender">risk factor translated</th>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
         </tr>
         </thead>
         <tbody th:each="risk : ${patHistoryCommand.getPatHistoryInfoCommandRiskFactors()}">
         <tr>
-            <td style="background-color: azure"
-                th:style="${!patHistoryCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
-                th:text="${risk.getRiskFactor()}"></td>
-            <td th:if="${risk.isState()}" class="text-warning"
-                th:text="#{fragment.current.patient.navigation.left.pat.history.yes}"></td>
-            <td th:unless="${risk.isState()}" class="text-primary"
-                th:text="#{fragment.current.patient.navigation.left.pat.history.no}"></td>
+            <td th:text="${risk.getRiskFactor()}"></td>
+            <th style="background-color: azure" th:text="${risk.getRiskFactorTranslated()}"></th>
+            <td th:if="${risk.isState()}" class="text-warning" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}"></td>
+            <td th:unless="${risk.isState()}" class="text-primary" th:text="#{fragment.current.patient.navigation.left.pat.history.no}"></td>
         </tr>
         </tbody>
     </table>

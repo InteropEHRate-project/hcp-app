@@ -12,6 +12,7 @@ public class PatHistoryInfoCommandRiskFactor {
     @NotEmpty
     @NotNull
     private String riskFactor;
+    private String riskFactorTranslated = "";
     @NotEmpty
     @NotNull
     private boolean state;

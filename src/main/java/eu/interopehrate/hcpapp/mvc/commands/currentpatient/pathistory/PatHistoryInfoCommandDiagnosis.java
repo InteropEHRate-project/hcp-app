@@ -12,6 +12,7 @@ public class PatHistoryInfoCommandDiagnosis {
     @NotEmpty
     @NotNull
     private String diagnosis;
+    private String diagnosisTranslated = "";
     @NotEmpty
     @NotNull
     private int yearOfDiagnosis;

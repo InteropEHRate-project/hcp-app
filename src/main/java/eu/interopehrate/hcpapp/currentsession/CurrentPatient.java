@@ -503,34 +503,18 @@ public class CurrentPatient {
     }
 
     public List<Observation> patHisConsultationRiskFactorsList() {
-        if (this.displayTranslatedVersion) {
-            if (Objects.isNull(this.patHisBundleTranslated)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(this.patHisBundleTranslated).patHisConsultationObservationsList();
-            }
+        if (Objects.isNull(this.patHisBundleTranslated)) {
+            return Collections.emptyList();
         } else {
-            if (Objects.isNull(this.patHisBundle)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(this.patHisBundle).patHisConsultationObservationsList();
-            }
+            return new BundleProcessor(this.patHisBundleTranslated).patHisConsultationObservationsList();
         }
     }
 
     public List<Condition> patHisConsultationDiagnosesList() {
-        if (this.displayTranslatedVersion) {
-            if (Objects.isNull(this.patHisBundleTranslated)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(this.patHisBundleTranslated).patHisConsultationConditionsList();
-            }
+        if (Objects.isNull(this.patHisBundleTranslated)) {
+            return Collections.emptyList();
         } else {
-            if (Objects.isNull(this.patHisBundle)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(this.patHisBundle).patHisConsultationConditionsList();
-            }
+            return new BundleProcessor(this.patHisBundleTranslated).patHisConsultationConditionsList();
         }
     }
 
