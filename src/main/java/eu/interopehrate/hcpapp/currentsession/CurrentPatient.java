@@ -399,19 +399,11 @@ public class CurrentPatient {
     }
 
     public List<Condition> conditionsList() {
-        if (displayTranslatedVersion) {
             if (Objects.isNull(patientSummaryBundleTranslated)) {
                 return Collections.emptyList();
             } else {
                 return new BundleProcessor(patientSummaryBundleTranslated).conditionList();
             }
-        } else {
-            if (Objects.isNull(patientSummaryBundle)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(patientSummaryBundle).conditionList();
-            }
-        }
     }
 
     public List<MedicationStatement> medicationStatementList() {
