@@ -15,6 +15,7 @@ public class CurrentDiseaseInfoCommand {
     @NotEmpty
     @NotNull
     private String disease;
+    private String diseaseTranslated;
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfDiagnosis = LocalDate.now();
