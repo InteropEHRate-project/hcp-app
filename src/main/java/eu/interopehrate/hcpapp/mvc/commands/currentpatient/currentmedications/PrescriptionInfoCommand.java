@@ -24,8 +24,6 @@ public class PrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String drugName;
-    @NotEmpty
-    @NotNull
     private String drugNameTranslated = "";
     @NotEmpty
     @NotNull
@@ -33,8 +31,6 @@ public class PrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String notes;
-    @NotEmpty
-    @NotNull
     private String notesTranslated = "";
     private String author;
     @NotNull
