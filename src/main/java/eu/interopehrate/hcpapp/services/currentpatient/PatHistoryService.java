@@ -14,4 +14,5 @@ public interface PatHistoryService {
     void editRisk(Boolean value, String id);
     PatHistoryInfoCommandDiagnosis patHisInfoCommandById(String id);
     void updateDiagnosis(PatHistoryInfoCommandDiagnosis patHisInfoCommand);
+    void deleteDiagnosis(String id);
 }

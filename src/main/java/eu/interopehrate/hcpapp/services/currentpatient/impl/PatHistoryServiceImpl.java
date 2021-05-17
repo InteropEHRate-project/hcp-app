@@ -132,6 +132,19 @@ public class PatHistoryServiceImpl implements PatHistoryService {
         updateDiagnosisDetails(optional, patHisInfoCommand);
     }
 
+    @Override
+    public void deleteDiagnosis(String id) {
+        // delete from Original Bundle
+        this.currentPatient.getPatHisBundle()
+                .getEntry()
+                .removeIf(bundleEntryComponent -> bundleEntryComponent.getResource().getResourceType().equals(ResourceType.Condition) && bundleEntryComponent.getResource().getId().equals(id));
+
+        // delete from Translated Bundle
+        this.currentPatient.getPatHisBundleTranslated()
+                .getEntry()
+                .removeIf(bundleEntryComponent -> bundleEntryComponent.getResource().getResourceType().equals(ResourceType.Condition) && bundleEntryComponent.getResource().getId().equals(id));
+    }
+
     private static void updateDiagnosisDetails(Optional<Resource> optional, PatHistoryInfoCommandDiagnosis patHisInfoCommand) {
         if (optional.isPresent()) {
             ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(patHisInfoCommand.getDiagnosis());

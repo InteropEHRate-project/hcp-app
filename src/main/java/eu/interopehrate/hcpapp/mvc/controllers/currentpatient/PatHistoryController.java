@@ -69,4 +69,12 @@ public class PatHistoryController {
         this.patHistoryService.updateDiagnosis(patHisInfoCommand);
         return "redirect:/current-patient/pat-history/view-section";
     }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String deleteDiagnosis(@RequestParam("id") String id, Model model) {
+        this.patHistoryService.deleteDiagnosis(id);
+        model.addAttribute("diagnosisDeleted", Boolean.TRUE);
+        return this.viewSection(model);
+    }
 }
