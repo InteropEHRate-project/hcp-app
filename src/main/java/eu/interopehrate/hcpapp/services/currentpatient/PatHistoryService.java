@@ -10,4 +10,5 @@ public interface PatHistoryService {
     void deleteSocHis(String socHis);
     void insertFamHis(String famHis);
     void deleteFamHis(String famHis);
+    void editRisk(Boolean value, String id);
 }

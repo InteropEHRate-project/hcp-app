@@ -6,6 +6,10 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import lombok.SneakyThrows;
+import org.hl7.fhir.r4.model.BooleanType;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Observation;
+import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -83,5 +87,23 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     @Override
     public void deleteFamHis(String famHis) {
         this.listOfFamHis.removeIf(x -> x.equals(famHis));
+    }
+
+    @Override
+    public void editRisk(Boolean value, String id) {
+        // update original bundle
+        Bundle bundle = this.currentPatient.getPatHisBundle();
+        for (Bundle.BundleEntryComponent b : bundle.getEntry()) {
+            if (b.getResource().getResourceType().equals(ResourceType.Observation) && b.getResource().getId().equals(id)) {
+                ((BooleanType) ((Observation) b.getResource()).getValue()).setValue(value);
+            }
+        }
+        // update translated bundle
+        Bundle bundleTranslated = this.currentPatient.getPatHisBundleTranslated();
+        for (Bundle.BundleEntryComponent b : bundleTranslated.getEntry()) {
+            if (b.getResource().getResourceType().equals(ResourceType.Observation) && b.getResource().getId().equals(id)) {
+                ((BooleanType) ((Observation) b.getResource()).getValue()).setValue(value);
+            }
+        }
     }
 }

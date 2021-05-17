@@ -48,12 +48,18 @@
     </table>
     <br>
 
+
+
+    <div class="alert alert-success" role="alert" th:if="${riskFactorEdited != null && riskFactorEdited}"
+         th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor.updated}">Risk factor updated</div>
+
     <table class="table" th:if="${!patHistoryCommand.getPatHistoryInfoCommandRiskFactors().isEmpty()}">
         <thead>
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor}" style="background-color: lavender">risk factor</th>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor.translated}" style="background-color: lavender">risk factor translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.yes.no}" style="background-color: lavender">yes/no</th>
+            <th style="background-color: lavender" th:text="#{fragment.current.patient.navigation.left.pat.history.edit.value}">Edit value</th>
         </tr>
         </thead>
         <tbody th:each="risk : ${patHistoryCommand.getPatHistoryInfoCommandRiskFactors()}">
@@ -62,6 +68,16 @@
             <th style="background-color: azure" th:text="${risk.getRiskFactorTranslated()}"></th>
             <td th:if="${risk.isState()}" class="text-warning" th:text="#{fragment.current.patient.navigation.left.pat.history.yes}"></td>
             <td th:unless="${risk.isState()}" class="text-primary" th:text="#{fragment.current.patient.navigation.left.pat.history.no}"></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn-sm btn-warning"
+                       th:href="@{/current-patient/pat-history/editRisk(value = true, id = ${risk.getId()})}"
+                       th:text="#{fragment.current.patient.navigation.left.pat.history.yes}">Yes</a>
+                    <a href="#" class="btn-sm btn-primary"
+                       th:href="@{/current-patient/pat-history/editRisk(value = false, id = ${risk.getId()})}"
+                       th:text="#{fragment.current.patient.navigation.left.pat.history.no}">No</a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

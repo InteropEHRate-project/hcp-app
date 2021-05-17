@@ -237,6 +237,10 @@ public class CurrentPatient {
         return patHisBundle;
     }
 
+    public Bundle getPatHisBundleTranslated() {
+        return patHisBundleTranslated;
+    }
+
     public Bundle getPrescription() {
         return prescription;
     }

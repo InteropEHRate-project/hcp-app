@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/current-patient/pat-history")
@@ -34,5 +35,15 @@ public class PatHistoryController {
         this.patHistoryService.insertSocHis(socHis);
         this.patHistoryService.insertFamHis(famHis);
         return "redirect:/current-patient/pat-history/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/editRisk")
+    public String editRisk(Model model,
+                           @RequestParam(name = "value") Boolean value,
+                           @RequestParam(name = "id") String id) {
+        this.patHistoryService.editRisk(value, id);
+        model.addAttribute("riskFactorEdited", Boolean.TRUE);
+        return this.viewSection(model);
     }
 }
