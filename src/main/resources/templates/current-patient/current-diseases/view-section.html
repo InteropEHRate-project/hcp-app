@@ -24,27 +24,29 @@
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
-            <th>Resource</th>
+            <th th:text="#{fragment.current.patient.navigation.left.allergies.Resource}">Resource</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
-            <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
-            <td>Original</td>
-            <td th:text="${currentDisease.getDisease()}">disease</td>
-            <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
-            <td th:text="${currentDisease.getComment()}">comment</td>
-        </tr>
-        <tr th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
-            <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
-            <td>Translated</td>
-            <th style="background-color: azure" th:style="${!currentDiseaseCommand.displayTranslatedVersion} ? '' : 'background-color: azure'" th:text="${currentDisease.getDiseaseTranslated()}">disease</th>
-            <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
-            <td th:text="${currentDisease.getComment()}">comment</td>
-        </tr>
+        <div th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
+            <tr>
+                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
+                <td th:text="#{ips.translate.button.original}">Original</td>
+                <td th:text="${currentDisease.getDisease()}">disease</td>
+                <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${currentDisease.getComment()}">comment</td>
+            </tr>
+            <tr>
+                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
+                <td th:text="#{ips.translate.button.translated}">Translated</td>
+                <th style="background-color: azure" th:text="${currentDisease.getDiseaseTranslated()}">disease</th>
+                <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${currentDisease.getComment()}">comment</td>
+            </tr>
+        </div>
         </tbody>
     </table>
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
