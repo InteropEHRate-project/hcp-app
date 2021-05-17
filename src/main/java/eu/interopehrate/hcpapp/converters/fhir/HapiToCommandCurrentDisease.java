@@ -41,11 +41,6 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
         if (Objects.nonNull(condition.getCode()) && condition.getCode().getCodingFirstRep().hasDisplayElement() &&
                 Objects.nonNull(condition.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
                 condition.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
-            currentDiseaseInfoCommand.setCode(condition.getCode()
-                    .getCoding()
-                    .stream()
-                    .map(c -> c.getSystem() + ":" + c.getCode())
-                    .collect(Collectors.joining("; ")));
 
             currentDiseaseInfoCommand.setDiseaseTranslated(condition.getCode().getCodingFirstRep().getDisplayElement().getExtension().get(0).getValue().toString());
         }
