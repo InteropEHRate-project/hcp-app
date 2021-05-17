@@ -27,6 +27,9 @@
 <!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.pat.history}">Pat History</h3>
     <br>
+    <div class="alert alert-danger" role="alert" th:if="${diagnosisDeleted != null && diagnosisDeleted}"
+         th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis.deleted}">Diagnosis deleted</div>
+
     <table class="table table-bordered" th:if="${!patHistoryCommand.getPatHistoryInfoCommandDiagnoses().isEmpty()}">
         <thead class="thead-light">
         <tr>
