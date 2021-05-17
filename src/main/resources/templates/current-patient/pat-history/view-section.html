@@ -35,6 +35,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.year.of.diagnosis}">year of diagnosis
             </th>
             <th th:text="#{fragment.current.patient.navigation.left.pat.history.comments}">comments</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,16 @@
             <th style="background-color: azure" th:text="${patHistory.getDiagnosisTranslated()}">diagnosis translated</th>
             <td th:text="${{patHistory.getYearOfDiagnosis()}}">year of diagnosis</td>
             <td th:text="${patHistory.getComments()}">comments</td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-info"
+                       th:href="@{/current-patient/pat-history/open-update-page(id=${{patHistory.getId()}})}"
+                       th:text="#{crud.button.edit}">Edit</a>
+<!--                    <a href="#" class="btn btn-danger"-->
+<!--                       th:href="@{/current-patient/pat-history/delete(id=${{patHistory.getId()}})}"-->
+<!--                       th:text="#{crud.button.delete}">Delete</a>-->
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

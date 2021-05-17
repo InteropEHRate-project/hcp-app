@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.converters.fhir.pathistory;
 
-import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
 import org.hl7.fhir.r4.model.Condition;
 import org.hl7.fhir.r4.model.DateTimeType;
@@ -11,16 +10,14 @@ import java.util.Objects;
 
 @Component
 public class HapiToCommandDiagnosis implements Converter<Condition, PatHistoryInfoCommandDiagnosis> {
-    private final CurrentPatient currentPatient;
-
-    public HapiToCommandDiagnosis(CurrentPatient currentPatient) {
-        this.currentPatient = currentPatient;
-    }
 
     @Override
     public PatHistoryInfoCommandDiagnosis convert(Condition source) {
         PatHistoryInfoCommandDiagnosis patHistoryInfoCommandDiagnosis = new PatHistoryInfoCommandDiagnosis();
 
+        if (Objects.nonNull(source.getId())) {
+            patHistoryInfoCommandDiagnosis.setId(source.getId());
+        }
         if (Objects.nonNull(source.getCode()) && source.getCode().getCodingFirstRep().hasDisplay()) {
             patHistoryInfoCommandDiagnosis.setDiagnosis(source.getCode().getCodingFirstRep().getDisplay());
         }

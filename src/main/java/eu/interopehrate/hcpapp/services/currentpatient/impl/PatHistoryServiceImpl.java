@@ -4,18 +4,17 @@ import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandDiagnosis
 import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandRiskFactor;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import lombok.SneakyThrows;
-import org.hl7.fhir.r4.model.BooleanType;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Observation;
-import org.hl7.fhir.r4.model.ResourceType;
+import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class PatHistoryServiceImpl implements PatHistoryService {
     private final CurrentPatient currentPatient;
@@ -104,6 +103,47 @@ public class PatHistoryServiceImpl implements PatHistoryService {
             if (b.getResource().getResourceType().equals(ResourceType.Observation) && b.getResource().getId().equals(id)) {
                 ((BooleanType) ((Observation) b.getResource()).getValue()).setValue(value);
             }
+        }
+    }
+
+    @Override
+    public PatHistoryInfoCommandDiagnosis patHisInfoCommandById(String id) {
+        var patHisDiagnosis = this.currentPatient.getPatHisBundleTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(id)).findFirst();
+        return patHisDiagnosis.map(resource -> this.hapiToCommandDiagnosis.convert((Condition) resource)).orElse(null);
+    }
+
+    @Override
+    public void updateDiagnosis(PatHistoryInfoCommandDiagnosis patHisInfoCommand) {
+        // update original bundle
+        var optional = this.currentPatient.getPatHisBundle().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(patHisInfoCommand.getId())).findFirst();
+        updateDiagnosisDetails(optional, patHisInfoCommand);
+
+        // update translated bundle
+        optional = this.currentPatient.getPatHisBundleTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(patHisInfoCommand.getId())).findFirst();
+        updateDiagnosisDetails(optional, patHisInfoCommand);
+    }
+
+    private static void updateDiagnosisDetails(Optional<Resource> optional, PatHistoryInfoCommandDiagnosis patHisInfoCommand) {
+        if (optional.isPresent()) {
+            ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(patHisInfoCommand.getDiagnosis());
+            ((Condition) optional.get()).getNoteFirstRep().setText(patHisInfoCommand.getComments());
+            if (Objects.isNull(((Condition) optional.get()).getOnset())) {
+                ((Condition) optional.get()).setOnset(new DateTimeType(new Date()));
+                ((DateTimeType) ((Condition) optional.get()).getOnset()).setYear(patHisInfoCommand.getYearOfDiagnosis());
+            } else {
+                ((DateTimeType) ((Condition) optional.get()).getOnset()).setYear(patHisInfoCommand.getYearOfDiagnosis());
+            }
+        } else {
+            log.error("Cannot be updated. Resource not found.");
         }
     }
 }

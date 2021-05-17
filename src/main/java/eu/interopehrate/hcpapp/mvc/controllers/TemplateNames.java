@@ -22,6 +22,7 @@ public interface TemplateNames {
 
     // Current Patient
     String CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION = "current-patient/pat-history/view-section";
+    String CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE = "current-patient/pat-history/update-info";
     String CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION = "current-patient/current-diseases/view-section";
     String CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE = "current-patient/current-diseases/add-info";
     String CURRENT_PATIENT_DEMOGRAPHIC_INFORMATION_VIEW_SECTION = "current-patient/demographic-information/view-section";

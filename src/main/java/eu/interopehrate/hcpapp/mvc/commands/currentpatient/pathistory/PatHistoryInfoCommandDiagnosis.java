@@ -9,13 +9,13 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class PatHistoryInfoCommandDiagnosis {
+    private String id;
     @NotEmpty
     @NotNull
     private String diagnosis;
     private String diagnosisTranslated = "";
-    @NotEmpty
     @NotNull
-    private int yearOfDiagnosis;
+    private Integer yearOfDiagnosis;
     @NotEmpty
     @NotNull
     private String comments;

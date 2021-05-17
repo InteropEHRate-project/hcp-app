@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.pat.history}">pat history</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="m-3"></div>
+    <h2 th:text="#{fragment.current.patient.navigation.left.pat.history.edit.pat.his.diagnosis}">Edit pathology history diagnosis</h2>
+    <div class="m-5"></div>
+    <form action="#" th:action="@{/current-patient/pat-history/update}" th:object="${patHisInfoCommand}" method="post">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <p th:text="#{template.errors.message}">Please correct the errors below</p>
+        </div>
+        <div class="form-row">
+            <input id="drugId" type="hidden" th:field="*{id}">
+            <div class="col-md-6">
+                <label for="diagnosis" th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis}">Diagnosis</label>
+                <input id="diagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('diagnosis')} ? 'is-invalid' :''" th:field="*{diagnosis}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('diagnosis')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('diagnosis')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="yearOfDiagnosis" th:text="#{fragment.current.patient.navigation.left.pat.history.year.of.diagnosis}">Year of Diagnosis</label>
+                <input id="yearOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('yearOfDiagnosis')} ? 'is-invalid' :''" th:field="*{yearOfDiagnosis}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('yearOfDiagnosis')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('yearOfDiagnosis')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-12"><br>
+                <label for="comments" th:text="#{fragment.current.patient.navigation.left.pat.history.comments}">Comments</label>
+                <input id="comments" type="text" class="form-control" th:classappend="${#fields.hasErrors('comments')} ? 'is-invalid' :''" th:field="*{comments}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('comments')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('comments')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
+        </div><br>
+        <div class="text-right"><br>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
