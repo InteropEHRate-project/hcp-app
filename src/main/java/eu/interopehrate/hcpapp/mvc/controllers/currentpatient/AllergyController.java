@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntoleranceInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.currentpatient.AllergyIntoleranceService;
+import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,36 +15,37 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/current-patient/allergies")
-public class AllergyIntoleranceController {
-    private final AllergyIntoleranceService allergyIntoleranceService;
+public class AllergyController {
+    private final AllergyService allergyService;
 
-    public AllergyIntoleranceController(AllergyIntoleranceService allergyIntoleranceService) {
-        this.allergyIntoleranceService = allergyIntoleranceService;
+    public AllergyController(AllergyService allergyService) {
+        this.allergyService = allergyService;
     }
 
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
-        model.addAttribute("patient", this.allergyIntoleranceService.getCurrentPatient().getPatient());
-        model.addAttribute("allergyIntolerance", this.allergyIntoleranceService.allergyIntoleranceInfoCommand());
-        model.addAttribute("allergyIntoleranceTranslated", this.allergyIntoleranceService.allergyIntoleranceInfoCommandTranslated());
+        model.addAttribute("patient", this.allergyService.getCurrentPatient().getPatient());
+        model.addAttribute("allergyIntolerance", this.allergyService.allergyInfoCommand());
+        model.addAttribute("allergyIntoleranceTranslated", this.allergyService.allergyInfoCommandTranslated());
+        model.addAttribute("newAllergies", this.allergyService.listOfNewAllergies());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_VIEW_SECTION;
     }
 
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
-        model.addAttribute("allergyIntoleranceInfoCommand", new AllergyIntoleranceInfoCommand());
+        model.addAttribute("allergyInfoCommand", new AllergyInfoCommand());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute AllergyIntoleranceInfoCommand allergyIntoleranceInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
         }
-        this.allergyIntoleranceService.insertAllergyIntolerance(allergyIntoleranceInfoCommand);
+        this.allergyService.insertAllergy(allergyInfoCommand);
         return "redirect:/current-patient/allergies/view-section";
     }
 }

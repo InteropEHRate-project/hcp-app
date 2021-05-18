@@ -8,7 +8,10 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class AllergyIntoleranceInfoCommand {
+public class AllergyInfoCommand {
+    private Long id;
+    private String patientId;
+    private String author;
     private String identifier;
     @NotEmpty
     @NotNull

@@ -272,6 +272,7 @@ public class CurrentPatient {
             patientSummaryBundle = patientSummary;
             patientSummaryBundleTranslated = translateService.translate(patientSummaryBundle, Locale.UK);
             patientSummaryBundleTranslated = codesConversionService.convert(patientSummaryBundleTranslated);
+            logger.info("IPS translated & converted.");
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             patientSummaryBundleTranslated = patientSummary;

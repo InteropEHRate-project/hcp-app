@@ -74,10 +74,12 @@ public class CloudConnection implements DisposableBean {
             if (Objects.isNull(this.emergencyToken)) {
                 this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
             }
+            log.info("IPS requested from Cloud.");
             String patientSummary = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.PATIENT_SUMMARY);
             if (patientSummary.equalsIgnoreCase("File not found")) {
                 log.error("PatientSummary not found");
             } else {
+                log.info("IPS Received without translation & conversion from Cloud.");
                 Bundle patientSummaryBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(patientSummary);
                 List<Patient> patientList = patientSummaryBundle.getEntry()
                         .stream()

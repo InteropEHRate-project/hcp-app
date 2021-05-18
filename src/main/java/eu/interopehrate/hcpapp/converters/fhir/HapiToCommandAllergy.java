@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.converters.fhir;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyIntoleranceInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
 import org.hl7.fhir.r4.model.Identifier;
 import org.springframework.core.convert.converter.Converter;
@@ -11,16 +11,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class HapiToCommandAllergyIntolerance implements Converter<AllergyIntolerance, AllergyIntoleranceInfoCommand> {
+public class HapiToCommandAllergy implements Converter<AllergyIntolerance, AllergyInfoCommand> {
     private final CurrentPatient currentPatient;
 
-    public HapiToCommandAllergyIntolerance(CurrentPatient currentPatient) {
+    public HapiToCommandAllergy(CurrentPatient currentPatient) {
         this.currentPatient = currentPatient;
     }
 
     @Override
-    public AllergyIntoleranceInfoCommand convert(AllergyIntolerance allergyIntolerance) {
-        AllergyIntoleranceInfoCommand command = new AllergyIntoleranceInfoCommand();
+    public AllergyInfoCommand convert(AllergyIntolerance allergyIntolerance) {
+        AllergyInfoCommand command = new AllergyInfoCommand();
 
         if (Objects.nonNull(allergyIntolerance.getCode())) {
             // using the method that doesn't take into account the value of "displayTranaslatedVersion" boolean

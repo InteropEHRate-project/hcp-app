@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class AllergyIntoleranceCommand {
+public class AllergyCommand {
     private final Boolean displayTranslatedVersion;
-    private final List<AllergyIntoleranceInfoCommand> allergyIntoleranceList;
+    private final List<AllergyInfoCommand> allergyList;
 }
