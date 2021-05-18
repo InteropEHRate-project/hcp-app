@@ -50,7 +50,9 @@
         </tbody>
     </table>
 
+    <div class="m-5"></div>
     <table class="table table-bordered" th:if="${!currentDiseasesList.isEmpty()}">
+        <h5 th:text="#{fragment.current.patient.navigation.left.current.diseases.to.upload.in.sehr}">Current Diseases to upload in S-EHR</h5></p>
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
@@ -70,6 +72,7 @@
         </div>
         </tbody>
     </table>
+
 
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
