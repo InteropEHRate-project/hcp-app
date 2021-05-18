@@ -47,8 +47,26 @@
                 <td th:text="${currentDisease.getComment()}">comment</td>
             </tr>
         </div>
+
+        <div th:each="currentDisease : ${currentDiseasesList}">
+            <tr>
+                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
+                <td th:text="#{ips.translate.button.original}">Original</td>
+                <td th:text="${currentDisease.getDisease()}">disease</td>
+                <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${currentDisease.getComment()}">comment</td>
+            </tr>
+            <tr>
+                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
+                <td th:text="#{ips.translate.button.translated}">Translated</td>
+                <th style="background-color: azure" th:text="${currentDisease.getDiseaseTranslated()}">disease</th>
+                <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${currentDisease.getComment()}">comment</td>
+            </tr>
+        </div>
         </tbody>
     </table>
+
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}" th:text="#{crud.button.add}">add</a>
