@@ -14,10 +14,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "CURRENT_DISEASE")
+@Table(name = "CURRENT_DISEASES")
 public class CurrentDiseaseEntity extends HCPApplicationEntity {
-    @Column(name="ID")
-    private Long id;
     @Column(name = "CODE")
     private String code;
     @NotNull

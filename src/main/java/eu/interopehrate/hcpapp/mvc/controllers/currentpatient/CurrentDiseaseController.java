@@ -1,6 +1,5 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
-import eu.interopehrate.hcpapp.jpa.entities.CurrentDiseaseEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
@@ -10,13 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/current-patient/current-diseases")
 public class CurrentDiseaseController {
     private final CurrentDiseaseService currentDiseaseService;
-    public static List<CurrentDiseaseEntity> currentDiseaseEntityList;
 
     public CurrentDiseaseController(CurrentDiseaseService currentDiseaseService) {
         this.currentDiseaseService = currentDiseaseService;
@@ -36,15 +33,13 @@ public class CurrentDiseaseController {
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
         model.addAttribute("currentDiseaseInfoCommand", new CurrentDiseaseInfoCommand());
-        model.addAttribute("currentDiseasesList", this.currentDiseaseService.listNewCurrentDiseases());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute CurrentDiseaseInfoCommand currentDiseaseInfoCommand, BindingResult bindingResult, Model model) {
+    public String saveAdd(@Valid @ModelAttribute CurrentDiseaseInfoCommand currentDiseaseInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("currentDiseasesList", this.currentDiseaseService.listNewCurrentDiseases());
             return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
         }
         this.currentDiseaseService.insertCurrentDisease(currentDiseaseInfoCommand);
