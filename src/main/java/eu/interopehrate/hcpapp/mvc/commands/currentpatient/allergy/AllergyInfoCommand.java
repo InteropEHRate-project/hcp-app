@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class AllergyInfoCommand {
     private Long id;
+    private String idFHIR;
     private String patientId;
     private String author;
     private String identifier;

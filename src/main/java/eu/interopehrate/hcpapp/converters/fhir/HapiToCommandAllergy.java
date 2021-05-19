@@ -21,6 +21,7 @@ public class HapiToCommandAllergy implements Converter<AllergyIntolerance, Aller
     @Override
     public AllergyInfoCommand convert(AllergyIntolerance allergyIntolerance) {
         AllergyInfoCommand command = new AllergyInfoCommand();
+        command.setIdFHIR(allergyIntolerance.getId());
 
         if (Objects.nonNull(allergyIntolerance.getCode())) {
             // using the method that doesn't take into account the value of "displayTranaslatedVersion" boolean

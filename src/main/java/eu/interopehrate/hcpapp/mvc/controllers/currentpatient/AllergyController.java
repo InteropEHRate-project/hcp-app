@@ -70,4 +70,32 @@ public class AllergyController {
         this.allergyService.updateNewAllergy(allergyInfoCommand);
         return "redirect:/current-patient/allergies/view-section";
     }
+
+//    @GetMapping
+//    @RequestMapping("/open-update-page-data-s-ehr")
+//    public String openEditAllergyFromSEHR(@RequestParam("id") String id, Model model) {
+//        model.addAttribute("patHisInfoCommand", this.patHistoryService.patHisInfoCommandById(id));
+//        return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE;
+//    }
+//
+//    @PutMapping
+//    @RequestMapping("/update-data-s-ehr")
+//    public String updateAllergyFromSEHR(@Valid @ModelAttribute("patHisInfoCommand") PatHistoryInfoCommandDiagnosis patHisInfoCommand, BindingResult bindingResult) {
+//        if (Objects.nonNull(patHisInfoCommand.getYearOfDiagnosis()) && (patHisInfoCommand.getYearOfDiagnosis() > 9999 || patHisInfoCommand.getYearOfDiagnosis() < 0)) {
+//            bindingResult.addError(new FieldError("patHisInfoCommand", "yearOfDiagnosis", "exceeds range 0 - 9999"));
+//        }
+//        if (bindingResult.hasErrors()) {
+//            return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE;
+//        }
+//        this.patHistoryService.updateDiagnosis(patHisInfoCommand);
+//        return "redirect:/current-patient/pat-history/view-section";
+//    }
+
+    @DeleteMapping
+    @RequestMapping("/delete-data-s-ehr")
+    public String deleteAllergyFromSEHR(@RequestParam("id") String id, Model model) {
+        this.allergyService.deleteAllergyFromSEHR(id);
+        model.addAttribute("allergyDeletedFromSEHR", Boolean.TRUE);
+        return this.viewSection(model);
+    }
 }

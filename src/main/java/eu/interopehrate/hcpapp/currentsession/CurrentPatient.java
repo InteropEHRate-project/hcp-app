@@ -221,6 +221,10 @@ public class CurrentPatient {
         return patientSummaryBundle;
     }
 
+    public Bundle getPatientSummaryBundleTranslated() {
+        return patientSummaryBundleTranslated;
+    }
+
     public Bundle getLaboratoryResults() {
         return laboratoryResults;
     }

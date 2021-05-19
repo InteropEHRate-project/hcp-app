@@ -10,6 +10,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyComman
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
+import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -101,5 +102,20 @@ public class AllergyServiceImpl implements AllergyService {
         oldAllergy.setSymptoms(allergyInfoCommand.getSymptoms());
         oldAllergy.setComments(allergyInfoCommand.getComments());
         this.allergyRepository.save(oldAllergy);
+    }
+
+    @Override
+    public void deleteAllergyFromSEHR(String id) {
+        // delete from Original Bundle
+        this.currentPatient.getPatientSummaryBundle()
+                .getEntry()
+                .removeIf(bundleEntryComponent ->
+                        bundleEntryComponent.getResource().getResourceType().equals(ResourceType.AllergyIntolerance) && bundleEntryComponent.getResource().getId().equals(id));
+
+        // delete from Translated Bundle
+        this.currentPatient.getPatientSummaryBundleTranslated()
+                .getEntry()
+                .removeIf(bundleEntryComponent ->
+                        bundleEntryComponent.getResource().getResourceType().equals(ResourceType.AllergyIntolerance) && bundleEntryComponent.getResource().getId().equals(id));
     }
 }
