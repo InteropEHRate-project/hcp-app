@@ -148,6 +148,13 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     private static void updateDiagnosisDetails(Optional<Resource> optional, PatHistoryInfoCommandDiagnosis patHisInfoCommand) {
         if (optional.isPresent()) {
             ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(patHisInfoCommand.getDiagnosis());
+
+            // deletes translation if the diagnosis's name is different
+            if (((Condition) optional.get()).getCode().getCodingFirstRep().hasExtension() &&
+                    !((Condition) optional.get()).getCode().getCodingFirstRep().getDisplay().equalsIgnoreCase(patHisInfoCommand.getDiagnosis())) {
+                ((Condition) optional.get()).getCode().getCodingFirstRep().getExtension().clear();
+            }
+
             ((Condition) optional.get()).getNoteFirstRep().setText(patHisInfoCommand.getComments());
             if (Objects.isNull(((Condition) optional.get()).getOnset())) {
                 ((Condition) optional.get()).setOnset(new DateTimeType(new Date()));
