@@ -13,4 +13,6 @@ public interface AllergyService {
     void insertAllergy(AllergyInfoCommand allergyInfoCommand);
     List<AllergyInfoCommand> listOfNewAllergies();
     void deleteNewAllergy(Long id);
+    AllergyInfoCommand retrieveNewAllergyById(Long id);
+    void updateNewAllergy(AllergyInfoCommand allergyInfoCommand);
 }

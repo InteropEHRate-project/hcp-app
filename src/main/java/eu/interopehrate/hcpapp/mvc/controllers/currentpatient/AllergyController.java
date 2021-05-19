@@ -46,31 +46,28 @@ public class AllergyController {
         return "redirect:/current-patient/allergies/view-section";
     }
 
-//    @GetMapping
-//    @RequestMapping("/open-update-page")
-//    public String openEditDiagnosis(@RequestParam("id") String id, Model model) {
-//        model.addAttribute("patHisInfoCommand", this.patHistoryService.patHisInfoCommandById(id));
-//        return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE;
-//    }
-
-//    @PutMapping
-//    @RequestMapping("/update")
-//    public String updateDiagnosis(@Valid @ModelAttribute("patHisInfoCommand") PatHistoryInfoCommandDiagnosis patHisInfoCommand, BindingResult bindingResult) {
-//        if (Objects.nonNull(patHisInfoCommand.getYearOfDiagnosis()) && (patHisInfoCommand.getYearOfDiagnosis() > 9999 || patHisInfoCommand.getYearOfDiagnosis() < 0)) {
-//            bindingResult.addError(new FieldError("patHisInfoCommand", "yearOfDiagnosis", "exceeds range 0 - 9999"));
-//        }
-//        if (bindingResult.hasErrors()) {
-//            return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE;
-//        }
-//        this.patHistoryService.updateDiagnosis(patHisInfoCommand);
-//        return "redirect:/current-patient/pat-history/view-section";
-//    }
-
     @DeleteMapping
     @RequestMapping("/delete")
     public String deleteNewAllergy(@RequestParam("id") Long id, Model model) {
         this.allergyService.deleteNewAllergy(id);
         model.addAttribute("allergyDeleted", Boolean.TRUE);
         return this.viewSection(model);
+    }
+
+    @GetMapping
+    @RequestMapping("/open-update-page")
+    public String openEditNewAllergy(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("allergyInfoCommand", this.allergyService.retrieveNewAllergyById(id));
+        return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_PAGE;
+    }
+
+    @PutMapping
+    @RequestMapping("/update")
+    public String updateNewAllergy(@Valid @ModelAttribute("allergyInfoCommand") AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_PAGE;
+        }
+        this.allergyService.updateNewAllergy(allergyInfoCommand);
+        return "redirect:/current-patient/allergies/view-section";
     }
 }

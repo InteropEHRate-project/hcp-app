@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEnt
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandAllergy;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergy;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.AllergyEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.AllergyRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
@@ -68,7 +69,7 @@ public class AllergyServiceImpl implements AllergyService {
     @Override
     public void insertAllergy(AllergyInfoCommand allergyInfoCommand) {
         allergyInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
-        allergyInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        allergyInfoCommand.setAuthor(this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + this.healthCareProfessionalService.getHealthCareProfessional().getLastName());
         this.allergyRepository.save(this.commandToEntityAllergy.convert(allergyInfoCommand));
     }
 
@@ -83,5 +84,22 @@ public class AllergyServiceImpl implements AllergyService {
     @Override
     public void deleteNewAllergy(Long id) {
         this.allergyRepository.deleteById(id);
+    }
+
+    @Override
+    public AllergyInfoCommand retrieveNewAllergyById(Long id) {
+        return this.entityToCommandAllergy.convert(this.allergyRepository.getOne(id));
+    }
+
+    @Override
+    public void updateNewAllergy(AllergyInfoCommand allergyInfoCommand) {
+        AllergyEntity oldAllergy = this.allergyRepository.getOne(allergyInfoCommand.getId());
+        oldAllergy.setAuthor(this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + this.healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        oldAllergy.setCategory(allergyInfoCommand.getCategory());
+        oldAllergy.setName(allergyInfoCommand.getName());
+        oldAllergy.setType(allergyInfoCommand.getType());
+        oldAllergy.setSymptoms(allergyInfoCommand.getSymptoms());
+        oldAllergy.setComments(allergyInfoCommand.getComments());
+        this.allergyRepository.save(oldAllergy);
     }
 }
