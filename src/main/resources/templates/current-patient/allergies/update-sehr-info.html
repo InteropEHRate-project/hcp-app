@@ -3,20 +3,23 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</title>
+    <title th:text="#{fragment.current.patient.navigation.left.allergies.update.allergy}">Update Allergy information</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="m-3"></div>
-    <h2 th:text="#{fragment.current.patient.navigation.left.allergies.add.allergy}">Add Allergy information</h2>
+    <h2 th:text="#{fragment.current.patient.navigation.left.allergies.update.allergy}">Update Allergy information</h2>
     <div class="m-5"></div>
-    <form action="#" th:action="@{/current-patient/allergies/save-add}" th:object="${allergyInfoCommand}" method="post">
+    <form action="#" th:action="@{/current-patient/allergies/update-data-s-ehr}" th:object="${allergyInfoCommand}" method="post">
 
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p th:text="#{template.errors.message}">Please correct the errors below</p>
         </div>
 
         <div class="form-row">
+            <input type="hidden" th:field="*{idFHIR}">
+            <input type="hidden" th:field="*{author}">
+            <input type="hidden" th:field="*{identifier}">
             <div class="col-md-6">
                 <label for="category" th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</label>
                 <input id="category" type="text" class="form-control"

@@ -10,12 +10,15 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyComman
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
-import org.hl7.fhir.r4.model.ResourceType;
+import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AllergyServiceImpl implements AllergyService {
     private final CurrentPatient currentPatient;
@@ -117,5 +120,60 @@ public class AllergyServiceImpl implements AllergyService {
                 .getEntry()
                 .removeIf(bundleEntryComponent ->
                         bundleEntryComponent.getResource().getResourceType().equals(ResourceType.AllergyIntolerance) && bundleEntryComponent.getResource().getId().equals(id));
+    }
+
+    @Override
+    public AllergyInfoCommand retrieveAllergyFromSEHRById(String id) {
+        // retrieving allergy from the Original Bundle
+        var allergy = this.currentPatient.getPatientSummaryBundle().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.AllergyIntolerance) && resource.getId().equals(id)).findFirst();
+        return allergy.map(resource -> this.hapiToCommandAllergy.convert((AllergyIntolerance) resource)).orElse(null);
+    }
+
+    @Override
+    public void updateAllergyFromSEHR(AllergyInfoCommand allergyInfoCommand) {
+        // update translated bundle
+        var optional = this.currentPatient.getPatientSummaryBundleTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.AllergyIntolerance) && resource.getId().equals(allergyInfoCommand.getIdFHIR())).findFirst();
+        updateAllergyDetails(optional, allergyInfoCommand);
+
+        // update original bundle
+        optional = this.currentPatient.getPatientSummaryBundle().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.AllergyIntolerance) && resource.getId().equals(allergyInfoCommand.getIdFHIR())).findFirst();
+        updateAllergyDetails(optional, allergyInfoCommand);
+    }
+
+    private static void updateAllergyDetails(Optional<Resource> optional, AllergyInfoCommand allergyInfoCommand) {
+        if (optional.isPresent()) {
+
+            // deletes translation if the allergy's name is different
+            StringType displayElement = ((AllergyIntolerance) optional.get()).getCode().getCodingFirstRep().getDisplayElement();
+            if (displayElement.hasExtension() && !displayElement.getValue().equalsIgnoreCase(allergyInfoCommand.getName())) {
+                displayElement.getExtension().clear();  // DE SCHIMBAT AFISAREA TRADUCERII
+            }
+            ((AllergyIntolerance) optional.get()).getCode().getCodingFirstRep().setDisplay(allergyInfoCommand.getName());
+            try {
+                ((AllergyIntolerance) optional.get()).getCategory().get(0).setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyInfoCommand.getCategory().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                log.error("no type available");
+                e.printStackTrace();
+            }
+            try {
+                ((AllergyIntolerance) optional.get()).setType(AllergyIntolerance.AllergyIntoleranceType.valueOf(allergyInfoCommand.getType().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                log.error("no type available");
+                e.printStackTrace();
+            }
+            // DE SETAT SI ALTE VALORI
+
+        } else {
+            log.error("Cannot be updated. Resource not found.");
+        }
     }
 }

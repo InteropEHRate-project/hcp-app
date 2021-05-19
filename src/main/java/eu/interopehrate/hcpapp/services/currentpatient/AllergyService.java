@@ -16,4 +16,6 @@ public interface AllergyService {
     AllergyInfoCommand retrieveNewAllergyById(Long id);
     void updateNewAllergy(AllergyInfoCommand allergyInfoCommand);
     void deleteAllergyFromSEHR(String id);
+    AllergyInfoCommand retrieveAllergyFromSEHRById(String id);
+    void updateAllergyFromSEHR(AllergyInfoCommand allergyInfoCommand);
 }

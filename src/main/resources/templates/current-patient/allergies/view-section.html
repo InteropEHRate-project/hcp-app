@@ -17,8 +17,15 @@
 <!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</h3>
     <br>
-    <div class="alert alert-danger" role="alert" th:if="${allergyDeletedFromSEHR != null && allergyDeletedFromSEHR}"
+
+    <div class="alert alert-danger" role="alert" id="message1" th:if="${allergyDeletedFromSEHR != null && allergyDeletedFromSEHR}"
          th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted</div>
+    <script>
+        setTimeout(function(){
+            $('#message1').remove();
+        }, 5000);
+    </script>
+
     <table class="table table-bordered" th:if="${!allergyIntolerance.getAllergyList.isEmpty()}">
         <thead class="thead-light">
         <tr>
@@ -41,9 +48,9 @@
             <td th:text="${{ai.comments}}"></td>
             <td>
                 <div class="btn-group" role="group">
-<!--                    <a href="#" class="btn btn-info"-->
-<!--                       th:href="@{/current-patient/allergies/open-update-page(id=${{ai.getId()}})}"-->
-<!--                       th:text="#{crud.button.edit}">Edit</a>-->
+                    <a href="#" class="btn btn-info"
+                       th:href="@{/current-patient/allergies/open-update-page-data-s-ehr(id=${{ai.getIdFHIR()}})}"
+                       th:text="#{crud.button.edit}">Edit</a>
                     <a href="#" class="btn btn-danger"
                        th:href="@{/current-patient/allergies/delete-data-s-ehr(id=${{ai.getIdFHIR()}})}"
                        th:text="#{crud.button.delete}">Delete</a>
@@ -64,8 +71,15 @@
     <br>
     <h5 th:if="${!newAllergies.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.allergies.to.upload}">Allergies to upload in S-EHR</h5>
     <br>
-    <div class="alert alert-danger" role="alert" th:if="${allergyDeleted != null && allergyDeleted}"
+
+    <div class="alert alert-danger" role="alert" id="message2" th:if="${allergyDeleted != null && allergyDeleted}"
          th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted</div>
+    <script>
+        setTimeout(function(){
+            $('#message2').remove();
+        }, 5000);
+    </script>
+
     <table class="table table-bordered" th:if="${!newAllergies.isEmpty()}">
         <thead class="thead-light">
         <tr>
