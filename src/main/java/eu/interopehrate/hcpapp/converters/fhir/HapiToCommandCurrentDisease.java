@@ -27,6 +27,9 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
     public CurrentDiseaseInfoCommand convert(Condition condition) {
         CurrentDiseaseInfoCommand currentDiseaseInfoCommand = new CurrentDiseaseInfoCommand();
 
+        if (Objects.nonNull(condition.getId())) {
+            currentDiseaseInfoCommand.setId(condition.getId());
+        }
         if (Objects.nonNull(condition.getCode())) {
             currentDiseaseInfoCommand.setCode(condition.getCode()
                     .getCoding()

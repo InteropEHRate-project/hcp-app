@@ -20,6 +20,8 @@
 <!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.current.diseases}">Current Diseases</h3>
     <br>
+    <div class="alert alert-danger" role="alert" th:if="${currentDiseaseDeletedFromSEHR != null && currentDiseaseDeletedFromSEHR}"
+         th:text="#{fragment.current.patient.navigation.left.current.disease.deleted}">Current Disease deleted</div>
     <table class="table table-bordered" th:if="${!currentDiseaseCommand.getCurrentDiseaseInfoCommand().isEmpty()}">
         <thead class="thead-light">
         <tr>
@@ -28,6 +30,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
+            <th th:text="#{crud.button.actions}" >Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +41,16 @@
                 <td th:text="${currentDisease.getDisease()}">disease</td>
                 <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${currentDisease.getComment()}">comment</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="#" class="btn btn-info"
+                           th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getId()})}"
+                           th:text="#{crud.button.edit}">Edit</a>
+                        <a href="#" class="btn btn-danger"
+                           th:href="@{/current-patient/current-diseases/deleteCurrentDisease(id=${currentDisease.getId()})}"
+                           th:text="#{crud.button.delete}">Delete</a>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
@@ -45,6 +58,7 @@
                 <th style="background-color: azure" th:text="${currentDisease.getDiseaseTranslated()}">disease</th>
                 <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${currentDisease.getComment()}">comment</td>
+                <td></td>
             </tr>
         </div>
         </tbody>

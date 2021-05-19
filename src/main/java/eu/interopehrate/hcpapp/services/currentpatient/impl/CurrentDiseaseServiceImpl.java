@@ -8,12 +8,14 @@ import eu.interopehrate.hcpapp.jpa.repositories.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
+import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private final CurrentPatient currentPatient;
@@ -75,5 +77,55 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
                 .stream()
                 .map(this.entityToCommandCurrentDisease::convert)
                 .collect(Collectors.toList());
+    }
+
+    public CurrentDiseaseInfoCommand currentDiseaseById(String id) {
+        var currentDiseaseId = this.currentPatient.getPatientSummaryBundleTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(id)).findFirst();
+        return currentDiseaseId.map(resource -> this.hapiToCommandCurrentDisease.convert((Condition) resource)).orElse(null);
+    }
+
+    @Override
+    public void updateCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand) {
+        // update original bundle
+        var optional = this.currentPatient.getPatientSummaryBundle().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(currentDiseaseInfoCommand.getId())).findFirst();
+        updateCurrentDiseaseDetails(optional, currentDiseaseInfoCommand);
+
+        // update translated bundle
+        optional = this.currentPatient.getPatientSummaryBundleTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(currentDiseaseInfoCommand.getId())).findFirst();
+        updateCurrentDiseaseDetails(optional, currentDiseaseInfoCommand);
+    }
+
+    @Override
+    public void deleteCurrentDisease(String id) {
+        // delete from Original Bundle
+        this.currentPatient.getPatientSummaryBundle()
+                .getEntry()
+                .removeIf(bundleEntryComponent -> bundleEntryComponent.getResource().getResourceType().equals(ResourceType.Condition) && bundleEntryComponent.getResource().getId().equals(id));
+
+        // delete from Translated Bundle
+        this.currentPatient.getPatientSummaryBundleTranslated()
+                .getEntry()
+                .removeIf(bundleEntryComponent -> bundleEntryComponent.getResource().getResourceType().equals(ResourceType.Condition) && bundleEntryComponent.getResource().getId().equals(id));
+    }
+
+    private static void updateCurrentDiseaseDetails(Optional<Resource> optional, CurrentDiseaseInfoCommand currentDiseaseInfoCommand) {
+        if (optional.isPresent()) {
+            ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(currentDiseaseInfoCommand.getDisease());
+            ((Condition) optional.get()).getNoteFirstRep().setText(currentDiseaseInfoCommand.getComment());
+            if (Objects.isNull(((Condition) optional.get()).getOnset())) {
+                ((Condition) optional.get()).setOnset(new DateTimeType(new Date()));
+            }
+        } else {
+            log.error("Cannot be updated. Resource not found.");
+        }
     }
 }
