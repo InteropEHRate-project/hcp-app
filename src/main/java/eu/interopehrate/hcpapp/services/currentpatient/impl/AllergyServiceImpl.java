@@ -79,4 +79,9 @@ public class AllergyServiceImpl implements AllergyService {
                 .map(this.entityToCommandAllergy::convert)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteNewAllergy(Long id) {
+        this.allergyRepository.deleteById(id);
+    }
 }

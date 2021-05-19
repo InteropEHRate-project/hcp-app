@@ -6,10 +6,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -47,5 +44,33 @@ public class AllergyController {
         }
         this.allergyService.insertAllergy(allergyInfoCommand);
         return "redirect:/current-patient/allergies/view-section";
+    }
+
+//    @GetMapping
+//    @RequestMapping("/open-update-page")
+//    public String openEditDiagnosis(@RequestParam("id") String id, Model model) {
+//        model.addAttribute("patHisInfoCommand", this.patHistoryService.patHisInfoCommandById(id));
+//        return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE;
+//    }
+
+//    @PutMapping
+//    @RequestMapping("/update")
+//    public String updateDiagnosis(@Valid @ModelAttribute("patHisInfoCommand") PatHistoryInfoCommandDiagnosis patHisInfoCommand, BindingResult bindingResult) {
+//        if (Objects.nonNull(patHisInfoCommand.getYearOfDiagnosis()) && (patHisInfoCommand.getYearOfDiagnosis() > 9999 || patHisInfoCommand.getYearOfDiagnosis() < 0)) {
+//            bindingResult.addError(new FieldError("patHisInfoCommand", "yearOfDiagnosis", "exceeds range 0 - 9999"));
+//        }
+//        if (bindingResult.hasErrors()) {
+//            return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_UPDATE_PAGE;
+//        }
+//        this.patHistoryService.updateDiagnosis(patHisInfoCommand);
+//        return "redirect:/current-patient/pat-history/view-section";
+//    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String deleteNewAllergy(@RequestParam("id") Long id, Model model) {
+        this.allergyService.deleteNewAllergy(id);
+        model.addAttribute("allergyDeleted", Boolean.TRUE);
+        return this.viewSection(model);
     }
 }

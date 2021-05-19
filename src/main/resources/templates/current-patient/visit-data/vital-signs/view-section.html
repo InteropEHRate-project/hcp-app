@@ -54,9 +54,10 @@
             </tbody>
         </table>
 
-        <p th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}"><br>
-        <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h5></p>
-
+        <br>
+        <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h5>
+        <br>
         <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
             <thead class="thead-light">
             <tr>

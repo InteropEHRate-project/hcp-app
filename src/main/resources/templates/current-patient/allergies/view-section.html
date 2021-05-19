@@ -47,8 +47,12 @@
         </tr>
         </tbody>
     </table>
+
     <br>
     <h5 th:if="${!newAllergies.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.allergies.to.upload}">Allergies to upload in S-EHR</h5>
+    <br>
+    <div class="alert alert-danger" role="alert" th:if="${allergyDeleted != null && allergyDeleted}"
+         th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted</div>
     <table class="table table-bordered" th:if="${!newAllergies.isEmpty()}">
         <thead class="thead-light">
         <tr>
@@ -57,6 +61,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -66,6 +71,16 @@
             <td th:text="${{ai.type}}"></td>
             <td th:text="${{ai.symptoms}}"></td>
             <td th:text="${{ai.comments}}"></td>
+            <td>
+                <div class="btn-group" role="group">
+<!--                    <a href="#" class="btn btn-info"-->
+<!--                       th:href="@{/current-patient/allergies/open-update-page(id=${{ai.getId()}})}"-->
+<!--                       th:text="#{crud.button.edit}">Edit</a>-->
+                    <a href="#" class="btn btn-danger"
+                       th:href="@{/current-patient/allergies/delete(id=${{ai.getId()}})}"
+                       th:text="#{crud.button.delete}">Delete</a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
