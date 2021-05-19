@@ -14,4 +14,7 @@ public interface CurrentDiseaseService {
     void insertNote(String note);
     void deleteNote(String note);
     List<CurrentDiseaseInfoCommand> listNewCurrentDiseases();
+    CurrentDiseaseInfoCommand currentDiseaseById(String id);
+    void updateCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand);
+    void deleteCurrentDisease(String id);
 }

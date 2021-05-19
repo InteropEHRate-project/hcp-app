@@ -44,6 +44,8 @@ public class CurrentPatient {
     private Bundle docHistoryConsultTranslated;
     private Bundle patHisBundle;
     private Bundle patHisBundleTranslated;
+    private Bundle currentDiseaseBundle;
+    private Bundle currentDiseaseBundleTranslated;
     @Value("${hcp.without.connection}")
     private Boolean withoutConnection;
 

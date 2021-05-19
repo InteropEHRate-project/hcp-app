@@ -31,7 +31,7 @@ public class CurrentDiseaseController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage(Model model) {
+    public String openAddPage( Model model) {
         model.addAttribute("currentDiseaseInfoCommand", new CurrentDiseaseInfoCommand());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
     }
@@ -53,10 +53,35 @@ public class CurrentDiseaseController {
         return "redirect:/current-patient/current-diseases/view-section";
     }
 
+    @GetMapping
+    @RequestMapping("/open-update-page")
+    public String openEditCurrentDisease(@RequestParam("id") String id, Model model){
+        model.addAttribute("currentDiseaseInfoCommandUpdate",this.currentDiseaseService.currentDiseaseById(id));
+        return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE;
+    }
+
+    @PutMapping
+    @RequestMapping("/update")
+    public String updateCurrentDisease(@Valid @ModelAttribute("currentDiseaseInfoCommandUpdate") CurrentDiseaseInfoCommand currentDiseaseInfoCommandUpdate, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE;
+        }
+        this.currentDiseaseService.updateCurrentDisease(currentDiseaseInfoCommandUpdate);
+        return "redirect:/current-patient/current-diseases/view-section";
+    }
+
     @DeleteMapping
     @RequestMapping("/delete")
     public String delete(@RequestParam("note") String note) {
         this.currentDiseaseService.deleteNote(note);
         return "redirect:/current-patient/current-diseases/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/deleteCurrentDisease")
+    public String deleteCurrentDiseaseFromSEHR(@RequestParam("id") String id, Model model) {
+        this.currentDiseaseService.deleteCurrentDisease(id);
+        model.addAttribute("currentDiseaseDeletedFromSEHR", Boolean.TRUE);
+        return this.viewSection(model);
     }
 }
