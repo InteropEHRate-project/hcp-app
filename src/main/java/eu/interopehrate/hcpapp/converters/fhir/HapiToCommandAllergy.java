@@ -46,6 +46,8 @@ public class HapiToCommandAllergy implements Converter<AllergyIntolerance, Aller
                         .collect(Collectors.joining("; "))
                 );
             }
+            command.setSymptoms(allergyIntolerance.getReactionFirstRep().getManifestationFirstRep().getText());
+            command.setComments(allergyIntolerance.getNoteFirstRep().getText());
         }
         return command;
     }

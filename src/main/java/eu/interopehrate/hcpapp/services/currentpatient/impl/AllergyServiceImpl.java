@@ -170,8 +170,8 @@ public class AllergyServiceImpl implements AllergyService {
                 log.error("no type available");
                 e.printStackTrace();
             }
-            // DE SETAT SI ALTE VALORI
-
+            ((AllergyIntolerance) optional.get()).getReactionFirstRep().getManifestationFirstRep().setText(allergyInfoCommand.getSymptoms());
+            ((AllergyIntolerance) optional.get()).getNoteFirstRep().setText(allergyInfoCommand.getComments());
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
