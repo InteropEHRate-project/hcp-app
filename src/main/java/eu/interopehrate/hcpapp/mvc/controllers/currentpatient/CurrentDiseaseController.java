@@ -84,4 +84,12 @@ public class CurrentDiseaseController {
         model.addAttribute("currentDiseaseDeletedFromSEHR", Boolean.TRUE);
         return this.viewSection(model);
     }
+
+    @DeleteMapping
+    @RequestMapping("/deleteCurrentDiseaseFromDataBase")
+    public String deleteCurrentDisease(@RequestParam("id") Long id, Model model) {
+        this.currentDiseaseService.deleteNewCurrentDisease(id);
+        model.addAttribute("currentDiseaseDeletedFromDataBase", Boolean.TRUE);
+        return this.viewSection(model);
+    }
 }

@@ -9,10 +9,15 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Condition;
+import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -124,5 +129,10 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
+    }
+
+    @Override
+    public void deleteNewCurrentDisease(Long id) {
+        this.currentDiseaseRepository.deleteById(id);
     }
 }

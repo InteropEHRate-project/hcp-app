@@ -44,10 +44,10 @@
                 <td>
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-info"
-                           th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getId()})}"
+                           th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getIdFHIR()})}"
                            th:text="#{crud.button.edit}">Edit</a>
                         <a href="#" class="btn btn-danger"
-                           th:href="@{/current-patient/current-diseases/deleteCurrentDisease(id=${currentDisease.getId()})}"
+                           th:href="@{/current-patient/current-diseases/deleteCurrentDisease(id=${currentDisease.getIdFHIR()})}"
                            th:text="#{crud.button.delete}">Delete</a>
                     </div>
                 </td>
@@ -65,6 +65,8 @@
     </table>
 
     <div class="m-5"></div>
+    <div class="alert alert-danger" role="alert" th:if="${currentDiseaseDeletedFromDataBase != null && currentDiseaseDeletedFromDataBase}"
+         th:text="#{fragment.current.patient.navigation.left.current.disease.deleted}">Current Disease deleted</div>
     <table class="table table-bordered" th:if="${!currentDiseasesList.isEmpty()}">
         <h5 th:text="#{fragment.current.patient.navigation.left.current.diseases.to.upload.in.sehr}">Current Diseases to upload in S-EHR</h5></p>
         <thead class="thead-light">
@@ -73,15 +75,26 @@
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
+            <th th:text="#{crud.button.actions}" >Actions</th>
         </tr>
         </thead>
         <tbody>
-        <div th:each="currentDisease : ${currentDiseasesList}">
+        <div th:each="currentDiseaseNew : ${currentDiseasesList}">
             <tr>
                 <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
-                <td th:text="${currentDisease.getDisease()}">disease</td>
-                <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
-                <td th:text="${currentDisease.getComment()}">comment</td>
+                <td th:text="${currentDiseaseNew.getDisease()}">disease</td>
+                <td th:text="${{#temporals.format(currentDiseaseNew.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${currentDiseaseNew.getComment()}">comment</td>
+                <td>
+                    <div class="btn-group" role="group">
+<!--                        <a href="#" class="btn btn-info"-->
+<!--                           th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getId()})}"-->
+<!--                           th:text="#{crud.button.edit}">Edit</a>-->
+                        <a href="#" class="btn btn-danger"
+                           th:href="@{/current-patient/current-diseases/deleteCurrentDiseaseFromDataBase(id=${currentDiseaseNew.getId()})}"
+                           th:text="#{crud.button.delete}">Delete</a>
+                    </div>
+                </td>
             </tr>
         </div>
         </tbody>

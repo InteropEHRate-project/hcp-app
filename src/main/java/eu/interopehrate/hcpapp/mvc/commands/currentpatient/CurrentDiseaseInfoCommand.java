@@ -11,7 +11,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class CurrentDiseaseInfoCommand {
-    private String id;
+    private Long id;
+    private String idFHIR;
     private String code;
     @NotEmpty
     @NotNull

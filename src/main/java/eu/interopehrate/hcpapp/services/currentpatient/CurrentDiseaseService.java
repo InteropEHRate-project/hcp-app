@@ -17,4 +17,5 @@ public interface CurrentDiseaseService {
     CurrentDiseaseInfoCommand currentDiseaseById(String id);
     void updateCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand);
     void deleteCurrentDisease(String id);
+    void deleteNewCurrentDisease(Long id);
 }
