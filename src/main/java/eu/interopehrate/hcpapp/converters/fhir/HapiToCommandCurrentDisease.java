@@ -80,6 +80,9 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                     .map(Coding::getCode)
                     .collect(Collectors.joining(" ")));
         }
+        if(Objects.nonNull(condition.getNote())) {
+            currentDiseaseInfoCommand.setComment(condition.getNoteFirstRep().getText());
+        }
 
         return currentDiseaseInfoCommand;
     }
