@@ -24,8 +24,11 @@ public class HapiToCommandAllergy implements Converter<AllergyIntolerance, Aller
         command.setIdFHIR(allergyIntolerance.getId());
 
         if (Objects.nonNull(allergyIntolerance.getCode())) {
-            // using the method that doesn't take into account the value of "displayTranaslatedVersion" boolean
-            allergyIntolerance.getCode().getCoding().forEach(coding -> command.setName(CurrentPatient.testExtractExtensionText(coding)));
+            command.setName(allergyIntolerance.getCode().getCodingFirstRep().getDisplay());
+            if (allergyIntolerance.getCode().getCodingFirstRep().getDisplayElement().hasExtension() &&
+                    allergyIntolerance.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
+                command.setNameTranslated(allergyIntolerance.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
+            }
 
             if (Objects.nonNull(allergyIntolerance.getCategory())) {
                 command.setCategory(allergyIntolerance.getCategory()

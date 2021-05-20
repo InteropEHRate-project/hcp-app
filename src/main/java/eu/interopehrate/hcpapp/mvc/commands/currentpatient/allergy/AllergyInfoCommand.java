@@ -20,6 +20,7 @@ public class AllergyInfoCommand {
     @NotEmpty
     @NotNull
     private String name;
+    private String nameTranslated = "";
     @NotEmpty
     @NotNull
     private String type;

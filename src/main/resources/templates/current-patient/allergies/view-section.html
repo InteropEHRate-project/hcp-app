@@ -59,11 +59,11 @@
         </tr>
         <tr th:each="ai : ${allergyIntoleranceTranslated.getAllergyList}">
             <td th:text="#{ips.translate.button.translated}">Translated</td>
-            <th style="background-color: azure" th:text="${{ai.name}}"></th>
-            <td th:text="${{ai.category}}"></td>
-            <td th:text="${{ai.type}}"></td>
-            <td th:text="${{ai.symptoms}}"></td>
-            <td th:text="${{ai.comments}}"></td>
+            <th style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></th>
+            <td th:text="${{ai.getCategory()}}"></td>
+            <td th:text="${{ai.getType()}}"></td>
+            <td th:text="${{ai.getSymptoms()}}"></td>
+            <td th:text="${{ai.getComments()}}"></td>
         </tr>
         </tbody>
     </table>

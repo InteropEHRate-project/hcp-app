@@ -155,7 +155,7 @@ public class AllergyServiceImpl implements AllergyService {
             // deletes translation if the allergy's name is different
             StringType displayElement = ((AllergyIntolerance) optional.get()).getCode().getCodingFirstRep().getDisplayElement();
             if (displayElement.hasExtension() && !displayElement.getValue().equalsIgnoreCase(allergyInfoCommand.getName())) {
-                displayElement.getExtension().clear();  // DE SCHIMBAT AFISAREA TRADUCERII
+                displayElement.getExtension().clear();
             }
             ((AllergyIntolerance) optional.get()).getCode().getCodingFirstRep().setDisplay(allergyInfoCommand.getName());
             try {
