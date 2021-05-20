@@ -19,9 +19,11 @@
         <div class="form-row">
             <div class="col-md-6">
                 <label for="category" th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</label>
-                <input id="category" type="text" class="form-control"
-                       th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''"
-                       th:field="*{category}">
+                <select class="form-control" id="category" th:field="*{category}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.allergies.chooose.category}">Choose a category</option>
+                    <option input type="text" class="form-control" th:each="category : ${allergyCategories}" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''"
+                            th:value="${category}" th:text="${category}">Category</option>
+                </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('category')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('category')}" th:text="${err}">err</li>
@@ -42,8 +44,12 @@
 
             <div class="col-md-6"><br>
                 <label for="type" th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</label><br>
-                <input id="type" type="text" class="form-control"
-                       th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
+                <select class="form-control" id="type" th:field="*{type}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.allergies.chooose.type}">Choose a type</option>
+                    <option input type="text" class="form-control" th:each="type : ${allergyTypes}" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''"
+                            th:value="${type}" th:text="${type}">Type</option>
+                </select>
+
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('type')}" th:text="${err}">err</li>

@@ -3,6 +3,8 @@ package eu.interopehrate.hcpapp.services.currentpatient;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.enums.AllergyCategory;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.enums.AllergyType;
 
 import java.util.List;
 
@@ -18,4 +20,6 @@ public interface AllergyService {
     void deleteAllergyFromSEHR(String id);
     AllergyInfoCommand retrieveAllergyFromSEHRById(String id);
     void updateAllergyFromSEHR(AllergyInfoCommand allergyInfoCommand);
+    List<AllergyType> getAllergyTypes();
+    List<AllergyCategory> getAllergyCategories();
 }

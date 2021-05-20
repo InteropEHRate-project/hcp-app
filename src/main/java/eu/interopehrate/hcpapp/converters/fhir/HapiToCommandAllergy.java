@@ -33,13 +33,13 @@ public class HapiToCommandAllergy implements Converter<AllergyIntolerance, Aller
             if (Objects.nonNull(allergyIntolerance.getCategory())) {
                 command.setCategory(allergyIntolerance.getCategory()
                         .stream()
-                        .map(aice -> aice.getValue().getDisplay())
+                        .map(aice -> aice.getValue().getDisplay().toUpperCase())
                         .collect(Collectors.joining("; "))
                 );
             }
 
             if (Objects.nonNull(allergyIntolerance.getType())) {
-                command.setType(allergyIntolerance.getType().getDisplay());
+                command.setType(allergyIntolerance.getType().getDisplay().toUpperCase());
             }
 
             if (Objects.nonNull(allergyIntolerance.getIdentifier())) {
