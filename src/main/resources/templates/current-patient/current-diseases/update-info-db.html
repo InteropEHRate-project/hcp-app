@@ -9,12 +9,12 @@
 <div layout:fragment="content">
     <p><h2 th:text="#{fragment.current.patient.navigation.left.current.diseases.edit}">Edit Current Disease</h2></p>
     <div class="m-5"></div>
-    <form  action="#" th:action="@{/current-patient/current-diseases/update}" th:object="${currentDiseaseInfoCommandUpdate}" method="post">
+    <form  action="#" th:action="@{/current-patient/current-diseases/update-data-base}" th:object="${currentDiseaseInfoCommandUpdateDataBase}" method="post">
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p th:text="#{template.errors.message}">please correct the errors below</p>
         </div>
         <div class="form-row">
-            <input id="drugId" type="hidden" th:field="*{idFHIR}">
+            <input id="drugId" type="hidden" th:field="*{id}">
             <div class="col-md-4">
                 <label for="disease" th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</label>
                 <input id="disease" type="text" class="form-control" th:classappend="${#fields.hasErrors('disease')} ? 'is-invalid' :''" th:field="*{disease}"/>

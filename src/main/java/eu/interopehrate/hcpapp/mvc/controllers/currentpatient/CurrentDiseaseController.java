@@ -60,6 +60,13 @@ public class CurrentDiseaseController {
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE;
     }
 
+    @GetMapping
+    @RequestMapping("/open-update-page-data-base")
+    public String openEditCurrentDiseaseDataBase(@RequestParam("id") Long id, Model model){
+        model.addAttribute("currentDiseaseInfoCommandUpdateDataBase",this.currentDiseaseService.retrieveNewCurrentDiseaseById(id));
+        return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE_DB;
+    }
+
     @PutMapping
     @RequestMapping("/update")
     public String updateCurrentDisease(@Valid @ModelAttribute("currentDiseaseInfoCommandUpdate") CurrentDiseaseInfoCommand currentDiseaseInfoCommandUpdate, BindingResult bindingResult) {
@@ -67,6 +74,16 @@ public class CurrentDiseaseController {
             return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE;
         }
         this.currentDiseaseService.updateCurrentDisease(currentDiseaseInfoCommandUpdate);
+        return "redirect:/current-patient/current-diseases/view-section";
+    }
+
+    @PutMapping
+    @RequestMapping("/update-data-base")
+    public String updateCurrentDiseaseDataBase(@Valid @ModelAttribute("currentDiseaseInfoCommandUpdateDataBase") CurrentDiseaseInfoCommand currentDiseaseInfoCommandUpdate, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE_DB;
+        }
+        this.currentDiseaseService.updateNewCurrentDisease(currentDiseaseInfoCommandUpdate);
         return "redirect:/current-patient/current-diseases/view-section";
     }
 
@@ -78,7 +95,7 @@ public class CurrentDiseaseController {
     }
 
     @DeleteMapping
-    @RequestMapping("/deleteCurrentDisease")
+    @RequestMapping("/delete-current-disease")
     public String deleteCurrentDiseaseFromSEHR(@RequestParam("id") String id, Model model) {
         this.currentDiseaseService.deleteCurrentDisease(id);
         model.addAttribute("currentDiseaseDeletedFromSEHR", Boolean.TRUE);
@@ -86,7 +103,7 @@ public class CurrentDiseaseController {
     }
 
     @DeleteMapping
-    @RequestMapping("/deleteCurrentDiseaseFromDataBase")
+    @RequestMapping("/delete-current-disease-from-db")
     public String deleteCurrentDisease(@RequestParam("id") Long id, Model model) {
         this.currentDiseaseService.deleteNewCurrentDisease(id);
         model.addAttribute("currentDiseaseDeletedFromDataBase", Boolean.TRUE);

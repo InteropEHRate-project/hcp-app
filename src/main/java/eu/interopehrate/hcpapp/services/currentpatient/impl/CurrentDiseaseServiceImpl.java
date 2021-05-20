@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEnt
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.CurrentDiseaseEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
@@ -98,14 +99,14 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         var optional = this.currentPatient.getPatientSummaryBundle().getEntry()
                 .stream()
                 .map(Bundle.BundleEntryComponent::getResource)
-                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(currentDiseaseInfoCommand.getId())).findFirst();
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(currentDiseaseInfoCommand.getIdFHIR())).findFirst();
         updateCurrentDiseaseDetails(optional, currentDiseaseInfoCommand);
 
         // update translated bundle
         optional = this.currentPatient.getPatientSummaryBundleTranslated().getEntry()
                 .stream()
                 .map(Bundle.BundleEntryComponent::getResource)
-                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(currentDiseaseInfoCommand.getId())).findFirst();
+                .filter(resource -> resource.getResourceType().equals(ResourceType.Condition) && resource.getId().equals(currentDiseaseInfoCommand.getIdFHIR())).findFirst();
         updateCurrentDiseaseDetails(optional, currentDiseaseInfoCommand);
     }
 
@@ -134,5 +135,19 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     @Override
     public void deleteNewCurrentDisease(Long id) {
         this.currentDiseaseRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateNewCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand) {
+        CurrentDiseaseEntity currentDiseaseInfoCommandOld = this.currentDiseaseRepository.getOne(currentDiseaseInfoCommand.getId());
+        currentDiseaseInfoCommandOld.setDisease(currentDiseaseInfoCommand.getDisease());
+        currentDiseaseInfoCommandOld.setDateOfDiagnosis(currentDiseaseInfoCommand.getDateOfDiagnosis());
+        currentDiseaseInfoCommandOld.setComment(currentDiseaseInfoCommand.getComment());
+        this.currentDiseaseRepository.save(currentDiseaseInfoCommandOld);
+    }
+
+    @Override
+    public CurrentDiseaseInfoCommand retrieveNewCurrentDiseaseById(Long id) {
+        return this.entityToCommandCurrentDisease.convert(this.currentDiseaseRepository.getOne(id));
     }
 }

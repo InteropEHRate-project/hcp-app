@@ -47,7 +47,7 @@
                            th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getIdFHIR()})}"
                            th:text="#{crud.button.edit}">Edit</a>
                         <a href="#" class="btn btn-danger"
-                           th:href="@{/current-patient/current-diseases/deleteCurrentDisease(id=${currentDisease.getIdFHIR()})}"
+                           th:href="@{/current-patient/current-diseases/delete-current-disease(id=${currentDisease.getIdFHIR()})}"
                            th:text="#{crud.button.delete}">Delete</a>
                     </div>
                 </td>
@@ -87,11 +87,11 @@
                 <td th:text="${currentDiseaseNew.getComment()}">comment</td>
                 <td>
                     <div class="btn-group" role="group">
-<!--                        <a href="#" class="btn btn-info"-->
-<!--                           th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getId()})}"-->
-<!--                           th:text="#{crud.button.edit}">Edit</a>-->
+                        <a href="#" class="btn btn-info"
+                           th:href="@{/current-patient/current-diseases/open-update-page-data-base(id=${currentDiseaseNew.getId()})}"
+                           th:text="#{crud.button.edit}">Edit</a>
                         <a href="#" class="btn btn-danger"
-                           th:href="@{/current-patient/current-diseases/deleteCurrentDiseaseFromDataBase(id=${currentDiseaseNew.getId()})}"
+                           th:href="@{/current-patient/current-diseases/delete-current-disease-from-db(id=${currentDiseaseNew.getId()})}"
                            th:text="#{crud.button.delete}">Delete</a>
                     </div>
                 </td>
