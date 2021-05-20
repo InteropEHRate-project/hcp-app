@@ -28,7 +28,7 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
         CurrentDiseaseInfoCommand currentDiseaseInfoCommand = new CurrentDiseaseInfoCommand();
 
         if (Objects.nonNull(condition.getId())) {
-            currentDiseaseInfoCommand.setId(condition.getId());
+            currentDiseaseInfoCommand.setIdFHIR(condition.getId());
         }
         if (Objects.nonNull(condition.getCode())) {
             currentDiseaseInfoCommand.setCode(condition.getCode()
@@ -80,7 +80,7 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                     .map(Coding::getCode)
                     .collect(Collectors.joining(" ")));
         }
-        if(Objects.nonNull(condition.getNote())) {
+        if (Objects.nonNull(condition.getNote())) {
             currentDiseaseInfoCommand.setComment(condition.getNoteFirstRep().getText());
         }
 
