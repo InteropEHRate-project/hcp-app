@@ -21,8 +21,14 @@
                 <label for="category" th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</label>
                 <select class="form-control" id="category" th:field="*{category}">
                     <option selected value="" th:text="#{fragment.current.patient.navigation.left.allergies.chooose.category}">Choose a category</option>
-                    <option input type="text" class="form-control" th:each="category : ${allergyCategories}" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''"
-                            th:value="${category}" th:text="${category}">Category</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''" value="BIOLOGIC"
+                            th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''" value="ENVIRONMENT"
+                            th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''" value="FOOD"
+                            th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' :''" value="MEDICATION"
+                            th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</option>
                 </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('category')}">
                     <ul>
@@ -46,10 +52,11 @@
                 <label for="type" th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</label><br>
                 <select class="form-control" id="type" th:field="*{type}">
                     <option selected value="" th:text="#{fragment.current.patient.navigation.left.allergies.chooose.type}">Choose a type</option>
-                    <option input type="text" class="form-control" th:each="type : ${allergyTypes}" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''"
-                            th:value="${type}" th:text="${type}">Type</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="ALLERGY"
+                            th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="INTOLERANCE"
+                            th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</option>
                 </select>
-
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('type')}" th:text="${err}">err</li>

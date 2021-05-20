@@ -33,17 +33,13 @@ public class AllergyController {
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
         model.addAttribute("allergyInfoCommand", new AllergyInfoCommand());
-        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypes());
-        model.addAttribute("allergyCategories", this.allergyService.getAllergyCategories());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult, Model model) {
+    public String saveAdd(@Valid @ModelAttribute AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("allergyTypes", this.allergyService.getAllergyTypes());
-            model.addAttribute("allergyCategories", this.allergyService.getAllergyCategories());
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
         }
         this.allergyService.insertAllergy(allergyInfoCommand);
@@ -62,17 +58,13 @@ public class AllergyController {
     @RequestMapping("/open-update-page")
     public String openEditNewAllergy(@RequestParam("id") Long id, Model model) {
         model.addAttribute("allergyInfoCommand", this.allergyService.retrieveNewAllergyById(id));
-        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypes());
-        model.addAttribute("allergyCategories", this.allergyService.getAllergyCategories());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_PAGE;
     }
 
     @PutMapping
     @RequestMapping("/update")
-    public String updateNewAllergy(@Valid @ModelAttribute("allergyInfoCommand") AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult, Model model) {
+    public String updateNewAllergy(@Valid @ModelAttribute("allergyInfoCommand") AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("allergyTypes", this.allergyService.getAllergyTypes());
-            model.addAttribute("allergyCategories", this.allergyService.getAllergyCategories());
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_PAGE;
         }
         this.allergyService.updateNewAllergy(allergyInfoCommand);
@@ -83,17 +75,13 @@ public class AllergyController {
     @RequestMapping("/open-update-page-data-s-ehr")
     public String openEditAllergyFromSEHR(@RequestParam("id") String id, Model model) {
         model.addAttribute("allergyInfoCommand", this.allergyService.retrieveAllergyFromSEHRById(id));
-        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypes());
-        model.addAttribute("allergyCategories", this.allergyService.getAllergyCategories());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_SEHR_PAGE;
     }
 
     @PutMapping
     @RequestMapping("/update-data-s-ehr")
-    public String updateAllergyFromSEHR(@Valid @ModelAttribute("allergyInfoCommand") AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult, Model model) {
+    public String updateAllergyFromSEHR(@Valid @ModelAttribute("allergyInfoCommand") AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("allergyTypes", this.allergyService.getAllergyTypes());
-            model.addAttribute("allergyCategories", this.allergyService.getAllergyCategories());
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_SEHR_PAGE;
         }
         this.allergyService.updateAllergyFromSEHR(allergyInfoCommand);

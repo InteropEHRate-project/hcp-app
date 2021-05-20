@@ -8,15 +8,12 @@ import eu.interopehrate.hcpapp.jpa.entities.AllergyEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.AllergyRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.enums.AllergyCategory;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.enums.AllergyType;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -150,24 +147,6 @@ public class AllergyServiceImpl implements AllergyService {
                 .map(Bundle.BundleEntryComponent::getResource)
                 .filter(resource -> resource.getResourceType().equals(ResourceType.AllergyIntolerance) && resource.getId().equals(allergyInfoCommand.getIdFHIR())).findFirst();
         updateAllergyDetails(optional, allergyInfoCommand);
-    }
-
-    @Override
-    public List<AllergyType> getAllergyTypes() {
-        var list = new ArrayList<AllergyType>();
-        list.add(AllergyType.ALLERGY);
-        list.add(AllergyType.INTOLERANCE);
-        return list;
-    }
-
-    @Override
-    public List<AllergyCategory> getAllergyCategories() {
-        var list = new ArrayList<AllergyCategory>();
-        list.add(AllergyCategory.BIOLOGIC);
-        list.add(AllergyCategory.ENVIRONMENT);
-        list.add(AllergyCategory.FOOD);
-        list.add(AllergyCategory.MEDICATION);
-        return list;
     }
 
     private static void updateAllergyDetails(Optional<Resource> optional, AllergyInfoCommand allergyInfoCommand) {

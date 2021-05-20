@@ -42,10 +42,34 @@
         <tr th:each="ai : ${allergyIntolerance.getAllergyList}">
             <td th:text="#{ips.translate.button.original}">Original</td>
             <td style="background-color: azure" th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ai.name}}"></td>
-            <td th:text="${{ai.category}}"></td>
-            <td th:text="${{ai.type}}"></td>
-            <td th:text="${{ai.symptoms}}"></td>
-            <td th:text="${{ai.comments}}"></td>
+            <td>
+                <th:block th:switch="${ai.getCategory().toUpperCase()}">
+                    <div th:case="'BIOLOGIC'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>
+                    </div>
+                    <div th:case="'ENVIRONMENT'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>
+                    </div>
+                    <div th:case="'FOOD'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>
+                    </div>
+                    <div th:case="'MEDICATION'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>
+                    </div>
+                </th:block>
+            </td>
+            <td>
+                <th:block th:switch="${ai.getType().toUpperCase()}">
+                    <div th:case="'ALLERGY'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>
+                    </div>
+                    <div th:case="'INTOLERANCE'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>
+                    </div>
+                </th:block>
+            </td>
+            <td th:text="${{ai.getSymptoms()}}"></td>
+            <td th:text="${{ai.getComments()}}"></td>
             <td>
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-info"
@@ -60,8 +84,32 @@
         <tr th:each="ai : ${allergyIntoleranceTranslated.getAllergyList}">
             <td th:text="#{ips.translate.button.translated}">Translated</td>
             <th style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></th>
-            <td th:text="${{ai.getCategory()}}"></td>
-            <td th:text="${{ai.getType()}}"></td>
+            <td>
+                <th:block th:switch="${ai.getCategory().toUpperCase()}">
+                    <div th:case="'BIOLOGIC'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>
+                    </div>
+                    <div th:case="'ENVIRONMENT'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>
+                    </div>
+                    <div th:case="'FOOD'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>
+                    </div>
+                    <div th:case="'MEDICATION'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>
+                    </div>
+                </th:block>
+            </td>
+            <td>
+                <th:block th:switch="${ai.getType().toUpperCase()}">
+                    <div th:case="'ALLERGY'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>
+                    </div>
+                    <div th:case="'INTOLERANCE'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>
+                    </div>
+                </th:block>
+            </td>
             <td th:text="${{ai.getSymptoms()}}"></td>
             <td th:text="${{ai.getComments()}}"></td>
         </tr>
@@ -93,11 +141,35 @@
         </thead>
         <tbody>
         <tr th:each="ai : ${newAllergies}">
-            <td th:text="${{ai.name}}"></td>
-            <td th:text="${{ai.category}}"></td>
-            <td th:text="${{ai.type}}"></td>
-            <td th:text="${{ai.symptoms}}"></td>
-            <td th:text="${{ai.comments}}"></td>
+            <td th:text="${{ai.getName()}}"></td>
+            <td>
+                <th:block th:switch="${ai.getCategory().toUpperCase()}">
+                    <div th:case="'BIOLOGIC'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>
+                    </div>
+                    <div th:case="'ENVIRONMENT'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>
+                    </div>
+                    <div th:case="'FOOD'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>
+                    </div>
+                    <div th:case="'MEDICATION'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>
+                    </div>
+                </th:block>
+            </td>
+            <td>
+                <th:block th:switch="${ai.getType().toUpperCase()}">
+                    <div th:case="'ALLERGY'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>
+                    </div>
+                    <div th:case="'INTOLERANCE'">
+                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>
+                    </div>
+                </th:block>
+            </td>
+            <td th:text="${{ai.getSymptoms()}}"></td>
+            <td th:text="${{ai.getComments()}}"></td>
             <td>
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-info"
