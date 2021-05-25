@@ -29,6 +29,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.allergies.resource}">Resource</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
             <th th:text="#{crud.button.actions}" >Actions</th>
         </tr>
@@ -40,15 +41,16 @@
                 <td th:text="#{ips.translate.button.original}">Original</td>
                 <td th:text="${currentDisease.getDisease()}">disease</td>
                 <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${{#temporals.format(currentDisease.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
                 <td th:text="${currentDisease.getComment()}">comment</td>
                 <td>
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-info"
                            th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getIdFHIR()})}"
                            th:text="#{crud.button.edit}">Edit</a>
-                        <a href="#" class="btn btn-danger"
-                           th:href="@{/current-patient/current-diseases/delete-current-disease(id=${currentDisease.getIdFHIR()})}"
-                           th:text="#{crud.button.delete}">Delete</a>
+<!--                        <a href="#" class="btn btn-danger"-->
+<!--                           th:href="@{/current-patient/current-diseases/delete-current-disease(id=${currentDisease.getIdFHIR()})}"-->
+<!--                           th:text="#{crud.button.delete}">Delete</a>-->
                     </div>
                 </td>
             </tr>
@@ -57,6 +59,7 @@
                 <td th:text="#{ips.translate.button.translated}">Translated</td>
                 <th style="background-color: azure" th:text="${currentDisease.getDiseaseTranslated()}">disease</th>
                 <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td></td>
                 <td th:text="${currentDisease.getComment()}">comment</td>
                 <td></td>
             </tr>

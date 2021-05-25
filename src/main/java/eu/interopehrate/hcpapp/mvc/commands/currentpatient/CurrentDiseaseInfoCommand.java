@@ -21,6 +21,9 @@ public class CurrentDiseaseInfoCommand {
     @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfDiagnosis = LocalDate.now();
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate endDateOfDiagnosis = LocalDate.now();
     private String categoryCode;
     private String categoryName;
     private String clinicalStatus;

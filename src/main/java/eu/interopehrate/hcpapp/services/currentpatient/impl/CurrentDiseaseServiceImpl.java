@@ -127,6 +127,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         if (optional.isPresent()) {
             ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(currentDiseaseInfoCommand.getDisease());
             ((Condition) optional.get()).getNoteFirstRep().setText(currentDiseaseInfoCommand.getComment());
+            ((Condition) optional.get()).getOnset();
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
