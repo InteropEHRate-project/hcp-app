@@ -8,11 +8,11 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -67,6 +67,25 @@ public class PrescriptionController {
     @RequestMapping("/refresh-data")
     public String refreshData() {
         this.prescriptionService.refreshData();
+        return "redirect:/current-patient/current-medications/prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-update")
+    public String openEditPrescriptionFromSEHR(@RequestParam("id") String id, Model model) {
+        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+        model.addAttribute("prescriptionInfoCommandUpdate", this.prescriptionService.retrievePrescriptionFromSEHRById(id));
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_UPDATE_SEHR_PAGE;
+    }
+
+    @PutMapping
+    @RequestMapping("/update")
+    public String updatePrescriptionFromSEHR(@Valid @ModelAttribute("prescriptionInfoCommandUpdate") PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+            return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_UPDATE_SEHR_PAGE;
+        }
+        this.prescriptionService.updatePrescriptionFromSEHR(prescriptionInfoCommand);
         return "redirect:/current-patient/current-medications/prescription/view-section";
     }
 }

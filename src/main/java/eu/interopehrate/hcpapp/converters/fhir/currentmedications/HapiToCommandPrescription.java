@@ -19,6 +19,7 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
     @Override
     public PrescriptionInfoCommand convert(MedicationRequest source) {
         PrescriptionInfoCommand prescriptionInfoCommand = new PrescriptionInfoCommand();
+        prescriptionInfoCommand.setIdFHIR(source.getId());
         if (source.hasId()) {
             prescriptionInfoCommand.setId(Long.parseLong(source.getId().substring(source.getId().indexOf("/") + 1)));
         }

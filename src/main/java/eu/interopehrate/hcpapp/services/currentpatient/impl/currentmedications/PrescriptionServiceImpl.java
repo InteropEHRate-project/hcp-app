@@ -173,6 +173,32 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
+    public PrescriptionInfoCommand retrievePrescriptionFromSEHRById(String id) {
+        var prescription = this.currentPatient.getPrescriptionTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest) && resource.getId().equals(id)).findFirst();
+        return prescription.map(resource -> this.hapiToCommandPrescription.convert((MedicationRequest) resource)).orElse(null);
+    }
+
+    @Override
+    public void updatePrescriptionFromSEHR(PrescriptionInfoCommand prescriptionInfoCommand) {
+        // update translated bundle
+        var optional = this.currentPatient.getPrescriptionTranslated().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest) && resource.getId().equals(prescriptionInfoCommand.getIdFHIR())).findFirst();
+        updatePrescriptionDetails(optional, prescriptionInfoCommand);
+
+        // update original bundle
+        optional = this.currentPatient.getPrescription().getEntry()
+                .stream()
+                .map(Bundle.BundleEntryComponent::getResource)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest) && resource.getId().equals(prescriptionInfoCommand.getIdFHIR())).findFirst();
+        updatePrescriptionDetails(optional, prescriptionInfoCommand);
+    }
+
+    @Override
     public void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand) {
         prescriptionInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency().toString());
@@ -185,6 +211,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.prescriptionRepository.save(prescriptionEntity);
         //Adding the ID from the database to the InfoCommand
         prescriptionInfoCommand.setId(prescriptionEntity.getId());
+    }
+
+    private static void updatePrescriptionDetails(Optional<Resource> optional, PrescriptionInfoCommand prescriptionInfoCommand) {
+        if (optional.isPresent()) {
+            ((MedicationRequest) optional.get()).setStatus(MedicationRequest.MedicationRequestStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
+        } else {
+            log.error("Cannot be updated. Resource not found.");
+        }
     }
 
     @Override

@@ -30,4 +30,6 @@ public interface PrescriptionService {
     void sendPrescription(Bundle medicationRequest) throws IOException;
     Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize);
     void refreshData();
+    PrescriptionInfoCommand retrievePrescriptionFromSEHRById(String id);
+    void updatePrescriptionFromSEHR(PrescriptionInfoCommand prescriptionInfoCommand);
 }
