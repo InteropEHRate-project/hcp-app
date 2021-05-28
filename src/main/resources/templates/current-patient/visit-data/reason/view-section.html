@@ -8,7 +8,22 @@
 
 <body>
 <div layout:fragment="content">
+    <div class="m-5"></div>
     <p><h3 th:text="#{fragment.current.patient.navigation.left.reason}">reason</h3></p>
+    <div class="m-5"></div>
+
+    <div class="m-5"></div>
+    <form class="row col-12 justify-content-center">
+        <div class="form-group col-6">
+            <label for="carePlan" th:text="#{fragment.current.patient.navigation.left.reason.care.plan}">Care plan</label>
+            <textarea class="form-control" name="carePlan" id="carePlan" rows="3"></textarea>
+        </div>
+        <div class="form-group col-6">
+            <label for="reason" th:text="#{fragment.current.patient.navigation.left.reason.reason}">Reason</label>
+            <textarea class="form-control" name="reason" id="reason" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
+    </form>
 </div>
 </body>
 </html>
