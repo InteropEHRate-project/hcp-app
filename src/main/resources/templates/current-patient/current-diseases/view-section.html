@@ -77,6 +77,7 @@
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
             <th th:text="#{crud.button.actions}" >Actions</th>
         </tr>
@@ -87,6 +88,7 @@
                 <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
                 <td th:text="${currentDiseaseNew.getDisease()}">disease</td>
                 <td th:text="${{#temporals.format(currentDiseaseNew.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${{#temporals.format(currentDiseaseNew.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${currentDiseaseNew.getComment()}">comment</td>
                 <td>
                     <div class="btn-group" role="group">

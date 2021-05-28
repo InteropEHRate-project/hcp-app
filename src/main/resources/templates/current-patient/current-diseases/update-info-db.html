@@ -56,6 +56,25 @@
                 </script>
             </div>
         </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <label for="endDateOfDiagnosis" th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">dateOfDiagnosis</label>
+                <input id="endDateOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('endDateOfDiagnosis')} ? 'is-invalid' :''" readonly th:field="*{endDateOfDiagnosis}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('endDateOfDiagnosis')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('endDateOfDiagnosis')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#dateOfDiagnosis').datetimepicker({
+                            format: 'dd-mm-yyyy',
+                            minView: "month"
+                        });
+                    });
+                </script>
+            </div>
+        </div>
         <div class="text-right"><br>
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
         </div>

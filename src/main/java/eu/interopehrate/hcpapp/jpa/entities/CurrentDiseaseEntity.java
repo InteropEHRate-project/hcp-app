@@ -26,6 +26,8 @@ public class CurrentDiseaseEntity extends HCPApplicationEntity {
     private String diseaseTranslated;
     @Column(name = "DATE_OF_DIAGNOSIS")
     private LocalDate dateOfDiagnosis = LocalDate.now();
+    @Column(name = "END_DATE_OF_DIAGNOSIS")
+    private LocalDate endDateOfDiagnosis = LocalDate.now();
     @Column(name = "CATEGORY_CODE")
     private String categoryCode;
     @Column(name = "CATEGORY_NAME")
