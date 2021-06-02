@@ -10,10 +10,10 @@
 <div layout:fragment="content">
     <p><h3 th:text="#{fragment.current.patient.navigation.left.outpatient.report}">Outpatient report</h3></p>
 
-    <p th:if="${!listPrescriptions.isEmpty()}"><br>
-    <h5 th:if="${!listPrescriptions.isEmpty()}"
+    <p th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"><br>
+    <h5 th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"
         th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
-    <table id="uploadTable" class="table table-bordered" th:if="${!listPrescriptions.isEmpty()}">
+    <table id="uploadTable" class="table table-bordered" th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="prUpload : ${listPrescriptions}">
+        <tr th:each="prUpload : ${outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll()}">
             <td th:text="${prUpload.getDrugName()}"></td>
             <td th:text="${prUpload.getDrugDosage()}"></td>
             <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
@@ -52,23 +52,23 @@
     </table>
 
     <br>
-    <p th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
-    <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}"
+    <p th:if="${!outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()}">
+    <h5 th:if="${!outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()}"
         th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h5></p>
-    <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
+    <table class="table table-bordered" th:if="${!outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
-            <th:block th:each="sample : ${vitalSignsUpload.localDateTimeListWithoutDuplicates()}">
+            <th:block th:each="sample : ${outpatientReportCommand.getVitalSignsService.vitalSignsUpload().localDateTimeListWithoutDuplicates()}">
                 <th th:text="${{sample}}"></th>
             </th:block>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="an : ${vitalSignsUpload.vitalSignsAnalysesWithoutDuplicates()}">
-            <div th:with="map=${vitalSignsUpload.valueReturn()}">
+        <tr th:each="an : ${outpatientReportCommand.getVitalSignsService.vitalSignsUpload().vitalSignsAnalysesWithoutDuplicates()}">
+            <div th:with="map=${outpatientReportCommand.getVitalSignsService.vitalSignsUpload().valueReturn()}">
                 <td th:text="${{an}}"></td>
-                <th:block th:each="sample : ${vitalSignsUpload.localDateTimeListWithoutDuplicates()}">
+                <th:block th:each="sample : ${outpatientReportCommand.getVitalSignsService.vitalSignsUpload().localDateTimeListWithoutDuplicates()}">
                     <td th:if="${map.get(an,sample) == null}">-</td>
                     <div th:if="${map.get(an,sample) != null}">
                         <td th:text="${{map.get(an,sample)}}"></td>
@@ -81,10 +81,10 @@
     </table>
 
     <br>
-    <p th:if="${!listCurrentDiseases.isEmpty()}">
-    <h5 th:if="${!listCurrentDiseases.isEmpty()}"
+    <p th:if="${!outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty()}">
+    <h5 th:if="${!outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty()}"
         th:text="#{fragment.current.patient.navigation.left.current.diseases.to.upload.in.sehr}">Current diseases to upload in S-EHR</h5></p>
-    <table class="table table-bordered" th:if="${!listCurrentDiseases.isEmpty()}">
+    <table class="table table-bordered" th:if="${!outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
@@ -95,7 +95,7 @@
         </tr>
         </thead>
         <tbody>
-        <div th:each="currentDiseaseNew : ${listCurrentDiseases}">
+        <div th:each="currentDiseaseNew : ${outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases()}">
             <tr>
                 <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
                 <td th:text="${currentDiseaseNew.getDisease()}">disease</td>
@@ -110,13 +110,18 @@
 
     <br>
     <div class="card-body text-center"
-         th:if="${!listPrescriptions.isEmpty() || !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty() || !listCurrentDiseases.isEmpty()}">
+         th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() ||
+         !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() ||
+         !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty()}">
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
-    <div class="row justify-content-center" th:if="${(prescriptionService.getConnectedThread() != null && !listPrescriptions.isEmpty()) ||
-         (vitalSignsService.getConnectedThread() != null && !vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()) ||
-         (currentDiseaseService.getConnectedThread() != null && !listCurrentDiseases.isEmpty())}">
+    <div class="row justify-content-center" th:if="${(outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getConnectedThread() != null && 
+    !outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()) ||
+         (outpatientReportCommand.getVitalSignsService.getCurrentD2DConnection().getConnectedThread() != null &&
+         !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()) ||
+         (outpatientReportCommand.getCurrentDiseaseService.getCurrentD2DConnection().getConnectedThread() != null &&
+         !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
@@ -169,8 +174,9 @@
         </div>
     </div>
 
-    <h5 th:if="${((prescriptionService.getConnectedThread() == null) ||
-    (listPrescriptions.isEmpty() && vitalSignsUpload.getVitalSignsInfoCommands().isEmpty() && listCurrentDiseases.isEmpty())) &&
+    <h5 th:if="${((outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getConnectedThread() == null) ||
+    (outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
+    outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() && outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty())) &&
     (session.withoutConnection != null && !session.withoutConnection)}" th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>
     <h5 th:if="${dataSent != null && dataSent}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.data.sent}" style="color: green">Data has been sent to the Smart-EHR</h5>

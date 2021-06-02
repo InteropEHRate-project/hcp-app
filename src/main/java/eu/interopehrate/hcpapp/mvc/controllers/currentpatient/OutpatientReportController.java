@@ -1,10 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
-import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
-import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
-import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.OutpatientReportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,53 +14,39 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/current-patient/outpatient-report")
 public class OutpatientReportController {
-    private final PrescriptionService prescriptionService;
-    private final VitalSignsService vitalSignsService;
-    private final MedicationService medicationService;
-    private final CurrentDiseaseService currentDiseaseService;
+    private final OutpatientReportService outpatientReportService;
 
-    public OutpatientReportController(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                                      MedicationService medicationService, CurrentDiseaseService currentDiseaseService) {
-        this.prescriptionService = prescriptionService;
-        this.vitalSignsService = vitalSignsService;
-        this.medicationService = medicationService;
-        this.currentDiseaseService = currentDiseaseService;
+    public OutpatientReportController(OutpatientReportService outpatientReportService) {
+        this.outpatientReportService = outpatientReportService;
     }
 
     @GetMapping
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
-        model.addAttribute("listPrescriptions", this.prescriptionService.getPrescriptionRepository().findAll());
-        model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
-        model.addAttribute("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
-        model.addAttribute("vitalSignsService", this.vitalSignsService.getCurrentD2DConnection());
-        model.addAttribute("currentDiseaseService", this.currentDiseaseService.getCurrentD2DConnection());
-        model.addAttribute("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
+        model.addAttribute("outpatientReportCommand", this.outpatientReportService.outpatientReportCommand());
         return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT;
     }
 
     @GetMapping
     @RequestMapping("/idToMedication")
     public String viewSection(@RequestParam(name = "id") String id, Model model) {
-        model.addAttribute("prescription", this.medicationService.visitFind(Long.parseLong(id)));
-        model.addAttribute("translation", this.medicationService.getCurrentPatient().getDisplayTranslatedVersion());
+        model.addAttribute("prescription", this.outpatientReportService.outpatientReportCommand().getMedicationService().visitFind(Long.parseLong(id)));
+        model.addAttribute("translation", this.outpatientReportService.outpatientReportCommand().getMedicationService().getCurrentPatient().getDisplayTranslatedVersion());
         return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_MEDICATION_VIEW;
     }
 
     @GetMapping
     @RequestMapping("/sendToSehr")
     public String sendToSehr(Model model) throws IOException {
-        if (!this.prescriptionService.getPrescriptionRepository().findAll().isEmpty() && Objects.nonNull(this.prescriptionService.getCurrentD2DConnection().getConnectedThread())) {
-            this.prescriptionService.callSendPrescription();
+        if (!this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
+                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getConnectedThread())) {
+            this.outpatientReportService.outpatientReportCommand().getPrescriptionService().callSendPrescription();
         }
-        if (!this.vitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() && Objects.nonNull(this.vitalSignsService.getCurrentD2DConnection().getConnectedThread())) {
-            this.vitalSignsService.callVitalSigns();
+        if (!this.outpatientReportService.outpatientReportCommand().getVitalSignsService().vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
+                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getVitalSignsService().getCurrentD2DConnection().getConnectedThread())) {
+            this.outpatientReportService.outpatientReportCommand().getVitalSignsService().callVitalSigns();
         }
         model.addAttribute("dataSent", Boolean.TRUE);
-        model.addAttribute("listPrescriptions", this.prescriptionService.getPrescriptionRepository().findAll());
-        model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
-        model.addAttribute("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
-        model.addAttribute("vitalSignsService", this.vitalSignsService.getCurrentD2DConnection());
-        return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT;
+        return this.viewSection(model);
     }
 }
