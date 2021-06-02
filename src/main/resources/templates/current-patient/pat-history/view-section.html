@@ -27,8 +27,13 @@
 <!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.pat.history}">Pat History</h3>
     <br>
-    <div class="alert alert-danger" role="alert" th:if="${diagnosisDeleted != null && diagnosisDeleted}"
+    <div class="alert alert-danger" role="alert" id="message1" th:if="${diagnosisDeleted != null && diagnosisDeleted}"
          th:text="#{fragment.current.patient.navigation.left.pat.history.diagnosis.deleted}">Diagnosis deleted</div>
+    <script>
+        setTimeout(function(){
+            $('#message1').remove();
+        }, 5000);
+    </script>
 
     <table class="table table-bordered" th:if="${!patHistoryCommand.getPatHistoryInfoCommandDiagnoses().isEmpty()}">
         <thead class="thead-light">
@@ -52,9 +57,9 @@
                     <a href="#" class="btn btn-info"
                        th:href="@{/current-patient/pat-history/open-update-page(id=${{patHistory.getId()}})}"
                        th:text="#{crud.button.edit}">Edit</a>
-                    <a href="#" class="btn btn-danger"
-                       th:href="@{/current-patient/pat-history/delete(id=${{patHistory.getId()}})}"
-                       th:text="#{crud.button.delete}">Delete</a>
+<!--                    <a href="#" class="btn btn-danger"-->
+<!--                       th:href="@{/current-patient/pat-history/delete(id=${{patHistory.getId()}})}"-->
+<!--                       th:text="#{crud.button.delete}">Delete</a>-->
                 </div>
             </td>
         </tr>
@@ -62,10 +67,13 @@
     </table>
     <br>
 
-
-
-    <div class="alert alert-success" role="alert" th:if="${riskFactorEdited != null && riskFactorEdited}"
+    <div class="alert alert-success" role="alert" id="message2" th:if="${riskFactorEdited != null && riskFactorEdited}"
          th:text="#{fragment.current.patient.navigation.left.pat.history.risk.factor.updated}">Risk factor updated</div>
+    <script>
+        setTimeout(function(){
+            $('#message2').remove();
+        }, 5000);
+    </script>
 
     <table class="table" th:if="${!patHistoryCommand.getPatHistoryInfoCommandRiskFactors().isEmpty()}">
         <thead>
