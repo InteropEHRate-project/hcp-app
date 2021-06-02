@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityCurrentDisease;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.CurrentDiseaseEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.CurrentDiseaseRepository;
@@ -30,20 +31,27 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private final CommandToEntityCurrentDisease commandToEntityCurrentDisease;
     private final CurrentDiseaseRepository currentDiseaseRepository;
     private final EntityToCommandCurrentDisease entityToCommandCurrentDisease;
+    private final CurrentD2DConnection currentD2DConnection;
 
     public CurrentDiseaseServiceImpl(CurrentPatient currentPatient, HapiToCommandCurrentDisease hapiToCommandCurrentDisease,
                                      CommandToEntityCurrentDisease commandToEntityCurrentDisease, CurrentDiseaseRepository currentDiseaseRepository,
-                                     EntityToCommandCurrentDisease entityToCommandCurrentDisease) {
+                                     EntityToCommandCurrentDisease entityToCommandCurrentDisease, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandCurrentDisease = hapiToCommandCurrentDisease;
         this.commandToEntityCurrentDisease = commandToEntityCurrentDisease;
         this.currentDiseaseRepository = currentDiseaseRepository;
         this.entityToCommandCurrentDisease = entityToCommandCurrentDisease;
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
     public CurrentPatient getCurrentPatient() {
-        return currentPatient;
+        return this.currentPatient;
+    }
+
+    @Override
+    public CurrentD2DConnection getCurrentD2DConnection() {
+        return this.currentD2DConnection;
     }
 
     @Override

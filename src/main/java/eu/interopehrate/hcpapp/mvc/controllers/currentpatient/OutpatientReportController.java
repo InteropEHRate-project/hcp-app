@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
@@ -19,11 +20,14 @@ public class OutpatientReportController {
     private final PrescriptionService prescriptionService;
     private final VitalSignsService vitalSignsService;
     private final MedicationService medicationService;
+    private final CurrentDiseaseService currentDiseaseService;
 
-    public OutpatientReportController(PrescriptionService prescriptionService, VitalSignsService vitalSignsService, MedicationService medicationService) {
+    public OutpatientReportController(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
+                                      MedicationService medicationService, CurrentDiseaseService currentDiseaseService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
+        this.currentDiseaseService = currentDiseaseService;
     }
 
     @GetMapping
@@ -33,6 +37,8 @@ public class OutpatientReportController {
         model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
         model.addAttribute("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
         model.addAttribute("vitalSignsService", this.vitalSignsService.getCurrentD2DConnection());
+        model.addAttribute("currentDiseaseService", this.currentDiseaseService.getCurrentD2DConnection());
+        model.addAttribute("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         return TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT;
     }
 

@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityCurrentDisease;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
@@ -48,13 +49,15 @@ class CurrentDiseaseControllerTest {
     private EntityToCommandCurrentDisease entityToCommandCurrentDisease;
     @Mock
     private TerminalFhirContext terminalFhirContext;
+    @Mock
+    private CurrentD2DConnection currentD2DConnection;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         CurrentDiseaseService service = new CurrentDiseaseServiceImpl(
                 new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
-                hapiToCommandCurrentDisease, commandToEntityCurrentDisease, currentDiseaseRepository, entityToCommandCurrentDisease);
+                hapiToCommandCurrentDisease, commandToEntityCurrentDisease, currentDiseaseRepository, entityToCommandCurrentDisease, currentD2DConnection);
         this.controller = new CurrentDiseaseController(service);
     }
 

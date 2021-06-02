@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient;
 
 
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public interface CurrentDiseaseService {
     CurrentPatient getCurrentPatient();
+    CurrentD2DConnection getCurrentD2DConnection();
     CurrentDiseaseCommand currentDiseasesSection();
     void insertCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseCommand);
     void insertNote(String note);
