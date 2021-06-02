@@ -77,8 +77,8 @@
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedicationSEHR(id=${{pr.getId()}})}"
                        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
-<!--                    <a href="#" class="btn btn-info" th:href="@{/current-patient/current-medications/prescription/open-update(id=${{pr.getIdFHIR()}})}"-->
-<!--                        th:text="#{crud.button.edit}">Edit</a>-->
+                    <a href="#" class="btn btn-info" th:href="@{/current-patient/current-medications/prescription/open-update(id=${{pr.getIdFHIR()}})}"
+                        th:text="#{crud.button.edit}">Edit</a>
                 </div>
             </td>
         </tr>

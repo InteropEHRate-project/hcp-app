@@ -19,6 +19,8 @@
         </div>
         <div class="form-row">
             <input id="drugIdFHIR" type="hidden" th:field="*{idFHIR}">
+            <input id="drugName" type="hidden" th:field="*{drugName}">
+            <input id="frequency" type="hidden" th:field="*{frequency}">
 <!--            <div class="col-md-6">-->
 <!--                <label th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug name</label>-->
 <!--                <select class="form-control" id="drugName" th:field="*{drugName}">-->
@@ -81,15 +83,6 @@
 <!--                    </ul>-->
 <!--                </div>-->
 <!--            </div>-->
-            <div class="col-md-3"><br>
-                <label for="timings" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">Times per day:</label>
-                <input id="timings" type="text" class="form-control" th:classappend="${#fields.hasErrors('timings')} ? 'is-invalid' :''" th:field="*{timings}">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('timings')}">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('timings')}" th:text="${err}">err</li>
-                    </ul>
-                </div>
-            </div>
         </div><br>
 
         <div class="form-group row">

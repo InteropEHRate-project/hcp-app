@@ -3,14 +3,57 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <title th:text="#{fragment.current.patient.navigation.left.reason}">reason</title>
 </head>
+<!--<script>-->
+<!--    var button = document.getElementById("enter");-->
+<!--    var input = document.getElementById("userinput");-->
+<!--    var ul = document.querySelector("ul");-->
+
+<!--    button.addEventListener("click", function() {-->
+<!--        var li = document.createElement("li");-->
+<!--        // Add Bootstrap class to the list element-->
+<!--        li.classList.add("list-group-item");-->
+<!--        li.appendChild(document.createTextNode(input.value));-->
+<!--        ul.appendChild(li);-->
+<!--        // Clear your input-->
+<!--        input.value = "";-->
+<!--    })-->
+<!--</script>-->
 
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
     <p><h3 th:text="#{fragment.current.patient.navigation.left.reason}">reason</h3></p>
-    <div class="m-5"></div>
+    <div class="m-4"></div>
+
+<!--    <div class="container">-->
+<!--        <div class="row justify-center col-6">-->
+<!--            <header>-->
+<!--                <h4>List of symptoms</h4>-->
+<!--            </header>-->
+<!--            <div class="col-12">-->
+<!--                <ul class="list-group">-->
+<!--                    <li class="list-group-item">Headache</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="m-2"></div>-->
+<!--            <div class="col-12">-->
+<!--                <div class="input-group mb-3">-->
+<!--                    <input id="userinput" type="text" class="form-control" placeholder="add an symptom..." aria-label="Add an item" aria-describedby="basic-addon2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <button class="btn btn-primary" id="enter" type="button">Add</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="m-5"></div>
     <form class="row col-12 justify-content-center">

@@ -17,7 +17,6 @@ public class PrescriptionInfoCommand {
     @NotEmpty
     @NotNull
     private String status;
-    @NotNull
     private Integer frequency;
     private Integer period = 1;
     private String periodUnit = "day";

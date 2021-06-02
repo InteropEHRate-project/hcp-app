@@ -215,7 +215,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static void updatePrescriptionDetails(Optional<Resource> optional, PrescriptionInfoCommand prescriptionInfoCommand) {
         if (optional.isPresent()) {
-            ((MedicationRequest) optional.get()).setStatus(MedicationRequest.MedicationRequestStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
+            //((MedicationRequest) optional.get()).setStatus(MedicationRequest.MedicationRequestStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
