@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.pdfdownload;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
+import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import eu.interopehrate.hcpapp.services.currentpatient.HospitalDischargeReportService;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
@@ -30,14 +31,16 @@ public class PDFController {
     private final TemplateEngine templateEngine;
     private final PrescriptionService prescriptionService;
     private final VitalSignsService vitalSignsService;
+    private final CurrentDiseaseService currentDiseaseService;
     private final HospitalDischargeReportService hospitalDischargeReportService;
 
     public PDFController(ServletContext servletContext, TemplateEngine templateEngine, PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                         HospitalDischargeReportService hospitalDischargeReportService) {
+                         CurrentDiseaseService currentDiseaseService, HospitalDischargeReportService hospitalDischargeReportService) {
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
+        this.currentDiseaseService = currentDiseaseService;
         this.hospitalDischargeReportService = hospitalDischargeReportService;
     }
 
@@ -55,6 +58,7 @@ public class PDFController {
         WebContext context = new WebContext(request, response, this.servletContext);
         context.setVariable("listPrescriptions", this.prescriptionService.getPrescriptionRepository().findAll());
         context.setVariable("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
+        context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
 
         return this.getPDF(TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT, context, "Outpatient-report.pdf");
     }
@@ -65,6 +69,7 @@ public class PDFController {
         WebContext context = new WebContext(request, response, this.servletContext);
         context.setVariable("listPrescriptions", this.prescriptionService.getPrescriptionRepository().findAll());
         context.setVariable("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
+        context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
 
         return this.getPDF(TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT_DOCUMENT, context, "Hospital-discharge-report.pdf");

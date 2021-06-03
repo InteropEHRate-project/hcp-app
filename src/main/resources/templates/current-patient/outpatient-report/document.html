@@ -22,46 +22,6 @@
     <div class="card-body row justify-content-center">
         <h5 th:if="${!listPrescriptions.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescriptions}">Prescriptions</h5>
     </div>
-<!--    <table id="uploadTable" class="table table-bordered" th:if="${!listPrescriptions.isEmpty()}">-->
-<!--        <thead class="thead-light">-->
-<!--        <tr>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.dateofprescription}">Date of prescription</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.start}">Start</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.end.optional}">End</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.notes}">Notes</th>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author}">Author</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="prUpload : ${listPrescriptions}">-->
-<!--            <td th:text="${prUpload.getDrugName()}"></td>-->
-<!--            <td th:text="${prUpload.getDrugDosage()}"></td>-->
-<!--            <td th:utext="${prUpload.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>-->
-<!--            <td>-->
-<!--                <th:block th:switch="${prUpload.getStatus().toLowerCase()}">-->
-<!--                    <div th:case="'active'">-->
-<!--                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>-->
-<!--                    </div>-->
-<!--                    <div th:case="'on-hold'">-->
-<!--                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>-->
-<!--                    </div>-->
-<!--                    <div th:case="'stopped'">-->
-<!--                        <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>-->
-<!--                    </div>-->
-<!--                </th:block>-->
-<!--            </td>-->
-<!--            <td th:text="${prUpload.getDateOfPrescription()}"></td>-->
-<!--            <td th:text="${prUpload.getStart()}"></td>-->
-<!--            <td th:text="${prUpload.getEnd()}"></td>-->
-<!--            <td th:text="${prUpload.getNotes()}"></td>-->
-<!--            <td th:text="${prUpload.getAuthor()}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
     <div th:if="${!listPrescriptions.isEmpty()}">
         <div th:each="prUpload : ${listPrescriptions}">
             <h6 th:text="${listPrescriptions.indexOf(prUpload) + 1}"></h6>
@@ -82,24 +42,6 @@
     <div class="card-body row justify-content-center">
         <h5 th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">Vital Signs</h5>
     </div>
-<!--    <table class="table table-bordered" th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">-->
-<!--        <thead class="thead-light">-->
-<!--        <tr>-->
-<!--            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>-->
-<!--            <th>Value</th>-->
-<!--            <th>Date and time</th>-->
-<!--            <th>Author</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="vital : ${vitalSignsUpload.getVitalSignsInfoCommands()}">-->
-<!--            <td th:text="${vital.getAnalysisName()}"></td>-->
-<!--            <td th:text="${vital.getVitalSignsInfoCommandSample().getCurrentValue()}"></td>-->
-<!--            <td th:text="${vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()}"></td>-->
-<!--            <td th:text="${vital.getAuthor()}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
     <div th:if="${!vitalSignsUpload.getVitalSignsInfoCommands().isEmpty()}">
         <div th:each="vital : ${vitalSignsUpload.getVitalSignsInfoCommands()}">
             <h6 th:text="${vitalSignsUpload.getVitalSignsInfoCommands().indexOf(vital) + 1}"></h6>
@@ -107,6 +49,20 @@
             <p th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.value} + ': ' + ${vital.getVitalSignsInfoCommandSample().getCurrentValue()}">Value</p>
             <p th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.local.date.and.time} + ': ' + ${vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()}">Date and time</p>
             <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author} + ': ' + ${vital.getAuthor()}">Author</p>
+            <br></br>
+        </div>
+    </div>
+
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!listCurrentDiseases.isEmpty()}" th:text="#{template.administration.initial.sehr.download.currentDiseases}">Current Diseases</h5>
+    </div>
+    <div th:if="${!listCurrentDiseases.isEmpty()}">
+        <div th:each="disease : ${listCurrentDiseases}">
+            <h6 th:text="${listCurrentDiseases.indexOf(disease) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.current.diseases.disease} + ': ' + ${disease.getDisease()}">disease</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis} + ': ' + ${disease.getDateOfDiagnosis()}">date of diagnosis</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis} + ': ' + ${disease.getEndDateOfDiagnosis()}">end date of diagnosis</p>
+            <p th:text="#{fragment.current.patient.navigation.left.current.diseases.comment} + ': ' + ${disease.getComment()}">comment</p>
             <br></br>
         </div>
     </div>
