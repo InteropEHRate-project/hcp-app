@@ -5,7 +5,8 @@
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.current.diseases}">current diseases</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -53,8 +54,6 @@
                     });
                 </script>
             </div>
-        </div>
-        <div class="form-row">
             <div class="col-md-4">
                 <label for="endDateOfDiagnosis" th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">dateOfDiagnosis</label>
                 <input id="endDateOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('endDateOfDiagnosis')} ? 'is-invalid' :''" readonly th:field="*{endDateOfDiagnosis}">
@@ -65,7 +64,7 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#dateOfDiagnosis').datetimepicker({
+                        $('#endDateOfDiagnosis').datetimepicker({
                             format: 'dd-mm-yyyy',
                             minView: "month"
                         });
