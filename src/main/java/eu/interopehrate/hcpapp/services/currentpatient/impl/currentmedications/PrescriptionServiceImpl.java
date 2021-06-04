@@ -213,14 +213,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionInfoCommand.setId(prescriptionEntity.getId());
     }
 
-    private static void updatePrescriptionDetails(Optional<Resource> optional, PrescriptionInfoCommand prescriptionInfoCommand) {
-        if (optional.isPresent()) {
-            //((MedicationRequest) optional.get()).setStatus(MedicationRequest.MedicationRequestStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
-        } else {
-            log.error("Cannot be updated. Resource not found.");
-        }
-    }
-
     @Override
     public void deletePrescription(Long drugId) {
         this.prescriptionRepository.deleteById(drugId);
@@ -427,6 +419,31 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         } catch (IndexOutOfBoundsException ignored) {
             int index = (pageNo - 1) * pageSize;
             return new PageImpl<>(list.subList(index, list.size()), pageable, list.size());
+        }
+    }
+
+    private static void updatePrescriptionDetails(Optional<Resource> optional, PrescriptionInfoCommand prescriptionInfoCommand) {
+        if (optional.isPresent()) {
+            ((MedicationRequest) optional.get()).setStatus(MedicationRequest.MedicationRequestStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
+
+            // deletes Notes translation if the prescription's notes are different
+            StringType displayElement = ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement();
+            if (displayElement.hasExtension() && !displayElement.getValue().equalsIgnoreCase(prescriptionInfoCommand.getNotes())) {
+                displayElement.getExtension().clear();
+            }
+
+            ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getRoute().getCodingFirstRep().setDisplay(prescriptionInfoCommand.getNotes());
+
+            ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getTiming().getRepeat().setFrequency(Integer.parseInt(prescriptionInfoCommand.getTimings()));
+            ((MedicationRequest) optional.get()).setAuthoredOn(Date.from(prescriptionInfoCommand.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod()
+                    .setStart(Date.from(prescriptionInfoCommand.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            if (Objects.nonNull(prescriptionInfoCommand.getEnd())) {
+                ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod()
+                        .setEnd(Date.from(prescriptionInfoCommand.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            }
+        } else {
+            log.error("Cannot be updated. Resource not found.");
         }
     }
 }

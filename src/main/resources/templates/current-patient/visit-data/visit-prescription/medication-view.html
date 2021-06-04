@@ -42,14 +42,14 @@
                        th:text="${prescription.getNotes()}">notes</p>
 
                     <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.status}">Status</h5>
-                    <th:block th:switch="${prescription.getStatus()}">
-                        <div th:case="'Active'">
+                    <th:block th:switch="${prescription.getStatus().toUpperCase()}">
+                        <div th:case="'ACTIVE'">
                             <p class="card-text" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.active}">Active</p>
                         </div>
-                        <div th:case="'On-Hold'">
+                        <div th:case="'ONHOLD'">
                             <p class="card-text" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.on.hold}">On-Hold</p>
                         </div>
-                        <div th:case="'Stopped'">
+                        <div th:case="'STOPPED'">
                             <p class="card-text" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.stopped}">Stopped</p>
                         </div>
                     </th:block>

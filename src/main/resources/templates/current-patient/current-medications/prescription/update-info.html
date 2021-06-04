@@ -3,10 +3,10 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">Prescriptions</title>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
             th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+
+    <title th:text="#{fragment.current.patient.navigation.left.current.medications.prescription}">Prescriptions</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -19,25 +19,19 @@
         </div>
         <div class="form-row">
             <input id="drugIdFHIR" type="hidden" th:field="*{idFHIR}">
-            <input id="drugName" type="hidden" th:field="*{drugName}">
-            <input id="frequency" type="hidden" th:field="*{frequency}">
-<!--            <div class="col-md-6">-->
-<!--                <label th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug name</label>-->
-<!--                <select class="form-control" id="drugName" th:field="*{drugName}">-->
-<!--                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.current.medication.choose}">Choose a drug</option>-->
-<!--                    <option input type="text" class="form-control" th:each="type : ${prescriptionTypes}" th:classappend="${#fields.hasErrors('drugName')} ? 'is-invalid' :''"-->
-<!--                            th:value="${type.getName()}" th:text="${type.getName()}">Drug name</option>-->
-<!--                </select>-->
-<!--                <div class="invalid-feedback" th:if="${#fields.hasErrors('drugName')}">-->
-<!--                    <ul>-->
-<!--                        <li th:each="err : ${#fields.errors('drugName')}" th:text="${err}">err</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div class="col-md-6">
+                <label th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug name</label>
+                <input id="drugName" readonly type="text" class="form-control" th:classappend="${#fields.hasErrors('drugName')} ? 'is-invalid' :''" th:field="*{drugName}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('drugName')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('drugName')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
 
             <div class="col-md-6">
                 <label for="drugDosage" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</label>
-                <input id="drugDosage" type="text" class="form-control" th:classappend="${#fields.hasErrors('drugDosage')} ? 'is-invalid' :''" th:field="*{drugDosage}">
+                <input id="drugDosage" readonly type="text" class="form-control" th:classappend="${#fields.hasErrors('drugDosage')} ? 'is-invalid' :''" th:field="*{drugDosage}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('drugDosage')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('drugDosage')}" th:text="${err}">err</li>
@@ -52,7 +46,7 @@
                 <select class="form-control" id="status" th:field="*{status}">
                     <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Active"
                             th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Active</option>
-                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="On-Hold"
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="OnHold"
                             th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</option>
                     <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' :''" value="Stopped"
                             th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</option>
@@ -74,15 +68,15 @@
                 </div>
             </div>
 
-<!--            <div class="col-md-3"><br>-->
-<!--                <label for="frequency" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">Times per day:</label>-->
-<!--                <input id="frequency" type="text" class="form-control" th:classappend="${#fields.hasErrors('frequency')} ? 'is-invalid' :''" th:field="*{frequency}">-->
-<!--                <div class="invalid-feedback" th:if="${#fields.hasErrors('frequency')}">-->
-<!--                    <ul>-->
-<!--                        <li th:each="err : ${#fields.errors('frequency')}" th:text="${err}">err</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div class="col-md-3"><br>
+                <label for="timings" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}">Times per day:</label>
+                <input id="timings" type="text" class="form-control" th:classappend="${#fields.hasErrors('timings')} ? 'is-invalid' :''" th:field="*{timings}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('timings')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('timings')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
         </div><br>
 
         <div class="form-group row">

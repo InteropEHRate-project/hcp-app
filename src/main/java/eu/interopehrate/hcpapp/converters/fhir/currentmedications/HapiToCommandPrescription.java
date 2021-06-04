@@ -37,11 +37,12 @@ public class HapiToCommandPrescription implements Converter<MedicationRequest, P
         } else if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute() && source.getDosageInstructionFirstRep().getRoute().hasCoding()) {
             prescriptionInfoCommand.setNotes(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplay());
         }
-        if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute() && source.getDosageInstructionFirstRep().getRoute().hasCoding()) {
+        if (source.hasDosageInstruction() && source.getDosageInstructionFirstRep().hasRoute() &&
+                source.getDosageInstructionFirstRep().getRoute().hasCoding() && source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().hasExtension()) {
             prescriptionInfoCommand.setNotesTranslated(source.getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
         }
         if (source.hasStatus() && source.getStatus().getDisplay() != null) {
-            prescriptionInfoCommand.setStatus(source.getStatus().getDisplay());
+            prescriptionInfoCommand.setStatus(source.getStatus().toString());
         }
         if (source.hasAuthoredOn()) {
             prescriptionInfoCommand.setDateOfPrescription(source.getAuthoredOn()
