@@ -55,9 +55,7 @@
                     });
                 </script>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <label for="endDateOfDiagnosis" th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">dateOfDiagnosis</label>
                 <input id="endDateOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('endDateOfDiagnosis')} ? 'is-invalid' :''" readonly th:field="*{endDateOfDiagnosis}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('endDateOfDiagnosis')}">
@@ -67,12 +65,13 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#dateOfDiagnosis').datetimepicker({
+                        $('#endDateOfDiagnosis').datetimepicker({
                             format: 'dd-mm-yyyy',
                             minView: "month"
                         });
                     });
                 </script>
+                <p style="color: #007bff">End date not integrated in FHIR yet</p>
             </div>
         </div>
         <div class="text-right"><br>

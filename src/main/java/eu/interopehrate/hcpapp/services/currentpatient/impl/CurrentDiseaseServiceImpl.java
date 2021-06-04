@@ -11,13 +11,12 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Condition;
-import org.hl7.fhir.r4.model.Resource;
-import org.hl7.fhir.r4.model.ResourceType;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -135,8 +134,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         if (optional.isPresent()) {
             ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(currentDiseaseInfoCommand.getDisease());
             ((Condition) optional.get()).getNoteFirstRep().setText(currentDiseaseInfoCommand.getComment());
-            // Date onSetEnd = ((DateTimeType) ((Condition) optional.get()).getOnset()).getValue();
-            // ((Condition) optional.get()).setOnset(onSetEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            ((Condition) optional.get()).setOnset(new DateTimeType(Date.from(currentDiseaseInfoCommand.getDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant())));
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
