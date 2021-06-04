@@ -149,11 +149,12 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
 
     @Override
     public void updateNewCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand) {
-        CurrentDiseaseEntity currentDiseaseInfoCommandOld = this.currentDiseaseRepository.getOne(currentDiseaseInfoCommand.getId());
-        currentDiseaseInfoCommandOld.setDisease(currentDiseaseInfoCommand.getDisease());
-        currentDiseaseInfoCommandOld.setDateOfDiagnosis(currentDiseaseInfoCommand.getDateOfDiagnosis());
-        currentDiseaseInfoCommandOld.setComment(currentDiseaseInfoCommand.getComment());
-        this.currentDiseaseRepository.save(currentDiseaseInfoCommandOld);
+        CurrentDiseaseEntity currentDiseaseEntity = this.currentDiseaseRepository.getOne(currentDiseaseInfoCommand.getId());
+        currentDiseaseEntity.setDisease(currentDiseaseInfoCommand.getDisease());
+        currentDiseaseEntity.setDateOfDiagnosis(currentDiseaseInfoCommand.getDateOfDiagnosis());
+        currentDiseaseEntity.setEndDateOfDiagnosis(currentDiseaseInfoCommand.getEndDateOfDiagnosis());
+        currentDiseaseEntity.setComment(currentDiseaseInfoCommand.getComment());
+        this.currentDiseaseRepository.save(currentDiseaseEntity);
     }
 
     @Override

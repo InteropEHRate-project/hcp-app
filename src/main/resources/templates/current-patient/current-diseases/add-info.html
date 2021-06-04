@@ -54,7 +54,7 @@
                     });
                 </script>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <label for="endDateOfDiagnosis" th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">dateOfDiagnosis</label>
                 <input id="endDateOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('endDateOfDiagnosis')} ? 'is-invalid' :''" readonly th:field="*{endDateOfDiagnosis}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('endDateOfDiagnosis')}">
