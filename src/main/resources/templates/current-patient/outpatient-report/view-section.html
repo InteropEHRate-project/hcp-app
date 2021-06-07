@@ -120,7 +120,6 @@
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</th>
-            <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -154,16 +153,6 @@
             </td>
             <td th:text="${{ai.getSymptoms()}}"></td>
             <td th:text="${{ai.getComments()}}"></td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-info"
-                       th:href="@{/current-patient/allergies/open-update-page(id=${{ai.getId()}})}"
-                       th:text="#{crud.button.edit}">Edit</a>
-                    <a href="#" class="btn btn-danger"
-                       th:href="@{/current-patient/allergies/delete(id=${{ai.getId()}})}"
-                       th:text="#{crud.button.delete}">Delete</a>
-                </div>
-            </td>
         </tr>
         </tbody>
         <p style="color: #007bff">The upload of Allergies is not implemented yet.</p>

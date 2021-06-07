@@ -66,6 +66,21 @@
             <br></br>
         </div>
     </div>
+
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!listAllergies.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.allergies}">Allergies</h5>
+    </div>
+    <div th:if="${!listAllergies.isEmpty()}">
+        <div th:each="allergy : ${listAllergies}">
+            <h6 th:text="${listAllergies.indexOf(allergy) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.allergies.name} + ': ' + ${allergy.getName()}">Name</p>
+            <p th:text="#{fragment.current.patient.navigation.left.allergies.category} + ': ' + ${allergy.getCategory()}">Category</p>
+            <p th:text="#{fragment.current.patient.navigation.left.allergies.type} + ': ' + ${allergy.getType()}">Type</p>
+            <p th:text="#{fragment.current.patient.navigation.left.allergies.symptoms} + ': ' + ${allergy.getSymptoms()}">Symptoms</p>
+            <p th:text="#{fragment.current.patient.navigation.left.allergies.comments} + ': ' + ${allergy.getComments()}">Comments</p>
+            <br></br>
+        </div>
+    </div>
 </div>
 </body>
 </html>
