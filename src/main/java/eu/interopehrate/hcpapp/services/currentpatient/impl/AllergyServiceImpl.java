@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityAllergy;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandAllergy;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergy;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.AllergyEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.AllergyRepository;
@@ -27,21 +28,29 @@ public class AllergyServiceImpl implements AllergyService {
     private final CommandToEntityAllergy commandToEntityAllergy;
     private final EntityToCommandAllergy entityToCommandAllergy;
     private final HealthCareProfessionalService healthCareProfessionalService;
+    private final CurrentD2DConnection currentD2DConnection;
 
     public AllergyServiceImpl(CurrentPatient currentPatient, HapiToCommandAllergy hapiToCommandAllergy,
                               AllergyRepository allergyRepository, CommandToEntityAllergy commandToEntityAllergy,
-                              EntityToCommandAllergy entityToCommandAllergy, HealthCareProfessionalService healthCareProfessionalService) {
+                              EntityToCommandAllergy entityToCommandAllergy, HealthCareProfessionalService healthCareProfessionalService,
+                              CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandAllergy = hapiToCommandAllergy;
         this.allergyRepository = allergyRepository;
         this.commandToEntityAllergy = commandToEntityAllergy;
         this.entityToCommandAllergy = entityToCommandAllergy;
         this.healthCareProfessionalService = healthCareProfessionalService;
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
     public CurrentPatient getCurrentPatient() {
         return currentPatient;
+    }
+
+    @Override
+    public CurrentD2DConnection getCurrentD2DConnection() {
+        return currentD2DConnection;
     }
 
     // HARCODED METHOD

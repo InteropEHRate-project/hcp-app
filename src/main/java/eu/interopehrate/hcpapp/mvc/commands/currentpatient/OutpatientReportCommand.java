@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 
+import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
@@ -14,4 +15,5 @@ public class OutpatientReportCommand {
     private final VitalSignsService vitalSignsService;
     private final MedicationService medicationService;
     private final CurrentDiseaseService currentDiseaseService;
+    private final AllergyService allergyService;
 }
