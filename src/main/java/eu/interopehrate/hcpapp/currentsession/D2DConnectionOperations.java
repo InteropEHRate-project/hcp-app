@@ -3,7 +3,8 @@ package eu.interopehrate.hcpapp.currentsession;
 import eu.interopehrate.hcpapp.mvc.commands.d2dconnection.D2DConnectionSseCommand;
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
-import eu.interopehrate.td2de.ConnectedThread;
+import eu.interopehrate.td2de.api.TD2D;
+import eu.interopehrate.td2de.api.TD2DSecureConnectionFactory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -33,8 +34,9 @@ public class D2DConnectionOperations {
         this.eventPublisher.publishEvent(d2DConnectionSseCommand);
     }
 
-    public void sendPractitionerIdentity(ConnectedThread connectedThread) throws IOException {
-        connectedThread.sendPersonalIdentity(applicationRuntimeInfoService.practitioner());
+    @SneakyThrows
+    public TD2D sendPractitionerIdentity(TD2DSecureConnectionFactory secureConnectionFactory) throws IOException {
+        return secureConnectionFactory.createSecureConnection(applicationRuntimeInfoService.practitioner());
     }
 
     public void auditPatientAdmission() {

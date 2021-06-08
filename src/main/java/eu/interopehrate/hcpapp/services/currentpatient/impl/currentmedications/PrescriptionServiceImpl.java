@@ -7,7 +7,6 @@ import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
-import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
@@ -236,42 +235,29 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() {
-        if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
-            Bundle prescription = new Bundle();
-            prescription.setEntry(new ArrayList<>());
-            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-                prescription.getEntry().add(new Bundle.BundleEntryComponent());
-                MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
-                prescription.getEntry().get(i).setResource(med);
-                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-            }
-            this.sendPrescription(prescription);
-        } else {
-            log.error("The connection with S-EHR is not established.");
-        }
+//        if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
+//            Bundle prescription = new Bundle();
+//            prescription.setEntry(new ArrayList<>());
+//            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+//                prescription.getEntry().add(new Bundle.BundleEntryComponent());
+//                MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+//                prescription.getEntry().get(i).setResource(med);
+//                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+//                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+//            }
+//            this.sendPrescription(prescription);
+//        } else {
+//            log.error("The connection with S-EHR is not established.");
+//        }
     }
 
     @Override
     @SneakyThrows
     public void sendPrescription(Bundle medicationRequest) {
-        // Creates String from the Bundle
-//        FhirContext fhirContext = terminalFhirContext.getContext();
-//        IParser parser = fhirContext.newJsonParser().setPrettyPrint(Boolean.TRUE);
-//        String content = parser.encodeResourceToString(medicationRequest);
-
-        // Tries to translate the English content into Italian
-//        medicationRequest = this.translateService.translate(medicationRequest, Locale.ITALY);
-//        String translatedContent = parser.encodeResourceToString(medicationRequest);
-
-        // Tries to translate the Italian content into English
-//        medicationRequest = this.translateService.translate(medicationRequest, Locale.UK);
-//        String translatedContent = parser.encodeResourceToString(medicationRequest);
-
-        this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
-        log.info("Prescription sent to S-EHR");
-        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
-        this.prescriptionRepository.deleteAll();
+//        this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
+//        log.info("Prescription sent to S-EHR");
+//        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
+//        this.prescriptionRepository.deleteAll();
     }
 
     @Override

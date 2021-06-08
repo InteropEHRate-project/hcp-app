@@ -1,9 +1,8 @@
 package eu.interopehrate.hcpapp.d2dlibrary;
 
 import ca.uhn.fhir.context.FhirContext;
-import eu.interopehrate.td2de.BluetoothConnection;
-import eu.interopehrate.td2de.api.D2DConnection;
-import eu.interopehrate.td2de.api.D2DHRExchangeListeners;
+import eu.interopehrate.td2de.D2DBluetoothConnector;
+import eu.interopehrate.td2de.api.D2DConnector;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -12,7 +11,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Patient;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,87 +27,11 @@ public class D2DLibraryTests {
 
     @Test
     public void testGetBTAdapterAddress() throws Exception {
-        D2DConnection d2DConnection = new BluetoothConnection();
+        D2DConnector d2DConnection = new D2DBluetoothConnector();
 //        ((D2DSecurityConnection) d2DConnection).fetchCertificate();
-        String btAdapterAddress = d2DConnection.getBTadapterAddress();
+        String btAdapterAddress = d2DConnection.getBtAdapterAddress();
         Assert.assertNotNull(btAdapterAddress);
         System.out.println(btAdapterAddress);
-    }
-
-    @Test
-    public void testOnNoConformantPatientSummaryReceived() {
-        class D2DHRExchangeListenersTestImpl implements D2DHRExchangeListeners {
-            @Override
-            public void onPersonalIdentityReceived(Patient patient) {
-
-            }
-
-            @Override
-            public void onPatientSummaryReceived(Bundle bundle) {
-
-            }
-
-            @Override
-            public void onConsentAnswerReceived(String s) {
-
-            }
-
-            @Override
-            public void onNoConformantPatientSummaryReceived() {
-
-            }
-
-            @Override
-            public void onPrescriptionReceived(Bundle medicationRequest) {
-
-            }
-
-            @Override
-            public void onNoConformantPrescriptionReceived() {
-
-            }
-
-            @Override
-            public void onLaboratoryResultsReceived(Bundle bundle) {
-
-            }
-
-            @Override
-            public void onImageReportReceived(Bundle bundle) {
-
-            }
-
-            @Override
-            public void onPathologyHistoryInformationReceived(Bundle bundle) {
-
-            }
-
-            @Override
-            public void onMedicalDocumentConsultationReceived(Bundle bundle) {
-
-            }
-
-            @Override
-            public void onVitalSignsReceived(Bundle bundle) {
-
-            }
-        }
-
-        D2DHRExchangeListeners d2DHRExchangeListeners = new D2DHRExchangeListenersTestImpl();
-        D2DLibraryMock d2DLibraryMock = new D2DLibraryMock(d2DHRExchangeListeners);
-        d2DLibraryMock.simulateNonValidPatientSummaryReceived();
-    }
-
-    private static class D2DLibraryMock {
-        private D2DHRExchangeListeners listeners;
-
-        public D2DLibraryMock(D2DHRExchangeListeners listeners) {
-            this.listeners = listeners;
-        }
-
-        public void simulateNonValidPatientSummaryReceived() {
-            listeners.onNoConformantPatientSummaryReceived();
-        }
     }
 
     @Test

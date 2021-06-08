@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/outpatient-report")
@@ -38,15 +37,15 @@ public class OutpatientReportController {
     @GetMapping
     @RequestMapping("/sendToSehr")
     public String sendToSehr(Model model) throws IOException {
-        if (!this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
-                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getConnectedThread())) {
-            this.outpatientReportService.outpatientReportCommand().getPrescriptionService().callSendPrescription();
-        }
-        if (!this.outpatientReportService.outpatientReportCommand().getVitalSignsService().vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
-                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getVitalSignsService().getCurrentD2DConnection().getConnectedThread())) {
-            this.outpatientReportService.outpatientReportCommand().getVitalSignsService().callVitalSigns();
-        }
-        model.addAttribute("dataSent", Boolean.TRUE);
+//        if (!this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
+//                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getConnectedThread())) {
+//            this.outpatientReportService.outpatientReportCommand().getPrescriptionService().callSendPrescription();
+//        }
+//        if (!this.outpatientReportService.outpatientReportCommand().getVitalSignsService().vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
+//                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getVitalSignsService().getCurrentD2DConnection().getConnectedThread())) {
+//            this.outpatientReportService.outpatientReportCommand().getVitalSignsService().callVitalSigns();
+//        }
+//        model.addAttribute("dataSent", Boolean.TRUE);
         return this.viewSection(model);
     }
 }
