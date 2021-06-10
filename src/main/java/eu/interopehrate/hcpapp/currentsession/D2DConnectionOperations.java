@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 @Slf4j
 @Component
 public class D2DConnectionOperations {
@@ -35,7 +33,7 @@ public class D2DConnectionOperations {
     }
 
     @SneakyThrows
-    public TD2D sendPractitionerIdentity(TD2DSecureConnectionFactory secureConnectionFactory) throws IOException {
+    public TD2D getConnection(TD2DSecureConnectionFactory secureConnectionFactory) {
         return secureConnectionFactory.createSecureConnection(applicationRuntimeInfoService.practitioner());
     }
 
