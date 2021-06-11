@@ -15,7 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -183,6 +186,17 @@ public class AllergyServiceImpl implements AllergyService {
             }
             ((AllergyIntolerance) optional.get()).getReactionFirstRep().getManifestationFirstRep().setText(allergyInfoCommand.getSymptoms());
             ((AllergyIntolerance) optional.get()).getNoteFirstRep().setText(allergyInfoCommand.getComments());
+
+            if ((((AllergyIntolerance) optional.get()).hasExtension() && ((AllergyIntolerance) optional.get()).getExtension().size() > 0) && Objects.nonNull(allergyInfoCommand.getEndDate())) {
+                ((AllergyIntolerance) optional.get()).getExtension().get(0).setValue(new DateTimeType(Date.from(allergyInfoCommand.getEndDate()
+                        .atStartOfDay(ZoneId.systemDefault())
+                        .toInstant())));
+            } else if (Objects.nonNull(allergyInfoCommand.getEndDate())) {
+                ((AllergyIntolerance) optional.get()).getExtension().add(new Extension());
+                ((AllergyIntolerance) optional.get()).getExtension().get(0).setValue(new DateTimeType(Date.from(allergyInfoCommand.getEndDate()
+                        .atStartOfDay(ZoneId.systemDefault())
+                        .toInstant())));
+            }
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
