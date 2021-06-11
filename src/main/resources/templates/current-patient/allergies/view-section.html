@@ -35,6 +35,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</th>
+            <th th:text="#{fragment.current.patient.navigation.left.allergies.end.date}">End date</th>
             <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
@@ -71,6 +72,7 @@
                 </td>
                 <td th:text="${{ai.getSymptoms()}}"></td>
                 <td th:text="${{ai.getComments()}}"></td>
+                <td th:text="${{ai.getEndDate()}}"></td>
                 <td>
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-info"
@@ -113,6 +115,7 @@
                 </td>
                 <td th:text="${{ai.getSymptoms()}}"></td>
                 <td th:text="${{ai.getComments()}}"></td>
+                <td th:text="${{ai.getEndDate()}}"></td>
             </tr>
         </div>
         </tbody>
@@ -138,6 +141,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</th>
+            <th th:text="#{fragment.current.patient.navigation.left.allergies.end.date}">End date</th>
             <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
@@ -172,6 +176,7 @@
             </td>
             <td th:text="${{ai.getSymptoms()}}"></td>
             <td th:text="${{ai.getComments()}}"></td>
+            <td th:text="${{ai.getEndDate()}}"></td>
             <td>
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-info"
