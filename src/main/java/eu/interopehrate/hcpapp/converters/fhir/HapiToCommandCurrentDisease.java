@@ -51,7 +51,12 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());
         }
-
+        if (condition.hasAbatementDateTimeType() && condition.getAbatementDateTimeType().hasValue()) {
+            currentDiseaseInfoCommand.setEndDateOfDiagnosis(condition.getAbatementDateTimeType().getValue()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate());
+        }
         if (Objects.nonNull(condition.getCategory())) {
             currentDiseaseInfoCommand.setCategoryCode(condition.getCategory()
                     .stream()
