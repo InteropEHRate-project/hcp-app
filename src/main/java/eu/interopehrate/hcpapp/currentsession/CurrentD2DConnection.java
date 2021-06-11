@@ -33,7 +33,6 @@ public class CurrentD2DConnection implements DisposableBean {
     private final CurrentPatient currentPatient;
     private final D2DConnectionOperations d2DConnectionOperations;
     private D2DConnector bluetoothConnection;
-//    private ConnectedThread connectedThread;
     private TD2DSecureConnectionFactory secureConnectionFactory;
     private TD2D td2d;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
@@ -50,10 +49,6 @@ public class CurrentD2DConnection implements DisposableBean {
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.auditInformationService = auditInformationService;
     }
-
-//    public ConnectedThread getConnectedThread() {
-//        return connectedThread;
-//    }
 
     public TD2DSecureConnectionFactory getSecureConnectionFactory() {
         return secureConnectionFactory;
@@ -87,7 +82,6 @@ public class CurrentD2DConnection implements DisposableBean {
     private void openConnection() {
         try {
             bluetoothConnection = new D2DBluetoothConnector();
-//            connectedThread = bluetoothConnection.listenConnection(new D2DHRExchangeListener(), new D2DConnectionListener(), this.ipsValidatorPackPath);
             this.secureConnectionFactory = bluetoothConnection.openConnection(new D2DHRExchangeListener(), this.ipsValidatorPackPath);
 
             this.connectionState = D2DConnectionState.ON;
@@ -101,8 +95,6 @@ public class CurrentD2DConnection implements DisposableBean {
     private void afterConnectionOpened() {
         try {
             this.td2d = this.d2DConnectionOperations.getConnection(this.secureConnectionFactory);
-//            this.connectedThread.sendHCPCertificate();
-//            this.connectedThread.sendSymKey();
         } catch (Exception e) {
             this.closeConnection();
             throw new RuntimeException(e);
@@ -134,29 +126,7 @@ public class CurrentD2DConnection implements DisposableBean {
         }
     }
 
-//    private class D2DConnectionListener implements D2DConnectionListeners {
-//        @Override
-//        public void onConnectionClosure() {
-//            log.info("D2D connection was closed.");
-//        }
-//    }
-
     private class D2DHRExchangeListener implements TD2DListener {
-//        @Override
-//        public void onPersonalIdentityReceived(Patient patient) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onPersonalIdentityReceived");
-//                    CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
-//                    CurrentD2DConnection.this.currentPatient.initPatient(patient);
-//                    CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
-//                    CurrentD2DConnection.this.certificate();
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after personal identity was received", e);
-//                }
-//            });
-//        }
 //
 //        @Override
 //        public void onPatientSummaryReceived(Bundle bundle) {
@@ -187,15 +157,6 @@ public class CurrentD2DConnection implements DisposableBean {
 //        }
 //
 //        @Override
-//        public void onNoConformantPatientSummaryReceived() {
-//            CompletableFuture.runAsync(() -> {
-//                log.error("onNoConformantPatientSummaryReceived");
-//                indexPatientDataCommand.setNoConformantJSON(true);
-//                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//            });
-//        }
-//
-//        @Override
 //        public void onPrescriptionReceived(Bundle medicationRequest) {
 //            CompletableFuture.runAsync(() -> {
 //                try {
@@ -207,15 +168,6 @@ public class CurrentD2DConnection implements DisposableBean {
 //                } catch (Exception e) {
 //                    log.error("Error after Prescription was received", e);
 //                }
-//            });
-//        }
-//
-//        @Override
-//        public void onNoConformantPrescriptionReceived() {
-//            CompletableFuture.runAsync(() -> {
-//                log.error("onNoConformantPrescriptionReceived");
-//                indexPatientDataCommand.setNoConformantJSON(true);
-//                CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
 //            });
 //        }
 //
@@ -322,12 +274,14 @@ public class CurrentD2DConnection implements DisposableBean {
 
         @Override
         public void onError(int errorCode, String errorMessage) {
-
+            log.error("onNoConformantPatientSummaryReceived");
+            indexPatientDataCommand.setNoConformantJSON(true);
+            CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
         }
 
         @Override
         public void onConnectionClosure() {
-
+            log.info("D2D connection was closed.");
         }
     }
 
