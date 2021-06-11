@@ -113,6 +113,7 @@ public class AllergyServiceImpl implements AllergyService {
         oldAllergy.setType(allergyInfoCommand.getType());
         oldAllergy.setSymptoms(allergyInfoCommand.getSymptoms());
         oldAllergy.setComments(allergyInfoCommand.getComments());
+        oldAllergy.setEndDate(allergyInfoCommand.getEndDate());
         this.allergyRepository.save(oldAllergy);
     }
 

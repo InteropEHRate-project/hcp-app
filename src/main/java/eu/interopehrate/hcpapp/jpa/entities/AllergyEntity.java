@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -35,4 +36,6 @@ public class AllergyEntity extends HCPApplicationEntity {
     private String symptoms;
     @Column(name = "COMMENTS")
     private String comments;
+    @Column(name = "END_DATE")
+    private LocalDate endDate;
 }

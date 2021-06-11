@@ -3,6 +3,9 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+
     <title th:text="#{fragment.current.patient.navigation.left.allergies.update.allergy}">Update Allergy information</title>
 </head>
 <body>
@@ -80,9 +83,26 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="col-md-12"><br>
+            <div class="col-md-8"><br>
                 <label for="comments" th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</label>
                 <input id="comments" type="text" class="form-control" th:field="*{comments}">
+            </div>
+            <div class="col-md-4"><br>
+                <label for="endDate" th:text="#{fragment.current.patient.navigation.left.allergies.end.date}">End Date</label>
+                <input id="endDate" type="text" class="form-control" th:classappend="${#fields.hasErrors('endDate')} ? 'is-invalid' :''" readonly th:field="*{endDate}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('endDate')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#endDate').datetimepicker({
+                            format: 'dd-mm-yyyy',
+                            minView: "month"
+                        });
+                    });
+                </script>
             </div>
         </div>
 
