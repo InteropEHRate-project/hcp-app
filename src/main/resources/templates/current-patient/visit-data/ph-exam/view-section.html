@@ -8,7 +8,35 @@
 
 <body>
 <div layout:fragment="content">
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.ph.exam}">ph exam</h3></p>
+    <div class="m-5"></div>
+    <h3 th:text="#{fragment.current.patient.navigation.left.ph.exam}">ph exam</h3>
+    <br>
+    <table class="table table-bordered" th:if="${!list.isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.ph.exam.type}">Type</th>
+            <th th:text="#{fragment.current.patient.navigation.left.ph.exam.result}">Result</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="exam : ${list}">
+            <td th:text="${{exam.getType()}}"></td>
+            <td th:text="${{exam.getResult()}}"></td>
+<!--            <td>-->
+<!--                <div class="btn-group" role="group">-->
+<!--                    <a href="#" class="btn btn-info"-->
+<!--                       th:href="@{/current-patient/allergies/open-update-page(id=${{ai.getId()}})}"-->
+<!--                       th:text="#{crud.button.edit}">Edit</a>-->
+<!--                    <a href="#" class="btn btn-danger"-->
+<!--                       th:href="@{/current-patient/allergies/delete(id=${{ai.getId()}})}"-->
+<!--                       th:text="#{crud.button.delete}">Delete</a>-->
+<!--                </div>-->
+<!--            </td>-->
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 </body>
 </html>
