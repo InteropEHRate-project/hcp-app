@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.ph.exam.add}">Add Physical examination</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="m-3"></div>
+    <h2 th:text="#{fragment.current.patient.navigation.left.ph.exam.add}">Add Physical examination</h2>
+    <div class="m-5"></div>
+    <form action="#" th:action="@{/current-patient/visit-data/ph-exam/save-add}" th:object="${phExamInfoCommand}" method="post">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <p th:text="#{template.errors.message}">Please correct the errors below</p>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-6">
+                <label for="type" th:text="#{fragment.current.patient.navigation.left.ph.exam.type}">Type</label>
+                <select class="form-control" id="type" th:field="*{type}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.type}">Choose a type</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="ECHO"
+                            th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECHO}">ECHO</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="XRAY"
+                            th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.XRAY}">X-RAY</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="MRI"
+                            th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.MRI}">MRI</option>
+                    <option input type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="ECG"
+                            th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECG}">ECG</option>
+                </select>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('type')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="result" th:text="#{fragment.current.patient.navigation.left.ph.exam.result}">Result</label>
+                <input id="result" type="text" class="form-control" th:classappend="${#fields.hasErrors('result')} ? 'is-invalid' :''" th:field="*{result}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('result')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('result')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-right"><br>
+            <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

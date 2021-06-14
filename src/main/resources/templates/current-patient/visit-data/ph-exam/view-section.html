@@ -21,7 +21,22 @@
         </thead>
         <tbody>
         <tr th:each="exam : ${list}">
-            <td th:text="${{exam.getType()}}"></td>
+            <td>
+                <th:block th:switch="${exam.getType().toString().toUpperCase()}">
+                    <div th:case="'ECHO'">
+                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECHO}">ECHO</p>
+                    </div>
+                    <div th:case="'XRAY'">
+                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.XRAY}">XRAY</p>
+                    </div>
+                    <div th:case="'MRI'">
+                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.MRI}">MRI</p>
+                    </div>
+                    <div th:case="'ECG'">
+                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECG}">ECG</p>
+                    </div>
+                </th:block>
+            </td>
             <td th:text="${{exam.getResult()}}"></td>
 <!--            <td>-->
 <!--                <div class="btn-group" role="group">-->
@@ -36,6 +51,12 @@
         </tr>
         </tbody>
     </table>
+    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary"
+               th:href="@{/current-patient/visit-data/ph-exam/open-add-page}" th:text="#{crud.button.add}">Add</a>
+        </div>
+    </div>
 
 </div>
 </body>
