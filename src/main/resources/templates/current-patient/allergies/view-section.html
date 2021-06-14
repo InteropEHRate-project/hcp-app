@@ -72,7 +72,7 @@
                 </td>
                 <td th:text="${{ai.getSymptoms()}}"></td>
                 <td th:text="${{ai.getComments()}}"></td>
-                <td th:text="${{ai.getEndDate()}}"></td>
+                <td th:text="${{#temporals.format(ai.getEndDate(), 'dd-MM-yyyy')}}"></td>
                 <td>
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-info"
@@ -115,7 +115,7 @@
                 </td>
                 <td th:text="${{ai.getSymptoms()}}"></td>
                 <td th:text="${{ai.getComments()}}"></td>
-                <td th:text="${{ai.getEndDate()}}"></td>
+                <td th:text="${{#temporals.format(ai.getEndDate(), 'dd-MM-yyyy')}}"></td>
             </tr>
         </div>
         </tbody>
@@ -176,7 +176,7 @@
             </td>
             <td th:text="${{ai.getSymptoms()}}"></td>
             <td th:text="${{ai.getComments()}}"></td>
-            <td th:text="${{ai.getEndDate()}}"></td>
+            <td th:text="${{#temporals.format(ai.getEndDate(), 'dd-MM-yyyy')}}"></td>
             <td>
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-info"
