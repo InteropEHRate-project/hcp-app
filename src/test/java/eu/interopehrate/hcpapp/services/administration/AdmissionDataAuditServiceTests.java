@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.services.administration;
 
-import eu.interopehrate.hcpapp.jpa.entities.AdmissionDataAuditEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.AdmissionDataAuditEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
-import eu.interopehrate.hcpapp.jpa.repositories.AdmissionDataAuditRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.AdmissionDataAuditRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

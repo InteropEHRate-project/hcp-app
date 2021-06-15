@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl.currentmedications;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.PrescriptionController;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata.VisitPrescriptionController;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;

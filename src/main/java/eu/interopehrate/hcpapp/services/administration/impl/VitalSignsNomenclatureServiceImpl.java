@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.services.administration.VitalSignsNomenclatureService;
 import org.springframework.stereotype.Service;
 

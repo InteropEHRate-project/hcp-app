@@ -6,10 +6,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.PHExamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -44,6 +41,23 @@ public class PHExamController {
             return TemplateNames.CURRENT_PATIENT_PH_EXAM_ADD_PAGE;
         }
         this.phExamService.insertExam(phExamInfoCommand);
+        return "redirect:/current-patient/visit-data/ph-exam/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-update-page")
+    public String openEdit(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("phExamInfoCommand", this.phExamService.retrieveExamById(id));
+        return TemplateNames.CURRENT_PATIENT_PH_EXAM_UPDATE_PAGE;
+    }
+
+    @PutMapping
+    @RequestMapping("/update")
+    public String updateExam(@Valid @ModelAttribute("phExamInfoCommand") PHExamInfoCommand phExamInfoCommand, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TemplateNames.CURRENT_PATIENT_PH_EXAM_UPDATE_PAGE;
+        }
+        this.phExamService.updateExam(phExamInfoCommand);
         return "redirect:/current-patient/visit-data/ph-exam/view-section";
     }
 }

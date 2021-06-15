@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.converters.entity.entitytocommand;
 
-import eu.interopehrate.hcpapp.jpa.entities.CurrentDiseaseEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.CurrentDiseaseEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.converter.Converter;

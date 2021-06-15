@@ -5,7 +5,7 @@ import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommand
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.repositories.CurrentDiseaseRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;

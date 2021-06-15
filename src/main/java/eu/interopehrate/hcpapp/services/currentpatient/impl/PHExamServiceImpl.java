@@ -1,22 +1,33 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPHExam;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandPHExam;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.PHExamEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.phexam.PHExamInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.PHExamService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class PHExamServiceImpl implements PHExamService {
     private final CurrentPatient currentPatient;
-    private final List<PHExamInfoCommand> listOfExams = new ArrayList<>();
+    private final PHExamRepository phExamRepository;
+    private final CommandToEntityPHExam commandToEntityPHExam;
+    private final EntityToCommandPHExam entityToCommandPHExam;
 
-    public PHExamServiceImpl(CurrentPatient currentPatient) {
+    public PHExamServiceImpl(CurrentPatient currentPatient, PHExamRepository phExamRepository,
+                             CommandToEntityPHExam commandToEntityPHExam, EntityToCommandPHExam entityToCommandPHExam) {
         this.currentPatient = currentPatient;
+        this.phExamRepository = phExamRepository;
+        this.commandToEntityPHExam = commandToEntityPHExam;
+        this.entityToCommandPHExam = entityToCommandPHExam;
     }
 
     @Override
@@ -26,11 +37,26 @@ public class PHExamServiceImpl implements PHExamService {
 
     @Override
     public List<PHExamInfoCommand> getListOfExams() {
-        return listOfExams;
+        return this.phExamRepository.findAll()
+                .stream()
+                .map(this.entityToCommandPHExam::convert)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void insertExam(PHExamInfoCommand phExamInfoCommand) {
-        this.listOfExams.add(phExamInfoCommand);
+        this.phExamRepository.save(this.commandToEntityPHExam.convert(phExamInfoCommand));
+    }
+
+    @Override
+    public PHExamInfoCommand retrieveExamById(Long id) {
+        return this.entityToCommandPHExam.convert(this.phExamRepository.getOne(id));
+    }
+
+    @Override
+    public void updateExam(PHExamInfoCommand phExamInfoCommand) {
+        PHExamEntity phExamEntity = this.phExamRepository.getOne(phExamInfoCommand.getId());
+        BeanUtils.copyProperties(phExamInfoCommand, phExamEntity);
+        this.phExamRepository.save(phExamEntity);
     }
 }

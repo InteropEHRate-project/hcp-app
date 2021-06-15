@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.administration;
 
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.administration.VitalSignsNomenclatureService;
 import org.springframework.stereotype.Controller;

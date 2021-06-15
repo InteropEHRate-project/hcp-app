@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
-import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.HospitalDischargeReportService;
 import org.springframework.stereotype.Service;

@@ -5,12 +5,12 @@ import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommand
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;

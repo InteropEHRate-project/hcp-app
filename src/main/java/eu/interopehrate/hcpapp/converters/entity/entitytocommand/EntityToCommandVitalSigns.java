@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.converters.entity.entitytocommand;
 
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommandSample;
 import org.springframework.beans.BeanUtils;

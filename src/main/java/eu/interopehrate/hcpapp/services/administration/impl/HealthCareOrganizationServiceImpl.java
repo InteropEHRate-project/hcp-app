@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandHealthCareOrganization;
-import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareOrganizationRepository;
+import eu.interopehrate.hcpapp.jpa.entities.administration.HealthCareOrganizationEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareOrganizationRepository;
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareOrganizationCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
 import lombok.extern.slf4j.Slf4j;

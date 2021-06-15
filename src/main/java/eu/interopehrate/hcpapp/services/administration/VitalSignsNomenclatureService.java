@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration;
 
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
 
 import java.util.List;
 

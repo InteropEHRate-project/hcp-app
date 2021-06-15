@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;

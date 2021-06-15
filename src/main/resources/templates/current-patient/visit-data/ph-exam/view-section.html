@@ -38,16 +38,16 @@
                 </th:block>
             </td>
             <td th:text="${{exam.getResult()}}"></td>
-<!--            <td>-->
-<!--                <div class="btn-group" role="group">-->
-<!--                    <a href="#" class="btn btn-info"-->
-<!--                       th:href="@{/current-patient/allergies/open-update-page(id=${{ai.getId()}})}"-->
-<!--                       th:text="#{crud.button.edit}">Edit</a>-->
+            <td>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-info"
+                       th:href="@{/current-patient/visit-data/ph-exam/open-update-page(id=${{exam.getId()}})}"
+                       th:text="#{crud.button.edit}">Edit</a>
 <!--                    <a href="#" class="btn btn-danger"-->
-<!--                       th:href="@{/current-patient/allergies/delete(id=${{ai.getId()}})}"-->
+<!--                       th:href="@{/current-patient/visit-data/ph-exam/delete(id=${{exam.getId()}})}"-->
 <!--                       th:text="#{crud.button.delete}">Delete</a>-->
-<!--                </div>-->
-<!--            </td>-->
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

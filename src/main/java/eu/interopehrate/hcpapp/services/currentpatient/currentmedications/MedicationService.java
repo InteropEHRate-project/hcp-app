@@ -2,7 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.currentmedications;
 
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
 
 public interface MedicationService {
     CurrentPatient getCurrentPatient();

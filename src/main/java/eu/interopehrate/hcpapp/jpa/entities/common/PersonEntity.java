@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.jpa.entities.common;
 
-import eu.interopehrate.hcpapp.jpa.entities.AddressEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.AddressEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.Gender;
 import lombok.Getter;
 import lombok.Setter;

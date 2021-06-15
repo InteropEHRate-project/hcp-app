@@ -5,8 +5,8 @@ import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommand
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergy;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.AllergyEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.AllergyRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.AllergyEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;

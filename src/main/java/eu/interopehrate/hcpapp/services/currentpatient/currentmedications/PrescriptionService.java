@@ -2,9 +2,9 @@ package eu.interopehrate.hcpapp.services.currentpatient.currentmedications;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;

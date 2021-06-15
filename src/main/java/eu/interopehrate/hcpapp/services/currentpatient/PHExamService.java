@@ -9,4 +9,6 @@ public interface PHExamService {
     CurrentPatient getCurrentPatient();
     List<PHExamInfoCommand> getListOfExams();
     void insertExam(PHExamInfoCommand phExamInfoCommand);
+    PHExamInfoCommand retrieveExamById(Long id);
+    void updateExam(PHExamInfoCommand phExamInfoCommand);
 }
