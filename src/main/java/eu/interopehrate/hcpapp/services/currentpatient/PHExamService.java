@@ -11,4 +11,5 @@ public interface PHExamService {
     void insertExam(PHExamInfoCommand phExamInfoCommand);
     PHExamInfoCommand retrieveExamById(Long id);
     void updateExam(PHExamInfoCommand phExamInfoCommand);
+    void deleteExam(Long id);
 }

@@ -59,4 +59,9 @@ public class PHExamServiceImpl implements PHExamService {
         BeanUtils.copyProperties(phExamInfoCommand, phExamEntity);
         this.phExamRepository.save(phExamEntity);
     }
+
+    @Override
+    public void deleteExam(Long id) {
+        this.phExamRepository.deleteById(id);
+    }
 }

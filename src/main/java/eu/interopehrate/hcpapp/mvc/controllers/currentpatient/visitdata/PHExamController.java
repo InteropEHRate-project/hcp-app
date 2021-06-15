@@ -60,4 +60,12 @@ public class PHExamController {
         this.phExamService.updateExam(phExamInfoCommand);
         return "redirect:/current-patient/visit-data/ph-exam/view-section";
     }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String deleteExam(@RequestParam("id") Long id, Model model) {
+        this.phExamService.deleteExam(id);
+        model.addAttribute("examDeleted", Boolean.TRUE);
+        return this.viewSection(model);
+    }
 }
