@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layoutcurrentpatient}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{fragment.current.patient.navigation.left.physical.examination}">Physical examination</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="m-3"></div>
+    <h2 th:text="#{fragment.current.patient.navigation.left.physical.examination}">Physical examination</h2>
+    <div class="m-5"></div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <p><h3 th:text="${phExamInfoCommand.getType()}">Examination Type</h3></p>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.ph.exam.result}">Result</h5>
+                    <p class="card-text" th:text="${phExamInfoCommand.getResult()}">Result</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/visit-data/ph-exam/view-section}" th:text="#{button.back}">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

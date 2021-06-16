@@ -68,4 +68,11 @@ public class PHExamController {
         model.addAttribute("examDeleted", Boolean.TRUE);
         return this.viewSection(model);
     }
+
+    @GetMapping
+    @RequestMapping("/view")
+    public String viewExam(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("phExamInfoCommand", this.phExamService.retrieveExamById(id));
+        return TemplateNames.CURRENT_PATIENT_PH_EXAM_VIEW_EXAM;
+    }
 }

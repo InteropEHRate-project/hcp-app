@@ -51,6 +51,9 @@
                     <a href="#" class="btn btn-info"
                        th:href="@{/current-patient/visit-data/ph-exam/open-update-page(id=${{exam.getId()}})}"
                        th:text="#{crud.button.edit}">Edit</a>
+                    <a href="#" class="btn btn-warning"
+                       th:href="@{/current-patient/visit-data/ph-exam/view(id=${{exam.getId()}})}"
+                       th:text="#{crud.button.view}">View</a>
                     <a href="#" class="btn btn-danger"
                        th:href="@{/current-patient/visit-data/ph-exam/delete(id=${{exam.getId()}})}"
                        th:text="#{crud.button.delete}">Delete</a>
