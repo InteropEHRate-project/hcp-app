@@ -19,7 +19,7 @@
         }, 5000);
     </script>
 
-    <table class="table table-bordered" th:if="${!list.isEmpty()}">
+    <table class="table table-bordered" th:if="${!phExamCommand.getPhExamInfoCommands().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.ph.exam.type}">Type</th>
@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="exam : ${list}">
+        <tr th:each="exam : ${phExamCommand.getPhExamInfoCommands()}">
             <td>
                 <th:block th:switch="${exam.getType().toString().toUpperCase()}">
                     <div th:case="'ECHO'">
@@ -68,6 +68,15 @@
                th:href="@{/current-patient/visit-data/ph-exam/open-add-page}" th:text="#{crud.button.add}">Add</a>
         </div>
     </div>
+
+    <br><br>
+    <form th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" method="post" th:object="${phExamCommand}">
+        <div class="form-group">
+            <label for="clinicalExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
+            <textarea class="form-control" rows="3" type="input" name="clinicalExam" th:field="*{clinicalExam}" id="clinicalExam"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
+    </form>
 
 </div>
 </body>

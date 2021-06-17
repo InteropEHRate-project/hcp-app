@@ -23,7 +23,7 @@ public class PHExamController {
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         model.addAttribute("patient", this.phExamService.getCurrentPatient().getPatient());
-        model.addAttribute("list", this.phExamService.getListOfExams());
+        model.addAttribute("phExamCommand", this.phExamService.phExamCommand());
         return TemplateNames.CURRENT_PATIENT_PH_EXAM_VIEW_SECTION;
     }
 
@@ -74,5 +74,12 @@ public class PHExamController {
     public String viewExam(@RequestParam("id") Long id, Model model) {
         model.addAttribute("phExamInfoCommand", this.phExamService.retrieveExamById(id));
         return TemplateNames.CURRENT_PATIENT_PH_EXAM_VIEW_EXAM;
+    }
+
+    @PostMapping
+    @RequestMapping("/save-clinical-exam")
+    public String saveClinicalExam(String clinicalExam) {
+        this.phExamService.insertClinicalExam(clinicalExam);
+        return "redirect:/current-patient/visit-data/ph-exam/view-section";
     }
 }

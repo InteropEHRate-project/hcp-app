@@ -5,13 +5,13 @@ import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommand
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.PHExamEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.phexam.PHExamCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.phexam.PHExamInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.PHExamService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -21,6 +21,7 @@ public class PHExamServiceImpl implements PHExamService {
     private final PHExamRepository phExamRepository;
     private final CommandToEntityPHExam commandToEntityPHExam;
     private final EntityToCommandPHExam entityToCommandPHExam;
+    private String clinicalExam;
 
     public PHExamServiceImpl(CurrentPatient currentPatient, PHExamRepository phExamRepository,
                              CommandToEntityPHExam commandToEntityPHExam, EntityToCommandPHExam entityToCommandPHExam) {
@@ -36,11 +37,15 @@ public class PHExamServiceImpl implements PHExamService {
     }
 
     @Override
-    public List<PHExamInfoCommand> getListOfExams() {
-        return this.phExamRepository.findAll()
+    public PHExamCommand phExamCommand() {
+        var listOfExams = this.phExamRepository.findAll()
                 .stream()
                 .map(this.entityToCommandPHExam::convert)
                 .collect(Collectors.toList());
+        return PHExamCommand.builder()
+                .phExamInfoCommands(listOfExams)
+                .clinicalExam(this.clinicalExam)
+                .build();
     }
 
     @Override
@@ -63,5 +68,10 @@ public class PHExamServiceImpl implements PHExamService {
     @Override
     public void deleteExam(Long id) {
         this.phExamRepository.deleteById(id);
+    }
+
+    @Override
+    public void insertClinicalExam(String clinicalExam) {
+        this.clinicalExam = clinicalExam;
     }
 }
