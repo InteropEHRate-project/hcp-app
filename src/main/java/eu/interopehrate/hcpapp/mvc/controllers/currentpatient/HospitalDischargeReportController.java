@@ -34,4 +34,11 @@ public class HospitalDischargeReportController {
         this.hospitalDischargeReportService.insertDetails(hospitalDischargeReportCommand);
         return "redirect:/current-patient/hospital-discharge-report/view-section";
     }
+
+    @GetMapping
+    @RequestMapping("/save-in-cloud")
+    public String saveInCloud(Model model) {
+        model.addAttribute("savedToCloud" , this.hospitalDischargeReportService.saveInCloud());
+        return this.viewSection(model);
+    }
 }

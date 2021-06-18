@@ -216,7 +216,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         return "";
     }
 
-    private static String convertBundleIntoString(Bundle bundle) throws IOException {
+    public static String convertBundleIntoString(Bundle bundle) throws IOException {
         IParser iParser = new JsonParser();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         iParser.compose(byteArrayOutputStream, bundle);

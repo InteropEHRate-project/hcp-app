@@ -215,8 +215,8 @@
 
         <dependency>
             <groupId>eu.interopehrate</groupId>
-            <artifactId>r2dEmergency</artifactId>
-            <version>0.0.2</version>
+            <artifactId>tr2demergency</artifactId>
+            <version>0.0.6</version>
         </dependency>
 
         <dependency>

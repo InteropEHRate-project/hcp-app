@@ -37,6 +37,14 @@ public class CloudConnection implements DisposableBean {
         this.auditInformationService = auditInformationService;
     }
 
+    public String getEmergencyToken() {
+        return emergencyToken;
+    }
+
+    public R2DEmergencyI getR2dEmergency() {
+        return r2dEmergency;
+    }
+
     @Override
     public void destroy() {
         this.closeConnection();
