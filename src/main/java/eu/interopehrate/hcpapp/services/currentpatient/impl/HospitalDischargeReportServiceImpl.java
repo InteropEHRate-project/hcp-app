@@ -6,9 +6,11 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepos
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.HospitalDischargeReportService;
-import eu.interopehrate.protocols.common.DocumentCategory;
+import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.DocumentReference;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -59,9 +61,17 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     @Override
     @SneakyThrows
     public Boolean saveInCloud() {
+        Bundle bundle = new Bundle();
+        bundle.getEntry().add(new Bundle.BundleEntryComponent());
+        bundle.getEntryFirstRep().setResource(new DocumentReference());
+
         String content = SendToOtherHcpServiceImpl.convertBundleIntoString(this.currentPatient.getPatientSummaryBundle());
         try {
-            this.cloudConnection.getR2dEmergency().create(this.cloudConnection.getEmergencyToken(), DocumentCategory.PATIENT_SUMMARY, content);
+            String result = this.cloudConnection.getR2dEmergency().create(this.cloudConnection.getEmergencyToken(), FHIRResourceCategory.DOCUMENT_REFERENCE, content);
+
+            if (result.toUpperCase().contains("ERROR")) {
+                return Boolean.FALSE;
+            }
             return Boolean.TRUE;
         } catch (Exception e) {
             log.error("Error in saving data into Cloud", e);

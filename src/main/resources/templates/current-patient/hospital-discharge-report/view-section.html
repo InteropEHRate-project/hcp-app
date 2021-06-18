@@ -56,13 +56,9 @@
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
             <a class="btn btn-outline-primary" th:href="@{/reports/hospital-discharge-report-pdf}" th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns}"
                th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
+            <a class="btn btn-warning" th:href="@{/current-patient/hospital-discharge-report/save-in-cloud}" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.save.in.cloud}">Save in Cloud</a>
         </div>
     </form>
-
-    <br>
-    <div class="card-body text-center">
-        <a class="btn btn-primary" th:href="@{/reports/save-in-cloud}" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.save.in.cloud}">Save in Cloud</a>
-    </div>
 </div>
 </body>
 </html>

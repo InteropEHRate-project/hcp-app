@@ -6,7 +6,7 @@ import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.protocols.common.DocumentCategory;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
-import eu.interopehrate.r2demergency.R2DEmergencyImpl;
+import eu.interopehrate.r2demergency.R2DEmergencyFactory;
 import eu.interopehrate.r2demergency.api.R2DEmergencyI;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +14,10 @@ import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,7 +28,9 @@ public class CloudConnection implements DisposableBean {
     private CloudConnectionState connectionState = CloudConnectionState.OFF;
     private final CurrentPatient currentPatient;
     private final IndexPatientDataCommand indexPatientDataCommand;
-    private final R2DEmergencyI r2dEmergency = new R2DEmergencyImpl();
+    @Value("${ips.validator.pack}")
+    private String ipsValidatorPackPath;
+    private R2DEmergencyI r2dEmergency;
     private String emergencyToken;
     private final AuditInformationService auditInformationService;
 
@@ -35,6 +39,11 @@ public class CloudConnection implements DisposableBean {
         this.currentPatient = currentPatient;
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.auditInformationService = auditInformationService;
+    }
+
+    @PostConstruct
+    private void initializeR2DEmergency() {
+        this.r2dEmergency = R2DEmergencyFactory.create(this.ipsValidatorPackPath);
     }
 
     public String getEmergencyToken() {
