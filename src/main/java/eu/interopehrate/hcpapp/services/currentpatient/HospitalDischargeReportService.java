@@ -10,5 +10,5 @@ public interface HospitalDischargeReportService {
     VitalSignsRepository getVitalSignsRepository();
     HospitalDischargeReportCommand hospitalDischargeReportCommand();
     void insertDetails(HospitalDischargeReportCommand hospitalDischargeReportCommand);
-    Boolean saveInCloud();
+    Boolean saveInCloud(byte[] content);
 }

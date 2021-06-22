@@ -10,8 +10,11 @@ import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.DocumentReference;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Slf4j
 @Service
@@ -60,12 +63,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
 
     @Override
     @SneakyThrows
-    public Boolean saveInCloud() {
-        Bundle bundle = new Bundle();
-        bundle.getEntry().add(new Bundle.BundleEntryComponent());
-        bundle.getEntryFirstRep().setResource(new DocumentReference());
-
-        String content = SendToOtherHcpServiceImpl.convertBundleIntoString(this.currentPatient.getPatientSummaryBundle());
+    public Boolean saveInCloud(byte[] bytes) {
+        String content = SendToOtherHcpServiceImpl.convertBundleIntoString(createBundle(bytes));
         try {
             String result = this.cloudConnection.getR2dEmergency().create(this.cloudConnection.getEmergencyToken(), FHIRResourceCategory.DOCUMENT_REFERENCE, content);
 
@@ -77,5 +76,22 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
             log.error("Error in saving data into Cloud", e);
             return Boolean.FALSE;
         }
+    }
+
+    private Bundle createBundle(byte[] bytes) {
+        Bundle bundle = new Bundle();
+        bundle.setEntry(new ArrayList<>(1));
+
+        DocumentReference doc = new DocumentReference();
+        bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
+
+        doc.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
+        doc.getContentFirstRep().getAttachment().setContentType("application/pdf");
+        doc.getContentFirstRep().getAttachment().setLanguage("en");
+        doc.getContentFirstRep().getAttachment().setData(bytes);
+        doc.getContentFirstRep().getAttachment().setTitle("Hospital Discharge Report");
+        doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
+
+        return bundle;
     }
 }
