@@ -1,7 +1,8 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
-import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
@@ -26,15 +27,27 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private String instructions;
     private final PrescriptionRepository prescriptionRepository;
     private final VitalSignsRepository vitalSignsRepository;
+    private final CurrentDiseaseRepository currentDiseaseRepository;
+    private final AllergyRepository allergyRepository;
     private final CloudConnection cloudConnection;
-    private final CurrentPatient currentPatient;
 
     public HospitalDischargeReportServiceImpl(PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
-                                              CloudConnection cloudConnection, CurrentPatient currentPatient) {
+                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection) {
         this.prescriptionRepository = prescriptionRepository;
         this.vitalSignsRepository = vitalSignsRepository;
+        this.currentDiseaseRepository = currentDiseaseRepository;
+        this.allergyRepository = allergyRepository;
         this.cloudConnection = cloudConnection;
-        this.currentPatient = currentPatient;
+    }
+
+    @Override
+    public CurrentDiseaseRepository getCurrentDiseaseRepository() {
+        return currentDiseaseRepository;
+    }
+
+    @Override
+    public AllergyRepository getAllergyRepository() {
+        return allergyRepository;
     }
 
     @Override

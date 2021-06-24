@@ -31,6 +31,8 @@ public class HospitalDischargeReportController {
         model.addAttribute("hospitalDischargeReportCommand", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
         model.addAttribute("hasPrescriptions", !this.hospitalDischargeReportService.getPrescriptionRepository().findAll().isEmpty());
         model.addAttribute("hasVitalSigns", !this.hospitalDischargeReportService.getVitalSignsRepository().findAll().isEmpty());
+        model.addAttribute("hasCurrentDiseases", !this.hospitalDischargeReportService.getCurrentDiseaseRepository().findAll().isEmpty());
+        model.addAttribute("hasAllergies", !this.hospitalDischargeReportService.getAllergyRepository().findAll().isEmpty());
         return TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT;
     }
 
