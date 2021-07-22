@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -144,6 +145,11 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public Boolean retrieveData(String qrCodeContent, String hospitalID) {
         return this.cloudConnection.download(qrCodeContent, hospitalID);
+    }
+
+    @Override
+    public JSONArray listBuckets(String emergencyToken) throws Exception {
+        return this.cloudConnection.listOfBuckets(emergencyToken);
     }
 
     @Override

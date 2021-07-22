@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.ResourceType;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,10 +33,11 @@ public class CloudConnection implements DisposableBean {
     private String ipsValidatorPackPath;
     private R2DEmergencyI r2dEmergency;
     private String emergencyToken;
+    private String bucketName;
     private final AuditInformationService auditInformationService;
 
     public CloudConnection(CurrentPatient currentPatient,
-                           IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) {
+                           IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) throws Exception {
         this.currentPatient = currentPatient;
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.auditInformationService = auditInformationService;
@@ -48,6 +50,10 @@ public class CloudConnection implements DisposableBean {
 
     public String getEmergencyToken() {
         return emergencyToken;
+    }
+
+    public String getBucketName() {
+        return bucketName;
     }
 
     public R2DEmergencyI getR2dEmergency() {
@@ -90,9 +96,10 @@ public class CloudConnection implements DisposableBean {
         try {
             if (Objects.isNull(this.emergencyToken)) {
                 this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
+                this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
             log.info("IPS requested from Cloud.");
-            String patientSummary = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.PATIENT_SUMMARY);
+            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.PATIENT_SUMMARY);
             if (patientSummary.equalsIgnoreCase("File not found")) {
                 log.error("PatientSummary not found");
             } else {
@@ -127,9 +134,13 @@ public class CloudConnection implements DisposableBean {
         }
     }
 
+    public JSONArray listOfBuckets(String emergencyToken) throws Exception {
+        return this.r2dEmergency.listBuckets(emergencyToken);
+    }
+
     @SneakyThrows
     public void downloadPrescription() {
-        String prescription = this.r2dEmergency.get(this.emergencyToken, FHIRResourceCategory.MEDICATION_REQUEST);
+        String prescription = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.MEDICATION_REQUEST);
         if (prescription.equalsIgnoreCase("File not found")) {
             log.error("Prescription not found");
         } else {
@@ -141,7 +152,7 @@ public class CloudConnection implements DisposableBean {
 
     @SneakyThrows
     public void downloadLabResults() {
-        String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.LABORATORY_REPORT);
+        String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.LABORATORY_REPORT);
         if (laboratoryResults.equalsIgnoreCase("File not found")) {
             log.error("LaboratoryResults not found");
         } else {
@@ -153,7 +164,7 @@ public class CloudConnection implements DisposableBean {
 
     @SneakyThrows
     public void downloadImageReport() {
-        String imageReport = this.r2dEmergency.get(this.emergencyToken, DocumentCategory.IMAGE_REPORT);
+        String imageReport = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.IMAGE_REPORT);
         if (imageReport.equalsIgnoreCase("File not found")) {
             log.error("ImageReport not found");
         } else {
