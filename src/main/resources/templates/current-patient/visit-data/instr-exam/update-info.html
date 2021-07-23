@@ -3,22 +3,24 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.ph.exam.edit}">Edit Physical examination</title>
+    <title th:text="#{fragment.current.patient.navigation.left.instr.exam.edit}">Edit Instrumental examination</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="m-3"></div>
-    <h2 th:text="#{fragment.current.patient.navigation.left.ph.exam.edit}">Edit Physical examination</h2>
+    <h2 th:text="#{fragment.current.patient.navigation.left.instr.exam.edit}">Edit Instrumental examination</h2>
     <div class="m-5"></div>
-    <form action="#" th:action="@{/current-patient/visit-data/ph-exam/update}" th:object="${phExamInfoCommand}" method="post">
+    <form action="#" th:action="@{/current-patient/visit-data/instr-exam/update}" th:object="${instrExamInfoCommand}"
+          method="post">
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p th:text="#{template.errors.message}">Please correct the errors below</p>
         </div>
         <input type="hidden" th:field="*{id}">
         <div class="form-row">
             <div class="col-md-6">
-                <label for="type" th:text="#{fragment.current.patient.navigation.left.ph.exam.type}">Type</label>
-                <input id="type" readonly type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
+                <label for="type" th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</label>
+                <input id="type" readonly type="text" class="form-control"
+                       th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('type')}" th:text="${err}">err</li>
@@ -26,8 +28,10 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="result" th:text="#{fragment.current.patient.navigation.left.ph.exam.result}">Result</label>
-                <input id="result" type="text" class="form-control" th:classappend="${#fields.hasErrors('result')} ? 'is-invalid' :''" th:field="*{result}">
+                <label for="result"
+                       th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</label>
+                <input id="result" type="text" class="form-control"
+                       th:classappend="${#fields.hasErrors('result')} ? 'is-invalid' :''" th:field="*{result}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('result')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('result')}" th:text="${err}">err</li>

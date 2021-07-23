@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.converters.entity.commandstoentities;
 
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.PHExamEntity;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.phexam.PHExamInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.PHExamInfoCommand;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

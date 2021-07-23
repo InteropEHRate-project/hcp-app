@@ -10,70 +10,19 @@
 <div layout:fragment="content">
     <div class="m-5"></div>
     <h3 th:text="#{fragment.current.patient.navigation.left.ph.exam}">ph exam</h3>
-    <br>
-    <div class="alert alert-danger" role="alert" id="message" th:if="${examDeleted != null && examDeleted}"
-         th:text="#{fragment.current.patient.navigation.left.ph.exam.deleted}">Examination deleted</div>
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             $('#message').remove();
         }, 5000);
     </script>
-
-    <table class="table table-bordered" th:if="${!phExamCommand.getPhExamInfoCommands().isEmpty()}">
-        <thead class="thead-light">
-        <tr>
-            <th th:text="#{fragment.current.patient.navigation.left.ph.exam.type}">Type</th>
-            <th th:text="#{fragment.current.patient.navigation.left.ph.exam.result}">Result</th>
-            <th th:text="#{crud.button.actions}">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="exam : ${phExamCommand.getPhExamInfoCommands()}">
-            <td>
-                <th:block th:switch="${exam.getType().toString().toUpperCase()}">
-                    <div th:case="'ECHO'">
-                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECHO}">ECHO</p>
-                    </div>
-                    <div th:case="'XRAY'">
-                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.XRAY}">XRAY</p>
-                    </div>
-                    <div th:case="'MRI'">
-                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.MRI}">MRI</p>
-                    </div>
-                    <div th:case="'ECG'">
-                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECG}">ECG</p>
-                    </div>
-                </th:block>
-            </td>
-            <td th:text="${{exam.getResult()}}"></td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-info"
-                       th:href="@{/current-patient/visit-data/ph-exam/open-update-page(id=${{exam.getId()}})}"
-                       th:text="#{crud.button.edit}">Edit</a>
-                    <a href="#" class="btn btn-warning"
-                       th:href="@{/current-patient/visit-data/ph-exam/view(id=${{exam.getId()}})}"
-                       th:text="#{crud.button.view}">View</a>
-                    <a href="#" class="btn btn-danger"
-                       th:href="@{/current-patient/visit-data/ph-exam/delete(id=${{exam.getId()}})}"
-                       th:text="#{crud.button.delete}">Delete</a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
-        <div class="btn-group" role="group">
-            <a href="#" class="btn btn-primary"
-               th:href="@{/current-patient/visit-data/ph-exam/open-add-page}" th:text="#{crud.button.add}">Add</a>
-        </div>
-    </div>
-
     <br><br>
-    <form th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" method="post" th:object="${phExamCommand}">
+    <form th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" method="post"
+          th:object="${phExamCommand}">
         <div class="form-group">
-            <label for="clinicalExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
-            <textarea class="form-control" rows="3" type="input" name="clinicalExam" th:field="*{clinicalExam}" id="clinicalExam"></textarea>
+            <label for="clinicalExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical
+                exam</label>
+            <textarea class="form-control" rows="3" type="input" name="clinicalExam" th:field="*{clinicalExam}"
+                      id="clinicalExam"></textarea>
         </div>
         <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
     </form>

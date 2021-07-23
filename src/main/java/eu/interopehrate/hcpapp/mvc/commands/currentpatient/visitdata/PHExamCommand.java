@@ -1,4 +1,4 @@
-package eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.phexam;
+package eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata;
 
 import lombok.Builder;
 import lombok.Getter;
