@@ -99,7 +99,7 @@ public class CloudConnection implements DisposableBean {
                 this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
             log.info("IPS requested from Cloud.");
-            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.PATIENT_SUMMARY);
+            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.PATIENT);
             if (patientSummary.equalsIgnoreCase("File not found")) {
                 log.error("PatientSummary not found");
             } else {

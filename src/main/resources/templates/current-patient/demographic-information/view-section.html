@@ -28,6 +28,10 @@
                 <th th:text="#{fragment.current.patient.navigation.left.demographic.data.patient.surname}">Surname</th>
                 <td th:text="${index.patientDataCommand.getFirstName()}">surname</td>
             </tr>
+            <tr th:if="${index.patientDataCommand.getPhoto() != null}">
+                <th th:text="#{fragment.current.patient.navigation.left.demographic.data.patient.photo}">Photo</th>
+                <td><img th:src="${index.patientDataCommand.getPhoto()}" width="110"></td>
+            </tr>
             <tr th:if="${index.patientDataCommand.getBirthDate() != null}">
                 <th th:text="#{fragment.current.patient.navigation.left.demographic.data.patient.birth.date}">Birth Date</th>
                 <td th:text="${index.patientDataCommand.getBirthDate()}">birth date</td>

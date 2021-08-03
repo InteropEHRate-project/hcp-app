@@ -1,0 +1,102 @@
+{
+    "resourceType": "Bundle",
+    "id": "fd89fdcd-ec8a-47de-92de-5c52f3f2b36c",
+    "meta": {
+        "lastUpdated": "2021-07-28T20:45:25.299+03:00"
+    },
+    "type": "searchset",
+    "total": 1,
+    "link": [
+        {
+            "relation": "self",
+            "url": "http://213.249.46.205:8080/R2D/fhir/Patient?_id=Patient%2F31"
+        }
+    ],
+    "entry": [
+        {
+            "fullUrl": "http://213.249.46.205:8080/R2D/fhir/Patient/31",
+            "resource": {
+                "resourceType": "Patient",
+                "id": "31",
+                "meta": {
+                    "versionId": "2",
+                    "lastUpdated": "2021-07-19T20:37:17.531+03:00",
+                    "source": "#HdiYypxL8LUJswXo",
+                    "profile": [
+                        "http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips"
+                    ]
+                },
+                "text": {
+                    "status": "generated",
+                    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Mario <b>ROSSI </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>RSSMRA60A01D663E</td></tr><tr><td>Address</td><td><span>Piazza del Duomo </span><br/><span>Pisa </span><span>Italia </span></td></tr><tr><td>Date of birth</td><td><span>01 January 1960</span></td></tr></tbody></table></div>"
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "TAX"
+                                }
+                            ]
+                        },
+                        "value": "RSSMRA60A01D663E"
+                    },
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "code": "EIDAS"
+                                }
+                            ]
+                        },
+                        "value": "12345"
+                    }
+                ],
+                "name": [
+                    {
+                        "family": "Rossi",
+                        "given": [
+                            "Mario"
+                        ]
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "+393391234567",
+                        "use": "mobile"
+                    }
+                ],
+                "gender": "male",
+                "birthDate": "1960-01-01",
+                "address": [
+                    {
+                        "use": "home",
+                        "line": [
+                            "Piazza del Duomo"
+                        ],
+                        "city": "Pisa",
+                        "state": "Italia",
+                        "postalCode": "56011"
+                    }
+                ],
+                "photo": [
+                    {
+                        "contentType": "application/jpeg",
+                        "data": "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",
+                        "size": 6009
+                    }
+                ],
+                "generalPractitioner": [
+                    {
+                        "reference": "Practitioner/30"
+                    }
+                ]
+            },
+            "search": {
+                "mode": "match"
+            }
+        }
+    ]
+}
