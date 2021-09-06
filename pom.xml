@@ -116,7 +116,7 @@
         <dependency>
             <groupId>eu.interopehrate</groupId>
             <artifactId>sd2de</artifactId>
-            <version>0.3.6</version>
+            <version>0.3.7</version>
             <exclusions>
                 <exclusion>
                     <groupId>ca.uhn.hapi</groupId>
