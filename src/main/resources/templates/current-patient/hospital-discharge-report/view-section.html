@@ -8,20 +8,17 @@
 
 <body>
 <div layout:fragment="content">
-    <p></p>
     <h3 th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</h3>
 
-    <div class="alert alert-success" role="alert" id="message1" th:if="${savedToCloud != null && savedToCloud}"
-         th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.data.saved}">Data saved in Cloud</div>
+    <div class="alert alert-success" role="alert" id="message1" th:if="${savedToCloud != null && savedToCloud}" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.data.saved}">Data saved in Cloud</div>
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             $('#message1').remove();
         }, 5000);
     </script>
-    <div class="alert alert-danger" role="alert" id="message2" th:if="${savedToCloud != null && savedToCloud == false}"
-         th:text="#{alert.error}">Error</div>
+    <div class="alert alert-danger" role="alert" id="message2" th:if="${savedToCloud != null && savedToCloud == false}" th:text="#{alert.error}">Error</div>
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             $('#message2').remove();
         }, 5000);
     </script>
@@ -29,29 +26,57 @@
     <form class="row justify-content-center" th:action="@{/current-patient/hospital-discharge-report/save}" th:object="${hospitalDischargeReportCommand}" method="post">
         <div class="form-group col-12">
             <label for="reason" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason for hospitalization:</label>
-            <textarea class="form-control" id="reason" rows="3" type="input" name="reason" th:field="*{reasons}"
-                      th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.reasons.placeholder}"></textarea>
+            <textarea class="form-control" id="reason" rows="3" type="input" name="reason" th:field="*{reasons}" th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.reasons.placeholder}"></textarea>
         </div>
         <div class="form-group col-12">
             <label for="finding" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.significant.findings}">Significant findings:</label>
-            <textarea class="form-control" id="finding" rows="3" type="input" name="finding" th:field="*{findings}"
-                      th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.findings.placeholder}"></textarea>
+            <textarea class="form-control" id="finding" rows="3" type="input" name="finding" th:field="*{findings}" th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.findings.placeholder}"></textarea>
         </div>
         <div class="form-group col-12">
             <label for="procedure" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.procedures.and.treatment}">Procedures and treatment provided:</label>
-            <textarea class="form-control" id="procedure" rows="3" type="input" name="procedure" th:field="*{procedures}"
-                      th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.procedures.placeholder}"></textarea>
+            <textarea class="form-control" id="procedure" rows="3" type="input" name="procedure" th:field="*{procedures}" th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.procedures.placeholder}"></textarea>
         </div>
         <div class="form-group col-12">
             <label for="condition" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.discharge.conditions}">Patient's discharge condition:</label>
-            <textarea class="form-control" id="condition" rows="3" type="input" name="condition" th:field="*{conditions}"
-                      th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.conditions.placeholder}"></textarea>
+            <textarea class="form-control" id="condition" rows="3" type="input" name="condition" th:field="*{conditions}" th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.conditions.placeholder}"></textarea>
         </div>
         <div class="form-group col-12">
             <label for="instruction" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.patient.family.instructions}">Patient and family instructions (as appropriate):</label>
-            <textarea class="form-control" id="instruction" rows="3" type="input" name="instruction" th:field="*{instructions}"
-                      th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.instructions.placeholder}"></textarea>
+            <textarea class="form-control" id="instruction" rows="3" type="input" name="instruction" th:field="*{instructions}" th:placeholder="#{fragment.current.patient.navigation.left.hospital.discharge.report.instructions.placeholder}"></textarea>
         </div>
+
+        <p><h4>Prescription</h4></p>
+        <table id="uploadCloud" class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="prCloud : ${hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll()}">
+                <td th:text="${prCloud.getDrugName()}"></td>
+                <td th:text="${prCloud.getDrugDosage()}"></td>
+                <td th:utext="${prCloud.getTimings()} + ' ' + #{fragment.current.patient.navigation.left.current.medications.prescription.medication.times.per.day}"></td>
+                <td>
+                    <th:block th:switch="${prCloud.getStatus().toLowerCase()}">
+                        <div th:case="'active'">
+                            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.active}">Activ</p>
+                        </div>
+                        <div th:case="'onhold'">
+                            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.on.hold}">On-Hold</p>
+                        </div>
+                        <div th:case="'stopped'">
+                            <p th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.stopped}">Stopped</p>
+                        </div>
+                    </th:block>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
         <div class="btn-group">
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
             <a class="btn btn-outline-primary" th:href="@{/reports/hospital-discharge-report-pdf}"

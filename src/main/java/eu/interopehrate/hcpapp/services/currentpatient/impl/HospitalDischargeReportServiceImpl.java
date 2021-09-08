@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepos
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.HospitalDischargeReportService;
+import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +26,16 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private String procedures;
     private String conditions;
     private String instructions;
+    private final PrescriptionService prescriptionService;
     private final PrescriptionRepository prescriptionRepository;
     private final VitalSignsRepository vitalSignsRepository;
     private final CurrentDiseaseRepository currentDiseaseRepository;
     private final AllergyRepository allergyRepository;
     private final CloudConnection cloudConnection;
 
-    public HospitalDischargeReportServiceImpl(PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
+    public HospitalDischargeReportServiceImpl(PrescriptionService prescriptionService, PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
                                               CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection) {
+        this.prescriptionService = prescriptionService;
         this.prescriptionRepository = prescriptionRepository;
         this.vitalSignsRepository = vitalSignsRepository;
         this.currentDiseaseRepository = currentDiseaseRepository;
@@ -62,7 +65,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
 
     @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
-        return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions);
+        return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, prescriptionService);
     }
 
     @Override
