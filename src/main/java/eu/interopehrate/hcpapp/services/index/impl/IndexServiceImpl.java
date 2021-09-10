@@ -73,7 +73,7 @@ public class IndexServiceImpl implements IndexService {
             );
             patientDataCommand.setId(currentPatient.getPatient().getId());
 
-            if (Objects.nonNull(currentPatient.getPatient().getPhoto().get(0).getData())) {
+            if (Objects.nonNull(currentPatient.getPatient().getPhoto())) {
                 String photo = currentPatient.getPatient().getPhotoFirstRep().getDataElement().getValueAsString();
                 String p = String.join(",", "data:application/jpeg;base64", photo);
                 patientDataCommand.setPhoto(p);
