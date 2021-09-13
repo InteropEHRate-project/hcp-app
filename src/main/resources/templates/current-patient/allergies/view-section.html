@@ -8,20 +8,22 @@
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
-<!--    <div class="btn-toolbar float-right" role="toolbar">-->
-<!--        <div class="btn-group mr-2" role="group">-->
-<!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
-<!--            <a href="#" class="btn btn-primary" th:styleappend="${!allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.original}">Original</a>-->
-<!--            <a href="#" class="btn btn-primary" th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="btn-toolbar float-right" role="toolbar">-->
+    <!--        <div class="btn-group mr-2" role="group">-->
+    <!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+    <!--            <a href="#" class="btn btn-primary" th:styleappend="${!allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.original}">Original</a>-->
+    <!--            <a href="#" class="btn btn-primary" th:styleappend="${allergyIntolerance.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/allergies/view-section')}" th:text="#{ips.translate.button.translated}">Translated</a>-->
+    <!--        </div>-->
+    <!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.allergies}">allergies</h3>
     <br>
 
-    <div class="alert alert-danger" role="alert" id="message1" th:if="${allergyDeletedFromSEHR != null && allergyDeletedFromSEHR}"
-         th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted</div>
+    <div class="alert alert-danger" role="alert" id="message1"
+         th:if="${allergyDeletedFromSEHR != null && allergyDeletedFromSEHR}"
+         th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted
+    </div>
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             $('#message1').remove();
         }, 5000);
     </script>
@@ -29,8 +31,8 @@
     <table class="table table-bordered" th:if="${!allergyIntolerance.getAllergyList.isEmpty()}">
         <thead class="thead-light">
         <tr>
-            <th th:text="#{fragment.current.patient.navigation.left.allergies.resource}">Resource</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</th>
+            <th th:text="#{fragment.current.patient.navigation.left.allergies.name.translated}">Name translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
@@ -42,8 +44,10 @@
         <tbody>
         <div th:each="ai : ${allergyIntoleranceTranslated.getAllergyList()}">
             <tr>
-                <td th:text="#{ips.translate.button.original}">Original</td>
-                <td style="background-color: azure" th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${{ai.name}}"></td>
+                <td style="background-color: azure"
+                    th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
+                    th:text="${{ai.name}}"></td>
+                <td style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></td>
                 <td>
                     <th:block th:switch="${ai.getCategory().toUpperCase()}">
                         <div th:case="'BIOLOGIC'">
@@ -78,44 +82,11 @@
                         <a href="#" class="btn btn-info"
                            th:href="@{/current-patient/allergies/open-update-page-data-s-ehr(id=${{ai.getIdFHIR()}})}"
                            th:text="#{crud.button.edit}">Edit</a>
-<!--                        <a href="#" class="btn btn-danger"-->
-<!--                           th:href="@{/current-patient/allergies/delete-data-s-ehr(id=${{ai.getIdFHIR()}})}"-->
-<!--                           th:text="#{crud.button.delete}">Delete</a>-->
+                        <!--                        <a href="#" class="btn btn-danger"-->
+                        <!--                           th:href="@{/current-patient/allergies/delete-data-s-ehr(id=${{ai.getIdFHIR()}})}"-->
+                        <!--                           th:text="#{crud.button.delete}">Delete</a>-->
                     </div>
                 </td>
-            </tr>
-            <tr>
-                <td th:text="#{ips.translate.button.translated}">Translated</td>
-                <th style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></th>
-                <td>
-                    <th:block th:switch="${ai.getCategory().toUpperCase()}">
-                        <div th:case="'BIOLOGIC'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>
-                        </div>
-                        <div th:case="'ENVIRONMENT'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>
-                        </div>
-                        <div th:case="'FOOD'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>
-                        </div>
-                        <div th:case="'MEDICATION'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>
-                        </div>
-                    </th:block>
-                </td>
-                <td>
-                    <th:block th:switch="${ai.getType().toUpperCase()}">
-                        <div th:case="'ALLERGY'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>
-                        </div>
-                        <div th:case="'INTOLERANCE'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>
-                        </div>
-                    </th:block>
-                </td>
-                <td th:text="${{ai.getSymptoms()}}"></td>
-                <td th:text="${{ai.getComments()}}"></td>
-                <td th:text="${{#temporals.format(ai.getEndDate(), 'dd-MM-yyyy')}}"></td>
             </tr>
         </div>
         </tbody>
@@ -125,10 +96,9 @@
     <h5 th:if="${!newAllergies.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.allergies.to.upload}">Allergies to upload in S-EHR</h5>
     <br>
 
-    <div class="alert alert-danger" role="alert" id="message2" th:if="${allergyDeleted != null && allergyDeleted}"
-         th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted</div>
+    <div class="alert alert-danger" role="alert" id="message2" th:if="${allergyDeleted != null && allergyDeleted}" th:text="#{fragment.current.patient.navigation.left.allergies.deleted}">Allergy deleted</div>
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             $('#message2').remove();
         }, 5000);
     </script>

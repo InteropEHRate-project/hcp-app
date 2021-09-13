@@ -9,37 +9,39 @@
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
-<!--    <div class="btn-toolbar float-right" role="toolbar">-->
-<!--        <div class="btn-group btn-group-sm mr-2" role="group">-->
-<!--            <div class="btn-group mr-2" role="group">-->
-<!--                <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
-<!--                <a href="#" class="btn btn-primary" th:styleappend="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-diseases/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
-<!--                <a href="#" class="btn btn-primary" th:styleappend="${currentDiseaseCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-diseases/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="btn-toolbar float-right" role="toolbar">-->
+    <!--        <div class="btn-group btn-group-sm mr-2" role="group">-->
+    <!--            <div class="btn-group mr-2" role="group">-->
+    <!--                <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+    <!--                <a href="#" class="btn btn-primary" th:styleappend="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/current-diseases/view-section')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
+    <!--                <a href="#" class="btn btn-primary" th:styleappend="${currentDiseaseCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''"  th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/current-diseases/view-section')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.current.diseases}">Current Diseases</h3>
     <br>
-    <div class="alert alert-danger" role="alert" th:if="${currentDiseaseDeletedFromSEHR != null && currentDiseaseDeletedFromSEHR}"
-         th:text="#{fragment.current.patient.navigation.left.current.disease.deleted}">Current Disease deleted</div>
+    <div class="alert alert-danger" role="alert"
+         th:if="${currentDiseaseDeletedFromSEHR != null && currentDiseaseDeletedFromSEHR}"
+         th:text="#{fragment.current.patient.navigation.left.current.disease.deleted}">Current Disease deleted
+    </div>
     <table class="table table-bordered" th:if="${!currentDiseaseCommand.getCurrentDiseaseInfoCommand().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
-            <th th:text="#{fragment.current.patient.navigation.left.allergies.resource}">Resource</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease.translated}">disease translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
-            <th th:text="#{crud.button.actions}" >Actions</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
         <div th:each="currentDisease : ${currentDiseaseCommand.getCurrentDiseaseInfoCommand()}">
             <tr>
                 <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
-                <td th:text="#{ips.translate.button.original}">Original</td>
                 <td th:text="${currentDisease.getDisease()}">disease</td>
+                <td style="background-color: azure" th:text="${currentDisease.getDiseaseTranslated()}">disease translated</td>
                 <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${{#temporals.format(currentDisease.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
                 <td th:text="${currentDisease.getComment()}">comment</td>
@@ -48,29 +50,24 @@
                         <a href="#" class="btn btn-info"
                            th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDisease.getIdFHIR()})}"
                            th:text="#{crud.button.edit}">Edit</a>
-<!--                        <a href="#" class="btn btn-danger"-->
-<!--                           th:href="@{/current-patient/current-diseases/delete-current-disease(id=${currentDisease.getIdFHIR()})}"-->
-<!--                           th:text="#{crud.button.delete}">Delete</a>-->
+                        <!--                        <a href="#" class="btn btn-danger"-->
+                        <!--                           th:href="@{/current-patient/current-diseases/delete-current-disease(id=${currentDisease.getIdFHIR()})}"-->
+                        <!--                           th:text="#{crud.button.delete}">Delete</a>-->
                     </div>
                 </td>
-            </tr>
-            <tr>
-                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
-                <td th:text="#{ips.translate.button.translated}">Translated</td>
-                <th style="background-color: azure" th:text="${currentDisease.getDiseaseTranslated()}">disease</th>
-                <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
-                <td th:text="${{#temporals.format(currentDisease.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
-                <td th:text="${currentDisease.getComment()}">comment</td>
             </tr>
         </div>
         </tbody>
     </table>
 
     <div class="m-5"></div>
-    <div class="alert alert-danger" role="alert" th:if="${currentDiseaseDeletedFromDataBase != null && currentDiseaseDeletedFromDataBase}"
-         th:text="#{fragment.current.patient.navigation.left.current.disease.deleted}">Current Disease deleted</div>
+    <div class="alert alert-danger" role="alert"
+         th:if="${currentDiseaseDeletedFromDataBase != null && currentDiseaseDeletedFromDataBase}"
+         th:text="#{fragment.current.patient.navigation.left.current.disease.deleted}">Current Disease deleted
+    </div>
     <table class="table table-bordered" th:if="${!currentDiseasesList.isEmpty()}">
-        <h5 th:text="#{fragment.current.patient.navigation.left.current.diseases.to.upload.in.sehr}">Current Diseases to upload in S-EHR</h5></p>
+        <h5 th:text="#{fragment.current.patient.navigation.left.current.diseases.to.upload.in.sehr}">Current Diseases to
+            upload in S-EHR</h5></p>
         <thead class="thead-light">
         <tr>
             <!--                        <th th:text="#{template.current.patient.currentDisease.list.statement.code}">code</th>-->
@@ -78,7 +75,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
-            <th th:text="#{crud.button.actions}" >Actions</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -107,7 +104,8 @@
 
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
-            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}" th:text="#{crud.button.add}">add</a>
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}"
+               th:text="#{crud.button.add}">add</a>
         </div>
     </div>
     <br><br>
@@ -124,7 +122,9 @@
             <td class="col-10" th:text="${note}"></td>
             <td>
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/delete(note=${note})}" th:text="#{crud.button.delete}">Delete</a>
+                    <a href="#" class="btn btn-primary"
+                       th:href="@{/current-patient/current-diseases/delete(note=${note})}"
+                       th:text="#{crud.button.delete}">Delete</a>
                 </div>
             </td>
         </tr>
