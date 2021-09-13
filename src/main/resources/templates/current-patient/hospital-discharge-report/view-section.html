@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <h3 th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</h3>
 
-    <div class="alert alert-success" role="alert" id="message1" th:if="${savedToCloud != null && savedToCloud}" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.data.saved}">Data saved in Cloud</div>
+    <div class="alert alert-success" role="alert" id="message1" th:if="${savedToCloud != null && savedToCloud}" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.data.saved}">Data uploaded in Citizen Cloud</div>
     <script>
         setTimeout(function () {
             $('#message1').remove();
