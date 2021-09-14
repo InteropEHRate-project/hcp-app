@@ -47,7 +47,7 @@
                 <td style="background-color: azure"
                     th:style="${!allergyIntolerance.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'"
                     th:text="${{ai.name}}"></td>
-                <td style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></td>
+                <th style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></th>
                 <td>
                     <th:block th:switch="${ai.getCategory().toUpperCase()}">
                         <div th:case="'BIOLOGIC'">
