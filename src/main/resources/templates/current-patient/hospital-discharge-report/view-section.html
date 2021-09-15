@@ -48,7 +48,8 @@
         <br>
         <div class="m-3"></div>
         <p th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"><br>
-        <h4 th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">Prescription to upload in cloud</h4></p>
+        <h4 th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.citizen.cloud}">Prescription to upload in Citizen Cloud</h4></p>
         <table id="uploadCloud" class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
             <thead class="thead-light">
             <tr>
