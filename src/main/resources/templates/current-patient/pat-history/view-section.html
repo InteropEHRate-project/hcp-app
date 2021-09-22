@@ -48,8 +48,8 @@
         </thead>
         <tbody>
         <tr th:each="patHistory : ${patHistoryCommand.getPatHistoryInfoCommandDiagnoses()}">
-            <td th:text="${patHistory.getDiagnosis()}">diagnosis</td>
-            <th style="background-color: azure" th:text="${patHistory.getDiagnosisTranslated()}">diagnosis translated</th>
+            <td th:text="${{patHistory.getDiagnosis()}}">diagnosis</td>
+            <th style="background-color: azure" th:text="${{patHistory.getDiagnosisTranslated()}}">diagnosis translated</th>
             <td th:text="${{patHistory.getYearOfDiagnosis()}}">year of diagnosis</td>
             <td th:text="${{#temporals.format(patHistory.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date</td>
             <td th:text="${patHistory.getComments()}">comments</td>
