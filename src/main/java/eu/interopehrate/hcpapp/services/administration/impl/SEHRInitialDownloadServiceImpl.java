@@ -7,17 +7,26 @@ import eu.interopehrate.hcpapp.jpa.repositories.SEHRInitialDownloadRepository;
 import eu.interopehrate.hcpapp.mvc.commands.administration.SEHRInitialDownloadCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.administration.SEHRInitialDownloadService;
+import eu.interopehrate.protocols.client.ResourceReader;
+import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Iterator;
 import java.util.List;
 
+import static eu.interopehrate.protocols.common.DocumentCategory.LABORATORY_REPORT;
+
+@Slf4j
 @Service
 public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadService {
     private final SEHRInitialDownloadRepository sehrInitialDownloadRepository;
     private final EntityToCommandSEHRInitialDownload entityToCommandSEHRInitialDownload;
     private final AuditInformationService auditInformationService;
+    private ResourceReader resourceReader;
+
 
     public SEHRInitialDownloadServiceImpl(SEHRInitialDownloadRepository sehrInitialDownloadRepository,
                                           EntityToCommandSEHRInitialDownload entityToCommandSEHRInitialDownload,
@@ -40,5 +49,11 @@ public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadServic
         BeanUtils.copyProperties(sehrInitialDownloadCommand, sehrInitialDownloadEntity);
         sehrInitialDownloadRepository.save(sehrInitialDownloadEntity);
         auditInformationService.auditEvent(AuditEventType.SAVE_INITIAL_SEHR_DOWNLOAD, sehrInitialDownloadCommand.toString());
+    }
+
+    @Override
+    public Iterator<Resource> getLaboratoryTests() throws Exception {
+        return resourceReader.getResourcesByCategory(LABORATORY_REPORT, null, null, null, false);
+        // log.info("LaboratoryResults received");
     }
 }

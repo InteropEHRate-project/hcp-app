@@ -3,6 +3,8 @@ package eu.interopehrate.hcpapp.currentsession;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
+import eu.interopehrate.protocols.client.ResourceReader;
+import eu.interopehrate.protocols.common.ResourceCategory;
 import eu.interopehrate.td2de.D2DBluetoothConnector;
 import eu.interopehrate.td2de.api.D2DConnector;
 import eu.interopehrate.td2de.api.TD2D;
@@ -11,6 +13,7 @@ import eu.interopehrate.td2de.api.TD2DSecureConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Resource;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Semaphore;
@@ -35,6 +40,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private D2DConnector bluetoothConnection;
     private TD2DSecureConnectionFactory secureConnectionFactory;
     private TD2D td2d;
+    private ResourceReader resourceReader;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
     private final IndexPatientDataCommand indexPatientDataCommand;
     @Value("${ips.validator.pack}")
@@ -126,7 +132,7 @@ public class CurrentD2DConnection implements DisposableBean {
         }
     }
 
-    private class D2DHRExchangeListener implements TD2DListener {
+    private class D2DHRExchangeListener implements TD2DListener, ResourceReader {
 //
 //        @Override
 //        public void onPatientSummaryReceived(Bundle bundle) {
@@ -282,6 +288,41 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onConnectionClosure() {
             log.info("D2D connection was closed.");
+        }
+
+        @Override
+        public Iterator<Resource> getResources(Date date, boolean b) throws Exception {
+            return null;
+        }
+
+        @Override
+        public Iterator<Resource> getResourcesByCategories(Date date, boolean b, ResourceCategory... resourceCategories) throws Exception {
+            return null;
+        }
+
+        @Override
+        public Iterator<Resource> getResourcesByCategory(ResourceCategory resourceCategory, Date date, boolean b) throws Exception {
+            return this.getResourcesByCategory(resourceCategory, null, null, null, false);
+        }
+
+        @Override
+        public Iterator<Resource> getResourcesByCategory(ResourceCategory resourceCategory, String s, String s1, Date date, boolean b) throws Exception {
+            return null;
+        }
+
+        @Override
+        public Iterator<Resource> getMostRecentResources(ResourceCategory resourceCategory, int i, boolean b) throws Exception {
+            return null;
+        }
+
+        @Override
+        public Iterator<Resource> getMostRecentResources(ResourceCategory resourceCategory, String s, String s1, int i, boolean b) throws Exception {
+            return null;
+        }
+
+        @Override
+        public Iterator<Resource> getResourcesById(String... strings) throws Exception {
+            return null;
         }
     }
 
