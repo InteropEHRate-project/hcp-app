@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests;
 
 import eu.interopehrate.hcpapp.converters.fhir.laboratorytests.HapiToCommandObservationLaboratory;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -42,6 +43,8 @@ class ObservationLaboratoryControllerTest {
     private HttpSession httpSession;
     @Mock
     private CloudConnection cloudConnection;
+    @Mock
+    private CurrentD2DConnection currentD2DConnection;
 
     @BeforeEach
     void setUp() {
@@ -50,7 +53,7 @@ class ObservationLaboratoryControllerTest {
                 new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService),
                         new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
                 new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService),
-                        new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)), cloudConnection);
+                        new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)), cloudConnection, currentD2DConnection);
         this.controller = new ObservationLaboratoryController(service);
     }
 

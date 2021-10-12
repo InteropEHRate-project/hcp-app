@@ -68,8 +68,7 @@
             <div th:if="${index.connectionState == null || index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).OFF}"
                  class="m-3">
                 <div class="row justify-content-center">
-                    <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application
-                        in connection mode.</h3>
+                    <h3 class="mt-5" th:text="#{fragment.main.press.the.button}">Press the button to put the application in connection mode.</h3>
                 </div>
                 <div class="row justify-content-center">
                     <a href="#" class="btn btn-primary" th:text="#{template.index.button.open.connection}"
@@ -91,21 +90,21 @@
                 </div>
             </div>
             <div th:if="${index.connectionState == T(eu.interopehrate.hcpapp.currentsession.D2DConnectionState).ON}" class="m-3">
-                <div class="row justify-content-center">
-                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}" th:text="#{template.index.waiting}">Connection established. Waiting for patient's EHRs...</h3>
-                </div>
-                <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
+<!--                <div class="row justify-content-center">-->
+<!--                    <h3 class="mt-5" th:if="${!index.transmissionCompleted}" th:text="#{template.index.waiting}">Connection established.</h3>-->
+<!--                </div>-->
+<!--                <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">-->
+<!--                    <div class="spinner-border text-primary" role="status">-->
+<!--                        <span class="sr-only">Loading...</span>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
                     <h5 style="color: red" class="row justify-content-center"
                         th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>
                 </div>
-                <div th:if="${index.transmissionCompleted}">
-                    <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>
-                </div>
+<!--                <div th:if="${index.transmissionCompleted}">-->
+<!--                    <h5 style="color: green" class="row justify-content-center" th:text="#{template.index.button.transmission.completed}">Transmission completed!</h5>-->
+<!--                </div>-->
                 <div class="row justify-content-center">
                     <h3 class="mt-5" th:if="${index.transmissionCompleted}" th:text="#{fragment.main.connected}">Connected</h3>
                 </div>
@@ -116,14 +115,14 @@
                 <div class="row justify-content-center">
                     <p></p>
                 </div>
-                <div class="text-center" th:if="${!index.transmissionCompleted}">
-                    <p th:if="${index.patientDataCommand.ipsReceived}" th:text="#{template.index.ips.received}">IPS received</p>
-                    <p th:if="${index.getPatientDataCommand().getLaboratoryResultsReceived()}" th:text="#{template.index.laboratory.received}">Laboratory results received</p>
-                    <p th:if="${index.getPatientDataCommand().getPrescriptionReceived()}" th:text="#{template.index.prescription.received}">Prescription received</p>
-                    <p th:if="${index.getPatientDataCommand().getImageReportReceived()}" th:text="#{template.index.image.report.received}">Image report received</p>
-                    <p th:if="${index.getPatientDataCommand().getPatHisReceived()}" th:text="#{template.index.pat.his.received}">Pathology history received</p>
-                    <p th:if="${index.getPatientDataCommand().getVitalSignsReceived()}" th:text="#{template.index.vital.signs.received}">Vital signs received</p>
-                </div>
+<!--                <div class="text-center" th:if="${!index.transmissionCompleted}">-->
+<!--                    <p th:if="${index.patientDataCommand.ipsReceived}" th:text="#{template.index.ips.received}">IPS received</p>-->
+<!--                    <p th:if="${index.getPatientDataCommand().getLaboratoryResultsReceived()}" th:text="#{template.index.laboratory.received}">Laboratory results received</p>-->
+<!--                    <p th:if="${index.getPatientDataCommand().getPrescriptionReceived()}" th:text="#{template.index.prescription.received}">Prescription received</p>-->
+<!--                    <p th:if="${index.getPatientDataCommand().getImageReportReceived()}" th:text="#{template.index.image.report.received}">Image report received</p>-->
+<!--                    <p th:if="${index.getPatientDataCommand().getPatHisReceived()}" th:text="#{template.index.pat.his.received}">Pathology history received</p>-->
+<!--                    <p th:if="${index.getPatientDataCommand().getVitalSignsReceived()}" th:text="#{template.index.vital.signs.received}">Vital signs received</p>-->
+<!--                </div>-->
             </div>
         </div>
     </div>

@@ -2,10 +2,12 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests;
 
 import eu.interopehrate.hcpapp.converters.fhir.laboratorytests.HapiToCommandObservationLaboratory;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryInfoCommandAnalysis;
 import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,13 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
     private boolean isFiltered = false;
     private boolean isEmpty = false;
     private final CloudConnection cloudConnection;
+    private final CurrentD2DConnection currentD2DConnection;
 
-    public ObservationLaboratoryServiceImpl(CurrentPatient currentPatient, HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory, CloudConnection cloudConnection) {
+    public ObservationLaboratoryServiceImpl(CurrentPatient currentPatient, HapiToCommandObservationLaboratory hapiToCommandObservationLaboratory, CloudConnection cloudConnection, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandObservationLaboratory = hapiToCommandObservationLaboratory;
         this.cloudConnection = cloudConnection;
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
@@ -87,5 +91,11 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
     @Override
     public void refreshData() {
         this.cloudConnection.downloadLabResults();
+    }
+
+    @SneakyThrows
+    @Override
+    public void getLaboratoryTests() {
+        this.currentD2DConnection.getLaboratoryTestsResource();
     }
 }

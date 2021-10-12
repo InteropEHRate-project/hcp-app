@@ -1,19 +1,20 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
-import eu.interopehrate.protocols.client.ResourceReader;
-import eu.interopehrate.protocols.common.ResourceCategory;
+import eu.interopehrate.protocols.common.DocumentCategory;
 import eu.interopehrate.td2de.D2DBluetoothConnector;
 import eu.interopehrate.td2de.api.D2DConnector;
 import eu.interopehrate.td2de.api.TD2D;
 import eu.interopehrate.td2de.api.TD2DListener;
 import eu.interopehrate.td2de.api.TD2DSecureConnectionFactory;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Resource;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,8 +27,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Semaphore;
@@ -37,10 +36,10 @@ import java.util.concurrent.Semaphore;
 public class CurrentD2DConnection implements DisposableBean {
     private final CurrentPatient currentPatient;
     private final D2DConnectionOperations d2DConnectionOperations;
+    private final ApplicationRuntimeInfoService applicationRuntimeInfoService;
+    private TD2D td2D;
     private D2DConnector bluetoothConnection;
     private TD2DSecureConnectionFactory secureConnectionFactory;
-    private TD2D td2d;
-    private ResourceReader resourceReader;
     private D2DConnectionState connectionState = D2DConnectionState.OFF;
     private final IndexPatientDataCommand indexPatientDataCommand;
     @Value("${ips.validator.pack}")
@@ -49,9 +48,10 @@ public class CurrentD2DConnection implements DisposableBean {
     private final Semaphore docHisSemaphore = new Semaphore(1);
 
     public CurrentD2DConnection(CurrentPatient currentPatient, D2DConnectionOperations d2DConnectionOperations,
-                                IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) {
+                                ApplicationRuntimeInfoService applicationRuntimeInfoService, IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.d2DConnectionOperations = d2DConnectionOperations;
+        this.applicationRuntimeInfoService = applicationRuntimeInfoService;
         this.indexPatientDataCommand = indexPatientDataCommand;
         this.auditInformationService = auditInformationService;
     }
@@ -100,7 +100,9 @@ public class CurrentD2DConnection implements DisposableBean {
 
     private void afterConnectionOpened() {
         try {
-            this.td2d = this.d2DConnectionOperations.getConnection(this.secureConnectionFactory);
+            //this.td2d = this.d2DConnectionOperations.getConnection(this.secureConnectionFactory);
+            td2D = secureConnectionFactory.createSecureConnection(applicationRuntimeInfoService.practitioner());
+            log.info("Create secure connection");
         } catch (Exception e) {
             this.closeConnection();
             throw new RuntimeException(e);
@@ -110,7 +112,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private void closeConnection() {
         try {
             if (Objects.nonNull(bluetoothConnection) && Objects.nonNull(secureConnectionFactory)) {
-                this.td2d.closeConnectionWithSEHR();
+                this.td2D.closeConnectionWithSEHR();
                 this.bluetoothConnection.closeConnection();
             }
         } catch (Exception e) {
@@ -118,7 +120,7 @@ public class CurrentD2DConnection implements DisposableBean {
         } finally {
             this.bluetoothConnection = null;
             this.secureConnectionFactory = null;
-            this.td2d = null;
+            this.td2D = null;
             this.connectionState = D2DConnectionState.OFF;
             this.indexPatientDataCommand.setCertificate(null);
             this.indexPatientDataCommand.setNoConformantJSON(false);
@@ -132,7 +134,7 @@ public class CurrentD2DConnection implements DisposableBean {
         }
     }
 
-    private class D2DHRExchangeListener implements TD2DListener, ResourceReader {
+    private class D2DHRExchangeListener implements TD2DListener {
 //
 //        @Override
 //        public void onPatientSummaryReceived(Bundle bundle) {
@@ -256,7 +258,7 @@ public class CurrentD2DConnection implements DisposableBean {
         public boolean onCitizenPersonalDataReceived(Patient patient) {
             try {
                 log.info("onPersonalIdentityReceived");
-//                    CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
+//              CurrentD2DConnection.this.connectedThread.getSignedConsent(patient);
                 CurrentD2DConnection.this.currentPatient.initPatient(patient);
                 CurrentD2DConnection.this.d2DConnectionOperations.auditPatientAdmission();
                 CurrentD2DConnection.this.certificate();
@@ -275,7 +277,8 @@ public class CurrentD2DConnection implements DisposableBean {
 
         @Override
         public void onSearch(Bundle healthDataBundle, int currentPage, int totalPages) {
-
+            log.info("onSearch call " + " " + currentPage + " " + totalPages);
+            log.info("bundle items " + healthDataBundle.getEntry().size());
         }
 
         @Override
@@ -290,40 +293,20 @@ public class CurrentD2DConnection implements DisposableBean {
             log.info("D2D connection was closed.");
         }
 
-        @Override
-        public Iterator<Resource> getResources(Date date, boolean b) throws Exception {
-            return null;
-        }
+    }
 
-        @Override
-        public Iterator<Resource> getResourcesByCategories(Date date, boolean b, ResourceCategory... resourceCategories) throws Exception {
-            return null;
-        }
+    @SneakyThrows
+    public void getLaboratoryTestsResource() {
+        this.td2D.getResourcesByCategory(DocumentCategory.LABORATORY_REPORT, null, false);
 
-        @Override
-        public Iterator<Resource> getResourcesByCategory(ResourceCategory resourceCategory, Date date, boolean b) throws Exception {
-            return this.getResourcesByCategory(resourceCategory, null, null, null, false);
-        }
+        //Iterator<Resource> laboratoryResults = this.td2d.getMostRecentResources(DocumentCategory.LABORATORY_REPORT, "vital-signs", null, 3, true);
+        //this.td2d.getResourcesByCategory(FHIRResourceCategory.OBSERVATION, "vital-signs", null, null, false);
+        CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
+        auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
 
-        @Override
-        public Iterator<Resource> getResourcesByCategory(ResourceCategory resourceCategory, String s, String s1, Date date, boolean b) throws Exception {
-            return null;
-        }
-
-        @Override
-        public Iterator<Resource> getMostRecentResources(ResourceCategory resourceCategory, int i, boolean b) throws Exception {
-            return null;
-        }
-
-        @Override
-        public Iterator<Resource> getMostRecentResources(ResourceCategory resourceCategory, String s, String s1, int i, boolean b) throws Exception {
-            return null;
-        }
-
-        @Override
-        public Iterator<Resource> getResourcesById(String... strings) throws Exception {
-            return null;
-        }
+        //Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource((InputStream) laboratoryResults);
+        //this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+        log.info("LaboratoryResults received");
     }
 
     public void certificate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
