@@ -25,7 +25,6 @@ public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadServic
     private final SEHRInitialDownloadRepository sehrInitialDownloadRepository;
     private final EntityToCommandSEHRInitialDownload entityToCommandSEHRInitialDownload;
     private final AuditInformationService auditInformationService;
-    private ResourceReader resourceReader;
 
 
     public SEHRInitialDownloadServiceImpl(SEHRInitialDownloadRepository sehrInitialDownloadRepository,
@@ -49,11 +48,5 @@ public class SEHRInitialDownloadServiceImpl implements SEHRInitialDownloadServic
         BeanUtils.copyProperties(sehrInitialDownloadCommand, sehrInitialDownloadEntity);
         sehrInitialDownloadRepository.save(sehrInitialDownloadEntity);
         auditInformationService.auditEvent(AuditEventType.SAVE_INITIAL_SEHR_DOWNLOAD, sehrInitialDownloadCommand.toString());
-    }
-
-    @Override
-    public Iterator<Resource> getLaboratoryTests() throws Exception {
-        return resourceReader.getResourcesByCategory(LABORATORY_REPORT, null, null, null, false);
-        // log.info("LaboratoryResults received");
     }
 }

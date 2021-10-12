@@ -8,5 +8,4 @@ import java.util.Iterator;
 public interface SEHRInitialDownloadService {
     SEHRInitialDownloadCommand getInitialConfig();
     void saveInitialConfig(SEHRInitialDownloadCommand sehrInitialDownloadCommand);
-    Iterator<Resource> getLaboratoryTests() throws Exception;
 }
