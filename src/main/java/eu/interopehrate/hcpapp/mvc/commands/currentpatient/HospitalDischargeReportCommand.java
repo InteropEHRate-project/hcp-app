@@ -14,14 +14,18 @@ public class HospitalDischargeReportCommand {
     private final String procedures;
     private final String conditions;
     private final String instructions;
+    private final String hospitalName;
+    private final String hospitalAddress;
     private final PrescriptionService prescriptionService;
 
-    public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, PrescriptionService prescriptionService) {
+    public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, String hospitalName, String hospitalAddress, PrescriptionService prescriptionService) {
         this.reasons = reasons;
         this.findings = findings;
         this.procedures = procedures;
         this.conditions = conditions;
         this.instructions = instructions;
+        this.hospitalName = hospitalName;
+        this.hospitalAddress = hospitalAddress;
         this.prescriptionService = prescriptionService;
     }
 
@@ -31,6 +35,7 @@ public class HospitalDischargeReportCommand {
                 (Objects.nonNull(this.procedures) && !this.procedures.isBlank()) ||
                 (Objects.nonNull(this.conditions) && !this.conditions.isBlank()) ||
                 (Objects.nonNull(this.instructions) && !this.instructions.isBlank()) ||
+                (Objects.nonNull(this.hospitalName) && !this.hospitalName.isBlank()) ||
                 (Objects.nonNull(this.prescriptionService) && !this.prescriptionService.isEmpty())) {
             return Boolean.TRUE;
         }

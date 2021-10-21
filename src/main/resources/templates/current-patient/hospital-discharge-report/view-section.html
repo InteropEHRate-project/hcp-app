@@ -81,6 +81,32 @@
             </tbody>
         </table>
 
+
+         <table class="table">
+            <thead class="thead-light">
+             <tr>
+                <th scope="col">Hospital name</th>
+                <th scope="col">Hospital address</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+                <td>
+                    <div class="form-group col-12">
+<!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
+                        <textarea class="form-control" id="hospitalName" rows="3" type="input" name="hospitalName" th:field="*{hospitalName}"></textarea>
+                    </div>
+                </td>
+                 <td>
+                     <div class="form-group col-12">
+                         <!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
+                         <textarea class="form-control" id="hospitalAddress" rows="3" type="input" name="hospitalAddress" th:field="*{hospitalAddress}"></textarea>
+                     </div>
+                 </td>
+             </tr>
+            </tbody>
+         </table>
+
         <div class="btn-group">
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
             <a class="btn btn-outline-primary" th:href="@{/reports/hospital-discharge-report-pdf}"

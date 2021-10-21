@@ -26,6 +26,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private String procedures;
     private String conditions;
     private String instructions;
+    private String hospitalName;
+    private String hospitalAddress;
     private final PrescriptionService prescriptionService;
     private final PrescriptionRepository prescriptionRepository;
     private final VitalSignsRepository vitalSignsRepository;
@@ -65,7 +67,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
 
     @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
-        return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, prescriptionService);
+        return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, prescriptionService);
     }
 
     @Override
@@ -75,6 +77,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.procedures = hospitalDischargeReportCommand.getProcedures();
         this.conditions = hospitalDischargeReportCommand.getConditions();
         this.instructions = hospitalDischargeReportCommand.getInstructions();
+        this.hospitalName = hospitalDischargeReportCommand.getHospitalName();
+        this.hospitalAddress = hospitalDischargeReportCommand.getHospitalAddress();
     }
 
     @Override
