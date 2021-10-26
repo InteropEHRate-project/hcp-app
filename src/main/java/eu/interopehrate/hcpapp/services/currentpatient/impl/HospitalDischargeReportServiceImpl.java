@@ -28,6 +28,12 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private String instructions;
     private String hospitalName;
     private String hospitalAddress;
+    private String patientName;
+    private String patientDateBirth;
+    private String patientGender;
+    private String hcpName;
+    private String dateOfVisit;
+    private String timeOfVisit;
     private final PrescriptionService prescriptionService;
     private final PrescriptionRepository prescriptionRepository;
     private final VitalSignsRepository vitalSignsRepository;
@@ -67,7 +73,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
 
     @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
-        return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, prescriptionService);
+        return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, patientName, patientDateBirth,
+                patientGender, hcpName, timeOfVisit, dateOfVisit, prescriptionService);
     }
 
     @Override
@@ -79,6 +86,12 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.instructions = hospitalDischargeReportCommand.getInstructions();
         this.hospitalName = hospitalDischargeReportCommand.getHospitalName();
         this.hospitalAddress = hospitalDischargeReportCommand.getHospitalAddress();
+        this.patientName = hospitalDischargeReportCommand.getPatientName();
+        this.patientDateBirth = hospitalDischargeReportCommand.getPatientDateBirth();
+        this.patientGender = hospitalDischargeReportCommand.getPatientGender();
+        this.hcpName = hospitalDischargeReportCommand.getHcpName();
+        this.dateOfVisit = hospitalDischargeReportCommand.getDateOfVisit();
+        this.timeOfVisit = hospitalDischargeReportCommand.getTimeOfVisit();
     }
 
     @Override

@@ -81,6 +81,35 @@
             </tbody>
         </table>
 
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Patient name</th>
+                <th scope="col">Patient date of birth</th>
+                <th scope="col">Patient gender</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="form-group col-12">
+                        <!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
+                        <textarea class="form-control" id="patientName" rows="3" type="input" name="patientName" th:field="*{patientName}"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group col-12">
+                        <textarea class="form-control" id="patientDateBirth" rows="3" type="input" name="patientDateBirth" th:field="*{patientDateBirth}"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group col-12">
+                        <textarea class="form-control" id="patientGender" rows="3" type="input" name="patientGender" th:field="*{patientGender}"></textarea>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
          <table class="table">
             <thead class="thead-light">
@@ -106,6 +135,36 @@
              </tr>
             </tbody>
          </table>
+
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">HCP name</th>
+                <th scope="col">Date of the Visit</th>
+                <th scope="col">Time of the Visit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="form-group col-12">
+                        <!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
+                        <textarea class="form-control" id="hcpName" rows="3" type="input" name="hcpName" th:field="*{hcpName}"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group col-12">
+                        <textarea class="form-control" id="dateOfVisit" rows="3" type="input" name="dateOfVisit" th:field="*{dateOfVisit}"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group col-12">
+                        <textarea class="form-control" id="timeofVisit" rows="3" type="input" name="timeofVisit" th:field="*{timeOfVisit}"></textarea>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
         <div class="btn-group">
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>

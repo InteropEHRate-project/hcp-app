@@ -44,6 +44,29 @@
     <table class="table">
         <thead class="thead-light">
         <tr>
+            <th scope="col">Patient name</th>
+            <th scope="col">Patient date of birth</th>
+            <th scope="col">Patient gender</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getPatientName() != null && !hospitalDischargeReport.getPatientName().isBlank()}">
+                <p th:text="${hospitalDischargeReport.getPatientName()}"></p>
+            </div></td>
+            <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getPatientDateBirth() != null && !hospitalDischargeReport.getPatientDateBirth().isBlank()}">
+                <p th:text="${hospitalDischargeReport.getPatientDateBirth()}"></p>
+            </div></td>
+            <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getPatientGender() != null && !hospitalDischargeReport.getPatientGender().isBlank()}">
+                <p th:text="${hospitalDischargeReport.getPatientGender()}"></p>
+            </div></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
             <th th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.hospitalName}">Hospital name</th>
             <th scope="col">Hospital address</th>
         </tr>
@@ -55,6 +78,29 @@
             </div></td>
             <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getHospitalAddress() != null && !hospitalDischargeReport.getHospitalAddress().isBlank()}">
                 <p th:text="${hospitalDischargeReport.getHospitalAddress()}"></p>
+            </div></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>HCP name</th>
+            <th scope="col">Date of the visit</th>
+            <th scope="col">Time of the visit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getHcpName() != null && !hospitalDischargeReport.getHcpName().isBlank()}">
+                <p th:text="${hospitalDischargeReport.getHcpName()}"></p>
+            </div></td>
+            <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getDateOfVisit() != null && !hospitalDischargeReport.getDateOfVisit().isBlank()}">
+                <p th:text="${hospitalDischargeReport.getDateOfVisit()}"></p>
+            </div></td>
+            <td> <div class="card-body row justify-content-center" th:if="${hospitalDischargeReport.getTimeOfVisit() != null && !hospitalDischargeReport.getTimeOfVisit().isBlank()}">
+                <p th:text="${hospitalDischargeReport.getTimeOfVisit()}"></p>
             </div></td>
         </tr>
         </tbody>

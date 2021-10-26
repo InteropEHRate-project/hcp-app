@@ -16,9 +16,16 @@ public class HospitalDischargeReportCommand {
     private final String instructions;
     private final String hospitalName;
     private final String hospitalAddress;
+    private final String patientName;
+    private final String patientDateBirth;
+    private final String patientGender;
+    private final String hcpName;
+    private final String dateOfVisit;
+    private final String timeOfVisit;
     private final PrescriptionService prescriptionService;
 
-    public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, String hospitalName, String hospitalAddress, PrescriptionService prescriptionService) {
+    public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, String hospitalName, String hospitalAddress, String patientName, String patientDateBirth, String patientGender,
+                                          String hcpName, String dateOfVisit, String timeOfVisit, PrescriptionService prescriptionService) {
         this.reasons = reasons;
         this.findings = findings;
         this.procedures = procedures;
@@ -26,6 +33,12 @@ public class HospitalDischargeReportCommand {
         this.instructions = instructions;
         this.hospitalName = hospitalName;
         this.hospitalAddress = hospitalAddress;
+        this.patientName = patientName;
+        this.patientDateBirth = patientDateBirth;
+        this.patientGender = patientGender;
+        this.hcpName = hcpName;
+        this.dateOfVisit = dateOfVisit;
+        this.timeOfVisit = timeOfVisit;
         this.prescriptionService = prescriptionService;
     }
 
