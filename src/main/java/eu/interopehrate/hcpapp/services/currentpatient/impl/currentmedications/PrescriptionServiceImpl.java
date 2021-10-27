@@ -432,4 +432,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             log.error("Cannot be updated. Resource not found.");
         }
     }
+
+    @SneakyThrows
+    @Override
+    public void getPrescriptionsTests() {
+        this.currentD2DConnection.getPrescriptions();
+    }
 }

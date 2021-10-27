@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.protocols.common.DocumentCategory;
+import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import eu.interopehrate.td2de.D2DBluetoothConnector;
 import eu.interopehrate.td2de.api.D2DConnector;
 import eu.interopehrate.td2de.api.TD2D;
@@ -297,16 +298,20 @@ public class CurrentD2DConnection implements DisposableBean {
 
     @SneakyThrows
     public void getLaboratoryTestsResource() {
-        this.td2D.getResourcesByCategory(DocumentCategory.LABORATORY_REPORT, null, false);
-
-        //Iterator<Resource> laboratoryResults = this.td2d.getMostRecentResources(DocumentCategory.LABORATORY_REPORT, "vital-signs", null, 3, true);
-        //this.td2d.getResourcesByCategory(FHIRResourceCategory.OBSERVATION, "vital-signs", null, null, false);
+        // this.td2D.getResourcesByCategory(DocumentCategory.LABORATORY_REPORT, "vital-signs", null, null, true);
+        this.td2D.getResourcesByCategory(DocumentCategory.LABORATORY_REPORT, null, true);
         CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
         auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
 
         //Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource((InputStream) laboratoryResults);
         //this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
         log.info("LaboratoryResults received");
+    }
+
+    @SneakyThrows
+    public void getPrescriptions() {
+        this.td2D.getResourcesByCategory(FHIRResourceCategory.MEDICATION_REQUEST, null, false);
+        log.info("Prescriptions received");
     }
 
     public void certificate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {

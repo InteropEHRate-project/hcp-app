@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
+import lombok.SneakyThrows;
 import org.hl7.fhir.r4.model.Bundle;
 import org.springframework.data.domain.Page;
 
@@ -32,4 +33,5 @@ public interface PrescriptionService {
     void refreshData();
     PrescriptionInfoCommand retrievePrescriptionFromSEHRById(String id);
     void updatePrescriptionFromSEHR(PrescriptionInfoCommand prescriptionInfoCommand);
+    void getPrescriptionsTests();
 }
