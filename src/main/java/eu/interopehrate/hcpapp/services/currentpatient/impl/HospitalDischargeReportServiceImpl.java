@@ -32,8 +32,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private String patientDateBirth;
     private String patientGender;
     private String hcpName;
-    private String dateOfVisit;
-    private String timeOfVisit;
+    private String format;
     private final PrescriptionService prescriptionService;
     private final PrescriptionRepository prescriptionRepository;
     private final VitalSignsRepository vitalSignsRepository;
@@ -74,7 +73,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
         return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, patientName, patientDateBirth,
-                patientGender, hcpName, timeOfVisit, dateOfVisit, prescriptionService);
+                patientGender, hcpName, format, prescriptionService);
     }
 
     @Override
@@ -90,8 +89,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.patientDateBirth = hospitalDischargeReportCommand.getPatientDateBirth();
         this.patientGender = hospitalDischargeReportCommand.getPatientGender();
         this.hcpName = hospitalDischargeReportCommand.getHcpName();
-        this.dateOfVisit = hospitalDischargeReportCommand.getDateOfVisit();
-        this.timeOfVisit = hospitalDischargeReportCommand.getTimeOfVisit();
+        this.format = hospitalDischargeReportCommand.getFormat();
     }
 
     @Override

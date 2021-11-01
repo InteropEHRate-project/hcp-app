@@ -3,27 +3,60 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</title>
+    <title th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge
+        Report</title>
 </head>
 
 <body>
 <div layout:fragment="content">
-    <h3 th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</h3>
-
-    <div class="alert alert-success" role="alert" id="message1" th:if="${savedToCloud != null && savedToCloud}" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.data.saved}">Data uploaded in Citizen Cloud</div>
+    <!--    <h3 th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</h3>-->
+    <div class="m-5"></div>
+    <div class="alert alert-success" role="alert" id="message1" th:if="${savedToCloud != null && savedToCloud}"
+         th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.data.saved}">Data uploaded in
+        Citizen Cloud
+    </div>
     <script>
         setTimeout(function () {
             $('#message1').remove();
         }, 5000);
     </script>
-    <div class="alert alert-danger" role="alert" id="message2" th:if="${savedToCloud != null && savedToCloud == false}" th:text="#{alert.error}">Error</div>
+    <div class="alert alert-danger" role="alert" id="message2" th:if="${savedToCloud != null && savedToCloud == false}"
+         th:text="#{alert.error}">Error
+    </div>
     <script>
         setTimeout(function () {
             $('#message2').remove();
         }, 5000);
     </script>
 
-    <form class="row justify-content-center" th:action="@{/current-patient/hospital-discharge-report/save}" th:object="${hospitalDischargeReportCommand}" method="post">
+    <form class="row justify-content-center" th:action="@{/current-patient/hospital-discharge-report/save}"
+          th:object="${hospitalDischargeReportCommand}" method="post">
+        <br>
+        <div class="form-group col-6">
+            <label for="hospitalName">Hospital name</label>
+            <textarea class="form-control" id="hospitalName" rows="3" type="input" name="hospitalName" th:field="*{hospitalName}"></textarea>
+        </div>
+
+        <div class="form-group col-6">
+            <label for="hospitalAddress">Hospital address</label>
+            <textarea class="form-control" id="hospitalAddress" rows="3" type="input" name="hospitalAddress" th:field="*{hospitalAddress}"></textarea>
+        </div>
+
+        <div class="form-group col-4">
+            <label for="patientName">Patient name</label>
+            <textarea class="form-control" id="patientName" rows="3" type="input" name="patientName" th:field="*{patientName}"></textarea>
+        </div>
+
+        <div class="form-group col-4">
+            <label for="patientDateBirth">Patient date of birth</label>
+            <textarea class="form-control" id="patientDateBirth" rows="3" type="input" name="patientDateBirth" th:field="*{patientDateBirth}"></textarea>
+        </div>
+
+        <div class="form-group col-4">
+            <label for="patientGender">Patient gender</label>
+            <textarea class="form-control" id="patientGender" rows="3" type="input" name="patientGender" th:field="*{patientGender}"></textarea>
+        </div>
+
         <div class="form-group col-12">
             <label for="reason" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>
             <textarea class="form-control" id="reason" rows="3" type="input" name="reason" th:field="*{reasons}"></textarea>
@@ -34,7 +67,7 @@
         </div>
         <div class="form-group col-12">
             <label for="procedure" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.procedures.and.treatment}">Instrumental examinations reports:</label>
-            <textarea class="form-control" id="procedure" rows="3" type="input" name="procedure" th:field="*{procedures}" ></textarea>
+            <textarea class="form-control" id="procedure" rows="3" type="input" name="procedure" th:field="*{procedures}"></textarea>
         </div>
         <div class="form-group col-12">
             <label for="condition" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.discharge.conditions}">Future visits and recommendations:</label>
@@ -47,16 +80,22 @@
 
         <br>
         <div class="m-3"></div>
-        <p th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"><br>
+        <p th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
+            <br>
         <h4 th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"
             th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.citizen.cloud}">Prescription to upload in Citizen Cloud</h4></p>
-        <table id="uploadCloud" class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
+        <table id="uploadCloud" class="table table-bordered"
+               th:if="${!hospitalDischargeReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
             <thead class="thead-light">
             <tr>
-                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name</th>
-                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage</th>
-                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings</th>
-                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.name}">Drug Name
+                </th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.drug.dosage}">Drug Dosage
+                </th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.timings}">Timings
+                </th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.status}">Status
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -82,88 +121,14 @@
         </table>
 
         <table class="table">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Patient name</th>
-                <th scope="col">Patient date of birth</th>
-                <th scope="col">Patient gender</th>
-            </tr>
-            </thead>
-            <tbody>
             <tr>
                 <td>
                     <div class="form-group col-12">
-                        <!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
-                        <textarea class="form-control" id="patientName" rows="3" type="input" name="patientName" th:field="*{patientName}"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col-12">
-                        <textarea class="form-control" id="patientDateBirth" rows="3" type="input" name="patientDateBirth" th:field="*{patientDateBirth}"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col-12">
-                        <textarea class="form-control" id="patientGender" rows="3" type="input" name="patientGender" th:field="*{patientGender}"></textarea>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-         <table class="table">
-            <thead class="thead-light">
-             <tr>
-                <th scope="col">Hospital name</th>
-                <th scope="col">Hospital address</th>
-             </tr>
-            </thead>
-            <tbody>
-             <tr>
-                <td>
-                    <div class="form-group col-12">
-<!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
-                        <textarea class="form-control" id="hospitalName" rows="3" type="input" name="hospitalName" th:field="*{hospitalName}"></textarea>
-                    </div>
-                </td>
-                 <td>
-                     <div class="form-group col-12">
-                         <!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
-                         <textarea class="form-control" id="hospitalAddress" rows="3" type="input" name="hospitalAddress" th:field="*{hospitalAddress}"></textarea>
-                     </div>
-                 </td>
-             </tr>
-            </tbody>
-         </table>
-
-        <table class="table">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">HCP name</th>
-                <th scope="col">Date of the Visit</th>
-                <th scope="col">Time of the Visit</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <div class="form-group col-12">
-                        <!--                        <label for="hcpName" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>-->
+                        <label for="hcpName">HCP name</label>
                         <textarea class="form-control" id="hcpName" rows="3" type="input" name="hcpName" th:field="*{hcpName}"></textarea>
                     </div>
                 </td>
-                <td>
-                    <div class="form-group col-12">
-                        <textarea class="form-control" id="dateOfVisit" rows="3" type="input" name="dateOfVisit" th:field="*{dateOfVisit}"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col-12">
-                        <textarea class="form-control" id="timeofVisit" rows="3" type="input" name="timeofVisit" th:field="*{timeOfVisit}"></textarea>
-                    </div>
-                </td>
             </tr>
-            </tbody>
         </table>
 
         <div class="btn-group">
@@ -173,7 +138,8 @@
                th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
             <a class="btn btn-warning" th:href="@{/current-patient/hospital-discharge-report/save-in-cloud}"
                th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies}"
-               th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.save.in.cloud}">Upload in Citizen Cloud</a>
+               th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.save.in.cloud}">Upload in
+                Citizen Cloud</a>
         </div>
         <br>
     </form>
