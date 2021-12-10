@@ -31,7 +31,7 @@ public class CurrentDiseaseController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage( Model model) {
+    public String openAddPage(Model model) {
         model.addAttribute("currentDiseaseInfoCommand", new CurrentDiseaseInfoCommand());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
     }
@@ -55,15 +55,15 @@ public class CurrentDiseaseController {
 
     @GetMapping
     @RequestMapping("/open-update-page")
-    public String openEditCurrentDisease(@RequestParam("id") String id, Model model){
-        model.addAttribute("currentDiseaseInfoCommandUpdate",this.currentDiseaseService.currentDiseaseById(id));
+    public String openEditCurrentDisease(@RequestParam("id") String id, Model model) {
+        model.addAttribute("currentDiseaseInfoCommandUpdate", this.currentDiseaseService.currentDiseaseById(id));
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE;
     }
 
     @GetMapping
     @RequestMapping("/open-update-page-data-base")
-    public String openEditCurrentDiseaseDataBase(@RequestParam("id") Long id, Model model){
-        model.addAttribute("currentDiseaseInfoCommandUpdateDataBase",this.currentDiseaseService.retrieveNewCurrentDiseaseById(id));
+    public String openEditCurrentDiseaseDataBase(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("currentDiseaseInfoCommandUpdateDataBase", this.currentDiseaseService.retrieveNewCurrentDiseaseById(id));
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE_DB;
     }
 
@@ -108,5 +108,12 @@ public class CurrentDiseaseController {
         this.currentDiseaseService.deleteNewCurrentDisease(id);
         model.addAttribute("currentDiseaseDeletedFromDataBase", Boolean.TRUE);
         return this.viewSection(model);
+    }
+
+    @GetMapping
+    @RequestMapping("/refresh")
+    public String refresh() throws Exception {
+        this.currentDiseaseService.refresh();
+        return "redirect:/current-patient/current-diseases/view-section";
     }
 }

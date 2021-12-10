@@ -93,11 +93,11 @@
                 <div class="row justify-content-center">
                     <h3 class="mt-5" th:if="${!index.transmissionCompleted}" th:text="#{template.index.waiting}">Connection established.</h3>
                 </div>
-                <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
+<!--                <div class="card-body row justify-content-center" th:if="${!index.transmissionCompleted}">-->
+<!--                    <div class="spinner-border text-primary" role="status">-->
+<!--                        <span class="sr-only">Loading...</span>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div th:if="${index.patientDataCommand.getNoConformantJSON()}">
                     <h5 style="color: red" class="row justify-content-center"
                         th:text="#{template.index.button.transmission.error}">Transmission error, please retry!</h5>

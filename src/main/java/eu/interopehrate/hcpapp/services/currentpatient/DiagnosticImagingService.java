@@ -7,4 +7,5 @@ public interface DiagnosticImagingService {
     void displayEcgDemo();
     void displayMrDemo();
     void refreshData();
+    void refresh();
 }

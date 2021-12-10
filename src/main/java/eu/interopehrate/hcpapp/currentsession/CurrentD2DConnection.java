@@ -280,6 +280,14 @@ public class CurrentD2DConnection implements DisposableBean {
         public void onSearch(Bundle healthDataBundle, int currentPage, int totalPages) {
             log.info("onSearch call " + " " + currentPage + " " + totalPages);
             log.info("bundle items " + healthDataBundle.getEntry().size());
+            CurrentD2DConnection.this.currentPatient.initPatientSummary(healthDataBundle);
+            // CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
+            // CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(healthDataBundle);
+            CurrentD2DConnection.this.currentPatient.initImageReport(healthDataBundle);
+            CurrentD2DConnection.this.currentPatient.initVitalSigns(healthDataBundle);
+            if (healthDataBundle.getEntry().size() > 33) {
+                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(healthDataBundle);
+            }
         }
 
         @Override
@@ -298,13 +306,9 @@ public class CurrentD2DConnection implements DisposableBean {
 
     @SneakyThrows
     public void getLaboratoryTestsResource() {
-        // this.td2D.getResourcesByCategory(DocumentCategory.LABORATORY_REPORT, "vital-signs", null, null, true);
-        this.td2D.getResourcesByCategory(DocumentCategory.LABORATORY_REPORT, null, true);
+        this.td2D.getResourcesByCategory(FHIRResourceCategory.OBSERVATION, null, true);
         CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
         auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
-
-        //Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource((InputStream) laboratoryResults);
-        //this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
         log.info("LaboratoryResults received");
     }
 
@@ -312,6 +316,30 @@ public class CurrentD2DConnection implements DisposableBean {
     public void getPrescriptions() {
         this.td2D.getResourcesByCategory(FHIRResourceCategory.MEDICATION_REQUEST, null, false);
         log.info("Prescriptions received");
+    }
+
+    @SneakyThrows
+    public void getDiagnosticImaging() {
+        this.td2D.getResourcesByCategory(DocumentCategory.IMAGE_REPORT, null, false);
+        log.info("Diagnostic Imaging received");
+    }
+
+    @SneakyThrows
+    public void getIPS() {
+        this.td2D.getResourcesByCategory(DocumentCategory.PATIENT_SUMMARY, null, false);
+        log.info("Patient Summary received");
+    }
+
+    @SneakyThrows
+    public void getDocumentHistory() {
+        this.td2D.getResourcesByCategory(FHIRResourceCategory.DOCUMENT_REFERENCE, null, false);
+        log.info("Document History received");
+    }
+
+    @SneakyThrows
+    public void getPathologyHistory() {
+        this.td2D.getResourcesByCategory(FHIRResourceCategory.CONDITION, null, false);
+        log.info("Pathology History received");
     }
 
     public void certificate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {

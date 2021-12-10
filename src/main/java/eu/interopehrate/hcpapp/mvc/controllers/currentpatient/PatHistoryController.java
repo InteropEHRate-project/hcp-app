@@ -77,4 +77,11 @@ public class PatHistoryController {
         model.addAttribute("diagnosisDeleted", Boolean.TRUE);
         return this.viewSection(model);
     }
+
+    @GetMapping
+    @RequestMapping("/refresh")
+    public String refresh() throws Exception {
+        this.patHistoryService.refresh();
+        return "redirect:/current-patient/pat-history/view-section";
+    }
 }

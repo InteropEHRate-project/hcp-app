@@ -159,4 +159,8 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     public CurrentDiseaseInfoCommand retrieveNewCurrentDiseaseById(Long id) {
         return this.entityToCommandCurrentDisease.convert(this.currentDiseaseRepository.getOne(id));
     }
+
+    public void refresh() {
+        this.currentD2DConnection.getIPS();
+    }
 }

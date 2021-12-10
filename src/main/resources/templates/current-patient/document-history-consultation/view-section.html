@@ -20,7 +20,7 @@
 <!--        </div>-->
     <h3 th:text="#{fragment.current.patient.navigation.left.document.history.consultation}">Document History Consultation</h3>
     <br>
-    <div th:if="${currentD2DConnection.getConnectedThread() == null && (session.withoutConnection != null && !session.withoutConnection)}">
+    <div th:if="${currentD2DConnection == null && (session.withoutConnection != null && !session.withoutConnection)}">
         <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.no.connection}">The connection with S-EHR is not established</h5>
     </div>
 
@@ -88,7 +88,7 @@
         + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">
                 Parameters:</p>
             <br>
-            <div th:if="${currentD2DConnection.getConnectedThread() != null}">
+            <div th:if="${currentD2DConnection != null}">
                 <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
             </div>
             <h5 th:if="${session.withoutConnection != null && session.withoutConnection}"
@@ -99,7 +99,7 @@
         </div>
     </form>
 
-    <div th:if="${session.speciality == null && currentD2DConnection.getConnectedThread() != null}">
+    <div th:if="${session.speciality == null}">
         <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.filter}">Please, set a filter to view data</h5>
     </div>
     <br>
@@ -139,6 +139,10 @@
         </tr>
         </tbody>
     </table>
+    <div class="row justify-content-end">
+        <a class="btn btn-primary" th:href="@{/current-patient/document-history-consultation/refresh}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
+    </div>
 </div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandDiagnosis;
 import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandRiskFactor;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
@@ -23,12 +24,14 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     private final List<String> listOfFamHis = new ArrayList<>();
     private final HapiToCommandRiskFactor hapiToCommandRiskFactor;
     private final HapiToCommandDiagnosis hapiToCommandDiagnosis;
+    private final CurrentD2DConnection currentD2DConnection;
 
     @SneakyThrows
-    public PatHistoryServiceImpl(CurrentPatient currentPatient, HapiToCommandRiskFactor hapiToCommandRiskFactor, HapiToCommandDiagnosis hapiToCommandDiagnosis) {
+    public PatHistoryServiceImpl(CurrentPatient currentPatient, HapiToCommandRiskFactor hapiToCommandRiskFactor, HapiToCommandDiagnosis hapiToCommandDiagnosis, CurrentD2DConnection currentD2DConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandRiskFactor = hapiToCommandRiskFactor;
         this.hapiToCommandDiagnosis = hapiToCommandDiagnosis;
+        this.currentD2DConnection = currentD2DConnection;
     }
 
     @Override
@@ -166,5 +169,10 @@ public class PatHistoryServiceImpl implements PatHistoryService {
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
+    }
+
+    @Override
+    public void refresh() {
+        this.currentD2DConnection.getPathologyHistory();
     }
 }
