@@ -71,6 +71,13 @@ public class PrescriptionController {
     }
 
     @GetMapping
+    @RequestMapping("/refresh")
+    public String refresh() {
+        this.prescriptionService.getPrescriptionsTests();
+        return "redirect:/current-patient/current-medications/prescription/view-section";
+    }
+
+    @GetMapping
     @RequestMapping("/open-update")
     public String openEditPrescriptionFromSEHR(@RequestParam("id") String id, Model model) {
         model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());

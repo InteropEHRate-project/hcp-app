@@ -7,4 +7,5 @@ public interface ObservationLaboratoryService {
     boolean isEmpty();
     ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis(String keyword);
     void refreshData();
+    void getLaboratoryTests() throws Exception;
 }

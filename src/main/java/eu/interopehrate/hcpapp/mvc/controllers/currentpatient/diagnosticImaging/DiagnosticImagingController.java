@@ -65,4 +65,11 @@ public class DiagnosticImagingController {
         this.diagnosticImagingService.refreshData();
         return "redirect:/current-patient/diagnostic-imaging/image-report";
     }
+
+    @GetMapping
+    @RequestMapping("/refresh")
+    public String refresh() throws Exception {
+        this.diagnosticImagingService.refresh();
+        return "redirect:/current-patient/diagnostic-imaging/image-report";
+    }
 }

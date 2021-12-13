@@ -52,4 +52,11 @@ public class ObservationLaboratoryController {
         this.observationLaboratoryService.refreshData();
         return "redirect:/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
     }
+
+    @GetMapping
+    @RequestMapping("/refresh")
+    public String refresh() throws Exception {
+        this.observationLaboratoryService.getLaboratoryTests();
+        return "redirect:/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
+    }
 }

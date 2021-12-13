@@ -15,41 +15,58 @@
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
-<!--    <div class="btn-toolbar float-right" role="toolbar">-->
-<!--        <div class="btn-group mr-2" role="group">-->
-<!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
-<!--            <a href="#" class="btn btn-primary" th:styleappend="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage} + '/keyword/empty')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
-<!--            <a href="#" class="btn btn-primary" th:styleappend="${labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage} + '/keyword/empty')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div th:replace="current-patient/laboratory-tests/fragments/navigation::navigation-top">navigation-top</div>-->
-    <h3 th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">Laboratory Results</h3>
+    <!--    <div class="btn-toolbar float-right" role="toolbar">-->
+    <!--        <div class="btn-group mr-2" role="group">-->
+    <!--            <a href="#" class="btn disabled" style="background-color: lightgray" th:text="#{ips.translate.label}">language of the section</a>-->
+    <!--            <a href="#" class="btn btn-primary" th:styleappend="${!labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='false', redirect-to='/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage} + '/keyword/empty')}" th:text="#{ips.translate.button.original}">Initial version</a>-->
+    <!--            <a href="#" class="btn btn-primary" th:styleappend="${labResultsAnalysisCommand.getDisplayTranslatedVersion()} ? 'background-color: darkblue' : ''" th:href="@{/current-patient/switch-display-language(displayTranslatedVersion='true', redirect-to='/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage} + '/keyword/empty')}" th:text="#{ips.translate.button.translated}">Translated version</a>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div th:replace="current-patient/laboratory-tests/fragments/navigation::navigation-top">navigation-top</div>-->
+    <h3 th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">
+        Laboratory Results</h3>
     <br>
     <div th:if="${!labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(currentPage).isEmpty() || isFiltered || isEmpty}">
-        <p><button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-                   th:text="#{button.filter.arrow}">Filter</button></p>
-        <p class="col-form-label" th:if="${isFiltered}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">Filtered list</p>
-        <p class="col-form-label" th:if="${isEmpty}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">Empty list</p>
+        <p>
+            <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample"
+                    th:text="#{button.filter.arrow}">Filter
+            </button>
+        </p>
+        <p class="col-form-label" th:if="${isFiltered}"
+           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.filtered}">
+            Filtered list</p>
+        <p class="col-form-label" th:if="${isEmpty}"
+           th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.is.empty}">
+            Empty list</p>
         <p th:if="${session.keyword != null && session.keyword != ''}" th:text="${session.keyword}"></p>
         <div class="collapse" id="collapseExample">
             <div class="btn-toolbar float-left" role="toolbar">
                 <div class="btn-group btn-group-sm mr-2" role="group">
-                    <form th:action="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}" method="get">
+                    <form th:action="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}"
+                          method="get">
                         <input id="txtSearch" type="text" name="keyword" th:value="${session.keyword}">
-                        <button type="submit" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.filter.by.analysis}">Filter by analysis</button>
+                        <button type="submit" class="btn btn-primary"
+                                th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.filter.by.analysis}">
+                            Filter by analysis
+                        </button>
                         <a type="button" class="btn btn-light" th:value="#{button.reset}" onclick="customReset();"
-                           th:href="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}" th:text="#{button.reset}"></a>
+                           th:href="@{/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view}"
+                           th:text="#{button.reset}"></a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="scrollBar" th:if="${!labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(currentPage).isEmpty()}">
+    <div class="scrollBar"
+         th:if="${!labResultsAnalysisCommand.observationLaboratoryInfoCommandAnalysesWithoutDuplicates(currentPage).isEmpty()}">
         <table class="table table-bordered">
             <thead class="thead-light">
             <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
-            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.translated}">Analysis translated</th>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.translated}">
+                Analysis translated
+            </th>
             <th:block th:each="sample : ${labResultsAnalysisCommand.localDateTimeListWithoutDuplicates()}">
                 <th th:text="${{sample}}"></th>
             </th:block>
@@ -63,8 +80,10 @@
                     <th:block th:each="sample : ${labResultsAnalysisCommand.localDateTimeListWithoutDuplicates()}">
                         <div th:with="boolVal=${labResultsAnalysisCommand.getResultOfAnalysis(an.getAnalysis(), sample)}">
                             <td th:if="${map.get(an,sample) == null}">-</td>
-                            <td th:unless="${map.get(an,sample) == null}" th:text="${{map.get(an,sample)}}" th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' "
-                                data-toggle="tooltip" data-placement="bottom" th:title="${labResultsAnalysisCommand.getStringForTooltip(an.getAnalysis())}"></td>
+                            <td th:unless="${map.get(an,sample) == null}" th:text="${{map.get(an,sample)}}"
+                                th:style=" ${boolVal} == false ? 'background-color: red' : 'background-color: none' "
+                                data-toggle="tooltip" data-placement="bottom"
+                                th:title="${labResultsAnalysisCommand.getStringForTooltip(an.getAnalysis())}"></td>
                         </div>
                     </th:block>
                 </div>
@@ -72,32 +91,62 @@
             </tbody>
         </table>
 
-        <nav th:if = "${totalPages > 1}">
+        <nav th:if="${totalPages > 1}">
             <ul class="pagination">
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total Rows: totalItems</a>
+                    <a class="page-link" href="#"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.total.rows} + ' ' + ${totalItems}">Total
+                        Rows: totalItems</a>
                 </li>
                 <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                    <a class="page-link"  th:if="${currentPage != i && session.keyword != null && !session.keyword.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${i} + '/keyword/' + ${session.keyword}}">[[${i}]]</a>
-                    <a class="page-link"  th:if="${(currentPage != i && session.keyword == null) || (currentPage != i && session.keyword.trim().equals(''))}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${i} + '/keyword/empty'}">[[${i}]]</a>
-                    <span class="page-link disabled" style="color: white; background-color: dodgerblue" th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                    <a class="page-link"
+                       th:if="${currentPage != i && session.keyword != null && !session.keyword.trim().equalsIgnoreCase('')}"
+                       th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${i} + '/keyword/' + ${session.keyword}}">[[${i}]]</a>
+                    <a class="page-link"
+                       th:if="${(currentPage != i && session.keyword == null) || (currentPage != i && session.keyword.trim().equals(''))}"
+                       th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${i} + '/keyword/empty'}">[[${i}]]</a>
+                    <span class="page-link disabled" style="color: white; background-color: dodgerblue"
+                          th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
                 </li>
                 <li class="page-item">
-                    <a class="page-link"  th:if="${currentPage < totalPages && session.keyword != null && !session.keyword.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage + 1} + '/keyword/' + ${session.keyword}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
-                    <a class="page-link"  th:if="${(currentPage < totalPages && session.keyword == null) || (currentPage < totalPages && session.keyword.trim().equals(''))}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage + 1} + '/keyword/empty'}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
-                    <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
+                    <a class="page-link"
+                       th:if="${currentPage < totalPages && session.keyword != null && !session.keyword.trim().equalsIgnoreCase('')}"
+                       th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage + 1} + '/keyword/' + ${session.keyword}}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                    <a class="page-link"
+                       th:if="${(currentPage < totalPages && session.keyword == null) || (currentPage < totalPages && session.keyword.trim().equals(''))}"
+                       th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${currentPage + 1} + '/keyword/empty'}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</a>
+                    <span class="page-link disabled" style="color: white; background-color: lightgray"
+                          th:unless="${currentPage < totalPages}"
+                          th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.next}">Next</span>
                 </li>
                 <li class="page-item">
-                    <a class="page-link"  th:if="${currentPage < totalPages && session.keyword != null && !session.keyword.trim().equalsIgnoreCase('')}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${totalPages} + '/keyword/' + ${session.keyword}}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
-                    <a class="page-link"  th:if="${(currentPage < totalPages && session.keyword == null) || (currentPage < totalPages && session.keyword.trim().equals(''))}" th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${totalPages} + '/keyword/empty'}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
-                    <span class="page-link disabled" style="color: white; background-color: lightgray" th:unless="${currentPage < totalPages}" th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
+                    <a class="page-link"
+                       th:if="${currentPage < totalPages && session.keyword != null && !session.keyword.trim().equalsIgnoreCase('')}"
+                       th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${totalPages} + '/keyword/' + ${session.keyword}}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                    <a class="page-link"
+                       th:if="${(currentPage < totalPages && session.keyword == null) || (currentPage < totalPages && session.keyword.trim().equals(''))}"
+                       th:href="@{'/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view/page/' + ${totalPages} + '/keyword/empty'}"
+                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</a>
+                    <span class="page-link disabled" style="color: white; background-color: lightgray"
+                          th:unless="${currentPage < totalPages}"
+                          th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.pagination.last}">Last</span>
                 </li>
             </ul>
         </nav>
     </div>
-    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
+    <div class="row justify-content-end">
+        <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh
+            data</a>
+    </div>
+    <div class="row justify-content-end"
+         th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
         <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh-data}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh
+            data</a>
     </div>
 </div>
 

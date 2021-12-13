@@ -22,4 +22,5 @@ public interface CurrentDiseaseService {
     void deleteNewCurrentDisease(Long id);
     void updateNewCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand);
     CurrentDiseaseInfoCommand retrieveNewCurrentDiseaseById(Long id);
+    void refresh();
 }

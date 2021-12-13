@@ -119,4 +119,9 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
                 .documentHistoryConsultationInfoCommandList(list)
                 .build();
     }
+
+    @Override
+    public void refresh() {
+        this.currentD2DConnection.getDocumentHistory();
+    }
 }

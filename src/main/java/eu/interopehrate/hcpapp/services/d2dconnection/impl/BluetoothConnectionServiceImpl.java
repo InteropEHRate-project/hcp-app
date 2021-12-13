@@ -6,7 +6,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
-import eu.interopehrate.td2de.BluetoothConnection;
+import eu.interopehrate.td2de.D2DBluetoothConnector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class BluetoothConnectionServiceImpl implements BluetoothConnectionServic
 
     @Override
     public byte[] connectionInfoQRCodePng() throws Exception {
-        String connectionInfo = new BluetoothConnection().getBTadapterAddress();
+        String connectionInfo = new D2DBluetoothConnector().getBtAdapterAddress();
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
         try {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();

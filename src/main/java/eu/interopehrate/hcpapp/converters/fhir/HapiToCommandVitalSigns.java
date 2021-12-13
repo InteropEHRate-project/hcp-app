@@ -29,11 +29,11 @@ public class HapiToCommandVitalSigns implements Converter<Observation, VitalSign
             vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setLocalDateOfVitalSign(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
         }
 
-        if (Objects.nonNull(observation.getValueQuantity())) {
+        if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
             vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setCurrentValue(observation.getValueQuantity().getValue().doubleValue());
         }
 
-        if (Objects.nonNull(observation.getValueQuantity())) {
+        if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
             vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setUnitOfMeasurement(observation.getValueQuantity().getUnit());
         }
         return vitalSignsInfoCommand;

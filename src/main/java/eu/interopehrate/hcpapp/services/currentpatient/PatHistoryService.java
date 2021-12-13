@@ -15,4 +15,5 @@ public interface PatHistoryService {
     PatHistoryInfoCommandDiagnosis patHisInfoCommandById(String id);
     void updateDiagnosis(PatHistoryInfoCommandDiagnosis patHisInfoCommand);
     void deleteDiagnosis(String id);
+    void refresh();
 }

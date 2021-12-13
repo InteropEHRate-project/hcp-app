@@ -60,4 +60,11 @@ public class DocumentHistoryConsultationController {
         model.addAttribute("now", LocalDate.now());
         return TemplateNames.CURRENT_PATIENT_DOCUMENT_HISTORY_CONSULTATION_VIEW_SECTION;
     }
+
+    @GetMapping
+    @RequestMapping("/refresh")
+    public String refresh() throws Exception {
+        this.documentHistoryConsultationService.refresh();
+        return "redirect:/current-patient/document-history-consultation/view-section";
+    }
 }
