@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -165,6 +166,9 @@ public class PatHistoryServiceImpl implements PatHistoryService {
                 ((DateTimeType) ((Condition) optional.get()).getOnset()).setYear(patHisInfoCommand.getYearOfDiagnosis());
             } else {
                 ((DateTimeType) ((Condition) optional.get()).getOnset()).setYear(patHisInfoCommand.getYearOfDiagnosis());
+            }
+            if (Objects.nonNull(patHisInfoCommand.getEndDateOfDiagnosis())) {
+                ((Condition) optional.get()).setAbatement(new DateTimeType(Date.from(patHisInfoCommand.getEndDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant())));
             }
         } else {
             log.error("Cannot be updated. Resource not found.");

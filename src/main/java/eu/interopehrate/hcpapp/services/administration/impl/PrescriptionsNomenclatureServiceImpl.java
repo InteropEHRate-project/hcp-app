@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionTypesEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionTypesRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionTypesEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.services.administration.PrescriptionsNomenclatureService;
 import org.springframework.stereotype.Service;
 

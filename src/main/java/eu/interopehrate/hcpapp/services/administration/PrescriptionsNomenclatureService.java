@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration;
 
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionTypesEntity;
 
 import java.util.List;
 

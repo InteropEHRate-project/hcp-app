@@ -72,6 +72,8 @@
                th:text="#{fragment.current.patient.navigation.left.reason}">Reason</a>
             <a class="dropdown-item" th:href="@{/current-patient/visit-data/ph-exam/view-section}"
                th:text="#{fragment.current.patient.navigation.left.ph.exam}">PH Exam</a>
+            <a class="dropdown-item" th:href="@{/current-patient/visit-data/instr-exam/view-section}"
+               th:text="#{fragment.current.patient.navigation.left.instr.exam}">Instrumental Examination</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" th:href="@{/current-patient/visit-data/conclusion/view-section}"
                th:text="#{fragment.current.patient.navigation.left.conclusion}">Conclusion</a>
@@ -79,12 +81,13 @@
     </li>
 
     <div class="dropdown-divider"></div>
-    <a class="flex-sm-fill text-sm-left nav-link" th:if="${session.workingSession != null && session.workingSession == 'INPATIENT_ENCOUNTER'}"
+    <a class="flex-sm-fill text-sm-left nav-link" th:if="${session.workingSession != null && (session.workingSession == 'INPATIENT_ENCOUNTER' || session.workingSession == 'EMERGENCY')}"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/hospital-discharge-report')} ? 'active' : ''"
        href="../hospital-discharge-report/view-section.html"
        th:href="@{/current-patient/hospital-discharge-report/view-section}"
        th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report}">Hospital Discharge Report</a>
-    <a class="flex-sm-fill text-sm-left nav-link" th:if="${(session.withoutConnection != null && session.withoutConnection) || session.workingSession != null && (session.workingSession == 'OUTPATIENT_VISIT' || session.workingSession == 'EMERGENCY')}"
+    <a class="flex-sm-fill text-sm-left nav-link"
+       th:if="${(session.withoutConnection != null && session.withoutConnection) || (session.workingSession != null && session.workingSession == 'OUTPATIENT_VISIT')}"
        th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'current-patient/outpatient-report')} ? 'active' : ''"
        href="../outpatient-report/view-section.html"
        th:href="@{/current-patient/outpatient-report/view-section}"

@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.services.administration;
 
-import eu.interopehrate.hcpapp.jpa.entities.AuditInformationEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.AuditInformationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package eu.interopehrate.hcpapp.converters.linkedhashmap;
 
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

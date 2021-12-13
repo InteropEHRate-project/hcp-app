@@ -1,9 +1,9 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.AdmissionDataAuditEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.AdmissionDataAuditEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
-import eu.interopehrate.hcpapp.jpa.repositories.AdmissionDataAuditRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.AdmissionDataAuditRepository;
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import org.hl7.fhir.r4.model.HumanName;

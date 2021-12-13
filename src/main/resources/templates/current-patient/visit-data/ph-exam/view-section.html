@@ -8,7 +8,23 @@
 
 <body>
 <div layout:fragment="content">
-    <p><h3 th:text="#{fragment.current.patient.navigation.left.ph.exam}">ph exam</h3></p>
+    <div class="m-5"></div>
+    <h3 th:text="#{fragment.current.patient.navigation.left.ph.exam}">ph exam</h3>
+    <script>
+        setTimeout(function () {
+            $('#message').remove();
+        }, 5000);
+    </script>
+    <br><br>
+    <form th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" method="post"
+          th:object="${phExamCommand}">
+        <div class="form-group">
+            <label for="clinicalExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
+            <textarea class="form-control" rows="3" type="input" name="clinicalExam" th:field="*{clinicalExam}" id="clinicalExam"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
+    </form>
+
 </div>
 </body>
 </html>

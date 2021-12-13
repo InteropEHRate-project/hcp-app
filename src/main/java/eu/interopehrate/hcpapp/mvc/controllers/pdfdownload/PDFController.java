@@ -98,4 +98,26 @@ public class PDFController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(bytes);
     }
+
+    public byte[] retrievePdfAsBytes(HttpServletRequest request, HttpServletResponse response) {
+        WebContext context = new WebContext(request, response, this.servletContext);
+        context.setVariable("listPrescriptions", this.prescriptionService.getPrescriptionRepository().findAll());
+        context.setVariable("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
+        context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
+        context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
+        context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
+
+        /* Create HTML using Thymeleaf template Engine */
+        String reportHtml = templateEngine.process(TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT_DOCUMENT, context);
+
+        /* Setup Source and target I/O streams */
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri("http://localhost:" + this.port);
+        /* Call convert method */
+        HtmlConverter.convertToPdf(reportHtml, target, converterProperties);
+
+        /* extract output as bytes */
+        return target.toByteArray();
+    }
 }

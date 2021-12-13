@@ -1,9 +1,9 @@
 package eu.interopehrate.hcpapp.services.administration.impl;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.AuditInformationEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.AuditInformationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
-import eu.interopehrate.hcpapp.jpa.repositories.AuditInformationRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.AuditInformationRepository;
 import eu.interopehrate.hcpapp.services.administration.AdmissionDataAuditService;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import lombok.extern.slf4j.Slf4j;

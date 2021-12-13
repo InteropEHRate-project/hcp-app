@@ -3,10 +3,12 @@ package eu.interopehrate.hcpapp.converters.fhir;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Identifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -51,6 +53,14 @@ public class HapiToCommandAllergy implements Converter<AllergyIntolerance, Aller
             }
             command.setSymptoms(allergyIntolerance.getReactionFirstRep().getManifestationFirstRep().getText());
             command.setComments(allergyIntolerance.getNoteFirstRep().getText());
+            if ((allergyIntolerance.hasExtension()) &&
+                    (allergyIntolerance.getExtension().size() > 0) &&
+                    (allergyIntolerance.getExtension().get(0).getValue() instanceof DateTimeType)) {
+                command.setEndDate(((DateTimeType) allergyIntolerance.getExtension().get(0).getValue()).getValue()
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate());
+            }
         }
         return command;
     }

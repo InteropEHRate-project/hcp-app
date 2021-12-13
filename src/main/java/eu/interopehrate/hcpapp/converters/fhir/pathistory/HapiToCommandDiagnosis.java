@@ -6,6 +6,7 @@ import org.hl7.fhir.r4.model.DateTimeType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
 import java.util.Objects;
 
 @Component
@@ -33,7 +34,12 @@ public class HapiToCommandDiagnosis implements Converter<Condition, PatHistoryIn
         if (source.hasNote() && source.getNoteFirstRep().hasText()) {
             patHistoryInfoCommandDiagnosis.setComments(source.getNoteFirstRep().getText());
         }
-
+        if (source.hasAbatementDateTimeType() && source.getAbatementDateTimeType().hasValue()) {
+            patHistoryInfoCommandDiagnosis.setEndDateOfDiagnosis(source.getAbatementDateTimeType().getValue()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate());
+        }
         return patHistoryInfoCommandDiagnosis;
     }
 }

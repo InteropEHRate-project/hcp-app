@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.d2dconnection.BluetoothConnectionService;
 import eu.interopehrate.hcpapp.services.index.IndexService;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,13 @@ public class IndexServiceImpl implements IndexService {
                     .collect(Collectors.joining(","))
             );
             patientDataCommand.setId(currentPatient.getPatient().getId());
+
+            if (Objects.nonNull(currentPatient.getPatient().getPhoto())) {
+                String photo = currentPatient.getPatient().getPhotoFirstRep().getDataElement().getValueAsString();
+                String p = String.join(",", "data:application/jpeg;base64", photo);
+                patientDataCommand.setPhoto(p);
+            }
+
             if (Objects.nonNull(currentPatient.getPatient().getGender())) {
                 patientDataCommand.setGender(currentPatient.getPatient().getGender().toString());
             }
@@ -144,6 +152,11 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public Boolean retrieveData(String qrCodeContent, String hospitalID) {
         return this.cloudConnection.download(qrCodeContent, hospitalID);
+    }
+
+    @Override
+    public JSONArray listBuckets(String emergencyToken) throws Exception {
+        return this.cloudConnection.listOfBuckets(emergencyToken);
     }
 
     @Override

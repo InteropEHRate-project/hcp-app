@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.converters.entity.commandstoentities;
 
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

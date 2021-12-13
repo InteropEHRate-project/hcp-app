@@ -14,6 +14,7 @@ public class IndexPatientDataCommand {
     private String id;
     private String lastName;
     private String firstName;
+    private String photo;
     private String gender;
     private LocalDate birthDate;
     private String consent;

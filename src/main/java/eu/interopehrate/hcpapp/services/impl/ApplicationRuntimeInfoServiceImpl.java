@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.services.impl;
 
-import eu.interopehrate.hcpapp.jpa.entities.*;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareOrganizationRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.jpa.entities.administration.*;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareOrganizationRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.services.ApplicationRuntimeInfoService;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;

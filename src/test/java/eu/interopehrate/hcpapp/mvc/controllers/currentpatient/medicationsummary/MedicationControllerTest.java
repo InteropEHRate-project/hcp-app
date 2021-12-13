@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary;
 
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandHealthCareProfessional;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareProfessionalCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.currentmedications.prescription.MedicationController;

@@ -1,8 +1,8 @@
 package eu.interopehrate.hcpapp.converters.entity.entitytocommand;
 
 import eu.interopehrate.hcpapp.converters.entity.utils.AddressUtils;
-import eu.interopehrate.hcpapp.jpa.entities.ContactPointEntity;
-import eu.interopehrate.hcpapp.jpa.entities.HealthCareOrganizationEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.ContactPointEntity;
+import eu.interopehrate.hcpapp.jpa.entities.administration.HealthCareOrganizationEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.ContactPointType;
 import eu.interopehrate.hcpapp.mvc.commands.administration.HealthCareOrganizationCommand;
 import org.springframework.core.convert.converter.Converter;

@@ -9,6 +9,15 @@
 <body>
 <div layout:fragment="content">
     <p><h3 th:text="#{fragment.current.patient.navigation.left.conclusion}">conclusion</h3></p>
+    <div class="m-4"></div>
+    <div class="m-5"></div>
+    <form>
+        <div class="form-group">
+            <label for="reason" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
+            <textarea class="form-control" name="reason" id="reason" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 float-right" th:text="#{button.save}">Save</button>
+    </form>
 </div>
 </body>
 </html>

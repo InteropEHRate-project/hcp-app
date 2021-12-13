@@ -21,5 +21,6 @@ public class IndexCommand {
     @NotEmpty
     @NotNull
     private String qrCode;
+    private String bucketName;
     private String hospitalID = "hospital";
 }

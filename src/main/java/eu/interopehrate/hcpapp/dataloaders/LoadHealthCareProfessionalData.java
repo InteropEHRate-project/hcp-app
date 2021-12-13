@@ -1,7 +1,7 @@
 package eu.interopehrate.hcpapp.dataloaders;
 
-import eu.interopehrate.hcpapp.jpa.entities.HealthCareProfessionalEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.jpa.entities.administration.HealthCareProfessionalEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

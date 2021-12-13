@@ -9,9 +9,9 @@ insert into CITIES (created_date, updated_date, version, name, country_id) value
 insert into CITIES (created_date, updated_date, version, name, country_id) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Rome', (select id from countries where alpha_2_code = 'IT'));
 
 insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '013685', 'Soseaua Bucuresti-Ploiesti', '73-81', 'Sector 1, Victoria Park, Cladirea 4');
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '013685', 'Road Bucuresti-Ploiesti', '73-81', 'Sector 1, Victoria Park, Residance 4');
 insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '041915', 'Șoseaua Berceni', '12', 'Sector 4');
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Bucharest'), 'WORK', '041915', 'Road Berceni', '12', 'Sector 4');
 
 insert into CONTACT_POINTS (created_date, updated_date, version, type, use, value) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PHONE', 'WORK', '+4021 334 30 25');
 insert into CONTACT_POINTS (created_date, updated_date, version, type, use, value) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PHONE', 'WORK', '+4021 334 30 26');
@@ -32,7 +32,7 @@ insert into HEALTH_CARE_PROFESSIONAL (id, OCCUPATION_ID) values ((select id from
 
 insert into PERSON_ADDRESS (person_id, address_id) values ((select id from persons where first_name = 'Ion'), (select id from addresses where postal_code = '013685'));
 
-insert into HEALTH_CARE_ORGANIZATION (created_date, updated_date, version, code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'SCUBA', 'Spitalul Clinic de Urgenta Bagdasar-Arseni');
+insert into HEALTH_CARE_ORGANIZATION (created_date, updated_date, version, code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'SCUBA', 'Bagdasar-Arseni Emergency Clinical Hospital');
 
 insert into HCO_ADDRESS (hco_id, address_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from addresses where postal_code = '041915'));
 

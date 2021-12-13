@@ -3,12 +3,12 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.PrescriptionEntity;
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.EHRType;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.PrescriptionRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.EHRModel;
 import eu.interopehrate.hcpapp.mvc.models.currentpatient.TransferredPatientModel;
@@ -216,7 +216,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
         return "";
     }
 
-    private static String convertBundleIntoString(Bundle bundle) throws IOException {
+    public static String convertBundleIntoString(Bundle bundle) throws IOException {
         IParser iParser = new JsonParser();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         iParser.compose(byteArrayOutputStream, bundle);

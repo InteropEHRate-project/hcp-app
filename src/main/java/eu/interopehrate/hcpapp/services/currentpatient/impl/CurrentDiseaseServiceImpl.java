@@ -5,8 +5,8 @@ import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommand
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.CurrentDiseaseEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.CurrentDiseaseRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.CurrentDiseaseEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
@@ -15,10 +15,7 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -135,6 +132,9 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
             ((Condition) optional.get()).getCode().getCodingFirstRep().setDisplay(currentDiseaseInfoCommand.getDisease());
             ((Condition) optional.get()).getNoteFirstRep().setText(currentDiseaseInfoCommand.getComment());
             ((Condition) optional.get()).setOnset(new DateTimeType(Date.from(currentDiseaseInfoCommand.getDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant())));
+            if (Objects.nonNull(currentDiseaseInfoCommand.getEndDateOfDiagnosis())) {
+                ((Condition) optional.get()).setAbatement(new DateTimeType(Date.from(currentDiseaseInfoCommand.getEndDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant())));
+            }
         } else {
             log.error("Cannot be updated. Resource not found.");
         }

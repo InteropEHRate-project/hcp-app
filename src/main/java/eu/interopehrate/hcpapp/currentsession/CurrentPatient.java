@@ -170,7 +170,7 @@ public class CurrentPatient {
             }
 
             try {
-                in = getClass().getResourceAsStream("/PathologyHistoryCompositionExampleIPS.json");
+                in = getClass().getResourceAsStream("/PathologyHistoryCompositionExampleIPS-ITA.json");
                 this.patHisBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(inputStreamToString(in));
                 this.patHisBundleTranslated = this.translateService.translate(this.patHisBundle, Locale.UK);
             } catch (Exception e) {
