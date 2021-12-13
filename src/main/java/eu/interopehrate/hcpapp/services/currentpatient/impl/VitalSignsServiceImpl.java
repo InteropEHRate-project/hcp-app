@@ -5,11 +5,11 @@ import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommand
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsEntity;
-import eu.interopehrate.hcpapp.jpa.entities.VitalSignsTypesEntity;
-import eu.interopehrate.hcpapp.jpa.repositories.HealthCareProfessionalRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsRepository;
-import eu.interopehrate.hcpapp.jpa.repositories.VitalSignsTypesRepository;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
@@ -92,7 +92,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public void deleteVitalSign(String an, String sample) {
-        LocalDateTime localDateTime = LocalDateTime.parse(sample , DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
+        LocalDateTime localDateTime = LocalDateTime.parse(sample, DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
         for (VitalSignsEntity v : this.vitalSignsRepository.findAll()) {
             if (v.getLocalDateOfVitalSign().equals(localDateTime) && v.getAnalysisType().getName().equalsIgnoreCase(an)) {
                 this.vitalSignsRepository.delete(v);
@@ -102,7 +102,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public VitalSignsInfoCommand getVitalSign(String an, String sample) {
-        LocalDateTime localDateTime = LocalDateTime.parse(sample , DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
+        LocalDateTime localDateTime = LocalDateTime.parse(sample, DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
         for (VitalSignsEntity v : this.vitalSignsRepository.findAll()) {
             if (v.getLocalDateOfVitalSign().equals(localDateTime) && v.getAnalysisType().getName().equalsIgnoreCase(an)) {
                 return this.entityToCommandVitalSigns.convert(v);
