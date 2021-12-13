@@ -173,4 +173,6 @@ public class CloudConnection implements DisposableBean {
             log.info("ImageReport received from Cloud");
         }
     }
+
+    //test
 }
