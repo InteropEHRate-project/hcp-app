@@ -35,7 +35,7 @@ public class NewVisitController {
         }
         IndexCommand indexCommand = indexService.indexCommand();
         model.addAttribute("index", indexCommand);
-        if (Objects.isNull(session.getAttribute("patientNavbar")) && IndexCommand.transmissionCompleted) {
+        if (Objects.isNull(session.getAttribute("patientNavbar"))) {
             session.setAttribute("patientNavbar", indexCommand);
         }
         return TemplateNames.INDEX_NEW_PATIENT;

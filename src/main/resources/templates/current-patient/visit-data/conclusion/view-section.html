@@ -11,9 +11,34 @@
     <p><h3 th:text="#{fragment.current.patient.navigation.left.conclusion}">conclusion</h3></p>
     <div class="m-4"></div>
     <div class="m-5"></div>
+
+    <table class="table table-bordered" th:if="${!conclusionCommand.getCurrentDiseaseService().listNewCurrentDiseases().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease.translated}">disease translated</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="currentDiseaseConclusion : ${conclusionCommand.getCurrentDiseaseService().listNewCurrentDiseases()}">
+            <tr>
+                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
+                <td th:text="${{currentDiseaseConclusion.getDisease()}}">disease</td>
+                <td style="background-color: azure" th:text="${{currentDiseaseConclusion.getDiseaseTranslated()}}">disease translated</td>
+                <td th:text="${{#temporals.format(currentDiseaseConclusion.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${{#temporals.format(currentDiseaseConclusion.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
+                <td th:text="${currentDiseaseConclusion.getComment()}">comment</td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+    <br>
     <form>
         <div class="form-group">
-            <label for="reason" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
+            <label for="reason" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}"> Conclusion</label>
             <textarea class="form-control" name="reason" id="reason" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary mb-2 float-right" th:text="#{button.save}">Save</button>

@@ -35,6 +35,11 @@
         }, 5000);
     </script>
 
+<!--    <div class="row justify-content-end">-->
+<!--        <a class="btn btn-primary" th:href="@{/current-patient/pat-history/refresh}"-->
+<!--           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>-->
+<!--    </div>-->
+
     <table class="table table-bordered" th:if="${!patHistoryCommand.getPatHistoryInfoCommandDiagnoses().isEmpty()}">
         <thead class="thead-light">
         <tr>
@@ -150,11 +155,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="row justify-content-end">
-            <a class="btn btn-primary" th:href="@{/current-patient/pat-history/refresh}"
-               th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
         </div>
 
         <form class="row col-12 justify-content-center" th:action="@{/current-patient/pat-history/save}" method="post">

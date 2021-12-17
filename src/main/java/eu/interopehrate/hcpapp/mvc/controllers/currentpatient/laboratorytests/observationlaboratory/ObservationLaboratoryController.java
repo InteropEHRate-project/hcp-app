@@ -27,6 +27,8 @@ public class ObservationLaboratoryController {
     public String viewSection(Model model, HttpSession session, String keyword) {
         if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
             session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
+        } else {
+            session.setAttribute("MVisit", CurrentPatient.typeOfWorkingSession.toString());
         }
         session.setAttribute("keyword", keyword);
         return this.findPaginated(1, model, keyword);
