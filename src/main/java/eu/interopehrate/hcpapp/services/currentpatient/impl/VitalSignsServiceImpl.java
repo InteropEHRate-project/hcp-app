@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsEntity;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.administration.HealthCareProfessionalRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
@@ -14,6 +15,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSigns
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
+import eu.interopehrate.td2de.api.TD2D;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
@@ -25,10 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -137,29 +136,30 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     public void callVitalSigns() {
-//        if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
-//            Bundle vital = new Bundle();
-//            vital.setEntry(new ArrayList<>());
-//            for (int i = 0; i < this.vitalSignsRepository.findAll().size(); i++) {
-//                vital.getEntry().add(new Bundle.BundleEntryComponent());
-//                Observation vitalSigns = createVitalSignsFromEntity(this.vitalSignsRepository.findAll().get(i));
-//                vital.getEntry().get(i).setResource(vitalSigns);
-//                this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
-//                this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
-//            }
-//            this.sendVitalSigns(vital);
-//        } else {
-//            log.error("The connection with S-EHR is not established.");
-//        }
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            Bundle vital = new Bundle();
+            vital.setEntry(new ArrayList<>());
+            for (int i = 0; i < this.vitalSignsRepository.findAll().size(); i++) {
+                vital.getEntry().add(new Bundle.BundleEntryComponent());
+                Observation vitalSigns = createVitalSignsFromEntity(this.vitalSignsRepository.findAll().get(i));
+                vital.getEntry().get(i).setResource(vitalSigns);
+                this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+            }
+            this.sendVitalSigns(vital);
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
     }
 
     @SneakyThrows
     @Override
     public void sendVitalSigns(Bundle vitalSigns) {
-//        this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
-//        log.info("VitalSigns sent to S-EHR");
-//        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send VitalSigns to S-EHR");
-//        this.vitalSignsRepository.deleteAll();
+//      this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
+        this.currentD2DConnection.getTd2D().sendHealthData(vitalSigns);
+        log.info("VitalSigns sent to S-EHR");
+        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send VitalSigns to S-EHR");
+        this.vitalSignsRepository.deleteAll();
     }
 
     @SuppressWarnings("rawtypes")

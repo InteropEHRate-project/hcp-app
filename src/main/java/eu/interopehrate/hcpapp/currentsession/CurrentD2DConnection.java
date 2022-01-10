@@ -65,6 +65,8 @@ public class CurrentD2DConnection implements DisposableBean {
         return indexPatientDataCommand;
     }
 
+    public TD2D getTd2D() { return td2D; }
+
     @Override
     public void destroy() {
         if (Objects.nonNull(bluetoothConnection)) {
@@ -101,8 +103,8 @@ public class CurrentD2DConnection implements DisposableBean {
 
     private void afterConnectionOpened() {
         try {
-            //this.td2d = this.d2DConnectionOperations.getConnection(this.secureConnectionFactory);
-            td2D = secureConnectionFactory.createSecureConnection(applicationRuntimeInfoService.practitioner());
+            td2D = this.d2DConnectionOperations.getConnection(this.secureConnectionFactory);
+            //td2D = secureConnectionFactory.createSecureConnection(applicationRuntimeInfoService.practitioner());
             log.info("Create secure connection");
         } catch (Exception e) {
             this.closeConnection();
@@ -281,8 +283,9 @@ public class CurrentD2DConnection implements DisposableBean {
             log.info("onSearch call " + " " + currentPage + " " + totalPages);
             log.info("bundle items " + healthDataBundle.getEntry().size());
             CurrentD2DConnection.this.currentPatient.initPatientSummary(healthDataBundle);
-            // CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
-            // CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(healthDataBundle);
+            CurrentD2DConnection.this.currentPatient.initPrescription(healthDataBundle);
+//            CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
+            CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initImageReport(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initVitalSigns(healthDataBundle);
             if (healthDataBundle.getEntry().size() > 33) {

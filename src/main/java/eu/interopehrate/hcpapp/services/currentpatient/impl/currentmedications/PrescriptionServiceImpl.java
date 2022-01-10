@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
@@ -16,6 +17,7 @@ import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalSer
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
+import eu.interopehrate.td2de.api.TD2D;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
@@ -235,29 +237,30 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void callSendPrescription() {
-//        if (Objects.nonNull(this.currentD2DConnection.getConnectedThread())) {
-//            Bundle prescription = new Bundle();
-//            prescription.setEntry(new ArrayList<>());
-//            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-//                prescription.getEntry().add(new Bundle.BundleEntryComponent());
-//                MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
-//                prescription.getEntry().get(i).setResource(med);
-//                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-//                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-//            }
-//            this.sendPrescription(prescription);
-//        } else {
-//            log.error("The connection with S-EHR is not established.");
-//        }
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            Bundle prescription = new Bundle();
+            prescription.setEntry(new ArrayList<>());
+            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+                prescription.getEntry().add(new Bundle.BundleEntryComponent());
+                MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+                prescription.getEntry().get(i).setResource(med);
+                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+            }
+            this.sendPrescription(prescription);
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
     }
 
     @Override
     @SneakyThrows
     public void sendPrescription(Bundle medicationRequest) {
-//        this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
-//        log.info("Prescription sent to S-EHR");
-//        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
-//        this.prescriptionRepository.deleteAll();
+        this.currentD2DConnection.getTd2D().sendHealthData(medicationRequest);
+//      this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
+        log.info("Prescription sent to S-EHR");
+        auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
+        this.prescriptionRepository.deleteAll();
     }
 
     @Override

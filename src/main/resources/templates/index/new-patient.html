@@ -115,8 +115,8 @@
                 <div class="row justify-content-center">
                     <p></p>
                 </div>
-                <div class="text-center" th:if="${!index.transmissionCompleted}">
-<!--                    <p th:if="${index.patientDataCommand.ipsReceived}" th:text="#{template.index.ips.received}">IPS received</p>-->
+                <div class="text-center" th:if="${index.transmissionCompleted}">
+                    <p th:if="${index.patientDataCommand.getFirstName()}" th:text="#{template.index.ips.received}">IPS received</p>
 <!--                    <p th:if="${index.getPatientDataCommand().getLaboratoryResultsReceived()}" th:text="#{template.index.laboratory.received}">Laboratory results received</p>-->
 <!--                    <p th:if="${index.getPatientDataCommand().getPrescriptionReceived()}" th:text="#{template.index.prescription.received}">Prescription received</p>-->
 <!--                    <p th:if="${index.getPatientDataCommand().getImageReportReceived()}" th:text="#{template.index.image.report.received}">Image report received</p>-->

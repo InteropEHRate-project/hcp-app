@@ -166,13 +166,13 @@
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
-    <div class="row justify-content-center" th:if="${(outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getConnectedThread() != null && 
+    <div class="row justify-content-center" th:if="${(outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getTd2D() != null &&
     !outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()) ||
-         (outpatientReportCommand.getVitalSignsService.getCurrentD2DConnection().getConnectedThread() != null &&
+         (outpatientReportCommand.getVitalSignsService.getCurrentD2DConnection().getTd2D() != null &&
          !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()) ||
-         (outpatientReportCommand.getCurrentDiseaseService.getCurrentD2DConnection().getConnectedThread() != null &&
+         (outpatientReportCommand.getCurrentDiseaseService.getCurrentD2DConnection().getTd2D()!= null &&
          !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty()) ||
-         (outpatientReportCommand.getAllergyService().getCurrentD2DConnection().getConnectedThread() != null &&
+         (outpatientReportCommand.getAllergyService().getCurrentD2DConnection().getTd2D() != null &&
          !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <h5 th:if="${((outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getConnectedThread() == null) ||
+    <h5 th:if="${((outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getTd2D() == null) ||
     (outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
     outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() && outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() &&
     outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty())) && (session.withoutConnection != null && !session.withoutConnection)}"
