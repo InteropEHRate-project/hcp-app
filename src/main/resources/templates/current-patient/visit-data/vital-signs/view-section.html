@@ -33,6 +33,7 @@
             <thead class="thead-light">
             <tr>
                 <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis.translated}">Analysis translated</th>
                 <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
                     <th th:text="${{sample}}"></th>
                 </th:block>
@@ -43,6 +44,7 @@
             <tr th:each="an : ${vitalSigns.vitalSignsAnalysesWithoutDuplicates()}">
                 <div th:with="map=${vitalSigns.valueReturn()}">
                     <td th:text="${{an}}"></td>
+                    <th style="background-color: azure" th:text="${{an}}"></th>
                     <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
                         <td th:if="${map.get(an,sample) == null}">-</td>
                         <div th:if="${map.get(an,sample) != null}">
