@@ -8,6 +8,12 @@
 
 <body>
 <div layout:fragment="content">
+    <script>
+        function autoRefresh() {
+            window.location = window.location.href;
+        }
+        setInterval('autoRefresh()', 15000);
+    </script>
     <div class="m-5"></div>
     <!--    <div class="btn-toolbar float-right" role="toolbar">-->
     <!--        <div class="btn-group btn-group-sm mr-2" role="group">-->
