@@ -4,4 +4,5 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.ConclusionC
 
 public interface ConclusionService {
     ConclusionCommand conclusionComm();
+    void insertConclusionNote(String conclusionNote);
 }

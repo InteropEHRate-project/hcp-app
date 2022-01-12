@@ -12,7 +12,40 @@
     <div class="m-4"></div>
     <div class="m-5"></div>
 
-    <table class="table table-bordered" th:if="${!conclusionCommand.getCurrentDiseaseService().listNewCurrentDiseases().isEmpty()}">
+    <table class="table table-bordered"
+           th:if="${!conclusionCommand.getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease.translated}">disease translated</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
+            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
+            <th th:text="#{crud.button.actions}">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="currentDiseaseConclusionS : ${conclusionCommand.getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand()}">
+            <tr>
+                <td th:text="${{currentDiseaseConclusionS.getDisease()}}">disease</td>
+                <td style="background-color: azure" th:text="${{currentDiseaseConclusionS.getDiseaseTranslated()}}">disease translated</td>
+                <td th:text="${{#temporals.format(currentDiseaseConclusionS.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                <td th:text="${{#temporals.format(currentDiseaseConclusionS.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
+                <td th:text="${currentDiseaseConclusionS.getComment()}">comment</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="#" class="btn btn-info"
+                           th:href="@{/current-patient/current-diseases/open-update-page(id=${currentDiseaseConclusionS.getIdFHIR()})}"
+                           th:text="#{crud.button.edit}">Edit</a>
+                    </div>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered"
+           th:if="${!conclusionCommand.getCurrentDiseaseService().listNewCurrentDiseases().isEmpty()}">
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
@@ -25,7 +58,6 @@
         <tbody>
         <div th:each="currentDiseaseConclusion : ${conclusionCommand.getCurrentDiseaseService().listNewCurrentDiseases()}">
             <tr>
-                <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
                 <td th:text="${{currentDiseaseConclusion.getDisease()}}">disease</td>
                 <td style="background-color: azure" th:text="${{currentDiseaseConclusion.getDiseaseTranslated()}}">disease translated</td>
                 <td th:text="${{#temporals.format(currentDiseaseConclusion.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
@@ -36,10 +68,26 @@
         </tbody>
     </table>
     <br>
-    <form>
+
+    <div class="col-4">
+        <table class="table table-bordered" th:if="${!conclusionNote.isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="conclusion : ${conclusionNote}">
+                <td class="col-2" th:text="${conclusion}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form th:action="@{/current-patient/visit-data/conclusion/save}" method="post">
         <div class="form-group">
-            <label for="reason" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}"> Conclusion</label>
-            <textarea class="form-control" name="reason" id="reason" rows="3"></textarea>
+            <label for="conclusion" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
+            <textarea class="form-control" name="conclusion" id="conclusion" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary mb-2 float-right" th:text="#{button.save}">Save</button>
     </form>
