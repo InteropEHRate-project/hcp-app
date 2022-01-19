@@ -27,7 +27,7 @@ public class ConclusionController {
 
     @PostMapping
     @RequestMapping("/save")
-    public String saveSocHis(String conclusionNote) {
+    public String saveConclusionNote(String conclusionNote) {
         this.conclusionService.insertConclusionNote(conclusionNote);
         return "redirect:/current-patient/visit-data/conclusion/view-section";
     }
