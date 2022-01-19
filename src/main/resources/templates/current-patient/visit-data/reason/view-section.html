@@ -5,25 +5,42 @@
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.reason}">reason</title>
 </head>
+<!--<script>-->
+<!--    let button = document.getElementById("enter");-->
+<!--    let input = document.getElementById("userinput");-->
+<!--    let ul = document.querySelector("ul");-->
+
+<!--    button.addEventListener("click", function () {-->
+<!--        let li = document.createElement("li");-->
+<!--        li.className = 'list-group-item';-->
+<!--        li.textContent = input.value;-->
+<!--        ul.appendChild(li);-->
+<!--        // Add Bootstrap class to the list element-->
+<!--        // li.classList.add("list-group-item");-->
+<!--        // li.appendChild(document.createTextNode(input.value));-->
+<!--        // ul.appendChild(li);-->
+<!--        // Clear your input-->
+<!--        // input.value = "";-->
+<!--    })-->
+<!--</script>-->
 <script>
-    let button = document.getElementById("enter");
-    let input = document.getElementById("userinput");
-    let ul = document.querySelector("ul");
-
-    button.addEventListener("click", function () {
+    function addItem(){
+        let ul = document.getElementById("dynamic-list");
+        let symptom = document.getElementById("symptom");
         let li = document.createElement("li");
-        li.className = 'list-group-item';
-        li.textContent = input.value;
+        li.setAttribute('id',symptom.value);
+        li.appendChild(document.createTextNode(symptom.value));
         ul.appendChild(li);
-        // Add Bootstrap class to the list element
-        // li.classList.add("list-group-item");
-        // li.appendChild(document.createTextNode(input.value));
-        // ul.appendChild(li);
-        // Clear your input
-        // input.value = "";
-    })
-</script>
+    }
 
+    function removeItem(){
+        let ul = document.getElementById("dynamic-list");
+        let symptom = document.getElementById("symptom");
+        let li = document.createElement("li");
+        li.setAttribute('id',symptom.value);
+        ul.removeChild(li);
+    }
+</script>
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
@@ -32,27 +49,41 @@
     <div class="m-4"></div>
 
     <div class="container">
-        <div class="row justify-center col-6">
-            <header>
-                <h4>List of symptoms</h4>
-            </header>
-            <div class="m-2"></div>
-            <div class="col-sm-12">
-                <ul class="list-group">
-                    <li class="list-group-item">Headache</li>
-                </ul>
-            </div>
-            <div class="m-2"></div>
-            <div class="col-sm-12">
-                <div class="input-group mb-3">
-                    <input id="userinput" type="text" class="form-control" placeholder="Add an symptom..." aria-label="Add an item" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" id="enter" type="button">Add symptom</button>
-                    </div>
-                </div>
-            </div>
+        <header>
+            <h4>List of symptoms</h4>
+        </header>
+    <div class="input-group">
+        <input type="text" class="form-control" id="symptom">
+        <div class="input-group-append">
+            <button onclick="addItem()" class="btn btn-primary" type="button">Add an symptom</button>
+            <button onclick="removeItem()" class="btn btn-danger" type="button">Delete an symptom</button>
         </div>
     </div>
+    </div>
+
+    <ul id="dynamic-list"></ul>
+<!--    <div class="container">-->
+<!--        <div class="row justify-center col-6">-->
+<!--            <header>-->
+<!--                <h4>List of symptoms</h4>-->
+<!--            </header>-->
+<!--            <div class="m-2"></div>-->
+<!--            <div class="col-sm-12">-->
+<!--                <ul class="list-group">-->
+<!--                    <li class="list-group-item">Headache</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="m-2"></div>-->
+<!--            <div class="col-sm-12">-->
+<!--                <div class="input-group mb-3">-->
+<!--                    <input id="userinput" type="text" class="form-control" placeholder="Add an symptom..." aria-label="Add an item" aria-describedby="basic-addon2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <button class="btn btn-primary" id="enter" type="button">Add symptom</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="m-5"></div>
     <form class="row col-12 justify-content-center">
