@@ -47,7 +47,7 @@
             <tr>
                 <!--                        <td style="background-color: azure" th:style="${!currentDiseaseCommand.getDisplayTranslatedVersion()} ? '' : 'background-color: azure'" th:text="${currentDisease.getCode()}">code</td>-->
                 <td th:text="${{currentDisease.getDisease()}}">disease</td>
-                <td style="background-color: azure" th:text="${{currentDisease.getDiseaseTranslated()}}">disease translated</td>
+                <th style="background-color: azure" th:text="${{currentDisease.getDiseaseTranslated()}}">disease translated</th>
                 <td th:text="${{#temporals.format(currentDisease.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${{#temporals.format(currentDisease.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
                 <td th:text="${currentDisease.getComment()}">comment</td>
