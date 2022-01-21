@@ -75,8 +75,8 @@
             </td>
             <td>
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedicationSEHR(id=${{pr.getId()}})}"
-                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>
+<!--                    <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/idToMedicationSEHR(id=${{pr.getId()}})}"-->
+<!--                       th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.medication.details}">Medication Details</a>-->
                     <a href="#" class="btn btn-info" th:href="@{/current-patient/current-medications/prescription/open-update(id=${{pr.getIdFHIR()}})}"
                         th:text="#{crud.button.edit}">Edit</a>
                 </div>
@@ -120,10 +120,6 @@
             </li>
         </ul>
     </nav>
-    <div class="row justify-content-end">
-        <a class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/refresh}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
-    </div>
     <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
         <a class="btn btn-primary" th:href="@{/current-patient/current-medications/prescription/refresh-data}"
            th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
