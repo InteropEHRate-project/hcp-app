@@ -109,12 +109,13 @@ public class IndexServiceImpl implements IndexService {
         patientDataCommand.setImageReportReceived(this.currentD2DConnection.getIndexPatientDataCommand().getImageReportReceived());
         patientDataCommand.setPatHisReceived(this.currentD2DConnection.getIndexPatientDataCommand().getPatHisReceived());
         patientDataCommand.setVitalSignsReceived(this.currentD2DConnection.getIndexPatientDataCommand().getVitalSignsReceived());
-        if (this.currentD2DConnection.getIndexPatientDataCommand().getIpsReceived() &&
-                this.currentD2DConnection.getIndexPatientDataCommand().getPrescriptionReceived() &&
-                this.currentD2DConnection.getIndexPatientDataCommand().getLaboratoryResultsReceived() &&
-                this.currentD2DConnection.getIndexPatientDataCommand().getImageReportReceived() &&
-                this.currentD2DConnection.getIndexPatientDataCommand().getPatHisReceived() &&
-                this.currentD2DConnection.getIndexPatientDataCommand().getVitalSignsReceived()) {
+        if (this.currentD2DConnection.getIndexPatientDataCommand().hasData())
+//                this.currentD2DConnection.getIndexPatientDataCommand().getPrescriptionReceived() &&
+//                this.currentD2DConnection.getIndexPatientDataCommand().getLaboratoryResultsReceived() &&
+//                this.currentD2DConnection.getIndexPatientDataCommand().getImageReportReceived() &&
+//                this.currentD2DConnection.getIndexPatientDataCommand().getPatHisReceived() &&
+//                this.currentD2DConnection.getIndexPatientDataCommand().getVitalSignsReceived())
+        {
             IndexCommand.transmissionCompleted = true;
         }
 
