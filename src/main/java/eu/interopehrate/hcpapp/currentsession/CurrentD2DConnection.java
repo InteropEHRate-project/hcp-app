@@ -284,11 +284,11 @@ public class CurrentD2DConnection implements DisposableBean {
             log.info("bundle items " + healthDataBundle.getEntry().size());
             CurrentD2DConnection.this.currentPatient.initPatientSummary(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initPrescription(healthDataBundle);
-//            CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
+     //     CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initImageReport(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initVitalSigns(healthDataBundle);
-            if (healthDataBundle.getEntry().size() > 33) {
+            if (healthDataBundle.getEntry().size() > 35) {
                 CurrentD2DConnection.this.currentPatient.initLaboratoryResults(healthDataBundle);
             }
         }
@@ -313,12 +313,6 @@ public class CurrentD2DConnection implements DisposableBean {
         CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
         auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
         log.info("LaboratoryResults received");
-    }
-
-    @SneakyThrows
-    public void getPrescriptions() {
-        this.td2D.getResourcesByCategory(FHIRResourceCategory.MEDICATION_REQUEST, null, false);
-        log.info("Prescriptions received");
     }
 
     @SneakyThrows
