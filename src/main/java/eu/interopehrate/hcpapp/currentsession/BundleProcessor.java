@@ -66,12 +66,12 @@ public class BundleProcessor {
                 .collect(Collectors.toList());
     }
 
-    public List<MedicationRequest> prescriptionList() {
+    public List<MedicationStatement> prescriptionList() {
         return this.bundle.getEntry()
                 .stream()
                 .map(Bundle.BundleEntryComponent::getResource)
-                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest))
-                .map(MedicationRequest.class::cast)
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationStatement))
+                .map(MedicationStatement.class::cast)
                 .collect(Collectors.toList());
     }
 

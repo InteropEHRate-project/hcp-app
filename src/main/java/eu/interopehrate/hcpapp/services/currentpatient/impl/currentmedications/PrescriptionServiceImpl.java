@@ -17,7 +17,6 @@ import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalSer
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
-import eu.interopehrate.td2de.api.TD2D;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
@@ -178,8 +177,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         var prescription = this.currentPatient.getPrescriptionTranslated().getEntry()
                 .stream()
                 .map(Bundle.BundleEntryComponent::getResource)
-                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest) && resource.getId().equals(id)).findFirst();
-        return prescription.map(resource -> this.hapiToCommandPrescription.convert((MedicationRequest) resource)).orElse(null);
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationStatement) && resource.getId().equals(id)).findFirst();
+        return prescription.map(resource -> this.hapiToCommandPrescription.convert((MedicationStatement) resource)).orElse(null);
     }
 
     @Override
@@ -188,14 +187,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         var optional = this.currentPatient.getPrescriptionTranslated().getEntry()
                 .stream()
                 .map(Bundle.BundleEntryComponent::getResource)
-                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest) && resource.getId().equals(prescriptionInfoCommand.getIdFHIR())).findFirst();
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationStatement) && resource.getId().equals(prescriptionInfoCommand.getIdFHIR())).findFirst();
         updatePrescriptionDetails(optional, prescriptionInfoCommand);
 
         // update original bundle
         optional = this.currentPatient.getPrescription().getEntry()
                 .stream()
                 .map(Bundle.BundleEntryComponent::getResource)
-                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationRequest) && resource.getId().equals(prescriptionInfoCommand.getIdFHIR())).findFirst();
+                .filter(resource -> resource.getResourceType().equals(ResourceType.MedicationStatement) && resource.getId().equals(prescriptionInfoCommand.getIdFHIR())).findFirst();
         updatePrescriptionDetails(optional, prescriptionInfoCommand);
     }
 
@@ -242,7 +241,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             prescription.setEntry(new ArrayList<>());
             for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
                 prescription.getEntry().add(new Bundle.BundleEntryComponent());
-                MedicationRequest med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+                MedicationStatement med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
                 prescription.getEntry().get(i).setResource(med);
                 this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
                 this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
@@ -324,8 +323,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         });
     }
 
-    private static MedicationRequest createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
-        MedicationRequest medicationRequest = new MedicationRequest();
+    private static MedicationStatement createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
+        MedicationStatement medicationRequest = new MedicationStatement();
 
         medicationRequest.setMedication(new CodeableConcept());
         medicationRequest.getMedication().addChild("coding");
@@ -342,23 +341,23 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         d.add(new Dosage().setTiming(t));
         d.get(0).setDoseAndRate(new ArrayList<>());
         d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setUnit(prescriptionEntity.getDrugDosage());
-        medicationRequest.setDosageInstruction(d);
-        medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
+        medicationRequest.setDosage(d);
+        medicationRequest.getDosageFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
+        medicationRequest.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
-        medicationRequest.setStatus(MedicationRequest.MedicationRequestStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
+        medicationRequest.setStatus(MedicationStatement.MedicationStatementStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
 
-        medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        //medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         medicationRequest.setId(prescriptionEntity.getId().toString());
 
         List<CodeableConcept> d2 = new ArrayList<>();
         d2.add(new CodeableConcept().setText(prescriptionEntity.getNotes()));
-        medicationRequest.getDosageInstructionFirstRep().setAdditionalInstruction(d2);
+        medicationRequest.getDosageFirstRep().setAdditionalInstruction(d2);
 
         if (Objects.nonNull(prescriptionEntity.getEnd())) {
             Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            medicationRequest.getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
+            medicationRequest.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
         }
         return medicationRequest;
     }
@@ -413,32 +412,26 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static void updatePrescriptionDetails(Optional<Resource> optional, PrescriptionInfoCommand prescriptionInfoCommand) {
         if (optional.isPresent()) {
-            ((MedicationRequest) optional.get()).setStatus(MedicationRequest.MedicationRequestStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
+            ((MedicationStatement) optional.get()).setStatus(MedicationStatement.MedicationStatementStatus.valueOf(prescriptionInfoCommand.getStatus().toUpperCase()));
 
             // deletes Notes translation if the prescription's notes are different
-            StringType displayElement = ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getRoute().getCodingFirstRep().getDisplayElement();
+            StringType displayElement = ((MedicationStatement) optional.get()).getDosageFirstRep().getRoute().getCodingFirstRep().getDisplayElement();
             if (displayElement.hasExtension() && !displayElement.getValue().equalsIgnoreCase(prescriptionInfoCommand.getNotes())) {
                 displayElement.getExtension().clear();
             }
 
-            ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getRoute().getCodingFirstRep().setDisplay(prescriptionInfoCommand.getNotes());
+            ((MedicationStatement) optional.get()).getDosageFirstRep().getRoute().getCodingFirstRep().setDisplay(prescriptionInfoCommand.getNotes());
 
-            ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getTiming().getRepeat().setFrequency(Integer.parseInt(prescriptionInfoCommand.getTimings()));
-            ((MedicationRequest) optional.get()).setAuthoredOn(Date.from(prescriptionInfoCommand.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod()
+            ((MedicationStatement) optional.get()).getDosageFirstRep().getTiming().getRepeat().setFrequency(Integer.parseInt(prescriptionInfoCommand.getTimings()));
+            // ((MedicationStatement) optional.get()).setAuthoredOn(Date.from(prescriptionInfoCommand.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            ((MedicationStatement) optional.get()).getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod()
                     .setStart(Date.from(prescriptionInfoCommand.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             if (Objects.nonNull(prescriptionInfoCommand.getEnd())) {
-                ((MedicationRequest) optional.get()).getDosageInstructionFirstRep().getTiming().getRepeat().getBoundsPeriod()
+                ((MedicationStatement) optional.get()).getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod()
                         .setEnd(Date.from(prescriptionInfoCommand.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             }
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
-    }
-
-    @SneakyThrows
-    @Override
-    public void getPrescriptionsTests() {
-        this.currentD2DConnection.getPrescriptions();
     }
 }

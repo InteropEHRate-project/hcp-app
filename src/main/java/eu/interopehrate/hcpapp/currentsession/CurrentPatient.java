@@ -408,11 +408,11 @@ public class CurrentPatient {
     }
 
     public List<Condition> conditionsList() {
-            if (Objects.isNull(patientSummaryBundleTranslated)) {
-                return Collections.emptyList();
-            } else {
-                return new BundleProcessor(patientSummaryBundleTranslated).conditionList();
-            }
+        if (Objects.isNull(patientSummaryBundleTranslated)) {
+            return Collections.emptyList();
+        } else {
+            return new BundleProcessor(patientSummaryBundleTranslated).conditionList();
+        }
     }
 
     public List<MedicationStatement> medicationStatementList() {
@@ -431,7 +431,7 @@ public class CurrentPatient {
         }
     }
 
-    public List<MedicationRequest> prescriptionList() {
+    public List<MedicationStatement> prescriptionList() {
         if (Objects.isNull(this.prescriptionTranslated)) {
             return Collections.emptyList();
         } else {
