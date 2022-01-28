@@ -28,9 +28,9 @@ public class ObservationLaboratoryController {
         if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
             session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
         }
-//        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
-//            session.setAttribute("MVisit", CurrentPatient.typeOfWorkingSession.toString());
-//        }
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("MVisit", CurrentPatient.typeOfWorkingSession.toString());
+        }
         session.setAttribute("keyword", keyword);
         return this.findPaginated(1, model, keyword);
     }
