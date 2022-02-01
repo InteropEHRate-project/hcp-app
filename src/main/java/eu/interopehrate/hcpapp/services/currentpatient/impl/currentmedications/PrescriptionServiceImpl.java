@@ -324,13 +324,15 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     private static MedicationStatement createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
-        MedicationStatement medicationRequest = new MedicationStatement();
+        MedicationStatement medicationStatement = new MedicationStatement();
 
-        medicationRequest.setMedication(new CodeableConcept());
-        medicationRequest.getMedication().addChild("coding");
-        medicationRequest.getMedicationCodeableConcept().setCoding(new ArrayList<>());
-        medicationRequest.getMedicationCodeableConcept().getCoding().add(new Coding());
-        medicationRequest.getMedicationCodeableConcept().getCoding().get(0).setDisplay(prescriptionEntity.getDrugName());
+        medicationStatement.setMedication(new Reference());
+        ((Reference) medicationStatement.getMedication()).setResource(new Medication().setCode(new CodeableConcept().setCoding(new ArrayList<>()).addCoding(new Coding().setDisplay(prescriptionEntity.getDrugName()))));
+//        medicationStatement.setMedication(new CodeableConcept());
+//        medicationStatement.getMedication().addChild("coding");
+//        medicationStatement.getMedicationCodeableConcept().setCoding(new ArrayList<>());
+//        medicationStatement.getMedicationCodeableConcept().getCoding().add(new Coding());
+//        medicationStatement.getMedicationCodeableConcept().getCoding().get(0).setDisplay(prescriptionEntity.getDrugName());
 
         Timing t = new Timing();
         t.getRepeat().setFrequency(prescriptionEntity.getFrequency());
@@ -341,25 +343,27 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         d.add(new Dosage().setTiming(t));
         d.get(0).setDoseAndRate(new ArrayList<>());
         d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setUnit(prescriptionEntity.getDrugDosage());
-        medicationRequest.setDosage(d);
-        medicationRequest.getDosageFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
+        medicationStatement.setDosage(d);
+        medicationStatement.getDosageFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        medicationRequest.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
+        medicationStatement.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
-        medicationRequest.setStatus(MedicationStatement.MedicationStatementStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
+        medicationStatement.setStatus(MedicationStatement.MedicationStatementStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
 
         //medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        medicationRequest.setId(prescriptionEntity.getId().toString());
+        //medicationStatement.setInformationSource(prescriptionEntity.getAuthor());
+        //medicationStatement.setId(prescriptionEntity.getId().toString());
+        (medicationStatement.getMedication()).setId(prescriptionEntity.getId().toString());
 
         List<CodeableConcept> d2 = new ArrayList<>();
         d2.add(new CodeableConcept().setText(prescriptionEntity.getNotes()));
-        medicationRequest.getDosageFirstRep().setAdditionalInstruction(d2);
+        medicationStatement.getDosageFirstRep().setAdditionalInstruction(d2);
 
         if (Objects.nonNull(prescriptionEntity.getEnd())) {
             Date dateEnd = Date.from(prescriptionEntity.getEnd().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            medicationRequest.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
+            medicationStatement.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setEnd(dateEnd);
         }
-        return medicationRequest;
+        return medicationStatement;
     }
 
     private static String toShortUnit(String unit) {
