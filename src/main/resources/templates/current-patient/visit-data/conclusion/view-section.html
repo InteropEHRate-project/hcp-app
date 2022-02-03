@@ -70,15 +70,23 @@
     <br>
 
     <div class="col-4">
-        <table class="table table-bordered" th:if="${!conclusionNote.isEmpty()}">
+        <table id="uploadTable" class="table table-bordered" th:if="${!conclusionNote.isEmpty()}">
             <thead class="thead-light">
             <tr>
                 <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</th>
+                <th th:text="#{button.action}">Action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="conclusion : ${conclusionNote}">
                 <td class="col-2" th:text="${conclusion}"></td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="#" class="btn btn-primary"
+                           th:href="@{/current-patient/visit-data/conclusion/delete(note=${conclusion})}"
+                           th:text="#{crud.button.delete}">Delete</a>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -87,7 +95,7 @@
     <form th:action="@{/current-patient/visit-data/conclusion/save}" method="post">
         <div class="form-group">
             <label for="conclusion" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
-            <textarea class="form-control" name="conclusion" id="conclusion" rows="3"></textarea>
+            <textarea class="form-control" type="input" name="conclusion" id="conclusion" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary mb-2 float-right" th:text="#{button.save}">Save</button>
     </form>

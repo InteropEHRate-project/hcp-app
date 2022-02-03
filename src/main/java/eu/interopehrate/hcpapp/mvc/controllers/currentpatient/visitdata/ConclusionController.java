@@ -4,9 +4,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.ConclusionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/current-patient/visit-data/conclusion")
@@ -29,6 +27,13 @@ public class ConclusionController {
     @RequestMapping("/save")
     public String saveConclusionNote(String conclusionNote) {
         this.conclusionService.insertConclusionNote(conclusionNote);
+        return "redirect:/current-patient/visit-data/conclusion/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String delete(@RequestParam("note") String note) {
+        this.conclusionService.deleteNote(note);
         return "redirect:/current-patient/visit-data/conclusion/view-section";
     }
 }
