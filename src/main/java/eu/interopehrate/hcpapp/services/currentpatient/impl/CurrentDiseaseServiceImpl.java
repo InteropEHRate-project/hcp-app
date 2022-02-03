@@ -10,6 +10,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRep
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
@@ -162,5 +163,43 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
 
     public void refresh() {
         this.currentD2DConnection.getIPS();
+    }
+
+    @Override
+    public void callSendCurrentDiseases() {
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            Bundle currentDiseases = new Bundle();
+            currentDiseases.setEntry(new ArrayList<>());
+            for (int i = 0; i < this.currentDiseaseRepository.findAll().size(); i++) {
+                currentDiseases.getEntry().add(new Bundle.BundleEntryComponent());
+                Condition condition = createCurrentDiseasesFromEntity(this.currentDiseaseRepository.findAll().get(i));
+                currentDiseases.getEntry().get(i).setResource(condition);
+                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(condition));
+                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(condition));
+            }
+            this.sendCurrentDiseases(currentDiseases);
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public void sendCurrentDiseases(Bundle condition) {
+        this.currentD2DConnection.getTd2D().sendHealthData(condition);
+        log.info("Current Diseases sent to S-EHR");
+        this.currentDiseaseRepository.deleteAll();
+    }
+
+    private static Condition createCurrentDiseasesFromEntity(CurrentDiseaseEntity currentDiseaseEntity) {
+        Condition condition = new Condition();
+
+        condition.setCode(new CodeableConcept().setCoding(new ArrayList<>()).addCoding(new Coding().setDisplay(currentDiseaseEntity.getDisease())));
+
+        List<CodeableConcept> d2 = new ArrayList<>();
+        d2.add(new CodeableConcept().setText(currentDiseaseEntity.getComment()));
+        condition.getNoteFirstRep().setText(currentDiseaseEntity.getComment());
+
+        return condition;
     }
 }

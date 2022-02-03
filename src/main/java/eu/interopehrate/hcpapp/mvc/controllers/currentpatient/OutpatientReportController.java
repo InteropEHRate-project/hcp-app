@@ -46,6 +46,10 @@ public class OutpatientReportController {
                 Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getVitalSignsService().getCurrentD2DConnection().getTd2D())) {
             this.outpatientReportService.outpatientReportCommand().getVitalSignsService().callVitalSigns();
         }
+        if (!this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand().isEmpty()
+                && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().getCurrentD2DConnection().getTd2D())) {
+            this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().callSendCurrentDiseases();
+        }
         model.addAttribute("dataSent", Boolean.TRUE);
         return this.viewSection(model);
     }
