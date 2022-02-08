@@ -15,7 +15,6 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSigns
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
-import eu.interopehrate.td2de.api.TD2D;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
@@ -26,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -192,6 +192,10 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
         vitalSigns.getValueQuantity().setValue(vitalSignsEntity.getCurrentValue());
         vitalSigns.getValueQuantity().setUnit(vitalSignsEntity.getUnitOfMeasurement());
+
+        vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor());
+        vitalSigns.addExtension().setValue(new Signature().setWho(vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor())).
+                setWhen(Date.from(vitalSignsEntity.getLocalDateOfVitalSign().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant())).setTargetFormat("json").setSigFormat("application/jose"));
 
         return vitalSigns;
     }

@@ -349,9 +349,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         medicationStatement.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
         medicationStatement.setStatus(MedicationStatement.MedicationStatementStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
+        medicationStatement.addExtension().setValue(new Signature().setWhen(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant())).
+                setWho(medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor())).setTargetFormat("json").setSigFormat("application/jose"));
 
         //medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        //medicationStatement.setInformationSource(prescriptionEntity.getAuthor());
+        medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor());
         //medicationStatement.setId(prescriptionEntity.getId().toString());
         (medicationStatement.getMedication()).setId(prescriptionEntity.getId().toString());
 
