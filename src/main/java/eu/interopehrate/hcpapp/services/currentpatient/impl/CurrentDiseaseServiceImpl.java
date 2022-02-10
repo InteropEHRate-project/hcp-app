@@ -200,6 +200,9 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         d2.add(new CodeableConcept().setText(currentDiseaseEntity.getComment()));
         condition.getNoteFirstRep().setText(currentDiseaseEntity.getComment());
 
+        condition.getOnsetDateTimeType().setValue(Date.from(currentDiseaseEntity.getDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        condition.getAbatementDateTimeType().setValue(Date.from(currentDiseaseEntity.getEndDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
         return condition;
     }
 }
