@@ -99,7 +99,7 @@ public class CloudConnection implements DisposableBean {
                 this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
             log.info("IPS requested from Cloud.");
-            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.PATIENT);
+            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.PATIENT_SUMMARY);
             if (patientSummary.equalsIgnoreCase("File not found")) {
                 log.error("PatientSummary not found");
             } else {
@@ -140,7 +140,7 @@ public class CloudConnection implements DisposableBean {
 
     @SneakyThrows
     public void downloadPrescription() {
-        String prescription = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.MEDICATION_REQUEST);
+        String prescription = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.PATIENT_SUMMARY);
         if (prescription.equalsIgnoreCase("File not found")) {
             log.error("Prescription not found");
         } else {
