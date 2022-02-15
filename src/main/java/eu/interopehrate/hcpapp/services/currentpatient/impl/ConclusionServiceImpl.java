@@ -69,6 +69,8 @@ public class ConclusionServiceImpl implements ConclusionService {
     @Override
     public ConclusionCommand conclusionComm() {
         return ConclusionCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .listOfConclusionNote(this.listOfConclusionNote)
                 .currentDiseaseService(this.currentDiseaseService)
                 .build();
     }
