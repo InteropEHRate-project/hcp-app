@@ -28,7 +28,7 @@
         <div th:each="currentDiseaseConclusionS : ${conclusionCommand.getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand()}">
             <tr>
                 <td th:text="${{currentDiseaseConclusionS.getDisease()}}">disease</td>
-                <td style="background-color: azure" th:text="${{currentDiseaseConclusionS.getDiseaseTranslated()}}">disease translated</td>
+                <th style="background-color: azure" th:text="${{currentDiseaseConclusionS.getDiseaseTranslated()}}">disease translated</th>
                 <td th:text="${{#temporals.format(currentDiseaseConclusionS.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${{#temporals.format(currentDiseaseConclusionS.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
                 <td th:text="${currentDiseaseConclusionS.getComment()}">comment</td>
@@ -59,7 +59,7 @@
         <div th:each="currentDiseaseConclusion : ${conclusionCommand.getCurrentDiseaseService().listNewCurrentDiseases()}">
             <tr>
                 <td th:text="${{currentDiseaseConclusion.getDisease()}}">disease</td>
-                <td style="background-color: azure" th:text="${{currentDiseaseConclusion.getDiseaseTranslated()}}">disease translated</td>
+                <th style="background-color: azure" th:text="${{currentDiseaseConclusion.getDiseaseTranslated()}}">disease translated</th>
                 <td th:text="${{#temporals.format(currentDiseaseConclusion.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${{#temporals.format(currentDiseaseConclusion.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
                 <td th:text="${currentDiseaseConclusion.getComment()}">comment</td>
@@ -74,19 +74,11 @@
             <thead class="thead-light">
             <tr>
                 <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</th>
-                <th th:text="#{button.action}">Action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="conclusion : ${conclusionNote}">
                 <td class="col-2" th:text="${conclusion}"></td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a href="#" class="btn btn-primary"
-                           th:href="@{/current-patient/visit-data/conclusion/delete(note=${conclusion})}"
-                           th:text="#{crud.button.delete}">Delete</a>
-                    </div>
-                </td>
             </tr>
             </tbody>
         </table>
