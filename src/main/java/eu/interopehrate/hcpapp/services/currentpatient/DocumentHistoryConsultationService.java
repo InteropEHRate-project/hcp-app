@@ -11,4 +11,5 @@ public interface DocumentHistoryConsultationService {
     DocumentHistoryConsultationCommand getData();
     DocumentHistoryConsultationCommand documentHistoryConsultationCommand(String speciality, String date, String start, String end) throws Exception;
     void refresh();
+    void refreshData();
 }

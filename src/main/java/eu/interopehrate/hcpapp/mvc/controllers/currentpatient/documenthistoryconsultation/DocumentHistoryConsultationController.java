@@ -67,4 +67,11 @@ public class DocumentHistoryConsultationController {
         this.documentHistoryConsultationService.refresh();
         return "redirect:/current-patient/document-history-consultation/view-section";
     }
+
+    @GetMapping
+    @RequestMapping("/refresh-data")
+    public String refreshData() {
+        this.documentHistoryConsultationService.refreshData();
+        return "redirect:/current-patient/document-history-consultation/view-section";
+    }
 }

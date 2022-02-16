@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandDocHistoryConsultation;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.historyconsultation.DocumentHistoryConsultationCommand;
@@ -23,12 +24,14 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     private boolean isFiltered = false;
     private boolean isEmpty = false;
     private final CurrentD2DConnection currentD2DConnection;
+    private final CloudConnection cloudConnection;
 
     @SneakyThrows
-    public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation, CurrentD2DConnection currentD2DConnection) {
+    public DocumentHistoryConsultationServiceImpl(CurrentPatient currentPatient, HapiToCommandDocHistoryConsultation hapiToCommandDocHistoryConsultation, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandDocHistoryConsultation = hapiToCommandDocHistoryConsultation;
         this.currentD2DConnection = currentD2DConnection;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -123,5 +126,10 @@ public class DocumentHistoryConsultationServiceImpl implements DocumentHistoryCo
     @Override
     public void refresh() {
         this.currentD2DConnection.getDocumentHistory();
+    }
+
+    @Override
+    public void refreshData() {
+        this.cloudConnection.downloadDocumentReference();
     }
 }

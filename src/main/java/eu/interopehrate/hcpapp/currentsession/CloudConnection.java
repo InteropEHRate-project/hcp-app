@@ -151,6 +151,18 @@ public class CloudConnection implements DisposableBean {
     }
 
     @SneakyThrows
+    public void downloadDocumentReference() {
+        String documentReference = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.DOCUMENT_REFERENCE);
+        if (documentReference.equalsIgnoreCase("File not found")) {
+            log.error("Document Reference not found");
+        } else {
+            Bundle documentReferenceBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(documentReference);
+            this.currentPatient.initDocHistoryConsultation(documentReferenceBundle);
+            log.info("Document Reference received from Cloud");
+        }
+    }
+
+    @SneakyThrows
     public void downloadLabResults() {
         String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.LABORATORY_REPORT);
         if (laboratoryResults.equalsIgnoreCase("File not found")) {
