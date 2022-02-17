@@ -11,9 +11,7 @@ import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.Prescr
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.DateTimeType;
-import org.hl7.fhir.r4.model.DocumentReference;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -123,6 +121,16 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         doc.getContentFirstRep().getAttachment().setTitle("Hospital Discharge Report");
         doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
 
+//        Composition composition = new Composition();
+//        bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
+//
+//        composition.add(new Composition.CompositionAttesterComponent());
+//        composition. getContentFirstRep().getAttachment().setContentType("application/pdf");
+//        composition.setLanguage("en");
+//        composition.;
+//        composition. getContentFirstRep().getAttachment().setData(bytes);
+//        composition.setTitle("Hospital Discharge Report");
+//        composition.setDateElement(DateTimeType.now());
         return bundle;
     }
 }
