@@ -24,84 +24,84 @@
         <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.no.connection}">The connection with S-EHR is not established</h5>
     </div>
 
-    <form class="row" th:action="@{/current-patient/document-history-consultation/filter}" method="post">
-        <fieldset class="form-group col-2">
-            <legend class="col-form-label col-sm-2 pt-0"
-                    th:text="#{fragment.current.patient.navigation.left.document.history.consultation.speciality}">Speciality</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="speciality" id="cardiology" value="cardiology">
-                    <label class="form-check-label" for="cardiology"
-                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="speciality" id="psychiatry" value="psychiatry">
-                    <label class="form-check-label" for="psychiatry"
-                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</label>
-                </div>
-                <div class="dropdown-divider"></div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="speciality" id="all" value="all" checked>
-                    <label class="form-check-label" for="all"
-                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>
-                </div>
-            </div>
-        </fieldset>
+<!--    <form class="row" th:action="@{/current-patient/document-history-consultation/filter}" method="post">-->
+<!--        <fieldset class="form-group col-2">-->
+<!--            <legend class="col-form-label col-sm-2 pt-0"-->
+<!--                    th:text="#{fragment.current.patient.navigation.left.document.history.consultation.speciality}">Speciality</legend>-->
+<!--            <div class="col-sm-10">-->
+<!--                <div class="form-check">-->
+<!--                    <input class="form-check-input" type="radio" name="speciality" id="cardiology" value="cardiology">-->
+<!--                    <label class="form-check-label" for="cardiology"-->
+<!--                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.cardiology}">Cardiology</label>-->
+<!--                </div>-->
+<!--                <div class="form-check">-->
+<!--                    <input class="form-check-input" type="radio" name="speciality" id="psychiatry" value="psychiatry">-->
+<!--                    <label class="form-check-label" for="psychiatry"-->
+<!--                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.psychiatry}">Psychiatry</label>-->
+<!--                </div>-->
+<!--                <div class="dropdown-divider"></div>-->
+<!--                <div class="form-check">-->
+<!--                    <input class="form-check-input" type="radio" name="speciality" id="all" value="all" checked>-->
+<!--                    <label class="form-check-label" for="all"-->
+<!--                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </fieldset>-->
 
-        <fieldset class="form-group col-5">
-            <legend class="col-form-label col-sm-2 pt-0" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="date" id="lastYear" value="lastYear" checked>
-                    <label class="form-check-label" for="lastYear"
-                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.year}">Last Year</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="date" id="last5Years" value="last5Years">
-                    <label class="form-check-label" for="last5Years"
-                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.five.years}">Last 5 Years</label>
-                </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.start}">Start</label>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" id="inputEmail3" placeholder="Email" name="start">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.end}">End</label>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" id="inputPassword3" placeholder="Password" name="end">
-                    </div>
-                </div>
-                <div class="dropdown-divider"></div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="date" id="all2" value="all" checked>
-                    <label class="form-check-label" for="all2"
-                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>
-                </div>
-            </div>
-        </fieldset>
-        <div class="form-group">
-            <p class="col-form-label" th:if="${session.speciality != null && session.date != null}"
-               th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.parameters} + '<br/>'
-        + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'
-        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">
-                Parameters:</p>
-            <br>
-            <div th:if="${currentD2DConnection != null}">
-                <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>
-            </div>
-            <h5 th:if="${session.withoutConnection != null && session.withoutConnection}"
-                th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available}">Filtration function not available in Simulation mode</h5>
-            <h5 th:if="${session.isExtractedData}"
-                th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available.in.simulation}">
-                Filtration function in "Extracted patient phase" not available for the moment</h5>
-        </div>
-    </form>
+<!--        <fieldset class="form-group col-5">-->
+<!--            <legend class="col-form-label col-sm-2 pt-0" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.date}">Date</legend>-->
+<!--            <div class="col-sm-10">-->
+<!--                <div class="form-check">-->
+<!--                    <input class="form-check-input" type="radio" name="date" id="lastYear" value="lastYear" checked>-->
+<!--                    <label class="form-check-label" for="lastYear"-->
+<!--                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.year}">Last Year</label>-->
+<!--                </div>-->
+<!--                <div class="form-check">-->
+<!--                    <input class="form-check-input" type="radio" name="date" id="last5Years" value="last5Years">-->
+<!--                    <label class="form-check-label" for="last5Years"-->
+<!--                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.last.five.years}">Last 5 Years</label>-->
+<!--                </div>-->
+<!--                <div class="form-group row">-->
+<!--                    <label for="inputEmail3" class="col-sm-2 col-form-label" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.start}">Start</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <input type="date" class="form-control" id="inputEmail3" placeholder="Email" name="start">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group row">-->
+<!--                    <label for="inputPassword3" class="col-sm-2 col-form-label" th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.end}">End</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <input type="date" class="form-control" id="inputPassword3" placeholder="Password" name="end">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="dropdown-divider"></div>-->
+<!--                <div class="form-check">-->
+<!--                    <input class="form-check-input" type="radio" name="date" id="all2" value="all" checked>-->
+<!--                    <label class="form-check-label" for="all2"-->
+<!--                           th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filter.by.date.all}">All</label>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </fieldset>-->
+<!--        <div class="form-group">-->
+<!--            <p class="col-form-label" th:if="${session.speciality != null && session.date != null}"-->
+<!--               th:utext="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.parameters} + '<br/>'-->
+<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.speciality} + ': ' + ${session.speciality} + '<br/>'-->
+<!--        + #{fragment.current.patient.navigation.left.document.history.consultation.date} + ': ' + ${session.date}">-->
+<!--                Parameters:</p>-->
+<!--            <br>-->
+<!--            <div th:if="${currentD2DConnection != null}">-->
+<!--                <button type="submit" class="btn btn-secondary" th:text="#{button.filter.arrow}">Filter 🡣</button>-->
+<!--            </div>-->
+<!--            <h5 th:if="${session.withoutConnection != null && session.withoutConnection}"-->
+<!--                th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available}">Filtration function not available in Simulation mode</h5>-->
+<!--            <h5 th:if="${session.isExtractedData}"-->
+<!--                th:text="#{fragment.current.patient.navigation.left.document.history.consultation.filtration.not.available.in.simulation}">-->
+<!--                Filtration function in "Extracted patient phase" not available for the moment</h5>-->
+<!--        </div>-->
+<!--    </form>-->
 
-    <div th:if="${session.speciality == null}">
-        <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.filter}">Please, set a filter to view data</h5>
-    </div>
+<!--    <div th:if="${session.speciality == null}">-->
+<!--        <h5 th:text="#{fragment.current.patient.navigation.left.document.history.consultation.mandatory.filter}">Please, set a filter to view data</h5>-->
+<!--    </div>-->
     <br>
 
     <table class="table table-bordered" th:if="${!documentHistoryConsultationList.isEmpty()}">
@@ -141,6 +141,12 @@
     </table>
     <div class="row justify-content-end">
         <a class="btn btn-primary" th:href="@{/current-patient/document-history-consultation/refresh}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.sehr}">Refresh data from S-EHR</a>
+    </div>
+    <br>
+    <div class="row justify-content-end"
+         th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
+        <a class="btn btn-primary" th:href="@{/current-patient/document-history-consultation/refresh-data}"
            th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data</a>
     </div>
 </div>
