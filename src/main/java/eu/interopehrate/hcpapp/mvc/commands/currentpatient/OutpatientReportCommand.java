@@ -1,8 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 
-import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
-import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
-import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
+import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import lombok.Builder;
@@ -16,4 +14,6 @@ public class OutpatientReportCommand {
     private final MedicationService medicationService;
     private final CurrentDiseaseService currentDiseaseService;
     private final AllergyService allergyService;
+    private final ConclusionService conclusionService;
+    private final InstrumentsExaminationService instrumentsExaminationService;
 }

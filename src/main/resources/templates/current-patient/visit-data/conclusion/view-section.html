@@ -84,7 +84,7 @@
         </table>
     </div>
 
-    <form th:action="@{/current-patient/visit-data/conclusion/save}" method="post">
+    <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/conclusion/save}" method="post">
         <div class="form-group">
             <label for="conclusion" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
             <textarea class="form-control" type="input" name="conclusion" id="conclusion" rows="3"></textarea>

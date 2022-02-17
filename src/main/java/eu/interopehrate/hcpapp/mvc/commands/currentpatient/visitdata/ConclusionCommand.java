@@ -13,12 +13,4 @@ public class ConclusionCommand {
     private final CurrentDiseaseService currentDiseaseService;
     private final List<String> listOfConclusionNote;
     private final List<ConclusionInfoCommand> conclusionInfoCommandList;
-
-    public ConclusionCommand(Boolean displayTranslatedVersion, CurrentDiseaseService currentDiseaseService, List<String> listOfConclusionNote,
-                             List<ConclusionInfoCommand> conclusionInfoCommandList) {
-        this.displayTranslatedVersion = displayTranslatedVersion;
-        this.currentDiseaseService = currentDiseaseService;
-        this.listOfConclusionNote = listOfConclusionNote;
-        this.conclusionInfoCommandList = conclusionInfoCommandList;
-    }
 }

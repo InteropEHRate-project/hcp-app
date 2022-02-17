@@ -86,4 +86,10 @@ public class ConclusionServiceImpl implements ConclusionService {
     public void deleteNote(String note) {
         this.listOfConclusionNote.removeIf(x -> x.equals(note));
     }
+
+    @Override
+    public CurrentD2DConnection getCurrentD2DConnection() {
+        return this.currentD2DConnection;
+    }
+
 }

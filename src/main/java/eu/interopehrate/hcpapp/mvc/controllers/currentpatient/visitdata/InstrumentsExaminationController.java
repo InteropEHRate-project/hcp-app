@@ -24,6 +24,7 @@ public class InstrumentsExaminationController {
     public String viewSection(Model model) {
         model.addAttribute("patient", this.instrumentsExaminationService.getCurrentPatient().getPatient());
         model.addAttribute("instrExamCommand", this.instrumentsExaminationService.instrExam());
+        model.addAttribute("instrumentExaminationList", this.instrumentsExaminationService.listNewInstrumentExamination());
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW_PAGE;
     }
 

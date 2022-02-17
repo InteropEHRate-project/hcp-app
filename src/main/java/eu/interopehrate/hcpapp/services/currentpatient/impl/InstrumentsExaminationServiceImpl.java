@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -68,5 +69,16 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
         this.instrumentsExaminationRepository.deleteById(id);
     }
 
+    @Override
+    public List<InstrumentsExaminationInfoCommand> listNewInstrumentExamination() {
+        return this.instrumentsExaminationRepository.findAll()
+                .stream()
+                .map(this.entityToCommandInstrumentsExam::convert)
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public InstrumentsExaminationRepository getInstrumentsExaminationRepository(){
+        return instrumentsExaminationRepository;
+    }
 }
