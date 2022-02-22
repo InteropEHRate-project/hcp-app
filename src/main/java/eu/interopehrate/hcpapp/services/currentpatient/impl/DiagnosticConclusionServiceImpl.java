@@ -1,11 +1,14 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityConclusion;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToConclusion;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.DiagnosticConclusionEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.DiagnosticConclusionRepository;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.ConclusionCommand;
-import eu.interopehrate.hcpapp.services.currentpatient.ConclusionService;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.DiagnosticConclusionCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.DiagnosticConclusionInfoCommand;
+import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticConclusionService;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -15,22 +18,27 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class ConclusionServiceImpl implements ConclusionService {
+public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionService {
     private final CurrentDiseaseService currentDiseaseService;
     private final CurrentD2DConnection currentD2DConnection;
     private final CurrentPatient currentPatient;
     private final DiagnosticConclusionRepository diagnosticConclusionRepository;
     private final List<String> listOfConclusionNote = new ArrayList<>();
+    public final EntityToConclusion entityToConclusion;
+    private final CommandToEntityConclusion commandToEntityConclusion;
 
-    public ConclusionServiceImpl(CurrentDiseaseService currentDiseaseService, CurrentD2DConnection currentD2DConnection, CurrentPatient currentPatient,
-                                 DiagnosticConclusionRepository diagnosticConclusionRepository) {
+    public DiagnosticConclusionServiceImpl(CurrentDiseaseService currentDiseaseService, CurrentD2DConnection currentD2DConnection, CurrentPatient currentPatient,
+                                           DiagnosticConclusionRepository diagnosticConclusionRepository, EntityToConclusion entityToConclusion, CommandToEntityConclusion commandToEntityConclusion) {
         this.currentDiseaseService = currentDiseaseService;
         this.currentD2DConnection = currentD2DConnection;
         this.currentPatient = currentPatient;
         this.diagnosticConclusionRepository = diagnosticConclusionRepository;
+        this.entityToConclusion = entityToConclusion;
+        this.commandToEntityConclusion = commandToEntityConclusion;
     }
 
     @Override
@@ -67,8 +75,8 @@ public class ConclusionServiceImpl implements ConclusionService {
     }
 
     @Override
-    public ConclusionCommand conclusionComm() {
-        return ConclusionCommand.builder()
+    public DiagnosticConclusionCommand conclusionComm() {
+        return DiagnosticConclusionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .listOfConclusionNote(this.listOfConclusionNote)
                 .currentDiseaseService(this.currentDiseaseService)
@@ -92,4 +100,14 @@ public class ConclusionServiceImpl implements ConclusionService {
         return this.currentD2DConnection;
     }
 
+    public DiagnosticConclusionRepository getDiagnosticRepository() {
+        return diagnosticConclusionRepository;
+    }
+
+    public List<DiagnosticConclusionInfoCommand> getNewConclusion() {
+        return this.diagnosticConclusionRepository.findAll()
+                .stream()
+                .map(this.entityToConclusion::convert)
+                .collect(Collectors.toList());
+    }
 }

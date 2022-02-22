@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DiagnosticConclusionRepository extends JpaRepository<DiagnosticConclusionEntity, String> {
+public interface DiagnosticConclusionRepository extends JpaRepository<DiagnosticConclusionEntity, Long> {
 }

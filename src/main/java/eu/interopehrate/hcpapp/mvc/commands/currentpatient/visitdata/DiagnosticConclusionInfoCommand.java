@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class ConclusionInfoCommand {
+public class DiagnosticConclusionInfoCommand {
     private Long id;
     @NotEmpty
     @NotNull
