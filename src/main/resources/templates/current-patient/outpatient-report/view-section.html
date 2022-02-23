@@ -12,7 +12,7 @@
 
     <p th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"><br>
     <h5 th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}"
-        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription to upload in S-EHR</h5></p>
+        th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.prescription.to.upload.in.sehr}">Prescription and Administration plan to upload in S-EHR</h5></p>
     <table id="uploadTable" class="table table-bordered" th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty()}">
         <thead class="thead-light">
         <tr>

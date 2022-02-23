@@ -37,7 +37,7 @@
                     <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.end}">End</h5>
                     <p class="card-text" th:text="${prescription.getEnd()}">end</p>
 
-                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.notes}">Notes</h5>
+                    <h5 class="card-title" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.notes}">Notes of administration plan</h5>
                     <p class="card-text" style="background-color: azure" th:style="${!translation} ? '' : 'background-color: azure'"
                        th:text="${prescription.getNotes()}">notes</p>
 
