@@ -13,4 +13,7 @@ public class DiagnosticConclusionInfoCommand {
     @NotEmpty
     @NotNull
     private String conclusionNote;
+    @NotEmpty
+    @NotNull
+    private String treatmentPlan;
 }

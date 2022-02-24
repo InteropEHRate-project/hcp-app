@@ -69,28 +69,49 @@
     </table>
     <br>
 
-    <div class="col-4">
-        <table id="uploadTable" class="table table-bordered" th:if="${!conclusionNote.isEmpty()}">
-            <thead class="thead-light">
-            <tr>
-                <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="conclusion : ${conclusionNote}">
-                <td class="col-2" th:text="${conclusion}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/conclusion/save}" method="post">
-        <div class="form-group">
-            <label for="conclusion" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
-            <textarea class="form-control" type="input" name="conclusion" id="conclusion" rows="3"></textarea>
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-bordered" th:if="${!conclusionNote.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion.notes}">Conclusion notes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="conclusionNote : ${conclusionNote}">
+                    <td class="col-2" th:text="${conclusionNote}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <button type="submit" class="btn btn-primary mb-2 float-right" th:text="#{button.save}">Save</button>
-    </form>
+
+        <div class="col-6">
+            <table class="table table-bordered" th:if="${!treatmentPlan.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{fragment.current.patient.navigation.left.conclusion.treatment.plan.notes}">Treatment Plan notes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="treatmentPlan : ${treatmentPlan}">
+                    <td class="col-2" th:text="${treatmentPlan}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/conclusion/save}" th:object="${infoConclusion}" method="post">
+            <div class="form-group col-6">
+                <label for="conclusionNote" th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</label>
+                <textarea class="form-control" name="conclusionNote" id="conclusionNote" rows="3"></textarea>
+            </div>
+            <div class="form-group col-6">
+                <label for="treatmentPlan" th:text="#{fragment.current.patient.navigation.left.conclusion.treatment.plan}">Treatment Plan</label>
+                <textarea class="form-control" name="treatmentPlan" id="treatmentPlan" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

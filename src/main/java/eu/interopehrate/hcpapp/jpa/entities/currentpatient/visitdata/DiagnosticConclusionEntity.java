@@ -19,4 +19,7 @@ public class DiagnosticConclusionEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "CONCLUSION_NOTE")
     private String conclusionNote;
+    @NotNull
+    @Column(name = "TREATMENT_PLAN")
+    private String treatmentPlan;
 }

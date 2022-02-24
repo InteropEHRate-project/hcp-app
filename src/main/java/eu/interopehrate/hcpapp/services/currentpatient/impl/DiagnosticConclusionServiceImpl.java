@@ -28,6 +28,7 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     private final CurrentPatient currentPatient;
     private final DiagnosticConclusionRepository diagnosticConclusionRepository;
     private final List<String> listOfConclusionNote = new ArrayList<>();
+    private final List<String> listOfTreatmentPlan = new ArrayList<>();
     public final EntityToConclusion entityToConclusion;
     private final CommandToEntityConclusion commandToEntityConclusion;
 
@@ -48,10 +49,10 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
             conclusion.setEntry(new ArrayList<>());
             for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
                 conclusion.getEntry().add(new Bundle.BundleEntryComponent());
-                DiagnosticReport conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
+                CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
                 conclusion.getEntry().get(i).setResource(conc);
-                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
-                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
             }
             this.sendConclusion(conclusion);
         } else {
@@ -67,11 +68,12 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
         this.diagnosticConclusionRepository.deleteAll();
     }
 
-    private static DiagnosticReport createConclusionFromEntity(DiagnosticConclusionEntity diagnosticConclusionEntity) {
-        DiagnosticReport diagnosticReport = new DiagnosticReport();
-        diagnosticReport.setConclusion(diagnosticConclusionEntity.getConclusionNote());
+    private static CarePlan createConclusionFromEntity(DiagnosticConclusionEntity diagnosticConclusionEntity) {
+        CarePlan conclusion = new CarePlan();
+        conclusion.setDescription(diagnosticConclusionEntity.getConclusionNote());
+        conclusion.setDescription(diagnosticConclusionEntity.getTreatmentPlan());
 
-        return diagnosticReport;
+        return conclusion;
     }
 
     @Override
@@ -79,6 +81,7 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
         return DiagnosticConclusionCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .listOfConclusionNote(this.listOfConclusionNote)
+                .listOfTreatmentPlan(this.listOfTreatmentPlan)
                 .currentDiseaseService(this.currentDiseaseService)
                 .build();
     }
@@ -87,6 +90,13 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     public void insertConclusionNote(String conclusionNote) {
         if (conclusionNote != null && !conclusionNote.trim().equals("") && !this.listOfConclusionNote.contains(conclusionNote)) {
             this.listOfConclusionNote.add(conclusionNote);
+        }
+    }
+
+    @Override
+    public void insertTreatmentPlan(String treatmentPlan) {
+        if (treatmentPlan != null && !treatmentPlan.trim().equals("") && !this.listOfTreatmentPlan.contains(treatmentPlan)) {
+            this.listOfTreatmentPlan.add(treatmentPlan);
         }
     }
 
@@ -109,5 +119,10 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
                 .stream()
                 .map(this.entityToConclusion::convert)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void insertTreatment(DiagnosticConclusionInfoCommand diagnosticConclusionInfoCommand) {
+        this.diagnosticConclusionRepository.save(this.commandToEntityConclusion.convert(diagnosticConclusionInfoCommand));
     }
 }

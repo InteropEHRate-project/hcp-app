@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.DiagnosticConclusionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticConclusionService;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,18 @@ public class DiagnosticConclusionController {
     public String viewSection(Model model) {
         model.addAttribute("conclusionCommand", this.diagnosticConclusionService.conclusionComm());
         model.addAttribute("conclusionNote", this.diagnosticConclusionService.conclusionComm().getListOfConclusionNote());
+        model.addAttribute("treatmentPlan", this.diagnosticConclusionService.conclusionComm().getListOfTreatmentPlan());
+        model.addAttribute("infoConclusion", new DiagnosticConclusionInfoCommand());
+        model.addAttribute("newTreatmentConclusion", this.diagnosticConclusionService.getNewConclusion());
         return TemplateNames.CURRENT_PATIENT_CONCLUSION_VIEW_SECTION;
     }
 
     @PostMapping
     @RequestMapping("/save")
-    public String saveConclusionNote(String conclusionNote) {
+    public String saveConclusionNote(String conclusionNote, String treatmentPlan, @ModelAttribute DiagnosticConclusionInfoCommand diagnosticConclusionInfoCommand) {
         this.diagnosticConclusionService.insertConclusionNote(conclusionNote);
+        this.diagnosticConclusionService.insertTreatmentPlan(treatmentPlan);
+        this.diagnosticConclusionService.insertTreatment(diagnosticConclusionInfoCommand);
         return "redirect:/current-patient/visit-data/conclusion/view-section";
     }
 

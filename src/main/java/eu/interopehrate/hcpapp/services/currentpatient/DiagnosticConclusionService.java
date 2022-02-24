@@ -12,10 +12,12 @@ import java.util.List;
 public interface DiagnosticConclusionService {
     DiagnosticConclusionCommand conclusionComm();
     void insertConclusionNote(String conclusionNote);
+    void insertTreatmentPlan(String treatmentPlan);
     void deleteNote(String note);
     void callSendConclusion() throws IOException;
     void sendConclusion(Bundle conclusion) throws IOException;
     CurrentD2DConnection getCurrentD2DConnection();
     DiagnosticConclusionRepository getDiagnosticRepository();
     List<DiagnosticConclusionInfoCommand> getNewConclusion();
+    void insertTreatment(DiagnosticConclusionInfoCommand diagnosticConclusionInfoCommand);
 }
