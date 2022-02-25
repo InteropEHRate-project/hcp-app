@@ -115,22 +115,13 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
 
         doc.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
+        doc.setType(new CodeableConcept().addCoding(new Coding().setCode("18842-5")));
         doc.getContentFirstRep().getAttachment().setContentType("application/pdf");
         doc.getContentFirstRep().getAttachment().setLanguage("en");
         doc.getContentFirstRep().getAttachment().setData(bytes);
         doc.getContentFirstRep().getAttachment().setTitle("Hospital Discharge Report");
         doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
 
-//        Composition composition = new Composition();
-//        bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
-//
-//        composition.add(new Composition.CompositionAttesterComponent());
-//        composition. getContentFirstRep().getAttachment().setContentType("application/pdf");
-//        composition.setLanguage("en");
-//        composition.;
-//        composition. getContentFirstRep().getAttachment().setData(bytes);
-//        composition.setTitle("Hospital Discharge Report");
-//        composition.setDateElement(DateTimeType.now());
         return bundle;
     }
 }
