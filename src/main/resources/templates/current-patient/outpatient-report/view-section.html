@@ -158,6 +158,23 @@
         <p style="color: #007bff">The upload of Allergies is not implemented yet.</p>
     </table>
 
+    <h5 th:if="${!outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}"
+        th:text="#{fragment.current.patient.navigation.left.conclusion.to.upload.in.sehr}">Diagnostic Conclusion to upload in S-EHR</h5></p>
+    <table class="table table-bordered" th:if="${!outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</th>
+                <th th:text="#{fragment.current.patient.navigation.left.conclusion.treatment.plan}">Treatment plan</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="concTrat : ${outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion()}">
+                <td th:text="${{concTrat.getConclusionNote()}}"></td>
+                <td th:text="${{concTrat.getTreatmentPlan()}}"></td>
+            </tr>
+            </tbody>
+    </table>
+
     <h5 th:if="${!outpatientReportCommand.getInstrumentsExaminationService().getInstrumentsExaminationRepository().findAll().isEmpty()}"
         th:text="#{fragment.current.patient.navigation.left.current.medications.instrumental.examination.to.upload.in.sehr}">Instrumental Examination to upload in S-EHR</h5></p>
     <table class="table table-bordered"
@@ -209,7 +226,9 @@
     <div class="card-body text-center"
          th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() ||
          !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() ||
-         !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() || !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()}">
+         !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() ||
+         !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty() ||
+         !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}">
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
@@ -220,7 +239,9 @@
          (outpatientReportCommand.getCurrentDiseaseService.getCurrentD2DConnection().getTd2D()!= null &&
          !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty()) ||
          (outpatientReportCommand.getAllergyService().getCurrentD2DConnection().getTd2D() != null &&
-         !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty())}">
+         !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()) ||
+         (outpatientReportCommand.getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D() != null &&
+         !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
@@ -275,8 +296,11 @@
 
     <h5 th:if="${((outpatientReportCommand.getPrescriptionService().getCurrentD2DConnection().getTd2D() == null) ||
     (outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
-    outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() && outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() &&
-    outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty())) && (session.withoutConnection != null && !session.withoutConnection)}"
+    outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
+    outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() &&
+    outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()) &&
+    outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()) &&
+    (session.withoutConnection != null && !session.withoutConnection)}"
         th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>
     <h5 th:if="${dataSent != null && dataSent}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.data.sent}" style="color: green">Data has been sent to the Smart-EHR</h5>

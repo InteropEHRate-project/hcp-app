@@ -3,10 +3,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.pdfdownload;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
-import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
-import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
-import eu.interopehrate.hcpapp.services.currentpatient.HospitalDischargeReportService;
-import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
+import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -34,16 +31,18 @@ public class PDFController {
     private final VitalSignsService vitalSignsService;
     private final CurrentDiseaseService currentDiseaseService;
     private final AllergyService allergyService;
+    private final DiagnosticConclusionService diagnosticConclusionService;
     private final HospitalDischargeReportService hospitalDischargeReportService;
 
     public PDFController(ServletContext servletContext, TemplateEngine templateEngine, PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, HospitalDischargeReportService hospitalDischargeReportService) {
+                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, HospitalDischargeReportService hospitalDischargeReportService) {
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.currentDiseaseService = currentDiseaseService;
         this.allergyService = allergyService;
+        this.diagnosticConclusionService = diagnosticConclusionService;
         this.hospitalDischargeReportService = hospitalDischargeReportService;
     }
 
@@ -63,6 +62,7 @@ public class PDFController {
         context.setVariable("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
         context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
+        context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT, context, "Outpatient-report.pdf");
     }
 
@@ -74,6 +74,7 @@ public class PDFController {
         context.setVariable("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
         context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
+        context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT_DOCUMENT, context, "Hospital-discharge-report.pdf");
     }
@@ -105,6 +106,7 @@ public class PDFController {
         context.setVariable("vitalSignsUpload", this.vitalSignsService.vitalSignsUpload());
         context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
+        context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
 
         /* Create HTML using Thymeleaf template Engine */

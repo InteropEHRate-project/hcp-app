@@ -70,8 +70,8 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
 
     private static CarePlan createConclusionFromEntity(DiagnosticConclusionEntity diagnosticConclusionEntity) {
         CarePlan conclusion = new CarePlan();
-        conclusion.setDescription(diagnosticConclusionEntity.getConclusionNote());
-        conclusion.setDescription(diagnosticConclusionEntity.getTreatmentPlan());
+        conclusion.setNote(new ArrayList<>()).addNote().setText(diagnosticConclusionEntity.getConclusionNote()).setId("Diagnostic Conclusion");
+        conclusion.addNote().setText(diagnosticConclusionEntity.getTreatmentPlan()).setId("Treatment Plan");
 
         return conclusion;
     }

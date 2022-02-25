@@ -13,18 +13,18 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private final MedicationService medicationService;
     private final CurrentDiseaseService currentDiseaseService;
     private final AllergyService allergyService;
-    private final ConclusionService conclusionService;
+    private final DiagnosticConclusionService diagnosticConclusionService;
     private final InstrumentsExaminationService instrumentsExaminationService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, ConclusionService conclusionService, InstrumentsExaminationService instrumentsExaminationService) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
         this.currentDiseaseService = currentDiseaseService;
         this.allergyService = allergyService;
-        this.conclusionService = conclusionService;
+        this.diagnosticConclusionService = diagnosticConclusionService;
         this.instrumentsExaminationService = instrumentsExaminationService;
     }
 
@@ -36,7 +36,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 .medicationService(this.medicationService)
                 .currentDiseaseService(this.currentDiseaseService)
                 .allergyService(this.allergyService)
-                .conclusionService(this.conclusionService)
+                .diagnosticConclusionService(this.diagnosticConclusionService)
                 .instrumentsExaminationService(this.instrumentsExaminationService)
                 .build();
     }

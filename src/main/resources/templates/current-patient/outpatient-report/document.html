@@ -81,6 +81,18 @@
             <br></br>
         </div>
     </div>
+
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!listConclusionTreatment.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.conclusion.treatment}">Diagnostic Conclusion</h5>
+    </div>
+    <div th:if="${!listConclusionTreatment.isEmpty()}">
+        <div th:each="conclusion : ${listConclusionTreatment}">
+            <h6 th:text="${listConclusionTreatment.indexOf(conclusion) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion} + ': ' + ${conclusion.getConclusionNote()}">Conclusion</p>
+            <p th:text="#{fragment.current.patient.navigation.left.conclusion.treatment.plan} + ': ' + ${conclusion.getTreatmentPlan()}">Treatment</p>
+            <br>
+        </div>
+    </div>
 </div>
 </body>
 </html>

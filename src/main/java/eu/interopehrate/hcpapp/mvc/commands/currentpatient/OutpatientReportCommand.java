@@ -14,6 +14,6 @@ public class OutpatientReportCommand {
     private final MedicationService medicationService;
     private final CurrentDiseaseService currentDiseaseService;
     private final AllergyService allergyService;
-    private final ConclusionService conclusionService;
+    private final DiagnosticConclusionService diagnosticConclusionService;
     private final InstrumentsExaminationService instrumentsExaminationService;
 }
