@@ -115,7 +115,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
 
         doc.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
-        doc.setType(new CodeableConcept().addCoding(new Coding().setCode("18842-5")));
+        doc.setType(new CodeableConcept().addCoding(new Coding().setSystem("https://loinc.org").setCode("18842-5")));
         doc.getContentFirstRep().getAttachment().setContentType("application/pdf");
         doc.getContentFirstRep().getAttachment().setLanguage("en");
         doc.getContentFirstRep().getAttachment().setData(bytes);

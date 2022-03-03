@@ -327,12 +327,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         MedicationStatement medicationStatement = new MedicationStatement();
 
         medicationStatement.setMedication(new Reference());
-        ((Reference) medicationStatement.getMedication()).setResource(new Medication().setCode(new CodeableConcept().setCoding(new ArrayList<>()).addCoding(new Coding().setDisplay(prescriptionEntity.getDrugName()))));
-//        medicationStatement.setMedication(new CodeableConcept());
-//        medicationStatement.getMedication().addChild("coding");
-//        medicationStatement.getMedicationCodeableConcept().setCoding(new ArrayList<>());
-//        medicationStatement.getMedicationCodeableConcept().getCoding().add(new Coding());
-//        medicationStatement.getMedicationCodeableConcept().getCoding().get(0).setDisplay(prescriptionEntity.getDrugName());
+        ((Reference) medicationStatement.getMedication()).setResource(new Medication().setCode(new CodeableConcept().setCoding(new ArrayList<>())
+                .addCoding(new Coding()
+                        .setSystem("https://loinc.org")
+                        .setCode("")
+                        .setDisplay(prescriptionEntity.getDrugName()))));
 
         Timing t = new Timing();
         t.getRepeat().setFrequency(prescriptionEntity.getFrequency());
@@ -352,9 +351,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         medicationStatement.addExtension().setValue(new Signature().setWhen(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant())).
                 setWho(medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor())).setTargetFormat("json").setSigFormat("application/jose"));
 
-        //medicationRequest.setAuthoredOn(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor());
-        //medicationStatement.setId(prescriptionEntity.getId().toString());
         (medicationStatement.getMedication()).setId(prescriptionEntity.getId().toString());
 
         List<CodeableConcept> d2 = new ArrayList<>();
