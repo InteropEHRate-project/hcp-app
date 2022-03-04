@@ -29,7 +29,7 @@ public class HapiToCommandPrescription implements Converter<MedicationStatement,
         }
 
         if (source.hasMedication()) {
-            //  prescriptionInfoCommand.setDrugNameTranslated((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString()));
+            prescriptionInfoCommand.setDrugNameTranslated((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString()));
         }
         if (this.currentPatient.getDisplayTranslatedVersion() && source.hasDosage() && source.getDosageFirstRep().hasRoute()
                 && source.getDosageFirstRep().getRoute().hasCoding() && source.getDosageFirstRep().getRoute().getCodingFirstRep().hasDisplayElement()
