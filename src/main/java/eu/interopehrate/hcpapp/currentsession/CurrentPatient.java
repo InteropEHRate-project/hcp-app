@@ -283,13 +283,13 @@ public class CurrentPatient {
         }
     }
 
-    public void initPrescription(Bundle prescription) {
+    public void initPrescription(Bundle prescript) {
         try {
-            this.prescription = prescription;
+            this.prescription = prescript;
             this.prescriptionTranslated = this.translateService.translate(prescription, Locale.UK);
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
-            this.prescriptionTranslated = prescription;
+            this.prescriptionTranslated = this.prescription;
         }
     }
 
