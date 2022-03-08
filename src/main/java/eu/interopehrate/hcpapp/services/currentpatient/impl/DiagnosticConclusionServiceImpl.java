@@ -45,16 +45,16 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     @Override
     public void callSendConclusion() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-            Bundle conclusion = new Bundle();
-            conclusion.setEntry(new ArrayList<>());
+            Bundle conclusionTreatment = new Bundle();
+            conclusionTreatment.setEntry(new ArrayList<>());
             for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
-                conclusion.getEntry().add(new Bundle.BundleEntryComponent());
+                conclusionTreatment.getEntry().add(new Bundle.BundleEntryComponent());
                 CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
-                conclusion.getEntry().get(i).setResource(conc);
+                conclusionTreatment.getEntry().get(i).setResource(conc);
                 this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
                 this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
             }
-            this.sendConclusion(conclusion);
+            this.sendConclusion(conclusionTreatment);
         } else {
             log.error("The connection with S-EHR is not established.");
         }
@@ -62,8 +62,8 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
 
     @Override
     @SneakyThrows
-    public void sendConclusion(Bundle medicationRequest) {
-        this.currentD2DConnection.getTd2D().sendHealthData(medicationRequest);
+    public void sendConclusion(Bundle conclusionTreatment) {
+        this.currentD2DConnection.getTd2D().sendHealthData(conclusionTreatment);
         log.info("Diagnostic Conclusion sent to S-EHR");
         this.diagnosticConclusionRepository.deleteAll();
     }

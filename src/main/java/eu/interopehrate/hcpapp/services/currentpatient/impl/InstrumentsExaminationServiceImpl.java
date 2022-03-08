@@ -125,7 +125,7 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
         DocumentReference documentReference = new DocumentReference();
 
         documentReference.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
-        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("https://loinc.org").setCode("18842")));
+        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("https://loinc.org").setCode("29545-1")));
         documentReference.getContentFirstRep().getAttachment().setContentType("application/pdf");
         documentReference.getContentFirstRep().getAttachment().setData(instrumentsExaminationEntity.getData());
         documentReference.getContentFirstRep().getAttachment().setTitle("Instrumental Examination");

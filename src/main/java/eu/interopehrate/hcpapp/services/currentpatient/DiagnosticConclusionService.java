@@ -15,7 +15,7 @@ public interface DiagnosticConclusionService {
     void insertTreatmentPlan(String treatmentPlan);
     void deleteNote(String note);
     void callSendConclusion() throws IOException;
-    void sendConclusion(Bundle conclusion) throws IOException;
+    void sendConclusion(Bundle conclusionTreatment) throws IOException;
     CurrentD2DConnection getCurrentD2DConnection();
     DiagnosticConclusionRepository getDiagnosticRepository();
     List<DiagnosticConclusionInfoCommand> getNewConclusion();
