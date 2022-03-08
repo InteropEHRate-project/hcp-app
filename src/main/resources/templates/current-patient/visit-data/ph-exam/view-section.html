@@ -8,19 +8,35 @@
 
 <body>
 <div layout:fragment="content">
-    <div class="m-5"></div>
     <h3 th:text="#{fragment.current.patient.navigation.left.ph.exam}">ph exam</h3>
+    <div class="m-4"></div>
+    <div class="m-5"></div>
+
     <script>
         setTimeout(function () {
             $('#message').remove();
         }, 5000);
     </script>
-    <br><br>
-    <form th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" method="post"
-          th:object="${phExamCommand}">
-        <div class="form-group">
-            <label for="clinicalExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
-            <textarea class="form-control" rows="3" type="input" name="clinicalExam" th:field="*{clinicalExam}" id="clinicalExam"></textarea>
+
+    <div class="col-12">
+        <table class="table table-bordered" th:if="${!phExam.isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.conclusion.treatment.plan.notes}">Treatment Plan notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="phExam : ${phExam}">
+                <td class="col-2" th:text="${phExam}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" method="post" th:object="${infoPhExam}">
+        <div class="form-group col-12">
+            <label for="phExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
+            <textarea class="form-control" rows="3" name="phExam" id="phExam"></textarea>
         </div>
         <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
     </form>

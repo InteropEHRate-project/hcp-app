@@ -1,10 +1,12 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.PHExamInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.PHExamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,13 +24,17 @@ public class PHExamController {
     public String viewSection(Model model) {
         model.addAttribute("patient", this.phExamService.getCurrentPatient().getPatient());
         model.addAttribute("phExamCommand", this.phExamService.phExamCommand());
+        model.addAttribute("phExam", this.phExamService.phExamCommand().getListClinicalExam());
+        model.addAttribute("infoPhExam", new PHExamInfoCommand());
+        model.addAttribute("newPhExam", this.phExamService.getNewPhExam());
         return TemplateNames.CURRENT_PATIENT_PH_EXAM_VIEW_SECTION;
     }
 
     @PostMapping
     @RequestMapping("/save-clinical-exam")
-    public String saveClinicalExam(String clinicalExam) {
+    public String saveClinicalExam(String clinicalExam, @ModelAttribute PHExamInfoCommand phExamInfoCommand) {
         this.phExamService.insertClinicalExam(clinicalExam);
+        this.phExamService.insertPhExam(phExamInfoCommand);
         return "redirect:/current-patient/visit-data/ph-exam/view-section";
     }
 }

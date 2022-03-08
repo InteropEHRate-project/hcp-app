@@ -13,6 +13,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PH_EXAMS")
 public class PHExamEntity extends HCPApplicationEntity {
+    @Column(name = "ID")
+    private Long id;
     @Column(name = "CLINICAL_EXAM")
     private String clinicalExam;
 }
