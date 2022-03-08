@@ -1,14 +1,20 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.InstrumentsExaminationEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.InstrumentsExaminationService;
+import lombok.SneakyThrows;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/current-patient/visit-data/instr-exam")
@@ -75,5 +81,23 @@ public class InstrumentsExaminationController {
     public String viewExam(@RequestParam("id") Long id, Model model) {
         model.addAttribute("instrExamInfoCommand", this.instrumentsExaminationService.retrieveInstrExamById(id));
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW;
+    }
+
+    @Bean(name = "multipart")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(100000);
+        return multipartResolver;
+    }
+
+    @SneakyThrows
+    @PostMapping("/choose")
+    public String handleFileUpload(@RequestParam("files") MultipartFile[] files, Model model) {
+        List<InstrumentsExaminationEntity> filesDB = instrumentsExaminationService.getFiles();
+        model.addAttribute("file", filesDB);
+        for (MultipartFile file : files) {
+            instrumentsExaminationService.store(file);
+        }
+        return "redirect:/current-patient/visit-data/instr-exam/view-section";
     }
 }

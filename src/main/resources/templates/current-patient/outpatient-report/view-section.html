@@ -183,6 +183,9 @@
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</th>
+            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.author}">Author</th>
+            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.date}">Date</th>
+<!--            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.file}">File</th>-->
 <!--            <th th:text="#{crud.button.actions}">Actions</th>-->
         </tr>
         </thead>
@@ -205,6 +208,9 @@
                 </th:block>
             </td>
             <td th:text="${{exam.getResult()}}"></td>
+            <td th:text="${{exam.getAuthor()}}"></td>
+            <td th:text="${{#temporals.format(exam.getDate(), 'dd-MM-yyyy')}}"></td>
+<!--            <td th:text="${{exam.getFile()}}"></td>-->
 <!--            <td>-->
 <!--                <div class="btn-group" role="group">-->
 <!--                    <a href="#" class="btn btn-info"-->
@@ -228,7 +234,8 @@
          !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() ||
          !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() ||
          !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty() ||
-         !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}">
+         !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty() ||
+         !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty()}">
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
@@ -241,7 +248,9 @@
          (outpatientReportCommand.getAllergyService().getCurrentD2DConnection().getTd2D() != null &&
          !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()) ||
          (outpatientReportCommand.getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D() != null &&
-         !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty())}">
+         !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()) ||
+          (outpatientReportCommand.getInstrumentsExaminationService.getCurrentD2DConnection().getTd2D() != null &&
+         !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
@@ -299,7 +308,8 @@
     outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
     outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() &&
     outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()) &&
-    outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()) &&
+    outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty() &&
+    outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty()) &&
     (session.withoutConnection != null && !session.withoutConnection)}"
         th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>
