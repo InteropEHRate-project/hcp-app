@@ -73,8 +73,8 @@ public class CloudConnection implements DisposableBean {
         this.connectionState = CloudConnectionState.OFF;
     }
 
-    public void requestAccess(String qrCodeContent, String hospitalID) throws Exception {
-        this.emergencyToken = r2dEmergency.requestAccess(qrCodeContent, hospitalID);
+    public void requestAccess(String qrCodeContent, String hospitalID, String hcoCertificate, String hcpName) throws Exception {
+        this.emergencyToken = r2dEmergency.requestAccess(qrCodeContent, hospitalID, hcoCertificate, hcpName);
     }
 
     public void close() {
@@ -92,10 +92,10 @@ public class CloudConnection implements DisposableBean {
     }
 
     @SneakyThrows
-    public Boolean download(String qrCodeContent, String hospitalId) {
+    public Boolean download(String qrCodeContent, String hospitalId, String hcoCertificate, String hcpName) {
         try {
             if (Objects.isNull(this.emergencyToken)) {
-                this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId);
+                this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId, hcoCertificate, hcpName);
                 this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
             log.info("IPS requested from Cloud.");

@@ -146,13 +146,13 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public void requestAccess(String qrCodeContent, String hospitalID) throws Exception {
-        this.cloudConnection.requestAccess(qrCodeContent, hospitalID);
+    public void requestAccess(String qrCodeContent, String hospitalID, String hcoCertificate, String hcpName) throws Exception {
+        this.cloudConnection.requestAccess(qrCodeContent, hospitalID, hcoCertificate, hcpName);
     }
 
     @Override
-    public Boolean retrieveData(String qrCodeContent, String hospitalID) {
-        return this.cloudConnection.download(qrCodeContent, hospitalID);
+    public Boolean retrieveData(String qrCodeContent, String hospitalID, String hcoCertificate, String hcpName) {
+        return this.cloudConnection.download(qrCodeContent, hospitalID, hcoCertificate, hcpName);
     }
 
     @Override
