@@ -46,10 +46,10 @@ public class OutpatientReportController {
                 Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getVitalSignsService().getCurrentD2DConnection().getTd2D())) {
             this.outpatientReportService.outpatientReportCommand().getVitalSignsService().callVitalSigns();
         }
-        if (!this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand().isEmpty()
-                && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().getCurrentD2DConnection().getTd2D())) {
-            this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().callSendCurrentDiseases();
-        }
+//        if (!this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand().isEmpty()
+//                && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().getCurrentD2DConnection().getTd2D())) {
+//            this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().callSendCurrentDiseases();
+//        }
         if (!this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().conclusionComm().getListOfConclusionNote().isEmpty()
                 && !this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().conclusionComm().getListOfTreatmentPlan().isEmpty()
                 && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D())) {
