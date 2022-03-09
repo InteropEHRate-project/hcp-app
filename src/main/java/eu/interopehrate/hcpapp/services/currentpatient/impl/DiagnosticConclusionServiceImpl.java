@@ -70,8 +70,18 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
 
     private static CarePlan createConclusionFromEntity(DiagnosticConclusionEntity diagnosticConclusionEntity) {
         CarePlan conclusion = new CarePlan();
-        conclusion.setNote(new ArrayList<>()).addNote().setText(diagnosticConclusionEntity.getConclusionNote()).setId("Diagnostic Conclusion");
-        conclusion.addNote().setText(diagnosticConclusionEntity.getTreatmentPlan()).setId("Treatment Plan");
+        conclusion.setCategory(new ArrayList<>()).getCategory().add(new CodeableConcept().setCoding(new ArrayList<>())
+                .addCoding(new Coding()
+                        .setSystem("https://loinc.org")
+                        .setCode("18776-5").setDisplay("Plan of care note")));
+        conclusion.setTitle("Treatment Plan");
+        conclusion.setDescription(diagnosticConclusionEntity.getTreatmentPlan());
+
+        Observation obs = new Observation();
+        obs.setCode(new CodeableConcept().setCoding(new ArrayList<>())
+                .addCoding(new Coding()
+                        .setSystem("https://loinc.org")
+                        .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document")).setText(diagnosticConclusionEntity.getConclusionNote()));
 
         return conclusion;
     }

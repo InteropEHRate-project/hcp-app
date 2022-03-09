@@ -330,7 +330,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         ((Reference) medicationStatement.getMedication()).setResource(new Medication().setCode(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
                         .setSystem("https://loinc.org")
-                        .setCode("")
+                        .setCode("52471-0")
                         .setDisplay(prescriptionEntity.getDrugName()))));
 
         Timing t = new Timing();
