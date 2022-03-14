@@ -69,6 +69,21 @@ public class D2DLibraryTests {
         this.write("vitalSigns#ACK#" + vitalSignsJSON);
     }
 
+    @Test
+    public void testSendDiagnosticConclusion() {
+        Bundle diagnosticConclusion = new Bundle();
+        String diagnosticConclusionJSON = FhirContext.forR4().newJsonParser().encodeResourceToString(diagnosticConclusion);
+        this.write("diagnosticConclusion#ACK#" + diagnosticConclusionJSON);
+    }
+
+    @Test
+    public void testSendInstrumentalExamination() {
+        Bundle instrumentalExamination = new Bundle();
+        String instrumentalExaminationJSON = FhirContext.forR4().newJsonParser().encodeResourceToString(instrumentalExamination);
+        this.write("instrumentalExamination#ACK#" + instrumentalExaminationJSON);
+    }
+
+
     private void write(String data) {
         DataOutputStream dos = new DataOutputStream(new ByteArrayOutputStream());
         try {

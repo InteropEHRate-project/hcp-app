@@ -46,9 +46,9 @@
                     <td th:text="${{an}}"></td>
                     <th style="background-color: azure" th:text="${{an}}"></th>
                     <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
-                        <td th:if="${map.get(an,sample) == null}">-</td>
-                        <div th:if="${map.get(an,sample) != null}">
-                            <td th:text="${{map.get(an,sample)}}"></td>
+                        <td th:if="${map.get(sample, an) == null}">-</td>
+                        <div th:if="${map.get(sample, an) != null}">
+                            <td th:text="${{map.get(sample, an)}}"></td>
                         </div>
                     </th:block>
                 </div>
