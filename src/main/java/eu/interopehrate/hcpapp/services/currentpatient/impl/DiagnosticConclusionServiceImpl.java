@@ -50,7 +50,11 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
             for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
                 conclusionTreatment.getEntry().add(new Bundle.BundleEntryComponent());
                 CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
+                Observation obs = createConclusionFromEntityObs(this.diagnosticConclusionRepository.findAll().get(i));
+                conclusionTreatment.addEntry().setResource(conc);
                 conclusionTreatment.getEntry().get(i).setResource(conc);
+                conclusionTreatment.addEntry().setResource(obs);
+                conclusionTreatment.getEntry().get(i).setResource(obs);
                 this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
                 this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
             }
@@ -64,7 +68,7 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     @SneakyThrows
     public void sendConclusion(Bundle conclusionTreatment) {
         this.currentD2DConnection.getTd2D().sendHealthData(conclusionTreatment);
-        log.info("Diagnostic Conclusion sent to S-EHR");
+        log.info("Diagnostic Conclusion & Treatment Plan sent to S-EHR");
         this.diagnosticConclusionRepository.deleteAll();
     }
 
@@ -73,17 +77,22 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
         conclusion.setCategory(new ArrayList<>()).getCategory().add(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
                         .setSystem("https://loinc.org")
-                        .setCode("18776-5").setDisplay("Plan of care note")));
+                        .setCode("18776-5")
+                        .setDisplay("Plan of care note")));
         conclusion.setTitle("Treatment Plan");
         conclusion.setDescription(diagnosticConclusionEntity.getTreatmentPlan());
 
+        return conclusion;
+    }
+
+    private static Observation createConclusionFromEntityObs(DiagnosticConclusionEntity diagnosticConclusionEntity) {
         Observation obs = new Observation();
         obs.setCode(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
                         .setSystem("https://loinc.org")
-                        .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document")).setText(diagnosticConclusionEntity.getConclusionNote()));
-
-        return conclusion;
+                        .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document"))
+                .setText(diagnosticConclusionEntity.getConclusionNote()));
+        return obs;
     }
 
     @Override
