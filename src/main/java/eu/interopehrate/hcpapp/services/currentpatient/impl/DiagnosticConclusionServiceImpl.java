@@ -76,7 +76,7 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
         CarePlan conclusion = new CarePlan();
         conclusion.setCategory(new ArrayList<>()).getCategory().add(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
-                        .setSystem("https://loinc.org")
+                        .setSystem("http://loinc.org")
                         .setCode("18776-5")
                         .setDisplay("Plan of care note")));
         conclusion.setTitle("Treatment Plan");
@@ -89,9 +89,10 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
         Observation obs = new Observation();
         obs.setCode(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
-                        .setSystem("https://loinc.org")
+                        .setSystem("http://loinc.org")
                         .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document"))
                 .setText(diagnosticConclusionEntity.getConclusionNote()));
+        obs.setId(diagnosticConclusionEntity.getPatientId());
         return obs;
     }
 
@@ -142,6 +143,7 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
 
     @Override
     public void insertTreatment(DiagnosticConclusionInfoCommand diagnosticConclusionInfoCommand) {
+        diagnosticConclusionInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         this.diagnosticConclusionRepository.save(this.commandToEntityConclusion.convert(diagnosticConclusionInfoCommand));
     }
 }

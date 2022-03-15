@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 public class DiagnosticConclusionEntity extends HCPApplicationEntity {
     @Column(name = "ID")
     private Long id;
+    @Column(name = "PATIENT_ID")
+    private String patientId;
     @NotNull
     @Column(name = "CONCLUSION_NOTE")
     private String conclusionNote;

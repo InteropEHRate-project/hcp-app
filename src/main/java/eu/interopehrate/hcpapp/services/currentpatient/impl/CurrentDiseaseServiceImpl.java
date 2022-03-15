@@ -194,7 +194,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private static Condition createCurrentDiseasesFromEntity(CurrentDiseaseEntity currentDiseaseEntity) {
         Condition condition = new Condition();
 
-        condition.setCode(new CodeableConcept().setCoding(new ArrayList<>()).addCoding(new Coding().setSystem("https://loinc.org").setCode("75326-9").setDisplay(currentDiseaseEntity.getDisease())));
+        condition.setCode(new CodeableConcept().setCoding(new ArrayList<>()).addCoding(new Coding().setSystem("http://loinc.org").setCode("75326-9").setDisplay(currentDiseaseEntity.getDisease())));
 
         List<CodeableConcept> d2 = new ArrayList<>();
         d2.add(new CodeableConcept().setText(currentDiseaseEntity.getComment()));
