@@ -182,7 +182,7 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</th>
-            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</th>
+<!--            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</th>-->
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.author}">Author</th>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.date}">Date</th>
 <!--            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.file}">File</th>-->
@@ -207,7 +207,7 @@
                     </div>
                 </th:block>
             </td>
-            <td th:text="${{exam.getResult()}}"></td>
+<!--            <td th:text="${{exam.getResult()}}"></td>-->
             <td th:text="${{exam.getAuthor()}}"></td>
             <td th:text="${{#temporals.format(exam.getDate(), 'dd-MM-yyyy')}}"></td>
 <!--            <td th:text="${{exam.getFile()}}"></td>-->

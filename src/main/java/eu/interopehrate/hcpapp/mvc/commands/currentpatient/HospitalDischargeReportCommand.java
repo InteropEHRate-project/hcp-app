@@ -23,7 +23,7 @@ public class HospitalDischargeReportCommand {
     private String patientDateBirth;
     private String patientGender;
     private final String hcpName;
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime localDateOfVisit;
     private String format;
     private final PrescriptionService prescriptionService;
@@ -41,7 +41,7 @@ public class HospitalDischargeReportCommand {
         this.patientDateBirth = patientDateBirth;
         this.patientGender = patientGender;
         this.hcpName = hcpName;
-        this.format = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        this.format = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
         this.prescriptionService = prescriptionService;
     }
 
