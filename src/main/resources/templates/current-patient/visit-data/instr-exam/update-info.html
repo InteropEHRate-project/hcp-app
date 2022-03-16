@@ -20,7 +20,7 @@
         </div>
         <input type="hidden" th:field="*{id}">
         <div class="form-row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="type" th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</label>
                 <input id="type" readonly type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
@@ -29,16 +29,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6">
-                <label for="result" th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</label>
-                <input id="result" type="text" class="form-control" th:classappend="${#fields.hasErrors('result')} ? 'is-invalid' :''" th:field="*{result}">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('result')}">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('result')}" th:text="${err}">err</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6"><br>
+
+            <div class="col-md-4">
                 <label for="author" th:text="#{fragment.current.patient.navigation.left.instr.exam.author}">Author</label>
                 <input id="author" type="text" class="form-control" th:classappend="${#fields.hasErrors('author')} ? 'is-invalid' :''" th:field="*{author}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('author')}">
@@ -47,7 +39,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6"><br>
+            <div class="col-md-4">
                 <label for="date" th:text="#{fragment.current.patient.navigation.left.instr.exam.date}">Date</label>
                 <input id="date" type="text" class="form-control" th:classappend="${#fields.hasErrors('date')} ? 'is-invalid' :''" readonly th:field="*{date}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('date')}">

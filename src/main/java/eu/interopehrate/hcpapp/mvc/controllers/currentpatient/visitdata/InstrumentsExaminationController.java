@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.InstrumentsExaminationEntity;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.DiagnosticConclusionInfoCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.InstrumentsExaminationService;
@@ -31,6 +33,8 @@ public class InstrumentsExaminationController {
         model.addAttribute("patient", this.instrumentsExaminationService.getCurrentPatient().getPatient());
         model.addAttribute("instrExamCommand", this.instrumentsExaminationService.instrExam());
         model.addAttribute("instrumentExaminationList", this.instrumentsExaminationService.listNewInstrumentExamination());
+        model.addAttribute("resultList", this.instrumentsExaminationService.instrExam().getListOfResultNote());
+        model.addAttribute("resultInfoList", new InstrumentsExaminationInfoCommand());
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW_PAGE;
     }
 
@@ -98,6 +102,13 @@ public class InstrumentsExaminationController {
         for (MultipartFile file : files) {
             instrumentsExaminationService.store(file);
         }
+        return "redirect:/current-patient/visit-data/instr-exam/view-section";
+    }
+
+    @PostMapping
+    @RequestMapping("/save")
+    public String saveResultNote(String resultNote) {
+        this.instrumentsExaminationService.insertResultNote(resultNote);
         return "redirect:/current-patient/visit-data/instr-exam/view-section";
     }
 }

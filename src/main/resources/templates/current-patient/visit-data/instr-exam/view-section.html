@@ -22,7 +22,6 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</th>
-            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</th>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.author}">Author</th>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.date}">Date</th>
             <!--            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.file}">File</th>-->
@@ -47,7 +46,6 @@
                     </div>
                 </th:block>
             </td>
-            <td th:text="${{exam.getResult()}}"></td>
             <td th:text="${{exam.getAuthor()}}"></td>
             <td th:text="${{#temporals.format(exam.getDate(), 'dd-MM-yyyy')}}"></td>
             <!--            <td th:text="${{exam.getData()}}"></td>-->
@@ -72,6 +70,34 @@
             <a href="#" class="btn btn-primary"
                th:href="@{/current-patient/visit-data/instr-exam/open-add-page}" th:text="#{crud.button.add}">Add</a>
         </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="m-5"></div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered" th:if="${!resultList.isEmpty()}">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{fragment.current.patient.navigation.left.instr.exam.notes}">Result notes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="result : ${resultList}">
+                    <td class="col-2" th:text="${result}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/instr-exam/save}" th:object="${resultInfoList}" method="post">
+            <div class="form-group col-12">
+                <label for="result" th:text="#{fragment.current.patient.navigation.left.instr.exam.result}">Result</label>
+                <textarea class="form-control" name="result" id="result" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
+        </form>
     </div>
 </div>
 </body>

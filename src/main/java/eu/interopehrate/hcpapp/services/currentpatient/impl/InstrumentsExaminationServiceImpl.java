@@ -33,6 +33,7 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     private final CommandToEntityInstrumentsExam commandToEntityInstrumentsExam;
     private final CurrentD2DConnection currentD2DConnection;
     private final AuditInformationService auditInformationService;
+    private final List<String> listOfResultNote = new ArrayList<>();
 
     public InstrumentsExaminationServiceImpl(CurrentPatient currentPatient, InstrumentsExaminationRepository instrumentsExaminationRepository, EntityToCommandInstrumentsExam entityToCommandInstrumentsExam, CommandToEntityInstrumentsExam commandToEntityInstrumentsExam, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
@@ -56,6 +57,7 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
                 .collect(Collectors.toList());
         return InstrumentsExaminationCommand.builder()
                 .instrumentsExaminationInfoCommandsExamInfoCommands(listOfInstrExams)
+                .listOfResultNote(this.listOfResultNote)
                 .build();
     }
 
@@ -125,20 +127,11 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
         DocumentReference documentReference = new DocumentReference();
 
         documentReference.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
-        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("https://loinc.org").setCode("29545-1")));
+        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("29545-1")));
         documentReference.getContentFirstRep().getAttachment().setContentType("application/pdf");
         documentReference.getContentFirstRep().getAttachment().setData(instrumentsExaminationEntity.getData());
         documentReference.getContentFirstRep().getAttachment().setTitle("Instrumental Examination");
         documentReference.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
-
-//        DiagnosticReport diagnosticReport = new DiagnosticReport();
-//        diagnosticReport.setConclusion(instrumentsExaminationEntity.getResult());
-//        Date dateStart = Date.from(instrumentsExaminationEntity.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-//        diagnosticReport.setIssued(dateStart);
-//        List<Reference> r = new ArrayList<>();
-//        r.add(new Reference());
-//        r.get(0).setReference(instrumentsExaminationEntity.getAuthor());
-//        return diagnosticReport;
 
         return documentReference;
     }
@@ -159,5 +152,12 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     @Override
     public List<InstrumentsExaminationEntity> getFiles() {
         return instrumentsExaminationRepository.findAll();
+    }
+
+    @Override
+    public void insertResultNote(String resultNote) {
+        if (resultNote != null && !resultNote.trim().equals("") && !this.listOfResultNote.contains(resultNote)) {
+            this.listOfResultNote.add(resultNote);
+        }
     }
 }
