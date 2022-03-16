@@ -15,6 +15,7 @@ public class HapiToCommandDocHistoryConsultation implements Converter<DocumentRe
     public DocumentHistoryConsultationInfoCommand convert(DocumentReference source) {
         DocumentHistoryConsultationInfoCommand documentHistoryConsultationInfoCommand = new DocumentHistoryConsultationInfoCommand();
         if (source.hasContent() && source.getContent().get(0).hasAttachment() && source.getContent().get(0).getAttachment().hasCreation()) {
+//            documentHistoryConsultationInfoCommand.setDate(source.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             documentHistoryConsultationInfoCommand.setDate(source.getContent()
                     .get(0)
                     .getAttachment()
