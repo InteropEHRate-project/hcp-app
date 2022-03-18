@@ -80,7 +80,7 @@ public class EmergencyController {
             }
             return "redirect:/index/emergency";
         }
-        Boolean itWorked = this.indexService.retrieveData(indexCommand.getQrCode(), indexCommand.getHospitalID(), indexCommand.getHcoHospital(),indexCommand.getHcpName());
+        Boolean itWorked = this.indexService.retrieveData(indexCommand.getQrCode(), indexCommand.getHospitalID(), indexCommand.getHcpName());
         session.setAttribute("itWorked", itWorked);
         if (itWorked) {
             session.setAttribute("workingSession", WorkingSession.EMERGENCY.toString());

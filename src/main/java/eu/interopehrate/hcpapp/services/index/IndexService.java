@@ -19,7 +19,7 @@ public interface IndexService {
     void closeCloudConnection();
     void requestAccess(String qrCodeContent, String hospitalID, String hcoCertificate, String hcpName) throws Exception;
     JSONArray listBuckets(String emergencyToken) throws Exception;
-    Boolean retrieveData(String qrCodeContent, String hospitalID, String hcoCertificate, String hcpName);
+    Boolean retrieveData(String qrCodeContent, String hospitalID, String hcpName);
     void certificate() throws CertificateException, InvalidKeyException, NoSuchAlgorithmException, KeyStoreException,
             OperatorCreationException, NoSuchProviderException, SignatureException, IOException;
 }

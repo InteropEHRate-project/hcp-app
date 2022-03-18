@@ -8,6 +8,8 @@ import eu.interopehrate.protocols.common.DocumentCategory;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import eu.interopehrate.r2demergency.R2DEmergencyFactory;
 import eu.interopehrate.r2demergency.api.R2DEmergencyI;
+import iehr.security.CryptoManagementFactory;
+import iehr.security.api.CryptoManagement;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.Bundle;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,6 +38,10 @@ public class CloudConnection implements DisposableBean {
     private String emergencyToken;
     private String bucketName;
     private final AuditInformationService auditInformationService;
+    private CryptoManagement cryptoManagement;
+    public final String ca_url = "http://interoperate-ejbca-service.euprojects.net";
+    public final String alias = "healthorganization";
+    private static final String keyStorePath = "keystore.p12";
 
     public CloudConnection(CurrentPatient currentPatient,
                            IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) throws Exception {
@@ -46,6 +53,11 @@ public class CloudConnection implements DisposableBean {
     @PostConstruct
     private void initializeR2DEmergency() {
         this.r2dEmergency = R2DEmergencyFactory.create(this.ipsValidatorPackPath);
+    }
+
+    @PostConstruct
+    private void initializeCertificate() {
+        this.cryptoManagement = CryptoManagementFactory.create(ca_url, keyStorePath);
     }
 
     public String getEmergencyToken() {
@@ -92,10 +104,11 @@ public class CloudConnection implements DisposableBean {
     }
 
     @SneakyThrows
-    public Boolean download(String qrCodeContent, String hospitalId, String hcoCertificate, String hcpName) {
+    public Boolean download(String qrCodeContent, String hospitalId, String hcpName) {
         try {
             if (Objects.isNull(this.emergencyToken)) {
-                this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId, hcoCertificate, hcpName);
+                String hcoC = Base64.getEncoder().encodeToString(this.cryptoManagement.getUserCertificate(alias));
+                this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId, hcoC, hcpName);
                 this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
             log.info("IPS requested from Cloud.");
