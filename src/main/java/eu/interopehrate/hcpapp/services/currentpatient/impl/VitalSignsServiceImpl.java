@@ -178,7 +178,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.setCode(new CodeableConcept());
         vitalSigns.getCode().addChild("coding");
         vitalSigns.getCode().setCoding(new ArrayList<>());
-        vitalSigns.getCode().getCoding().add(new Coding());
+        vitalSigns.getCode().getCoding().add(new Coding().setSystem("http://loinc").setCode(vitalSignsEntity.getAnalysisType().getLoinc()));
         vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisType().getName());
 
         Calendar when = Calendar.getInstance();
@@ -194,7 +194,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.getValueQuantity().setUnit(vitalSignsEntity.getUnitOfMeasurement());
 
         vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor());
-        vitalSigns.addExtension().setValue(new Signature().setWho(vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor())).
+        vitalSigns.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR").setValue(new Signature().setWho(vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor())).
                 setWhen(Date.from(vitalSignsEntity.getLocalDateOfVitalSign().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant())).setTargetFormat("json").setSigFormat("application/jose"));
 
         return vitalSigns;

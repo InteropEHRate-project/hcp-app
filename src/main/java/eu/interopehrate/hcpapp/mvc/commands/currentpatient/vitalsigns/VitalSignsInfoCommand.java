@@ -15,6 +15,7 @@ public class VitalSignsInfoCommand {
     @NotEmpty
     @NotNull
     private String analysisName;
+    private String analysisNameTranslated;
     @NotNull
     private VitalSignsInfoCommandSample vitalSignsInfoCommandSample = new VitalSignsInfoCommandSample();
 }
