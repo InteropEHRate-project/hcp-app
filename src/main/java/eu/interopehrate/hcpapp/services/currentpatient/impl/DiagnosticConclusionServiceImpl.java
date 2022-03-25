@@ -50,7 +50,7 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
             for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
                 conclusionTreatment.getEntry().add(new Bundle.BundleEntryComponent());
                 CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
-                Observation obs = createConclusionFromEntityObs(this.diagnosticConclusionRepository.findAll().get(i));
+                Condition obs = createConclusionFromEntityObs(this.diagnosticConclusionRepository.findAll().get(i));
                 conclusionTreatment.addEntry().setResource(conc);
                 conclusionTreatment.getEntry().get(i).setResource(conc);
                 conclusionTreatment.addEntry().setResource(obs);
@@ -81,17 +81,20 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
                         .setDisplay("Plan of care note")));
         conclusion.setTitle("Treatment Plan");
         conclusion.setDescription(diagnosticConclusionEntity.getTreatmentPlan());
+        conclusion.setSubject(conclusion.getSubject().setReference(diagnosticConclusionEntity.getPatientId()));
+        conclusion.setAuthor(conclusion.getAuthor().setReference(diagnosticConclusionEntity.getAuthor()));
+        conclusion.setCreatedElement(DateTimeType.now());
 
         return conclusion;
     }
 
-    private static Observation createConclusionFromEntityObs(DiagnosticConclusionEntity diagnosticConclusionEntity) {
-        Observation obs = new Observation();
+    private static Condition createConclusionFromEntityObs(DiagnosticConclusionEntity diagnosticConclusionEntity) {
+        Condition obs = new Condition();
         obs.setCode(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
                         .setSystem("http://loinc.org")
-                        .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document"))
-                .setText(diagnosticConclusionEntity.getConclusionNote()));
+                        .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document")));
+        obs.addNote().setText(diagnosticConclusionEntity.getConclusionNote());
         obs.setId(diagnosticConclusionEntity.getPatientId());
         return obs;
     }

@@ -17,4 +17,5 @@ public class DiagnosticConclusionInfoCommand {
     @NotEmpty
     @NotNull
     private String treatmentPlan;
+    private String author;
 }

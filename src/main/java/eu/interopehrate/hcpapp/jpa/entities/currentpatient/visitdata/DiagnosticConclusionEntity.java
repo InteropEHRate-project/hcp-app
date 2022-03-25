@@ -24,4 +24,6 @@ public class DiagnosticConclusionEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "TREATMENT_PLAN")
     private String treatmentPlan;
+    @Column(name = "AUTHOR")
+    private String author;
 }
