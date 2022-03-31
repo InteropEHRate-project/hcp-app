@@ -121,6 +121,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         doc.getContentFirstRep().getAttachment().setData(bytes);
         doc.getContentFirstRep().getAttachment().setTitle("Hospital Discharge Report");
         doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
+        byte[] sig = cloudConnection.signingData().getBytes();
+        doc.addExtension().setValue(new Provenance().addSignature().setTargetFormat("json").setData(sig));
 
         return bundle;
     }

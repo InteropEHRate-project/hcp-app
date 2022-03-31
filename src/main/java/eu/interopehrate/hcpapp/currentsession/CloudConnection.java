@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.security.PrivateKey;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
@@ -197,5 +198,13 @@ public class CloudConnection implements DisposableBean {
             this.currentPatient.initImageReport(imageReportBundle);
             log.info("ImageReport received from Cloud");
         }
+    }
+
+    @SneakyThrows
+    public String signingData() {
+        PrivateKey privateKey = cryptoManagement.getPrivateKey(alias);
+        byte[] certificateData = cryptoManagement.getUserCertificate(alias);
+        String signed = cryptoManagement.signPayload("payload", privateKey);
+        return this.cryptoManagement.createDetachedJws(certificateData, signed);
     }
 }
