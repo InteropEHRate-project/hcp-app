@@ -6,9 +6,11 @@ import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergy;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.AllergyEntity;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +18,7 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,11 +31,12 @@ public class AllergyServiceImpl implements AllergyService {
     private final EntityToCommandAllergy entityToCommandAllergy;
     private final HealthCareProfessionalService healthCareProfessionalService;
     private final CurrentD2DConnection currentD2DConnection;
+    private final AuditInformationService auditInformationService;
 
     public AllergyServiceImpl(CurrentPatient currentPatient, HapiToCommandAllergy hapiToCommandAllergy,
                               AllergyRepository allergyRepository, CommandToEntityAllergy commandToEntityAllergy,
                               EntityToCommandAllergy entityToCommandAllergy, HealthCareProfessionalService healthCareProfessionalService,
-                              CurrentD2DConnection currentD2DConnection) {
+                              CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandAllergy = hapiToCommandAllergy;
         this.allergyRepository = allergyRepository;
@@ -44,6 +44,7 @@ public class AllergyServiceImpl implements AllergyService {
         this.entityToCommandAllergy = entityToCommandAllergy;
         this.healthCareProfessionalService = healthCareProfessionalService;
         this.currentD2DConnection = currentD2DConnection;
+        this.auditInformationService = auditInformationService;
     }
 
     @Override
@@ -200,5 +201,44 @@ public class AllergyServiceImpl implements AllergyService {
         } else {
             log.error("Cannot be updated. Resource not found.");
         }
+    }
+
+    @Override
+    public Resource callAllergies() {
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            for (int i = 0; i < this.allergyRepository.findAll().size(); i++) {
+                Condition vitalSigns = createAllergiesFromEntity(this.allergyRepository.findAll().get(i));
+                this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                return vitalSigns;
+            }
+            auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Allergies to S-EHR");
+            this.allergyRepository.deleteAll();
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+        return null;
+    }
+
+    private static Condition createAllergiesFromEntity(AllergyEntity allergyEntity) {
+        Condition allergies = new Condition();
+
+        allergies.setCode(new CodeableConcept());
+        allergies.getCode().addChild("coding");
+        allergies.getCode().setCoding(new ArrayList<>());
+        allergies.getCode().getCoding().add(new Coding().setSystem("http://loinc").setCode(""));
+        allergies.getCode().getCoding().get(0).setDisplay(allergyEntity.getName());
+
+        allergies.addNote().setText(allergyEntity.getComments());
+        allergies.addCategory().setText(allergyEntity.getCategory());
+        allergies.setId(allergyEntity.getId().toString());
+
+
+        allergies.getSubject().setReference(allergyEntity.getAuthor());
+        allergies.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
+                .setValue(new Signature().setWho(allergies.getSubject().setReference(allergyEntity.getAuthor()))
+                        .setTargetFormat("json").setSigFormat("application/jose"));
+
+        return allergies;
     }
 }
