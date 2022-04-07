@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,6 +26,6 @@ public interface CurrentDiseaseService {
     void updateNewCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand);
     CurrentDiseaseInfoCommand retrieveNewCurrentDiseaseById(Long id);
     void refresh();
-    void callSendCurrentDiseases() throws IOException;
+    Resource callSendCurrentDiseases() throws IOException;
     void sendCurrentDiseases(Bundle condition) throws IOException;
 }

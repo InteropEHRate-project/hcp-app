@@ -47,7 +47,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private boolean isEmpty = false;
     private final AuditInformationService auditInformationService;
     private final PrescriptionTypesRepository prescriptionTypesRepository;
-    private final CloudConnection cloudConnection;
+    private static CloudConnection cloudConnection;
     private final TranslateService translateService;
     @Autowired
     private TerminalFhirContext terminalFhirContext;
@@ -234,29 +234,48 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         this.prescriptionRepository.save(prescriptionEntity);
     }
 
+    //    @Override
+//    public List<Reference> callSendPrescription() {
+//        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+//            Bundle prescription = new Bundle();
+//            prescription.setEntry(new ArrayList<>());
+//            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
+//                prescription.getEntry().add(new Bundle.BundleEntryComponent());
+//                MedicationStatement med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
+//                prescription.getEntry().get(i).setResource(med);
+//                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+//                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+//            }
+//            return (List<Reference>) prescription;
+// //           return (List<Reference>) (prescription);
+// //           this.sendPrescription(prescription);
+//        } else {
+//            log.error("The connection with S-EHR is not established.");
+//        }
+//        return null;
+//    }
+
     @Override
-    public void callSendPrescription() {
+    public Resource callSendPrescription() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-            Bundle prescription = new Bundle();
-            prescription.setEntry(new ArrayList<>());
             for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-                prescription.getEntry().add(new Bundle.BundleEntryComponent());
                 MedicationStatement med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
-                prescription.getEntry().get(i).setResource(med);
                 this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
                 this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+                return med;
             }
-            this.sendPrescription(prescription);
+            auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
+            this.prescriptionRepository.deleteAll();
         } else {
             log.error("The connection with S-EHR is not established.");
         }
+        return null;
     }
 
     @Override
     @SneakyThrows
     public void sendPrescription(Bundle medicationRequest) {
         this.currentD2DConnection.getTd2D().sendHealthData(medicationRequest);
-//      this.currentD2DConnection.getConnectedThread().sendPrescription(medicationRequest);
         log.info("Prescription sent to S-EHR");
         auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Prescription to S-EHR");
         this.prescriptionRepository.deleteAll();
@@ -348,8 +367,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         medicationStatement.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
         medicationStatement.setStatus(MedicationStatement.MedicationStatementStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
-        medicationStatement.addExtension().setValue(new Signature().setWhen(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant())).
-                setWho(medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor())).setTargetFormat("json").setSigFormat("application/jose"));
+        byte[] sig = cloudConnection.signingData().getBytes();
+        medicationStatement.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
+                .setValue(new Signature().setWhen(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant())).
+                        setWho(medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor())).setTargetFormat("json").setSigFormat("application/jose").setData(sig));
 
         medicationStatement.getInformationSource().setReference(prescriptionEntity.getAuthor());
         (medicationStatement.getMedication()).setId(prescriptionEntity.getId().toString());

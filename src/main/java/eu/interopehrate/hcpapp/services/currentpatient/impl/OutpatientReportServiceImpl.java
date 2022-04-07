@@ -1,11 +1,22 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.OutpatientReportCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
+@Slf4j
 @Service
 public class OutpatientReportServiceImpl implements OutpatientReportService {
     private final PrescriptionService prescriptionService;
@@ -15,10 +26,12 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private final AllergyService allergyService;
     private final DiagnosticConclusionService diagnosticConclusionService;
     private final InstrumentsExaminationService instrumentsExaminationService;
+    private final CurrentD2DConnection currentD2DConnection;
+    private final CloudConnection cloudConnection;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
@@ -26,6 +39,8 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         this.allergyService = allergyService;
         this.diagnosticConclusionService = diagnosticConclusionService;
         this.instrumentsExaminationService = instrumentsExaminationService;
+        this.currentD2DConnection = currentD2DConnection;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -39,5 +54,34 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 .diagnosticConclusionService(this.diagnosticConclusionService)
                 .instrumentsExaminationService(this.instrumentsExaminationService)
                 .build();
+    }
+
+    @SneakyThrows
+    @Override
+    public void createBundle() {
+        Bundle bundleEvaluation = new Bundle();
+        bundleEvaluation.setEntry(new ArrayList<>(1));
+
+        Composition composition = new Composition();
+        bundleEvaluation.getEntry().add(new Bundle.BundleEntryComponent().setResource(composition));
+        composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
+
+        composition.addSection().addEntry().setResource(prescriptionService.callSendPrescription());
+        composition.addSection().addEntry().setResource(vitalSignsService.callVitalSigns());
+        composition.addSection().addEntry().setResource(currentDiseaseService.callSendCurrentDiseases());
+
+        UUID uniqueKey = UUID.randomUUID();
+
+        composition.addExtension().setValue(new Provenance().addSignature()
+                .setWho(composition.getSubject().setReference(String.valueOf(composition.getAuthor())))
+                .setWhen(Date.from(Instant.now()))
+                .setTargetFormat("json").setSigFormat("application/jose")
+                .setData(cloudConnection.signingData().getBytes()))
+                .setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
+                .setId("Signature/" + uniqueKey);
+
+        this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
+        log.info("Prescription sent to S-EHR");
+        log.info("VitalSigns sent to S-EHR");
     }
 }

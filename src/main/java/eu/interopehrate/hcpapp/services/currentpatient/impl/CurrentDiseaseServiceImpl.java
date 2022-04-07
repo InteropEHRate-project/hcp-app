@@ -166,21 +166,20 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     }
 
     @Override
-    public void callSendCurrentDiseases() {
+    public Resource callSendCurrentDiseases() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-            Bundle currentDiseases = new Bundle();
-            currentDiseases.setEntry(new ArrayList<>());
             for (int i = 0; i < this.currentDiseaseRepository.findAll().size(); i++) {
-                currentDiseases.getEntry().add(new Bundle.BundleEntryComponent());
                 Condition condition = createCurrentDiseasesFromEntity(this.currentDiseaseRepository.findAll().get(i));
-                currentDiseases.getEntry().get(i).setResource(condition);
                 this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(condition));
                 this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(condition));
+                return condition;
             }
-            this.sendCurrentDiseases(currentDiseases);
+            log.info("Current Diseases sent to S-EHR");
+            this.currentDiseaseRepository.deleteAll();
         } else {
             log.error("The connection with S-EHR is not established.");
         }
+        return null;
     }
 
     @Override

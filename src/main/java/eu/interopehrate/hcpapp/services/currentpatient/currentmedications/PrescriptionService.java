@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionTypes
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Resource;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public interface PrescriptionService {
     void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand);
     void deletePrescription(Long drugId);
     void updatePrescription(PrescriptionInfoCommand prescriptionInfoCommand);
-    void callSendPrescription() throws IOException;
+    Resource callSendPrescription() throws IOException;
     void sendPrescription(Bundle medicationRequest) throws IOException;
     Page<PrescriptionEntity> findPaginated(int pageNo, int pageSize);
     void refreshData();

@@ -4,4 +4,5 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.OutpatientReportComma
 
 public interface OutpatientReportService {
     OutpatientReportCommand outpatientReportCommand();
+    void createBundle();
 }

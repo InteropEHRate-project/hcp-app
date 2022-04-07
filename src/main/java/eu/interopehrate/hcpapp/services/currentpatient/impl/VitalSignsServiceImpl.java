@@ -135,27 +135,26 @@ public class VitalSignsServiceImpl implements VitalSignsService {
                 .build();
     }
 
-    public void callVitalSigns() {
+    @Override
+    public Resource callVitalSigns() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-            Bundle vital = new Bundle();
-            vital.setEntry(new ArrayList<>());
             for (int i = 0; i < this.vitalSignsRepository.findAll().size(); i++) {
-                vital.getEntry().add(new Bundle.BundleEntryComponent());
                 Observation vitalSigns = createVitalSignsFromEntity(this.vitalSignsRepository.findAll().get(i));
-                vital.getEntry().get(i).setResource(vitalSigns);
                 this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                return vitalSigns;
             }
-            this.sendVitalSigns(vital);
+            auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send VitalSigns to S-EHR");
+            this.vitalSignsRepository.deleteAll();
         } else {
             log.error("The connection with S-EHR is not established.");
         }
+        return null;
     }
 
     @SneakyThrows
     @Override
     public void sendVitalSigns(Bundle vitalSigns) {
-//      this.currentD2DConnection.getConnectedThread().sendVitalSigns(vitalSigns);
         this.currentD2DConnection.getTd2D().sendHealthData(vitalSigns);
         log.info("VitalSigns sent to S-EHR");
         auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send VitalSigns to S-EHR");
