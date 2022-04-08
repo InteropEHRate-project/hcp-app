@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "CURRENT_DISEASES")
 public class CurrentDiseaseEntity extends HCPApplicationEntity {
+    private String patientId;
     @Column(name = "CODE")
     private String code;
     @NotNull

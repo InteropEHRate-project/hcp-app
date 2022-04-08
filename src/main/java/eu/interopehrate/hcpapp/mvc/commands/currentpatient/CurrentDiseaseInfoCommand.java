@@ -13,6 +13,7 @@ import java.time.LocalDate;
 public class CurrentDiseaseInfoCommand {
     private Long id;
     private String idFHIR;
+    private String patientId;
     private String code;
     @NotEmpty
     @NotNull
