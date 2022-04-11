@@ -12,9 +12,7 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -60,28 +58,37 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     @Override
     public void createBundle() {
         Bundle bundleEvaluation = new Bundle();
-        bundleEvaluation.setEntry(new ArrayList<>(1));
+        //bundleEvaluation.setEntry(new ArrayList<>(1));
 
+        MedicationStatement medicationStatement = prescriptionService.callSendPrescription();
+        Observation observation = vitalSignsService.callVitalSigns();
+        Condition condition = currentDiseaseService.callSendCurrentDiseases();
         Composition composition = new Composition();
-        bundleEvaluation.getEntry().add(new Bundle.BundleEntryComponent().setResource(composition));
+        //bundleEvaluation.getEntry().add(new Bundle.BundleEntryComponent().setResource(composition));
         composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
 
-        composition.addSection().addEntry().setResource(prescriptionService.callSendPrescription());
-        composition.addSection().addEntry().setResource(vitalSignsService.callVitalSigns());
-        composition.addSection().addEntry().setResource(currentDiseaseService.callSendCurrentDiseases());
+        // composition.addSection().addEntry().setResource(prescriptionService.callSendPrescription());
+        composition.addSection().addEntry(new Reference(medicationStatement));
+        // composition.addSection().addEntry().setResource(vitalSignsService.callVitalSigns());
+        composition.addSection().addEntry(new Reference(observation));
+        // composition.addSection().addEntry().setResource(currentDiseaseService.callSendCurrentDiseases());
+        composition.addSection().addEntry(new Reference(condition));
 
-        UUID uniqueKey = UUID.randomUUID();
+        bundleEvaluation.addEntry().setResource(composition);
+        bundleEvaluation.addEntry().setResource(medicationStatement);
+        bundleEvaluation.addEntry().setResource(observation);
+        bundleEvaluation.addEntry().setResource(condition);
 
         composition.addExtension().setValue(new Provenance().addSignature()
                 .setWho(composition.getSubject().setReference(String.valueOf(composition.getAuthor())))
                 .setWhen(Date.from(Instant.now()))
                 .setTargetFormat("json").setSigFormat("application/jose")
                 .setData(cloudConnection.signingData().getBytes()))
-                .setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
-                .setId("Signature/" + uniqueKey);
+                .setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR");
 
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
         log.info("Prescription sent to S-EHR");
         log.info("VitalSigns sent to S-EHR");
+        log.info("Current Diseases sent to S-EHR");
     }
 }

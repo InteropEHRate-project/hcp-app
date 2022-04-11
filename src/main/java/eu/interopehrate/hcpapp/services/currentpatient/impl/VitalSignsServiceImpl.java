@@ -136,7 +136,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     }
 
     @Override
-    public Resource callVitalSigns() {
+    public Observation callVitalSigns() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.vitalSignsRepository.findAll().size(); i++) {
                 Observation vitalSigns = createVitalSignsFromEntity(this.vitalSignsRepository.findAll().get(i));
@@ -177,8 +177,11 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.setCode(new CodeableConcept());
         vitalSigns.getCode().addChild("coding");
         vitalSigns.getCode().setCoding(new ArrayList<>());
-        vitalSigns.getCode().getCoding().add(new Coding().setSystem("http://loinc").setCode(vitalSignsEntity.getAnalysisType().getLoinc()));
+        vitalSigns.getCode().getCoding().add(new Coding().setSystem("http://loinc.org").setCode(vitalSignsEntity.getAnalysisType().getLoinc()));
         vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisType().getName());
+
+        UUID uniqueKey = UUID.randomUUID();
+        vitalSigns.setId(vitalSignsEntity.getPatientId() + "/" + uniqueKey);
 
         Calendar when = Calendar.getInstance();
         int y = vitalSignsEntity.getLocalDateOfVitalSign().getYear();

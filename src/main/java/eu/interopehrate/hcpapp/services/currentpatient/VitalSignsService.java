@@ -5,7 +5,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.Observation;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public interface VitalSignsService {
     void deleteVitalSign(String an, String sample);
     VitalSignsInfoCommand getVitalSign(String an, String sample);
     void editVitalSign(VitalSignsInfoCommand vitalSignsInfoCommand, VitalSignsInfoCommand oldVitalSign);
-    Resource callVitalSigns() throws IOException;
+    Observation callVitalSigns() throws IOException;
     void sendVitalSigns(Bundle vitalSigns) throws IOException;
     @SuppressWarnings("rawtypes")
     HashMap correlations();

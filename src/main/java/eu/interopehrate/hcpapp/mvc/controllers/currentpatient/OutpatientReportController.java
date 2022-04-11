@@ -39,9 +39,13 @@ public class OutpatientReportController {
     @RequestMapping("/sendToSehr")
     public String sendToSehr(Model model) throws IOException {
         if (!this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
-                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getTd2D())) {
-            this.outpatientReportService.createBundle();
-        }
+                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getTd2D()))
+            if (!this.outpatientReportService.outpatientReportCommand().getVitalSignsService().vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
+                    Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getVitalSignsService().getCurrentD2DConnection().getTd2D()))
+                if (!this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand().isEmpty()
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().getCurrentD2DConnection().getTd2D())) {
+                    this.outpatientReportService.createBundle();
+                }
 
 //        if (!this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
 //                Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getTd2D())) {

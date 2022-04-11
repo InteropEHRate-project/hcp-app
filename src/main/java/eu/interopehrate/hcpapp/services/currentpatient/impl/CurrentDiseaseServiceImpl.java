@@ -166,7 +166,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     }
 
     @Override
-    public Resource callSendCurrentDiseases() {
+    public Condition callSendCurrentDiseases() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.currentDiseaseRepository.findAll().size(); i++) {
                 Condition condition = createCurrentDiseasesFromEntity(this.currentDiseaseRepository.findAll().get(i));
@@ -193,7 +193,14 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private static Condition createCurrentDiseasesFromEntity(CurrentDiseaseEntity currentDiseaseEntity) {
         Condition condition = new Condition();
 
-        condition.setCode(new CodeableConcept().setCoding(new ArrayList<>()).addCoding(new Coding().setSystem("http://loinc.org").setCode("75326-9").setDisplay(currentDiseaseEntity.getDisease())));
+        condition.setCode(new CodeableConcept().setCoding(new ArrayList<>())
+                .addCoding(new Coding()
+                        .setSystem("http://loinc.org")
+                        .setCode("75326-9")
+                        .setDisplay(currentDiseaseEntity.getDisease())));
+
+        UUID uniqueKey = UUID.randomUUID();
+        condition.setId(currentDiseaseEntity.getPatientId() + "/" + uniqueKey);
 
         List<CodeableConcept> d2 = new ArrayList<>();
         d2.add(new CodeableConcept().setText(currentDiseaseEntity.getComment()));
