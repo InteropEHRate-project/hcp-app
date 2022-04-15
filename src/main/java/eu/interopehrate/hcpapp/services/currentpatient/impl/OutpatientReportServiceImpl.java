@@ -63,6 +63,8 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         MedicationStatement medicationStatement = prescriptionService.callSendPrescription();
         Observation observation = vitalSignsService.callVitalSigns();
         Condition condition = currentDiseaseService.callSendCurrentDiseases();
+        Condition diagnosticConclusion = diagnosticConclusionService.callSendConclusion();
+        CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
         Composition composition = new Composition();
         //bundleEvaluation.getEntry().add(new Bundle.BundleEntryComponent().setResource(composition));
         composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
@@ -73,18 +75,23 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         composition.addSection().addEntry(new Reference(observation));
         // composition.addSection().addEntry().setResource(currentDiseaseService.callSendCurrentDiseases());
         composition.addSection().addEntry(new Reference(condition));
+        composition.addSection().addEntry(new Reference(diagnosticConclusion));
+        composition.addSection().addEntry(new Reference(treatmentPlan));
 
         bundleEvaluation.addEntry().setResource(composition);
         bundleEvaluation.addEntry().setResource(medicationStatement);
         bundleEvaluation.addEntry().setResource(observation);
         bundleEvaluation.addEntry().setResource(condition);
+        bundleEvaluation.addEntry().setResource(diagnosticConclusion);
+        bundleEvaluation.addEntry().setResource(treatmentPlan);
 
-        composition.addExtension().setValue(new Provenance().addSignature()
-                .setWho(composition.getSubject().setReference(String.valueOf(composition.getAuthor())))
-                .setWhen(Date.from(Instant.now()))
-                .setTargetFormat("json").setSigFormat("application/jose")
-                .setData(cloudConnection.signingData().getBytes()))
-                .setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR");
+
+//        composition.addExtension().setValue(new Provenance().addSignature()
+//                .setWho(composition.getSubject().setReference(String.valueOf(composition.getAuthor())))
+//                .setWhen(Date.from(Instant.now()))
+//                .setTargetFormat("json").setSigFormat("application/jose")
+//                .setData(cloudConnection.signingData().getBytes()))
+//                .setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR");
 
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
         log.info("Prescription sent to S-EHR");

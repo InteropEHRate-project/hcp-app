@@ -43,25 +43,33 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     }
 
     @Override
-    public void callSendConclusion() {
+    public Condition callSendConclusion() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-            Bundle conclusionTreatment = new Bundle();
-            conclusionTreatment.setEntry(new ArrayList<>());
             for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
-                conclusionTreatment.getEntry().add(new Bundle.BundleEntryComponent());
-                CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
                 Condition obs = createConclusionFromEntityObs(this.diagnosticConclusionRepository.findAll().get(i));
-                conclusionTreatment.addEntry().setResource(conc);
-                conclusionTreatment.getEntry().get(i).setResource(conc);
-                conclusionTreatment.addEntry().setResource(obs);
-                conclusionTreatment.getEntry().get(i).setResource(obs);
-                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
-                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(obs));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(obs));
+                return obs;
             }
-            this.sendConclusion(conclusionTreatment);
         } else {
             log.error("The connection with S-EHR is not established.");
         }
+        return null;
+    }
+
+    @Override
+    public CarePlan callSendTreatment() {
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
+                CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
+                return conc;
+            }
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+        return null;
     }
 
     @Override
