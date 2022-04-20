@@ -39,7 +39,7 @@ public class CloudConnection implements DisposableBean {
     private String emergencyToken;
     private String bucketName;
     private final AuditInformationService auditInformationService;
-    private CryptoManagement cryptoManagement;
+    public CryptoManagement cryptoManagement;
     public final String ca_url = "http://interoperate-ejbca-service.euprojects.net";
     public final String alias = "healthorganization";
     private static final String keyStorePath = "keystore.p12";

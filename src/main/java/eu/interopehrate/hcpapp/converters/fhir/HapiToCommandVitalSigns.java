@@ -25,6 +25,12 @@ public class HapiToCommandVitalSigns implements Converter<Observation, VitalSign
             observation.getCode().getCoding().forEach(coding -> vitalSignsInfoCommand.setAnalysisName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
         }
 
+//        if (Objects.nonNull(observation.getCode()) && observation.getCode().getCodingFirstRep().hasDisplayElement() &&
+//                Objects.nonNull(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
+//                observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
+//            vitalSignsInfoCommand.setAnalysisNameTranslated(observation.getCode().getCoding().get(1).getDisplayElement().toString());
+//        }
+
         if (Objects.nonNull(observation.getEffectiveDateTimeType())) {
             vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setLocalDateOfVitalSign(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
         }
