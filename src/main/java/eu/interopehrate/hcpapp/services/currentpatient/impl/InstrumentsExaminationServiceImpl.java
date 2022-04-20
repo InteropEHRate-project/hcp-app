@@ -99,21 +99,18 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     }
 
     @Override
-    public void callSendInstrumentalExamination() {
+    public DocumentReference callSendInstrumentalExamination() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-            Bundle examination = new Bundle();
-            examination.setEntry(new ArrayList<>());
             for (int i = 0; i < this.instrumentsExaminationRepository.findAll().size(); i++) {
-                examination.getEntry().add(new Bundle.BundleEntryComponent());
                 DocumentReference med = createInstrumentalExaminationFromEntity(this.instrumentsExaminationRepository.findAll().get(i));
-                examination.getEntry().get(i).setResource(med);
                 this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
                 this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
+                return med;
             }
-            this.sendInstrumentalExamination(examination);
         } else {
             log.error("The connection with S-EHR is not established.");
         }
+        return null;
     }
 
     @Override
