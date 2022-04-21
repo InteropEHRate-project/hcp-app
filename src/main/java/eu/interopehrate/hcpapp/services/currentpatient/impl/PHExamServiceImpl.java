@@ -89,10 +89,10 @@ public class PHExamServiceImpl implements PHExamService {
     }
 
     @Override
-    public Resource callPHExam() {
+    public DiagnosticReport callPHExam() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.phExamRepository.findAll().size(); i++) {
-                Condition vitalSigns = createPHExamFromEntity(this.phExamRepository.findAll().get(i));
+                DiagnosticReport vitalSigns = createPHExamFromEntity(this.phExamRepository.findAll().get(i));
                 this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 return vitalSigns;
@@ -105,21 +105,24 @@ public class PHExamServiceImpl implements PHExamService {
         return null;
     }
 
-    private static Condition createPHExamFromEntity(PHExamEntity phExamEntity) {
-        Condition phExam = new Condition();
+    private static DiagnosticReport createPHExamFromEntity(PHExamEntity phExamEntity) {
+        DiagnosticReport phExam = new DiagnosticReport();
 
         phExam.setCode(new CodeableConcept());
         phExam.getCode().addChild("coding");
         phExam.getCode().setCoding(new ArrayList<>());
-        phExam.getCode().getCoding().add(new Coding().setSystem("http://loinc").setCode(""));
+        phExam.getCode().getCoding().add(new Coding()
+                .setSystem("http://terminology.hl7.org/CodeSystem/v2-0074")
+                .setCode("PHY"));
         phExam.getCode().getCoding().get(0).setDisplay(phExamEntity.getClinicalExam());
 
-        phExam.addNote().setText(phExamEntity.getClinicalExam());
+        // phExam.addNote().setText(phExamEntity.getClinicalExam());
+        phExam.getResultFirstRep().setReference(phExamEntity.getClinicalExam());
 
-        phExam.getSubject().setReference(phExamEntity.getAuthor());
-        phExam.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
-                .setValue(new Signature().setWho(phExam.getSubject().setReference(phExamEntity.getAuthor()))
-                        .setTargetFormat("json").setSigFormat("application/jose"));
+//        phExam.getSubject().setReference(phExamEntity.getAuthor());
+//        phExam.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
+//                .setValue(new Signature().setWho(phExam.getSubject().setReference(phExamEntity.getAuthor()))
+//                        .setTargetFormat("json").setSigFormat("application/jose"));
 
         return phExam;
     }

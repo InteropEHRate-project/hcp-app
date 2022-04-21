@@ -5,7 +5,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.PHExamCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.PHExamInfoCommand;
-import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.DiagnosticReport;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public interface PHExamService {
     PHExamRepository getPHExamRepository();
     List<PHExamInfoCommand> getNewPhExam();
     void insertPhExam(PHExamInfoCommand phExamInfoCommand);
-    Resource callPHExam();
+    DiagnosticReport callPHExam();
 }
