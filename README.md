@@ -1,1 +1,1 @@
-# hcp-app
+# InteropEHRate HCP Application
