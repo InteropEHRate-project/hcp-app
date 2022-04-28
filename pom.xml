@@ -142,6 +142,10 @@
                 </exclusion>
                 <exclusion>
                     <groupId>ca.uhn.hapi.fhir</groupId>
+                    <artifactId>hapi-fhir-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ca.uhn.hapi.fhir</groupId>
                     <artifactId>hapi-fhir-structures-r4</artifactId>
                 </exclusion>
                 <exclusion>
@@ -234,7 +238,7 @@
         <dependency>
             <groupId>eu.interopehrate</groupId>
             <artifactId>tr2de</artifactId>
-            <version>0.1.5</version>
+            <version>0.1.6</version>
         </dependency>
 
         <dependency>
