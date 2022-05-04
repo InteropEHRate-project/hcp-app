@@ -84,6 +84,18 @@ public class AllergyServiceImpl implements AllergyService {
     }
 
     @Override
+    public AllergyCommand allergiesUpload() {
+        var allergiesList = this.allergyRepository.findAll()
+                .stream()
+                .map(this.entityToCommandAllergy::convert)
+                .collect(Collectors.toList());
+        return AllergyCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .allergyList(allergiesList)
+                .build();
+    }
+
+    @Override
     public void insertAllergy(AllergyInfoCommand allergyInfoCommand) {
         allergyInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         allergyInfoCommand.setAuthor(this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + this.healthCareProfessionalService.getHealthCareProfessional().getLastName());
@@ -204,7 +216,7 @@ public class AllergyServiceImpl implements AllergyService {
     }
 
     @Override
-    public Resource callAllergies() {
+    public Condition callAllergies() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.allergyRepository.findAll().size(); i++) {
                 Condition vitalSigns = createAllergiesFromEntity(this.allergyRepository.findAll().get(i));
@@ -223,21 +235,19 @@ public class AllergyServiceImpl implements AllergyService {
     private static Condition createAllergiesFromEntity(AllergyEntity allergyEntity) {
         Condition allergies = new Condition();
 
+        allergies.setId(UUID.randomUUID().toString());
         allergies.setCode(new CodeableConcept());
         allergies.getCode().addChild("coding");
         allergies.getCode().setCoding(new ArrayList<>());
-        allergies.getCode().getCoding().add(new Coding().setSystem("http://loinc").setCode(""));
+        allergies.getCode().getCoding().add(new Coding()
+                .setSystem("http://loinc")
+                .setCode("48765-2")
+                .setDisplay("Allergies and adverse reactions Document"));
         allergies.getCode().getCoding().get(0).setDisplay(allergyEntity.getName());
 
         allergies.addNote().setText(allergyEntity.getComments());
         allergies.addCategory().setText(allergyEntity.getCategory());
-        allergies.setId(allergyEntity.getId().toString());
-
-
-        allergies.getSubject().setReference(allergyEntity.getAuthor());
-        allergies.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
-                .setValue(new Signature().setWho(allergies.getSubject().setReference(allergyEntity.getAuthor()))
-                        .setTargetFormat("json").setSigFormat("application/jose"));
+        //allergies.setId(allergyEntity.getId().toString());
 
         return allergies;
     }

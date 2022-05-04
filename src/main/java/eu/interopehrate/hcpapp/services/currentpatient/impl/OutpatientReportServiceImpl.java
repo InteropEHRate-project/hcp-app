@@ -93,6 +93,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         Condition diagnosticConclusion = diagnosticConclusionService.callSendConclusion();
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
         DocumentReference instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
+        Condition allergies = allergyService.callAllergies();
 
         Composition composition = new Composition();
         composition.setStatus(Composition.CompositionStatus.FINAL);
@@ -157,6 +158,12 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         instrumentExaminationSection.addEntry().setResource(instrumentalExamination);
         composition.addSection(instrumentExaminationSection);
         bundleEvaluation.addEntry().setResource(instrumentalExamination);
+
+        Composition.SectionComponent allergiesSection = new Composition.SectionComponent();
+        allergiesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "48765-2", "Allergies and adverse reactions Document")));
+        allergiesSection.addEntry().setResource(allergies);
+        composition.addSection(allergiesSection);
+        bundleEvaluation.addEntry().setResource(allergies);
 
         IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
         String parseResource = parser.encodeResourceToString(composition);
