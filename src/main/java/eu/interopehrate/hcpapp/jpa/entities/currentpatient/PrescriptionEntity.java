@@ -26,4 +26,5 @@ public class PrescriptionEntity extends HCPApplicationEntity {
     private String author;
     private String notes;
     private LocalDate dateOfPrescription;
+    private String patientName;
 }

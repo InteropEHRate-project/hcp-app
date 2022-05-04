@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -61,10 +62,10 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     public CarePlan callSendTreatment() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.diagnosticConclusionRepository.findAll().size(); i++) {
-                CarePlan conc = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
-                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
-                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(conc));
-                return conc;
+                CarePlan treatmentPlan = createConclusionFromEntity(this.diagnosticConclusionRepository.findAll().get(i));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(treatmentPlan));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(treatmentPlan));
+                return treatmentPlan;
             }
         } else {
             log.error("The connection with S-EHR is not established.");
@@ -89,21 +90,24 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
                         .setDisplay("Plan of care note")));
         conclusion.setTitle("Treatment Plan");
         conclusion.setDescription(diagnosticConclusionEntity.getTreatmentPlan());
-        conclusion.setSubject(conclusion.getSubject().setReference(diagnosticConclusionEntity.getPatientId()));
         conclusion.setAuthor(conclusion.getAuthor().setReference(diagnosticConclusionEntity.getAuthor()));
         conclusion.setCreatedElement(DateTimeType.now());
+        conclusion.setId(UUID.randomUUID().toString());
 
         return conclusion;
     }
 
     private static Condition createConclusionFromEntityObs(DiagnosticConclusionEntity diagnosticConclusionEntity) {
         Condition obs = new Condition();
-        obs.setCode(new CodeableConcept().setCoding(new ArrayList<>())
+        obs.setCategory(new ArrayList<>()).getCategory().add(new CodeableConcept()
+                .setCoding(new ArrayList<>())
                 .addCoding(new Coding()
                         .setSystem("http://loinc.org")
-                        .setCode("55110-1").setDisplay("Conclusions [Interpretation] Document")));
+                        .setCode("55110-1")
+                        .setDisplay("Conclusions [Interpretation] Document")));
         obs.addNote().setText(diagnosticConclusionEntity.getConclusionNote());
-        obs.setId(diagnosticConclusionEntity.getPatientId());
+        obs.setId(UUID.randomUUID().toString());
+
         return obs;
     }
 
@@ -155,6 +159,6 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     @Override
     public void insertTreatment(DiagnosticConclusionInfoCommand diagnosticConclusionInfoCommand) {
         diagnosticConclusionInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
-        this.diagnosticConclusionRepository.save(this.commandToEntityConclusion.convert(diagnosticConclusionInfoCommand));
+        this.diagnosticConclusionRepository.save(Objects.requireNonNull(this.commandToEntityConclusion.convert(diagnosticConclusionInfoCommand)));
     }
 }

@@ -51,8 +51,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private final TranslateService translateService;
     @Autowired
     private TerminalFhirContext terminalFhirContext;
-    private static String CODE_SYSTEM = "http://terminology.hl7.org/CodeSystem/v2-0203";
-    private static String CODE = "HOSPITAL";
+    private static final String CODE_SYSTEM = "http://terminology.hl7.org/CodeSystem/v2-0203";
+    private static final String CODE = "HOSPITAL";
 
     public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository,
                                    CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService,
@@ -208,6 +208,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
         PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(prescriptionInfoCommand);
         prescriptionEntity.setAuthor(prescriptionInfoCommand.getAuthor());
+        prescriptionEntity.setPatientName(prescriptionEntity.getPatientName());
 
         prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionEntity.getPeriodUnit()));
         this.prescriptionRepository.save(prescriptionEntity);
@@ -235,27 +236,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionEntity.setTimings(prescriptionInfoCommand.getFrequency().toString());
         this.prescriptionRepository.save(prescriptionEntity);
     }
-
-    //    @Override
-//    public List<Reference> callSendPrescription() {
-//        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
-//            Bundle prescription = new Bundle();
-//            prescription.setEntry(new ArrayList<>());
-//            for (int i = 0; i < this.prescriptionRepository.findAll().size(); i++) {
-//                prescription.getEntry().add(new Bundle.BundleEntryComponent());
-//                MedicationStatement med = createPrescriptionFromEntity(this.prescriptionRepository.findAll().get(i));
-//                prescription.getEntry().get(i).setResource(med);
-//                this.currentPatient.getPrescription().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-//                this.currentPatient.getPrescriptionTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
-//            }
-//            return (List<Reference>) prescription;
-// //           return (List<Reference>) (prescription);
-// //           this.sendPrescription(prescription);
-//        } else {
-//            log.error("The connection with S-EHR is not established.");
-//        }
-//        return null;
-//    }
 
     @Override
     public MedicationStatement callSendPrescription() {
@@ -293,7 +273,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public void refreshData() {
-        this.cloudConnection.downloadPrescription();
+        cloudConnection.downloadPrescription();
     }
 
     private static void toSortMethodCommand(List<PrescriptionInfoCommand> med) {
@@ -346,12 +326,16 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static MedicationStatement createPrescriptionFromEntity(PrescriptionEntity prescriptionEntity) {
         MedicationStatement medicationStatement = new MedicationStatement();
-        Medication medication = new Medication().setCode(new CodeableConcept()
-                .addCoding(new Coding()
-                        .setSystem("http://loinc.org")
-                        .setDisplay(prescriptionEntity.getDrugName())));
+        medicationStatement.setId(UUID.randomUUID().toString());
 
+        Medication medication = new Medication();
+        medication.setId(UUID.randomUUID().toString());
         medicationStatement.setMedication(new Reference(medication));
+
+        medication.setCode(new CodeableConcept().addCoding(new Coding()
+                .setSystem("http://loinc.org")
+                .setCode("52471-0")
+                .setDisplay(prescriptionEntity.getDrugName())));
 
         Timing t = new Timing();
         t.getRepeat().setFrequency(prescriptionEntity.getFrequency());
@@ -367,6 +351,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
         medicationStatement.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
+        medicationStatement.setSubject(new Reference(prescriptionEntity.getPatientName()));
 //        Timing.TimingRepeatComponent repeat = t.getRepeat();
 //        Period period = new Period()
 //                .setStart(new Date())
@@ -378,14 +363,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 //        repeat.setPeriodUnit(Timing.UnitsOfTime.fromCode(prescriptionEntity.getPeriodUnit()));
 
         medicationStatement.setStatus(MedicationStatement.MedicationStatementStatus.fromCode(prescriptionEntity.getStatus().toLowerCase()));
-        byte[] sig = cloudConnection.signingData().getBytes();
-        medicationStatement.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
-                .setValue(new Signature().setWhen(Date.from(prescriptionEntity.getDateOfPrescription().atStartOfDay(ZoneId.systemDefault()).toInstant())).
-                        setWho(new Reference(prescriptionEntity.getAuthor())).setTargetFormat("json").setSigFormat("application/jose").setData(sig));
-
-        UUID uniqueKey = UUID.randomUUID();
-        medicationStatement.addIdentifier(new Identifier().setType(new CodeableConcept().addCoding(new Coding().setSystem(CODE_SYSTEM).setCode(CODE))).setValue(prescriptionEntity.getId().toString() + "/" + uniqueKey));
-        //  (medicationStatement.getMedication()).setId(prescriptionEntity.getId().toString() + "/" + uniqueKey);
+        // medicationStatement.setSubject(new Reference(prescriptionEntity.getAuthor()));
 
         List<CodeableConcept> d2 = new ArrayList<>();
         d2.add(new CodeableConcept().setText(prescriptionEntity.getNotes()));

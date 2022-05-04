@@ -14,6 +14,7 @@ public class PrescriptionInfoCommand {
     private Long id;
     private String idFHIR;
     private String patientId;
+    private String patientName;
     @NotEmpty
     @NotNull
     private String status;

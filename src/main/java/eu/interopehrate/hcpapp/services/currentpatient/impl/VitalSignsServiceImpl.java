@@ -180,8 +180,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.getCode().getCoding().add(new Coding().setSystem("http://loinc.org").setCode(vitalSignsEntity.getAnalysisType().getLoinc()));
         vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisType().getName());
 
-        UUID uniqueKey = UUID.randomUUID();
-        vitalSigns.setId(vitalSignsEntity.getPatientId() + "/" + uniqueKey);
+        vitalSigns.setId(UUID.randomUUID().toString());
 
         Calendar when = Calendar.getInstance();
         int y = vitalSignsEntity.getLocalDateOfVitalSign().getYear();
@@ -192,12 +191,17 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         when.set(d, m, y, h, min);
         vitalSigns.setEffective(new DateTimeType(when));
 
-        vitalSigns.getValueQuantity().setValue(vitalSignsEntity.getCurrentValue());
-        vitalSigns.getValueQuantity().setUnit(vitalSignsEntity.getUnitOfMeasurement());
+        Quantity quantity = new Quantity();
+        quantity.setUnit(vitalSignsEntity.getUnitOfMeasurement())
+                .setValue(vitalSignsEntity.getCurrentValue())
+                .setSystem("http://unitsofmeasure.org")
+                .setCode(vitalSignsEntity.getUnitOfMeasurement());
+        vitalSigns.setValue(quantity);
 
-        vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor());
-        vitalSigns.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR").setValue(new Signature().setWho(vitalSigns.getSubject().setReference(vitalSignsEntity.getAuthor())).
-                setWhen(Date.from(vitalSignsEntity.getLocalDateOfVitalSign().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant())).setTargetFormat("json").setSigFormat("application/jose"));
+        vitalSignsEntity.setAuthor(vitalSignsEntity.getAuthor());
+        vitalSigns.setSubject(new Reference(vitalSignsEntity.getPatientId()));
+
+// TO do  add proper subject (Patient), encounter , performer()
 
         return vitalSigns;
     }

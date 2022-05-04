@@ -19,11 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -131,11 +127,7 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
         documentReference.getContentFirstRep().getAttachment().setData(instrumentsExaminationEntity.getData());
         documentReference.getContentFirstRep().getAttachment().setTitle("Instrumental Examination");
         documentReference.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
-
-        documentReference.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
-                .setValue(new Signature().setWho(documentReference.getSubject().setReference(String.valueOf(documentReference.getAuthor())))
-                        .setWhen(Date.from(instrumentsExaminationEntity.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                        .setTargetFormat("json").setSigFormat("application/jose"));
+        documentReference.setId(UUID.randomUUID().toString());
 
         return documentReference;
     }
