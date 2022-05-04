@@ -128,7 +128,7 @@
         <dependency>
             <groupId>eu.interopehrate</groupId>
             <artifactId>r2d-d2d-commons</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </dependency>
 
         <dependency>

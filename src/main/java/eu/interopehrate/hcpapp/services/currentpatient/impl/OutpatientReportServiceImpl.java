@@ -1,18 +1,27 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.administration.HealthCareOrganizationEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.OutpatientReportCommand;
+import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.protocols.provenance.ProvenanceBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.security.PrivateKey;
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -26,10 +35,13 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private final InstrumentsExaminationService instrumentsExaminationService;
     private final CurrentD2DConnection currentD2DConnection;
     private final CloudConnection cloudConnection;
+    private final CurrentPatient currentPatient;
+    @Autowired
+    private HealthCareProfessionalService healthCareProfessionalService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
@@ -39,6 +51,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         this.instrumentsExaminationService = instrumentsExaminationService;
         this.currentD2DConnection = currentD2DConnection;
         this.cloudConnection = cloudConnection;
+        this.currentPatient = currentPatient;
     }
 
     @Override
@@ -58,41 +71,106 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     @Override
     public void createBundle() {
         Bundle bundleEvaluation = new Bundle();
-        //bundleEvaluation.setEntry(new ArrayList<>(1));
+
+        Practitioner author = new Practitioner();
+        author.setId(UUID.randomUUID().toString());
+//        author.setName((java.util.List<HumanName>) new Reference(healthCareProfessionalService.getHealthCareProfessional().getFirstName() +
+//                " " + healthCareProfessionalService.getHealthCareProfessional().getLastName()));
+
+        HealthCareOrganizationEntity healthCareOrganizationEntity = new HealthCareOrganizationEntity();
+        Organization hospital = new Organization();
+        hospital.setId(UUID.randomUUID().toString());
+        hospital.setName(healthCareOrganizationEntity.getName());
+
+        IndexPatientDataCommand patientDataCommand = new IndexPatientDataCommand();
+        Patient patient = new Patient();
+        patient.setId(UUID.randomUUID().toString());
+        //  patient.addName().setFamily(patientDataCommand.getFirstName().concat(patientDataCommand.getLastName()));
 
         MedicationStatement medicationStatement = prescriptionService.callSendPrescription();
         Observation observation = vitalSignsService.callVitalSigns();
-        Condition condition = currentDiseaseService.callSendCurrentDiseases();
+        Condition currentDiseases = currentDiseaseService.callSendCurrentDiseases();
         Condition diagnosticConclusion = diagnosticConclusionService.callSendConclusion();
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
-        Composition composition = new Composition();
-        //bundleEvaluation.getEntry().add(new Bundle.BundleEntryComponent().setResource(composition));
-        composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
+        DocumentReference instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
 
-        // composition.addSection().addEntry().setResource(prescriptionService.callSendPrescription());
-        composition.addSection().addEntry(new Reference(medicationStatement));
-        // composition.addSection().addEntry().setResource(vitalSignsService.callVitalSigns());
-        composition.addSection().addEntry(new Reference(observation));
-        // composition.addSection().addEntry().setResource(currentDiseaseService.callSendCurrentDiseases());
-        composition.addSection().addEntry(new Reference(condition));
-        composition.addSection().addEntry(new Reference(diagnosticConclusion));
-        composition.addSection().addEntry(new Reference(treatmentPlan));
+        Composition composition = new Composition();
+        composition.setStatus(Composition.CompositionStatus.FINAL);
+        composition.setId(UUID.randomUUID().toString());
+        composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
+        composition.setDate(new Date());
+        composition.setTitle("Medical Visit");
 
         bundleEvaluation.addEntry().setResource(composition);
-        bundleEvaluation.addEntry().setResource(medicationStatement);
+
+        Meta profile = new Meta();
+        profile.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Composition-VisitReport-IEHR");
+        composition.setMeta(profile);
+
+        //set encounter
+        Encounter encounter = new Encounter();
+        encounter.setId(UUID.randomUUID().toString());
+        encounter.setMeta(profile);
+        encounter.setStatus(Encounter.EncounterStatus.FINISHED);
+        encounter.setClass_(new Coding("http://terminology.hl7.org/CodeSystem/v3-ActCode", "AMB", "ambulatory"));
+
+        Period period = new Period();
+        period.setStart(new Date());
+
+        encounter.setPeriod(period);
+        composition.setEncounter(new Reference(encounter));
+        bundleEvaluation.addEntry().setResource(encounter);
+
+        Composition.SectionComponent vSignsSection = new Composition.SectionComponent();
+        vSignsSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "8716-3", "Vital signs")));
+        vSignsSection.addEntry().setResource(observation);
+        composition.addSection(vSignsSection);
         bundleEvaluation.addEntry().setResource(observation);
-        bundleEvaluation.addEntry().setResource(condition);
+
+        Composition.SectionComponent medicationSection = new Composition.SectionComponent();
+        medicationSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "10183-2", "Hospital discharge medications")));
+        medicationSection.addEntry().setResource(medicationStatement);
+        composition.addSection(medicationSection);
+        bundleEvaluation.addEntry().setResource(medicationStatement);
+        bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
+
+        Composition.SectionComponent currentDiseasesSection = new Composition.SectionComponent();
+        currentDiseasesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "75326-9", "Current Diseases")));
+        currentDiseasesSection.addEntry().setResource(currentDiseases);
+        composition.addSection(currentDiseasesSection);
+        bundleEvaluation.addEntry().setResource(currentDiseases);
+
+        Composition.SectionComponent diagnosticConclusionSection = new Composition.SectionComponent();
+        diagnosticConclusionSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "55110-1", "Diagnostic Conclusion")));
+        diagnosticConclusionSection.addEntry().setResource(diagnosticConclusion);
+        composition.addSection(diagnosticConclusionSection);
         bundleEvaluation.addEntry().setResource(diagnosticConclusion);
+
+        Composition.SectionComponent treatmentPlanSection = new Composition.SectionComponent();
+        treatmentPlanSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "18776-5", "Treatment Plan")));
+        treatmentPlanSection.addEntry().setResource(treatmentPlan);
+        composition.addSection(treatmentPlanSection);
         bundleEvaluation.addEntry().setResource(treatmentPlan);
 
+        Composition.SectionComponent instrumentExaminationSection = new Composition.SectionComponent();
+        instrumentExaminationSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "29545-1", "Instrument Examination")));
+        instrumentExaminationSection.addEntry().setResource(instrumentalExamination);
+        composition.addSection(instrumentExaminationSection);
+        bundleEvaluation.addEntry().setResource(instrumentalExamination);
 
-//        composition.addExtension().setValue(new Provenance().addSignature()
-//                .setWho(composition.getSubject().setReference(String.valueOf(composition.getAuthor())))
-//                .setWhen(Date.from(Instant.now()))
-//                .setTargetFormat("json").setSigFormat("application/jose")
-//                .setData(cloudConnection.signingData().getBytes()))
-//                .setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR");
+        IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
+        String parseResource = parser.encodeResourceToString(composition);
+        Provenance prov = ProvenanceBuilder.build(composition, author, hospital);
 
+        PrivateKey privateKey = cloudConnection.cryptoManagement.getPrivateKey(cloudConnection.alias);
+        byte[] certificateData = cloudConnection.cryptoManagement.getUserCertificate(cloudConnection.alias);
+        String signed = cloudConnection.cryptoManagement.signPayload(parseResource, privateKey);
+        String jwsToken = cloudConnection.cryptoManagement.createDetachedJws(certificateData, signed);
+
+        prov.getSignatureFirstRep().setData(jwsToken.getBytes());
+        bundleEvaluation.addEntry().setResource(prov);
+
+        System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundleEvaluation));
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
         log.info("Prescription sent to S-EHR");
         log.info("VitalSigns sent to S-EHR");

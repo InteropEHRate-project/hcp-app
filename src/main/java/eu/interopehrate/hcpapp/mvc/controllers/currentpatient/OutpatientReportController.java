@@ -37,7 +37,7 @@ public class OutpatientReportController {
 
     @GetMapping
     @RequestMapping("/sendToSehr")
-    public String sendToSehr(Model model) throws IOException {
+    public String sendToSehr(Model model) {
         if (!this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() &&
                 Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPrescriptionService().getCurrentD2DConnection().getTd2D()) ||
                 !this.outpatientReportService.outpatientReportCommand().getVitalSignsService().vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() &&
@@ -45,14 +45,14 @@ public class OutpatientReportController {
                 !this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().currentDiseasesSection().getCurrentDiseaseInfoCommand().isEmpty()
                         && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getCurrentDiseaseService().getCurrentD2DConnection().getTd2D()) ||
                 !this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().conclusionComm().getListOfTreatmentPlan().isEmpty()
-                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D())) {
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D()) ||
+                !this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().conclusionComm().getListOfConclusionNote().isEmpty()
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D()) ||
+                !this.outpatientReportService.outpatientReportCommand().getInstrumentsExaminationService().getInstrumentsExaminationRepository().findAll().isEmpty()
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getInstrumentsExaminationService().getCurrentD2DConnection().getTd2D())) {
             this.outpatientReportService.createBundle();
         }
 
-        if (!this.outpatientReportService.outpatientReportCommand().getInstrumentsExaminationService().getInstrumentsExaminationRepository().findAll().isEmpty()
-                && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getInstrumentsExaminationService().getCurrentD2DConnection().getTd2D())) {
-            this.outpatientReportService.outpatientReportCommand().getInstrumentsExaminationService().callSendInstrumentalExamination();
-        }
         model.addAttribute("dataSent", Boolean.TRUE);
         return this.viewSection(model);
     }
