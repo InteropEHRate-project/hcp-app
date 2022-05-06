@@ -216,10 +216,10 @@ public class AllergyServiceImpl implements AllergyService {
     }
 
     @Override
-    public Condition callAllergies() {
+    public AllergyIntolerance callAllergies() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.allergyRepository.findAll().size(); i++) {
-                Condition vitalSigns = createAllergiesFromEntity(this.allergyRepository.findAll().get(i));
+                AllergyIntolerance vitalSigns = createAllergiesFromEntity(this.allergyRepository.findAll().get(i));
                 this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 return vitalSigns;
@@ -232,8 +232,8 @@ public class AllergyServiceImpl implements AllergyService {
         return null;
     }
 
-    private static Condition createAllergiesFromEntity(AllergyEntity allergyEntity) {
-        Condition allergies = new Condition();
+    private static AllergyIntolerance createAllergiesFromEntity(AllergyEntity allergyEntity) {
+        AllergyIntolerance allergies = new AllergyIntolerance();
 
         allergies.setId(UUID.randomUUID().toString());
         allergies.setCode(new CodeableConcept());
@@ -246,7 +246,7 @@ public class AllergyServiceImpl implements AllergyService {
         allergies.getCode().getCoding().get(0).setDisplay(allergyEntity.getName());
 
         allergies.addNote().setText(allergyEntity.getComments());
-        allergies.addCategory().setText(allergyEntity.getCategory());
+        allergies.addCategoryElement().setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyEntity.getCategory()));
         //allergies.setId(allergyEntity.getId().toString());
 
         return allergies;

@@ -85,7 +85,13 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         IndexPatientDataCommand patientDataCommand = new IndexPatientDataCommand();
         Patient patient = new Patient();
         patient.setId(UUID.randomUUID().toString());
-        //  patient.addName().setFamily(patientDataCommand.getFirstName().concat(patientDataCommand.getLastName()));
+//        patient.addName().setFamily(currentPatient.getPatient()
+//                .getName()
+//                .stream()
+//                .map(humanName -> String.join(" ", humanName.getFamily(), humanName.getGivenAsSingleString()))
+//                .collect(Collectors.joining(",")));
+//
+//        bundleEvaluation.addEntry().setResource(patient);
 
         MedicationStatement medicationStatement = prescriptionService.callSendPrescription();
         Observation observation = vitalSignsService.callVitalSigns();
@@ -93,7 +99,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         Condition diagnosticConclusion = diagnosticConclusionService.callSendConclusion();
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
         DocumentReference instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
-        Condition allergies = allergyService.callAllergies();
+        AllergyIntolerance allergies = allergyService.callAllergies();
 
         Composition composition = new Composition();
         composition.setStatus(Composition.CompositionStatus.FINAL);
@@ -129,11 +135,12 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(observation);
 
         Composition.SectionComponent medicationSection = new Composition.SectionComponent();
-        medicationSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "10183-2", "Hospital discharge medications")));
+        medicationSection.setCode(new CodeableConcept(new Coding("http://www.whocc.no/atc", "10183-2", "Hospital discharge medications")));
         medicationSection.addEntry().setResource(medicationStatement);
         composition.addSection(medicationSection);
         bundleEvaluation.addEntry().setResource(medicationStatement);
         bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
+        //   ProvenanceBuilder.addProvenanceExtension(composition, medicationStatement);
 
         Composition.SectionComponent currentDiseasesSection = new Composition.SectionComponent();
         currentDiseasesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "75326-9", "Current Diseases")));

@@ -4,7 +4,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
-import org.hl7.fhir.r4.model.Condition;
+import org.hl7.fhir.r4.model.AllergyIntolerance;
 
 import java.util.List;
 
@@ -21,6 +21,6 @@ public interface AllergyService {
     void deleteAllergyFromSEHR(String id);
     AllergyInfoCommand retrieveAllergyFromSEHRById(String id);
     void updateAllergyFromSEHR(AllergyInfoCommand allergyInfoCommand);
-    Condition callAllergies();
+    AllergyIntolerance callAllergies();
     AllergyCommand allergiesUpload();
 }

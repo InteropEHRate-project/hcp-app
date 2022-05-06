@@ -65,14 +65,14 @@
                     </th:block>
                 </td>
                 <td>
-                    <th:block th:switch="${ai.getType().toUpperCase()}">
-                        <div th:case="'ALLERGY'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>
-                        </div>
-                        <div th:case="'INTOLERANCE'">
-                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>
-                        </div>
-                    </th:block>
+<!--                    <th:block th:switch="${ai.getType().toUpperCase()}">-->
+<!--                        <div th:case="'ALLERGY'">-->
+<!--                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>-->
+<!--                        </div>-->
+<!--                        <div th:case="'INTOLERANCE'">-->
+<!--                            <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>-->
+<!--                        </div>-->
+<!--                    </th:block>-->
                 </td>
                 <td th:text="${{ai.getSymptoms()}}"></td>
                 <td th:text="${{ai.getComments()}}"></td>
