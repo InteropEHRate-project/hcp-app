@@ -152,7 +152,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         currentDiseaseEntity.setDisease(currentDiseaseInfoCommand.getDisease());
         currentDiseaseEntity.setDateOfDiagnosis(currentDiseaseInfoCommand.getDateOfDiagnosis());
         currentDiseaseEntity.setEndDateOfDiagnosis(currentDiseaseInfoCommand.getEndDateOfDiagnosis());
-        currentDiseaseEntity.setComment(currentDiseaseInfoCommand.getComment());
+//        currentDiseaseEntity.setComment(currentDiseaseInfoCommand.getComment());
         this.currentDiseaseRepository.save(currentDiseaseEntity);
     }
 
@@ -199,15 +199,16 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
                         .setCode("75326-9")
                         .setDisplay(currentDiseaseEntity.getDisease())));
 
-        UUID uniqueKey = UUID.randomUUID();
-        condition.setId(currentDiseaseEntity.getPatientId() + "/" + uniqueKey);
-
-        List<CodeableConcept> d2 = new ArrayList<>();
-        d2.add(new CodeableConcept().setText(currentDiseaseEntity.getComment()));
-        condition.getNoteFirstRep().setText(currentDiseaseEntity.getComment());
+        condition.setId(UUID.randomUUID().toString());
 
         condition.getOnsetDateTimeType().setValue(Date.from(currentDiseaseEntity.getDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        condition.getAbatementDateTimeType().setValue(Date.from(currentDiseaseEntity.getEndDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        try {
+            if (Objects.nonNull(currentDiseaseEntity.getEndDateOfDiagnosis())) {
+                condition.getAbatementDateTimeType().setValue(Date.from(currentDiseaseEntity.getEndDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            }
+        } catch (NullPointerException exception) {
+            exception.printStackTrace();
+        }
 
         return condition;
     }

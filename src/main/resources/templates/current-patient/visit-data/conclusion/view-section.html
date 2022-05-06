@@ -20,7 +20,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease.translated}">disease translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
-            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>-->
             <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
         </thead>
@@ -31,7 +31,7 @@
                 <th style="background-color: azure" th:text="${{currentDiseaseConclusionS.getDiseaseTranslated()}}">disease translated</th>
                 <td th:text="${{#temporals.format(currentDiseaseConclusionS.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${{#temporals.format(currentDiseaseConclusionS.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
-                <td th:text="${currentDiseaseConclusionS.getComment()}">comment</td>
+<!--                <td th:text="${currentDiseaseConclusionS.getComment()}">comment</td>-->
                 <td>
                     <div class="btn-group" role="group">
                         <a href="#" class="btn btn-info"
@@ -52,7 +52,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease.translated}">disease translated</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
             <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
-            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>
+<!--            <th th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</th>-->
         </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@
                 <th style="background-color: azure" th:text="${{currentDiseaseConclusion.getDiseaseTranslated()}}">disease translated</th>
                 <td th:text="${{#temporals.format(currentDiseaseConclusion.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
                 <td th:text="${{#temporals.format(currentDiseaseConclusion.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
-                <td th:text="${currentDiseaseConclusion.getComment()}">comment</td>
+<!--                <td th:text="${currentDiseaseConclusion.getComment()}">comment</td>-->
             </tr>
         </div>
         </tbody>

@@ -28,7 +28,5 @@ public class CurrentDiseaseInfoCommand {
     private String categoryName;
     private String clinicalStatus;
     private String verificationStatus;
-    @NotNull
-    @NotEmpty
     private String comment;
 }

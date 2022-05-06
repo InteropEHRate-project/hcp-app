@@ -17,7 +17,7 @@
             <p th:text="#{template.errors.message}">please correct the errors below</p>
         </div>
         <div class="form-row">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <label for="disease" th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</label>
                 <input id="disease" type="text" class="form-control" th:classappend="${#fields.hasErrors('disease')} ? 'is-invalid' :''" th:field="*{disease}"/>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('disease')}">
@@ -26,25 +26,25 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8">
-                <label for="comment" th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</label>
-                <input id="comment" type="text" class="form-control" th:classappend="${#fields.hasErrors('comment')} ? 'is-invalid' :''" th:field="*{comment}"/>
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('comment')}">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('comment')}" th:text="${err}">err</li>
-                    </ul>
-                </div>
-            </div>
+<!--            <div class="col-md-8">-->
+<!--                <label for="comment" th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</label>-->
+<!--                <input id="comment" type="text" class="form-control" th:classappend="${#fields.hasErrors('comment')} ? 'is-invalid' :''" th:field="*{comment}"/>-->
+<!--                <div class="invalid-feedback" th:if="${#fields.hasErrors('comment')}">-->
+<!--                    <ul>-->
+<!--                        <li th:each="err : ${#fields.errors('comment')}" th:text="${err}">err</li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
         </div><br>
         <div class="form-row">
             <div class="col-md-4">
                 <label for="dateOfDiagnosis" th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">dateOfDiagnosis</label>
-                <input id="dateOfDiagnosis" type="text" class="form-control" th:classappend="${#fields.hasErrors('dateOfDiagnosis')} ? 'is-invalid' :''" readonly th:field="*{dateOfDiagnosis}">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfDiagnosis')}">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('dateOfDiagnosis')}" th:text="${err}">err</li>
-                    </ul>
-                </div>
+                <input id="dateOfDiagnosis" type="text" class="form-control" readonly th:field="*{dateOfDiagnosis}">
+<!--                <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfDiagnosis')}">-->
+<!--                    <ul>-->
+<!--                        <li th:each="err : ${#fields.errors('dateOfDiagnosis')}" th:text="${err}">err</li>-->
+<!--                    </ul>-->
+<!--                </div>-->
                 <script type="text/javascript">
                     $(function () {
                         $('#dateOfDiagnosis').datetimepicker({

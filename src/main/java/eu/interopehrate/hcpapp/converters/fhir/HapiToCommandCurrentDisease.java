@@ -43,7 +43,7 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
                 Objects.nonNull(condition.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
                 condition.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
 
-            currentDiseaseInfoCommand.setDiseaseTranslated(condition.getCode().getCoding().get(1).getDisplayElement().toString());
+            currentDiseaseInfoCommand.setDiseaseTranslated(condition.getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString());
         }
         if (Objects.nonNull(condition.getOnset())) {
             Date onSet = ((DateTimeType) condition.getOnset()).getValue();
