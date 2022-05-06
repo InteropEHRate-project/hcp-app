@@ -32,6 +32,9 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Semaphore;
 
+import static eu.interopehrate.protocols.common.DocumentCategory.PATIENT_SUMMARY;
+import static eu.interopehrate.protocols.common.FHIRResourceCategory.*;
+
 @Slf4j
 @Component
 public class CurrentD2DConnection implements DisposableBean {
@@ -323,7 +326,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
     @SneakyThrows
     public void getIPS() {
-        this.td2D.getResourcesByCategory(DocumentCategory.PATIENT_SUMMARY, null, false);
+        this.td2D.getResourcesByCategories(null, false, CONDITION, ALLERGY_INTOLERANCE, MEDICATION_REQUEST, PATIENT_SUMMARY);
         log.info("Patient Summary received");
     }
 
