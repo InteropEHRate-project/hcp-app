@@ -67,13 +67,13 @@ insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, 
 insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucose [Mass/volume] in Serum or Plasma', 'Glucose [Mass/volume] in Serum or Plasma', 'mg/dL', '', '2345-7');
 
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Vicodin', 'Opioid/acetaminophen combinations', '1');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Synthroid', 'Thyroxines', '2');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Delasone', 'Corticosteroids', '3');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Amoxil', 'Penicillin antibiotics', '4');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Neurontin', 'Anti-epileptics', '5');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Prinivil', 'Angiotensin converting enzyme Inhibitors', '6');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Lipitor', 'Statin', '7');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucophage', 'Biguanides', '8');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Zofran', 'Serotonin antagonists', '9');
-insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Motrin', 'Nonsteroidal anti-inflammatory drugs', '10');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Vicodin', 'Opioid/acetaminophen combinations', 'R05DA03 ');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Synthroid', 'Thyroxines', 'H03AA');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Delasone', 'Corticosteroids', 'H02AB02');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Amoxil', 'Penicillin antibiotics', 'J01CA04');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Neurontin', 'Anti-epileptics', 'N03AX');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Prinivil', 'Angiotensin converting enzyme Inhibitors', 'C09AA04');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Lipitor', 'Statin', 'C10AA05');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucophage', 'Biguanides', 'A10BA');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Zofran', 'Serotonin antagonists', 'A03AE');
+insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Motrin', 'Nonsteroidal anti-inflammatory drugs', 'G02CC01');
