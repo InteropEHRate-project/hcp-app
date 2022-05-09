@@ -4,8 +4,7 @@ import eu.interopehrate.hcpapp.jpa.entities.common.HCPApplicationEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -27,4 +26,7 @@ public class PrescriptionEntity extends HCPApplicationEntity {
     private String notes;
     private LocalDate dateOfPrescription;
     private String patientName;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ANALYSIS_CODE", nullable = false, foreignKey = @ForeignKey(name = "FK_TYPES_CODE"))
+    private PrescriptionTypesEntity prescriptionTypesEntity;
 }

@@ -7,6 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
+import java.util.Objects;
 
 @Component
 public class HapiToCommandPrescription implements Converter<MedicationStatement, PrescriptionInfoCommand> {
@@ -21,15 +22,21 @@ public class HapiToCommandPrescription implements Converter<MedicationStatement,
         PrescriptionInfoCommand prescriptionInfoCommand = new PrescriptionInfoCommand();
         prescriptionInfoCommand.setIdFHIR(source.getId());
         if (source.hasId()) {
-            prescriptionInfoCommand.setId(Long.parseLong((((Reference) source.getMedication()).getResource().getIdElement().getIdPart())));
+            prescriptionInfoCommand.setId(Long.parseLong(source.getId().substring(source.getId().indexOf("/") + 70)));
+            //prescriptionInfoCommand.setId(Long.parseLong(source.getId()));
+            // prescriptionInfoCommand.setId(Long.parseLong((((Reference) source.getMedication()).getResource().getIdElement().getIdPart())));
         }
 
         if (source.hasMedication()) {
-            prescriptionInfoCommand.setDrugName((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().toString()));
+            prescriptionInfoCommand.setDrugName((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getValue()));
         }
 
-        if (source.hasMedication()) {
-            prescriptionInfoCommand.setDrugNameTranslated((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString()));
+        try {
+            if (source.hasMedication() && Objects.nonNull(source.getMedication().getExtension())) {
+//                prescriptionInfoCommand.setDrugNameTranslated((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString()));
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
         if (this.currentPatient.getDisplayTranslatedVersion() && source.hasDosage() && source.getDosageFirstRep().hasRoute()
                 && source.getDosageFirstRep().getRoute().hasCoding() && source.getDosageFirstRep().getRoute().getCodingFirstRep().hasDisplayElement()

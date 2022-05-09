@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class PrescriptionServiceImpl implements PrescriptionService {
     private final CurrentPatient currentPatient;
     private final HapiToCommandPrescription hapiToCommandPrescription;
-    private final CommandToEntityPrescription commandToEntityPrescription = new CommandToEntityPrescription();
+    private final CommandToEntityPrescription commandToEntityPrescription;
     private final EntityToCommandPrescription entityToCommandPrescription = new EntityToCommandPrescription();
     private final PrescriptionRepository prescriptionRepository;
     @Autowired
@@ -54,11 +54,12 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private static final String CODE_SYSTEM = "http://terminology.hl7.org/CodeSystem/v2-0203";
     private static final String CODE = "HOSPITAL";
 
-    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, PrescriptionRepository prescriptionRepository,
+    public PrescriptionServiceImpl(CurrentPatient currentPatient, HapiToCommandPrescription hapiToCommandPrescription, CommandToEntityPrescription commandToEntityPrescription, PrescriptionRepository prescriptionRepository,
                                    CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService,
                                    PrescriptionTypesRepository prescriptionTypesRepository, CloudConnection cloudConnection, TranslateService translateService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandPrescription = hapiToCommandPrescription;
+        this.commandToEntityPrescription = commandToEntityPrescription;
         this.prescriptionRepository = prescriptionRepository;
         this.currentD2DConnection = currentD2DConnection;
         this.auditInformationService = auditInformationService;
@@ -277,27 +278,27 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     private static void toSortMethodCommand(List<PrescriptionInfoCommand> med) {
-        med.sort((o1, o2) -> {
-            if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
-                return -1;
-            }
-            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
-                return -1;
-            }
-            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Stopped")) {
-                return -1;
-            }
-            if (o1.getStatus().equalsIgnoreCase("Stopped") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
-                return 1;
-            }
-            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
-                return 1;
-            }
-            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Active")) {
-                return 1;
-            }
-            return 0;
-        });
+//        med.sort((o1, o2) -> {
+//            if (o1.getStatus().equalsIgnoreCase("Active") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
+//                return -1;
+//            }
+//            if (o1.getStatus().equalsIgnoreCase("Active") && o2.getStatus().equalsIgnoreCase("Stopped")) {
+//                return -1;
+//            }
+//            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Stopped")) {
+//                return -1;
+//            }
+//            if (o1.getStatus().equalsIgnoreCase("Stopped") && (o2.getStatus().equalsIgnoreCase("On-Hold") || o2.getStatus().equalsIgnoreCase("On Hold"))) {
+//                return 1;
+//            }
+//            if (o1.getStatus().equalsIgnoreCase("Stopped") && o2.getStatus().equalsIgnoreCase("Active")) {
+//                return 1;
+//            }
+//            if ((o1.getStatus().equalsIgnoreCase("On-Hold") || o1.getStatus().equalsIgnoreCase("On Hold")) && o2.getStatus().equalsIgnoreCase("Active")) {
+//                return 1;
+//            }
+//            return 0;
+//        });
     }
 
     private static void toSortMethodEntity(List<PrescriptionEntity> med) {
@@ -330,11 +331,17 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
         Medication medication = new Medication();
         medication.setId(UUID.randomUUID().toString());
-        medicationStatement.setMedication(new Reference(medication));
+        try {
+            if (Objects.nonNull(medicationStatement)) {
+                medicationStatement.setMedication(new Reference(medication));
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         medication.setCode(new CodeableConcept().addCoding(new Coding()
-                .setSystem("http://loinc.org")
-                .setCode("52471-0")
+                .setSystem("http://www.whocc.no/atc")
+                .setCode(prescriptionEntity.getPrescriptionTypesEntity().getLoinc())
                 .setDisplay(prescriptionEntity.getDrugName())));
 
         Timing t = new Timing();
@@ -351,7 +358,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());
         medicationStatement.getDosageFirstRep().getTiming().getRepeat().getBoundsPeriod().setStart(dateStart);
 
-        medicationStatement.setSubject(new Reference(prescriptionEntity.getPatientName()));
+//        String name = currentPatient.getPatient()
+//                .getName()
+//                .stream()
+//                .map(humanName -> String.join(" ", humanName.getGivenAsSingleString()))
+//                .collect(Collectors.joining(","));
+
+        //medicationStatement.setSubject(new Reference());
 //        Timing.TimingRepeatComponent repeat = t.getRepeat();
 //        Period period = new Period()
 //                .setStart(new Date())

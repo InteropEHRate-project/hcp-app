@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.medicationsummary;
 
+import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPrescription;
 import eu.interopehrate.hcpapp.converters.fhir.currentmedications.HapiToCommandPrescription;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -50,12 +51,13 @@ class PrescriptionControllerTest {
     private CloudConnection cloudConnection;
     @Mock
     private TranslateService translateService;
+    private CommandToEntityPrescription commandToEntityPrescription;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         PrescriptionService service =
-                new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, this.prescriptionRepository, this.currentD2DConnection,
+                new PrescriptionServiceImpl(this.currentPatient, this.hapiToCommandPrescription, commandToEntityPrescription, this.prescriptionRepository, this.currentD2DConnection,
                         auditInformationService, prescriptionTypesRepository, this.cloudConnection, translateService);
         this.controller = new PrescriptionController(service);
     }
