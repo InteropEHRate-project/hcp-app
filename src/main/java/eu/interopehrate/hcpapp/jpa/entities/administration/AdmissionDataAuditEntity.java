@@ -19,7 +19,6 @@ public class AdmissionDataAuditEntity extends AuditInformationEntity {
     private String patientName;
     @NotNull
     private String patientId;
-    @NotNull
     private LocalDate dateOfBirth;
     @NotNull
     private String gender;

@@ -42,7 +42,7 @@ public class AdmissionDataAuditServiceImpl implements AdmissionDataAuditService 
         String firstNamePatient;
         String lastNamePatient;
         String idPatient;
-        LocalDate dateOfBirthPatient;
+        LocalDate dateOfBirthPatient = null;
         String genderPatient;
         if (Objects.nonNull(currentPatient.getPatient()) && Objects.nonNull(currentPatient.getPatient().getName())) {
             firstNamePatient = currentPatient.getPatient()
@@ -56,13 +56,18 @@ public class AdmissionDataAuditServiceImpl implements AdmissionDataAuditService 
                     .map(humanName -> String.join(" ", "Family Name:" + " " + humanName.getFamily()))
                     .collect(Collectors.joining(","));
             idPatient = currentPatient.getPatient().getId();
-            dateOfBirthPatient = Instant.ofEpochMilli(currentPatient.getPatient().getBirthDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            try {
+                dateOfBirthPatient = Instant.ofEpochMilli(currentPatient.getPatient().getBirthDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            } catch (NullPointerException e) {
+                System.out.println("Error thrown for null BIRTH DATE!");
+            }
+
             genderPatient = currentPatient.getPatient().getGender().toString();
         } else {
             firstNamePatient = "First_Name";
             lastNamePatient = "Last Name";
             idPatient = "ID";
-            dateOfBirthPatient = LocalDate.now();
+            dateOfBirthPatient = null;
             genderPatient = "Gender";
         }
 
