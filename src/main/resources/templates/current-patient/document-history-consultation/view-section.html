@@ -139,10 +139,10 @@
         </tr>
         </tbody>
     </table>
-    <div class="row justify-content-end">
-        <a class="btn btn-primary" th:href="@{/current-patient/document-history-consultation/refresh}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.sehr}">Refresh data from S-EHR</a>
-    </div>
+<!--    <div class="row justify-content-end">-->
+<!--        <a class="btn btn-primary" th:href="@{/current-patient/document-history-consultation/refresh}"-->
+<!--           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.sehr}">Refresh data from S-EHR</a>-->
+<!--    </div>-->
     <br>
     <div class="row justify-content-end"
          th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">

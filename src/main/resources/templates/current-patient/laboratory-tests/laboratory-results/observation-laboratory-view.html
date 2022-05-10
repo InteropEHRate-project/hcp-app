@@ -137,11 +137,11 @@
             </ul>
         </nav>
     </div>
-    <div class="row justify-content-end">
-<!--        th:if="${session.MVisit != null && session.MVisit.equalsIgnoreCase('OUTPATIENT_VISIT')}"-->
-        <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.sehr}">Refresh data from S-EHR</a>
-    </div>
+<!--    <div class="row justify-content-end">-->
+<!--&lt;!&ndash;        th:if="${session.MVisit != null && session.MVisit.equalsIgnoreCase('OUTPATIENT_VISIT')}"&ndash;&gt;-->
+<!--        <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh}"-->
+<!--           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.sehr}">Refresh data from S-EHR</a>-->
+<!--    </div>-->
     <br/>
     <div class="row justify-content-end"
          th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
