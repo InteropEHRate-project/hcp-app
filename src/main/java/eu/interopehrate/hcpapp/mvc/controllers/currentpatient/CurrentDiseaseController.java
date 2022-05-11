@@ -33,13 +33,15 @@ public class CurrentDiseaseController {
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
         model.addAttribute("currentDiseaseInfoCommand", new CurrentDiseaseInfoCommand());
+        model.addAttribute("currentDiseaseTypes", this.currentDiseaseService.getCurrentTypesRepository().findAll());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute CurrentDiseaseInfoCommand currentDiseaseInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute CurrentDiseaseInfoCommand currentDiseaseInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("currentDiseaseTypes", this.currentDiseaseService.getCurrentTypesRepository().findAll());
             return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
         }
         this.currentDiseaseService.insertCurrentDisease(currentDiseaseInfoCommand);
@@ -57,6 +59,7 @@ public class CurrentDiseaseController {
     @RequestMapping("/open-update-page")
     public String openEditCurrentDisease(@RequestParam("id") String id, Model model) {
         model.addAttribute("currentDiseaseInfoCommandUpdate", this.currentDiseaseService.currentDiseaseById(id));
+        model.addAttribute("currentDiseaseTypes", this.currentDiseaseService.getCurrentTypesRepository().findAll());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE;
     }
 

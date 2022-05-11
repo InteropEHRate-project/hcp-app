@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.CurrentDiseaseEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
@@ -29,16 +30,23 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private final CurrentDiseaseRepository currentDiseaseRepository;
     private final EntityToCommandCurrentDisease entityToCommandCurrentDisease;
     private final CurrentD2DConnection currentD2DConnection;
+    private final CurrentDiseaseTypesRepository currentDiseaseTypesRepository;
 
     public CurrentDiseaseServiceImpl(CurrentPatient currentPatient, HapiToCommandCurrentDisease hapiToCommandCurrentDisease,
                                      CommandToEntityCurrentDisease commandToEntityCurrentDisease, CurrentDiseaseRepository currentDiseaseRepository,
-                                     EntityToCommandCurrentDisease entityToCommandCurrentDisease, CurrentD2DConnection currentD2DConnection) {
+                                     EntityToCommandCurrentDisease entityToCommandCurrentDisease, CurrentD2DConnection currentD2DConnection, CurrentDiseaseTypesRepository currentDiseaseTypesRepository) {
         this.currentPatient = currentPatient;
         this.hapiToCommandCurrentDisease = hapiToCommandCurrentDisease;
         this.commandToEntityCurrentDisease = commandToEntityCurrentDisease;
         this.currentDiseaseRepository = currentDiseaseRepository;
         this.entityToCommandCurrentDisease = entityToCommandCurrentDisease;
         this.currentD2DConnection = currentD2DConnection;
+        this.currentDiseaseTypesRepository = currentDiseaseTypesRepository;
+    }
+
+    @Override
+    public CurrentDiseaseTypesRepository getCurrentTypesRepository() {
+        return this.currentDiseaseTypesRepository;
     }
 
     @Override
@@ -67,7 +75,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
 
     @Override
     public void insertCurrentDisease(CurrentDiseaseInfoCommand currentDiseaseInfoCommand) {
-        this.currentDiseaseRepository.save(this.commandToEntityCurrentDisease.convert(currentDiseaseInfoCommand));
+        this.currentDiseaseRepository.save(Objects.requireNonNull(this.commandToEntityCurrentDisease.convert(currentDiseaseInfoCommand)));
     }
 
     @Override
@@ -196,7 +204,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         condition.setCode(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
                         .setSystem("http://loinc.org")
-                        .setCode("75326-9")
+                        .setCode(currentDiseaseEntity.getCurrentDiseaseTypesEntity().getLoinc())
                         .setDisplay(currentDiseaseEntity.getDisease())));
 
         condition.setId(UUID.randomUUID().toString());
@@ -207,7 +215,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
                 condition.getAbatementDateTimeType().setValue(Date.from(currentDiseaseEntity.getEndDateOfDiagnosis().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             }
         } catch (NullPointerException exception) {
-            exception.printStackTrace();
+            System.out.println("End date for Current Diseases is null.");
         }
 
         return condition;

@@ -19,7 +19,11 @@
         <div class="form-row">
             <div class="col-md-12">
                 <label for="disease" th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</label>
-                <input id="disease" type="text" class="form-control" th:classappend="${#fields.hasErrors('disease')} ? 'is-invalid' :''" th:field="*{disease}"/>
+                <select class="form-control" id="disease" th:field="*{disease}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.choose}">Choose a drug</option>
+                    <option input type="text" class="form-control" th:each="type : ${currentDiseaseTypes}" th:classappend="${#fields.hasErrors('disease')} ? 'is-invalid' :''"
+                            th:value="${type.getName()}" th:text="${type.getName()}">Disease</option>
+                </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('disease')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('disease')}" th:text="${err}">err</li>

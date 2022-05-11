@@ -4,9 +4,7 @@ import eu.interopehrate.hcpapp.jpa.entities.common.HCPApplicationEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -39,4 +37,8 @@ public class CurrentDiseaseEntity extends HCPApplicationEntity {
     private String verificationStatus;
     @Column(name = "COMMENT")
     private String comment;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "DISEASE_CODE", nullable = false, foreignKey = @ForeignKey(name = "FK_DISEASE_CODE"))
+    private CurrentDiseaseTypesEntity currentDiseaseTypesEntity;
 }
