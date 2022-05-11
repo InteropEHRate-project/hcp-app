@@ -201,6 +201,9 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSignsEntity.setAuthor(vitalSignsEntity.getAuthor());
         vitalSigns.setSubject(new Reference(vitalSignsEntity.getPatientId()));
 
+        Extension provenance = vitalSigns.getExtensionByUrl("http://interopehrate.eu/fhir/StructureDefinition/ProvenanceExtension-IEHR");
+        vitalSigns.addExtension().setValue(provenance);
+
 // TO do  add proper subject (Patient), encounter , performer()
 
         return vitalSigns;

@@ -68,7 +68,9 @@ public class CurrentD2DConnection implements DisposableBean {
         return indexPatientDataCommand;
     }
 
-    public TD2D getTd2D() { return td2D; }
+    public TD2D getTd2D() {
+        return td2D;
+    }
 
     @Override
     public void destroy() {
@@ -287,7 +289,7 @@ public class CurrentD2DConnection implements DisposableBean {
             log.info("bundle items " + healthDataBundle.getEntry().size());
             CurrentD2DConnection.this.currentPatient.initPatientSummary(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initPrescription(healthDataBundle);
-     //     CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
+            //     CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initImageReport(healthDataBundle);
             CurrentD2DConnection.this.currentPatient.initVitalSigns(healthDataBundle);
@@ -326,7 +328,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
     @SneakyThrows
     public void getIPS() {
-        this.td2D.getResourcesByCategories(null, false, CONDITION, ALLERGY_INTOLERANCE, MEDICATION_REQUEST, PATIENT_SUMMARY);
+        this.td2D.getResourcesByCategories(null, false, CONDITION, ALLERGY_INTOLERANCE, MEDICATION_REQUEST, PATIENT_SUMMARY, OBSERVATION, DOCUMENT_REFERENCE);
         log.info("Patient Summary received");
     }
 
