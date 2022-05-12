@@ -76,9 +76,9 @@ public interface TemplateNames {
     String CURRENT_PATIENT_VISIT_PRESCRIPTION_UPDATE_PAGE = "current-patient/visit-data/visit-prescription/update-info";
     String CURRENT_PATIENT_REASON_VIEW_SECTION = "current-patient/visit-data/reason/view-section";
     String CURRENT_PATIENT_PH_EXAM_VIEW_SECTION = "current-patient/visit-data/ph-exam/view-section";
-    String CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW_PAGE ="/current-patient/visit-data/instr-exam/view-section";
-    String CURRENT_PATIENT_INSTRUMENTS_EXAM_ADD_PAGE ="/current-patient/visit-data/instr-exam/add-info";
-    String CURRENT_PATIENT_INSTRUMENTS_EXAM_UPDATE_PAGE ="/current-patient/visit-data/instr-exam/update-info";
-    String CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW ="/current-patient/visit-data/instr-exam/view-instr";
+    String CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW_PAGE ="current-patient/visit-data/instr-exam/view-section";
+    String CURRENT_PATIENT_INSTRUMENTS_EXAM_ADD_PAGE ="current-patient/visit-data/instr-exam/add-info";
+    String CURRENT_PATIENT_INSTRUMENTS_EXAM_UPDATE_PAGE ="current-patient/visit-data/instr-exam/update-info";
+    String CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW ="current-patient/visit-data/instr-exam/view-instr";
     String CURRENT_PATIENT_CONCLUSION_VIEW_SECTION = "current-patient/visit-data/conclusion/view-section";
 }
