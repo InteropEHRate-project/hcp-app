@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <label for="disease" th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</label>
                 <select class="form-control" id="disease" th:field="*{disease}">
-                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.choose}">Choose a drug</option>
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.visit.data.choose}">Choose a disease</option>
                     <option input type="text" class="form-control" th:each="type : ${currentDiseaseTypes}" th:classappend="${#fields.hasErrors('disease')} ? 'is-invalid' :''"
                             th:value="${type.getName()}" th:text="${type.getName()}">Disease</option>
                 </select>
