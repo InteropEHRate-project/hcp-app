@@ -5,12 +5,10 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCom
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Condition;
-import org.hl7.fhir.r4.model.DateTimeType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -45,11 +43,12 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
 
             currentDiseaseInfoCommand.setDiseaseTranslated(condition.getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString());
         }
-        if (Objects.nonNull(condition.getOnset())) {
-            Date onSet = ((DateTimeType) condition.getOnset()).getValue();
-            currentDiseaseInfoCommand.setDateOfDiagnosis(onSet.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate());
+        try {
+            if (Objects.nonNull(condition.getRecordedDate())) {
+                currentDiseaseInfoCommand.setDateOfDiagnosis(condition.getRecordedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Date for Current Disease is null.");
         }
         if (condition.hasAbatementDateTimeType() && condition.getAbatementDateTimeType().hasValue()) {
             currentDiseaseInfoCommand.setEndDateOfDiagnosis(condition.getAbatementDateTimeType().getValue()
