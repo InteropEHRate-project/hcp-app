@@ -188,7 +188,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         int d = vitalSignsEntity.getLocalDateOfVitalSign().getDayOfMonth();
         int h = vitalSignsEntity.getLocalDateOfVitalSign().getHour();
         int min = vitalSignsEntity.getLocalDateOfVitalSign().getMinute();
-        when.set(d, m, y, h, min);
+        when.set(y, m, d, h, min);
         vitalSigns.setEffective(new DateTimeType(when));
 
         Quantity quantity = new Quantity();
