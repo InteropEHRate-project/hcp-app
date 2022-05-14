@@ -203,7 +203,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
 
         condition.setCode(new CodeableConcept().setCoding(new ArrayList<>())
                 .addCoding(new Coding()
-                        .setSystem("http://loinc.org")
+                        .setSystem("http://hl7.org/fhir/sid/icd-10-cm")
                         .setCode(currentDiseaseEntity.getCurrentDiseaseTypesEntity().getLoinc())
                         .setDisplay(currentDiseaseEntity.getDisease())));
 
