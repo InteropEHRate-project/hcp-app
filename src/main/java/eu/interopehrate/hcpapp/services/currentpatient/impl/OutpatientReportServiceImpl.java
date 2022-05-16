@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.PrivateKey;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -74,13 +75,15 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
 
         Practitioner author = new Practitioner();
         author.setId(UUID.randomUUID().toString());
-//        author.setName((java.util.List<HumanName>) new Reference(healthCareProfessionalService.getHealthCareProfessional().getFirstName() +
-//                " " + healthCareProfessionalService.getHealthCareProfessional().getLastName()));
+        author.addName().setFamily(healthCareProfessionalService.getHealthCareProfessional().getFirstName() +
+                " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        bundleEvaluation.addEntry().setResource(author);
 
         HealthCareOrganizationEntity healthCareOrganizationEntity = new HealthCareOrganizationEntity();
         Organization hospital = new Organization();
         hospital.setId(UUID.randomUUID().toString());
         hospital.setName(healthCareOrganizationEntity.getName());
+        bundleEvaluation.addEntry().setResource(hospital);
 
         IndexPatientDataCommand patientDataCommand = new IndexPatientDataCommand();
         Patient patient = new Patient();
@@ -139,8 +142,15 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         medicationSection.addEntry().setResource(medicationStatement);
         composition.addSection(medicationSection);
         bundleEvaluation.addEntry().setResource(medicationStatement);
-        bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
-        //   ProvenanceBuilder.addProvenanceExtension(composition, medicationStatement);
+        try {
+            if (Objects.nonNull(medicationStatement.getMedicationReference().getResource())) {
+                bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
+            }
+        } catch (NullPointerException exception) {
+            System.out.println("Reference of Medication Statement is null.");
+        }
+        //bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
+        // ProvenanceBuilder.addProvenanceExtension(composition, medicationStatement);
 
         Composition.SectionComponent currentDiseasesSection = new Composition.SectionComponent();
         currentDiseasesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "75326-9", "Current Diseases")));
