@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -53,6 +54,7 @@ public class PHExamServiceImpl implements PHExamService {
                 .map(this.entityToCommandPHExam::convert)
                 .collect(Collectors.toList());
         return PHExamCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .phExamInfoCommands(listOfExams)
                 .listClinicalExam(this.listClinicalExam)
                 .build();
@@ -85,6 +87,7 @@ public class PHExamServiceImpl implements PHExamService {
 
     @Override
     public void insertPhExam(PHExamInfoCommand phExamInfoCommand) {
+        phExamInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         this.phExamRepository.save(Objects.requireNonNull(this.commandToEntityPHExam.convert(phExamInfoCommand)));
     }
 
@@ -108,6 +111,7 @@ public class PHExamServiceImpl implements PHExamService {
     private static DiagnosticReport createPHExamFromEntity(PHExamEntity phExamEntity) {
         DiagnosticReport phExam = new DiagnosticReport();
 
+        phExam.setId(UUID.randomUUID().toString());
         phExam.setCode(new CodeableConcept());
         phExam.getCode().addChild("coding");
         phExam.getCode().setCoding(new ArrayList<>());
@@ -118,11 +122,6 @@ public class PHExamServiceImpl implements PHExamService {
 
         // phExam.addNote().setText(phExamEntity.getClinicalExam());
         phExam.getResultFirstRep().setReference(phExamEntity.getClinicalExam());
-
-//        phExam.getSubject().setReference(phExamEntity.getAuthor());
-//        phExam.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/SignatureExtension-IEHR")
-//                .setValue(new Signature().setWho(phExam.getSubject().setReference(phExamEntity.getAuthor()))
-//                        .setTargetFormat("json").setSigFormat("application/jose"));
 
         return phExam;
     }

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class PHExamInfoCommand {
     private Long id;
+    private String patientId;
     @NotEmpty
     @NotNull
     private String clinicalExam;

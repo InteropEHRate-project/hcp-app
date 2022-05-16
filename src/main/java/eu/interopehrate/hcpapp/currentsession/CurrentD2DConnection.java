@@ -328,7 +328,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
     @SneakyThrows
     public void getIPS() {
-        this.td2D.getResourcesByCategories(null, false, CONDITION, ALLERGY_INTOLERANCE, MEDICATION_REQUEST, PATIENT_SUMMARY, OBSERVATION, DOCUMENT_REFERENCE);
+        this.td2D.getResourcesByCategories(null, false, CONDITION, ALLERGY_INTOLERANCE, MEDICATION_REQUEST, OBSERVATION, DOCUMENT_REFERENCE);
         log.info("Patient Summary received");
     }
 
