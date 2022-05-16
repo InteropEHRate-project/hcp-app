@@ -138,7 +138,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(observation);
 
         Composition.SectionComponent medicationSection = new Composition.SectionComponent();
-        medicationSection.setCode(new CodeableConcept(new Coding("http://www.whocc.no/atc", "10183-2", "Hospital discharge medications")));
+        medicationSection.setCode(new CodeableConcept(new Coding("http://www.whocc.no/atc", "A10BA02", "Hospital discharge medications")));
         medicationSection.addEntry().setResource(medicationStatement);
         composition.addSection(medicationSection);
         bundleEvaluation.addEntry().setResource(medicationStatement);

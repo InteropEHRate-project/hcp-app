@@ -33,13 +33,15 @@ public class AllergyController {
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
         model.addAttribute("allergyInfoCommand", new AllergyInfoCommand());
+        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypesRepository().findAll());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
     }
 
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@Valid @ModelAttribute AllergyInfoCommand allergyInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("allergyTypes", this.allergyService.getAllergyTypesRepository().findAll());
             return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
         }
         this.allergyService.insertAllergy(allergyInfoCommand);
@@ -58,6 +60,7 @@ public class AllergyController {
     @RequestMapping("/open-update-page")
     public String openEditNewAllergy(@RequestParam("id") Long id, Model model) {
         model.addAttribute("allergyInfoCommand", this.allergyService.retrieveNewAllergyById(id));
+        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypesRepository().findAll());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_PAGE;
     }
 

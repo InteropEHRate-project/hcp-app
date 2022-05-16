@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import org.hl7.fhir.r4.model.AllergyIntolerance;
@@ -23,4 +24,5 @@ public interface AllergyService {
     void updateAllergyFromSEHR(AllergyInfoCommand allergyInfoCommand);
     AllergyIntolerance callAllergies();
     AllergyCommand allergiesUpload();
+    AllergyTypesRepository getAllergyTypesRepository();
 }

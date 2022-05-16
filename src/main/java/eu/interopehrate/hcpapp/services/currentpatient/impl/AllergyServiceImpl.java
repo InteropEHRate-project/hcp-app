@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.AllergyEntity;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
@@ -32,11 +33,12 @@ public class AllergyServiceImpl implements AllergyService {
     private final HealthCareProfessionalService healthCareProfessionalService;
     private final CurrentD2DConnection currentD2DConnection;
     private final AuditInformationService auditInformationService;
+    private final AllergyTypesRepository allergyTypesRepository;
 
     public AllergyServiceImpl(CurrentPatient currentPatient, HapiToCommandAllergy hapiToCommandAllergy,
                               AllergyRepository allergyRepository, CommandToEntityAllergy commandToEntityAllergy,
                               EntityToCommandAllergy entityToCommandAllergy, HealthCareProfessionalService healthCareProfessionalService,
-                              CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService) {
+                              CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, AllergyTypesRepository allergyTypesRepository) {
         this.currentPatient = currentPatient;
         this.hapiToCommandAllergy = hapiToCommandAllergy;
         this.allergyRepository = allergyRepository;
@@ -45,6 +47,7 @@ public class AllergyServiceImpl implements AllergyService {
         this.healthCareProfessionalService = healthCareProfessionalService;
         this.currentD2DConnection = currentD2DConnection;
         this.auditInformationService = auditInformationService;
+        this.allergyTypesRepository = allergyTypesRepository;
     }
 
     @Override
@@ -241,7 +244,7 @@ public class AllergyServiceImpl implements AllergyService {
         allergies.getCode().setCoding(new ArrayList<>());
         allergies.getCode().getCoding().add(new Coding()
                 .setSystem("http://loinc")
-                .setCode("48765-2")
+                .setCode(allergyEntity.getAllergyTypesEntity().getLoinc())
                 .setDisplay("Allergies and adverse reactions Document"));
         allergies.getCode().getCoding().get(0).setDisplay(allergyEntity.getName());
 
@@ -250,5 +253,10 @@ public class AllergyServiceImpl implements AllergyService {
         //allergies.setId(allergyEntity.getId().toString());
 
         return allergies;
+    }
+
+    @Override
+    public AllergyTypesRepository getAllergyTypesRepository() {
+        return this.allergyTypesRepository;
     }
 }

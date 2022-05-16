@@ -106,3 +106,52 @@ insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DR
    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in the puerperium','O24','O24.3');
 insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Poisoning by, adverse effect of and underdosing of insulin and oral hypoglycemic [antidiabetic] drugs', 'T38', 'T38.3');
+
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hemoglobin Okaloosa', '105590001', '102002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ornithine racemase', '105590001', '120006');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ferrous (59-Fe) sulfate (substance)', '105590001', '125001');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Galactosyl-N-acetylglucosaminylgalactosylglucosylceramide alpha-galactosyltransferase', '105590001', '126000');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hemoglobin Hopkins-II', '105590001', '130002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Dolichyl-phosphate mannosyltransferase', '105590001', '131003');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ferrocyanide salt', '105590001', '159002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Phosphoenolpyruvate-protein phosphotransferase', '105590001', '164003');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Uridine diphosphate galactose', '105590001', '178002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'HLA-Cw9 antigen', '105590001', '186002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cyanocobalamin (57-Co) (substance)', '105590001', '187006');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Berberine', '105590001', '200001');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Coumachlor', '105590001', '296000');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Octylphenoxy P.H. ethanol', '105590001', '322006');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Arsenic-76 (substance)', '105590001', '327000');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Antimony-127 (substance)', '105590001', '329002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Fibrinogen Tokyo II', '105590001', '336001');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Enzyme variant', '105590001', '340005');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Fibrinogen San Juan', '105590001', '363000');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Beta>2S< glycoprotein (substance)', '105590001', '370000');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Acylcarnitine hydrolase', '105590001', '371001');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sparteine', '105590001', '377002');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Gadolinium-151 (substance)', '105590001', '392001');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Immunoglobulin pentamer', '105590001', '395004 ');

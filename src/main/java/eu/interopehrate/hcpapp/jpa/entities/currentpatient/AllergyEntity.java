@@ -4,8 +4,7 @@ import eu.interopehrate.hcpapp.jpa.entities.common.HCPApplicationEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -38,4 +37,8 @@ public class AllergyEntity extends HCPApplicationEntity {
     private String comments;
     @Column(name = "END_DATE")
     private LocalDate endDate;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ALLERGY_CODE", nullable = false, foreignKey = @ForeignKey(name = "FK_ALLERGY_CODE"))
+    private AllergyTypesEntity allergyTypesEntity;
 }
