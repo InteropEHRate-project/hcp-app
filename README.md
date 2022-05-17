@@ -10,7 +10,7 @@ HCP App:
  Steps to follow for the installation of the HCP App:
 - activate the bluetooth on the device
 - right click on the Run-HCP.app .bat file and click edit; 
-- 
+
 ![image](https://user-images.githubusercontent.com/104497337/168797837-536a953d-e6ac-4177-a0e1-159dc3df5366.png)
 
 
