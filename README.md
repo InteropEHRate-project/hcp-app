@@ -3,7 +3,8 @@
 The HCP App is software demonstrating the usage of the InteropEHRate protocols D2D and R2D.
 
 Installation guide
-Tools:  laptop with access on internet and operating system -> Windows, bluetooth
+
+Tools: laptop with access on internet and operating system -> Windows, bluetooth
 Download the apps here: 
 HCP App:
  Steps to follow for the installation of the HCP App:
