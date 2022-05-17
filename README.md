@@ -11,7 +11,7 @@ HCP App:
 - activate the bluetooth on the device
 - right click on the Run-HCP.app .bat file and click edit; 
 - 
-![image](https://user-images.githubusercontent.com/104497337/168796152-278fc103-ee89-42b2-9587-d827563738d2.png)
+![image](https://user-images.githubusercontent.com/104497337/168797837-536a953d-e6ac-4177-a0e1-159dc3df5366.png)
 
 
 -modify the path to the IPSValidatorPack folder files after the "=" sign: "-Dips.validator.pack=C:\\HCP-app\\IPSValidatorPack" -> it is your path (on your laptop) where the archive has been unzipped.
