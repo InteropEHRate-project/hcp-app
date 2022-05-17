@@ -9,14 +9,17 @@ HCP App:
  Steps to follow for the installation of the HCP App:
 - activate the bluetooth on the device
 - right click on the Run-HCP.app .bat file and click edit; 
+- 
 ![image](https://user-images.githubusercontent.com/104497337/168796152-278fc103-ee89-42b2-9587-d827563738d2.png)
 
 
 -modify the path to the IPSValidatorPack folder files after the "=" sign: "-Dips.validator.pack=C:\\HCP-app\\IPSValidatorPack" -> it is your path (on your laptop) where the archive has been unzipped.
+
 ![image](https://user-images.githubusercontent.com/104497337/168796194-1f3c09fb-0ad6-4b2f-b02b-ac98a59f5a3e.png)
 
 
 Make sure that the path is correct. The path should contain DOUBLE BACK-SLASHES "\\".
+
 ![image](https://user-images.githubusercontent.com/104497337/168796107-87ab610b-f4d2-44bf-b34d-0f5fabafb475.png)
 
 Save the modifications that were made in the Run-HCP.app file and then double click on the file.
