@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityCurrentDisease;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.CurrentDiseaseEntity;
@@ -31,10 +32,11 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     private final EntityToCommandCurrentDisease entityToCommandCurrentDisease;
     private final CurrentD2DConnection currentD2DConnection;
     private final CurrentDiseaseTypesRepository currentDiseaseTypesRepository;
+    private final CloudConnection cloudConnection;
 
     public CurrentDiseaseServiceImpl(CurrentPatient currentPatient, HapiToCommandCurrentDisease hapiToCommandCurrentDisease,
                                      CommandToEntityCurrentDisease commandToEntityCurrentDisease, CurrentDiseaseRepository currentDiseaseRepository,
-                                     EntityToCommandCurrentDisease entityToCommandCurrentDisease, CurrentD2DConnection currentD2DConnection, CurrentDiseaseTypesRepository currentDiseaseTypesRepository) {
+                                     EntityToCommandCurrentDisease entityToCommandCurrentDisease, CurrentD2DConnection currentD2DConnection, CurrentDiseaseTypesRepository currentDiseaseTypesRepository, CloudConnection cloudConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandCurrentDisease = hapiToCommandCurrentDisease;
         this.commandToEntityCurrentDisease = commandToEntityCurrentDisease;
@@ -42,6 +44,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
         this.entityToCommandCurrentDisease = entityToCommandCurrentDisease;
         this.currentD2DConnection = currentD2DConnection;
         this.currentDiseaseTypesRepository = currentDiseaseTypesRepository;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -220,4 +223,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
 
         return condition;
     }
+
+    @Override
+    public void refreshData() { this.cloudConnection.downloadCondition(); }
 }

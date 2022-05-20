@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
@@ -8,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/current-diseases")
@@ -21,7 +24,10 @@ public class CurrentDiseaseController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model) {
+    public String viewSection(Model model, HttpSession session) {
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
+        }
         model.addAttribute("patient", this.currentDiseaseService.getCurrentPatient().getPatient());
         model.addAttribute("currentDiseaseCommand", this.currentDiseaseService.currentDiseasesSection());
         model.addAttribute("currentDiseasesList", this.currentDiseaseService.listNewCurrentDiseases());
@@ -99,24 +105,31 @@ public class CurrentDiseaseController {
 
     @DeleteMapping
     @RequestMapping("/delete-current-disease")
-    public String deleteCurrentDiseaseFromSEHR(@RequestParam("id") String id, Model model) {
+    public String deleteCurrentDiseaseFromSEHR(@RequestParam("id") String id, Model model, HttpSession session) {
         this.currentDiseaseService.deleteCurrentDisease(id);
         model.addAttribute("currentDiseaseDeletedFromSEHR", Boolean.TRUE);
-        return this.viewSection(model);
+        return this.viewSection(model, session);
     }
 
     @DeleteMapping
     @RequestMapping("/delete-current-disease-from-db")
-    public String deleteCurrentDisease(@RequestParam("id") Long id, Model model) {
+    public String deleteCurrentDisease(@RequestParam("id") Long id, Model model, HttpSession session) {
         this.currentDiseaseService.deleteNewCurrentDisease(id);
         model.addAttribute("currentDiseaseDeletedFromDataBase", Boolean.TRUE);
-        return this.viewSection(model);
+        return this.viewSection(model, session);
     }
 
     @GetMapping
     @RequestMapping("/refresh")
     public String refresh() throws Exception {
         this.currentDiseaseService.refresh();
+        return "redirect:/current-patient/current-diseases/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/refresh-data")
+    public String refreshData() {
+        this.currentDiseaseService.refreshData();
         return "redirect:/current-patient/current-diseases/view-section";
     }
 }

@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
@@ -8,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/allergies")
@@ -21,7 +24,10 @@ public class AllergyController {
 
     @GetMapping
     @RequestMapping("/view-section")
-    public String viewSection(Model model) {
+    public String viewSection(Model model, HttpSession session) {
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
+        }
         model.addAttribute("patient", this.allergyService.getCurrentPatient().getPatient());
         model.addAttribute("allergyIntolerance", this.allergyService.allergyInfoCommand());
         model.addAttribute("allergyIntoleranceTranslated", this.allergyService.allergyInfoCommandTranslated());
@@ -50,10 +56,10 @@ public class AllergyController {
 
     @DeleteMapping
     @RequestMapping("/delete")
-    public String deleteNewAllergy(@RequestParam("id") Long id, Model model) {
+    public String deleteNewAllergy(@RequestParam("id") Long id, Model model, HttpSession session) {
         this.allergyService.deleteNewAllergy(id);
         model.addAttribute("allergyDeleted", Boolean.TRUE);
-        return this.viewSection(model);
+        return this.viewSection(model, session);
     }
 
     @GetMapping
@@ -93,9 +99,16 @@ public class AllergyController {
 
     @DeleteMapping
     @RequestMapping("/delete-data-s-ehr")
-    public String deleteAllergyFromSEHR(@RequestParam("id") String id, Model model) {
+    public String deleteAllergyFromSEHR(@RequestParam("id") String id, Model model, HttpSession session) {
         this.allergyService.deleteAllergyFromSEHR(id);
         model.addAttribute("allergyDeletedFromSEHR", Boolean.TRUE);
-        return this.viewSection(model);
+        return this.viewSection(model, session);
+    }
+
+    @GetMapping
+    @RequestMapping("/refresh-data")
+    public String refreshData() {
+        this.allergyService.refreshData();
+        return "redirect:/current-patient/allergies/view-section";
     }
 }

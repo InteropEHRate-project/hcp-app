@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityAllergy;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandAllergy;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandAllergy;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.AllergyEntity;
@@ -34,11 +35,12 @@ public class AllergyServiceImpl implements AllergyService {
     private final CurrentD2DConnection currentD2DConnection;
     private final AuditInformationService auditInformationService;
     private final AllergyTypesRepository allergyTypesRepository;
+    private final CloudConnection cloudConnection;
 
     public AllergyServiceImpl(CurrentPatient currentPatient, HapiToCommandAllergy hapiToCommandAllergy,
                               AllergyRepository allergyRepository, CommandToEntityAllergy commandToEntityAllergy,
                               EntityToCommandAllergy entityToCommandAllergy, HealthCareProfessionalService healthCareProfessionalService,
-                              CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, AllergyTypesRepository allergyTypesRepository) {
+                              CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService, AllergyTypesRepository allergyTypesRepository, CloudConnection cloudConnection) {
         this.currentPatient = currentPatient;
         this.hapiToCommandAllergy = hapiToCommandAllergy;
         this.allergyRepository = allergyRepository;
@@ -48,6 +50,7 @@ public class AllergyServiceImpl implements AllergyService {
         this.currentD2DConnection = currentD2DConnection;
         this.auditInformationService = auditInformationService;
         this.allergyTypesRepository = allergyTypesRepository;
+        this.cloudConnection = cloudConnection;
     }
 
     @Override
@@ -259,4 +262,7 @@ public class AllergyServiceImpl implements AllergyService {
     public AllergyTypesRepository getAllergyTypesRepository() {
         return this.allergyTypesRepository;
     }
+
+    @Override
+    public void refreshData() { this.cloudConnection.downloadAllergies(); }
 }

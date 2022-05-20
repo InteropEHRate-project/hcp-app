@@ -113,7 +113,7 @@ public class CloudConnection implements DisposableBean {
                 this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
             log.info("IPS requested from Cloud.");
-            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.PATIENT_SUMMARY);
+            String patientSummary = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.PATIENT);
             if (patientSummary.equalsIgnoreCase("File not found")) {
                 log.error("PatientSummary not found");
             } else {
@@ -154,49 +154,97 @@ public class CloudConnection implements DisposableBean {
 
     @SneakyThrows
     public void downloadPrescription() {
-        String prescription = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.PATIENT_SUMMARY);
-        if (prescription.equalsIgnoreCase("File not found")) {
-            log.error("Prescription not found");
-        } else {
-            Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
-            this.currentPatient.initPrescription(prescriptionBundle);
-            log.info("Prescription received from Cloud");
+        String prescription = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.MEDICATION_REQUEST);
+        try {
+            if (prescription.equalsIgnoreCase("File not found")) {
+                log.error("Prescription not found");
+            } else {
+                Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
+                this.currentPatient.initPrescription(prescriptionBundle);
+                log.info("Prescription received from Cloud");
+            }
+        } catch (Exception e) {
+            System.out.println("Missing file for Prescription.");
         }
     }
 
     @SneakyThrows
     public void downloadDocumentReference() {
         String documentReference = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.DOCUMENT_REFERENCE);
-        if (documentReference.equalsIgnoreCase("File not found")) {
-            log.error("Document Reference not found");
-        } else {
-            Bundle documentReferenceBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(documentReference);
-            this.currentPatient.initDocHistoryConsultation(documentReferenceBundle);
-            log.info("Document Reference received from Cloud");
+        try {
+            if (documentReference.equalsIgnoreCase("File not found")) {
+                log.error("Document Reference not found");
+            } else {
+                Bundle documentReferenceBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(documentReference);
+                this.currentPatient.initDocHistoryConsultation(documentReferenceBundle);
+                log.info("Document Reference received from Cloud");
+            }
+        } catch (Exception e) {
+            System.out.println("Missing file Document Reference.");
+        }
+    }
+
+    @SneakyThrows
+    public void downloadAllergies() {
+        String allergy = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.ALLERGY_INTOLERANCE);
+        try {
+            if (allergy.equalsIgnoreCase("File not found")) {
+                log.error("Allergies not found");
+            } else {
+                Bundle allergyBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(allergy);
+                this.currentPatient.initPatientSummary(allergyBundle);
+                log.info("Allergies received from Cloud");
+            }
+        } catch (Exception e) {
+            System.out.println("Missing file for Allergies category.");
+        }
+    }
+
+    @SneakyThrows
+    public void downloadCondition() {
+        String condition = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.CONDITION);
+        try {
+            if (condition.equalsIgnoreCase("File not found")) {
+                log.error("Prescription not found");
+            } else {
+                Bundle conditionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(condition);
+                this.currentPatient.initPatientSummary(conditionBundle);
+                log.info("Condition received from Cloud");
+            }
+        } catch (Exception e) {
+            System.out.println("Missing file for Current Diseases");
         }
     }
 
     @SneakyThrows
     public void downloadLabResults() {
         String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.LABORATORY_REPORT);
-        if (laboratoryResults.equalsIgnoreCase("File not found")) {
-            log.error("LaboratoryResults not found");
-        } else {
-            Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
-            this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
-            log.info("LaboratoryResults received from Cloud");
+        try {
+            if (laboratoryResults.equalsIgnoreCase("File not found")) {
+                log.error("LaboratoryResults not found");
+            } else {
+                Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
+                this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+                log.info("LaboratoryResults received from Cloud");
+            }
+        } catch (Exception e) {
+            System.out.println("Missing file for Laboratory Results.");
         }
     }
 
     @SneakyThrows
     public void downloadImageReport() {
         String imageReport = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.IMAGE_REPORT);
-        if (imageReport.equalsIgnoreCase("File not found")) {
-            log.error("ImageReport not found");
-        } else {
-            Bundle imageReportBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(imageReport);
-            this.currentPatient.initImageReport(imageReportBundle);
-            log.info("ImageReport received from Cloud");
+        try {
+            if (imageReport.equalsIgnoreCase("File not found")) {
+                log.error("ImageReport not found");
+            } else {
+                Bundle imageReportBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(imageReport);
+                this.currentPatient.initImageReport(imageReportBundle);
+                log.info("ImageReport received from Cloud");
+            }
+        } catch (Exception e) {
+            System.out.println("Missing file.");
         }
     }
 

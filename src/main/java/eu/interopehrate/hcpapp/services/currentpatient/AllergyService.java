@@ -25,4 +25,5 @@ public interface AllergyService {
     AllergyIntolerance callAllergies();
     AllergyCommand allergiesUpload();
     AllergyTypesRepository getAllergyTypesRepository();
+    void refreshData();
 }

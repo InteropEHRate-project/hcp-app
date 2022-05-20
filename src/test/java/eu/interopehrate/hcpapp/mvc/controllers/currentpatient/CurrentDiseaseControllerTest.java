@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityCurrentDisease;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandCurrentDisease;
 import eu.interopehrate.hcpapp.converters.fhir.HapiToCommandCurrentDisease;
+import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
@@ -24,6 +25,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -33,6 +36,7 @@ import static org.mockito.Mockito.verify;
 class CurrentDiseaseControllerTest {
     @Mock
     private Model model;
+    private HttpSession session;
     private CurrentDiseaseController controller;
     @Mock
     private MachineTranslateService machineTranslateService;
@@ -53,19 +57,20 @@ class CurrentDiseaseControllerTest {
     @Mock
     private CurrentD2DConnection currentD2DConnection;
     private CurrentDiseaseTypesRepository currentDiseaseTypesRepository;
+    private CloudConnection cloudConnection;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         CurrentDiseaseService service = new CurrentDiseaseServiceImpl(
                 new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService), new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
-                hapiToCommandCurrentDisease, commandToEntityCurrentDisease, currentDiseaseRepository, entityToCommandCurrentDisease, currentD2DConnection, currentDiseaseTypesRepository);
+                hapiToCommandCurrentDisease, commandToEntityCurrentDisease, currentDiseaseRepository, entityToCommandCurrentDisease, currentD2DConnection, currentDiseaseTypesRepository, cloudConnection);
         this.controller = new CurrentDiseaseController(service);
     }
 
     @Test
     void viewSection() {
-        String returnedString = this.controller.viewSection(this.model);
+        String returnedString = this.controller.viewSection(this.model, this.session);
         assertEquals(TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_VIEW_SECTION, returnedString);
         verify(this.model, times(1)).addAttribute(eq("currentDiseaseCommand"), any(CurrentDiseaseCommand.class));
     }

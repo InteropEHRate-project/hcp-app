@@ -30,4 +30,5 @@ public interface CurrentDiseaseService {
     Condition callSendCurrentDiseases() throws IOException;
     void sendCurrentDiseases(Bundle condition) throws IOException;
     CurrentDiseaseTypesRepository getCurrentTypesRepository();
+    void refreshData();
 }
