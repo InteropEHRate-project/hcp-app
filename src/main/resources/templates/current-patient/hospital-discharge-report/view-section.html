@@ -120,6 +120,141 @@
             </tbody>
         </table>
 
+        <br>
+        <p th:if="${!hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()}">
+        <h4 th:if="${!hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.to.upload.in.sehr}">Vital Signs to upload in S-EHR</h4></p>
+        <table class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+                <th:block th:each="sample : ${hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().localDateTimeListWithoutDuplicates()}">
+                    <th th:text="${{sample}}"></th>
+                </th:block>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="an : ${hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().vitalSignsAnalysesWithoutDuplicates()}">
+                <div th:with="map=${hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().valueReturn()}">
+                    <td th:text="${{an}}"></td>
+                    <th:block th:each="sample : ${hospitalDischargeReportCommand.getVitalSignsService.vitalSignsUpload().localDateTimeListWithoutDuplicates()}">
+                        <td th:if="${map.get(an,sample) == null}">-</td>
+                        <div th:if="${map.get(an,sample) != null}">
+                            <td th:text="${{map.get(an,sample)}}"></td>
+                        </div>
+
+                    </th:block>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <h4 th:if="${!hospitalDischargeReportCommand.getCurrentDiseaseService().listNewCurrentDiseases().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.current.diseases.to.upload.in.sehr}">Current Diseases to upload in S-EHR</h4></p>
+        <table class="table table-bordered"
+               th:if="${!hospitalDischargeReportCommand.getCurrentDiseaseService().listNewCurrentDiseases().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.diseases.disease.translated}">disease translated</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.diseases.date.of.diagnosis}">date of diagnosis</th>
+                <th th:text="#{fragment.current.patient.navigation.left.current.diseases.end.date.of.diagnosis}">end date of diagnosis</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="currentDiseaseConclusion : ${hospitalDischargeReportCommand.getCurrentDiseaseService().listNewCurrentDiseases()}">
+                <tr>
+                    <td th:text="${{currentDiseaseConclusion.getDisease()}}">disease</td>
+                    <th style="background-color: azure" th:text="${{currentDiseaseConclusion.getDiseaseTranslated()}}">disease translated</th>
+                    <td th:text="${{#temporals.format(currentDiseaseConclusion.getDateOfDiagnosis(), 'dd-MM-yyyy')}}">date of diagnosis</td>
+                    <td th:text="${{#temporals.format(currentDiseaseConclusion.getEndDateOfDiagnosis(), 'dd-MM-yyyy')}}">end date of diagnosis</td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+
+
+        <br>
+        <h4 th:if="${!hospitalDischargeReportCommand.getAllergyService().listOfNewAllergies().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.allergies.to.upload}">Allergies to upload in S-EHR</h4></p>
+        <table class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getAllergyService().listOfNewAllergies().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</th>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.name.translated}">Name translated</th>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</th>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</th>
+                <th th:text="#{fragment.current.patient.navigation.left.allergies.end.date}">End date</th>
+                <th th:text="#{crud.button.actions}">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="ai : ${hospitalDischargeReportCommand.getAllergyService().listOfNewAllergies()}">
+                <tr>
+                    <td th:text="${{ai.name}}"></td>
+                    <th style="background-color: azure" th:text="${{ai.getNameTranslated()}}"></th>
+                    <td>
+                        <th:block th:switch="${ai.getCategory().toUpperCase()}">
+                            <div th:case="'BIOLOGIC'">
+                                <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>
+                            </div>
+                            <div th:case="'ENVIRONMENT'">
+                                <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>
+                            </div>
+                            <div th:case="'FOOD'">
+                                <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>
+                            </div>
+                            <div th:case="'MEDICATION'">
+                                <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>
+                            </div>
+                        </th:block>
+                    </td>
+                    <td>
+                        <th:block th:switch="${ai.getType().toUpperCase()}">
+                            <div th:case="'ALLERGY'">
+                                <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ALLERGY}">ALLERGY</p>
+                            </div>
+                            <div th:case="'INTOLERANCE'">
+                                <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.INTOLERANCE}">INTOLERANCE</p>
+                            </div>
+                        </th:block>
+                    </td>
+                    <td th:text="${{ai.getSymptoms()}}"></td>
+                    <td th:text="${{ai.getComments()}}"></td>
+                    <td th:text="${{#temporals.format(ai.getEndDate(), 'dd-MM-yyyy')}}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-info"
+                               th:href="@{/current-patient/allergies/open-update-page-data-s-ehr(id=${{ai.getIdFHIR()}})}"
+                               th:text="#{crud.button.edit}">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+        <br>
+
+        <br>
+        <h4 th:if="${!hospitalDischargeReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.conclusion.to.upload.in.sehr}">Diagnostic Conclusion to upload in S-EHR</h4></p>
+        <table class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.conclusion.conclusion}">Conclusion</th>
+                <th th:text="#{fragment.current.patient.navigation.left.conclusion.treatment.plan}">Treatment plan</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="concTrat : ${hospitalDischargeReportCommand.getDiagnosticConclusionService().getNewConclusion()}">
+                <td th:text="${{concTrat.getConclusionNote()}}"></td>
+                <td th:text="${{concTrat.getTreatmentPlan()}}"></td>
+            </tr>
+            </tbody>
+        </table>
         <table class="table">
             <tr>
                 <td>
@@ -134,10 +269,10 @@
         <div class="btn-group">
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
             <a class="btn btn-outline-primary" th:href="@{/reports/hospital-discharge-report-pdf}"
-               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies}"
+               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies || hasDiagnosticConclusion}"
                th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
             <a class="btn btn-warning" th:href="@{/current-patient/hospital-discharge-report/save-in-cloud}"
-               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies}"
+               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies  || hasDiagnosticConclusion}"
                th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.save.in.cloud}">Upload in
                 Citizen Cloud</a>
         </div>

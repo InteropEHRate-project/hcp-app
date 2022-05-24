@@ -28,6 +28,9 @@ public class CurrentDiseaseController {
         if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
             session.setAttribute("emergency", CurrentPatient.typeOfWorkingSession.toString());
         }
+        if (Objects.nonNull(CurrentPatient.typeOfWorkingSession)) {
+            session.setAttribute("medicalVisit", CurrentPatient.typeOfWorkingSession.toString());
+        }
         model.addAttribute("patient", this.currentDiseaseService.getCurrentPatient().getPatient());
         model.addAttribute("currentDiseaseCommand", this.currentDiseaseService.currentDiseasesSection());
         model.addAttribute("currentDiseasesList", this.currentDiseaseService.listNewCurrentDiseases());

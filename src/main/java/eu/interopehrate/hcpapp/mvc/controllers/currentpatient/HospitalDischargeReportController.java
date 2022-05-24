@@ -33,6 +33,7 @@ public class HospitalDischargeReportController {
         model.addAttribute("hasVitalSigns", !this.hospitalDischargeReportService.getVitalSignsRepository().findAll().isEmpty());
         model.addAttribute("hasCurrentDiseases", !this.hospitalDischargeReportService.getCurrentDiseaseRepository().findAll().isEmpty());
         model.addAttribute("hasAllergies", !this.hospitalDischargeReportService.getAllergyRepository().findAll().isEmpty());
+        model.addAttribute("hasDiagnosticConclusion", !this.hospitalDischargeReportService.getDiagnosticConclusionRepository().findAll().isEmpty());
         return TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT;
     }
 
@@ -47,7 +48,7 @@ public class HospitalDischargeReportController {
     @RequestMapping("/save-in-cloud")
     public String saveInCloud(Model model, HttpServletRequest request, HttpServletResponse response) {
         byte[] content = this.pdfController.retrievePdfAsBytes(request, response);
-        model.addAttribute("savedToCloud" , this.hospitalDischargeReportService.saveInCloud(content));
+        model.addAttribute("savedToCloud", this.hospitalDischargeReportService.saveInCloud(content));
         return this.viewSection(model);
     }
 }

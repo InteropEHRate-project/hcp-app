@@ -68,6 +68,9 @@ public class IndexController {
         if (Objects.nonNull(session.getAttribute("workingSession"))) {
             session.removeAttribute("workingSession");
         }
+        if (Objects.nonNull(session.getAttribute("medicalVisit"))) {
+            session.removeAttribute("medicalVisit");
+        }
         return "redirect:/index/close-cloud-connection";
     }
 

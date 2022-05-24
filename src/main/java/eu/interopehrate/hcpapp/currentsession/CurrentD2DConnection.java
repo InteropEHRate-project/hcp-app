@@ -81,6 +81,7 @@ public class CurrentD2DConnection implements DisposableBean {
 
     public void open() {
         this.connectionState = D2DConnectionState.PENDING_DEVICE;
+        CurrentPatient.typeOfWorkingSession = WorkingSession.OUTPATIENT_VISIT;
         CompletableFuture.runAsync(this::openConnection)
                 .thenRun(this::afterConnectionOpened);
     }
