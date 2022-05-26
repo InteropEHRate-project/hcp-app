@@ -2,16 +2,17 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.fhir.provenance.BundleProvenanceBuilder;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
-import eu.interopehrate.hcpapp.jpa.entities.administration.HealthCareOrganizationEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.OutpatientReportCommand;
-import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
+import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.index.impl.IndexServiceImpl;
 import eu.interopehrate.protocols.provenance.ProvenanceBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.PrivateKey;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -39,6 +41,9 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private final CurrentPatient currentPatient;
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
+    @Autowired
+    private HealthCareOrganizationService healthCareOrganizationService;
+    private IndexServiceImpl indexService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
@@ -79,22 +84,17 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
         bundleEvaluation.addEntry().setResource(author);
 
-        HealthCareOrganizationEntity healthCareOrganizationEntity = new HealthCareOrganizationEntity();
         Organization hospital = new Organization();
         hospital.setId(UUID.randomUUID().toString());
-        hospital.setName(healthCareOrganizationEntity.getName());
+        hospital.setName(healthCareOrganizationService.getHealthCareOrganization().getName());
+        BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
+        List<Provenance> provenances = builder.addProvenanceToBundleItems(bundleEvaluation);
         bundleEvaluation.addEntry().setResource(hospital);
 
-        IndexPatientDataCommand patientDataCommand = new IndexPatientDataCommand();
         Patient patient = new Patient();
         patient.setId(UUID.randomUUID().toString());
-//        patient.addName().setFamily(currentPatient.getPatient()
-//                .getName()
-//                .stream()
-//                .map(humanName -> String.join(" ", humanName.getFamily(), humanName.getGivenAsSingleString()))
-//                .collect(Collectors.joining(",")));
-//
-//        bundleEvaluation.addEntry().setResource(patient);
+        //patient.addName().setFamily(indexService.indexCommand().getPatientDataCommand().getFirstName());
+        bundleEvaluation.addEntry().setResource(patient);
 
         MedicationStatement medicationStatement = prescriptionService.callSendPrescription();
         Observation observation = vitalSignsService.callVitalSigns();
@@ -129,6 +129,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
 
         encounter.setPeriod(period);
         composition.setEncounter(new Reference(encounter));
+        ProvenanceBuilder.addProvenanceExtension(composition, encounter);
         bundleEvaluation.addEntry().setResource(encounter);
 
         Composition.SectionComponent vSignsSection = new Composition.SectionComponent();
@@ -145,12 +146,11 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         try {
             if (Objects.nonNull(medicationStatement.getMedicationReference().getResource())) {
                 bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
+                ProvenanceBuilder.addProvenanceExtension(composition, medicationStatement);
             }
         } catch (NullPointerException exception) {
             System.out.println("Reference of Medication Statement is null.");
         }
-        //bundleEvaluation.addEntry().setResource((Resource) medicationStatement.getMedicationReference().getResource());
-        // ProvenanceBuilder.addProvenanceExtension(composition, medicationStatement);
 
         Composition.SectionComponent currentDiseasesSection = new Composition.SectionComponent();
         currentDiseasesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "75326-9", "Current Diseases")));
