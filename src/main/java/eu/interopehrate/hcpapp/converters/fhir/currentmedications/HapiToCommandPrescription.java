@@ -21,10 +21,12 @@ public class HapiToCommandPrescription implements Converter<MedicationStatement,
     public PrescriptionInfoCommand convert(MedicationStatement source) {
         PrescriptionInfoCommand prescriptionInfoCommand = new PrescriptionInfoCommand();
         prescriptionInfoCommand.setIdFHIR(source.getId());
-        if (source.hasId()) {
-            prescriptionInfoCommand.setId(Long.parseLong(source.getId().substring(source.getId().indexOf("/") + 70)));
-            //prescriptionInfoCommand.setId(Long.parseLong(source.getId()));
-            // prescriptionInfoCommand.setId(Long.parseLong((((Reference) source.getMedication()).getResource().getIdElement().getIdPart())));
+        try {
+            if (source.hasId()) {
+                //  prescriptionInfoCommand.setId(Long.parseLong(source.getId().substring(source.getId().indexOf("/") + 35).replace("-", "")));
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println("Wrong id/number for Medication Statement.");
         }
 
         if (source.hasMedication()) {
@@ -33,10 +35,10 @@ public class HapiToCommandPrescription implements Converter<MedicationStatement,
 
         try {
             if (source.hasMedication() && Objects.nonNull(source.getMedication().getExtension())) {
-//                prescriptionInfoCommand.setDrugNameTranslated((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString()));
+                prescriptionInfoCommand.setDrugNameTranslated((((Medication) ((Reference) source.getMedication()).getResource()).getCode().getCoding().get(0).getDisplayElement().getExtension().get(0).getExtension().get(1).getValue().toString()));
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.out.println("No translation for Drug medication on Current Medications");
         }
         if (this.currentPatient.getDisplayTranslatedVersion() && source.hasDosage() && source.getDosageFirstRep().hasRoute()
                 && source.getDosageFirstRep().getRoute().hasCoding() && source.getDosageFirstRep().getRoute().getCodingFirstRep().hasDisplayElement()
@@ -60,11 +62,11 @@ public class HapiToCommandPrescription implements Converter<MedicationStatement,
 //                    .toLocalDate());
 //        }
         if (source.hasDosage()) {
-            if (source.getDosageFirstRep().hasTiming()
-                    && source.getDosageFirstRep().getTiming().hasRepeat()
-                    && source.getDosageFirstRep().getTiming().getRepeat().hasFrequency()) {
-                prescriptionInfoCommand.setTimings(source.getDosageFirstRep().getTiming().getRepeat().getFrequency() + "");
-            }
+//            if (source.getDosageFirstRep().hasTiming()
+//                    && source.getDosageFirstRep().getTiming().hasRepeat()
+//                    && source.getDosageFirstRep().getDoseAndRateFirstRep().getDoseQuantity().hasValue()) {
+//                prescriptionInfoCommand.setTimings(source.getDosageFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getValue() + "");
+//            }
             if (source.getDosageFirstRep().hasTiming()
                     && source.getDosageFirstRep().getTiming().hasRepeat()
                     && source.getDosageFirstRep().getTiming().getRepeat().hasBoundsPeriod()) {
@@ -93,6 +95,7 @@ public class HapiToCommandPrescription implements Converter<MedicationStatement,
                 drugDosage.append(source.getDosageFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getUnit());
             }
             prescriptionInfoCommand.setDrugDosage(drugDosage.toString());
+            prescriptionInfoCommand.setTimings(source.getDosageFirstRep().getDoseAndRateFirstRep().getDoseQuantity().getValue() + " ");
         }
 
         return prescriptionInfoCommand;
