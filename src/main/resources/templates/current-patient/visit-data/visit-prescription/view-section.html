@@ -8,6 +8,7 @@
 <body>
 <div layout:fragment="content">
     <p></p>
+    <div class="m-5"></div>
     <h3 th:text="#{fragment.current.patient.navigation.left.visit.data.visit.prescriptions}">Prescriptions</h3>
     <div class="m-5"></div>
     <div th:if="${!listPrescriptions.isEmpty()}">
