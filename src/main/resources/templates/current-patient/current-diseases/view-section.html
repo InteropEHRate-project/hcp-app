@@ -107,11 +107,16 @@
         </tbody>
     </table>
 
+    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
+        <a class="btn btn-primary" th:href="@{/current-patient/current-diseases/refresh-data}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download data from Cloud</a>
+    </div>
+    <br>
 
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary" th:href="@{/current-patient/current-diseases/open-add-page}"
-               th:text="#{crud.button.add}">add</a>
+               th:text="#{crud.button.add}">Add</a>
         </div>
     </div>
     <br><br>
@@ -136,13 +141,6 @@
         </tr>
         </tbody>
     </table>
-
-    <br>
-    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
-        <a class="btn btn-primary" th:href="@{/current-patient/current-diseases/refresh-data}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download data from Cloud</a>
-    </div>
-    <br>
 
     <div class="row justify-content-end" th:if="${session.medicalVisit != null && session.medicalVisit.equalsIgnoreCase('OUTPATIENT_VISIT') }">
         <a class="btn btn-primary" th:href="@{/current-patient/current-diseases/refresh}"

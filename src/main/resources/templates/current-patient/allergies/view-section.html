@@ -161,6 +161,12 @@
         </tbody>
     </table>
 
+    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
+        <a class="btn btn-primary" th:href="@{/current-patient/allergies/refresh-data}"
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download data from Cloud</a>
+    </div>
+    <br/>
+
     <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
         <div class="btn-group" role="group">
             <a href="#" class="btn btn-primary"
@@ -168,12 +174,6 @@
         </div>
     </div>
     <br>
-
-    <br>
-    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
-        <a class="btn btn-primary" th:href="@{/current-patient/allergies/refresh-data}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download data from Cloud</a>
-    </div>
 </div>
 </body>
 </html>
