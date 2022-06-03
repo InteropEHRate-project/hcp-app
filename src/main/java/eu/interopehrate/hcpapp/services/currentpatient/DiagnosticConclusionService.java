@@ -15,7 +15,7 @@ public interface DiagnosticConclusionService {
     DiagnosticConclusionCommand conclusionComm();
     void insertConclusionNote(String conclusionNote);
     void insertTreatmentPlan(String treatmentPlan);
-    void deleteNote(String note);
+    void deleteAll(String note, String noteTreatment);
     Condition callSendConclusion() throws IOException;
     CarePlan callSendTreatment()throws IOException;
     void sendConclusion(Bundle conclusionTreatment) throws IOException;

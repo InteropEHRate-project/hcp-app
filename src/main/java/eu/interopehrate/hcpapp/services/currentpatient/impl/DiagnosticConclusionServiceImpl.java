@@ -136,8 +136,10 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
     }
 
     @Override
-    public void deleteNote(String note) {
+    public void deleteAll(String note, String noteTreatment) {
         this.listOfConclusionNote.removeIf(x -> x.equals(note));
+        this.listOfTreatmentPlan.removeIf(x -> x.equals(noteTreatment));
+        this.diagnosticConclusionRepository.deleteAll();
     }
 
     @Override

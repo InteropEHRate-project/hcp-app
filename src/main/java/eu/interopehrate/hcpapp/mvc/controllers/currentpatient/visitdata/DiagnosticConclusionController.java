@@ -37,9 +37,9 @@ public class DiagnosticConclusionController {
     }
 
     @DeleteMapping
-    @RequestMapping("/delete")
-    public String delete(@RequestParam("note") String note) {
-        this.diagnosticConclusionService.deleteNote(note);
+    @RequestMapping("/deleteAll")
+    public String deleteAll(String note, String noteTreatment) {
+        this.diagnosticConclusionService.deleteAll(note, noteTreatment);
         return "redirect:/current-patient/visit-data/conclusion/view-section";
     }
 }
