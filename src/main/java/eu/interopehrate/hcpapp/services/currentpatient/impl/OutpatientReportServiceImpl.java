@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.fhir.provenance.BundleProvenanceBuilder;
+import eu.interopehrate.fhir.provenance.ResourceSigner;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
@@ -20,9 +21,7 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.PrivateKey;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -88,8 +87,8 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         hospital.setId(UUID.randomUUID().toString());
         hospital.setName(healthCareOrganizationService.getHealthCareOrganization().getName());
         BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
-        List<Provenance> provenances = builder.addProvenanceToBundleItems(bundleEvaluation);
-        bundleEvaluation.addEntry().setResource(hospital);
+//        List<Provenance> provenances = builder.addProvenanceToBundleItems(bundleEvaluation);
+//        bundleEvaluation.addEntry().setResource(hospital);
 
         Patient patient = new Patient();
         patient.setId(UUID.randomUUID().toString());
@@ -101,7 +100,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         Condition currentDiseases = currentDiseaseService.callSendCurrentDiseases();
         Condition diagnosticConclusion = diagnosticConclusionService.callSendConclusion();
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
-        DocumentReference instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
+        DiagnosticReport instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
         AllergyIntolerance allergies = allergyService.callAllergies();
 
         Composition composition = new Composition();
@@ -175,6 +174,14 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         instrumentExaminationSection.addEntry().setResource(instrumentalExamination);
         composition.addSection(instrumentExaminationSection);
         bundleEvaluation.addEntry().setResource(instrumentalExamination);
+        try {
+            if (Objects.nonNull(instrumentalExamination.addMedia().getLink().getResource())) {
+                bundleEvaluation.addEntry().setResource((Resource) instrumentalExamination.addMedia().getLink().getResource());
+                ProvenanceBuilder.addProvenanceExtension(composition, instrumentalExamination);
+            }
+        } catch (NullPointerException exception) {
+            System.out.println("Reference of Diagnostic Report is null.");
+        }
 
         Composition.SectionComponent allergiesSection = new Composition.SectionComponent();
         allergiesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "48765-2", "Allergies and adverse reactions Document")));
@@ -183,15 +190,10 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(allergies);
 
         IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
-        String parseResource = parser.encodeResourceToString(composition);
         Provenance prov = ProvenanceBuilder.build(composition, author, hospital);
 
-        PrivateKey privateKey = cloudConnection.cryptoManagement.getPrivateKey(cloudConnection.alias);
-        byte[] certificateData = cloudConnection.cryptoManagement.getUserCertificate(cloudConnection.alias);
-        String signed = cloudConnection.cryptoManagement.signPayload(parseResource, privateKey);
-        String jwsToken = cloudConnection.cryptoManagement.createDetachedJws(certificateData, signed);
-
-        prov.getSignatureFirstRep().setData(jwsToken.getBytes());
+        prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(composition).getBytes());
+        prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(encounter).getBytes());
         bundleEvaluation.addEntry().setResource(prov);
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundleEvaluation));
