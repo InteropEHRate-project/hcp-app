@@ -64,12 +64,7 @@
 
             <div class="col-md-7"><br>
                 <label for="notes" th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.notes}">Notes</label><br>
-                <input id="notes" type="text" class="form-control" th:classappend="${#fields.hasErrors('notes')} ? 'is-invalid' :''" th:field="*{notes}">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('notes')}">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('notes')}" th:text="${err}">err</li>
-                    </ul>
-                </div>
+                <input id="notes" type="text" class="form-control" th:field="*{notes}">
             </div>
 
             <div class="col-md-3"><br>
