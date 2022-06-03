@@ -26,8 +26,6 @@ public class AllergyInfoCommand {
     @NotEmpty
     @NotNull
     private String type;
-    @NotEmpty
-    @NotNull
     private String symptoms;
     private String comments;
     @DateTimeFormat(pattern = "dd-MM-yyyy")

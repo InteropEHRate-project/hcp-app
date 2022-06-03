@@ -29,8 +29,6 @@ public class AllergyEntity extends HCPApplicationEntity {
     @NotNull
     @Column(name = "TYPE")
     private String type;
-    @NotEmpty
-    @NotNull
     @Column(name = "SYMPTOMS")
     private String symptoms;
     @Column(name = "COMMENTS")
