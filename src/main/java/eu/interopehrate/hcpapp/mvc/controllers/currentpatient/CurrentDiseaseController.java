@@ -76,6 +76,7 @@ public class CurrentDiseaseController {
     @RequestMapping("/open-update-page-data-base")
     public String openEditCurrentDiseaseDataBase(@RequestParam("id") Long id, Model model) {
         model.addAttribute("currentDiseaseInfoCommandUpdateDataBase", this.currentDiseaseService.retrieveNewCurrentDiseaseById(id));
+        model.addAttribute("currentDiseaseTypes", this.currentDiseaseService.getCurrentTypesRepository().findAll());
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASE_UPDATE_PAGE_DB;
     }
 
