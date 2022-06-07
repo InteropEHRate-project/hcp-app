@@ -17,16 +17,12 @@ public class AllergyEntity extends HCPApplicationEntity {
     private String author;
     @Column(name = "IDENTIFIER")
     private String identifier;
-    @NotEmpty
-    @NotNull
     @Column(name = "CATEGORY")
     private String category;
     @NotEmpty
     @NotNull
     @Column(name = "NAME")
     private String name;
-    @NotEmpty
-    @NotNull
     @Column(name = "TYPE")
     private String type;
     @Column(name = "SYMPTOMS")

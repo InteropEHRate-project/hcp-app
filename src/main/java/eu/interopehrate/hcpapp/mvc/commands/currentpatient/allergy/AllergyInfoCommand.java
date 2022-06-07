@@ -16,8 +16,6 @@ public class AllergyInfoCommand {
     private String patientId;
     private String author;
     private String identifier;
-    @NotEmpty
-    @NotNull
     private String category;
     @NotEmpty
     @NotNull

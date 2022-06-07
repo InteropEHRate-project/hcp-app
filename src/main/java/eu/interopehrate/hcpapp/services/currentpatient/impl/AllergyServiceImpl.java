@@ -191,12 +191,12 @@ public class AllergyServiceImpl implements AllergyService {
             }
 
             ((AllergyIntolerance) optional.get()).getCode().getCodingFirstRep().setDisplay(allergyInfoCommand.getName());
-            try {
-                ((AllergyIntolerance) optional.get()).getCategory().get(0).setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyInfoCommand.getCategory().toUpperCase()));
-            } catch (IllegalArgumentException e) {
-                log.error("no type available");
-                e.printStackTrace();
-            }
+//            try {
+//                ((AllergyIntolerance) optional.get()).getCategory().get(0).setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyInfoCommand.getCategory().toUpperCase()));
+//            } catch (IllegalArgumentException e) {
+//                log.error("no type available");
+//                e.printStackTrace();
+//            }
             try {
                 ((AllergyIntolerance) optional.get()).setType(AllergyIntolerance.AllergyIntoleranceType.valueOf(allergyInfoCommand.getType().toUpperCase()));
             } catch (IllegalArgumentException e) {
@@ -252,7 +252,7 @@ public class AllergyServiceImpl implements AllergyService {
         allergies.getCode().getCoding().get(0).setDisplay(allergyEntity.getName());
 
         allergies.addNote().setText(allergyEntity.getComments());
-        allergies.addCategoryElement().setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyEntity.getCategory()));
+         //allergies.addCategoryElement().setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyEntity.getCategory()));
         //allergies.setId(allergyEntity.getId().toString());
 
         return allergies;
