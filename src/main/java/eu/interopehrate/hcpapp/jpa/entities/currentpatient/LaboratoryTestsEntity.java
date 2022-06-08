@@ -19,4 +19,5 @@ public class LaboratoryTestsEntity extends HCPApplicationEntity {
     private String unitOfMeasurement;
     private Double upperLimitBound;
     private Double lowerLimitBound;
+    private String author;
 }

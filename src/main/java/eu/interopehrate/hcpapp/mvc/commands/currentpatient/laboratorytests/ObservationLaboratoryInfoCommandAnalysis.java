@@ -25,6 +25,7 @@ public class ObservationLaboratoryInfoCommandAnalysis {
     @NotEmpty
     @NotNull
     private String referenceRange;
+    private String author;
 
     public void setIsInLimits() {
         if (Objects.nonNull(this.getObservationLaboratoryInfoCommandSample().getCurrentValue())) {

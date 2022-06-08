@@ -148,6 +148,15 @@
         <a class="btn btn-primary" th:href="@{/current-patient/laboratory-tests/laboratory-results/refresh-data}"
            th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download data from Cloud</a>
     </div>
+
+    <br/>
+    <div class="btn-toolbar float-right" role="toolbar" th:if="${patient != null}">
+        <div class="btn-group" role="group">
+            <a href="#" class="btn btn-primary"
+               th:href="@{/current-patient/laboratory-tests/laboratory-results/open-add-page}"
+               th:text="#{crud.button.add}">Add</a>
+        </div>
+    </div>
 </div>
 
 </body>

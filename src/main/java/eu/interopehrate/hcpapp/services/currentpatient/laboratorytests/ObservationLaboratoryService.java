@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.services.currentpatient.laboratorytests;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryInfoCommandAnalysis;
 
 public interface ObservationLaboratoryService {
     boolean isFiltered();
@@ -8,4 +10,6 @@ public interface ObservationLaboratoryService {
     ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis(String keyword);
     void refreshData();
     void getLaboratoryTests() throws Exception;
+    void insertLaboratory(ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis);
+    CurrentPatient getCurrentPatient();
 }
