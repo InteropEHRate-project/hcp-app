@@ -18,7 +18,6 @@ public class PHExamEntity extends HCPApplicationEntity {
     private Long id;
     @Column(name = "PATIENT_ID")
     private String patientId;
-    @NotNull
     @Column(name = "CLINICAL_EXAM")
     private String clinicalExam;
     @Column(name = "AUTHOR")

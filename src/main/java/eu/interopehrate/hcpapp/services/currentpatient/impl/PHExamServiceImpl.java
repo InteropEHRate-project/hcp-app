@@ -27,7 +27,7 @@ public class PHExamServiceImpl implements PHExamService {
     private final CurrentPatient currentPatient;
     private final PHExamRepository phExamRepository;
     private final EntityToCommandPHExam entityToCommandPHExam;
-    private final List<String> listClinicalExam = new ArrayList<>();
+    private final List<String> listOfClinicalExam = new ArrayList<>();
     private final CurrentD2DConnection currentD2DConnection;
     private final CommandToEntityPHExam commandToEntityPHExam;
     private final AuditInformationService auditInformationService;
@@ -56,14 +56,14 @@ public class PHExamServiceImpl implements PHExamService {
         return PHExamCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .phExamInfoCommands(listOfExams)
-                .listClinicalExam(this.listClinicalExam)
+                .listClinicalExam(this.listOfClinicalExam)
                 .build();
     }
 
     @Override
     public void insertClinicalExam(String clinicalExam) {
-        if (clinicalExam != null && !clinicalExam.trim().equals("") && !this.listClinicalExam.contains(clinicalExam)) {
-            this.listClinicalExam.add(clinicalExam);
+        if (clinicalExam != null && !clinicalExam.trim().equals("") && !this.listOfClinicalExam.contains(clinicalExam)) {
+            this.listOfClinicalExam.add(clinicalExam);
         }
     }
 
