@@ -45,8 +45,11 @@
 
             <div class="col-md-5">
                 <label for="name" th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</label>
-                <input id="name" type="text" class="form-control"
-                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' :''" th:field="*{name}">
+                <select class="form-control" id="name" th:field="*{name}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.allergies.choose}">Choose a allergy</option>
+                    <option input type="text" class="form-control" th:each="type : ${allergyTypes}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' :''"
+                            th:value="${type.getName()}" th:text="${type.getName()}">Allergy</option>
+                </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('name')}" th:text="${err}">err</li>

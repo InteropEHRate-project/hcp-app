@@ -18,14 +18,13 @@
         </div>
         <div class="form-row">
             <input id="drugId" type="hidden" th:field="*{idFHIR}">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <label for="disease" th:text="#{fragment.current.patient.navigation.left.current.diseases.disease}">disease</label>
-                <input id="disease" type="text" class="form-control" th:field="*{disease}"/>
-<!--                <div class="invalid-feedback" th:if="${#fields.hasErrors('disease')}">-->
-<!--                    <ul>-->
-<!--                        <li th:each="err : ${#fields.errors('disease')}" th:text="${err}">err</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+                <select class="form-control" id="disease" th:field="*{disease}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.current.disease.choose}">Choose a disease</option>
+                    <option input type="text" class="form-control" th:each="type : ${currentDiseaseTypes}" th:classappend="${#fields.hasErrors('disease')} ? 'is-invalid' :''"
+                            th:value="${type.getName()}" th:text="${type.getName()}">Disease</option>
+                </select>
             </div>
 <!--            <div class="col-md-8">-->
 <!--                <label for="comment" th:text="#{fragment.current.patient.navigation.left.current.diseases.comment}">comment</label>-->

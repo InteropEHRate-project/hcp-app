@@ -84,6 +84,7 @@ public class AllergyController {
     @RequestMapping("/open-update-page-data-s-ehr")
     public String openEditAllergyFromSEHR(@RequestParam("id") String id, Model model) {
         model.addAttribute("allergyInfoCommand", this.allergyService.retrieveAllergyFromSEHRById(id));
+        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypesRepository().findAll());
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_UPDATE_SEHR_PAGE;
     }
 
