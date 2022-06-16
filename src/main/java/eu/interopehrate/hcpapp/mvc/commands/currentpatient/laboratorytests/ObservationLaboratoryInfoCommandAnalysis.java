@@ -10,22 +10,19 @@ import java.util.Objects;
 @Getter
 @Setter
 public class ObservationLaboratoryInfoCommandAnalysis {
-    @NotEmpty
+    private Long id;
     @NotNull
+    @NotEmpty
     private String analysis = "Default Analysis";
-    @NotEmpty
-    @NotNull
     private String analysisTranslated = "";
-    @NotEmpty
-    @NotNull
-    private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample = new ObservationLaboratoryInfoCommandSample();
-    @NotEmpty
-    @NotNull
     private Boolean isInLimits = false;
-    @NotEmpty
-    @NotNull
     private String referenceRange;
     private String author;
+    @NotNull
+    @NotEmpty
+    private String analysisName;
+    @NotNull
+    private ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample = new ObservationLaboratoryInfoCommandSample();
 
     public void setIsInLimits() {
         if (Objects.nonNull(this.getObservationLaboratoryInfoCommandSample().getCurrentValue())) {

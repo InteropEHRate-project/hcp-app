@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests.observationlaboratory;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryInfoCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -18,10 +19,11 @@ import java.util.Objects;
 @RequestMapping("/current-patient/laboratory-tests/laboratory-results")
 public class ObservationLaboratoryController {
     private final ObservationLaboratoryService observationLaboratoryService;
-    public static ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis;
+    private final LaboratoryTestsTypesRepository laboratoryTestsTypesRepository;
 
-    public ObservationLaboratoryController(ObservationLaboratoryService observationLaboratoryService) {
+    public ObservationLaboratoryController(ObservationLaboratoryService observationLaboratoryService, LaboratoryTestsTypesRepository laboratoryTestsTypesRepository) {
         this.observationLaboratoryService = observationLaboratoryService;
+        this.laboratoryTestsTypesRepository = laboratoryTestsTypesRepository;
     }
 
     @GetMapping
@@ -35,6 +37,7 @@ public class ObservationLaboratoryController {
         }
         session.setAttribute("keyword", keyword);
         model.addAttribute("patient", this.observationLaboratoryService.getCurrentPatient().getPatient());
+        model.addAttribute("laboratoryUpload", observationLaboratoryService.laboratoryUpload());
         return this.findPaginated(1, model, keyword);
     }
 
@@ -69,8 +72,9 @@ public class ObservationLaboratoryController {
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
-       // model.addAttribute("prescriptionTypes", this.observationLaboratoryService.getPrescriptionTypesRepository().findAll());
-        model.addAttribute("laboratoryInfoCommand", new ObservationLaboratoryInfoCommandAnalysis());
+        model.addAttribute("observationLaboratoryInfoCommandAnalysis", new ObservationLaboratoryInfoCommandAnalysis());
+        model.addAttribute("laboratoryTypes", this.laboratoryTestsTypesRepository.findAll());
+        model.addAttribute("correlations", this.observationLaboratoryService.correlations());
         return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_ADD_PAGE;
     }
 
@@ -78,7 +82,8 @@ public class ObservationLaboratoryController {
     @RequestMapping("/save-add")
     public String saveAdd(@Valid @ModelAttribute ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-           // model.addAttribute("prescriptionTypes", this.observationLaboratoryService.getPrescriptionTypesRepository().findAll());
+            model.addAttribute("laboratoryTypes", this.laboratoryTestsTypesRepository.findAll());
+            model.addAttribute("correlations", this.observationLaboratoryService.correlations());
             return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_ADD_PAGE;
         }
         observationLaboratoryService.insertLaboratory(observationLaboratoryInfoCommandAnalysis);

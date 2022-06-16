@@ -13,10 +13,17 @@ public class EntityToCommandLaboratoryTest implements Converter<LaboratoryTestsE
     @Override
     public ObservationLaboratoryInfoCommandAnalysis convert(LaboratoryTestsEntity laboratoryTestsEntity) {
         ObservationLaboratoryInfoCommandAnalysis laboratoryInfoCommandAnalysis = new ObservationLaboratoryInfoCommandAnalysis();
-        BeanUtils.copyProperties(laboratoryTestsEntity, laboratoryInfoCommandAnalysis);
+        laboratoryInfoCommandAnalysis.setId(laboratoryTestsEntity.getId());
+        laboratoryInfoCommandAnalysis.setAuthor(laboratoryTestsEntity.getAuthor());
+        laboratoryInfoCommandAnalysis.setAnalysisName(laboratoryTestsEntity.getLaboratoryTestsTypesEntity().getName());
 
         ObservationLaboratoryInfoCommandSample observationLaboratoryInfoCommandSample = new ObservationLaboratoryInfoCommandSample();
-        BeanUtils.copyProperties(laboratoryTestsEntity, observationLaboratoryInfoCommandSample);
+        observationLaboratoryInfoCommandSample.setLocalDateOfLaboratory(laboratoryTestsEntity.getLocalDateOfLaboratory());
+        observationLaboratoryInfoCommandSample.setCurrentValue(laboratoryTestsEntity.getCurrentValue());
+        observationLaboratoryInfoCommandSample.setUnitOfMeasurement(laboratoryTestsEntity.getUnitOfMeasurement());
+//        laboratoryTestsEntity.setLocalDateOfLaboratory(observationLaboratoryInfoCommandSample.getLocalDateOfLaboratory());
+//        laboratoryTestsEntity.setUnitOfMeasurement(observationLaboratoryInfoCommandSample.getUnitOfMeasurement());
+//        laboratoryTestsEntity.setCurrentValue(observationLaboratoryInfoCommandSample.getCurrentValue());
         laboratoryInfoCommandAnalysis.setObservationLaboratoryInfoCommandSample(observationLaboratoryInfoCommandSample);
         return laboratoryInfoCommandAnalysis;
     }

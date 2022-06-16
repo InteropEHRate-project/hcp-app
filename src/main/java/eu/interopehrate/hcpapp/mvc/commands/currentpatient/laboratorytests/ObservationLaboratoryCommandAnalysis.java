@@ -72,6 +72,38 @@ public class ObservationLaboratoryCommandAnalysis {
         return mapPair;
     }
 
+    public List<String> laboratoryAnalysesWithoutDuplicates() {
+        List<String> withDuplicates = new ArrayList<>();
+        this.observationLaboratoryInfoCommandAnalyses.forEach(laboratory -> withDuplicates.add(laboratory.getAnalysisName()));
+
+        List<String> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
+        Collections.sort(noDuplicates);
+        return noDuplicates;
+    }
+
+    public List<LocalDateTime> localDateTimeListWithoutDuplicatesLab() {
+        List<LocalDateTime> withDuplicates = new ArrayList<>();
+        this.observationLaboratoryInfoCommandAnalyses.forEach(laboratory -> withDuplicates.add(laboratory.getObservationLaboratoryInfoCommandSample().getLocalDateOfLaboratory()));
+
+        List<LocalDateTime> noDuplicates = new ArrayList<>(new HashSet<>(withDuplicates));
+        Collections.sort(noDuplicates);
+        return noDuplicates;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public DoubleKeyHashMap valueReturnLaboratory() {
+        DoubleKeyHashMap<String, LocalDateTime, String> mapPair = new DoubleKeyHashMap<>();
+        List<String> analysisList = this.laboratoryAnalysesWithoutDuplicates();
+        List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
+
+        analysisList.forEach(an -> dateTimeList.forEach(date -> this.observationLaboratoryInfoCommandAnalyses.forEach(laboratory -> {
+            if (an.equals(laboratory.getAnalysisName())) {
+                mapPair.put(an, laboratory.getObservationLaboratoryInfoCommandSample().getLocalDateOfLaboratory(), laboratory.getObservationLaboratoryInfoCommandSample().getCurrentValue() + " " + laboratory.getObservationLaboratoryInfoCommandSample().getUnitOfMeasurement());
+            }
+        })));
+        return mapPair;
+    }
+
     public boolean getResultOfAnalysis(String analysis, LocalDateTime dateTime) {
         for (ObservationLaboratoryInfoCommandAnalysis el : this.observationLaboratoryInfoCommandAnalyses) {
             if (el.getAnalysis().equals(analysis) && el.getObservationLaboratoryInfoCommandSample().getSample().equals(dateTime)) {

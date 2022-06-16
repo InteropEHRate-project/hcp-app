@@ -142,6 +142,44 @@
 <!--           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Refresh data from S-EHR</a>-->
 <!--    </div>-->
 
+    <br>
+    <h5 th:if="${!laboratoryUpload.getObservationLaboratoryInfoCommandAnalyses().isEmpty()}"
+        th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.add}">Laboratory Tests to upload in S-EHR</h5>
+    <br>
+    <table class="table table-bordered" th:if="${!laboratoryUpload.getObservationLaboratoryInfoCommandAnalyses().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+            <th:block th:each="sample : ${laboratoryUpload.localDateTimeListWithoutDuplicatesLab()}">
+                <th th:text="${{sample}}"></th>
+            </th:block>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="an : ${laboratoryUpload.laboratoryAnalysesWithoutDuplicates()}">
+            <div th:with="map=${laboratoryUpload.valueReturnLaboratory()}">
+                <td th:text="${{an}}"></td>
+                <th:block th:each="sample : ${laboratoryUpload.localDateTimeListWithoutDuplicatesLab()}">
+                    <td th:if="${map.get(an,sample) == null}">-</td>
+<!--                    <td th:if="${map.get(an,sample) != null}"></td>-->
+                    </td>
+                    <div th:if="${map.get(an,sample) != null}">
+                        <td>
+                            <p th:text="${{map.get(an,sample)}}"></p>
+                            <div class="btn-group" role="group">
+<!--                                <a href="#" class="btn btn-info" th:href="@{/current-patient/visit-data/vital-signs/open-edit-page(an = ${{an}}, sample = ${{sample}})}"-->
+<!--                                   th:text="#{crud.button.edit}">Edit</a>-->
+<!--                                <a href="#" class="btn btn-danger" th:href="@{/current-patient/visit-data/vital-signs/delete(an = ${{an}}, sample = ${{sample}})}"-->
+<!--                                   th:text="#{crud.button.delete}">Delete</a>-->
+                            </div>
+                        </td>
+                    </div>
+                </th:block>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+
     <br/>
     <div class="row justify-content-end"
          th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">

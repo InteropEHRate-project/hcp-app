@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -16,13 +17,14 @@ public class ObservationLaboratoryInfoCommandSample {
     @NotEmpty
     @NotNull
     private Double currentValue;
-    @NotEmpty
-    @NotNull
     private String unit = "-";
-    @NotEmpty
-    @NotNull
     private double upperLimitBound = Double.MAX_VALUE;
+    private double lowerLimitBound = Double.MIN_VALUE;
     @NotEmpty
     @NotNull
-    private double lowerLimitBound = Double.MIN_VALUE;
+    @DateTimeFormat(pattern = "dd-MM-yyyy h:mm a")
+    private LocalDateTime localDateOfLaboratory = LocalDateTime.now();
+    @NotEmpty
+    @NotNull
+    private String unitOfMeasurement;
 }

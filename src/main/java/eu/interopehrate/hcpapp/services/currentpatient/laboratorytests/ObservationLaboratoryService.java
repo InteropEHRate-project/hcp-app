@@ -4,6 +4,8 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryInfoCommandAnalysis;
 
+import java.util.HashMap;
+
 public interface ObservationLaboratoryService {
     boolean isFiltered();
     boolean isEmpty();
@@ -12,4 +14,7 @@ public interface ObservationLaboratoryService {
     void getLaboratoryTests() throws Exception;
     void insertLaboratory(ObservationLaboratoryInfoCommandAnalysis observationLaboratoryInfoCommandAnalysis);
     CurrentPatient getCurrentPatient();
+    @SuppressWarnings("rawtypes")
+    HashMap correlations();
+    ObservationLaboratoryCommandAnalysis laboratoryUpload();
 }
