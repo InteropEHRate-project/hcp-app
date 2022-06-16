@@ -116,7 +116,7 @@
         <thead class="thead-light">
         <tr>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.name}">Name</th>
-            <th th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</th>
+<!--            <th th:text="#{fragment.current.patient.navigation.left.allergies.category}">Category</th>-->
             <th th:text="#{fragment.current.patient.navigation.left.allergies.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.symptoms}">Symptoms</th>
             <th th:text="#{fragment.current.patient.navigation.left.allergies.comments}">Comments</th>
@@ -125,22 +125,22 @@
         <tbody>
         <tr th:each="ai : ${outpatientReportCommand.getAllergyService().listOfNewAllergies()}">
             <td th:text="${{ai.getName()}}"></td>
-            <td>
-                <th:block th:switch="${ai.getCategory().toUpperCase()}">
-                    <div th:case="'BIOLOGIC'">
-                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>
-                    </div>
-                    <div th:case="'ENVIRONMENT'">
-                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>
-                    </div>
-                    <div th:case="'FOOD'">
-                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>
-                    </div>
-                    <div th:case="'MEDICATION'">
-                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>
-                    </div>
-                </th:block>
-            </td>
+<!--            <td>-->
+<!--                <th:block th:switch="${ai.getCategory().toUpperCase()}">-->
+<!--                    <div th:case="'BIOLOGIC'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.BIOLOGIC}">BIOLOGIC</p>-->
+<!--                    </div>-->
+<!--                    <div th:case="'ENVIRONMENT'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.ENVIRONMENT}">ENVIRONMENT</p>-->
+<!--                    </div>-->
+<!--                    <div th:case="'FOOD'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.FOOD}">FOOD</p>-->
+<!--                    </div>-->
+<!--                    <div th:case="'MEDICATION'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.allergies.chooose.MEDICATION}">MEDICATION</p>-->
+<!--                    </div>-->
+<!--                </th:block>-->
+<!--            </td>-->
             <td>
                 <th:block th:switch="${ai.getType().toUpperCase()}">
                     <div th:case="'ALLERGY'">
