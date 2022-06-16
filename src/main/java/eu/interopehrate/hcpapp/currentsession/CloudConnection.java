@@ -44,7 +44,7 @@ public class CloudConnection implements DisposableBean {
     public CryptoManagement cryptoManagement;
     public final String ca_url = "http://interoperate-ejbca-service.euprojects.net";
     public final String alias = "healthorganization";
-    private static final String keyStorePath = "CHU_iehr.p12";
+    private static final String keyStorePath = "FTGM_iehr.p12";
 
     public CloudConnection(CurrentPatient currentPatient,
                            IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) throws Exception {
