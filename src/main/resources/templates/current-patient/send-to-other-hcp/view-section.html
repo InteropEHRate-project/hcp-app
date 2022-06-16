@@ -19,15 +19,15 @@
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
-            <th th:text="#{template.administration.hcps.name}">Name</th>
-            <th th:text="#{template.administration.hcps.occupation}">Occupation</th>
+<!--            <th th:text="#{template.administration.hcps.name}">Name</th>-->
+<!--            <th th:text="#{template.administration.hcps.occupation}">Occupation</th>-->
             <th th:if="${patient != null}" th:text="#{button.action}">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="hcp : ${hcps}">
-            <td th:text="${hcp.name}"></td>
-            <td th:text="${hcp.occupation}"></td>
+<!--            <td th:text="${hcp.name}"></td>-->
+<!--            <td th:text="${hcp.occupation}"></td>-->
             <td th:if="${patient != null}">
                 <div class="btn-group" role="group">
                     <a href="#" class="btn btn-primary" th:text="#{fragment.current.patient.navigation.left.send.and.close}" th:href="@{/current-patient/send-to-other-hcp/send-patient(

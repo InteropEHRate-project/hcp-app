@@ -35,6 +35,8 @@ public interface TemplateNames {
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_STATEMENT_ADD_PAGE = "current-patient/current-medications/statement/add-info";
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION = "current-patient/current-medications/prescription/view-section";
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_UPDATE_SEHR_PAGE = "current-patient/current-medications/prescription/update-info";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_ADD_PAGE = "current-patient/current-medications/prescription/add-info";
+    String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_UPDATE_PAGE = "current-patient/current-medications/prescription/update-info-db";
     String CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_MEDICATION_VIEW = "current-patient/current-medications/prescription/medication-view";
     String CURRENT_PATIENT_ALLERGIES_VIEW_SECTION = "current-patient/allergies/view-section";
     String CURRENT_PATIENT_ALLERGIES_ADD_PAGE = "current-patient/allergies/add-info";

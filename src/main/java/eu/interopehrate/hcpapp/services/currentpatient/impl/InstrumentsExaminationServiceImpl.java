@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.dicom_anonymization_library.DICOMAnonymization;
 import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityInstrumentsExam;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandInstrumentsExam;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -95,10 +98,10 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     }
 
     @Override
-    public DocumentReference callSendInstrumentalExamination() {
+    public DiagnosticReport callSendInstrumentalExamination() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.instrumentsExaminationRepository.findAll().size(); i++) {
-                DocumentReference med = createInstrumentalExaminationFromEntity(this.instrumentsExaminationRepository.findAll().get(i));
+                DiagnosticReport med = createInstrumentalExaminationFromEntity1(this.instrumentsExaminationRepository.findAll().get(i));
                 this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
                 this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(med));
                 return med;
@@ -118,18 +121,56 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
         this.instrumentsExaminationRepository.deleteAll();
     }
 
-    private static DocumentReference createInstrumentalExaminationFromEntity(InstrumentsExaminationEntity instrumentsExaminationEntity) {
-        DocumentReference documentReference = new DocumentReference();
+//    private static DocumentReference createInstrumentalExaminationFromEntity(InstrumentsExaminationEntity instrumentsExaminationEntity) {
+//        DocumentReference documentReference = new DocumentReference();
+//
+//        documentReference.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
+//        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("29545-1")));
+//        documentReference.getContentFirstRep().getAttachment().setContentType("application/pdf");
+//        documentReference.getContentFirstRep().getAttachment().setData(instrumentsExaminationEntity.getData());
+//        documentReference.getContentFirstRep().getAttachment().setTitle("Instrumental Examination");
+//        documentReference.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
+//        documentReference.setId(UUID.randomUUID().toString());
+//
+//        documentReference.setAuthor(Collections.singletonList(new Reference().setReference(instrumentsExaminationEntity.getAuthor())));
+//
+//        return documentReference;
+//    }
 
-        documentReference.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
-        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("29545-1")));
-        documentReference.getContentFirstRep().getAttachment().setContentType("application/pdf");
-        documentReference.getContentFirstRep().getAttachment().setData(instrumentsExaminationEntity.getData());
-        documentReference.getContentFirstRep().getAttachment().setTitle("Instrumental Examination");
-        documentReference.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
-        documentReference.setId(UUID.randomUUID().toString());
+    private static DiagnosticReport createInstrumentalExaminationFromEntity1(InstrumentsExaminationEntity instrumentsExaminationEntity) {
+        DiagnosticReport diagnosticReport = new DiagnosticReport();
+        diagnosticReport.setId(UUID.randomUUID().toString());
 
-        return documentReference;
+        diagnosticReport.setCategory(Collections.singletonList(new CodeableConcept()
+                .setCoding(new ArrayList<>())
+                .addCoding(new Coding()
+                        .setSystem("http://loinc.org")
+                        .setCode("29545-1")
+                        .setDisplay(instrumentsExaminationEntity.getType().toString()))));
+
+        Media imageNonAnon = new Media();
+        imageNonAnon.setId(UUID.randomUUID().toString());
+        imageNonAnon.getContent().setData(instrumentsExaminationEntity.getData());
+
+        Media imageAnon = new Media();
+        imageAnon.setId(UUID.randomUUID().toString());
+
+        Path path = FileSystems.getDefault().getPath("./").toAbsolutePath().getParent();
+        String filename = String.valueOf(path);
+        DICOMAnonymization dicomAnonymization = new DICOMAnonymization("http://10.97.32.223:9000");
+        String response = dicomAnonymization.invokeEndpoint(filename);
+
+        imageAnon.getContent().setData(response.getBytes());
+
+        try {
+            diagnosticReport.setMedia(new ArrayList<>())
+                    .addImagingStudy(new Reference(imageNonAnon))
+                    .addImagingStudy(new Reference(imageAnon));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return diagnosticReport;
     }
 
     @SneakyThrows

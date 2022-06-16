@@ -22,6 +22,6 @@ public class IndexCommand {
     @NotNull
     private String qrCode;
     private String bucketName;
-    private String hospitalID = "simonamaria";
-    private String hcpName = "Ion Popescu";
+    private String hospitalID = "ftgm";
+    private String hcpName = "Giuseppe Vergaro";
 }

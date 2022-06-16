@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.fhir.provenance.ResourceSigner;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
@@ -42,7 +44,7 @@ public class CloudConnection implements DisposableBean {
     public CryptoManagement cryptoManagement;
     public final String ca_url = "http://interoperate-ejbca-service.euprojects.net";
     public final String alias = "healthorganization";
-    private static final String keyStorePath = "keystore.p12";
+    private static final String keyStorePath = "CHU_iehr.p12";
 
     public CloudConnection(CurrentPatient currentPatient,
                            IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) throws Exception {
@@ -59,6 +61,13 @@ public class CloudConnection implements DisposableBean {
     @PostConstruct
     private void initializeCertificate() {
         this.cryptoManagement = CryptoManagementFactory.create(ca_url, keyStorePath);
+    }
+
+    @SneakyThrows
+    @PostConstruct
+    private void initializeCertificateS() {
+        IParser parser = FhirContext.forR4().newJsonParser();
+        ResourceSigner.INSTANCE.initialize("FTGM_iehr.p12", "FTGM_iehr", parser);
     }
 
     public String getEmergencyToken() {

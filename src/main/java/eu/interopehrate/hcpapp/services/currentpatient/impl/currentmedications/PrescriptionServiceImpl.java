@@ -218,6 +218,23 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
+    public void insertPrescriptionMedication(PrescriptionInfoCommand prescriptionInfoCommand) {
+        prescriptionInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
+        prescriptionInfoCommand.setTimings(prescriptionInfoCommand.getFrequency().toString());
+        prescriptionInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+
+        PrescriptionEntity prescriptionEntity = this.commandToEntityPrescription.convert(prescriptionInfoCommand);
+        prescriptionEntity.setAuthor(prescriptionInfoCommand.getAuthor());
+        prescriptionEntity.setPatientName(prescriptionEntity.getPatientName());
+
+        prescriptionEntity.setPeriodUnit(toShortUnit(prescriptionEntity.getPeriodUnit()));
+        this.prescriptionRepository.save(prescriptionEntity);
+        //Adding the ID from the database to the InfoCommand
+        prescriptionInfoCommand.setId(prescriptionEntity.getId());
+    }
+
+
+    @Override
     public void deletePrescription(Long drugId) {
         this.prescriptionRepository.deleteById(drugId);
     }

@@ -6,6 +6,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.Pr
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,12 +39,12 @@ public class PrescriptionController {
         this.prescriptionService.setFiltered(false);
         session.setAttribute("keywordPrescription", keywordPrescription);
         model.addAttribute("patient", this.prescriptionService.getCurrentPatient().getPatient());
-        return this.findPaginated(1, keywordPrescription, model);
+        return this.findPaginated(1, 1, keywordPrescription, model);
     }
 
     @GetMapping
     @RequestMapping("/view-section/page/{pageNoSEHR}/{keywordPrescription}")
-    public String findPaginated(@PathVariable(value = "pageNoSEHR") int pageNoSEHR,
+    public String findPaginated(@PathVariable(value = "pageNoSEHR") int pageNoSEHR, @PathVariable(value = "pageNo") int pageNo,
                                 @PathVariable(value = "keywordPrescription") String keywordPrescription,
                                 Model model) throws IOException {
         model.addAttribute("currentPatient", this.prescriptionService.getCurrentPatient());
@@ -51,6 +52,10 @@ public class PrescriptionController {
         int pageSize = 3;
         PrescriptionController.prescriptionCommand = this.prescriptionService.prescriptionCommand(pageNoSEHR, pageSize, keywordPrescription);
         List<PrescriptionInfoCommand> listPrescriptionsSEHR = prescriptionCommand.getPageInfoCommand().getContent();
+
+        Page<PrescriptionEntity> page = this.prescriptionService.findPaginated(pageNo, pageSize);
+        PrescriptionController.prescriptionEntityList = page.getContent();
+
         model.addAttribute("prescriptionCommand", prescriptionCommand);
         model.addAttribute("listPrescriptionsSEHR", listPrescriptionsSEHR);
         model.addAttribute("currentPageSEHR", pageNoSEHR);
@@ -59,6 +64,10 @@ public class PrescriptionController {
         model.addAttribute("prescriptionService", this.prescriptionService.getCurrentD2DConnection());
         model.addAttribute("isFiltered", this.prescriptionService.isFiltered());
         model.addAttribute("isEmpty", this.prescriptionService.isEmpty());
+        model.addAttribute("listPrescriptions", prescriptionEntityList);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
 
         return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_VIEW_SECTION;
     }
@@ -69,7 +78,6 @@ public class PrescriptionController {
         this.prescriptionService.refreshData();
         return "redirect:/current-patient/current-medications/prescription/view-section";
     }
-
 
     @GetMapping
     @RequestMapping("/open-update")
@@ -88,5 +96,32 @@ public class PrescriptionController {
         }
         this.prescriptionService.updatePrescriptionFromSEHR(prescriptionInfoCommand);
         return "redirect:/current-patient/current-medications/prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-add-page")
+    public String openAddPage(Model model) {
+        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+        model.addAttribute("prescriptionInfoCommand", new PrescriptionInfoCommand());
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_ADD_PAGE;
+    }
+
+    @PostMapping
+    @RequestMapping("/save-add")
+    public String saveAdd(@Valid @ModelAttribute PrescriptionInfoCommand prescriptionInfoCommand, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+            return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_ADD_PAGE;
+        }
+        prescriptionService.insertPrescriptionMedication(prescriptionInfoCommand);
+        return "redirect:/current-patient/current-medications/prescription/view-section";
+    }
+
+    @GetMapping
+    @RequestMapping("/open-update-page")
+    public String openUpdatePage(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+        model.addAttribute("prescriptionInfoCommand", this.prescriptionService.prescriptionInfoCommandById(id));
+        return TemplateNames.CURRENT_PATIENT_CURRENT_MEDICATIONS_PRESCRIPTION_UPDATE_PAGE;
     }
 }

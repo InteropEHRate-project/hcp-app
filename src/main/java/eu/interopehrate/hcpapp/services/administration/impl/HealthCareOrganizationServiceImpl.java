@@ -27,7 +27,7 @@ public class HealthCareOrganizationServiceImpl implements HealthCareOrganization
 
     @Override
     public HealthCareOrganizationCommand getHealthCareOrganization() {
-        HealthCareOrganizationEntity healthCareOrganizationEntity = healthCareOrganizationRepository.findByCode("SCUBA");
+        HealthCareOrganizationEntity healthCareOrganizationEntity = healthCareOrganizationRepository.findByCode("FTGM");
         return entityToCommandHealthCareOrganization.convert(healthCareOrganizationEntity);
     }
 

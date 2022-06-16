@@ -162,7 +162,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         bundle.addEntry().setResource(patient);
 
         DocumentReference doc = new DocumentReference();
-        bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
+        //bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
 
         doc.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
         doc.setId(UUID.randomUUID().toString());
@@ -174,8 +174,10 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
 
         Meta profileDischarge = new Meta();
-        profileDischarge.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Composition-VisitReport-IEHR");
-        bundle.setMeta(profileDischarge);
+        profileDischarge.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Composition-HospitalDischargeReport-IEHR");
+        doc.setMeta(profileDischarge);
+
+        bundle.addEntry().setResource(doc);
 
         //set encounter
         Encounter encounter = new Encounter();
@@ -189,22 +191,16 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
 
         encounter.setPeriod(period);
         //doc.setEncounter(new Reference(encounter));
-        ProvenanceBuilder.addProvenanceExtension(doc, encounter);
-        bundle.addEntry().setResource(encounter);
+       // bundle.addEntry().setResource(encounter);
 
         IParser parser1 = FhirContext.forR4().newJsonParser();
-        ResourceSigner.INSTANCE.initialize("keystore.p12", "healthorganization", parser1);
+        ResourceSigner.INSTANCE.initialize("FTGM_iehr.p12", "FTGM_iehr", parser1);
 
         IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
-        String parseResource = parser.encodeResourceToString(doc);
         Provenance prov = ProvenanceBuilder.build(doc, author, hospital);
 
-        PrivateKey privateKey = cloudConnection.cryptoManagement.getPrivateKey(cloudConnection.alias);
-        byte[] certificateData = cloudConnection.cryptoManagement.getUserCertificate(cloudConnection.alias);
-        String signed = cloudConnection.cryptoManagement.signPayload(parseResource, privateKey);
-        String jwsToken = cloudConnection.cryptoManagement.createDetachedJws(certificateData, signed);
-
-        prov.getSignatureFirstRep().setData(jwsToken.getBytes());
+        prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(doc).getBytes());
+       // prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(encounter).getBytes());
         bundle.addEntry().setResource(prov);
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
