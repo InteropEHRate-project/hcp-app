@@ -21,9 +21,6 @@ public class EntityToCommandLaboratoryTest implements Converter<LaboratoryTestsE
         observationLaboratoryInfoCommandSample.setLocalDateOfLaboratory(laboratoryTestsEntity.getLocalDateOfLaboratory());
         observationLaboratoryInfoCommandSample.setCurrentValue(laboratoryTestsEntity.getCurrentValue());
         observationLaboratoryInfoCommandSample.setUnitOfMeasurement(laboratoryTestsEntity.getUnitOfMeasurement());
-//        laboratoryTestsEntity.setLocalDateOfLaboratory(observationLaboratoryInfoCommandSample.getLocalDateOfLaboratory());
-//        laboratoryTestsEntity.setUnitOfMeasurement(observationLaboratoryInfoCommandSample.getUnitOfMeasurement());
-//        laboratoryTestsEntity.setCurrentValue(observationLaboratoryInfoCommandSample.getCurrentValue());
         laboratoryInfoCommandAnalysis.setObservationLaboratoryInfoCommandSample(observationLaboratoryInfoCommandSample);
         return laboratoryInfoCommandAnalysis;
     }
