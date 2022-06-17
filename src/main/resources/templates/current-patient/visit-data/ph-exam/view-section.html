@@ -23,16 +23,30 @@
         <div class="col-12">
             <table class="table table-bordered" th:if="${!phExam.isEmpty()}">
                 <thead class="thead-light">
-                <tr><th th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam.notes}">Clinical exam notes</th></tr>
+                <tr>
+                    <th th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam.notes}">Clinical exam notes
+                    </th>
+                    <th th:text="#{button.action}">Action</th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr th:each="phExam : ${phExam}"><td class="col-2" th:text="${phExam}"></td></tr>
+                <tr th:each="phExam : ${phExam}">
+                    <td class="col-9" th:text="${phExam}"></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-primary" th:href="@{/current-patient/visit-data/ph-exam/delete(note = ${phExam})}"
+                               th:text="#{crud.button.delete}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
         </div>
 
         <div class="m-3"></div>
-        <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" th:object="${infoPhExam}" method="post">
+        <form class="row col-12 justify-content-center"
+              th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" th:object="${infoPhExam}" method="post">
             <div class="form-group col-12">
                 <label for="phExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
                 <textarea class="form-control" name="phExam" id="phExam" rows="3"></textarea>

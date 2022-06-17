@@ -127,4 +127,10 @@ public class PHExamServiceImpl implements PHExamService {
 
         return phExam;
     }
+
+    @Override
+    public void delete(String phNote) {
+        this.listOfClinicalExam.removeIf(x -> x.equals(phNote));
+        this.phExamRepository.deleteAll();
+    }
 }

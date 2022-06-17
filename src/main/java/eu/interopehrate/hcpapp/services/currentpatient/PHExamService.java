@@ -18,4 +18,5 @@ public interface PHExamService {
     List<PHExamInfoCommand> getNewPhExam();
     void insertPhExam(PHExamInfoCommand phExamInfoCommand);
     DiagnosticReport callPHExam();
+    void delete(String phNote);
 }

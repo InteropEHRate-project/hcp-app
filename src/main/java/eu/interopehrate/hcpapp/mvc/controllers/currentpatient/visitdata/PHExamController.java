@@ -5,10 +5,7 @@ import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.PHExamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/current-patient/visit-data/ph-exam")
@@ -35,6 +32,13 @@ public class PHExamController {
     public String saveClinicalExam(String phExam, @ModelAttribute PHExamInfoCommand phExamInfoCommand) {
         this.phExamService.insertClinicalExam(phExam);
         this.phExamService.insertPhExam(phExamInfoCommand);
+        return "redirect:/current-patient/visit-data/ph-exam/view-section";
+    }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String deleteAll(String note) {
+        this.phExamService.delete(note);
         return "redirect:/current-patient/visit-data/ph-exam/view-section";
     }
 }
