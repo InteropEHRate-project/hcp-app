@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EntityToCommandPHExam implements Converter<PHExamEntity, PHExamInfoCommand> {
 
+    @Override
     public PHExamInfoCommand convert(PHExamEntity phExamEntity) {
         PHExamInfoCommand phExamInfoCommand = new PHExamInfoCommand();
         BeanUtils.copyProperties(phExamEntity, phExamInfoCommand);

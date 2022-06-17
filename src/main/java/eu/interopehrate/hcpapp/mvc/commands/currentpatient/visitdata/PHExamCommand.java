@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 public class PHExamCommand {
     private final Boolean displayTranslatedVersion;
-    private final List<PHExamInfoCommand> phExamInfoCommands;
     private final List<String> listClinicalExam;
+    private final List<PHExamInfoCommand> phExamInfoCommands;
 }

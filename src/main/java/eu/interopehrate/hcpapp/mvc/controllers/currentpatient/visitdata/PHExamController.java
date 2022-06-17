@@ -32,8 +32,8 @@ public class PHExamController {
 
     @PostMapping
     @RequestMapping("/save-clinical-exam")
-    public String saveClinicalExam(String clinicalExam, @ModelAttribute PHExamInfoCommand phExamInfoCommand) {
-        this.phExamService.insertClinicalExam(clinicalExam);
+    public String saveClinicalExam(String phExam, @ModelAttribute PHExamInfoCommand phExamInfoCommand) {
+        this.phExamService.insertClinicalExam(phExam);
         this.phExamService.insertPhExam(phExamInfoCommand);
         return "redirect:/current-patient/visit-data/ph-exam/view-section";
     }

@@ -11,5 +11,10 @@ import javax.validation.constraints.NotNull;
 public class PHExamInfoCommand {
     private Long id;
     private String patientId;
-    private String clinicalExam;
+    @NotEmpty
+    @NotNull
+    private String phExam;
+    @NotEmpty
+    @NotNull
+    private String author;
 }

@@ -10,9 +10,11 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamR
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.PHExamCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.PHExamInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
+import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.PHExamService;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class PHExamServiceImpl implements PHExamService {
     private final CurrentD2DConnection currentD2DConnection;
     private final CommandToEntityPHExam commandToEntityPHExam;
     private final AuditInformationService auditInformationService;
+    @Autowired
+    private HealthCareProfessionalService healthCareProfessionalService;
 
 
     public PHExamServiceImpl(CurrentPatient currentPatient, PHExamRepository phExamRepository, EntityToCommandPHExam entityToCommandPHExam, CurrentD2DConnection currentD2DConnection, CommandToEntityPHExam commandToEntityPHExam, AuditInformationService auditInformationService) {
@@ -49,13 +53,8 @@ public class PHExamServiceImpl implements PHExamService {
 
     @Override
     public PHExamCommand phExamCommand() {
-        var listOfExams = this.phExamRepository.findAll()
-                .stream()
-                .map(this.entityToCommandPHExam::convert)
-                .collect(Collectors.toList());
         return PHExamCommand.builder()
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
-                .phExamInfoCommands(listOfExams)
                 .listClinicalExam(this.listOfClinicalExam)
                 .build();
     }
@@ -88,6 +87,9 @@ public class PHExamServiceImpl implements PHExamService {
     @Override
     public void insertPhExam(PHExamInfoCommand phExamInfoCommand) {
         phExamInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
+        phExamInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " "
+                + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+
         this.phExamRepository.save(Objects.requireNonNull(this.commandToEntityPHExam.convert(phExamInfoCommand)));
     }
 
@@ -118,10 +120,10 @@ public class PHExamServiceImpl implements PHExamService {
         phExam.getCode().getCoding().add(new Coding()
                 .setSystem("http://terminology.hl7.org/CodeSystem/v2-0074")
                 .setCode("PHY"));
-        phExam.getCode().getCoding().get(0).setDisplay(phExamEntity.getClinicalExam());
+        phExam.getCode().getCoding().get(0).setDisplay(phExamEntity.getPhExam());
 
         // phExam.addNote().setText(phExamEntity.getClinicalExam());
-        phExam.getResultFirstRep().setReference(phExamEntity.getClinicalExam());
+        phExam.getResultFirstRep().setReference(phExamEntity.getPhExam());
 
         return phExam;
     }

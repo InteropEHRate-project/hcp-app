@@ -31,6 +31,7 @@
             </table>
         </div>
 
+        <div class="m-3"></div>
         <form class="row col-12 justify-content-center" th:action="@{/current-patient/visit-data/ph-exam/save-clinical-exam}" th:object="${infoPhExam}" method="post">
             <div class="form-group col-12">
                 <label for="phExam" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</label>
