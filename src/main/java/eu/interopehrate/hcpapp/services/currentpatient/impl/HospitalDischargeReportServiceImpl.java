@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.DiagnosticConclusionRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
@@ -22,7 +23,6 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -57,9 +57,11 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     @Autowired
     private HealthCareOrganizationService healthCareOrganizationService;
     private final VitalSignsService vitalSignsService;
+    private final PHExamService phExamService;
+    private final PHExamRepository phExamRepository;
 
     public HospitalDischargeReportServiceImpl(PrescriptionService prescriptionService, PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
-                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection, DiagnosticConclusionRepository diagnosticConclusionRepository, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService) {
+                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection, DiagnosticConclusionRepository diagnosticConclusionRepository, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, PHExamRepository phExamRepository) {
         this.prescriptionService = prescriptionService;
         this.prescriptionRepository = prescriptionRepository;
         this.vitalSignsRepository = vitalSignsRepository;
@@ -71,6 +73,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.allergyService = allergyService;
         this.diagnosticConclusionService = diagnosticConclusionService;
         this.vitalSignsService = vitalSignsService;
+        this.phExamService = phExamService;
+        this.phExamRepository = phExamRepository;
     }
 
     @Override
@@ -99,9 +103,14 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     }
 
     @Override
+    public PHExamRepository getPhExamRepository() {
+        return phExamRepository;
+    }
+
+    @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
         return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, patientName, patientDateBirth,
-                patientGender, hcpName, format, prescriptionService, currentDiseaseService, allergyService, diagnosticConclusionService, vitalSignsService);
+                patientGender, hcpName, format, prescriptionService, currentDiseaseService, allergyService, diagnosticConclusionService, vitalSignsService, phExamService);
     }
 
     @Override
@@ -162,7 +171,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         bundle.addEntry().setResource(patient);
 
         DocumentReference doc = new DocumentReference();
-        bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
+        // bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
 
         doc.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
         doc.setId(UUID.randomUUID().toString());
@@ -172,10 +181,11 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         doc.getContentFirstRep().getAttachment().setData(bytes);
         doc.getContentFirstRep().getAttachment().setTitle("Hospital Discharge Report");
         doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
+        bundle.addEntry().setResource(doc);
 
         Meta profileDischarge = new Meta();
         profileDischarge.addProfile("http://interopehrate.eu/fhir/StructureDefinition/DocumentReference-IEHR");
-        bundle.setMeta(profileDischarge);
+        doc.setMeta(profileDischarge);
 
         //set encounter
         Encounter encounter = new Encounter();
@@ -189,8 +199,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
 
         encounter.setPeriod(period);
         //doc.setEncounter(new Reference(encounter));
-        ProvenanceBuilder.addProvenanceExtension(doc, encounter);
-        bundle.addEntry().setResource(encounter);
+        // ProvenanceBuilder.addProvenanceExtension(doc, encounter);
+        // bundle.addEntry().setResource(encounter);
 
         IParser parser1 = FhirContext.forR4().newJsonParser();
         ResourceSigner.INSTANCE.initialize("FTGM_iehr.p12", "FTGM_iehr", parser1);
@@ -199,12 +209,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         String parseResource = parser.encodeResourceToString(doc);
         Provenance prov = ProvenanceBuilder.build(doc, author, hospital);
 
-        PrivateKey privateKey = cloudConnection.cryptoManagement.getPrivateKey(cloudConnection.alias);
-        byte[] certificateData = cloudConnection.cryptoManagement.getUserCertificate(cloudConnection.alias);
-        String signed = cloudConnection.cryptoManagement.signPayload(parseResource, privateKey);
-        String jwsToken = cloudConnection.cryptoManagement.createDetachedJws(certificateData, signed);
-
-        prov.getSignatureFirstRep().setData(jwsToken.getBytes());
+        prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(doc).getBytes());
+        // prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(encounter).getBytes());
         bundle.addEntry().setResource(prov);
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));

@@ -122,8 +122,8 @@ public class PHExamServiceImpl implements PHExamService {
                 .setCode("PHY"));
         phExam.getCode().getCoding().get(0).setDisplay(phExamEntity.getPhExam());
 
-        // phExam.addNote().setText(phExamEntity.getClinicalExam());
-        phExam.getResultFirstRep().setReference(phExamEntity.getPhExam());
+        // phExam.setText(phExamEntity.getPhExam());
+        phExam.setConclusion(phExamEntity.getPhExam());
 
         return phExam;
     }

@@ -65,6 +65,7 @@ public class PDFController {
         context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
+        context.setVariable("phExamination", this.phExamService.getNewPhExam());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT, context, "Outpatient-report.pdf");
     }
 
@@ -77,6 +78,7 @@ public class PDFController {
         context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
+        context.setVariable("phExamination", this.phExamService.getNewPhExam());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT_DOCUMENT, context, "Hospital-discharge-report.pdf");
     }

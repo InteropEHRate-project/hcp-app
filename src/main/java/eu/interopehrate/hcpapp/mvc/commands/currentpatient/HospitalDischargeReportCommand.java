@@ -1,9 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 
-import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
-import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
-import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticConclusionService;
-import eu.interopehrate.hcpapp.services.currentpatient.VitalSignsService;
+import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,10 +32,11 @@ public class HospitalDischargeReportCommand {
     private final AllergyService allergyService;
     private final DiagnosticConclusionService diagnosticConclusionService;
     private final VitalSignsService vitalSignsService;
+    private final PHExamService phExamService;
 
 
     public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, String hospitalName, String hospitalAddress,
-                                          String patientName, String patientDateBirth, String patientGender, String hcpName, String format, PrescriptionService prescriptionService, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService) {
+                                          String patientName, String patientDateBirth, String patientGender, String hcpName, String format, PrescriptionService prescriptionService, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService) {
         this.reasons = reasons;
         this.findings = findings;
         this.procedures = procedures;
@@ -54,6 +52,7 @@ public class HospitalDischargeReportCommand {
         this.allergyService = allergyService;
         this.diagnosticConclusionService = diagnosticConclusionService;
         this.vitalSignsService = vitalSignsService;
+        this.phExamService = phExamService;
         this.format = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
         this.prescriptionService = prescriptionService;
     }
