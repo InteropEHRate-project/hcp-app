@@ -17,4 +17,5 @@ public interface ObservationLaboratoryService {
     @SuppressWarnings("rawtypes")
     HashMap correlations();
     ObservationLaboratoryCommandAnalysis laboratoryUpload();
+    void deleteLaboratory(String an, String sample);
 }

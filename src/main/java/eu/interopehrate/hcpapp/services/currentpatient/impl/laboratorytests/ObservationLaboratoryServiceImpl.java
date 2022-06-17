@@ -19,10 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -151,5 +150,15 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .observationLaboratoryInfoCommandAnalyses(laboratoryList)
                 .build();
+    }
+
+    @Override
+    public void deleteLaboratory(String an, String sample) {
+        LocalDateTime localDateTime = LocalDateTime.parse(sample, DateTimeFormatter.ofPattern("M/d/yy, h:mm a", Locale.US));
+        for (LaboratoryTestsEntity l : this.laboratoryTestsRepository.findAll()) {
+            if (l.getLocalDateOfLaboratory().equals(localDateTime) && l.getLaboratoryTestsTypesEntity().getName().equalsIgnoreCase(an)) {
+                this.laboratoryTestsRepository.delete(l);
+            }
+        }
     }
 }

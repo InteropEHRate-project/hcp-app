@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Objects;
 
 @Controller
@@ -89,4 +90,12 @@ public class ObservationLaboratoryController {
         observationLaboratoryService.insertLaboratory(observationLaboratoryInfoCommandAnalysis);
         return "redirect:/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
     }
+
+    @DeleteMapping
+    @RequestMapping("/delete")
+    public String deleteData(@RequestParam(name = "an") String an, @RequestParam(name = "sample") String sample) throws IOException {
+        this.observationLaboratoryService.deleteLaboratory(an, sample);
+        return "redirect:/current-patient/laboratory-tests/laboratory-results/observation-laboratory-view";
+    }
+
 }
