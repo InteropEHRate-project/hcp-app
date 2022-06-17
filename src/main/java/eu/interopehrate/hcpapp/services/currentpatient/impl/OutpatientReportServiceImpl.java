@@ -2,7 +2,6 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import eu.interopehrate.fhir.provenance.BundleProvenanceBuilder;
 import eu.interopehrate.fhir.provenance.ResourceSigner;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
@@ -43,10 +42,11 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     @Autowired
     private HealthCareOrganizationService healthCareOrganizationService;
     private IndexServiceImpl indexService;
+    private final PHExamService phExamService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, PHExamService phExamService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
@@ -57,6 +57,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         this.currentD2DConnection = currentD2DConnection;
         this.cloudConnection = cloudConnection;
         this.currentPatient = currentPatient;
+        this.phExamService = phExamService;
     }
 
     @Override
@@ -69,6 +70,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 .allergyService(this.allergyService)
                 .diagnosticConclusionService(this.diagnosticConclusionService)
                 .instrumentsExaminationService(this.instrumentsExaminationService)
+                .phExamService(this.phExamService)
                 .build();
     }
 
@@ -86,9 +88,9 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         Organization hospital = new Organization();
         hospital.setId(UUID.randomUUID().toString());
         hospital.setName(healthCareOrganizationService.getHealthCareOrganization().getName());
-        BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
+//        BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
 //        List<Provenance> provenances = builder.addProvenanceToBundleItems(bundleEvaluation);
-//        bundleEvaluation.addEntry().setResource(hospital);
+        bundleEvaluation.addEntry().setResource(hospital);
 
         Patient patient = new Patient();
         patient.setId(UUID.randomUUID().toString());
@@ -102,6 +104,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
         DiagnosticReport instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
         AllergyIntolerance allergies = allergyService.callAllergies();
+        DiagnosticReport phExam = phExamService.callPHExam();
 
         Composition composition = new Composition();
         composition.setStatus(Composition.CompositionStatus.FINAL);
@@ -189,6 +192,12 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         composition.addSection(allergiesSection);
         bundleEvaluation.addEntry().setResource(allergies);
 
+        Composition.SectionComponent phExamSection = new Composition.SectionComponent();
+        phExamSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "48765-2", "Physical Examination")));
+        phExamSection.addEntry().setResource(phExam);
+        composition.addSection(phExamSection);
+        bundleEvaluation.addEntry().setResource(phExam);
+
         IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
         Provenance prov = ProvenanceBuilder.build(composition, author, hospital);
 
@@ -198,8 +207,5 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundleEvaluation));
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
-        log.info("Prescription sent to S-EHR");
-        log.info("VitalSigns sent to S-EHR");
-        log.info("Current Diseases sent to S-EHR");
     }
 }

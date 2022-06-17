@@ -158,6 +158,7 @@
 <!--        <p style="color: #007bff">The upload of Allergies is not implemented yet.</p>-->
     </table>
 
+    <br>
     <h5 th:if="${!outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}"
         th:text="#{fragment.current.patient.navigation.left.conclusion.to.upload.in.sehr}">Diagnostic Conclusion to upload in S-EHR</h5></p>
     <table class="table table-bordered" th:if="${!outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()}">
@@ -175,6 +176,23 @@
             </tbody>
     </table>
 
+    <br>
+    <h5 th:if="${!outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty()}"
+        th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam.upload.in.sehr}">Physical Examination to upload in S-EHR</h5></p>
+    <table class="table table-bordered" th:if="${!outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical exam</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="examination : ${outpatientReportCommand.getPhExamService().getNewPhExam()}">
+            <td th:text="${{examination.getPhExam()}}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
     <h5 th:if="${!outpatientReportCommand.getInstrumentsExaminationService().getInstrumentsExaminationRepository().findAll().isEmpty()}"
         th:text="#{fragment.current.patient.navigation.left.current.medications.instrumental.examination.to.upload.in.sehr}">Instrumental Examination to upload in S-EHR</h5></p>
     <table class="table table-bordered"
@@ -196,12 +214,12 @@
                     <div th:case="'ECHO'">
                         <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECHO}">ECHO</p>
                     </div>
-                    <div th:case="'XRAY'">
-                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.XRAY}">XRAY</p>
-                    </div>
-                    <div th:case="'MRI'">
-                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.MRI}">MRI</p>
-                    </div>
+<!--                    <div th:case="'XRAY'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.XRAY}">XRAY</p>-->
+<!--                    </div>-->
+<!--                    <div th:case="'MRI'">-->
+<!--                        <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.MRI}">MRI</p>-->
+<!--                    </div>-->
                     <div th:case="'ECG'">
                         <p th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECG}">ECG</p>
                     </div>
@@ -235,7 +253,8 @@
          !outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() ||
          !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty() ||
          !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty() ||
-         !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty()}">
+         !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty() ||
+         !outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty()}">
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
@@ -250,7 +269,9 @@
          (outpatientReportCommand.getDiagnosticConclusionService().getCurrentD2DConnection().getTd2D() != null &&
          !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty()) ||
           (outpatientReportCommand.getInstrumentsExaminationService.getCurrentD2DConnection().getTd2D() != null &&
-         !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty())}">
+         !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty()) ||
+         (outpatientReportCommand.getPhExamService().getCurrentD2DConnection().getTd2D() != null &&
+         !outpatientReportCommand.getPhExamService().getPHExamRepository().findAll().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
@@ -309,7 +330,8 @@
     outpatientReportCommand.getCurrentDiseaseService.listNewCurrentDiseases().isEmpty() &&
     outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()) &&
     outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty() &&
-    outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty()) &&
+    outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty() &&
+    outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty()) &&
     (session.withoutConnection != null && !session.withoutConnection)}"
         th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>

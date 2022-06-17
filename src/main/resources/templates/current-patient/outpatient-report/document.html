@@ -93,6 +93,17 @@
             <br>
         </div>
     </div>
+
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!phExamination.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical Exam</h5>
+    </div>
+    <div th:if="${!phExamination.isEmpty()}">
+        <div th:each="exam: ${phExamination}">
+            <h6 th:text="${phExamination.indexOf(exam) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam} + ': ' + ${exam.getPhExam()}">Clinical Exam</p>
+            <br>
+        </div>
+    </div>
 </div>
 </body>
 </html>

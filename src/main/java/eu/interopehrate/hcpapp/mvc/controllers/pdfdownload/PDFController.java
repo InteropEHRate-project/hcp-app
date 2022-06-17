@@ -32,10 +32,11 @@ public class PDFController {
     private final CurrentDiseaseService currentDiseaseService;
     private final AllergyService allergyService;
     private final DiagnosticConclusionService diagnosticConclusionService;
+    private final PHExamService phExamService;
     private final HospitalDischargeReportService hospitalDischargeReportService;
 
     public PDFController(ServletContext servletContext, TemplateEngine templateEngine, PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, HospitalDischargeReportService hospitalDischargeReportService) {
+                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService) {
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
         this.prescriptionService = prescriptionService;
@@ -43,6 +44,7 @@ public class PDFController {
         this.currentDiseaseService = currentDiseaseService;
         this.allergyService = allergyService;
         this.diagnosticConclusionService = diagnosticConclusionService;
+        this.phExamService = phExamService;
         this.hospitalDischargeReportService = hospitalDischargeReportService;
     }
 
@@ -107,6 +109,7 @@ public class PDFController {
         context.setVariable("listCurrentDiseases", this.currentDiseaseService.listNewCurrentDiseases());
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
+        context.setVariable("phExamination", this.phExamService.getNewPhExam());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
 
         /* Create HTML using Thymeleaf template Engine */
