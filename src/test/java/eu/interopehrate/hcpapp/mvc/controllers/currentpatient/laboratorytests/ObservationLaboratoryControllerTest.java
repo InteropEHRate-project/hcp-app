@@ -11,6 +11,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsTy
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests.observationlaboratory.ObservationLaboratoryController;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests.ObservationLaboratoryServiceImpl;
 import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
@@ -53,6 +54,7 @@ class ObservationLaboratoryControllerTest {
     private LaboratoryTestsRepository laboratoryTestsRepository;
     private LaboratoryTestsTypesRepository laboratoryTestsTypesRepository;
     private EntityToCommandLaboratoryTest entityToCommandLaboratoryTest;
+    private AuditInformationService auditInformationService;
 
     @BeforeEach
     void setUp() {
@@ -61,7 +63,8 @@ class ObservationLaboratoryControllerTest {
                 new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService),
                         new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext),
                 new HapiToCommandObservationLaboratory(new CurrentPatient(new TranslateServiceImpl(this.conceptTranslateService, this.machineTranslateService, this.extendWithTranslationService),
-                        new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)), cloudConnection, currentD2DConnection, commandToEntityLaboratory, laboratoryTestsRepository, laboratoryTestsTypesRepository, entityToCommandLaboratoryTest);
+                        new CodesConversionServiceImpl(new RestTemplate(), terminalFhirContext), terminalFhirContext)), cloudConnection, currentD2DConnection, commandToEntityLaboratory,
+                laboratoryTestsRepository, laboratoryTestsTypesRepository, entityToCommandLaboratoryTest, auditInformationService);
         this.controller = new ObservationLaboratoryController(service, laboratoryTestsTypesRepository);
     }
 

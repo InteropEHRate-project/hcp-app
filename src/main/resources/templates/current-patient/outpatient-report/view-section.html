@@ -247,6 +247,34 @@
     </table>
 
     <br>
+    <h5 th:if="${!outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()}"
+        th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.add}">Laboratory Tests to upload in S-EHR</h5></p>
+    <table class="table table-bordered" th:if="${!outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+            <th:block th:each="sample : ${outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().localDateTimeListWithoutDuplicatesLab()}">
+                <th th:text="${{sample}}"></th>
+            </th:block>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="an : ${outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().laboratoryAnalysesWithoutDuplicates()}">
+            <div th:with="map=${outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().valueReturnLaboratory()}">
+                <td th:text="${{an}}"></td>
+                <th:block th:each="sample : ${outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().localDateTimeListWithoutDuplicatesLab()}">
+<!--                    <td th:if="${map.get(an,sample) == null}">-</td>-->
+                    <div th:if="${map.get(an,sample) != null}">
+                        <td th:text="${{map.get(an,sample)}}"></td>
+                    </div>
+
+                </th:block>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
     <div class="card-body text-center"
          th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() ||
          !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() ||
@@ -254,7 +282,8 @@
          !outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty() ||
          !outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty() ||
          !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty() ||
-         !outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty()}">
+         !outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty() ||
+         !outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()}">
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
@@ -271,7 +300,9 @@
           (outpatientReportCommand.getInstrumentsExaminationService.getCurrentD2DConnection().getTd2D() != null &&
          !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty()) ||
          (outpatientReportCommand.getPhExamService().getCurrentD2DConnection().getTd2D() != null &&
-         !outpatientReportCommand.getPhExamService().getPHExamRepository().findAll().isEmpty())}">
+         !outpatientReportCommand.getPhExamService().getPHExamRepository().findAll().isEmpty()) ||
+         (outpatientReportCommand.getObservationLaboratoryService().getCurrentD2DConnection().getTd2D() != null &&
+         !outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
@@ -331,7 +362,8 @@
     outpatientReportCommand.getAllergyService().listOfNewAllergies().isEmpty()) &&
     outpatientReportCommand.getDiagnosticConclusionService().getNewConclusion().isEmpty() &&
     outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty() &&
-    outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty()) &&
+    outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty() &&
+    outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()) &&
     (session.withoutConnection != null && !session.withoutConnection)}"
         th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>

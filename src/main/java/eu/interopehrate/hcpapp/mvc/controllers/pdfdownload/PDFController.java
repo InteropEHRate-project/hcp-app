@@ -5,6 +5,7 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -34,9 +35,10 @@ public class PDFController {
     private final DiagnosticConclusionService diagnosticConclusionService;
     private final PHExamService phExamService;
     private final HospitalDischargeReportService hospitalDischargeReportService;
+    private final ObservationLaboratoryService observationLaboratoryService;
 
     public PDFController(ServletContext servletContext, TemplateEngine templateEngine, PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService) {
+                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService, ObservationLaboratoryService observationLaboratoryService) {
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
         this.prescriptionService = prescriptionService;
@@ -46,6 +48,7 @@ public class PDFController {
         this.diagnosticConclusionService = diagnosticConclusionService;
         this.phExamService = phExamService;
         this.hospitalDischargeReportService = hospitalDischargeReportService;
+        this.observationLaboratoryService = observationLaboratoryService;
     }
 
 //    @GetMapping
@@ -66,6 +69,7 @@ public class PDFController {
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
+        context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT, context, "Outpatient-report.pdf");
     }
 
@@ -112,6 +116,7 @@ public class PDFController {
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
+        context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
 
         /* Create HTML using Thymeleaf template Engine */

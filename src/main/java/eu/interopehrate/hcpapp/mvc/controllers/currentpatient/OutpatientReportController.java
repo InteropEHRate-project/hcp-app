@@ -53,7 +53,9 @@ public class OutpatientReportController {
                 !this.outpatientReportService.outpatientReportCommand().getAllergyService().allergiesUpload().getAllergyList().isEmpty()
                         && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getAllergyService().getCurrentD2DConnection().getTd2D()) ||
                 !this.outpatientReportService.outpatientReportCommand().getPhExamService().getPHExamRepository().findAll().isEmpty()
-                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPhExamService().getCurrentD2DConnection().getTd2D())) {
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPhExamService().getCurrentD2DConnection().getTd2D()) ||
+                !this.outpatientReportService.outpatientReportCommand().getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getObservationLaboratoryService().getCurrentD2DConnection().getTd2D())) {
             this.outpatientReportService.createBundle();
         }
 

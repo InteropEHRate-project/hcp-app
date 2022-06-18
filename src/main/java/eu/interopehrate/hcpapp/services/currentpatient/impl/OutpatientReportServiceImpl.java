@@ -12,6 +12,7 @@ import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalSer
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
 import eu.interopehrate.hcpapp.services.index.impl.IndexServiceImpl;
 import eu.interopehrate.protocols.provenance.ProvenanceBuilder;
 import lombok.SneakyThrows;
@@ -43,10 +44,11 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private HealthCareOrganizationService healthCareOrganizationService;
     private IndexServiceImpl indexService;
     private final PHExamService phExamService;
+    private final ObservationLaboratoryService observationLaboratoryService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, PHExamService phExamService) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, PHExamService phExamService, ObservationLaboratoryService observationLaboratoryService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
@@ -58,6 +60,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         this.cloudConnection = cloudConnection;
         this.currentPatient = currentPatient;
         this.phExamService = phExamService;
+        this.observationLaboratoryService = observationLaboratoryService;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 .diagnosticConclusionService(this.diagnosticConclusionService)
                 .instrumentsExaminationService(this.instrumentsExaminationService)
                 .phExamService(this.phExamService)
+                .observationLaboratoryService(this.observationLaboratoryService)
                 .build();
     }
 
@@ -105,6 +109,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         DiagnosticReport instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
         AllergyIntolerance allergies = allergyService.callAllergies();
         DiagnosticReport phExam = phExamService.callPHExam();
+        Observation laboratory = observationLaboratoryService.callLaboratoryTests();
 
         Composition composition = new Composition();
         composition.setStatus(Composition.CompositionStatus.FINAL);
@@ -197,6 +202,12 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         phExamSection.addEntry().setResource(phExam);
         composition.addSection(phExamSection);
         bundleEvaluation.addEntry().setResource(phExam);
+
+        Composition.SectionComponent laboratorySection = new Composition.SectionComponent();
+        laboratorySection.setCode(new CodeableConcept(new Coding("http://loinc.org", "8716-3", "Laboratory Test")));
+        laboratorySection.addEntry().setResource(laboratory);
+        composition.addSection(laboratorySection);
+        bundleEvaluation.addEntry().setResource(laboratory);
 
         IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
         Provenance prov = ProvenanceBuilder.build(composition, author, hospital);

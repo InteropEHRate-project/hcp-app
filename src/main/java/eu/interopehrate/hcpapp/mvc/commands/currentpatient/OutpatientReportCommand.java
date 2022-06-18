@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.MedicationService;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.laboratorytests.ObservationLaboratoryService;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,4 +18,5 @@ public class OutpatientReportCommand {
     private final DiagnosticConclusionService diagnosticConclusionService;
     private final InstrumentsExaminationService instrumentsExaminationService;
     private final PHExamService phExamService;
+    private final ObservationLaboratoryService observationLaboratoryService;
 }

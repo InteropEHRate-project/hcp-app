@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "LABORATORY_TESTS")
 public class LaboratoryTestsEntity extends HCPApplicationEntity {
+    private String patientId;
     private LocalDateTime sampleDate;
     private Double currentValue;
     private String unit;

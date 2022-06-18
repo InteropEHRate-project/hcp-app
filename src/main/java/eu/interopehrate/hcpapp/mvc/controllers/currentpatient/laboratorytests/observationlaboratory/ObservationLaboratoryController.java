@@ -39,6 +39,7 @@ public class ObservationLaboratoryController {
         session.setAttribute("keyword", keyword);
         model.addAttribute("patient", this.observationLaboratoryService.getCurrentPatient().getPatient());
         model.addAttribute("laboratoryUpload", observationLaboratoryService.laboratoryUpload());
+        model.addAttribute("observationLaboratoryService", observationLaboratoryService.getCurrentD2DConnection());
         return this.findPaginated(1, model, keyword);
     }
 
@@ -53,6 +54,7 @@ public class ObservationLaboratoryController {
         model.addAttribute("totalItems", ObservationLaboratoryCommandAnalysis.getTotalElements());
         model.addAttribute("isFiltered", this.observationLaboratoryService.isFiltered());
         model.addAttribute("isEmpty", this.observationLaboratoryService.isEmpty());
+        model.addAttribute("laboratory", this.observationLaboratoryService.observationCommand());
         return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_VIEW;
     }
 
