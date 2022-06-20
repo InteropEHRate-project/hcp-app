@@ -198,6 +198,20 @@
     </div>
 
     <div class="card-body row justify-content-center">
+        <h5 th:if="${!laboratoryUpload.getObservationLaboratoryInfoCommandAnalyses().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.laboratory.tests.laboratory.results.observation.laboratory}">Laboratory Results</h5>
+    </div>
+    <div th:if="${!laboratoryUpload.getObservationLaboratoryInfoCommandAnalyses().isEmpty()}">
+        <div th:each="lab : ${laboratoryUpload.getObservationLaboratoryInfoCommandAnalyses()}">
+            <h6 th:text="${laboratoryUpload.getObservationLaboratoryInfoCommandAnalyses().indexOf(lab) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis} + ': ' + ${lab.getAnalysisName()}">Analysis</p>
+            <p th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.value} + ': ' + ${lab.getObservationLaboratoryInfoCommandSample().getCurrentValue()}">Value</p>
+            <p th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.date} + ': ' + ${lab.getObservationLaboratoryInfoCommandSample().getLocalDateOfLaboratory()}">Date and time</p>
+            <p th:text="#{fragment.current.patient.navigation.left.visit.data.prescription.medication.author} + ': ' + ${lab.getAuthor()}">Author</p>
+            <br>
+        </div>
+
+    <div class="card-body row justify-content-center">
         <h5 th:if="${!phExamination.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.ph.exam.clinical.exam}">Clinical Exam</h5>
     </div>
     <div th:if="${!phExamination.isEmpty()}">

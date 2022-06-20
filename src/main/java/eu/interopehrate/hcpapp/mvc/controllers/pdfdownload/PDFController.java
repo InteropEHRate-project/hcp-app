@@ -83,6 +83,7 @@ public class PDFController {
         context.setVariable("listAllergies", this.allergyService.listOfNewAllergies());
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
+        context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT_DOCUMENT, context, "Hospital-discharge-report.pdf");
     }

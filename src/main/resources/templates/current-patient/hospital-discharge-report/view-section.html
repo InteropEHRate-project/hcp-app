@@ -283,6 +283,34 @@
             </tr>
         </table>
 
+        <br>
+        <h5 th:if="${!hospitalDischargeReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.add}">Laboratory Tests to upload in S-EHR</h5></p>
+        <table class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
+                <th:block th:each="sample : ${hospitalDischargeReportCommand.getObservationLaboratoryService().laboratoryUpload().localDateTimeListWithoutDuplicatesLab()}">
+                    <th th:text="${{sample}}"></th>
+                </th:block>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="an : ${hospitalDischargeReportCommand.getObservationLaboratoryService().laboratoryUpload().laboratoryAnalysesWithoutDuplicates()}">
+                <div th:with="map=${hospitalDischargeReportCommand.getObservationLaboratoryService().laboratoryUpload().valueReturnLaboratory()}">
+                    <td th:text="${{an}}"></td>
+                    <th:block th:each="sample : ${hospitalDischargeReportCommand.getObservationLaboratoryService().laboratoryUpload().localDateTimeListWithoutDuplicatesLab()}">
+                        <!--                    <td th:if="${map.get(an,sample) == null}">-</td>-->
+                        <div th:if="${map.get(an,sample) != null}">
+                            <td th:text="${{map.get(an,sample)}}"></td>
+                        </div>
+
+                    </th:block>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+
         <div class="btn-group">
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
             <a class="btn btn-outline-primary" th:href="@{/reports/hospital-discharge-report-pdf}"

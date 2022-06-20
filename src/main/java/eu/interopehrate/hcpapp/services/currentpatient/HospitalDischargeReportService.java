@@ -3,6 +3,7 @@ package eu.interopehrate.hcpapp.services.currentpatient;
 
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.DiagnosticConclusionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
@@ -19,4 +20,5 @@ public interface HospitalDischargeReportService {
     void insertDetails(HospitalDischargeReportCommand hospitalDischargeReportCommand);
     Boolean saveInCloud(byte[] content);
     PHExamRepository getPhExamRepository();
+    LaboratoryTestsRepository getLaboratoryTestsRepository();
 }

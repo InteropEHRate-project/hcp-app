@@ -6,6 +6,7 @@ import eu.interopehrate.fhir.provenance.ResourceSigner;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.CurrentDiseaseRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.DiagnosticConclusionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
@@ -15,6 +16,7 @@ import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationSer
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests.ObservationLaboratoryServiceImpl;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import eu.interopehrate.protocols.provenance.ProvenanceBuilder;
 import lombok.SneakyThrows;
@@ -59,9 +61,11 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private final VitalSignsService vitalSignsService;
     private final PHExamService phExamService;
     private final PHExamRepository phExamRepository;
+    private final ObservationLaboratoryServiceImpl observationLaboratoryService;
+    private final LaboratoryTestsRepository laboratoryTestsRepository;
 
     public HospitalDischargeReportServiceImpl(PrescriptionService prescriptionService, PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
-                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection, DiagnosticConclusionRepository diagnosticConclusionRepository, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, PHExamRepository phExamRepository) {
+                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection, DiagnosticConclusionRepository diagnosticConclusionRepository, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, PHExamRepository phExamRepository, ObservationLaboratoryServiceImpl observationLaboratoryService, LaboratoryTestsRepository laboratoryTestsRepository) {
         this.prescriptionService = prescriptionService;
         this.prescriptionRepository = prescriptionRepository;
         this.vitalSignsRepository = vitalSignsRepository;
@@ -75,6 +79,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.vitalSignsService = vitalSignsService;
         this.phExamService = phExamService;
         this.phExamRepository = phExamRepository;
+        this.observationLaboratoryService = observationLaboratoryService;
+        this.laboratoryTestsRepository = laboratoryTestsRepository;
     }
 
     @Override
@@ -108,9 +114,14 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     }
 
     @Override
+    public LaboratoryTestsRepository getLaboratoryTestsRepository() {
+        return laboratoryTestsRepository;
+    }
+
+    @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
         return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, patientName, patientDateBirth,
-                patientGender, hcpName, format, prescriptionService, currentDiseaseService, allergyService, diagnosticConclusionService, vitalSignsService, phExamService);
+                patientGender, hcpName, format, prescriptionService, currentDiseaseService, allergyService, diagnosticConclusionService, vitalSignsService, phExamService, observationLaboratoryService);
     }
 
     @Override

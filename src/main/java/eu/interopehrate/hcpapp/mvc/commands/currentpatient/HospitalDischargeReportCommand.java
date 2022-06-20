@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.mvc.commands.currentpatient;
 
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
+import eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests.ObservationLaboratoryServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,10 +34,11 @@ public class HospitalDischargeReportCommand {
     private final DiagnosticConclusionService diagnosticConclusionService;
     private final VitalSignsService vitalSignsService;
     private final PHExamService phExamService;
+    private final ObservationLaboratoryServiceImpl observationLaboratoryService;
 
 
     public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, String hospitalName, String hospitalAddress,
-                                          String patientName, String patientDateBirth, String patientGender, String hcpName, String format, PrescriptionService prescriptionService, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService) {
+                                          String patientName, String patientDateBirth, String patientGender, String hcpName, String format, PrescriptionService prescriptionService, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, ObservationLaboratoryServiceImpl observationLaboratoryService) {
         this.reasons = reasons;
         this.findings = findings;
         this.procedures = procedures;
@@ -53,6 +55,7 @@ public class HospitalDischargeReportCommand {
         this.diagnosticConclusionService = diagnosticConclusionService;
         this.vitalSignsService = vitalSignsService;
         this.phExamService = phExamService;
+        this.observationLaboratoryService = observationLaboratoryService;
         this.format = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
         this.prescriptionService = prescriptionService;
     }
