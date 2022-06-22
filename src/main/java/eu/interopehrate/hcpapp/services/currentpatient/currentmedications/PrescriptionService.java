@@ -25,7 +25,6 @@ public interface PrescriptionService {
     PrescriptionCommand prescriptionCommand(int pageNo, int pageSize, String keyword) throws IOException;
     PrescriptionInfoCommand prescriptionInfoCommandById(Long id);
     void insertPrescription(PrescriptionInfoCommand prescriptionInfoCommand);
-    void insertPrescriptionMedication(PrescriptionInfoCommand prescriptionInfoCommand);
     void deletePrescription(Long drugId);
     void updatePrescription(PrescriptionInfoCommand prescriptionInfoCommand);
     MedicationStatement callSendPrescription() throws IOException;
