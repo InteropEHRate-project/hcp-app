@@ -36,9 +36,10 @@ public class PDFController {
     private final PHExamService phExamService;
     private final HospitalDischargeReportService hospitalDischargeReportService;
     private final ObservationLaboratoryService observationLaboratoryService;
+    private final OutpatientReportService outpatientReportService;
 
     public PDFController(ServletContext servletContext, TemplateEngine templateEngine, PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService, ObservationLaboratoryService observationLaboratoryService) {
+                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService, ObservationLaboratoryService observationLaboratoryService, OutpatientReportService outpatientReportService) {
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
         this.prescriptionService = prescriptionService;
@@ -49,6 +50,7 @@ public class PDFController {
         this.phExamService = phExamService;
         this.hospitalDischargeReportService = hospitalDischargeReportService;
         this.observationLaboratoryService = observationLaboratoryService;
+        this.outpatientReportService = outpatientReportService;
     }
 
 //    @GetMapping
@@ -70,6 +72,7 @@ public class PDFController {
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
         context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
+        context.setVariable("outpatientReport", this.outpatientReportService.outpatientReportCommand());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT, context, "Outpatient-report.pdf");
     }
 

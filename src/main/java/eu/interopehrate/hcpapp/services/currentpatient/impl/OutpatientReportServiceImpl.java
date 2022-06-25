@@ -21,6 +21,8 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -42,13 +44,13 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private HealthCareProfessionalService healthCareProfessionalService;
     @Autowired
     private HealthCareOrganizationService healthCareOrganizationService;
-    private IndexServiceImpl indexService;
+    private final IndexServiceImpl indexService;
     private final PHExamService phExamService;
     private final ObservationLaboratoryService observationLaboratoryService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, PHExamService phExamService, ObservationLaboratoryService observationLaboratoryService) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, IndexServiceImpl indexService, PHExamService phExamService, ObservationLaboratoryService observationLaboratoryService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
@@ -59,6 +61,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         this.currentD2DConnection = currentD2DConnection;
         this.cloudConnection = cloudConnection;
         this.currentPatient = currentPatient;
+        this.indexService = indexService;
         this.phExamService = phExamService;
         this.observationLaboratoryService = observationLaboratoryService;
     }
@@ -75,6 +78,14 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 .instrumentsExaminationService(this.instrumentsExaminationService)
                 .phExamService(this.phExamService)
                 .observationLaboratoryService(this.observationLaboratoryService)
+                .hospitalAddress(this.healthCareOrganizationService.getHealthCareOrganization().getAddress())
+                .hcpName(this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " +
+                        this.healthCareProfessionalService.getHealthCareProfessional().getLastName())
+                .hospitalName(this.healthCareOrganizationService.getHealthCareOrganization().getName())
+                .patientName(this.indexService.getCurrentPatient().getPatient().getNameFirstRep().getNameAsSingleString())
+                .patientBirthDate(this.indexService.getCurrentPatient().getPatient().getBirthDate())
+                .patientSex(this.indexService.getCurrentPatient().getPatient().getGender().toString())
+                .format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")))
                 .build();
     }
 
@@ -178,7 +189,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(treatmentPlan);
 
         Composition.SectionComponent instrumentExaminationSection = new Composition.SectionComponent();
-        instrumentExaminationSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "29545-1", "Instrument Examination")));
+        instrumentExaminationSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "29545-1", "Instrumental Examination")));
         instrumentExaminationSection.addEntry().setResource(instrumentalExamination);
         composition.addSection(instrumentExaminationSection);
         bundleEvaluation.addEntry().setResource(instrumentalExamination);
@@ -204,7 +215,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(phExam);
 
         Composition.SectionComponent laboratorySection = new Composition.SectionComponent();
-        laboratorySection.setCode(new CodeableConcept(new Coding("http://loinc.org", "8716-3", "Laboratory Test")));
+        laboratorySection.setCode(new CodeableConcept(new Coding("http://loinc.org", "", "Laboratory Test")));
         laboratorySection.addEntry().setResource(laboratory);
         composition.addSection(laboratorySection);
         bundleEvaluation.addEntry().setResource(laboratory);
@@ -217,6 +228,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(prov);
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundleEvaluation));
+       // this.currentPatient.initPatientSummary(bundleEvaluation);
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
     }
 }
