@@ -119,7 +119,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
         DiagnosticReport instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
         AllergyIntolerance allergies = allergyService.callAllergies();
-        DiagnosticReport phExam = phExamService.callPHExam();
+        Condition phExam = phExamService.callPHExam();
         Observation laboratory = observationLaboratoryService.callLaboratoryTests();
 
         Composition composition = new Composition();
