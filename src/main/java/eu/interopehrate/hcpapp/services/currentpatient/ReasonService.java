@@ -1,5 +1,13 @@
 package eu.interopehrate.hcpapp.services.currentpatient;
 
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.ReasonEntity;
+
+import java.util.List;
+
 public interface ReasonService {
-    void insertNote(String note);
+    List<ReasonEntity> getReasons();
+
+    void addSymptom(String symptom);
+
+    void delete(Long id);
 }

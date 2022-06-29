@@ -5,42 +5,7 @@
 <head>
     <title th:text="#{fragment.current.patient.navigation.left.reason}">reason</title>
 </head>
-<!--<script>-->
-<!--    let button = document.getElementById("enter");-->
-<!--    let input = document.getElementById("userinput");-->
-<!--    let ul = document.querySelector("ul");-->
 
-<!--    button.addEventListener("click", function () {-->
-<!--        let li = document.createElement("li");-->
-<!--        li.className = 'list-group-item';-->
-<!--        li.textContent = input.value;-->
-<!--        ul.appendChild(li);-->
-<!--        // Add Bootstrap class to the list element-->
-<!--        // li.classList.add("list-group-item");-->
-<!--        // li.appendChild(document.createTextNode(input.value));-->
-<!--        // ul.appendChild(li);-->
-<!--        // Clear your input-->
-<!--        // input.value = "";-->
-<!--    })-->
-<!--</script>-->
-<script>
-    function addItem(){
-        let ul = document.getElementById("dynamic-list");
-        let symptom = document.getElementById("symptom");
-        let li = document.createElement("li");
-        li.setAttribute('id',symptom.value);
-        li.appendChild(document.createTextNode(symptom.value));
-        ul.appendChild(li);
-    }
-
-    function removeItem(){
-        let ul = document.getElementById("dynamic-list");
-        let symptom = document.getElementById("symptom");
-        let li = document.createElement("li");
-        li.setAttribute('id',symptom.value);
-        ul.removeChild(li);
-    }
-</script>
 <body>
 <div layout:fragment="content">
     <div class="m-5"></div>
@@ -48,55 +13,45 @@
     <h3 th:text="#{fragment.current.patient.navigation.left.reason}">reason</h3></p>
     <div class="m-4"></div>
 
-    <div class="container">
-        <header>
+        <div class="container">
+            <header>
             <h4>List of symptoms</h4>
-        </header>
-    <div class="input-group">
-        <input type="text" class="form-control" id="symptom">
-        <div class="input-group-append">
-            <button onclick="addItem()" class="btn btn-primary" type="button">Add an symptom</button>
-            <button onclick="removeItem()" class="btn btn-danger" type="button">Delete an symptom</button>
+            </header>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th th:text="#{template.administration.prescriptions.nomenclature.name}">Reason</th>
+                    <th th:text="#{button.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reason : ${reasons}">
+                    <td th:text="${reason.getSymptom}"></td>
+                    <td>
+                        <a th:href="@{/current-patient/visit-data/reason/delete(symptomId=${reason.getId()})}" class="btn btn-danger ml-2">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
-    </div>
-    </div>
 
     <ul id="dynamic-list"></ul>
-<!--    <div class="container">-->
-<!--        <div class="row justify-center col-6">-->
-<!--            <header>-->
-<!--                <h4>List of symptoms</h4>-->
-<!--            </header>-->
-<!--            <div class="m-2"></div>-->
-<!--            <div class="col-sm-12">-->
-<!--                <ul class="list-group">-->
-<!--                    <li class="list-group-item">Headache</li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="m-2"></div>-->
-<!--            <div class="col-sm-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <input id="userinput" type="text" class="form-control" placeholder="Add an symptom..." aria-label="Add an item" aria-describedby="basic-addon2">-->
-<!--                    <div class="input-group-append">-->
-<!--                        <button class="btn btn-primary" id="enter" type="button">Add symptom</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 
     <div class="m-5"></div>
-    <form class="row col-12 justify-content-center">
-<!--        <div class="form-group col-6">-->
-<!--            <label for="carePlan" th:text="#{fragment.current.patient.navigation.left.reason.care.plan}">Care plan</label>-->
-<!--            <textarea class="form-control" name="carePlan" id="carePlan" rows="3"></textarea>-->
-<!--        </div>-->
-        <div class="form-group col-12">
-            <label for="reason" th:text="#{fragment.current.patient.navigation.left.reason.reason}">Reason</label>
-            <textarea class="form-control" name="reason" id="reason" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary mb-2" th:text="#{button.save}">Save</button>
-    </form>
+
+    <div>
+        <h3>Add Symptom</h3>
+        <hr/>
+        <form th:action="@{/current-patient/visit-data/reason/save-add}" th:object="${reason}" method="POST">
+            <input type="text" th:field="*{symptom}" class="form-control col-4 mb-4" placeholder="Enter Symptom" />
+            <button type="submit" class="btn btn-primary col-2">Save</button>
+            <input type="hidden" th:field="*{symptom}" />
+        </form>
+        <hr/>
+    </div>
+
 </div>
+
 </body>
 </html>
