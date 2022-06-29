@@ -94,10 +94,10 @@ public class PHExamServiceImpl implements PHExamService {
     }
 
     @Override
-    public DiagnosticReport callPHExam() {
+    public Condition callPHExam() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.phExamRepository.findAll().size(); i++) {
-                DiagnosticReport vitalSigns = createPHExamFromEntity(this.phExamRepository.findAll().get(i));
+                Condition vitalSigns = createPHExamFromEntity(this.phExamRepository.findAll().get(i));
                 this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 return vitalSigns;
@@ -110,8 +110,8 @@ public class PHExamServiceImpl implements PHExamService {
         return null;
     }
 
-    private static DiagnosticReport createPHExamFromEntity(PHExamEntity phExamEntity) {
-        DiagnosticReport phExam = new DiagnosticReport();
+    private static Condition createPHExamFromEntity(PHExamEntity phExamEntity) {
+        Condition phExam = new Condition();
 
         phExam.setId(UUID.randomUUID().toString());
         phExam.setCode(new CodeableConcept());
@@ -122,8 +122,7 @@ public class PHExamServiceImpl implements PHExamService {
                 .setCode("PHY"));
         phExam.getCode().getCoding().get(0).setDisplay(phExamEntity.getPhExam());
 
-        // phExam.setText(phExamEntity.getPhExam());
-        phExam.setConclusion(phExamEntity.getPhExam());
+        phExam.addNote().setText(phExamEntity.getPhExam());
 
         return phExam;
     }

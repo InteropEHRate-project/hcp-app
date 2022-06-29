@@ -172,8 +172,8 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.laboratoryTestsRepository.findAll().size(); i++) {
                 Observation laboratory = createLaboratoryFromEntity(this.laboratoryTestsRepository.findAll().get(i));
-                this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(laboratory));
-                this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(laboratory));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(laboratory));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(laboratory));
                 return laboratory;
             }
             auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Laboratory test to S-EHR");
