@@ -26,6 +26,8 @@ public class CurrentDiseaseTypesEntity extends HCPApplicationEntity {
     private String drugClass;
     @Column(name = "LOINC")
     private String loinc;
+    @Column(name = "LANG")
+    private String lang;
 
     @Override
     public boolean equals(Object o) {
