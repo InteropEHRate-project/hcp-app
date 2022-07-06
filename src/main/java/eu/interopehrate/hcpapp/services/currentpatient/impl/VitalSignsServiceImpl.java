@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -72,6 +71,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
     public VitalSignsCommand vitalSignsCommand() {
         var vitalSignsInfoCommands = this.currentPatient.vitalSignsList()
                 .stream()
+                .filter(vitalSigns -> vitalSigns.getId().contains("vitalsign") || vitalSigns.getId().contains("vital-sign"))
                 .map(hapiToCommandVitalSigns::convert)
                 .collect(Collectors.toList());
 
@@ -86,7 +86,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSignsInfoCommand.setPatientId(this.currentPatient.getPatient().getId());
         vitalSignsInfoCommand.setAuthor(this.healthCareProfessionalRepository.findAll().get(0).getFirstName() + " " + this.healthCareProfessionalRepository.findAll().get(0).getLastName());
         VitalSignsEntity vitalSignsEntity = this.commandToEntityVitalSigns.convert(vitalSignsInfoCommand);
-        vitalSignsRepository.save(vitalSignsEntity);
+        vitalSignsRepository.save(Objects.requireNonNull(vitalSignsEntity));
     }
 
     @Override
@@ -180,7 +180,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.getCode().getCoding().add(new Coding().setSystem("http://loinc.org").setCode(vitalSignsEntity.getAnalysisType().getLoinc()));
         vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisType().getName());
 
-        vitalSigns.setId(UUID.randomUUID().toString());
+        vitalSigns.setId(UUID.randomUUID() + "-vitalsign");
 
         Calendar when = Calendar.getInstance();
         int y = vitalSignsEntity.getLocalDateOfVitalSign().getYear();

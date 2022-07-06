@@ -1,5 +1,7 @@
 package eu.interopehrate.hcpapp.currentsession;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
@@ -14,8 +16,7 @@ import eu.interopehrate.td2de.api.TD2DListener;
 import eu.interopehrate.td2de.api.TD2DSecureConnectionFactory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,9 +33,6 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Semaphore;
 
-import static eu.interopehrate.protocols.common.DocumentCategory.PATIENT_SUMMARY;
-import static eu.interopehrate.protocols.common.FHIRResourceCategory.*;
-
 @Slf4j
 @Component
 public class CurrentD2DConnection implements DisposableBean {
@@ -50,6 +48,7 @@ public class CurrentD2DConnection implements DisposableBean {
     private String ipsValidatorPackPath;
     private final AuditInformationService auditInformationService;
     private final Semaphore docHisSemaphore = new Semaphore(1);
+    private Bundle bundleD2D;
 
     public CurrentD2DConnection(CurrentPatient currentPatient, D2DConnectionOperations d2DConnectionOperations,
                                 ApplicationRuntimeInfoService applicationRuntimeInfoService, IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) {
@@ -144,124 +143,6 @@ public class CurrentD2DConnection implements DisposableBean {
     }
 
     private class D2DHRExchangeListener implements TD2DListener {
-//
-//        @Override
-//        public void onPatientSummaryReceived(Bundle bundle) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onPatientSummaryReceived");
-//                    CurrentD2DConnection.this.currentPatient.initPatientSummary(bundle);
-//                    CurrentD2DConnection.this.indexPatientDataCommand.setIpsReceived(true);
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after Patient Summary was received", e);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onConsentAnswerReceived(String s) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onConsentAnswerReceived");
-//                    CurrentD2DConnection.this.currentPatient.initConsent(s);
-//                    CurrentD2DConnection.this.d2DConnectionOperations.auditPatientConsent();
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after consent answer was received", e);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onPrescriptionReceived(Bundle medicationRequest) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onPrescriptionReceived");
-//                    CurrentD2DConnection.this.currentPatient.initPrescription(medicationRequest);
-//                    CurrentD2DConnection.this.indexPatientDataCommand.setPrescriptionReceived(true);
-//                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing Prescription Received");
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after Prescription was received", e);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onLaboratoryResultsReceived(Bundle bundle) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onLaboratoryResultsReceived");
-//                    CurrentD2DConnection.this.currentPatient.initLaboratoryResults(bundle);
-//                    CurrentD2DConnection.this.indexPatientDataCommand.setLaboratoryResultsReceived(true);
-//                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing LaboratoryResults Received");
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after Prescription was received", e);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onImageReportReceived(Bundle bundle) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onImageReportReceived");
-//                    CurrentD2DConnection.this.currentPatient.initImageReport(bundle);
-//                    CurrentD2DConnection.this.indexPatientDataCommand.setImageReportReceived(true);
-//                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing ImageReport Received");
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after ImageReport was received", e);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onPathologyHistoryInformationReceived(Bundle bundle) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onPathologyHistoryInformationReceived");
-//                    CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundle);
-//                    CurrentD2DConnection.this.indexPatientDataCommand.setPatHisReceived(true);
-//                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing PathologyHistory Received");
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after PathologyHistoryInformation was received", e);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onMedicalDocumentConsultationReceived(Bundle bundle) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onMedicalDocumentConsultationReceived");
-//                    CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundle);
-//                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing DocumentConsultation Received");
-//                } catch (Exception e) {
-//                    log.error("Error after MedicalDocumentConsultation was received", e);
-//                } finally {
-//                    docHisSemaphore.release();
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onVitalSignsReceived(Bundle bundle) {
-//            CompletableFuture.runAsync(() -> {
-//                try {
-//                    log.info("onVitalSignsReceived");
-//                    CurrentD2DConnection.this.currentPatient.initVitalSigns(bundle);
-//                    CurrentD2DConnection.this.indexPatientDataCommand.setVitalSignsReceived(true);
-//                    auditInformationService.auditEvent(AuditEventType.RECEIVED_FROM_SEHR, "Auditing VitalSigns Received");
-//                    CurrentD2DConnection.this.d2DConnectionOperations.reloadIndexPage();
-//                } catch (Exception e) {
-//                    log.error("Error after VitalSigns was received", e);
-//                }
-//            });
-//        }
 
         @Override
         public boolean onCitizenPersonalDataReceived(Patient patient) {
@@ -287,15 +168,36 @@ public class CurrentD2DConnection implements DisposableBean {
         @Override
         public void onSearch(Bundle healthDataBundle, int currentPage, int totalPages) {
             log.info("onSearch call " + " " + currentPage + " " + totalPages);
-            log.info("bundle items " + healthDataBundle.getEntry().size());
-            CurrentD2DConnection.this.currentPatient.initPatientSummary(healthDataBundle);
-            CurrentD2DConnection.this.currentPatient.initPrescription(healthDataBundle);
-            //     CurrentD2DConnection.this.currentPatient.initPatHisConsultation(healthDataBundle);
-            CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(healthDataBundle);
-            CurrentD2DConnection.this.currentPatient.initImageReport(healthDataBundle);
-            CurrentD2DConnection.this.currentPatient.initVitalSigns(healthDataBundle);
-            if (healthDataBundle.getEntry().size() > 35) {
-                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(healthDataBundle);
+            //  log.info("bundle items " + healthDataBundle.getEntry().size());
+
+            if (currentPage == 1) {
+                bundleD2D = new Bundle();
+            }
+
+            for (Bundle.BundleEntryComponent entry : healthDataBundle.getEntry()) {
+                if (entry.getResource() instanceof Provenance)
+                    continue;
+                log.info("Received a " + entry.getResource().getResourceType() + " ,id = " + entry.getResource().getId());
+                bundleD2D.addEntry(entry);
+            }
+            if (currentPage == totalPages) {
+                log.info("Transfer from D2D finished.");
+                //recreate the reference for obj
+                IParser parser = FhirContext.forR4().newJsonParser();
+                String data = parser.encodeResourceToString(bundleD2D);
+                bundleD2D = parser.parseResource(Bundle.class, data);
+
+                log.info("Starting translation");
+                CurrentD2DConnection.this.currentPatient.initPatientSummary(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initPrescription(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initPatHisConsultation(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initDocHistoryConsultation(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initDiagnosticReport(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initImageReport(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initVitalSigns(bundleD2D);
+                CurrentD2DConnection.this.currentPatient.initLaboratoryResults(bundleD2D);
+                log.info("Information received from D2D");
+                bundleD2D = null;
             }
         }
 
@@ -329,7 +231,10 @@ public class CurrentD2DConnection implements DisposableBean {
 
     @SneakyThrows
     public void getIPS() {
-        this.td2D.getResourcesByCategories(null, false, CONDITION, ALLERGY_INTOLERANCE, MEDICATION_REQUEST, OBSERVATION, DOCUMENT_REFERENCE);
+        this.td2D.setItemsPerPage(1);
+        this.td2D.getResourcesByCategories(null, false, FHIRResourceCategory.CONDITION, FHIRResourceCategory.ALLERGY_INTOLERANCE,
+                FHIRResourceCategory.MEDICATION_REQUEST, FHIRResourceCategory.OBSERVATION, FHIRResourceCategory.DIAGNOSTIC_REPORT);
+
         log.info("Patient Summary received");
     }
 

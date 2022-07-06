@@ -246,14 +246,13 @@ public class AllergyServiceImpl implements AllergyService {
         allergies.getCode().addChild("coding");
         allergies.getCode().setCoding(new ArrayList<>());
         allergies.getCode().getCoding().add(new Coding()
-                .setSystem("http://loinc")
+                .setSystem("http://www.whocc.no/atc")
                 .setCode(allergyEntity.getAllergyTypesEntity().getLoinc())
                 .setDisplay("Allergies and adverse reactions Document"));
         allergies.getCode().getCoding().get(0).setDisplay(allergyEntity.getName());
 
         allergies.addNote().setText(allergyEntity.getComments());
-         //allergies.addCategoryElement().setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyEntity.getCategory()));
-        //allergies.setId(allergyEntity.getId().toString());
+        //allergies.addCategoryElement().setValue(AllergyIntolerance.AllergyIntoleranceCategory.valueOf(allergyEntity.getCategory()));
 
         return allergies;
     }

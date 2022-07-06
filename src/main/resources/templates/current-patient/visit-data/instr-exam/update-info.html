@@ -22,7 +22,17 @@
         <div class="form-row">
             <div class="col-md-4">
                 <label for="type" th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</label>
-                <input id="type" readonly type="text" class="form-control" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" th:field="*{type}">
+                <select class="form-control" id="type" th:field="*{type}">
+                    <option selected value="" th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.type}">Choose a type</option>
+                    <option input type="text" class="form-control"
+                            th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="ECHO"
+                            th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECHO}">ECHO
+                    </option>
+                    <option input type="text" class="form-control"
+                            th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' :''" value="ECG"
+                            th:text="#{fragment.current.patient.navigation.left.ph.exam.choose.ECG}">ECG
+                    </option>
+                </select>
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('type')}" th:text="${err}">err</li>
