@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.CurrentDiseaseTypesEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.CurrentDiseaseService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -40,9 +43,12 @@ public class CurrentDiseaseController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage(Model model) {
+    public String openAddPage(Model model, @RequestParam(required = false) String lang) {
         model.addAttribute("currentDiseaseInfoCommand", new CurrentDiseaseInfoCommand());
-        model.addAttribute("currentDiseaseTypes", this.currentDiseaseService.getCurrentTypesRepository().findAll());
+        List<CurrentDiseaseTypesEntity> listOfDiseases = lang != null ?
+                this.currentDiseaseService.getCurrentTypesRepository().findAllByLang(lang) :
+                this.currentDiseaseService.getCurrentTypesRepository().findAll();
+        model.addAttribute("currentDiseaseTypes", listOfDiseases.isEmpty() ? this.currentDiseaseService.getCurrentTypesRepository().findAll() : listOfDiseases);
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
     }
 
@@ -51,6 +57,7 @@ public class CurrentDiseaseController {
     public String saveAdd(@Valid @ModelAttribute CurrentDiseaseInfoCommand currentDiseaseInfoCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("currentDiseaseTypes", this.currentDiseaseService.getCurrentTypesRepository().findAll());
+
             return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
         }
         this.currentDiseaseService.insertCurrentDisease(currentDiseaseInfoCommand);
