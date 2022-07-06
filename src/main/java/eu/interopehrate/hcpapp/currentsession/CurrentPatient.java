@@ -38,6 +38,8 @@ public class CurrentPatient {
     private Certificate certificate;
     private Bundle imageReport;
     private Bundle imageReportTranslated;
+    private Bundle diagnosticReport;
+    private Bundle diagnosticReportTranslated;
     private Bundle vitalSignsBundle;
     private Bundle vitalSignsTranslated;
     private Bundle docHistoryConsult;
@@ -273,9 +275,31 @@ public class CurrentPatient {
 
     public void initPatientSummary(Bundle patientSummary) {
         try {
-            patientSummaryBundle = patientSummary;
-            patientSummaryBundleTranslated = translateService.translate(patientSummaryBundle, Locale.UK);
-            patientSummaryBundleTranslated = codesConversionService.convert(patientSummaryBundleTranslated);
+            patientSummaryBundle = new Bundle();
+            for (Bundle.BundleEntryComponent entry : patientSummary.getEntry()) {
+                if (entry.getResource() instanceof Provenance)
+                    continue;
+
+                else if (entry.getResource() instanceof Media) {
+                    Media originalMedia = (Media) entry.getResource();
+                    Media emptyMedia = new Media();
+                    Meta meta = new Meta();
+                    meta.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Media-IEHR");
+                    emptyMedia.setMeta(meta);
+                    emptyMedia.setId(originalMedia.getId());
+                    emptyMedia.setStatus(Media.MediaStatus.COMPLETED);
+                    emptyMedia.setSubject(originalMedia.getSubject());
+                    emptyMedia.setOperator(originalMedia.getOperator());
+                    emptyMedia.setEncounter(originalMedia.getEncounter());
+                    emptyMedia.addNote().setText(originalMedia.getNote().toString());
+                    patientSummaryBundle.addEntry().setResource(emptyMedia);
+
+                } else {
+                    patientSummaryBundle.addEntry().setResource(entry.getResource());
+                }
+            }
+            patientSummaryBundleTranslated = translateService.translate(patientSummaryBundle, new Locale("el"));
+            //patientSummaryBundleTranslated = codesConversionService.convert(patientSummaryBundleTranslated);
             logger.info("IPS translated & converted.");
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
@@ -286,7 +310,7 @@ public class CurrentPatient {
     public void initPrescription(Bundle prescript) {
         try {
             this.prescription = prescript;
-            this.prescriptionTranslated = this.translateService.translate(prescription, Locale.UK);
+            this.prescriptionTranslated = patientSummaryBundleTranslated;
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.prescriptionTranslated = this.prescription;
@@ -296,7 +320,7 @@ public class CurrentPatient {
     public void initLaboratoryResults(Bundle obs) {
         try {
             this.laboratoryResults = obs;
-            this.laboratoryResultsTranslated = this.translateService.translate(laboratoryResults, Locale.UK);
+            this.laboratoryResultsTranslated = patientSummaryBundleTranslated;
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.laboratoryResultsTranslated = laboratoryResults;
@@ -306,7 +330,7 @@ public class CurrentPatient {
     public void initVitalSigns(Bundle vital) {
         try {
             this.vitalSignsBundle = vital;
-            this.vitalSignsTranslated = this.translateService.translate(vitalSignsBundle, Locale.UK);
+            this.vitalSignsTranslated = patientSummaryBundleTranslated;
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.vitalSignsTranslated = vitalSignsBundle;
@@ -317,17 +341,27 @@ public class CurrentPatient {
     public void initImageReport(Bundle imageRep) {
         try {
             this.imageReport = imageRep;
-            this.imageReportTranslated = this.translateService.translate(imageReport, Locale.UK);
+            this.imageReportTranslated = imageRep;
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.imageReportTranslated = this.imageReport;
         }
     }
 
+    public void initDiagnosticReport(Bundle diagnosticRep) {
+        try {
+            this.diagnosticReport = diagnosticRep;
+            this.diagnosticReportTranslated = patientSummaryBundleTranslated;
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.diagnosticReportTranslated = this.diagnosticReport;
+        }
+    }
+
     public void initDocHistoryConsultation(Bundle docHistoryConsultation) {
         try {
             this.docHistoryConsult = docHistoryConsultation;
-            this.docHistoryConsultTranslated = this.translateService.translate(docHistoryConsult, Locale.UK);
+            this.docHistoryConsultTranslated = patientSummaryBundleTranslated;
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.docHistoryConsultTranslated = this.docHistoryConsult;
@@ -337,7 +371,7 @@ public class CurrentPatient {
     public void initPatHisConsultation(Bundle patHisConsultation) {
         try {
             this.patHisBundle = patHisConsultation;
-            this.patHisBundleTranslated = this.translateService.translate(patHisBundle, Locale.UK);
+            this.patHisBundleTranslated = patientSummaryBundleTranslated;
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.patHisBundleTranslated = this.patHisBundle;
@@ -457,16 +491,16 @@ public class CurrentPatient {
 
     public List<DiagnosticReport> diagnosticReportList() {
         if (this.displayTranslatedVersion) {
-            if (Objects.isNull(this.imageReportTranslated)) {
+            if (Objects.isNull(this.diagnosticReportTranslated)) {
                 return Collections.emptyList();
             } else {
-                return new BundleProcessor(this.imageReportTranslated).diagnosticReportList();
+                return new BundleProcessor(this.diagnosticReportTranslated).diagnosticReportList();
             }
         } else {
-            if (Objects.isNull(this.imageReport)) {
+            if (Objects.isNull(this.diagnosticReport)) {
                 return Collections.emptyList();
             } else {
-                return new BundleProcessor(this.imageReport).diagnosticReportList();
+                return new BundleProcessor(this.diagnosticReport).diagnosticReportList();
             }
         }
     }

@@ -70,6 +70,8 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
     public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis(String keyword) {
         var observationLaboratoryInfoCommandAnalyses = currentPatient.laboratoryList()
                 .stream()
+                .filter(laboratory -> laboratory.hasCategory() && ("laboratory".equals(laboratory.getCategoryFirstRep().getCodingFirstRep().getCode())
+                        || "RAD".equals(laboratory.getCategoryFirstRep().getCodingFirstRep().getCode())))
                 .map(hapiToCommandObservationLaboratory::convert)
                 .collect(Collectors.toList());
 
@@ -194,6 +196,7 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
         laboratory.getCode().getCoding().get(0).setDisplay(laboratoryTestsEntity.getLaboratoryTestsTypesEntity().getName());
 
         laboratory.setId(UUID.randomUUID().toString());
+        laboratory.setCategory(Collections.singletonList(new CodeableConcept().addCoding(new Coding().setCode("laboratory"))));
 
         Calendar when = Calendar.getInstance();
         int y = laboratoryTestsEntity.getLocalDateOfLaboratory().getYear();
