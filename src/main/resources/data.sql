@@ -4883,34 +4883,50 @@ insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_
 insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'LUTEZIO (177LU) OXODOTREOTIDE', '', 'V10XX04');
 
 
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Essential (primary) hypertension', 'I10', 'I10.0');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to other renal disorders', 'I15', 'I15.1');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to endocrine disorders', 'I15', 'I15.2');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Other secondary hypertension', 'I15', 'I15.8');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Secondary hypertension, unspecified', 'I15', 'I15.9');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease with heart failure', 'I11', 'I11.0');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease without heart failure', 'I11', 'I11.9');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Dilated cardiomyopathy', 'I42', 'I42.0');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Obstructive hypertrophic cardiomyopathy', 'I42', 'I42.1');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy, childbirth and the puerperium', 'O24', 'O24.0');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy', 'O24', 'O24.1');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in childbirth', 'O24' ,'O24.2');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in the puerperium','O24','O24.3');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc)
-   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Poisoning by, adverse effect of and underdosing of insulin and oral hypoglycemic [antidiabetic] drugs', 'T38', 'T38.3');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Essential (primary) hypertension', 'I10', 'I10.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to other renal disorders', 'I15', 'I15.1', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to endocrine disorders', 'I15', 'I15.2', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Other secondary hypertension', 'I15', 'I15.8', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Secondary hypertension, unspecified', 'I15', 'I15.9', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease with heart failure', 'I11', 'I11.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease without heart failure', 'I11', 'I11.9', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Dilated cardiomyopathy', 'I42', 'I42.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Obstructive hypertrophic cardiomyopathy', 'I42', 'I42.1', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy, childbirth and the puerperium', 'O24', 'O24.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy', 'O24', 'O24.1', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in childbirth', 'O24' ,'O24.2', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in the puerperium', 'O24','O24.3', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Poisoning by, adverse effect of and underdosing of insulin and oral hypoglycemic [antidiabetic] drugs', 'T38', 'T38.3', 'en');
+
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione essenziale (primitiva)', 'I10', 'I10.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria ad altri disturbi renali', 'I15', 'I15.1', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria a disturbi endocrini', 'I15', 'I15.2', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Altre forme di ipertensione secondaria', 'I15', 'I15.8', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria non specificata', 'I15', 'I15.9', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopatia ipertensiva con insufficienza cardiaca (congestizia)', 'I11', 'I11.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopatia ipertensiva senza insufficienza cardiaca (congestizia)', 'I11', 'I11.9', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiomiopatia dilatativa', 'I42', 'I42.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiomiopatia ipertrofica ostruttiva', 'I42', 'I42.1', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24', 'O24.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24', 'O24.1', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza, in childbirth', 'O24' ,'O24.2', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24','O24.3', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Avvelenamento da ormoni e loro sostitutivi sintetici ed antagonisti non classificati altrove', 'T38', 'T38.3', 'it');
+
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension essentielle bénigne', 'I10', 'I10.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire à d autres atteintes rénales', 'I15', 'I15.1', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire à des atteintes endocriniennes', 'I15', 'I15.2', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Autres hypertensions secondaires', 'I15', 'I15.8', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire, sans précision', 'I15', 'I15.9', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopathie hypertensive, avec insuffisance cardiaque (congestive)', 'I11', 'I11.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopathie hypertensive, sans insuffisance cardiaque (congestive)', 'I11', 'I11.9', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Myocardiopathie avec dilatation', 'I42', 'I42.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Myocardiopathie obstructive hypertrophique', 'I42', 'I42.1', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24', 'O24.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24', 'O24.1', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24' ,'O24.2', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse','O24','O24.3', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Intoxication par hormones et leurs substituts synthétiques et antagonistes, non classés ailleurs', 'T38', 'T38.3', 'fr');
 
 insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc)
   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Feather', 'V01AA01');
