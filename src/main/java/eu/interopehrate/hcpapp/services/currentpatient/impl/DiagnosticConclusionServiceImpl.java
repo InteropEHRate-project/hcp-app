@@ -99,14 +99,16 @@ public class DiagnosticConclusionServiceImpl implements DiagnosticConclusionServ
 
     private static Condition createConclusionFromEntityObs(DiagnosticConclusionEntity diagnosticConclusionEntity) {
         Condition obs = new Condition();
-        obs.setCategory(new ArrayList<>()).getCategory().add(new CodeableConcept()
-                .setCoding(new ArrayList<>())
-                .addCoding(new Coding()
-                        .setSystem("http://loinc.org")
-                        .setCode("55110-1")
-                        .setDisplay("Conclusions [Interpretation] Document")));
+        obs.setCode(new CodeableConcept().addCoding(new Coding()
+                .setSystem("http://loinc.org")
+                .setCode("55110-1")
+                .setDisplay("Conclusions [Interpretation] Document")));
         obs.addNote().setText(diagnosticConclusionEntity.getConclusionNote());
         obs.setId(UUID.randomUUID().toString());
+
+        Meta meta = new Meta();
+        meta.addProfile("http://interopehrate.eu/fhir/StructureDefinition/DiagnosticConclusion-IEHR");
+        obs.setMeta(meta);
 
         return obs;
     }

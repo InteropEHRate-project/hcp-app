@@ -5,6 +5,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.CurrentDiseaseInfoCom
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Condition;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +47,8 @@ public class HapiToCommandCurrentDisease implements Converter<Condition, Current
         try {
             if (Objects.nonNull(condition.getRecordedDate())) {
                 currentDiseaseInfoCommand.setDateOfDiagnosis(condition.getRecordedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            } else if (Objects.nonNull(condition.getOnset())) {
+                currentDiseaseInfoCommand.setDateOfDiagnosis(((DateTimeType) condition.getOnset()).getValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
         } catch (NullPointerException e) {
             System.out.println("Date for Current Disease is null.");
