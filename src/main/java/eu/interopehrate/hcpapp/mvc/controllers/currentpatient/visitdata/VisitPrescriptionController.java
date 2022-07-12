@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PrescriptionTypesEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.currentmedications.PrescriptionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -20,6 +21,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/current-patient/visit-data/visit-prescription")
 public class VisitPrescriptionController {
+
+    public static final String EN = "en";
+
     private final PrescriptionService prescriptionService;
     public static PrescriptionCommand prescriptionCommand;
     public static List<PrescriptionEntity> prescriptionEntityList;
@@ -41,8 +45,12 @@ public class VisitPrescriptionController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage(Model model) {
-        model.addAttribute("prescriptionTypes", this.prescriptionService.getPrescriptionTypesRepository().findAll());
+    public String openAddPage(Model model, @RequestParam(required = false) String lang) {
+        List<PrescriptionTypesEntity> listOfPrescriptionTypes = null != lang && (lang.equals("en") || lang.equals("fr")
+                || lang.equals("it") ) ?
+                this.prescriptionService.getPrescriptionTypesRepository().findAllByLang(lang) :
+                this.prescriptionService.getPrescriptionTypesRepository().findAllByLang(EN);
+        model.addAttribute("prescriptionTypes", listOfPrescriptionTypes);
         model.addAttribute("prescriptionInfoCommand", new PrescriptionInfoCommand());
         return TemplateNames.CURRENT_PATIENT_VISIT_DATA_PRESCRIPTION_ADD_PAGE;
     }

@@ -19,6 +19,8 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/current-patient/current-diseases")
 public class CurrentDiseaseController {
+    public static final String EN = "en";
+
     private final CurrentDiseaseService currentDiseaseService;
 
     public CurrentDiseaseController(CurrentDiseaseService currentDiseaseService) {
@@ -45,10 +47,11 @@ public class CurrentDiseaseController {
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model, @RequestParam(required = false) String lang) {
         model.addAttribute("currentDiseaseInfoCommand", new CurrentDiseaseInfoCommand());
-        List<CurrentDiseaseTypesEntity> listOfDiseases = lang != null ?
+        List<CurrentDiseaseTypesEntity> listOfDiseases = null != lang && (lang.equals("en") || lang.equals("fr")
+                || lang.equals("it") ) ?
                 this.currentDiseaseService.getCurrentTypesRepository().findAllByLang(lang) :
-                this.currentDiseaseService.getCurrentTypesRepository().findAll();
-        model.addAttribute("currentDiseaseTypes", listOfDiseases.isEmpty() ? this.currentDiseaseService.getCurrentTypesRepository().findAll() : listOfDiseases);
+                this.currentDiseaseService.getCurrentTypesRepository().findAllByLang(EN);
+        model.addAttribute("currentDiseaseTypes", listOfDiseases);
         return TemplateNames.CURRENT_PATIENT_CURRENT_DISEASES_ADD_PAGE;
     }
 

@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.AllergyTypesEntity;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.allergy.AllergyInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.AllergyService;
@@ -11,11 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/allergies")
 public class AllergyController {
+
+    public static final String EN = "en";
+
     private final AllergyService allergyService;
 
     public AllergyController(AllergyService allergyService) {
@@ -37,9 +42,14 @@ public class AllergyController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage(Model model) {
+    public String openAddPage(Model model, @RequestParam(required = false) String lang) {
         model.addAttribute("allergyInfoCommand", new AllergyInfoCommand());
-        model.addAttribute("allergyTypes", this.allergyService.getAllergyTypesRepository().findAll());
+        List<AllergyTypesEntity> listOfDiseases = null != lang && (lang.equals("en") || lang.equals("fr")
+                || lang.equals("it") ) ?
+                this.allergyService.getAllergyTypesRepository().findAllByLang(lang) :
+                this.allergyService.getAllergyTypesRepository().findAllByLang(EN);
+
+        model.addAttribute("allergyTypes", listOfDiseases);
         return TemplateNames.CURRENT_PATIENT_ALLERGIES_ADD_PAGE;
     }
 
