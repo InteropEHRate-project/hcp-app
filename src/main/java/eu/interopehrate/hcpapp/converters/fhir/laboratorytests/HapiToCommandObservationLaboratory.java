@@ -50,10 +50,13 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
         }
 
 
-        if (Objects.nonNull(observation.getEffectiveDateTimeType())) {
-            command.getObservationLaboratoryInfoCommandSample().setSample(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
+        try {
+            if (Objects.nonNull(observation.getEffectiveDateTimeType())) {
+                command.getObservationLaboratoryInfoCommandSample().setSample(observation.getEffectiveDateTimeType().getValueAsCalendar().toZonedDateTime().toLocalDateTime());
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Value for data field is not available.");
         }
-
         if (Objects.nonNull(observation.getReferenceRange()) && Objects.nonNull(observation.getReferenceRangeFirstRep().getText())) {
             command.setReferenceRange(observation.getReferenceRangeFirstRep().getText());
             String range = observation.getReferenceRangeFirstRep().getText().replaceAll(",", ".");
@@ -66,9 +69,6 @@ public class HapiToCommandObservationLaboratory implements Converter<Observation
                 command.getObservationLaboratoryInfoCommandSample().setLowerLimitBound(0);
             } else if (range.contains("(")) {
                 range = range.substring(0, range.indexOf("(") - 1);
-                command.getObservationLaboratoryInfoCommandSample().setLowerLimitBound(Double.parseDouble(range.substring(0, range.indexOf(" "))));
-                command.getObservationLaboratoryInfoCommandSample().setUpperLimitBound(Double.parseDouble(range.substring(range.indexOf("-") + 2)));
-            } else {
                 command.getObservationLaboratoryInfoCommandSample().setLowerLimitBound(Double.parseDouble(range.substring(0, range.indexOf(" "))));
                 command.getObservationLaboratoryInfoCommandSample().setUpperLimitBound(Double.parseDouble(range.substring(range.indexOf("-") + 2)));
             }
