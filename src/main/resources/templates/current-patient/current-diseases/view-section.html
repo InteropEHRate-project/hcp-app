@@ -36,7 +36,7 @@
     <br>
 
     <div class="row justify-content-end" th:if="${session.medicalVisit != null && session.medicalVisit.equalsIgnoreCase('OUTPATIENT_VISIT') }">
-        <a class="btn btn-primary" th:href="@{/current-patient/current-diseases/refresh}"
+        <a class="btn btn-primary" onclick="this.disabled=true" th:href="@{/current-patient/current-diseases/refresh}"
            th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data}">Download data from S-EHR</a>
     </div>
 
