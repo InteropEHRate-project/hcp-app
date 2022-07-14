@@ -1,5 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.AllergyTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
@@ -11,10 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/current-patient/visit-data/vital-signs")
 public class VitalSignsController {
+
+    public static final String EN = "en";
+
     private final VitalSignsService vitalSignsService;
     private final VitalSignsTypesRepository vitalSignsTypesRepository;
     private static VitalSignsInfoCommand oldVitalSign;
@@ -36,9 +42,14 @@ public class VitalSignsController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage(Model model) {
+    public String openAddPage(Model model, @RequestParam(required = false) String lang) {
         model.addAttribute("vitalSignsInfoCommand", new VitalSignsInfoCommand());
-        model.addAttribute("vitalSignsTypes", this.vitalSignsTypesRepository.findAll());
+        List<VitalSignsTypesEntity> listOfVitalSigns = null != lang && (lang.equals("en") || lang.equals("fr")
+                || lang.equals("el") || lang.equals("ro")) ?
+                this.vitalSignsTypesRepository.findAllByLang(lang) :
+                this.vitalSignsTypesRepository.findAllByLang(EN);
+
+        model.addAttribute("vitalSignsTypes", listOfVitalSigns);
         model.addAttribute("correlations", this.vitalSignsService.correlations());
         return TemplateNames.CURRENT_PATIENT_VITAL_SIGNS_ADD_PAGE;
     }

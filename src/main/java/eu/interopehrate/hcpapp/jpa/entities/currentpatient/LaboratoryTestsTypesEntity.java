@@ -26,6 +26,8 @@ public class LaboratoryTestsTypesEntity extends HCPApplicationEntity {
     private String ucum;
     @Column(name = "LOINC")
     private String loinc;
+    @Column(name = "LANG")
+    private String lang;
 
     @Override
     public boolean equals(Object o) {

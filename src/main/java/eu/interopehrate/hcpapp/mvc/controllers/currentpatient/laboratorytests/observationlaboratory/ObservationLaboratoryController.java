@@ -1,6 +1,8 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.laboratorytests.observationlaboratory;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.LaboratoryTestsTypesEntity;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.VitalSignsTypesEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsTypesRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryCommandAnalysis;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.laboratorytests.ObservationLaboratoryInfoCommandAnalysis;
@@ -14,11 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
 @RequestMapping("/current-patient/laboratory-tests/laboratory-results")
 public class ObservationLaboratoryController {
+
+    public static final String EN = "en";
+
     private final ObservationLaboratoryService observationLaboratoryService;
     private final LaboratoryTestsTypesRepository laboratoryTestsTypesRepository;
 
@@ -74,9 +80,14 @@ public class ObservationLaboratoryController {
 
     @GetMapping
     @RequestMapping("/open-add-page")
-    public String openAddPage(Model model) {
+    public String openAddPage(Model model, @RequestParam(required = false) String lang) {
         model.addAttribute("observationLaboratoryInfoCommandAnalysis", new ObservationLaboratoryInfoCommandAnalysis());
-        model.addAttribute("laboratoryTypes", this.laboratoryTestsTypesRepository.findAll());
+        List<LaboratoryTestsTypesEntity> listOfLaboratoryTestsTypes = null != lang && (lang.equals("en") || lang.equals("fr")
+                || lang.equals("it") || lang.equals("el") || lang.equals("ro")) ?
+                this.laboratoryTestsTypesRepository.findAllByLang(lang) :
+                this.laboratoryTestsTypesRepository.findAllByLang(EN);
+
+        model.addAttribute("laboratoryTypes",listOfLaboratoryTestsTypes);
         model.addAttribute("correlations", this.observationLaboratoryService.correlations());
         return TemplateNames.CURRENT_PATIENT_LABORATORY_TESTS_LABORATORY_RESULTS_OBSERVATION_LABORATORY_ADD_PAGE;
     }

@@ -47,89 +47,153 @@ insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from
 -- insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 26'));
 -- insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 27'));
 
--- insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
---     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FC', 'Frequenza cardiaca', 'bpm', '0-300', '8867-4');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Breathing rate', 'FR', 'atti/min', '0-60', '9279-1');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Oxygen saturation in Arterial blood by Pulse oximetry', 'Sat Oxy', '%', '0-100', '59408-5');
--- insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
---     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Weight', 'Weight', 'kg', '', '29463-7');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Heart rate', 'Heart rate', '/min', '', '8867-4');
--- insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
---     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'SpO2', 'SpO2', '%', '', '59407-7');
--- insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
---     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Mean Arterial pressure', 'Mean Arterial pressure', 'mm[Hg]', '', '8478-0');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body height', 'Body height', 'cm', '', '8302-2');
--- insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
---     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinine', 'Creatinine', 'mg/dL', '', '3097-3');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Systolic Blood Pressure', 'Systolic Blood Pressure', 'mmHg', '0-300', '8480-6');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body Weight', 'Body Weight', 'kg', '0-300', '3141-9');
-insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
-    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diastolic Blood Pressure', 'Diastolic Blood Pressure', 'mmHg', '0-300', '8462-4');
--- insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc)
---     values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucose [Mass/volume] in Serum or Plasma', 'Glucose [Mass/volume] in Serum or Plasma', 'mg/dL', '', '2345-7');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Breathing rate', 'FR', 'atti/min', '0-60', '9279-1', 'en');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Oxygen saturation in Arterial blood by Pulse oximetry', 'Sat Oxy', '%', '0-100', '59408-5', 'en');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Heart rate', 'Heart rate', '/min', '', '8867-4', 'en');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body height', 'Body height', 'cm', '', '8302-2', 'en');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Systolic Blood Pressure', 'Systolic Blood Pressure', 'mmHg', '0-300', '8480-6', 'en');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body Weight', 'Body Weight', 'kg', '0-300', '3141-9',  'en');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diastolic Blood Pressure', 'Diastolic Blood Pressure', 'mmHg', '0-300', '8462-4', 'en');
 
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Vicodin', 'Opioid/acetaminophen combinations', 'R05DA03 ');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Synthroid', 'Thyroxines', 'H03AA');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Delasone', 'Corticosteroids', 'H02AB02');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Amoxil', 'Penicillin antibiotics', 'J01CA04');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Neurontin', 'Anti-epileptics', 'N03AX');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Prinivil', 'Angiotensin converting enzyme Inhibitors', 'C09AA04');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Lipitor', 'Statin', 'C10AA05');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucophage', 'Biguanides', 'A10BA');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Zofran', 'Serotonin antagonists', 'A03AE');
--- insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Motrin', 'Nonsteroidal anti-inflammatory drugs', 'G02CC01');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Fréquence respiratoire', 'FR', 'atti/min', '0-60', '9279-1', 'fr');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Saturation en oxygène', 'Sat Oxy', '%', '0-100', '59408-5', 'fr');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Fréquence cardiaque,', 'Fréquence cardiaque', '/min', '', '8867-4', 'fr');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body height', 'Body height', 'cm', '', '8302-2', 'fr');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Tension artérielle systolique', 'Tension artérielle systolique', 'mmHg', '0-300', '8480-6', 'fr');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Poids corporel', 'Poids corporel', 'kg', '0-300', '3141-9', 'fr');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Tension artérielle diastolique', 'Tension artérielle diastolique', 'mmHg', '0-300', '8462-4', 'fr');
+
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Frecventa respiratorie', 'FR', 'atti/min', '0-60', '9279-1', 'ro');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Saturatia oxigenului din sang', 'Sat Oxy', '%', '0-100', '59408-5', 'ro');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Frecventa cardiaca', 'Frecventa cardiaca', '/min', '', '8867-4', 'ro');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body height', 'Body height', 'cm', '', '8302-2', 'ro');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Tensiune arteriala sistolica', 'Tensiune arteriala sistolica', 'mmHg', '0-300', '8480-6', 'ro');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Greutate corporală', 'Greutate corporală', 'kg', '0-300', '3141-9', 'ro');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Tensiune arteriala diastolica', 'Tensiune arteriala diastolica', 'mmHg', '0-300', '8462-4', 'ro');
+
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Αναπνοή', 'FR', 'atti/min', '0-60', '9279-1', 'el');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Κορεσμός Οξυγόνου σε Αρτηριακή Πίεση με χρήση Οξύμετρου', 'Sat Oxy', '%', '0-100', '59408-5', 'el');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Καρδιακοί Παλμοί', 'Καρδιακοί Παλμοί', '/min', '', '8867-4', 'el');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Body height', 'Body height', 'cm', '', '8302-2', 'el');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Συστολική Πίεση', 'Tensiune arteriala sistolica', 'mmHg', '0-300', '8480-6', 'el');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Σωματικό Βάρος', 'Σωματικό Βάρος', 'kg', '0-300', '3141-9', 'el');
+insert into VITAL_SIGNS_TYPES (created_date, updated_date, version, name, comm, ucum, bioprm_range, loinc, lang)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Διαστολική Πίεση', 'Tensiune arteriala diastolica', 'mmHg', '0-300', '8462-4', 'el');
 
 
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Essential (primary) hypertension', 'I10', 'I10.0', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to other renal disorders', 'I15', 'I15.1', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to endocrine disorders', 'I15', 'I15.2', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Other secondary hypertension', 'I15', 'I15.8', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Secondary hypertension, unspecified', 'I15', 'I15.9', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease with heart failure', 'I11', 'I11.0', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease without heart failure', 'I11', 'I11.9', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Dilated cardiomyopathy', 'I42', 'I42.0', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Obstructive hypertrophic cardiomyopathy', 'I42', 'I42.1', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy, childbirth and the puerperium', 'O24', 'O24.0', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy', 'O24', 'O24.1', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in childbirth', 'O24' ,'O24.2', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in the puerperium', 'O24','O24.3', 'en');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Poisoning by, adverse effect of and underdosing of insulin and oral hypoglycemic [antidiabetic] drugs', 'T38', 'T38.3', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Essential (primary) hypertension', 'I10', 'I10.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to other renal disorders', 'I15', 'I15.1', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondary to endocrine disorders', 'I15', 'I15.2', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Other secondary hypertension', 'I15', 'I15.8', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Secondary hypertension, unspecified', 'I15', 'I15.9', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease with heart failure', 'I11', 'I11.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertensive heart disease without heart failure', 'I11', 'I11.9', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Dilated cardiomyopathy', 'I42', 'I42.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Obstructive hypertrophic cardiomyopathy', 'I42', 'I42.1', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy, childbirth and the puerperium', 'O24', 'O24.0', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in pregnancy', 'O24', 'O24.1', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in childbirth', 'O24' ,'O24.2', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pre-existing type 1 diabetes mellitus, in the puerperium', 'O24','O24.3', 'en');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Poisoning by, adverse effect of and underdosing of insulin and oral hypoglycemic [antidiabetic] drugs', 'T38', 'T38.3', 'en');
 
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione essenziale (primitiva)', 'I10', 'I10.0', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria ad altri disturbi renali', 'I15', 'I15.1', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria a disturbi endocrini', 'I15', 'I15.2', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Altre forme di ipertensione secondaria', 'I15', 'I15.8', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria non specificata', 'I15', 'I15.9', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopatia ipertensiva con insufficienza cardiaca (congestizia)', 'I11', 'I11.0', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopatia ipertensiva senza insufficienza cardiaca (congestizia)', 'I11', 'I11.9', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiomiopatia dilatativa', 'I42', 'I42.0', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiomiopatia ipertrofica ostruttiva', 'I42', 'I42.1', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24', 'O24.0', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24', 'O24.1', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza, in childbirth', 'O24' ,'O24.2', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24','O24.3', 'it');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Avvelenamento da ormoni e loro sostitutivi sintetici ed antagonisti non classificati altrove', 'T38', 'T38.3', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione essenziale (primitiva)', 'I10', 'I10.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria ad altri disturbi renali', 'I15', 'I15.1', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria a disturbi endocrini', 'I15', 'I15.2', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Altre forme di ipertensione secondaria', 'I15', 'I15.8', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ipertensione secondaria non specificata', 'I15', 'I15.9', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopatia ipertensiva con insufficienza cardiaca (congestizia)', 'I11', 'I11.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopatia ipertensiva senza insufficienza cardiaca (congestizia)', 'I11', 'I11.9', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiomiopatia dilatativa', 'I42', 'I42.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiomiopatia ipertrofica ostruttiva', 'I42', 'I42.1', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24', 'O24.0', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24', 'O24.1', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza, in childbirth', 'O24' ,'O24.2', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabete mellito in gravidanza', 'O24','O24.3', 'it');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Avvelenamento da ormoni e loro sostitutivi sintetici ed antagonisti non classificati altrove', 'T38', 'T38.3', 'it');
 
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension essentielle bénigne', 'I10', 'I10.0', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire à d autres atteintes rénales', 'I15', 'I15.1', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire à des atteintes endocriniennes', 'I15', 'I15.2', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Autres hypertensions secondaires', 'I15', 'I15.8', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire, sans précision', 'I15', 'I15.9', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopathie hypertensive, avec insuffisance cardiaque (congestive)', 'I11', 'I11.0', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopathie hypertensive, sans insuffisance cardiaque (congestive)', 'I11', 'I11.9', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Myocardiopathie avec dilatation', 'I42', 'I42.0', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Myocardiopathie obstructive hypertrophique', 'I42', 'I42.1', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24', 'O24.0', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24', 'O24.1', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24' ,'O24.2', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse','O24','O24.3', 'fr');
-insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Intoxication par hormones et leurs substituts synthétiques et antagonistes, non classés ailleurs', 'T38', 'T38.3', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension essentielle bénigne', 'I10', 'I10.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire à d autres atteintes rénales', 'I15', 'I15.1', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire à des atteintes endocriniennes', 'I15', 'I15.2', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Autres hypertensions secondaires', 'I15', 'I15.8', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hypertension secondaire, sans précision', 'I15', 'I15.9', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopathie hypertensive, avec insuffisance cardiaque (congestive)', 'I11', 'I11.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cardiopathie hypertensive, sans insuffisance cardiaque (congestive)', 'I11', 'I11.9', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Myocardiopathie avec dilatation', 'I42', 'I42.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Myocardiopathie obstructive hypertrophique', 'I42', 'I42.1', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24', 'O24.0', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24', 'O24.1', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse', 'O24' ,'O24.2', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Diabète sucré au cours de la grossesse','O24','O24.3', 'fr');
+insert into CURRENT_DISEASE_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, LANG)
+    values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Intoxication par hormones et leurs substituts synthétiques et antagonistes, non classés ailleurs', 'T38', 'T38.3', 'fr');
 
 insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Feather', 'V01AA01', 'en');
@@ -154,52 +218,164 @@ insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lan
 insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Various', 'V01AA020', 'en');
 
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'TESSUTI', 'V01AA09', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'ANIMALI', 'V01AA11', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FIORI', 'V01AA10', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'POLLINE DI GRAMINACEE', 'V01AA02', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PIUME', 'V01AA01', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'MICETI DI MUFFE E LIEVITI', 'V01AA04', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'ACARI DELLA POLVERE DOMESTICA', 'V01AA03', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'POLLINE DI PIANTE', 'V01AA05', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'ALIMENTI', 'V01AA08', 'it');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'INSETTI', 'V01AA07', 'it');
-
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'textiles', 'V01AA09', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'animaux', 'V01AA11', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'fleurs', 'V01AA10', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'pollen de graminées', 'V01AA02', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'plume', 'V01AA01', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'moisissures de champignons et levures', 'V01AA04', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Acariens de poussière de maison', 'V01AA03', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'pollen d''arbre', 'V01AA05', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'aliments', 'V01AA08', 'fr');
-insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'insectes', 'V01AA07', 'fr');
-
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'TESSUTI', 'V01AA09', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'ANIMALI', 'V01AA11', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FIORI', 'V01AA10', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'POLLINE DI GRAMINACEE', 'V01AA02', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PIUME', 'V01AA01', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'MICETI DI MUFFE E LIEVITI', 'V01AA04', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'ACARI DELLA POLVERE DOMESTICA', 'V01AA03', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'POLLINE DI PIANTE', 'V01AA05', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'ALIMENTI', 'V01AA08', 'it');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'INSETTI', 'V01AA07', 'it');
 
 
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinine', 'mg/dL', '3097-3');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Potassium [Moles/volume] in Blood', 'mEq/L', '75940-7');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sodium [Moles/volume] in Blood', 'mEq/L', '2947-0');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Troponin T.cardiac ', 'ng/L', '67151-1');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Natriuretic peptide.B prohormone N-Terminal [Mass/volume] in Serum or Plasma', 'ng/L', '33762-6');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hemoglobin HGB', 'mg/dL', '41995-2');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucose [Mass/volume] in Serum or Plasma', 'mg/dL', '2345-7');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Urea in Blood', 'mg/dL', '20977-5');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glomerular filtration rate/1.73 sq M.predicted ', 'mL/min/1,73m2', '77147-7');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Chloride [Moles/volume] in Blood', 'mEq/L', '2069-3');
-insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc)
-  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Renin [Enzymatic activity/volume] in Plasma', 'mU/L', '2915-7');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'textiles', 'V01AA09', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'animaux', 'V01AA11', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'fleurs', 'V01AA10', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'pollen de graminées', 'V01AA02', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'plume', 'V01AA01', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'moisissures de champignons et levures', 'V01AA04', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Acariens de poussière de maison', 'V01AA03', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'pollen d''arbre', 'V01AA05', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'aliments', 'V01AA08', 'fr');
+insert into ALLERGY_TYPES (created_date, updated_date, version, name, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'insectes', 'V01AA07', 'fr');
+
+
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinine', 'mg/dL', '3097-3', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Potassium [Moles/volume] in Blood', 'mEq/L', '75940-7', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sodium [Moles/volume] in Blood', 'mEq/L', '2947-0', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Troponin T.cardiac ', 'ng/L', '67151-1', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Natriuretic peptide.B prohormone N-Terminal [Mass/volume] in Serum or Plasma', 'ng/L', '33762-6', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hemoglobin HGB', 'mg/dL', '41995-2', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucose [Mass/volume] in Serum or Plasma', 'mg/dL', '2345-7', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Urea in Blood', 'mg/dL', '20977-5', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glomerular filtration rate/1.73 sq M.predicted ', 'mL/min/1,73m2', '77147-7', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Chloride [Moles/volume] in Blood', 'mEq/L', '2069-3', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Renin [Enzymatic activity/volume] in Plasma', 'mU/L', '2915-7', 'en');
+
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinina', 'mg/dL', '3097-3', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Potassio', 'mEq/L', '75940-7', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sodio', 'mEq/L', '2947-0', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Troponina T-HS ', 'ng/L', '67151-1', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'NT-ProBNP', 'ng/L', '33762-6', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Emoglobina', 'mg/dL', '41995-2', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glicemia', 'mg/dL', '2345-7', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Uricemia', 'mg/dL', '20977-5', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'GFR', 'mL/min/1,73m2', '77147-7', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Cloro', 'mEq/L', '2069-3', 'it');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Renina', 'mU/L', '2915-7', 'it');
+
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Azote uréique/Créatinine', 'mg/dL', '3097-3', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Potassium [Moles/volume] in Blood', 'mEq/L', '75940-7', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sodium [Moles/volume] in Blood', 'mEq/L', '2947-0', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Troponin T.cardiac ', 'ng/L', '67151-1', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Peptide natriurétique.prohormone B N-terminale', 'ng/L', '33762-6', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hémoglobine A1c	Hemoglobina', 'mg/dL', '41995-2', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glucose [Mass/volume] in Serum or Plasma', 'mg/dL', '2345-7', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Urée', 'mg/dL', '20977-5', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Taux de filtration glomérulaire/1,73m surface , valeur prédite', 'mL/min/1,73m2', '77147-7', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Chlorure', 'mEq/L', '2069-3', 'fr');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Rénine', 'mU/L', '2915-7', 'fr');
+
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinina', 'mg/dL', '3097-3', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Potasiu', 'mEq/L', '75940-7', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Sodiu', 'mEq/L', '2947-0', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Troponina T', 'ng/L', '67151-1', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Natriuretic peptide.B prohormone N-Terminal [Mass/volume] in Serum or Plasma', 'ng/L', '33762-6', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Hemoglobina', 'mg/dL', '41995-2', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glicemie', 'mg/dL', '2345-7', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Uree', 'mg/dL', '20977-5', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Rata filtrarii glomerulare', 'mL/min/1,73m2', '77147-7', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Clor', 'mEq/L', '2069-3', 'ro');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Renina', 'mU/L', '2915-7', 'ro');
+
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Κρεατινίνη', 'mg/dL', '3097-3', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Κάλιο', 'mEq/L', '75940-7', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Νάτριο', 'mEq/L', '2947-0', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Τροπονίνη', 'ng/L', '67151-1', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Natriuretic peptide.B prohormone N-Terminal [Mass/volume] in Serum or Plasma', 'ng/L', '33762-6', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Αιμοσφαιρίνη Α1c (γλυκοζυλιωμένη)', 'mg/dL', '41995-2', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Γλυκόζη', 'mg/dL', '2345-7', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ουρία Αίματος', 'mg/dL', '20977-5', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Glomerular filtration rate/1.73 sq M.predicted', 'mL/min/1,73m2', '77147-7', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Χλωριούχα Αίματος [Moles/Όγκο]', 'mEq/L', '2069-3', 'el');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Ρενίνη', 'mU/L', '2915-7', 'el');
 
 
 insert into PRESCRIPTION_TYPES (created_date, updated_date, version, name, DRUG_CLASS, loinc, lang) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'SODIO FLUORURO', '', 'A01AA01', 'it');

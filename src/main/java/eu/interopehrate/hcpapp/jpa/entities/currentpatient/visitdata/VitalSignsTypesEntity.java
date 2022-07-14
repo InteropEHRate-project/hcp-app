@@ -32,6 +32,8 @@ public class VitalSignsTypesEntity extends HCPApplicationEntity {
     private String bioprm_range;
     @Column(name = "LOINC")
     private String loinc;
+    @Column(name = "LANG")
+    private String lang;
 
     @Override
     public boolean equals(Object o) {
