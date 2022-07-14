@@ -24,6 +24,13 @@ public class PrescriptionsNomenclatureServiceImpl implements PrescriptionsNomenc
     }
 
     @Override
+    public List<PrescriptionTypesEntity> getPrescriptionTypesByLang(String lang) {
+        var list = this.prescriptionTypesRepository.findAllByLang(lang);
+        Collections.sort(list);
+        return list;
+    }
+
+    @Override
     public void addPrescriptionType(PrescriptionTypesEntity prescriptionTypesEntity) {
         if (this.prescriptionTypesRepository.findAll().contains(prescriptionTypesEntity)) {
             return;
