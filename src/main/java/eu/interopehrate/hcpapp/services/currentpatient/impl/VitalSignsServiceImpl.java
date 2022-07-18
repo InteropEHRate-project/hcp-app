@@ -181,6 +181,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         vitalSigns.getCode().getCoding().get(0).setDisplay(vitalSignsEntity.getAnalysisType().getName());
 
         vitalSigns.setId(UUID.randomUUID() + "-vitalsign");
+        vitalSigns.setCategory(Collections.singletonList(new CodeableConcept().addCoding(new Coding().setCode("vitalsign"))));
 
         Calendar when = Calendar.getInstance();
         int y = vitalSignsEntity.getLocalDateOfVitalSign().getYear();

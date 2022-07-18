@@ -336,7 +336,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
                 medicationStatement.setMedication(new Reference(medication));
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.out.println("Medication without reference.");
         }
 
         medication.setCode(new CodeableConcept().addCoding(new Coding()

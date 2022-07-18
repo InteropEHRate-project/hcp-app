@@ -29,7 +29,7 @@
     <h3 th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs}">vital signs</h3>
     <br>
     <div class="scrollBar">
-        <table class="table table-bordered" th:if="${!vitalSigns.vitalSignsAnalysesWithoutDuplicates().isEmpty()}">
+        <table class="table table-bordered" th:if="${!vitalSigns.vitalSignsAnalysesWithoutDuplicatesSEHR().isEmpty()}">
             <thead class="thead-light">
             <tr>
                 <th th:text="#{fragment.current.patient.navigation.left.visit.data.vital.signs.analysis}">Analysis</th>
@@ -41,10 +41,10 @@
             </thead>
 
             <tbody>
-            <tr th:each="an : ${vitalSigns.vitalSignsAnalysesWithoutDuplicates()}">
-                <div th:with="map=${vitalSigns.valueReturn()}">
-                    <td th:text="${{an}}"></td>
-                    <th style="background-color: azure" th:text="${{an}}"></th>
+            <tr th:each="an : ${vitalSigns.vitalSignsAnalysesWithoutDuplicatesSEHR()}">
+                <div th:with="map=${vitalSigns.valueReturn1()}">
+                    <td th:text="${{an.getAnalysis()}}"></td>
+                    <th style="background-color: azure" th:text="${{an.getAnalysisTranslated()}}"></th>
                     <th:block th:each="sample : ${vitalSigns.localDateTimeListWithoutDuplicates()}">
                         <td th:if="${map.get(sample, an) == null}">-</td>
                         <div th:if="${map.get(sample, an) != null}">
