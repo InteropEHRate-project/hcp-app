@@ -2,11 +2,6 @@
 
 -- noinspection SqlNoDataSourceInspectionForFile
 
-insert into REASON (created_date, updated_date, version, author, symptom) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Unknown', 'Symptom1');
-insert into REASON (created_date, updated_date, version, author, symptom) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Unknown', 'Symptom2');
-insert into REASON (created_date, updated_date, version, author, symptom) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Unknown', 'Symptom3');
-
-
 
 insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_3_code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'RO', 'ROU', 'Romania');
 insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_3_code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'IT', 'ITA', 'Italy');

@@ -1,5 +1,6 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandPrescription;
 import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandVitalSigns;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
@@ -217,11 +218,7 @@ public class SendToOtherHcpServiceImpl implements SendToOtherHcpService {
     }
 
     public static String convertBundleIntoString(Bundle bundle) throws IOException {
-        IParser iParser = new JsonParser();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        iParser.compose(byteArrayOutputStream, bundle);
-        byteArrayOutputStream.close();
-        return byteArrayOutputStream.toString();
+        return FhirContext.forR4().newJsonParser().encodeResourceToString(bundle);
     }
 
     private static String convertPatientIntoString(Patient patient) throws IOException {

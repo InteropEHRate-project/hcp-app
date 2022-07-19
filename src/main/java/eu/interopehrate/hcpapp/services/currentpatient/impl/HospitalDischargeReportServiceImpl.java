@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import eu.interopehrate.fhir.provenance.BundleProvenanceBuilder;
 import eu.interopehrate.fhir.provenance.ResourceSigner;
 import eu.interopehrate.hcpapp.currentsession.CloudConnection;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.AllergyRepository;
@@ -17,15 +18,14 @@ import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalSer
 import eu.interopehrate.hcpapp.services.currentpatient.*;
 import eu.interopehrate.hcpapp.services.currentpatient.currentmedications.PrescriptionService;
 import eu.interopehrate.hcpapp.services.currentpatient.impl.laboratorytests.ObservationLaboratoryServiceImpl;
+import eu.interopehrate.hcpapp.services.index.IndexService;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
-import eu.interopehrate.protocols.provenance.ProvenanceBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -58,6 +58,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private HealthCareProfessionalService healthCareProfessionalService;
     @Autowired
     private HealthCareOrganizationService healthCareOrganizationService;
+    @Autowired
+    private IndexService indexService;
     private final VitalSignsService vitalSignsService;
     private final PHExamService phExamService;
     private final PHExamRepository phExamRepository;
@@ -160,7 +162,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     @SneakyThrows
     private Bundle createBundle(byte[] bytes) {
         Bundle bundle = new Bundle();
-        bundle.setEntry(new ArrayList<>(1));
+        bundle.setId(UUID.randomUUID().toString());
 
         Practitioner author = new Practitioner();
         author.setId(UUID.randomUUID().toString());
@@ -171,27 +173,39 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         Organization hospital = new Organization();
         hospital.setId(UUID.randomUUID().toString());
         hospital.setName(healthCareOrganizationService.getHealthCareOrganization().getName());
-
-//      BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
-//      List<Provenance> provenances = builder.addProvenanceToBundleItems(bundle);
         bundle.addEntry().setResource(hospital);
 
         Patient patient = new Patient();
         patient.setId(UUID.randomUUID().toString());
-        //patient.addName().setFamily(indexService.indexCommand().getPatientDataCommand().getFirstName());
+        patient.addName().setFamily(indexService.indexCommand().getPatientDataCommand().getFirstName() +
+                " " + indexService.indexCommand().getPatientDataCommand().getLastName());
         bundle.addEntry().setResource(patient);
 
+        Composition composition = new Composition();
+        composition.setStatus(Composition.CompositionStatus.FINAL);
+        composition.setId(UUID.randomUUID().toString());
+        composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
+        composition.setDate(new Date());
+        composition.setTitle("Medical Visit");
+
+        Meta profile = new Meta();
+        profile.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Composition-HospitalDischargeReport-IEHR");
+        composition.setMeta(profile);
+
+        Composition.SectionComponent docReferenceSection = new Composition.SectionComponent();
+        docReferenceSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "81218-0", "Discharge Report")));
         DocumentReference doc = new DocumentReference();
-        // bundle.getEntry().add(new Bundle.BundleEntryComponent().setResource(doc));
 
         doc.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
         doc.setId(UUID.randomUUID().toString());
-        doc.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("18842-5")));
+        doc.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81218-0")));
         doc.getContentFirstRep().getAttachment().setContentType("application/pdf");
         doc.getContentFirstRep().getAttachment().setLanguage("en");
         doc.getContentFirstRep().getAttachment().setData(bytes);
         doc.getContentFirstRep().getAttachment().setTitle("Hospital Discharge Report");
         doc.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
+        docReferenceSection.addEntry().setResource(doc);
+        composition.addSection(docReferenceSection);
         bundle.addEntry().setResource(doc);
 
         Meta profileDischarge = new Meta();
@@ -209,21 +223,14 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         period.setStart(new Date());
 
         encounter.setPeriod(period);
-        //doc.setEncounter(new Reference(encounter));
-        // ProvenanceBuilder.addProvenanceExtension(doc, encounter);
-        // bundle.addEntry().setResource(encounter);
+        composition.setEncounter(new Reference(encounter));
+        bundle.addEntry().setResource(encounter);
 
         IParser parser1 = FhirContext.forR4().newJsonParser();
         ResourceSigner.INSTANCE.initialize("FTGM_iehr.p12", "FTGM_iehr", parser1);
 
-        IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
-        String parseResource = parser.encodeResourceToString(doc);
-        Provenance prov = ProvenanceBuilder.build(doc, author, hospital);
-
-        prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(doc).getBytes());
-        // prov.getSignatureFirstRep().setData(ResourceSigner.INSTANCE.createJWSToken(encounter).getBytes());
-        bundle.addEntry().setResource(prov);
-
+        BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
+        builder.addProvenanceToBundleItems(bundle);
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
 
         return bundle;
