@@ -35,10 +35,12 @@ public class HospitalDischargeReportCommand {
     private final VitalSignsService vitalSignsService;
     private final PHExamService phExamService;
     private final ObservationLaboratoryServiceImpl observationLaboratoryService;
-
+    private final ReasonService reasonService;
 
     public HospitalDischargeReportCommand(String reasons, String findings, String procedures, String conditions, String instructions, String hospitalName, String hospitalAddress,
-                                          String patientName, String patientDateBirth, String patientGender, String hcpName, String format, PrescriptionService prescriptionService, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, ObservationLaboratoryServiceImpl observationLaboratoryService) {
+                                          String patientName, String patientDateBirth, String patientGender, String hcpName, String format, PrescriptionService prescriptionService,
+                                          CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService,
+                                          VitalSignsService vitalSignsService, PHExamService phExamService, ObservationLaboratoryServiceImpl observationLaboratoryService, ReasonService reasonService) {
         this.reasons = reasons;
         this.findings = findings;
         this.procedures = procedures;
@@ -56,6 +58,7 @@ public class HospitalDischargeReportCommand {
         this.vitalSignsService = vitalSignsService;
         this.phExamService = phExamService;
         this.observationLaboratoryService = observationLaboratoryService;
+        this.reasonService = reasonService;
         this.format = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
         this.prescriptionService = prescriptionService;
     }
