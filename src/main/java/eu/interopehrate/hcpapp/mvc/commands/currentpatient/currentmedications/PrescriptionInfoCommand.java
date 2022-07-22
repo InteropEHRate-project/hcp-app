@@ -26,8 +26,6 @@ public class PrescriptionInfoCommand {
     @NotNull
     private String drugName;
     private String drugNameTranslated = "";
-    @NotEmpty
-    @NotNull
     private String drugDosage;
     private String notes;
     private String notesTranslated = "";

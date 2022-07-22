@@ -279,6 +279,11 @@ insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, u
   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Chloride [Moles/volume] in Blood', 'mEq/L', '2069-3', 'en');
 insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Renin [Enzymatic activity/volume] in Plasma', 'mU/L', '2915-7', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Interventricular septum Thickness during diastole by US 2D', 'Milimeter', '29430-6', 'en');
+insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
+  values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Left ventricular Ejection fraction', '%', '10230-1', 'en');
+
 
 insert into LABORATORY_TESTS_TYPES (created_date, updated_date, version, name, ucum, loinc, lang)
   values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Creatinina', 'mg/dL', '3097-3', 'it');

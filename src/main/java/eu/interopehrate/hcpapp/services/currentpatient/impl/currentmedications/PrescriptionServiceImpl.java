@@ -352,8 +352,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         List<Dosage> d = new ArrayList<>();
         d.add(new Dosage().setTiming(t));
         d.get(0).setDoseAndRate(new ArrayList<>());
-        //d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setUnit(prescriptionEntity.getDrugDosage());
-        d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setValue(Long.parseLong(prescriptionEntity.getDrugDosage()));
+        d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setUnit("mg");
+        d.get(0).getDoseAndRateFirstRep().getDoseQuantity().setValue(Double.parseDouble(prescriptionEntity.getDrugDosage()));
         medicationStatement.setDosage(d);
         medicationStatement.getDosageFirstRep().getTiming().getRepeat().addChild("boundsPeriod");
         Date dateStart = Date.from(prescriptionEntity.getStart().atStartOfDay(ZoneId.systemDefault()).toInstant());

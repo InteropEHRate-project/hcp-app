@@ -34,7 +34,7 @@
         </div>
         <div class="form-row">
             <div class="col-md-6">
-                <label for="analysisName" th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.type}">Laboratory Tests Type</label>
+                <label for="analysisName" th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.type}">Laboratory/ECHO</label>
                 <select class="form-control" id="analysisName" th:field="*{analysisName}">
                     <option selected value="" th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.choose}">Choose a type</option>
                     <option input type="text" class="form-control" th:each="type : ${laboratoryTypes}" th:classappend="${#fields.hasErrors('analysisName')} ? 'is-invalid' :''"
@@ -62,7 +62,7 @@
 
         <div class="form-row">
             <div class="col-md-6">
-                <label for="currentValue" th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.value}">Value of Laboratory Tests</label><br>
+                <label for="currentValue" th:text="#{fragment.current.patient.navigation.laboratory.tests.laboratory.results.observation.laboratory.value}">Value </label><br>
                 <input id="currentValue" type="number" step="0.01" class="form-control"
                        th:classappend="${#fields.hasErrors('observationLaboratoryInfoCommandSample.currentValue')} ? 'is-invalid' :''"
                        th:field="*{observationLaboratoryInfoCommandSample.currentValue}">

@@ -79,7 +79,7 @@ public class VitalSignsServiceImpl implements VitalSignsService {
         listObs.add("2915-7");listObs.add("29430-6");listObs.add("2350-7");
         listObs.add("2276-4");listObs.add("2160-0");listObs.add("10230-1");
         listObs.add("2324-2");listObs.add("1742-6");listObs.add("718-7");
-        listObs.add("26449-9");
+        listObs.add("26449-9");listObs.add("10230-1");listObs.add("29430-6");
 
         var vitalSignsInfoCommands = this.currentPatient.vitalSignsList()
                 .stream()
