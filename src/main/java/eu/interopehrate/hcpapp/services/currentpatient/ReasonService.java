@@ -5,7 +5,7 @@ import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.ReasonEntity;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.ReasonRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.ReasonInfoCommand;
-import org.hl7.fhir.r4.model.Observation;
+import org.hl7.fhir.r4.model.Condition;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface ReasonService {
     List<ReasonEntity> getReasons();
     void addSymptom(String symptom);
     void delete(Long id);
-    Observation callReason();
+    Condition callReason();
     CurrentD2DConnection getCurrentD2DConnection();
     CurrentPatient getCurrentPatient();
     ReasonRepository getReasonRepository();

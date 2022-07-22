@@ -56,7 +56,9 @@ public class ReasonServiceImpl implements ReasonService {
     }
 
     @Override
-    public ReasonRepository getReasonRepository() { return reasonRepository; }
+    public ReasonRepository getReasonRepository() {
+        return reasonRepository;
+    }
 
     @Override
     public void addSymptom(String symptom) {
@@ -71,10 +73,10 @@ public class ReasonServiceImpl implements ReasonService {
     }
 
     @Override
-    public Observation callReason() {
+    public Condition callReason() {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.reasonRepository.findAll().size(); i++) {
-                Observation vitalSigns = createReasonFromEntity(this.reasonRepository.findAll().get(i));
+                Condition vitalSigns = createReasonFromEntity(this.reasonRepository.findAll().get(i));
                 this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 return vitalSigns;
@@ -87,12 +89,8 @@ public class ReasonServiceImpl implements ReasonService {
         return null;
     }
 
-    private static Observation createReasonFromEntity(ReasonEntity reasonEntity) {
-        Observation symptom = new Observation();
-
-        Meta profile = new Meta();
-        profile.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Observation-IEHR");
-        symptom.setMeta(profile);
+    private static Condition createReasonFromEntity(ReasonEntity reasonEntity) {
+        Condition symptom = new Condition();
 
         symptom.setId("obs-reason-29299-5");
         symptom.setCode(new CodeableConcept());
@@ -102,8 +100,6 @@ public class ReasonServiceImpl implements ReasonService {
                 .setSystem("http://loinc.org")
                 .setCode("29299-5")
                 .setDisplay("Reason for visit"));
-        symptom.setStatus(Observation.ObservationStatus.FINAL);
-        symptom.setEffective(DateTimeType.now());
         symptom.addNote().setText(reasonEntity.getSymptom());
 
         return symptom;
