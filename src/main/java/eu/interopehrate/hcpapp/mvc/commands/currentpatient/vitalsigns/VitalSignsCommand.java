@@ -55,9 +55,15 @@ public class VitalSignsCommand {
         List<AnalysisWrapper> analysisList = this.vitalSignsAnalysesWithoutDuplicatesSEHR();
         List<LocalDateTime> dateTimeList = this.localDateTimeListWithoutDuplicates();
 
-        analysisList.forEach(an -> dateTimeList.forEach(date -> this.vitalSignsInfoCommands.forEach(vital -> {
-            if (an.equals(vital.getAnalysisName()) && (date.equals(vital.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()))) {
-                mapPair.put(an, date, vital.getVitalSignsInfoCommandSample().getCurrentValue() + " " + vital.getVitalSignsInfoCommandSample().getUnitOfMeasurement());
+        analysisList.forEach(an -> dateTimeList.forEach(date -> this.getVitalSignsInfoCommands().forEach(obs -> {
+            if (an.getAnalysis().equals(obs.getAnalysisName()) &&
+                    (date.equals(obs.getVitalSignsInfoCommandSample().getLocalDateOfVitalSign()))) {
+                if (Objects.isNull(obs.getVitalSignsInfoCommandSample().getCurrentValue())
+                        || Objects.isNull(obs.getVitalSignsInfoCommandSample().getUnitOfMeasurement())) {
+                    mapPair.put(an, date, "-");
+                } else {
+                    mapPair.put(an, date, obs.getVitalSignsInfoCommandSample().getCurrentValue() + " " + obs.getVitalSignsInfoCommandSample().getUnitOfMeasurement());
+                }
             }
         })));
         return mapPair;

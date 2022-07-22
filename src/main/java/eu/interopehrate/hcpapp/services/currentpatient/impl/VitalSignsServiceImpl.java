@@ -69,9 +69,22 @@ public class VitalSignsServiceImpl implements VitalSignsService {
 
     @Override
     public VitalSignsCommand vitalSignsCommand() {
+
+        ArrayList<String> listObs = new ArrayList<>();
+        listObs.add("3097-3");listObs.add("789-8");listObs.add("75940-7");
+        listObs.add("4544-3");listObs.add("2947-0");listObs.add("777-3");
+        listObs.add("67151-1");listObs.add("33762-6");listObs.add("41995-2");
+        listObs.add("2345-7");listObs.add("41995-2");listObs.add("2345-7");
+        listObs.add("20977-5");listObs.add("77147-7");listObs.add("2069-3");
+        listObs.add("2915-7");listObs.add("29430-6");listObs.add("2350-7");
+        listObs.add("2276-4");listObs.add("2160-0");listObs.add("10230-1");
+        listObs.add("2324-2");listObs.add("1742-6");listObs.add("718-7");
+        listObs.add("26449-9");
+
         var vitalSignsInfoCommands = this.currentPatient.vitalSignsList()
                 .stream()
-                .filter(vitalSigns -> vitalSigns.getId().contains("vitalsign") || vitalSigns.getId().contains("vital-sign"))
+                .filter(vitalSigns -> (vitalSigns.getId().contains("vitalsign") || vitalSigns.getId().contains("vital-sign")) ||
+                        (vitalSigns.hasCode() && !listObs.contains(vitalSigns.getCode().getCodingFirstRep().getCode())))
                 .map(hapiToCommandVitalSigns::convert)
                 .collect(Collectors.toList());
 
