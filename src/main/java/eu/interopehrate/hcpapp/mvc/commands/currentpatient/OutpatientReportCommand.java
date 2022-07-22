@@ -32,4 +32,5 @@ public class OutpatientReportCommand {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private final LocalDateTime dateOfVisit;
     private final String format;
+    private final ReasonService reasonService;
 }

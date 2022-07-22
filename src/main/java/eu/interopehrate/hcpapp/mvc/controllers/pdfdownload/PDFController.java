@@ -37,9 +37,10 @@ public class PDFController {
     private final HospitalDischargeReportService hospitalDischargeReportService;
     private final ObservationLaboratoryService observationLaboratoryService;
     private final OutpatientReportService outpatientReportService;
+    private final ReasonService reasonService;
 
     public PDFController(ServletContext servletContext, TemplateEngine templateEngine, PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
-                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService, ObservationLaboratoryService observationLaboratoryService, OutpatientReportService outpatientReportService) {
+                         CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, PHExamService phExamService, HospitalDischargeReportService hospitalDischargeReportService, ObservationLaboratoryService observationLaboratoryService, OutpatientReportService outpatientReportService, ReasonService reasonService) {
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
         this.prescriptionService = prescriptionService;
@@ -51,6 +52,7 @@ public class PDFController {
         this.hospitalDischargeReportService = hospitalDischargeReportService;
         this.observationLaboratoryService = observationLaboratoryService;
         this.outpatientReportService = outpatientReportService;
+        this.reasonService = reasonService;
     }
 
 //    @GetMapping
@@ -72,6 +74,7 @@ public class PDFController {
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
         context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
+        context.setVariable("reasonUpload", this.reasonService.getNewReason());
         context.setVariable("outpatientReport", this.outpatientReportService.outpatientReportCommand());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_OUTPATIENT_REPORT_DOCUMENT, context, "Outpatient-report.pdf");
     }
@@ -87,6 +90,7 @@ public class PDFController {
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
         context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
+        context.setVariable("reasonUpload", this.reasonService.getNewReason());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
         return this.getPDF(TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT_DOCUMENT, context, "Hospital-discharge-report.pdf");
     }
@@ -121,6 +125,7 @@ public class PDFController {
         context.setVariable("listConclusionTreatment", this.diagnosticConclusionService.getNewConclusion());
         context.setVariable("phExamination", this.phExamService.getNewPhExam());
         context.setVariable("laboratoryUpload", this.observationLaboratoryService.laboratoryUpload());
+        context.setVariable("reasonUpload", this.reasonService.getNewReason());
         context.setVariable("hospitalDischargeReport", this.hospitalDischargeReportService.hospitalDischargeReportCommand());
 
         /* Create HTML using Thymeleaf template Engine */
