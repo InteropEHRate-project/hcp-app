@@ -14,6 +14,7 @@ public class ReasonInfoCommand {
     @NotEmpty
     @NotNull
     private String reason;
+    private String symptom;
     @NotEmpty
     @NotNull
     private String author;
