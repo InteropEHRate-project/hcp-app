@@ -7,6 +7,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsRe
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.DiagnosticConclusionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.ReasonRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
 
@@ -21,4 +22,5 @@ public interface HospitalDischargeReportService {
     Boolean saveInCloud(byte[] content);
     PHExamRepository getPhExamRepository();
     LaboratoryTestsRepository getLaboratoryTestsRepository();
+    ReasonRepository getReasonRepository();
 }

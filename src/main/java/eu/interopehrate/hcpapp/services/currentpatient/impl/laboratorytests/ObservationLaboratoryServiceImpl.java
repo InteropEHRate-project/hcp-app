@@ -68,10 +68,17 @@ public class ObservationLaboratoryServiceImpl implements ObservationLaboratorySe
 
     @Override
     public ObservationLaboratoryCommandAnalysis observationLaboratoryInfoCommandAnalysis(String keyword) {
+
+        ArrayList<String> listObs = new ArrayList<>();
+        listObs.add("8867-4");listObs.add("9279-1");listObs.add("59408-5");
+        listObs.add("3141-9");listObs.add("29463-7");listObs.add("8480-6");
+        listObs.add("8462-4");listObs.add("29463-7");listObs.add("8302-2");
+        listObs.add("59408-5");
+
         var observationLaboratoryInfoCommandAnalyses = currentPatient.laboratoryList()
                 .stream()
-                .filter(laboratory -> laboratory.hasCategory() && ("laboratory".equals(laboratory.getCategoryFirstRep().getCodingFirstRep().getCode())
-                        || "RAD".equals(laboratory.getCategoryFirstRep().getCodingFirstRep().getCode())))
+                .filter(laboratory -> (laboratory.hasCategory() && ("laboratory".equals(laboratory.getCategoryFirstRep().getCodingFirstRep().getCode())
+                        || "RAD".equals(laboratory.getCategoryFirstRep().getCodingFirstRep().getCode()))) || (laboratory.hasCode() && !listObs.contains(laboratory.getCode().getCodingFirstRep().getCode())))
                 .map(hapiToCommandObservationLaboratory::convert)
                 .collect(Collectors.toList());
 

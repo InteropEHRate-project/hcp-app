@@ -11,6 +11,7 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.LaboratoryTestsRe
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PrescriptionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.DiagnosticConclusionRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.PHExamRepository;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.ReasonRepository;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.VitalSignsRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.HospitalDischargeReportCommand;
 import eu.interopehrate.hcpapp.services.administration.HealthCareOrganizationService;
@@ -65,9 +66,14 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     private final PHExamRepository phExamRepository;
     private final ObservationLaboratoryServiceImpl observationLaboratoryService;
     private final LaboratoryTestsRepository laboratoryTestsRepository;
+    private final ReasonRepository reasonRepository;
+    private final ReasonService reasonService;
 
     public HospitalDischargeReportServiceImpl(PrescriptionService prescriptionService, PrescriptionRepository prescriptionRepository, VitalSignsRepository vitalSignsRepository,
-                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection, DiagnosticConclusionRepository diagnosticConclusionRepository, CurrentDiseaseService currentDiseaseService, AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, PHExamRepository phExamRepository, ObservationLaboratoryServiceImpl observationLaboratoryService, LaboratoryTestsRepository laboratoryTestsRepository) {
+                                              CurrentDiseaseRepository currentDiseaseRepository, AllergyRepository allergyRepository, CloudConnection cloudConnection,
+                                              DiagnosticConclusionRepository diagnosticConclusionRepository, CurrentDiseaseService currentDiseaseService, AllergyService allergyService,
+                                              DiagnosticConclusionService diagnosticConclusionService, VitalSignsService vitalSignsService, PHExamService phExamService, PHExamRepository phExamRepository,
+                                              ObservationLaboratoryServiceImpl observationLaboratoryService, LaboratoryTestsRepository laboratoryTestsRepository, ReasonRepository reasonRepository, ReasonService reasonService) {
         this.prescriptionService = prescriptionService;
         this.prescriptionRepository = prescriptionRepository;
         this.vitalSignsRepository = vitalSignsRepository;
@@ -83,6 +89,8 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.phExamRepository = phExamRepository;
         this.observationLaboratoryService = observationLaboratoryService;
         this.laboratoryTestsRepository = laboratoryTestsRepository;
+        this.reasonRepository = reasonRepository;
+        this.reasonService = reasonService;
     }
 
     @Override
@@ -116,14 +124,15 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
     }
 
     @Override
-    public LaboratoryTestsRepository getLaboratoryTestsRepository() {
-        return laboratoryTestsRepository;
-    }
+    public LaboratoryTestsRepository getLaboratoryTestsRepository() { return laboratoryTestsRepository; }
+
+    @Override
+    public ReasonRepository getReasonRepository(){ return reasonRepository;}
 
     @Override
     public HospitalDischargeReportCommand hospitalDischargeReportCommand() {
         return new HospitalDischargeReportCommand(reasons, findings, procedures, conditions, instructions, hospitalName, hospitalAddress, patientName, patientDateBirth,
-                patientGender, hcpName, format, prescriptionService, currentDiseaseService, allergyService, diagnosticConclusionService, vitalSignsService, phExamService, observationLaboratoryService);
+                patientGender, hcpName, format, prescriptionService, currentDiseaseService, allergyService, diagnosticConclusionService, vitalSignsService, phExamService, observationLaboratoryService, reasonService);
     }
 
     @Override
@@ -186,7 +195,7 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         composition.setId(UUID.randomUUID().toString());
         composition.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("81214-9")));
         composition.setDate(new Date());
-        composition.setTitle("Medical Visit");
+        composition.setTitle("Discharge Report");
 
         Meta profile = new Meta();
         profile.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Composition-HospitalDischargeReport-IEHR");

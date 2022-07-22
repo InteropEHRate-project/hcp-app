@@ -222,5 +222,16 @@
         </div>
     </div>
 </div>
+    <div class="card-body row justify-content-center">
+        <h5 th:if="${!reasonUpload.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.reason}">Reason</h5>
+    </div>
+    <div th:if="${!reasonUpload.isEmpty()}">
+        <div th:each="reason: ${reasonUpload}">
+            <h6 th:text="${reasonUpload.indexOf(reason) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.reason} + ': ' + ${reason.getSymptom()}">Reason</p>
+            <br>
+        </div>
+    </div>
+</div>
 </body>
 </html>

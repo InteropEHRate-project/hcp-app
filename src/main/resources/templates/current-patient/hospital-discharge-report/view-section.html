@@ -311,13 +311,29 @@
             </tbody>
         </table>
 
+        <br>
+        <h5 th:if="${!hospitalDischargeReportCommand.getReasonService().getNewReason().isEmpty()}"
+            th:text="#{fragment.current.patient.navigation.left.reason.reason.upload.in.sehr}">Reason to upload in S-EHR</h5></p>
+        <table class="table table-bordered" th:if="${!hospitalDischargeReportCommand.getReasonService().getNewReason().isEmpty()}">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.reason}">Reason</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reason : ${hospitalDischargeReportCommand.getReasonService().getNewReason()}">
+                <td th:text="${{reason.getSymptom()}}"></td>
+            </tr>
+            </tbody>
+        </table>
+
         <div class="btn-group">
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
             <a class="btn btn-outline-primary" th:href="@{/reports/hospital-discharge-report-pdf}"
-               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies || hasDiagnosticConclusion || hasPhExam}"
+               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies || hasDiagnosticConclusion || hasPhExam || hasReason}"
                th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
             <a class="btn btn-warning" th:href="@{/current-patient/hospital-discharge-report/save-in-cloud}"
-               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies  || hasDiagnosticConclusion || hasPhExam}"
+               th:if="${hospitalDischargeReportCommand.hasData() || hasPrescriptions || hasVitalSigns || hasCurrentDiseases || hasAllergies  || hasDiagnosticConclusion || hasPhExam || hasReason}"
                th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.save.in.cloud}">Upload in
                 Citizen Cloud</a>
         </div>

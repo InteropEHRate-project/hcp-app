@@ -72,7 +72,7 @@
             </thead>
             <tbody>
             <tr th:each="an : ${vitalSignsUpload.vitalSignsAnalysesWithoutDuplicates()}">
-                <div th:with="map=${vitalSignsUpload.valueReturn1()}">
+                <div th:with="map=${vitalSignsUpload.valueReturn()}">
                     <td th:text="${{an}}"></td>
                     <th:block th:each="sample : ${vitalSignsUpload.localDateTimeListWithoutDuplicates()}">
                         <td th:if="${map.get(an,sample) == null}">-</td>

@@ -36,6 +36,7 @@ public class HospitalDischargeReportController {
         model.addAttribute("hasDiagnosticConclusion", !this.hospitalDischargeReportService.getDiagnosticConclusionRepository().findAll().isEmpty());
         model.addAttribute("hasPhExam", !this.hospitalDischargeReportService.getPhExamRepository().findAll().isEmpty());
         model.addAttribute("hasLaboratory", !this.hospitalDischargeReportService.getLaboratoryTestsRepository().findAll().isEmpty());
+        model.addAttribute("hasReason", !this.hospitalDischargeReportService.getReasonRepository().findAll().isEmpty());
         return TemplateNames.CURRENT_PATIENT_HOSPITAL_DISCHARGE_REPORT;
     }
 
