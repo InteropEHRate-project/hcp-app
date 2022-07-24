@@ -173,6 +173,17 @@
     </div>
 
     <div class="card-body row justify-content-center">
+        <h5 th:if="${!patHisUpload.isEmpty()}" th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history}">Pathology history</h5>
+    </div>
+    <div th:if="${!patHisUpload.isEmpty()}">
+        <div th:each="patHis: ${patHisUpload}">
+            <h6 th:text="${patHisUpload.indexOf(patHis) + 1}"></h6>
+            <p th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history} + ': ' + ${patHis.getPatHis()}">Pathology history</p>
+            <br>
+        </div>
+    </div>
+
+    <div class="card-body row justify-content-center">
         <div th:if="${outpatientReport.getHcpName() != null && !outpatientReport.getHcpName().isBlank()}">
             <p th:text="${outpatientReport.getHcpName()}"></p>
         </div>

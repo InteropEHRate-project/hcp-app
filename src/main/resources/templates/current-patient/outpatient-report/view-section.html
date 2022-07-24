@@ -291,6 +291,22 @@
     </table>
 
     <br>
+    <h5 th:if="${!outpatientReportCommand.getPatHistoryService().getNewPat().isEmpty()}"
+        th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history.upload.in.sehr}">Pathology history to upload in S-EHR</h5></p>
+    <table class="table table-bordered" th:if="${!outpatientReportCommand.getPatHistoryService().getNewPat().isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history}">Pathology history</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="patHis : ${outpatientReportCommand.getPatHistoryService().getNewPat()}">
+            <td th:text="${{patHis.getPatHis()}}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
     <div class="card-body text-center"
          th:if="${!outpatientReportCommand.getPrescriptionService().getPrescriptionRepository().findAll().isEmpty() ||
          !outpatientReportCommand.getVitalSignsService.vitalSignsUpload().getVitalSignsInfoCommands().isEmpty() ||
@@ -300,7 +316,8 @@
          !outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty() ||
          !outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty() ||
          !outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty() ||
-         !outpatientReportCommand.getReasonService().getNewReason().isEmpty()}">
+         !outpatientReportCommand.getReasonService().getNewReason().isEmpty() ||
+         !outpatientReportCommand.getPatHistoryService().getNewPat().isEmpty()}">
         <a class="btn btn-primary" th:href="@{/reports/outpatient-report-pdf}" th:text="#{fragment.current.patient.navigation.left.outpatient.report.generate.pdf}">Generate PDF</a>
     </div>
     <br>
@@ -321,7 +338,9 @@
          (outpatientReportCommand.getObservationLaboratoryService().getCurrentD2DConnection().getTd2D() != null &&
          !outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()) ||
          (outpatientReportCommand.getReasonService().getCurrentD2DConnection().getTd2D() != null &&
-          !outpatientReportCommand.getReasonService().getNewReason().isEmpty())}">
+         !outpatientReportCommand.getReasonService().getNewReason().isEmpty()) ||
+         (outpatientReportCommand.getPatHistoryService().getCurrentD2DConnection().getTd2D() != null &&
+         !outpatientReportCommand.getPatHistoryService().getNewPat().isEmpty())}">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#sendToSehr"
                 th:text="#{fragment.current.patient.navigation.left.current.medications.prescription.medication.send.to.sehr}">Send to S-EHR</button>
@@ -383,7 +402,8 @@
     outpatientReportCommand.getInstrumentsExaminationService().listNewInstrumentExamination().isEmpty() &&
     outpatientReportCommand.getPhExamService().getNewPhExam().isEmpty() &&
     outpatientReportCommand.getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty() &&
-    outpatientReportCommand.getReasonService().getNewReason().isEmpty()) &&
+    outpatientReportCommand.getReasonService().getNewReason().isEmpty() &&
+    outpatientReportCommand.getPatHistoryService().getNewPat().isEmpty()) &&
     (session.withoutConnection != null && !session.withoutConnection)}"
         th:text="#{sync}">Nothing to synchronize or the connection with S-EHR is not established</h5>
     <br>

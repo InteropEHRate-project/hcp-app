@@ -33,4 +33,5 @@ public class OutpatientReportCommand {
     private final LocalDateTime dateOfVisit;
     private final String format;
     private final ReasonService reasonService;
+    private final PatHistoryService patHistoryService;
 }

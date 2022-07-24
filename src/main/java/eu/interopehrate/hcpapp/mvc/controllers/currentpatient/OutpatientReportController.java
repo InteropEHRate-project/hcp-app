@@ -57,7 +57,9 @@ public class OutpatientReportController {
                 !this.outpatientReportService.outpatientReportCommand().getObservationLaboratoryService().laboratoryUpload().getObservationLaboratoryInfoCommandAnalyses().isEmpty()
                         && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getObservationLaboratoryService().getCurrentD2DConnection().getTd2D()) ||
                 !this.outpatientReportService.outpatientReportCommand().getReasonService().getReasonRepository().findAll().isEmpty()
-                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getReasonService().getCurrentD2DConnection().getTd2D())) {
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getReasonService().getCurrentD2DConnection().getTd2D()) ||
+                !this.outpatientReportService.outpatientReportCommand().getPatHistoryService().getPatHistoryRepository().findAll().isEmpty()
+                        && Objects.nonNull(this.outpatientReportService.outpatientReportCommand().getPatHistoryService().getCurrentD2DConnection().getTd2D())) {
             this.outpatientReportService.createBundle();
         }
 
