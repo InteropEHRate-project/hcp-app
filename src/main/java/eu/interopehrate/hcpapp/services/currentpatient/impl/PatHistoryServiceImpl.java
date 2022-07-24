@@ -1,15 +1,20 @@
 package eu.interopehrate.hcpapp.services.currentpatient.impl;
 
+import eu.interopehrate.hcpapp.converters.entity.commandstoentities.CommandToEntityPatHistory;
+import eu.interopehrate.hcpapp.converters.entity.entitytocommand.EntityToCommandPatHistory;
 import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandDiagnosis;
 import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandRiskFactor;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PatHistoryRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
+import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
@@ -26,13 +31,22 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     private final HapiToCommandRiskFactor hapiToCommandRiskFactor;
     private final HapiToCommandDiagnosis hapiToCommandDiagnosis;
     private final CurrentD2DConnection currentD2DConnection;
+    private final PatHistoryRepository patHistoryRepository;
+    private final EntityToCommandPatHistory entityToCommandPatHistory;
+    private final CommandToEntityPatHistory commandToEntityPatHistory;
+    @Autowired
+    private HealthCareProfessionalService healthCareProfessionalService;
 
     @SneakyThrows
-    public PatHistoryServiceImpl(CurrentPatient currentPatient, HapiToCommandRiskFactor hapiToCommandRiskFactor, HapiToCommandDiagnosis hapiToCommandDiagnosis, CurrentD2DConnection currentD2DConnection) {
+    public PatHistoryServiceImpl(CurrentPatient currentPatient, HapiToCommandRiskFactor hapiToCommandRiskFactor, HapiToCommandDiagnosis hapiToCommandDiagnosis,
+                                 CurrentD2DConnection currentD2DConnection, PatHistoryRepository patHistoryRepository, EntityToCommandPatHistory entityToCommandPatHistory, CommandToEntityPatHistory commandToEntityPatHistory) {
         this.currentPatient = currentPatient;
         this.hapiToCommandRiskFactor = hapiToCommandRiskFactor;
         this.hapiToCommandDiagnosis = hapiToCommandDiagnosis;
         this.currentD2DConnection = currentD2DConnection;
+        this.patHistoryRepository = patHistoryRepository;
+        this.entityToCommandPatHistory = entityToCommandPatHistory;
+        this.commandToEntityPatHistory = commandToEntityPatHistory;
     }
 
     @Override
@@ -52,9 +66,6 @@ public class PatHistoryServiceImpl implements PatHistoryService {
                 .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
                 .patHistoryInfoCommandRiskFactors(riskFactorInfoCommands)
                 .patHistoryInfoCommandDiagnoses(diagnosisInfoCommands)
-                .listOfPatHis(this.listOfPatHis)
-                .listOfSocHis(this.listOfSocHis)
-                .listOfFamHis(this.listOfFamHis)
                 .build();
     }
 
@@ -180,5 +191,31 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     @Override
     public void refresh() {
         this.currentD2DConnection.getPathologyHistory();
+    }
+
+    @Override
+    public void insertPathHistory(PatHistoryInfoCommandDiagnosis patHistoryInfoCommandDiagnosis) {
+        patHistoryInfoCommandDiagnosis.setPatientId(this.currentPatient.getPatient().getId());
+        patHistoryInfoCommandDiagnosis.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " "
+                + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        this.patHistoryRepository.save(Objects.requireNonNull(this.commandToEntityPatHistory.convert(patHistoryInfoCommandDiagnosis)));
+    }
+
+    @Override
+    public List<PatHistoryInfoCommandDiagnosis> getNewPat() {
+        return this.patHistoryRepository.findAll()
+                .stream()
+                .map(this.entityToCommandPatHistory::convert)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PatHistoryCommand patHistoryCommand() {
+        return PatHistoryCommand.builder()
+                .displayTranslatedVersion(this.currentPatient.getDisplayTranslatedVersion())
+                .listOfFamHis(this.listOfFamHis)
+                .listOfPatHis(this.listOfPatHis)
+                .listOfSocHis(this.listOfSocHis)
+                .build();
     }
 }

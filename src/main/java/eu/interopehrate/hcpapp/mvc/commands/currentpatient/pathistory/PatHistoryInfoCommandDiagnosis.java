@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 public class PatHistoryInfoCommandDiagnosis {
     private String id;
+    private String patientId;
     @NotEmpty
     @NotNull
     private String diagnosis;
@@ -23,4 +24,8 @@ public class PatHistoryInfoCommandDiagnosis {
     private String comments;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDateOfDiagnosis;
+    private String patHis;
+    private String socHis;
+    private String famHis;
+    private String author;
 }

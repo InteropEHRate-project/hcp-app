@@ -3,6 +3,8 @@ package eu.interopehrate.hcpapp.services.currentpatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
 
+import java.util.List;
+
 public interface PatHistoryService {
     PatHistoryCommand patHistorySection();
     void insertPatHis(String patHis);
@@ -16,4 +18,7 @@ public interface PatHistoryService {
     void updateDiagnosis(PatHistoryInfoCommandDiagnosis patHisInfoCommand);
     void deleteDiagnosis(String id);
     void refresh();
+    void insertPathHistory(PatHistoryInfoCommandDiagnosis patHistoryInfoCommandDiagnosis);
+    List<PatHistoryInfoCommandDiagnosis> getNewPat();
+    PatHistoryCommand patHistoryCommand();
 }

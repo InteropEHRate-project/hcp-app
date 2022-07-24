@@ -18,11 +18,11 @@ public class PatHistoryEntity extends HCPApplicationEntity {
     @Column(name = "PATIENT_ID")
     private String patientId;
     @Column(name = "PATIENT_HISTORY")
-    private String patHistoryNote;
+    private String patHis;
     @Column(name = "SOCIAL_HISTORY")
-    private String socialNote;
+    private String socHis;
     @Column(name = "FAMILY_HISTORY")
-    private String familyNote;
+    private String famHis;
     @Column(name = "AUTHOR")
     private String author;
 }

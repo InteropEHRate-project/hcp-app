@@ -156,7 +156,7 @@
             </table>
         </div>
 
-        <form class="row col-12 justify-content-center" th:action="@{/current-patient/pat-history/save}" method="post">
+        <form class="row col-12 justify-content-center" th:action="@{/current-patient/pat-history/save}" th:object="${patInfoCommand}" method="post">
             <div class="form-group col-4">
                 <label for="patHis" th:text="#{fragment.current.patient.navigation.left.pat.history.patient.history}">Patient History</label>
                 <textarea class="form-control" name="patHis" id="patHis" rows="3"></textarea>

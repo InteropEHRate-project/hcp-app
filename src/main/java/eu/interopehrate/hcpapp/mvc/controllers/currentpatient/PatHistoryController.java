@@ -1,6 +1,7 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient;
 
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.DiagnosticConclusionInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import org.springframework.stereotype.Controller;
@@ -25,18 +26,22 @@ public class PatHistoryController {
     @RequestMapping("/view-section")
     public String viewSection(Model model) {
         model.addAttribute("patHistoryCommand", this.patHistoryService.patHistorySection());
-        model.addAttribute("patHis", this.patHistoryService.patHistorySection().getListOfPatHis());
-        model.addAttribute("socHis", this.patHistoryService.patHistorySection().getListOfSocHis());
-        model.addAttribute("famHis", this.patHistoryService.patHistorySection().getListOfFamHis());
+        model.addAttribute("patHistoryCommandH", this.patHistoryService.patHistoryCommand());
+        model.addAttribute("patHis", this.patHistoryService.patHistoryCommand().getListOfPatHis());
+        model.addAttribute("socHis", this.patHistoryService.patHistoryCommand().getListOfSocHis());
+        model.addAttribute("famHis", this.patHistoryService.patHistoryCommand().getListOfFamHis());
+        model.addAttribute("patInfoCommand", new DiagnosticConclusionInfoCommand());
+        model.addAttribute("newPat", this.patHistoryService.getNewPat());
         return TemplateNames.CURRENT_PATIENT_PAT_HISTORY_VIEW_SECTION;
     }
 
     @PostMapping
     @RequestMapping("/save")
-    public String saveSocHis(String patHis, String socHis, String famHis) {
+    public String saveSocHis(String patHis, String socHis, String famHis, @ModelAttribute PatHistoryInfoCommandDiagnosis patHistoryInfoCommandDiagnosis) {
         this.patHistoryService.insertPatHis(patHis);
         this.patHistoryService.insertSocHis(socHis);
         this.patHistoryService.insertFamHis(famHis);
+        this.patHistoryService.insertPathHistory(patHistoryInfoCommandDiagnosis);
         return "redirect:/current-patient/pat-history/view-section";
     }
 

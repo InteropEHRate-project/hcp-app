@@ -119,8 +119,8 @@ public class PHExamServiceImpl implements PHExamService {
         phExam.getCode().setCoding(new ArrayList<>());
         phExam.getCode().getCoding().add(new Coding()
                 .setSystem("http://terminology.hl7.org/CodeSystem/v2-0074")
-                .setCode("PHY"));
-        phExam.getCode().getCoding().get(0).setDisplay(phExamEntity.getPhExam());
+                .setCode("PHY")
+                .setDisplay("Physical Examination"));
 
         phExam.addNote().setText(phExamEntity.getPhExam());
 
