@@ -6,9 +6,12 @@ import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandDiagnosis
 import eu.interopehrate.hcpapp.converters.fhir.pathistory.HapiToCommandRiskFactor;
 import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.entities.currentpatient.PatHistoryEntity;
+import eu.interopehrate.hcpapp.jpa.entities.enums.AuditEventType;
 import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PatHistoryRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
+import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
 import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.PatHistoryService;
 import lombok.SneakyThrows;
@@ -36,10 +39,11 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     private final CommandToEntityPatHistory commandToEntityPatHistory;
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
+    private final AuditInformationService auditInformationService;
 
     @SneakyThrows
     public PatHistoryServiceImpl(CurrentPatient currentPatient, HapiToCommandRiskFactor hapiToCommandRiskFactor, HapiToCommandDiagnosis hapiToCommandDiagnosis,
-                                 CurrentD2DConnection currentD2DConnection, PatHistoryRepository patHistoryRepository, EntityToCommandPatHistory entityToCommandPatHistory, CommandToEntityPatHistory commandToEntityPatHistory) {
+                                 CurrentD2DConnection currentD2DConnection, PatHistoryRepository patHistoryRepository, EntityToCommandPatHistory entityToCommandPatHistory, CommandToEntityPatHistory commandToEntityPatHistory, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
         this.hapiToCommandRiskFactor = hapiToCommandRiskFactor;
         this.hapiToCommandDiagnosis = hapiToCommandDiagnosis;
@@ -47,6 +51,7 @@ public class PatHistoryServiceImpl implements PatHistoryService {
         this.patHistoryRepository = patHistoryRepository;
         this.entityToCommandPatHistory = entityToCommandPatHistory;
         this.commandToEntityPatHistory = commandToEntityPatHistory;
+        this.auditInformationService = auditInformationService;
     }
 
     @Override
@@ -218,4 +223,47 @@ public class PatHistoryServiceImpl implements PatHistoryService {
                 .listOfSocHis(this.listOfSocHis)
                 .build();
     }
+
+    private static Condition createPatHisFromEntity(PatHistoryEntity patHistoryEntity) {
+        Condition patHis = new Condition();
+
+        patHis.setId(UUID.randomUUID().toString());
+        patHis.setCode(new CodeableConcept());
+        patHis.getCode().addChild("coding");
+        patHis.getCode().setCoding(new ArrayList<>());
+        patHis.getCode().getCoding().add(new Coding()
+                .setSystem("http://loinc.org")
+                .setCode("113929-0")
+                .setDisplay("History general Narrative"));
+
+        patHis.addNote().setText(patHistoryEntity.getPatHis());
+
+        return patHis;
+    }
+
+    @Override
+    public Condition callPatHis() {
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            for (int i = 0; i < this.patHistoryRepository.findAll().size(); i++) {
+                Condition patHistory = createPatHisFromEntity(this.patHistoryRepository.findAll().get(i));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(patHistory));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(patHistory));
+                return patHistory;
+            }
+            auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send Pathology History to S-EHR");
+            this.patHistoryRepository.deleteAll();
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+        return null;
+    }
+
+    @Override
+    public CurrentPatient getCurrentPatient() { return currentPatient; }
+
+    @Override
+    public CurrentD2DConnection getCurrentD2DConnection() { return this.currentD2DConnection; }
+
+    @Override
+    public PatHistoryRepository getPatHistoryRepository() { return this.patHistoryRepository; }
 }

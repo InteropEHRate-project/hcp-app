@@ -1,7 +1,11 @@
 package eu.interopehrate.hcpapp.services.currentpatient;
 
+import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
+import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
+import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.PatHistoryRepository;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.pathistory.PatHistoryInfoCommandDiagnosis;
+import org.hl7.fhir.r4.model.Condition;
 
 import java.util.List;
 
@@ -21,4 +25,8 @@ public interface PatHistoryService {
     void insertPathHistory(PatHistoryInfoCommandDiagnosis patHistoryInfoCommandDiagnosis);
     List<PatHistoryInfoCommandDiagnosis> getNewPat();
     PatHistoryCommand patHistoryCommand();
+    Condition callPatHis();
+    CurrentPatient getCurrentPatient();
+    CurrentD2DConnection getCurrentD2DConnection();
+    PatHistoryRepository getPatHistoryRepository();
 }
