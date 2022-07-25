@@ -32,30 +32,6 @@
     <form class="row justify-content-center" th:action="@{/current-patient/hospital-discharge-report/save}"
           th:object="${hospitalDischargeReportCommand}" method="post">
         <br>
-        <div class="form-group col-6">
-            <label for="hospitalName">Hospital name</label>
-            <textarea class="form-control" id="hospitalName" rows="3" type="input" name="hospitalName" th:field="*{hospitalName}"></textarea>
-        </div>
-
-        <div class="form-group col-6">
-            <label for="hospitalAddress">Hospital address</label>
-            <textarea class="form-control" id="hospitalAddress" rows="3" type="input" name="hospitalAddress" th:field="*{hospitalAddress}"></textarea>
-        </div>
-
-        <div class="form-group col-4">
-            <label for="patientName">Patient name</label>
-            <textarea class="form-control" id="patientName" rows="3" type="input" name="patientName" th:field="*{patientName}"></textarea>
-        </div>
-
-        <div class="form-group col-4">
-            <label for="patientDateBirth">Patient date of birth</label>
-            <textarea class="form-control" id="patientDateBirth" rows="3" type="input" name="patientDateBirth" th:field="*{patientDateBirth}"></textarea>
-        </div>
-
-        <div class="form-group col-4">
-            <label for="patientGender">Patient gender</label>
-            <textarea class="form-control" id="patientGender" rows="3" type="input" name="patientGender" th:field="*{patientGender}"></textarea>
-        </div>
 
         <div class="form-group col-12">
             <label for="reason" th:text="#{fragment.current.patient.navigation.left.hospital.discharge.report.reason}">Reason of admission:</label>
@@ -270,17 +246,6 @@
                 <td th:text="${{examination.getPhExam()}}"></td>
             </tr>
             </tbody>
-        </table>
-
-        <table class="table">
-            <tr>
-                <td>
-                    <div class="form-group col-12">
-                        <label for="hcpName">HCP name</label>
-                        <textarea class="form-control" id="hcpName" rows="3" type="input" name="hcpName" th:field="*{hcpName}"></textarea>
-                    </div>
-                </td>
-            </tr>
         </table>
 
         <br>

@@ -87,12 +87,6 @@
         <p th:text="${hospitalDischargeReport.getInstructions()}"></p>
     </div>
 
-    <div class="card-body row"
-         th:if="${hospitalDischargeReport.getHcpName() != null && !hospitalDischargeReport.getHcpName().isBlank()}">
-        <p th:text="${hospitalDischargeReport.getHcpName()}"></p>
-        <p th:text="${hospitalDischargeReport.getFormat()}"></p>
-    </div>
-
     <div class="card-body row justify-content-center">
         <h5 th:if="${!listPrescriptions.isEmpty()}"
             th:text="#{fragment.current.patient.navigation.left.current.medications.prescriptions}">Prescriptions</h5>
@@ -231,6 +225,13 @@
             <p th:text="#{fragment.current.patient.navigation.left.reason} + ': ' + ${reason.getSymptom()}">Reason</p>
             <br>
         </div>
+    </div>
+
+    <br>
+    <div class="card-body row"
+         th:if="${hospitalDischargeReport.getHcpName() != null && !hospitalDischargeReport.getHcpName().isBlank()}">
+        <p th:text="${hospitalDischargeReport.getHcpName()}"></p>
+        <p th:text="${hospitalDischargeReport.getFormat()}"></p>
     </div>
 </div>
 </body>

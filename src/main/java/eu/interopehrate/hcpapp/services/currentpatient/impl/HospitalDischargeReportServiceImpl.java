@@ -142,12 +142,13 @@ public class HospitalDischargeReportServiceImpl implements HospitalDischargeRepo
         this.procedures = hospitalDischargeReportCommand.getProcedures();
         this.conditions = hospitalDischargeReportCommand.getConditions();
         this.instructions = hospitalDischargeReportCommand.getInstructions();
-        this.hospitalName = hospitalDischargeReportCommand.getHospitalName();
-        this.hospitalAddress = hospitalDischargeReportCommand.getHospitalAddress();
-        this.patientName = hospitalDischargeReportCommand.getPatientName();
-        this.patientDateBirth = hospitalDischargeReportCommand.getPatientDateBirth();
-        this.patientGender = hospitalDischargeReportCommand.getPatientGender();
-        this.hcpName = hospitalDischargeReportCommand.getHcpName();
+        this.hospitalName = this.healthCareOrganizationService.getHealthCareOrganization().getName();
+        this.hospitalAddress = this.healthCareOrganizationService.getHealthCareOrganization().getAddress();
+        this.patientName = this.indexService.getCurrentPatient().getPatient().getNameFirstRep().getNameAsSingleString();
+        this.patientDateBirth = String.valueOf(this.indexService.getCurrentPatient().getPatient().getBirthDate());
+        this.patientGender = this.indexService.getCurrentPatient().getPatient().getGender().toString();
+        this.hcpName = this.healthCareProfessionalService.getHealthCareProfessional().getFirstName() + " " +
+                this.healthCareProfessionalService.getHealthCareProfessional().getLastName();
         this.format = hospitalDischargeReportCommand.getFormat();
     }
 
