@@ -11,14 +11,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <title th:text="#{fragment.current.patient.navigation.left.outpatient.report}">Outpatient report</title>
+    <title th:text="#{fragment.current.patient.navigation.left.outpatient.report}" th:align="center">Outpatient report</title>
 </head>
 
 <body>
 <div class="container">
-    <div class="card-body row justify-content-center">
-        <h2 th:text="#{fragment.current.patient.navigation.left.outpatient.Report}" th:align="center">Outpatient Report</h2>
-    </div>
 
     <div class="card-body row justify-content-center">
         <div th:if="${outpatientReport.getHospitalName() != null && !outpatientReport.getHospitalName().isBlank()}" th:align="center">
