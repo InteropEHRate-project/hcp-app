@@ -58,12 +58,14 @@ public class PatHistoryServiceImpl implements PatHistoryService {
     public PatHistoryCommand patHistorySection() {
         var riskFactorInfoCommands = this.currentPatient.patHisConsultationRiskFactorsList()
                 .stream()
-                .filter(pathHistory -> pathHistory.getId().contains("11329-0"))
+                .filter(pathHistory -> ((pathHistory.hasId() && pathHistory.getId().contains("11329-0")) ||
+                        (pathHistory.hasCode() && pathHistory.getCode().getCodingFirstRep().getCode().contains("11329-0"))))
                 .map(hapiToCommandRiskFactor::convert)
                 .collect(Collectors.toList());
         var diagnosisInfoCommands = this.currentPatient.patHisConsultationDiagnosesList()
                 .stream()
-                .filter(pathHistory -> pathHistory.getId().contains("11329-0"))
+                .filter(pathHistory -> (pathHistory.hasId() && pathHistory.getId().contains("11329-0")) ||
+                        (pathHistory.hasCode() && pathHistory.getCode().getCodingFirstRep().getCode().contains("11329-0")))
                 .map(hapiToCommandDiagnosis::convert).filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
