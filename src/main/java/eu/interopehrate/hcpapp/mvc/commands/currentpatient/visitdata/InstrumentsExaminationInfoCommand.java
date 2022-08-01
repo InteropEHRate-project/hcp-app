@@ -4,6 +4,7 @@ import eu.interopehrate.hcpapp.jpa.entities.enums.InstrumentsExamType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class InstrumentsExaminationInfoCommand {
     private Long id;
     private InstrumentsExamType type;
-    private String result;
+    private String resultNote;
     private String author;
     private File file;
     private String name;
@@ -21,4 +22,5 @@ public class InstrumentsExaminationInfoCommand {
     private byte[] data;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
+    private MultipartFile fileContent;
 }

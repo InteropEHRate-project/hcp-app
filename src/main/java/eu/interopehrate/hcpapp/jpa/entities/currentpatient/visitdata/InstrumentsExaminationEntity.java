@@ -16,7 +16,7 @@ public class InstrumentsExaminationEntity extends HCPApplicationEntity {
     @Enumerated(EnumType.STRING)
     private InstrumentsExamType type;
     @Column(name = "RESULT")
-    private String result;
+    private String resultNote;
     @Column(name = "AUTHOR")
     private String author;
     @Column(name = "FILE")

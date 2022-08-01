@@ -11,17 +11,17 @@ import eu.interopehrate.hcpapp.jpa.repositories.currentpatient.visitdata.Instrum
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationInfoCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
+import eu.interopehrate.hcpapp.services.administration.HealthCareProfessionalService;
 import eu.interopehrate.hcpapp.services.currentpatient.InstrumentsExaminationService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +35,8 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     private final CurrentD2DConnection currentD2DConnection;
     private final AuditInformationService auditInformationService;
     private final List<String> listOfResultNote = new ArrayList<>();
+    @Autowired
+    private HealthCareProfessionalService healthCareProfessionalService;
 
     public InstrumentsExaminationServiceImpl(CurrentPatient currentPatient, InstrumentsExaminationRepository instrumentsExaminationRepository, EntityToCommandInstrumentsExam entityToCommandInstrumentsExam, CommandToEntityInstrumentsExam commandToEntityInstrumentsExam, CurrentD2DConnection currentD2DConnection, AuditInformationService auditInformationService) {
         this.currentPatient = currentPatient;
@@ -64,7 +66,9 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
 
     @Override
     public void insertInstrExam(InstrumentsExaminationInfoCommand instrumentsExaminationInfoCommand) {
-        this.instrumentsExaminationRepository.save(this.commandToEntityInstrumentsExam.convert(instrumentsExaminationInfoCommand));
+        instrumentsExaminationInfoCommand.setAuthor(healthCareProfessionalService.getHealthCareProfessional().getFirstName() +
+                " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
+        this.instrumentsExaminationRepository.save(Objects.requireNonNull(this.commandToEntityInstrumentsExam.convert(instrumentsExaminationInfoCommand)));
     }
 
     @Override
@@ -113,6 +117,36 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     }
 
     @Override
+    public Media callSendInstrumentalExaminationMedia() {
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            for (int i = 0; i < this.instrumentsExaminationRepository.findAll().size(); i++) {
+                Media media = createMediaFromEntity(this.instrumentsExaminationRepository.findAll().get(i));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(media));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(media));
+                return media;
+            }
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+        return null;
+    }
+
+    @Override
+    public Media callSendInstrumentalExaminationMediaAnon() {
+        if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
+            for (int i = 0; i < this.instrumentsExaminationRepository.findAll().size(); i++) {
+                Media media = createMediaAnonFromEntity(this.instrumentsExaminationRepository.findAll().get(i));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(media));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(media));
+                return media;
+            }
+        } else {
+            log.error("The connection with S-EHR is not established.");
+        }
+        return null;
+    }
+
+    @Override
     @SneakyThrows
     public void sendInstrumentalExamination(Bundle instrExamination) {
         this.currentD2DConnection.getTd2D().sendHealthData(instrExamination);
@@ -121,53 +155,134 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
         this.instrumentsExaminationRepository.deleteAll();
     }
 
-//    private static DocumentReference createInstrumentalExaminationFromEntity(InstrumentsExaminationEntity instrumentsExaminationEntity) {
-//        DocumentReference documentReference = new DocumentReference();
-//
-//        documentReference.getContent().add(new DocumentReference.DocumentReferenceContentComponent());
-//        documentReference.setType(new CodeableConcept().addCoding(new Coding().setSystem("http://loinc.org").setCode("29545-1")));
-//        documentReference.getContentFirstRep().getAttachment().setContentType("application/pdf");
-//        documentReference.getContentFirstRep().getAttachment().setData(instrumentsExaminationEntity.getData());
-//        documentReference.getContentFirstRep().getAttachment().setTitle("Instrumental Examination");
-//        documentReference.getContentFirstRep().getAttachment().setCreationElement(DateTimeType.now());
-//        documentReference.setId(UUID.randomUUID().toString());
-//
-//        documentReference.setAuthor(Collections.singletonList(new Reference().setReference(instrumentsExaminationEntity.getAuthor())));
-//
-//        return documentReference;
-//    }
+    private static Media createMediaFromEntity(InstrumentsExaminationEntity instrumentsExaminationEntity) {
+        Media imageNonAnon = new Media();
+
+        Meta profileMedia = new Meta();
+        profileMedia.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Media-IEHR");
+        imageNonAnon.setMeta(profileMedia);
+
+        imageNonAnon.setId(instrumentsExaminationEntity.getType().toString());
+        imageNonAnon.setOperator(new Reference(instrumentsExaminationEntity.getAuthor()));
+        imageNonAnon.setStatus(Media.MediaStatus.COMPLETED);
+        imageNonAnon.getContent().setData(instrumentsExaminationEntity.getData())
+                .setContentType("application/dicom")
+                .setSize(instrumentsExaminationEntity.getData().length);
+        imageNonAnon.addNote().setText(instrumentsExaminationEntity.getResultNote());
+
+        return imageNonAnon;
+    }
+
+    private static Media createMediaAnonFromEntity(InstrumentsExaminationEntity instrumentsExaminationEntity) {
+        Media imageNonAnon = new Media();
+        imageNonAnon.getContent().setData(Base64.getEncoder().encode(instrumentsExaminationEntity.getData()))
+                .setContentType("application/dicom+zip")
+                .setSize(instrumentsExaminationEntity.getData().length);
+
+        Media imageAnon = new Media();
+        Meta profileMedia = new Meta();
+        profileMedia.addProfile("http://interopehrate.eu/fhir/StructureDefinition/AnonymizationExtension-IEHR");
+        imageAnon.setMeta(profileMedia);
+
+        imageAnon.setId("anonymized");
+        imageAnon.setStatus(Media.MediaStatus.COMPLETED);
+        imageAnon.setOperator(new Reference(instrumentsExaminationEntity.getAuthor()));
+        imageAnon.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/AnonymizationExtension-IEHR")
+                .setValue(new CodeableConcept().addCoding()
+                        .setSystem("http://interopehrate.eu/fhir/CodeSystem/AnonymizationType-IEHR")
+                        .setCode("anonymization")
+                        .setDisplay("Anonymization"));
+
+        String base64Str = Base64.getEncoder().encodeToString(instrumentsExaminationEntity.getData());
+        String baseUrlFtgm = "http://10.97.32.223:9000";
+//        String baseUrlChu = "http://139.165.99.12:9000";
+        try {
+            DICOMAnonymization dicomAnonymizationFtgm = new DICOMAnonymization(baseUrlFtgm);
+            String response = dicomAnonymizationFtgm.request(base64Str);
+            imageAnon.getContent().setData(response.getBytes());
+
+//          DICOMAnonymization dicomAnonymizationChu = new DICOMAnonymization(baseUrlChu);
+//          String response = dicomAnonymizationChu.request(base64Str);
+//          imageAnon.getContent().setData(response.getBytes());
+        } catch (Exception e) {
+            System.out.println("The port for anon it's not present");
+        }
+
+        return imageAnon;
+    }
 
     private static DiagnosticReport createInstrumentalExaminationFromEntity1(InstrumentsExaminationEntity instrumentsExaminationEntity) {
         DiagnosticReport diagnosticReport = new DiagnosticReport();
         diagnosticReport.setId(UUID.randomUUID().toString());
 
-        diagnosticReport.setCategory(Collections.singletonList(new CodeableConcept()
-                .setCoding(new ArrayList<>())
-                .addCoding(new Coding()
-                        .setSystem("http://loinc.org")
-                        .setCode("29545-1")
-                        .setDisplay(instrumentsExaminationEntity.getType().toString()))));
+        if (instrumentsExaminationEntity.getType().toString().equals("ECHO")) {
+            diagnosticReport.setCode(new CodeableConcept()
+                    .setCoding(new ArrayList<>())
+                    .addCoding(new Coding()
+                            .setSystem("http://hl7.org/fhir/sid/icd-10")
+                            .setCode("B246ZZZ")
+                            .setDisplay(instrumentsExaminationEntity.getType().toString())));
+        } else if (instrumentsExaminationEntity.getType().toString().equals("ECG")) {
+            diagnosticReport.setCode(new CodeableConcept()
+                    .setCoding(new ArrayList<>())
+                    .addCoding(new Coding()
+                            .setSystem("http://hl7.org/fhir/sid/icd-10")
+                            .setCode("4A02X4Z")
+                            .setDisplay(instrumentsExaminationEntity.getType().toString())));
+        }
 
+        diagnosticReport.setStatus(DiagnosticReport.DiagnosticReportStatus.FINAL);
+        Meta profile = new Meta();
+        profile.addProfile("http://interopehrate.eu/fhir/StructureDefinition/DiagnosticReport");
+        diagnosticReport.setMeta(profile);
+
+        //IMAGE
         Media imageNonAnon = new Media();
-        imageNonAnon.setId(UUID.randomUUID().toString());
-        imageNonAnon.getContent().setData(instrumentsExaminationEntity.getData());
+        Meta profileMedia = new Meta();
+        profileMedia.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Media-IEHR");
+        imageNonAnon.setMeta(profileMedia);
+        imageNonAnon.setId(instrumentsExaminationEntity.getType().toString());
+        imageNonAnon.setOperator(new Reference(instrumentsExaminationEntity.getAuthor()));
+        imageNonAnon.setStatus(Media.MediaStatus.COMPLETED);
+        imageNonAnon.getContent().setData(instrumentsExaminationEntity.getData())
+                .setContentType("application/dicom+zip")
+                .setSize(instrumentsExaminationEntity.getData().length);
+        imageNonAnon.addNote().setText(instrumentsExaminationEntity.getResultNote());
 
+        //IMAGE ANON
         Media imageAnon = new Media();
-        imageAnon.setId(UUID.randomUUID().toString());
+        Meta profileMediaAnon = new Meta();
+        profileMedia.addProfile("http://interopehrate.eu/fhir/StructureDefinition/AnonymizationExtension-IEHR");
+        imageAnon.setMeta(profileMediaAnon);
 
-        Path path = FileSystems.getDefault().getPath("./").toAbsolutePath().getParent();
-        String filename = String.valueOf(path);
-        DICOMAnonymization dicomAnonymization = new DICOMAnonymization("http://10.97.32.223:9000");
-        String response = dicomAnonymization.invokeEndpoint(filename);
+        imageAnon.setStatus(Media.MediaStatus.COMPLETED);
+        imageAnon.setOperator(new Reference(instrumentsExaminationEntity.getAuthor()));
+        imageAnon.addExtension().setUrl("http://interopehrate.eu/fhir/StructureDefinition/AnonymizationExtension-IEHR")
+                .setValue(new CodeableConcept().addCoding()
+                        .setDisplay("http://interopehrate.eu/fhir/CodeSystem/AnonymizationType-IEHR")
+                        .setCode("anonymization")
+                        .setDisplay("Anonymization"));
 
-        imageAnon.getContent().setData(response.getBytes());
+        String base64Str = Base64.getEncoder().encodeToString(instrumentsExaminationEntity.getData());
+        String baseUrlFtgm = "http://10.97.32.223:9000";
+        // String baseUrlChu = "http://139.165.99.12:9000";
+        try {
+            DICOMAnonymization dicomAnonymizationFtgm = new DICOMAnonymization(baseUrlFtgm);
+            String response = dicomAnonymizationFtgm.request(base64Str);
+            imageAnon.getContent().setData(response.getBytes());
+
+//          DICOMAnonymization dicomAnonymizationChu = new DICOMAnonymization(baseUrlChu);
+//          String response = dicomAnonymizationChu.request(base64Str);
+//          imageAnon.getContent().setData(response.getBytes());
+        } catch (Exception e) {
+            System.out.println("The port for anon it's not present");
+        }
 
         try {
-            diagnosticReport.setMedia(new ArrayList<>())
-                    .addImagingStudy(new Reference(imageNonAnon))
-                    .addImagingStudy(new Reference(imageAnon));
+            diagnosticReport.addMedia().setLink(new Reference(imageNonAnon)).getLink().setReference(createMediaFromEntity(instrumentsExaminationEntity).getId());
+            diagnosticReport.addMedia().setLink(new Reference(imageAnon)).getLink().setReference(createMediaAnonFromEntity(instrumentsExaminationEntity).getId());
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.out.println("Media without reference.");
         }
 
         return diagnosticReport;

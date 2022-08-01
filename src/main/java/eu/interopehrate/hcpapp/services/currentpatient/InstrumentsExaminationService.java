@@ -8,6 +8,7 @@ import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.Instruments
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationInfoCommand;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.DiagnosticReport;
+import org.hl7.fhir.r4.model.Media;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,4 +29,6 @@ public interface InstrumentsExaminationService {
     CurrentD2DConnection getCurrentD2DConnection();
     List<InstrumentsExaminationEntity>getFiles();
     void insertResultNote(String resultNote);
+    Media callSendInstrumentalExaminationMedia();
+    Media callSendInstrumentalExaminationMediaAnon();
 }

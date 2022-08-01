@@ -1,8 +1,6 @@
 package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.visitdata;
 
 import eu.interopehrate.hcpapp.jpa.entities.currentpatient.visitdata.InstrumentsExaminationEntity;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.DiagnosticConclusionInfoCommand;
-import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationCommand;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.visitdata.InstrumentsExaminationInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.InstrumentsExaminationService;
@@ -34,23 +32,27 @@ public class InstrumentsExaminationController {
         model.addAttribute("instrExamCommand", this.instrumentsExaminationService.instrExam());
         model.addAttribute("instrumentExaminationList", this.instrumentsExaminationService.listNewInstrumentExamination());
         model.addAttribute("resultList", this.instrumentsExaminationService.instrExam().getListOfResultNote());
-        model.addAttribute("resultInfoList", new InstrumentsExaminationInfoCommand());
+        model.addAttribute("instrExamInfoCommand", new InstrumentsExaminationInfoCommand());
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW_PAGE;
     }
 
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
+        model.addAttribute("resultList", this.instrumentsExaminationService.instrExam().getListOfResultNote());
         model.addAttribute("instrExamInfoCommand", new InstrumentsExaminationInfoCommand());
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_ADD_PAGE;
     }
 
+    @SneakyThrows
     @PostMapping
     @RequestMapping("/save-add")
-    public String saveAdd(@Valid @ModelAttribute InstrumentsExaminationInfoCommand instrumentsExaminationInfoCommand, BindingResult bindingResult) {
+    public String saveAdd(@RequestParam("fileContent") MultipartFile fileContent, @Valid @ModelAttribute InstrumentsExaminationInfoCommand instrumentsExaminationInfoCommand, BindingResult bindingResult, String resultList) {
         if (bindingResult.hasErrors()) {
             return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_ADD_PAGE;
         }
+        instrumentsExaminationInfoCommand.setData(fileContent.getBytes());
+        this.instrumentsExaminationService.insertResultNote(resultList);
         this.instrumentsExaminationService.insertInstrExam(instrumentsExaminationInfoCommand);
         return "redirect:/current-patient/visit-data/instr-exam/view-section";
     }
@@ -90,7 +92,7 @@ public class InstrumentsExaminationController {
     @Bean(name = "multipart")
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(100000);
+        multipartResolver.setMaxUploadSize(1000000000);
         return multipartResolver;
     }
 
@@ -107,8 +109,8 @@ public class InstrumentsExaminationController {
 
     @PostMapping
     @RequestMapping("/save")
-    public String saveResultNote(String resultNote) {
-        this.instrumentsExaminationService.insertResultNote(resultNote);
+    public String saveResultNote(String resultList) {
+        this.instrumentsExaminationService.insertResultNote(resultList);
         return "redirect:/current-patient/visit-data/instr-exam/view-section";
     }
 }

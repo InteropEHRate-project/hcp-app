@@ -21,8 +21,8 @@ public class HapiToCommandImage implements Converter<Media, ImageInfoCommand> {
     public ImageInfoCommand convert(Media image) {
         ImageInfoCommand imageInfoCommand = new ImageInfoCommand();
 
-        if (image.hasType() && image.getType().hasCoding()) {
-            image.getType().getCoding().forEach(coding -> imageInfoCommand.setImageName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+        if (image.getContent().hasTitle()) {
+            imageInfoCommand.setImageName(image.getContent().getTitle());
         }
 
         if (image.hasContent()) {
