@@ -86,7 +86,11 @@ public class CurrentD2DConnection implements DisposableBean {
     }
 
     public void close() {
-        this.closeConnection();
+        try {
+            this.closeConnection();
+        } catch (Exception e) {
+            System.out.println("Connection to S-EHR has been closed.");
+        }
     }
 
     public D2DConnectionState connectionState() {

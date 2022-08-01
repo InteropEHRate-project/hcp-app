@@ -3,23 +3,47 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{fragment.current.patient.navigation.left.pat.history}">pat history</title>
+    <title th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging}">diag imaging</title>
 </head>
+<div class="m-5"></div>
 
 <body>
 <div layout:fragment="content">
     <br>
     <div class="row justify-content-center">
-        <h5><p th:if="${imageCommand.getImageInfoCommands().isEmpty()}" th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.no.data.available}">No Data available</p></h5>
-        <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
-            <h5><td th:text="${image.getDateOfImage()} + ' ' + ${image.getImageName()}"></td></h5>
-            <img th:src="${image.getCompleteStringForImageDisplaying()}" width="800">
-            <br>
-        </tr>
+        <h5><p th:if="${imageCommand.getImageInfoCommands().isEmpty()}"
+               th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.no.data.available}">
+            No Data available</p></h5>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.name}">Name</th>
+                <th th:text="#{fragment.current.patient.navigation.left.document.history.consultation.view}">View</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="image : ${imageCommand.getImageInfoCommands()}">
+                <td style="width:70%" th:text="${image.getImageName()}"></td>
+                <td>
+                    <div>
+                        <h5><a class="card-title"
+                               th:href="@{/current-patient/diagnostic-imaging/store-media-file(mediaId = ${{image.getImageName()}})}">Download
+                            media</a></h5>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
+    <div class="row justify-content-center">
+        <h5>Please note, all media files are downloaded in the user home folder.</h5>
+    </div>
+
     <br>
     <div th:if="${!imageCommand.getDiagnosticReportInfoCommands().isEmpty()}">
-        <h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.related.documents}">Related Documents</h5>
+        <h5 th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.related.documents}">
+            Related Documents</h5>
         <table class="table table-bordered">
             <thead class="thead-light">
             <tr>
@@ -34,12 +58,14 @@
                 <td th:text="${{image.getDateOfReport()}}"></td>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{button.open}">Open</button>
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                                th:text="#{button.open}">Open
+                        </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item"
                                th:href="@{'/current-patient/diagnostic-imaging/file-view/show-document/' + ${image.getNameDiagnostic()} + '/' + ${image.getDateOfReport()}}"
                                th:text="#{button.open}">Open</a>
-                            <a class="dropdown-item"  target="_blank"
+                            <a class="dropdown-item" target="_blank"
                                th:href="@{'/current-patient/diagnostic-imaging/file-view/show-document-new-tab/' + ${image.getNameDiagnostic()} + '/' + ${image.getDateOfReport()}}"
                                th:text="#{button.open.in.new.tab}">Open in new tab</a>
                         </div>
@@ -49,19 +75,18 @@
             </tbody>
         </table>
     </div>
-<!--    <div class="row justify-content-end">-->
-<!--        <a class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/refresh}"-->
-<!--           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.sehr}">Refresh data from S-EHR</a>-->
-<!--    </div>-->
     <br/>
-    <div class="row justify-content-end" th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
+    <div class="row justify-content-end"
+         th:if="${session.emergency != null && session.emergency.equalsIgnoreCase('EMERGENCY')}">
         <a class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/refresh-data}"
-           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download data from Cloud</a>
+           th:text="#{fragment.current.patient.navigation.left.diagnostic.imaging.Image.Report.refresh.data.cloud}">Download
+            data from Cloud</a>
     </div>
     <br>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
-            <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/view-section}" th:text="#{button.back}">Back</a>
+            <a href="#" class="btn btn-primary" th:href="@{/current-patient/diagnostic-imaging/view-section}"
+               th:text="#{button.back}">Back</a>
         </div>
     </div>
 </div>

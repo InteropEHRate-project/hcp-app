@@ -47,10 +47,12 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
     private final IndexServiceImpl indexService;
     private final PHExamService phExamService;
     private final ObservationLaboratoryService observationLaboratoryService;
+    private final ReasonService reasonService;
+    private final PatHistoryService patHistoryService;
 
     public OutpatientReportServiceImpl(PrescriptionService prescriptionService, VitalSignsService vitalSignsService,
                                        MedicationService medicationService, CurrentDiseaseService currentDiseaseService,
-                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, IndexServiceImpl indexService, PHExamService phExamService, ObservationLaboratoryService observationLaboratoryService) {
+                                       AllergyService allergyService, DiagnosticConclusionService diagnosticConclusionService, InstrumentsExaminationService instrumentsExaminationService, CurrentD2DConnection currentD2DConnection, CloudConnection cloudConnection, CurrentPatient currentPatient, IndexServiceImpl indexService, PHExamService phExamService, ObservationLaboratoryService observationLaboratoryService, ReasonService reasonService, PatHistoryService patHistoryService) {
         this.prescriptionService = prescriptionService;
         this.vitalSignsService = vitalSignsService;
         this.medicationService = medicationService;
@@ -64,6 +66,8 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         this.indexService = indexService;
         this.phExamService = phExamService;
         this.observationLaboratoryService = observationLaboratoryService;
+        this.reasonService = reasonService;
+        this.patHistoryService = patHistoryService;
     }
 
     @Override
@@ -86,6 +90,8 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
                 .patientBirthDate(this.indexService.getCurrentPatient().getPatient().getBirthDate())
                 .patientSex(this.indexService.getCurrentPatient().getPatient().getGender().toString())
                 .format(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")))
+                .reasonService(this.reasonService)
+                .patHistoryService(this.patHistoryService)
                 .build();
     }
 
@@ -99,12 +105,11 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         author.addName().setFamily(healthCareProfessionalService.getHealthCareProfessional().getFirstName() +
                 " " + healthCareProfessionalService.getHealthCareProfessional().getLastName());
         bundleEvaluation.addEntry().setResource(author);
+        bundleEvaluation.setType(Bundle.BundleType.SEARCHSET);
 
         Organization hospital = new Organization();
         hospital.setId(UUID.randomUUID().toString());
         hospital.setName(healthCareOrganizationService.getHealthCareOrganization().getName());
-//        BundleProvenanceBuilder builder = new BundleProvenanceBuilder(hospital);
-//        List<Provenance> provenances = builder.addProvenanceToBundleItems(bundleEvaluation);
         bundleEvaluation.addEntry().setResource(hospital);
 
         Patient patient = new Patient();
@@ -117,10 +122,14 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         Condition currentDiseases = currentDiseaseService.callSendCurrentDiseases();
         Condition diagnosticConclusion = diagnosticConclusionService.callSendConclusion();
         CarePlan treatmentPlan = diagnosticConclusionService.callSendTreatment();
+        Media mediaDicom = instrumentsExaminationService.callSendInstrumentalExaminationMedia();
+        Media mediaDicomAnon = instrumentsExaminationService.callSendInstrumentalExaminationMediaAnon();
         DiagnosticReport instrumentalExamination = instrumentsExaminationService.callSendInstrumentalExamination();
         AllergyIntolerance allergies = allergyService.callAllergies();
         Condition phExam = phExamService.callPHExam();
         Observation laboratory = observationLaboratoryService.callLaboratoryTests();
+        Condition reason = reasonService.callReason();
+        Condition patHistory = patHistoryService.callPatHis();
 
         Composition composition = new Composition();
         composition.setStatus(Composition.CompositionStatus.FINAL);
@@ -181,6 +190,13 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         diagnosticConclusionSection.addEntry().setResource(diagnosticConclusion);
         composition.addSection(diagnosticConclusionSection);
         bundleEvaluation.addEntry().setResource(diagnosticConclusion);
+        try {
+            if (Objects.nonNull(diagnosticConclusion)) {
+                ProvenanceBuilder.addProvenanceExtension(composition, diagnosticConclusion);
+            }
+        } catch (NullPointerException exception) {
+            System.out.println("Reference of Diagnostic Conclusion is null.");
+        }
 
         Composition.SectionComponent treatmentPlanSection = new Composition.SectionComponent();
         treatmentPlanSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "18776-5", "Treatment Plan")));
@@ -189,18 +205,22 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(treatmentPlan);
 
         Composition.SectionComponent instrumentExaminationSection = new Composition.SectionComponent();
-        instrumentExaminationSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "29545-1", "Instrumental Examination")));
+        instrumentExaminationSection.setCode(new CodeableConcept(new Coding("http://hl7.org/fhir/sid/icd-10", "", "Diagnostic Report")));
         instrumentExaminationSection.addEntry().setResource(instrumentalExamination);
         composition.addSection(instrumentExaminationSection);
         bundleEvaluation.addEntry().setResource(instrumentalExamination);
-        try {
-            if (Objects.nonNull(instrumentalExamination.addMedia().getLink().getResource())) {
-                bundleEvaluation.addEntry().setResource((Resource) instrumentalExamination.addMedia().getLink().getResource());
-                ProvenanceBuilder.addProvenanceExtension(composition, instrumentalExamination);
-            }
-        } catch (NullPointerException exception) {
-            System.out.println("Reference of Diagnostic Report is null.");
-        }
+
+        Composition.SectionComponent mediaSection = new Composition.SectionComponent();
+        mediaSection.setCode(new CodeableConcept(new Coding("http://hl7.org/fhir/sid/icd-10", "", "Instrumental Examination - Media")));
+        mediaSection.addEntry().setResource(mediaDicom);
+        composition.addSection(mediaSection);
+        bundleEvaluation.addEntry().setResource(mediaDicom);
+
+        Composition.SectionComponent mediaAnonSection = new Composition.SectionComponent();
+        mediaAnonSection.setCode(new CodeableConcept(new Coding("http://hl7.org/fhir/sid/icd-10", "", "Instrumental Examination - MediaAnon")));
+        mediaAnonSection.addEntry().setResource(mediaDicomAnon);
+        composition.addSection(mediaAnonSection);
+        bundleEvaluation.addEntry().setResource(mediaDicomAnon);
 
         Composition.SectionComponent allergiesSection = new Composition.SectionComponent();
         allergiesSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "48765-2", "Allergies and adverse reactions Document")));
@@ -209,7 +229,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(allergies);
 
         Composition.SectionComponent phExamSection = new Composition.SectionComponent();
-        phExamSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "48765-2", "Physical Examination")));
+        phExamSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "29545-1", "Physical Examination")));
         phExamSection.addEntry().setResource(phExam);
         composition.addSection(phExamSection);
         bundleEvaluation.addEntry().setResource(phExam);
@@ -220,6 +240,18 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         composition.addSection(laboratorySection);
         bundleEvaluation.addEntry().setResource(laboratory);
 
+        Composition.SectionComponent reasonSection = new Composition.SectionComponent();
+        reasonSection.setCode(new CodeableConcept(new Coding("http://loinc.org", "29299-5", "Reason for visit Narrative")));
+        reasonSection.addEntry().setResource(reason);
+        composition.addSection(reasonSection);
+        bundleEvaluation.addEntry().setResource(reason);
+
+        Composition.SectionComponent patHistorySection = new Composition.SectionComponent();
+        patHistorySection.setCode(new CodeableConcept(new Coding("http://loinc.org", "11329-0", "History general Narrative")));
+        patHistorySection.addEntry().setResource(patHistory);
+        composition.addSection(patHistorySection);
+        bundleEvaluation.addEntry().setResource(patHistory);
+
         IParser parser = FhirContext.forR4().newJsonParser().setPrettyPrint(false);
         Provenance prov = ProvenanceBuilder.build(composition, author, hospital);
 
@@ -228,7 +260,7 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(prov);
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundleEvaluation));
-       // this.currentPatient.initPatientSummary(bundleEvaluation);
+        //this.currentPatient.initPatientSummarySent(bundleEvaluation);
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
     }
 }

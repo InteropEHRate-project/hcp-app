@@ -11,9 +11,9 @@ public class ImageCommand {
     private final List<ImageInfoCommand> imageInfoCommands;
     private final List<DiagnosticReportInfoCommand> diagnosticReportInfoCommands;
 
-    public DiagnosticReportInfoCommand find(String nameDiagnostic, String dateOfReport) {
+    public DiagnosticReportInfoCommand find(String nameDiagnostic) {
         for (DiagnosticReportInfoCommand diag : this.diagnosticReportInfoCommands) {
-            if (diag.getNameDiagnostic().equals(nameDiagnostic) && diag.getDateOfReport().toString().equals(dateOfReport)) {
+            if (diag.getNameDiagnostic().equals(nameDiagnostic)) {
                 return diag;
             }
         }

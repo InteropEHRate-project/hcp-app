@@ -2,14 +2,17 @@ package eu.interopehrate.hcpapp.mvc.controllers.currentpatient.diagnosticImaging
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
+import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageInfoCommand;
 import eu.interopehrate.hcpapp.mvc.controllers.TemplateNames;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -50,6 +53,19 @@ public class DiagnosticImagingController {
     public String viewEcg() {
         this.diagnosticImagingService.displayEcgDemo();
         return "redirect:/current-patient/diagnostic-imaging/DICOM";
+    }
+
+    @SneakyThrows
+    @GetMapping
+    @RequestMapping("/store-media-file")
+    public String storeMediaFile(String mediaId) {
+        List<ImageInfoCommand> imageInfoCommandList = this.diagnosticImagingService.imageCommand().getImageInfoCommands();
+        for (ImageInfoCommand item : imageInfoCommandList) {
+            if (item.getImageName().equals(mediaId)) {
+                this.diagnosticImagingService.downloadMediaFile(item.getImageContent(), item.getImageName(), item.getImageType());
+            }
+        }
+        return "redirect:/current-patient/diagnostic-imaging/image-report";
     }
 
     @GetMapping

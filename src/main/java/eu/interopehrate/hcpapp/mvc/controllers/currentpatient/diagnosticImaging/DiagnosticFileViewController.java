@@ -14,18 +14,16 @@ public class DiagnosticFileViewController {
     @GetMapping
     @RequestMapping("/show-document/{nameDiagnostic}/{dateOfReport}")
     public String showDocument(Model model,
-                               @PathVariable(value = "nameDiagnostic") String nameDiagnostic,
-                               @PathVariable(value = "dateOfReport") String dateOfReport) {
-        model.addAttribute("dataString", DiagnosticImagingController.imageCommand.find(nameDiagnostic, dateOfReport).getCompleteStringForDiagnosticReportDisplaying());
+                               @PathVariable(value = "nameDiagnostic") String nameDiagnostic) {
+        model.addAttribute("dataString", DiagnosticImagingController.imageCommand.find(nameDiagnostic).getCompleteStringForDiagnosticReportDisplaying());
         return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_IMAGING_IMAGE_REPORT_VIEW_FILE;
     }
 
     @GetMapping
     @RequestMapping("/show-document-new-tab/{nameDiagnostic}/{dateOfReport}")
     public String showDocumentInNewTab(Model model,
-                                       @PathVariable(value = "nameDiagnostic") String nameDiagnostic,
-                                       @PathVariable(value = "dateOfReport") String dateOfReport) {
-        model.addAttribute("dataString", DiagnosticImagingController.imageCommand.find(nameDiagnostic, dateOfReport).getCompleteStringForDiagnosticReportDisplaying());
+                                       @PathVariable(value = "nameDiagnostic") String nameDiagnostic) {
+        model.addAttribute("dataString", DiagnosticImagingController.imageCommand.find(nameDiagnostic).getCompleteStringForDiagnosticReportDisplaying());
         return TemplateNames.CURRENT_PATIENT_DIAGNOSTIC_IMAGING_IMAGE_REPORT_VIEW_FILE_NEW_TAB;
     }
 }

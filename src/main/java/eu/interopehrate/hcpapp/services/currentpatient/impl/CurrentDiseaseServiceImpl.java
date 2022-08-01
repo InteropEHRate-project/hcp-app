@@ -66,6 +66,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     public CurrentDiseaseCommand currentDiseasesSection() {
         var currentDiseasesList = this.currentPatient.conditionsList()
                 .stream()
+                .filter(currentDisease -> (currentDisease.hasId() && !"11329-0".contains(currentDisease.getCode().getCodingFirstRep().getCode())))
                 .map(hapiToCommandCurrentDisease::convert)
                 .collect(Collectors.toList());
 
@@ -225,5 +226,7 @@ public class CurrentDiseaseServiceImpl implements CurrentDiseaseService {
     }
 
     @Override
-    public void refreshData() { this.cloudConnection.downloadCondition(); }
+    public void refreshData() {
+        this.cloudConnection.downloadCondition();
+    }
 }

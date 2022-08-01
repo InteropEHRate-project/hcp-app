@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.converters.fhir;
 
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.vitalsigns.VitalSignsInfoCommand;
+import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Quantity;
 import org.springframework.core.convert.converter.Converter;
@@ -23,14 +24,14 @@ public class HapiToCommandVitalSigns implements Converter<Observation, VitalSign
         VitalSignsInfoCommand vitalSignsInfoCommand = new VitalSignsInfoCommand();
 
         if (Objects.nonNull(observation.getCode())) {
-            observation.getCode().getCoding().forEach(coding -> vitalSignsInfoCommand.setAnalysisName(CurrentPatient.extractExtensionText(coding, this.currentPatient)));
+            vitalSignsInfoCommand.setAnalysisName(observation.getCode().getCodingFirstRep().getDisplay());
         }
 
-//        if (Objects.nonNull(observation.getCode()) && observation.getCode().getCodingFirstRep().hasDisplayElement() &&
-//                Objects.nonNull(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
-//                observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
-//            vitalSignsInfoCommand.setAnalysisNameTranslated(observation.getCode().getCoding().get(1).getDisplayElement().toString());
-//        }
+        if (Objects.nonNull(observation.getCode()) && observation.getCode().getCodingFirstRep().hasDisplayElement() &&
+                Objects.nonNull(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep()) &&
+                observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().hasExtension()) {
+            vitalSignsInfoCommand.setAnalysisNameTranslated(observation.getCode().getCodingFirstRep().getDisplayElement().getExtensionFirstRep().getExtension().get(1).getValue().toString());
+        }
 
         try {
             if (Objects.nonNull(observation.getEffectiveDateTimeType())) {
@@ -40,15 +41,24 @@ public class HapiToCommandVitalSigns implements Converter<Observation, VitalSign
             System.out.println("Null value date for Vital Signs.");
         }
 
-        if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
-            // vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setCurrentValue(observation.getValueQuantity().getValue().doubleValue());
-            vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setCurrentValue(((Quantity) observation.getValue()).getValue().doubleValue());
-        } else {
-            vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setCurrentValue(Double.parseDouble(observation.getValueStringType().getValue()));
+        try {
+            if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
+                vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setCurrentValue(((Quantity) observation.getValue()).getValue().doubleValue());
+            } else {
+                vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setCurrentValue(Double.parseDouble(observation.getValueStringType().getValue()));
+            }
+        } catch (FHIRException e) {
+            System.out.println("Incorrect type for quantity.");
         }
 
-        if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
-            vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setUnitOfMeasurement(observation.getValueQuantity().getUnit());
+        try {
+            if (Objects.nonNull(observation.getValueQuantity()) && Objects.nonNull(observation.getValueQuantity().getValue())) {
+                vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setUnitOfMeasurement(observation.getValueQuantity().getUnit());
+            } else {
+                vitalSignsInfoCommand.getVitalSignsInfoCommandSample().setUnitOfMeasurement(observation.getValueStringType().getValue());
+            }
+        } catch (FHIRException e) {
+            System.out.println("Incorrect type for quantity.");
         }
         return vitalSignsInfoCommand;
     }

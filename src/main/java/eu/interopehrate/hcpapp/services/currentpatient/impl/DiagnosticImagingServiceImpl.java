@@ -7,14 +7,19 @@ import eu.interopehrate.hcpapp.currentsession.CurrentD2DConnection;
 import eu.interopehrate.hcpapp.currentsession.CurrentPatient;
 import eu.interopehrate.hcpapp.mvc.commands.currentpatient.diagnostingimaging.ImageCommand;
 import eu.interopehrate.hcpapp.services.currentpatient.DiagnosticImagingService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Base64;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -46,6 +51,7 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
                 .collect(Collectors.toList());
         var diagnosticReports = this.currentPatient.diagnosticReportList()
                 .stream()
+                .filter(dr -> (dr.hasCategory() && !"LAB".equals(dr.getCategoryFirstRep().getCodingFirstRep().getCode())))
                 .map(this.hapiToCommandDiagnosticReport::convert)
                 .collect(Collectors.toList());
         return ImageCommand.builder()
@@ -58,6 +64,34 @@ public class DiagnosticImagingServiceImpl implements DiagnosticImagingService {
     public void displayEcgDemo() {
         String classPathFile = "samples/dicom/ecg/I1";
         displayEcg(classPathFile);
+    }
+
+    @SneakyThrows
+    @Override
+    public String downloadMediaFile(String base64, String mediaId, String type) {
+        byte[] byteArray = Base64.getDecoder().decode(base64);
+
+        String fileName = mediaId.replaceAll("/", "_");
+        if ("application/pdf".equals(type)) {
+            fileName = fileName + ".pdf";
+        } else if ("application/dicom".equals(type)) {
+            fileName = fileName + ".dcm";
+        } else if ("application/dicom+zip".equals(type)) {
+            fileName = fileName + ".zip";
+        } else {
+            fileName = fileName + ".bin";
+        }
+
+        String home = System.getProperty("user.home");
+        File f = new File(home + "/" + fileName);
+        System.out.println(" Creating file " + f.getAbsolutePath());
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(f, false))) {
+            out.write(byteArray);
+        } catch (Exception e) {
+            System.out.println("Couldn't write to file: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return f.getAbsolutePath();
     }
 
     @Override
