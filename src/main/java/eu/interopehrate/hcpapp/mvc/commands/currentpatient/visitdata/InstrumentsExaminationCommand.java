@@ -10,5 +10,4 @@ import java.util.List;
 public class InstrumentsExaminationCommand {
     private final Boolean displayTranslatedVersion;
     private final List<InstrumentsExaminationInfoCommand> instrumentsExaminationInfoCommandsExamInfoCommands;
-    private final List<String> listOfResultNote;
 }

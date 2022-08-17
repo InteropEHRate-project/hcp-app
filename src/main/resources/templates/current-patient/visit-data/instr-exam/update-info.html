@@ -77,6 +77,19 @@
             <!--                </div>-->
             <!--            </div>-->
         </div>
+
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="resultNote" th:text="#{fragment.current.patient.navigation.left.instr.exam.notes}">Result</label>
+                <textarea id="resultNote" type="text" class="form-control" th:classappend="${#fields.hasErrors('resultNote')} ? 'is-invalid' :''" th:field="*{resultNote}"></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('resultNote')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('resultNote')}" th:text="${err}">err</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="text-right"><br>
             <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save</button>
         </div>

@@ -24,6 +24,7 @@
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.type}">Type</th>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.author}">Author</th>
             <th th:text="#{fragment.current.patient.navigation.left.instr.exam.date}">Date</th>
+            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.notes}">Note result</th>
             <!--            <th th:text="#{fragment.current.patient.navigation.left.instr.exam.file}">File</th>-->
             <th th:text="#{crud.button.actions}">Actions</th>
         </tr>
@@ -42,6 +43,7 @@
             </td>
             <td th:text="${{exam.getAuthor()}}"></td>
             <td th:text="${{#temporals.format(exam.getDate(), 'dd-MM-yyyy')}}"></td>
+            <td th:text="${{exam.getResultNote()}}"></td>
             <!--            <td th:text="${{exam.getData()}}"></td>-->
             <td>
                 <div class="btn-group" role="group">

@@ -31,7 +31,6 @@ public class InstrumentsExaminationController {
         model.addAttribute("patient", this.instrumentsExaminationService.getCurrentPatient().getPatient());
         model.addAttribute("instrExamCommand", this.instrumentsExaminationService.instrExam());
         model.addAttribute("instrumentExaminationList", this.instrumentsExaminationService.listNewInstrumentExamination());
-        model.addAttribute("resultList", this.instrumentsExaminationService.instrExam().getListOfResultNote());
         model.addAttribute("instrExamInfoCommand", new InstrumentsExaminationInfoCommand());
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_VIEW_PAGE;
     }
@@ -39,7 +38,6 @@ public class InstrumentsExaminationController {
     @GetMapping
     @RequestMapping("/open-add-page")
     public String openAddPage(Model model) {
-        model.addAttribute("resultList", this.instrumentsExaminationService.instrExam().getListOfResultNote());
         model.addAttribute("instrExamInfoCommand", new InstrumentsExaminationInfoCommand());
         return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_ADD_PAGE;
     }
@@ -52,7 +50,6 @@ public class InstrumentsExaminationController {
             return TemplateNames.CURRENT_PATIENT_INSTRUMENTS_EXAM_ADD_PAGE;
         }
         instrumentsExaminationInfoCommand.setData(fileContent.getBytes());
-        this.instrumentsExaminationService.insertResultNote(resultList);
         this.instrumentsExaminationService.insertInstrExam(instrumentsExaminationInfoCommand);
         return "redirect:/current-patient/visit-data/instr-exam/view-section";
     }
@@ -104,13 +101,6 @@ public class InstrumentsExaminationController {
         for (MultipartFile file : files) {
             instrumentsExaminationService.store(file);
         }
-        return "redirect:/current-patient/visit-data/instr-exam/view-section";
-    }
-
-    @PostMapping
-    @RequestMapping("/save")
-    public String saveResultNote(String resultList) {
-        this.instrumentsExaminationService.insertResultNote(resultList);
         return "redirect:/current-patient/visit-data/instr-exam/view-section";
     }
 }

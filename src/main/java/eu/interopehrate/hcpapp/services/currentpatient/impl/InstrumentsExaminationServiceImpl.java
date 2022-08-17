@@ -34,7 +34,6 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     private final CommandToEntityInstrumentsExam commandToEntityInstrumentsExam;
     private final CurrentD2DConnection currentD2DConnection;
     private final AuditInformationService auditInformationService;
-    private final List<String> listOfResultNote = new ArrayList<>();
     @Autowired
     private HealthCareProfessionalService healthCareProfessionalService;
 
@@ -60,7 +59,6 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
                 .collect(Collectors.toList());
         return InstrumentsExaminationCommand.builder()
                 .instrumentsExaminationInfoCommandsExamInfoCommands(listOfInstrExams)
-                .listOfResultNote(this.listOfResultNote)
                 .build();
     }
 
@@ -194,16 +192,16 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
                         .setDisplay("Anonymization"));
 
         String base64Str = Base64.getEncoder().encodeToString(instrumentsExaminationEntity.getData());
-        String baseUrlFtgm = "http://10.97.32.223:9000";
-//        String baseUrlChu = "http://139.165.99.12:9000";
+//      String baseUrlFtgm = "http://10.97.32.223:9000";
+        String baseUrlChu = "http://139.165.99.12:9000";
         try {
-            DICOMAnonymization dicomAnonymizationFtgm = new DICOMAnonymization(baseUrlFtgm);
-            String response = dicomAnonymizationFtgm.request(base64Str);
-            imageAnon.getContent().setData(response.getBytes());
-
-//          DICOMAnonymization dicomAnonymizationChu = new DICOMAnonymization(baseUrlChu);
-//          String response = dicomAnonymizationChu.request(base64Str);
+//          DICOMAnonymization dicomAnonymizationFtgm = new DICOMAnonymization(baseUrlFtgm);
+//          String response = dicomAnonymizationFtgm.request(base64Str);
 //          imageAnon.getContent().setData(response.getBytes());
+
+            DICOMAnonymization dicomAnonymizationChu = new DICOMAnonymization(baseUrlChu);
+            String response = dicomAnonymizationChu.request(base64Str);
+            imageAnon.getContent().setData(response.getBytes());
         } catch (Exception e) {
             System.out.println("The port for anon it's not present");
         }
@@ -264,16 +262,16 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
                         .setDisplay("Anonymization"));
 
         String base64Str = Base64.getEncoder().encodeToString(instrumentsExaminationEntity.getData());
-        String baseUrlFtgm = "http://10.97.32.223:9000";
-        // String baseUrlChu = "http://139.165.99.12:9000";
+        // String baseUrlFtgm = "http://10.97.32.223:9000";
+        String baseUrlChu = "http://139.165.99.12:9000";
         try {
-            DICOMAnonymization dicomAnonymizationFtgm = new DICOMAnonymization(baseUrlFtgm);
-            String response = dicomAnonymizationFtgm.request(base64Str);
-            imageAnon.getContent().setData(response.getBytes());
-
-//          DICOMAnonymization dicomAnonymizationChu = new DICOMAnonymization(baseUrlChu);
-//          String response = dicomAnonymizationChu.request(base64Str);
+//          DICOMAnonymization dicomAnonymizationFtgm = new DICOMAnonymization(baseUrlFtgm);
+//          String response = dicomAnonymizationFtgm.request(base64Str);
 //          imageAnon.getContent().setData(response.getBytes());
+
+            DICOMAnonymization dicomAnonymizationChu = new DICOMAnonymization(baseUrlChu);
+            String response = dicomAnonymizationChu.request(base64Str);
+            imageAnon.getContent().setData(response.getBytes());
         } catch (Exception e) {
             System.out.println("The port for anon it's not present");
         }
@@ -304,12 +302,5 @@ public class InstrumentsExaminationServiceImpl implements InstrumentsExamination
     @Override
     public List<InstrumentsExaminationEntity> getFiles() {
         return instrumentsExaminationRepository.findAll();
-    }
-
-    @Override
-    public void insertResultNote(String resultNote) {
-        if (resultNote != null && !resultNote.trim().equals("") && !this.listOfResultNote.contains(resultNote)) {
-            this.listOfResultNote.add(resultNote);
-        }
     }
 }

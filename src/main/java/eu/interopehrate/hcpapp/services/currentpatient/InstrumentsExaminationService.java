@@ -28,7 +28,6 @@ public interface InstrumentsExaminationService {
     InstrumentsExaminationEntity store(MultipartFile file) throws IOException;
     CurrentD2DConnection getCurrentD2DConnection();
     List<InstrumentsExaminationEntity>getFiles();
-    void insertResultNote(String resultNote);
     Media callSendInstrumentalExaminationMedia();
     Media callSendInstrumentalExaminationMediaAnon();
 }
