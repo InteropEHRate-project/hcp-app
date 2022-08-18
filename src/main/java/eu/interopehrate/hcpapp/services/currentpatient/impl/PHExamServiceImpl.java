@@ -17,10 +17,7 @@ import org.hl7.fhir.r4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -98,8 +95,8 @@ public class PHExamServiceImpl implements PHExamService {
         if (Objects.nonNull(this.currentD2DConnection.getTd2D())) {
             for (int i = 0; i < this.phExamRepository.findAll().size(); i++) {
                 Condition vitalSigns = createPHExamFromEntity(this.phExamRepository.findAll().get(i));
-                this.currentPatient.getVitalSigns().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
-                this.currentPatient.getVitalSignsTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                this.currentPatient.getPatientSummaryBundle().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
+                this.currentPatient.getPatientSummaryBundleTranslated().getEntry().add(new Bundle.BundleEntryComponent().setResource(vitalSigns));
                 return vitalSigns;
             }
             auditInformationService.auditEvent(AuditEventType.SEND_TO_SEHR, "Auditing send PH Examinations to S-EHR");
@@ -110,7 +107,7 @@ public class PHExamServiceImpl implements PHExamService {
         return null;
     }
 
-    private static Condition createPHExamFromEntity(PHExamEntity phExamEntity) {
+    private Condition createPHExamFromEntity(PHExamEntity phExamEntity) {
         Condition phExam = new Condition();
 
         phExam.setId(UUID.randomUUID().toString());
@@ -122,9 +119,41 @@ public class PHExamServiceImpl implements PHExamService {
                 .setCode("PHY")
                 .setDisplay("Physical Examination"));
 
+        phExam.setLanguage("el");
+        Bundle bundle = this.currentPatient.initPatientSummarySent(this.createPHExamFromEntityBundle(phExamEntity));
+
+        try {
+            if (((Condition) bundle.getEntryFirstRep().getResource()).getNote().get(0).getTextElement().getExtension().get(0).hasExtension()) {
+                phExam.addNote().setText(String.valueOf(((Condition) bundle.getEntryFirstRep().getResource())
+                        .getNote().get(0).getTextElement().getExtension().get(0).getExtension().get(1).getValue()));
+            } else {
+                phExam.addNote().setText(phExamEntity.getPhExam());
+            }
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            System.out.println("Cannot be called the translation service!");
+            phExam.addNote().setText(phExamEntity.getPhExam());
+        }
+        return phExam;
+    }
+
+    private Bundle createPHExamFromEntityBundle(PHExamEntity phExamEntity) {
+        Bundle bundle = new Bundle();
+        Condition phExam = new Condition();
+        bundle.addEntry().setResource(phExam);
+
+        phExam.setId(UUID.randomUUID().toString());
+        phExam.setCode(new CodeableConcept());
+        phExam.getCode().addChild("coding");
+        phExam.getCode().setCoding(new ArrayList<>());
+        phExam.getCode().getCoding().add(new Coding()
+                .setSystem("http://terminology.hl7.org/CodeSystem/v2-0074")
+                .setCode("PHY")
+                .setDisplay("Physical Examination"));
+
+        phExam.setLanguage("el");
         phExam.addNote().setText(phExamEntity.getPhExam());
 
-        return phExam;
+        return bundle;
     }
 
     @Override
