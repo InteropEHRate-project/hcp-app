@@ -6,14 +6,16 @@
 insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_3_code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'RO', 'ROU', 'Romania');
 insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_3_code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'IT', 'ITA', 'Italy');
 insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_3_code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FR', 'FRA', 'Belgique');
+insert into COUNTRIES (created_date, updated_date, version, alpha_2_code, alpha_3_code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'GR', 'GR', 'Greece');
 
 insert into CITIES (created_date, updated_date, version, name, country_id) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Bucharest', (select id from countries where alpha_2_code = 'RO'));
 insert into CITIES (created_date, updated_date, version, name, country_id) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Pisa', (select id from countries where alpha_2_code = 'IT'));
+insert into CITIES (created_date, updated_date, version, name, country_id) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Athens', (select id from countries where alpha_2_code = 'GR'));
 
 insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details)
-values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Pisa'), 'WORK', '013685', 'CNR Foundation / Tuscany Region', '1', 'Giuseppe Moruzzi');
+values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Athens'), 'WORK', '013685', 'Erithrou Stavrou 4, Grecia', '1', 'Marousi 151 23');
 insert into ADDRESSES (created_date, updated_date, version, city_id, use, postal_code, street, number, details)
-values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Pisa'), 'WORK', '56124', 'CNR Foundation / Tuscany Region', '12', 'Sector 4');
+values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, (select id from cities where name = 'Athens'), 'WORK', '56124', 'Erithrou Stavrou 4, Grecia', '12', 'Marousi 151 23');
 
 insert into CONTACT_POINTS (created_date, updated_date, version, type, use, value) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PHONE', 'WORK', '+39 050 315 2216');
 --insert into CONTACT_POINTS (created_date, updated_date, version, type, use, value) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'PHONE', 'WORK', '+4021 334 30 26');
@@ -28,17 +30,18 @@ insert into HEALTH_CARE_OCCUPATIONS (created_date, updated_date, version, name, 
 values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Medical officer (general)', (select id from health_care_occupation_groups where isco_code = '2211'));
 
 insert into PERSONS (created_date, updated_date, version, first_name, last_name, gender, birth_date)
-values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Giuseppe', 'Vergaro', 'MALE', parsedatetime('24-11-1983', 'dd-MM-yyyy'));
+values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Petros', 'Danias', 'MALE', parsedatetime('24-11-1983', 'dd-MM-yyyy'));
 
-insert into HEALTH_CARE_PROFESSIONAL (id, OCCUPATION_ID) values ((select id from persons where first_name = 'Giuseppe'), (select id from health_care_occupations where name = 'Medical doctor specialist in Cardiology'));
+insert into HEALTH_CARE_PROFESSIONAL (id, OCCUPATION_ID) values ((select id from persons where first_name = 'Petros'), (select id from health_care_occupations where name = 'Medical doctor specialist in Cardiology'));
 
-insert into PERSON_ADDRESS (person_id, address_id) values ((select id from persons where first_name = 'Giuseppe'), (select id from addresses where postal_code = '013685'));
+insert into PERSON_ADDRESS (person_id, address_id) values ((select id from persons where first_name = 'Petros'), (select id from addresses where postal_code = '013685'));
 
-insert into HEALTH_CARE_ORGANIZATION (created_date, updated_date, version, code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'FTGM', 'Fondazione Toscana "Gabriele Monasterio" Hospital');
+insert into HEALTH_CARE_ORGANIZATION (created_date, updated_date, version, code, name) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'HYGEIA', 'HYGEIA');
 
-insert into HCO_ADDRESS (hco_id, address_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'FTGM'), (select id from addresses where postal_code = '56124'));
+insert into HCO_ADDRESS (hco_id, address_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'HYGEIA'), (select id from addresses where postal_code = '56124'));
 
-insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'FTGM'), (select id from CONTACT_POINTS where value = '+39 050 315 2216'));
+insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'HYGEIA'), (select id from CONTACT_POINTS where value = '+39 050 315 2216'));
+
 -- insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 26'));
 -- insert into HCO_CONTACT_POINT (hco_id, contact_point_id) values ((select id from HEALTH_CARE_ORGANIZATION where code = 'SCUBA'), (select id from CONTACT_POINTS where value = '+4021 334 30 27'));
 

@@ -2,6 +2,7 @@ package eu.interopehrate.hcpapp.currentsession;
 
 import ca.uhn.fhir.context.FhirContext;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
+import eu.interopehrate.hcpapp.services.index.impl.IndexServiceImpl;
 import eu.interopehrate.ihs.terminalclient.fhir.TerminalFhirContext;
 import eu.interopehrate.ihs.terminalclient.services.CodesConversionService;
 import eu.interopehrate.ihs.terminalclient.services.TranslateService;
@@ -9,6 +10,7 @@ import lombok.SneakyThrows;
 import org.hl7.fhir.r4.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,10 @@ public class CurrentPatient {
     private Consent consent;
     private Bundle patientSummaryBundle;
     private Bundle patientSummaryBundleTranslated;
+    private Bundle patientSummaryBundleSent;
+    private Bundle patientSummaryBundleTranslatedSent;
+    private Bundle patientAllergiesBundle;
+    private Bundle patientAllergiesBundleTranslated;
     private Bundle prescription;
     private Bundle prescriptionTranslated;
     private Bundle laboratoryResults;
@@ -48,6 +54,8 @@ public class CurrentPatient {
     private Bundle patHisBundleTranslated;
     @Value("${hcp.without.connection}")
     private Boolean withoutConnection;
+    @Autowired
+    private IndexServiceImpl indexService;
 
     public CurrentPatient(TranslateService translateService, CodesConversionService codesConversionService, TerminalFhirContext terminalFhirContext) {
         this.translateService = translateService;
@@ -307,10 +315,64 @@ public class CurrentPatient {
         }
     }
 
+    public Bundle initPatientSummarySent(Bundle patientSummary) {
+        try {
+            patientSummaryBundleSent = new Bundle();
+            for (Bundle.BundleEntryComponent entry : patientSummary.getEntry()) {
+                if (entry.getResource() instanceof Provenance)
+                    continue;
+
+                else if (entry.getResource() instanceof Media) {
+                    Media originalMedia = (Media) entry.getResource();
+                    Media emptyMedia = new Media();
+                    Meta meta = new Meta();
+                    meta.addProfile("http://interopehrate.eu/fhir/StructureDefinition/Media-IEHR");
+                    emptyMedia.setMeta(meta);
+                    emptyMedia.setId(originalMedia.getId());
+                    emptyMedia.setStatus(Media.MediaStatus.COMPLETED);
+                    emptyMedia.setSubject(originalMedia.getSubject());
+                    emptyMedia.setOperator(originalMedia.getOperator());
+                    emptyMedia.setEncounter(originalMedia.getEncounter());
+                    emptyMedia.addNote().setText(originalMedia.getNote().toString());
+                    patientSummaryBundleSent.addEntry().setResource(emptyMedia);
+
+                } else {
+                    patientSummaryBundleSent.addEntry().setResource(entry.getResource());
+                }
+            }
+            patientSummaryBundleTranslatedSent = translateService.translate(patientSummaryBundleSent, new Locale("fr"));
+            logger.info("IPS translated & converted.");
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            patientSummaryBundleTranslatedSent = patientSummary;
+        }
+        return patientSummaryBundleTranslatedSent;
+    }
+
+    public void initAllergiesEmergency(Bundle allergies) {
+        try {
+            this.patientAllergiesBundle = allergies;
+            this.patientAllergiesBundleTranslated = this.translateService.translate(patientAllergiesBundle, new Locale("el"));
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.patientAllergiesBundleTranslated = this.patientAllergiesBundle;
+        }
+    }
+
     public void initPrescription(Bundle prescript) {
         try {
             this.prescription = prescript;
             this.prescriptionTranslated = patientSummaryBundleTranslated;
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.prescriptionTranslated = this.prescription;
+        }
+    }
+
+    public void initPrescriptionEmergency(Bundle prescript) {
+        try {
+            this.prescription = prescript;
+            this.prescriptionTranslated = this.translateService.translate(prescription, new Locale("el"));
         } catch (Exception e) {
             logger.error("Error calling translation service.", e);
             this.prescriptionTranslated = this.prescription;
@@ -327,6 +389,16 @@ public class CurrentPatient {
         }
     }
 
+    public void initLaboratoryResultsEmergency(Bundle obs) {
+        try {
+            this.laboratoryResults = obs;
+            this.laboratoryResultsTranslated = this.translateService.translate(laboratoryResults, new Locale("el"));
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.laboratoryResultsTranslated = laboratoryResults;
+        }
+    }
+
     public void initVitalSigns(Bundle vital) {
         try {
             this.vitalSignsBundle = vital;
@@ -335,7 +407,16 @@ public class CurrentPatient {
             logger.error("Error calling translation service.", e);
             this.vitalSignsTranslated = vitalSignsBundle;
         }
+    }
 
+    public void initVitalSignsEmergency(Bundle vital) {
+        try {
+            this.vitalSignsBundle = vital;
+            this.vitalSignsTranslated = this.translateService.translate(vitalSignsBundle, new Locale("el"));
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.vitalSignsTranslated = vitalSignsBundle;
+        }
     }
 
     public void initImageReport(Bundle imageRep) {
@@ -378,10 +459,34 @@ public class CurrentPatient {
         }
     }
 
+    public void initPatHisConsultationEmergency(Bundle patHisConsultation) {
+        try {
+            this.patHisBundle = patHisConsultation;
+            this.patHisBundleTranslated = this.translateService.translate(patHisBundle, new Locale("el"));
+        } catch (Exception e) {
+            logger.error("Error calling translation service.", e);
+            this.patHisBundleTranslated = this.patHisBundle;
+        }
+    }
+
+    @SneakyThrows
     public void reset() {
         this.displayTranslatedVersion = Boolean.TRUE;
         this.patient = null;
         this.consent = null;
+        this.certificate = null;
+        this.indexService.indexCommand().getPatientDataCommand().setAge(null);
+        this.indexService.indexCommand().getPatientDataCommand().setConsent(null);
+        this.indexService.indexCommand().getPatientDataCommand().setCertificate(null);
+        this.indexService.indexCommand().getPatientDataCommand().setLastName(null);
+        this.indexService.indexCommand().getPatientDataCommand().setFirstName(null);
+        this.indexService.indexCommand().getPatientDataCommand().setPhoto(null);
+        this.indexService.indexCommand().getPatientDataCommand().setGender(null);
+        this.indexService.indexCommand().getPatientDataCommand().setCountry(null);
+        this.indexService.indexCommand().setQrCode(null);
+        this.indexService.indexCommand().setHospitalID(null);
+        this.indexService.indexCommand().setHcpName(null);
+        this.indexService.indexCommand().setBucketName(null);
         this.patientSummaryBundle = null;
         this.patientSummaryBundleTranslated = null;
         this.prescription = null;
@@ -403,6 +508,12 @@ public class CurrentPatient {
     public List<AllergyIntolerance> allergyIntoleranceList() {
         if (Objects.isNull(patientSummaryBundle)) {
             return Collections.emptyList();
+        } else if (!Objects.nonNull(patientSummaryBundle)) {
+            if (Objects.isNull(patientAllergiesBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientAllergiesBundle).allergyIntoleranceList();
+            }
         } else {
             return new BundleProcessor(patientSummaryBundle).allergyIntoleranceList();
         }
@@ -411,8 +522,16 @@ public class CurrentPatient {
     public List<AllergyIntolerance> allergyIntoleranceTranslatedList() {
         if (Objects.isNull(patientSummaryBundleTranslated)) {
             return Collections.emptyList();
+        } else if (!Objects.isNull(patientSummaryBundleTranslated)) {
+            if (Objects.isNull(patientSummaryBundle)) {
+                return Collections.emptyList();
+            } else {
+                return new BundleProcessor(patientSummaryBundleTranslated).allergyIntoleranceList();
+            }
+        } else if (Objects.isNull(patientAllergiesBundleTranslated)) {
+            return Collections.emptyList();
         } else {
-            return new BundleProcessor(patientSummaryBundleTranslated).allergyIntoleranceList();
+            return new BundleProcessor(patientAllergiesBundleTranslated).allergyIntoleranceList();
         }
     }
 

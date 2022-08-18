@@ -260,7 +260,6 @@ public class OutpatientReportServiceImpl implements OutpatientReportService {
         bundleEvaluation.addEntry().setResource(prov);
 
         System.out.println(FhirContext.forR4().newJsonParser().setPrettyPrint(true).encodeResourceToString(bundleEvaluation));
-        //this.currentPatient.initPatientSummarySent(bundleEvaluation);
         this.currentD2DConnection.getTd2D().sendHealthData(bundleEvaluation);
     }
 }

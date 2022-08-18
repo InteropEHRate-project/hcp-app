@@ -6,7 +6,6 @@ import eu.interopehrate.fhir.provenance.ResourceSigner;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexCommand;
 import eu.interopehrate.hcpapp.mvc.commands.index.IndexPatientDataCommand;
 import eu.interopehrate.hcpapp.services.administration.AuditInformationService;
-import eu.interopehrate.protocols.common.DocumentCategory;
 import eu.interopehrate.protocols.common.FHIRResourceCategory;
 import eu.interopehrate.r2demergency.R2DEmergencyFactory;
 import eu.interopehrate.r2demergency.api.R2DEmergencyI;
@@ -23,7 +22,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.security.PrivateKey;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
@@ -43,8 +41,7 @@ public class CloudConnection implements DisposableBean {
     private final AuditInformationService auditInformationService;
     public CryptoManagement cryptoManagement;
     public final String ca_url = "http://interoperate-ejbca-service.euprojects.net";
-    public final String alias = "healthorganization";
-    private static final String keyStorePath = "FTGM_iehr.p12";
+    private static final String keyStorePath = "HYGEIA_iehr.p12";
 
     public CloudConnection(CurrentPatient currentPatient,
                            IndexPatientDataCommand indexPatientDataCommand, AuditInformationService auditInformationService) throws Exception {
@@ -67,7 +64,7 @@ public class CloudConnection implements DisposableBean {
     @PostConstruct
     private void initializeCertificateS() {
         IParser parser = FhirContext.forR4().newJsonParser();
-        ResourceSigner.INSTANCE.initialize("FTGM_iehr.p12", "FTGM_iehr", parser);
+        ResourceSigner.INSTANCE.initialize("HYGEIA_iehr.p12", "HYGEIA_iehr", parser);
     }
 
     public String getEmergencyToken() {
@@ -111,13 +108,14 @@ public class CloudConnection implements DisposableBean {
         this.connectionState = CloudConnectionState.OFF;
         this.indexPatientDataCommand.setIpsReceived(false);
         IndexCommand.transmissionCompleted = Boolean.FALSE;
+        log.info("Connection with cloud was closed.");
     }
 
     @SneakyThrows
     public Boolean download(String qrCodeContent, String hospitalId, String hcpName) {
         try {
             if (Objects.isNull(this.emergencyToken)) {
-                String hcoC = Base64.getEncoder().encodeToString(this.cryptoManagement.getUserCertificate(alias));
+                String hcoC = Base64.getEncoder().encodeToString(this.cryptoManagement.getUserCertificate("HYGEIA_iehr"));
                 this.emergencyToken = this.r2dEmergency.requestAccess(qrCodeContent, hospitalId, hcoC, hcpName);
                 this.bucketName = String.valueOf(this.r2dEmergency.listBuckets(emergencyToken).get(0));
             }
@@ -169,7 +167,7 @@ public class CloudConnection implements DisposableBean {
                 log.error("Prescription not found");
             } else {
                 Bundle prescriptionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(prescription);
-                this.currentPatient.initPrescription(prescriptionBundle);
+                this.currentPatient.initPrescriptionEmergency(prescriptionBundle);
                 log.info("Prescription received from Cloud");
             }
         } catch (Exception e) {
@@ -201,7 +199,7 @@ public class CloudConnection implements DisposableBean {
                 log.error("Allergies not found");
             } else {
                 Bundle allergyBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(allergy);
-                this.currentPatient.initPatientSummary(allergyBundle);
+                this.currentPatient.initAllergiesEmergency(allergyBundle);
                 log.info("Allergies received from Cloud");
             }
         } catch (Exception e) {
@@ -218,6 +216,7 @@ public class CloudConnection implements DisposableBean {
             } else {
                 Bundle conditionBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(condition);
                 this.currentPatient.initPatientSummary(conditionBundle);
+                this.currentPatient.initPatHisConsultationEmergency(conditionBundle);
                 log.info("Condition received from Cloud");
             }
         } catch (Exception e) {
@@ -227,13 +226,14 @@ public class CloudConnection implements DisposableBean {
 
     @SneakyThrows
     public void downloadLabResults() {
-        String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.LABORATORY_REPORT);
+        String laboratoryResults = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.OBSERVATION);
         try {
             if (laboratoryResults.equalsIgnoreCase("File not found")) {
                 log.error("LaboratoryResults not found");
             } else {
                 Bundle laboratoryResultsBundle = (Bundle) FhirContext.forR4().newJsonParser().parseResource(laboratoryResults);
-                this.currentPatient.initLaboratoryResults(laboratoryResultsBundle);
+                this.currentPatient.initLaboratoryResultsEmergency(laboratoryResultsBundle);
+                this.currentPatient.initVitalSignsEmergency(laboratoryResultsBundle);
                 log.info("LaboratoryResults received from Cloud");
             }
         } catch (Exception e) {
@@ -243,7 +243,7 @@ public class CloudConnection implements DisposableBean {
 
     @SneakyThrows
     public void downloadImageReport() {
-        String imageReport = this.r2dEmergency.get(this.emergencyToken, this.bucketName, DocumentCategory.IMAGE_REPORT);
+        String imageReport = this.r2dEmergency.get(this.emergencyToken, this.bucketName, FHIRResourceCategory.DIAGNOSTIC_REPORT);
         try {
             if (imageReport.equalsIgnoreCase("File not found")) {
                 log.error("ImageReport not found");
@@ -253,15 +253,7 @@ public class CloudConnection implements DisposableBean {
                 log.info("ImageReport received from Cloud");
             }
         } catch (Exception e) {
-            System.out.println("Missing file.");
+            System.out.println("Missing file for Image Report.");
         }
-    }
-
-    @SneakyThrows
-    public String signingData() {
-        PrivateKey privateKey = cryptoManagement.getPrivateKey(alias);
-        byte[] certificateData = cryptoManagement.getUserCertificate(alias);
-        String signed = cryptoManagement.signPayload("payload", privateKey);
-        return this.cryptoManagement.createDetachedJws(certificateData, signed);
     }
 }
